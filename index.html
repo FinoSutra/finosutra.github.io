@@ -3,31 +3,33 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>CA Calc Pro — Ind AS 116</title>
+<title>Finosutra — Finance on Autopilot</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 
 body{
   min-height:100vh;
-  background:linear-gradient(160deg,#0B1F3A 0%,#142840 60%,#0D2235 100%);
+  background:linear-gradient(150deg,#F0F4FF 0%,#E8EDFF 50%,#F5F0FF 100%);
   font-family:Georgia,serif;
-  color:#fff
+  color:#1A1A2E
 }
 
 header{
-  border-bottom:1px solid rgba(201,147,58,0.3);
+  border-bottom:1px solid rgba(99,102,241,0.2);
   padding:0 32px;
-  background:rgba(11,31,58,0.95);
+  background:#FFFFFF;
   position:sticky;
   top:0;
   z-index:100;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  height:60px
+  height:60px;
+  box-shadow:0 2px 12px rgba(99,102,241,0.08)
 }
 
 .logo{display:flex;align-items:center;gap:12px}
@@ -35,30 +37,30 @@ header{
 .logo-icon{
   width:36px;
   height:36px;
-  background:linear-gradient(135deg,#C9933A,#E8B865);
+  background:linear-gradient(135deg,#6366F1,#8B5CF6);
   border-radius:8px;
   display:flex;
   align-items:center;
   justify-content:center;
   font-weight:bold;
   font-size:13px;
-  color:#0B1F3A
+  color:#fff
 }
 
-.logo-name{font-size:17px;font-weight:bold}
+.logo-name{font-size:17px;font-weight:bold;color:#1A1A2E}
 .logo-sub{
   font-size:10px;
-  color:#C9933A;
+  color:#6366F1;
   letter-spacing:2px;
   text-transform:uppercase
 }
 
 .badge{
-  background:linear-gradient(135deg,#C9933A,#E8B865);
-  color:#0B1F3A;
+  background:linear-gradient(135deg,#6366F1,#8B5CF6);
+  color:#fff;
   font-size:11px;
   font-weight:bold;
-  padding:4px 10px;
+  padding:4px 12px;
   border-radius:20px
 }
 
@@ -72,7 +74,7 @@ header{
   font-size:11px;
   letter-spacing:3px;
   text-transform:uppercase;
-  color:#C9933A;
+  color:#6366F1;
   margin-bottom:10px
 }
 
@@ -80,12 +82,13 @@ h1{
   font-size:30px;
   font-weight:bold;
   margin-bottom:8px;
-  line-height:1.2
+  line-height:1.2;
+  color:#1A1A2E
 }
 
 .hero p{
   font-size:14px;
-  color:#6B8BAE;
+  color:#6B7280;
   max-width:560px;
   line-height:1.6
 }
@@ -101,26 +104,29 @@ h1{
 }
 
 .card{
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(201,147,58,0.2);
+  background:#FFFFFF;
+  border:1px solid rgba(99,102,241,0.15);
   border-radius:16px;
-  overflow:hidden
+  overflow:hidden;
+  box-shadow:0 4px 24px rgba(99,102,241,0.08)
 }
 
 .card-hd{
   padding:16px 22px;
-  border-bottom:1px solid rgba(201,147,58,0.15);
+  border-bottom:1px solid rgba(99,102,241,0.12);
   display:flex;
   align-items:center;
   gap:10px;
   font-size:13px;
-  font-weight:bold
+  font-weight:bold;
+  color:#1A1A2E;
+  background:#FAFAFF
 }
 
 .hd-icon{
   width:30px;
   height:30px;
-  background:rgba(201,147,58,0.15);
+  background:rgba(99,102,241,0.1);
   border-radius:7px;
   display:flex;
   align-items:center;
@@ -137,85 +143,97 @@ label{
   font-weight:bold;
   letter-spacing:1.5px;
   text-transform:uppercase;
-  color:#8A9BB0;
+  color:#6B7280;
   margin-bottom:5px
 }
 
-input,select{
+input{
   width:100%;
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(201,147,58,0.25);
+  background:#F8F9FF;
+  border:1px solid rgba(99,102,241,0.3);
   border-radius:8px;
   padding:10px 13px;
   font-size:14px;
-  color:#fff;
+  color:#1A1A2E;
   outline:none;
   font-family:Georgia,serif;
   transition:border-color .2s
 }
 
 select{
-  background:#142840;
-  cursor:pointer
+  width:100%;
+  background:#F8F9FF;
+  border:1px solid rgba(99,102,241,0.3);
+  border-radius:8px;
+  padding:10px 13px;
+  font-size:14px;
+  color:#1A1A2E;
+  outline:none;
+  font-family:Georgia,serif;
+  cursor:pointer;
+  transition:border-color .2s
 }
 
 input:focus,select:focus{
-  border-color:rgba(201,147,58,0.6)
+  border-color:#6366F1;
+  box-shadow:0 0 0 3px rgba(99,102,241,0.1)
 }
 
 .hint{
   font-size:11px;
-  color:#8A9BB0;
+  color:#9CA3AF;
   margin-top:4px
 }
 
 .err{
-  border-color:rgba(192,57,43,0.7)!important
+  border-color:#EF4444 !important
 }
 
 .err-msg{
   font-size:11px;
-  color:#FF8A80;
+  color:#EF4444;
   margin-top:4px;
   display:none
 }
 
 .divider{
   height:1px;
-  background:rgba(201,147,58,0.15);
+  background:rgba(99,102,241,0.12);
   margin:16px 0
 }
 
 .btn-calc{
   width:100%;
   padding:13px;
-  background:linear-gradient(135deg,#C9933A,#E8B865);
+  background:linear-gradient(135deg,#6366F1,#8B5CF6);
   border:none;
   border-radius:10px;
   font-size:14px;
   font-weight:bold;
-  color:#0B1F3A;
+  color:#fff;
   cursor:pointer;
-  font-family:Georgia,serif
+  font-family:Georgia,serif;
+  letter-spacing:0.3px;
+  box-shadow:0 4px 14px rgba(99,102,241,0.35)
 }
 
-.btn-calc:hover{opacity:.92}
+.btn-calc:hover{opacity:.92;transform:translateY(-1px)}
 
 .btn-reset{
   width:100%;
   padding:9px;
   background:transparent;
-  border:1px solid rgba(201,147,58,0.3);
+  border:1px solid rgba(99,102,241,0.3);
   border-radius:10px;
   font-size:12px;
-  color:#8A9BB0;
+  color:#9CA3AF;
   cursor:pointer;
   font-family:Georgia,serif;
   margin-top:9px;
   display:none
 }
 
-.btn-reset:hover{color:#C9933A}
+.btn-reset:hover{color:#6366F1;border-color:#6366F1}
 
 .kpis{
   display:grid;
@@ -225,8 +243,8 @@ input:focus,select:focus{
 }
 
 .kpi{
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(201,147,58,0.15);
+  background:linear-gradient(135deg,#F5F3FF,#EEF2FF);
+  border:1px solid rgba(99,102,241,0.15);
   border-radius:10px;
   padding:13px 15px
 }
@@ -235,25 +253,25 @@ input:focus,select:focus{
   font-size:10px;
   letter-spacing:1.5px;
   text-transform:uppercase;
-  color:#8A9BB0;
+  color:#6B7280;
   margin-bottom:5px
 }
 
 .kpi-val{
   font-size:17px;
   font-weight:bold;
-  color:#C9933A
+  color:#6366F1
 }
 
 .kpi-val2{
   font-size:13px;
   font-weight:bold;
-  color:#E8B865
+  color:#8B5CF6
 }
 
 .kpi-note{
   font-size:10px;
-  color:#8A9BB0;
+  color:#9CA3AF;
   margin-top:3px
 }
 
@@ -265,19 +283,21 @@ input:focus,select:focus{
 }
 
 .pill{
-  background:rgba(26,122,74,.2);
-  border:1px solid rgba(26,122,74,.4);
-  color:#5EC98A;
+  background:rgba(16,185,129,.1);
+  border:1px solid rgba(16,185,129,.3);
+  color:#059669;
   font-size:10px;
   padding:2px 8px;
-  border-radius:20px
+  border-radius:20px;
+  font-weight:bold
 }
 
 .tabs{
   display:flex;
-  border-bottom:1px solid rgba(201,147,58,0.2);
+  border-bottom:1px solid rgba(99,102,241,0.15);
   padding:0 22px;
-  margin-top:14px
+  margin-top:14px;
+  background:#FAFAFF
 }
 
 .tab{
@@ -288,14 +308,15 @@ input:focus,select:focus{
   border:none;
   background:transparent;
   font-family:Georgia,serif;
-  color:#8A9BB0;
+  color:#9CA3AF;
   border-bottom:2px solid transparent;
-  margin-bottom:-1px
+  margin-bottom:-1px;
+  transition:color .2s
 }
 
 .tab.on{
-  color:#C9933A;
-  border-bottom-color:#C9933A
+  color:#6366F1;
+  border-bottom-color:#6366F1
 }
 
 .pane{display:none}
@@ -320,9 +341,9 @@ th{
   font-size:10px;
   letter-spacing:1px;
   text-transform:uppercase;
-  color:#C9933A;
-  background:rgba(201,147,58,0.08);
-  border-bottom:1px solid rgba(201,147,58,0.2);
+  color:#6366F1;
+  background:rgba(99,102,241,0.06);
+  border-bottom:1px solid rgba(99,102,241,0.15);
   white-space:nowrap;
   position:sticky;
   top:0
@@ -333,41 +354,43 @@ th.L{text-align:left}
 td{
   padding:8px 13px;
   text-align:right;
-  color:rgba(255,255,255,.85);
-  border-bottom:1px solid rgba(255,255,255,.04);
+  color:#374151;
+  border-bottom:1px solid rgba(99,102,241,0.06);
   white-space:nowrap
 }
 
 td.L{
   text-align:left;
-  color:#6B8BAE
+  color:#6B7280
 }
 
 td.B{
   font-weight:bold;
-  color:#fff
+  color:#111827
 }
 
 tr:nth-child(even){
-  background:rgba(201,147,58,.03)
+  background:rgba(99,102,241,0.025)
 }
 
 .tot-row{
-  background:rgba(201,147,58,.1)!important
+  background:rgba(99,102,241,0.08)!important;
+  font-weight:bold
 }
 
 .exp-row{
   padding:13px 22px;
-  border-top:1px solid rgba(201,147,58,.15);
+  border-top:1px solid rgba(99,102,241,0.12);
   display:flex;
   align-items:center;
   justify-content:flex-end;
-  gap:12px
+  gap:12px;
+  background:#FAFAFF
 }
 
 .exp-note{
   font-size:11px;
-  color:#8A9BB0
+  color:#9CA3AF
 }
 
 .btn-exp{
@@ -375,17 +398,18 @@ tr:nth-child(even){
   align-items:center;
   gap:7px;
   padding:9px 18px;
-  background:linear-gradient(135deg,#C9933A,#E8B865);
+  background:linear-gradient(135deg,#6366F1,#8B5CF6);
   border:none;
   border-radius:8px;
   font-size:12px;
   font-weight:bold;
-  color:#0B1F3A;
+  color:#fff;
   cursor:pointer;
-  font-family:Georgia,serif
+  font-family:Georgia,serif;
+  box-shadow:0 3px 10px rgba(99,102,241,0.3)
 }
 
-.btn-exp:hover{opacity:.9}
+.btn-exp:hover{opacity:.9;transform:translateY(-1px)}
 
 .empty{
   padding:56px 32px;
@@ -401,28 +425,28 @@ tr:nth-child(even){
 .empty-title{
   font-size:17px;
   font-weight:bold;
-  opacity:.7;
+  color:#1A1A2E;
   margin-bottom:7px
 }
 
 .empty p{
   font-size:13px;
-  color:#8A9BB0;
+  color:#9CA3AF;
   line-height:1.6
 }
 
 .je-hd{
   font-size:12px;
   font-weight:bold;
-  color:#C9933A;
+  color:#6366F1;
   padding:10px 22px;
-  background:rgba(201,147,58,.08);
-  border-bottom:1px solid rgba(201,147,58,.1)
+  background:rgba(99,102,241,0.05);
+  border-bottom:1px solid rgba(99,102,241,0.1)
 }
 
 .je-sub{
   font-weight:normal;
-  color:#8A9BB0;
+  color:#9CA3AF;
   margin-left:8px;
   font-size:11px
 }
@@ -441,7 +465,7 @@ tr:nth-child(even){
 .sum-sec{
   font-size:11px;
   font-weight:bold;
-  color:#C9933A;
+  color:#6366F1;
   letter-spacing:1px;
   text-transform:uppercase;
   margin:14px 0 7px
@@ -450,47 +474,45 @@ tr:nth-child(even){
 .irow{
   display:flex;
   justify-content:space-between;
-  padding:7px 0;
-  border-bottom:1px solid rgba(255,255,255,.05);
+  padding:8px 0;
+  border-bottom:1px solid rgba(99,102,241,0.08);
   font-size:13px
 }
 
-.il{color:#8A9BB0}
-.iv{font-weight:bold}
+.il{color:#6B7280}
+.iv{font-weight:bold;color:#111827}
 
 .bs-note{
   margin-top:13px;
-  padding:11px;
-  background:rgba(201,147,58,.08);
+  padding:13px;
+  background:#F5F3FF;
   border-radius:8px;
-  font-size:11px;
-  color:#8A9BB0;
-  line-height:1.6
+  border-left:3px solid #6366F1;
+  font-size:12px;
+  color:#4B5563;
+  line-height:1.7
 }
 
 .std-note{
   margin-top:12px;
   padding:13px 15px;
-  background:rgba(201,147,58,.06);
-  border:1px solid rgba(201,147,58,.15);
+  background:#EEF2FF;
+  border:1px solid rgba(99,102,241,0.2);
   border-radius:10px;
   font-size:11px;
-  color:#8A9BB0;
+  color:#6B7280;
   line-height:1.6
 }
 
-.std-note strong{
-  color:#C9933A
-}
+.std-note strong{color:#6366F1}
 
-@media(max-width:960px){
-  .main{
-    grid-template-columns:1fr
-  }
-
-  .kpis{
-    grid-template-columns:1fr
-  }
+@media(max-width:900px){
+  .main{grid-template-columns:1fr;padding:0 16px 60px}
+  .hero{padding:24px 16px 16px}
+  h1{font-size:22px}
+  .tbl-wrap{max-height:none}
+  .je-wrap{max-height:none}
+  .sum-pad{max-height:none}
 }
 </style>
 </head>
@@ -499,11 +521,11 @@ tr:nth-child(even){
 
 <header>
   <div class="logo">
-    <div class="logo-icon">CA</div>
+    <div class="logo-icon">FS</div>
 
     <div>
-      <div class="logo-name">CA Calc Pro</div>
-      <div class="logo-sub">Ind AS Compliance Suite</div>
+      <div class="logo-name">Finosutra</div>
+      <div class="logo-sub">Finance on Autopilot</div>
     </div>
   </div>
 
@@ -513,7 +535,7 @@ tr:nth-child(even){
 <div class="hero">
   <div class="eyebrow">Lease Accounting Calculator</div>
 
-  <h1>
+  <h1 style="color:#1A1A2E">
     Ind AS 116 / IFRS 16<br>
     Lease Liability & ROU Asset
   </h1>
@@ -609,7 +631,7 @@ tr:nth-child(even){
 
       <p>
         Fill in the parameters and click
-        <strong style="color:#C9933A">Calculate Lease Schedule</strong>
+        <strong style="color:#6366F1">Calculate Lease Schedule</strong>
       </p>
     </div>
 
@@ -671,7 +693,7 @@ tr:nth-child(even){
         <span class="exp-note" id="expNote"></span>
 
         <button class="btn-exp" id="btnExp">
-          ⬇ Export to Excel
+          ⬇ Export to Excel &nbsp;<span style="font-size:10px;opacity:.8;">₹199</span>
         </button>
       </div>
 
@@ -954,7 +976,7 @@ function render(){
           ${fn(x.dep)}
         </td>
 
-        <td style="color:#6B8BAE">
+        <td style="color:#6B7280">
           ${fn(x.rouC)}
         </td>
       </tr>
@@ -1132,7 +1154,7 @@ function renderSummary(){
     `
     <div class="bs-note">
 
-      <strong style="color:#E8B865">
+      <strong style="color:#8B5CF6">
         Balance Sheet Impact
       </strong>
 
@@ -1211,7 +1233,7 @@ function je(title,sub,entries,narr){
             style="
               font-style:italic;
               font-size:11px;
-              color:#8A9BB0;
+              color:#6B7280;
               padding:6px 13px
             "
           >
@@ -1228,8 +1250,8 @@ function je(title,sub,entries,narr){
 function ir(l,v){
   return `
     <div class="irow">
-      <span class="il">${l}</span>
-      <span class="iv">${v}</span>
+      <span class="il" style="color:#6B7280">${l}</span>
+      <span class="iv" style="color:#111827;font-weight:bold">${v}</span>
     </div>
   `;
 }
@@ -1248,7 +1270,71 @@ function sw(id,btn){
   btn.classList.add('on');
 }
 
-document.getElementById('btnExp').onclick = exportXL;
+document.getElementById('btnExp').onclick = initiatePayment;
+
+
+// ── Razorpay Payment ─────────────────────────────────────────────
+function initiatePayment(){
+  if(!R || !INP){
+    alert('Please calculate the lease schedule first.');
+    return;
+  }
+
+  var options = {
+    key: 'rzp_live_Sty2e9lT4uXzJJ',
+    amount: 9900,           // ₹99 in paise
+    currency: 'INR',
+    name: 'Finosutra',
+    description: 'Ind AS 116 Lease Report — Excel Export',
+    image: '',
+    theme: { color: '#6366F1' },
+    modal: {
+      ondismiss: function(){
+        showToast('Payment cancelled. No charges made.', '#8B5CF6');
+      }
+    },
+    handler: function(response){
+      // Payment successful — proceed to export
+      showToast('✓ Payment successful! Downloading your report...', '#5EC98A');
+      setTimeout(function(){ exportXL(); }, 800);
+    },
+    prefill: {
+      name: '',
+      email: '',
+      contact: ''
+    }
+  };
+
+  try {
+    var rzp = new Razorpay(options);
+    rzp.on('payment.failed', function(resp){
+      showToast('Payment failed: ' + resp.error.description, '#FF8A80');
+    });
+    rzp.open();
+  } catch(e) {
+    alert('Could not open payment window. Please check your connection and try again.');
+    console.error(e);
+  }
+}
+
+// Toast notification
+function showToast(msg, color){
+  var t = document.getElementById('toast');
+  if(!t){
+    t = document.createElement('div');
+    t.id = 'toast';
+    t.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%);padding:12px 22px;border-radius:10px;font-size:13px;font-family:Georgia,serif;font-weight:bold;z-index:9999;transition:opacity .4s;box-shadow:0 4px 20px rgba(0,0,0,.4)';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.background = color === '#5EC98A' ? 'rgba(26,90,55,0.97)' : color === '#FF8A80' ? 'rgba(120,30,30,0.97)' : 'rgba(80,60,10,0.97)';
+  t.style.color = '#fff';
+  t.style.opacity = '1';
+  t.style.display = 'block';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){t.style.display='none';},400); }, 4000);
+}
+// ─────────────────────────────────────────────────────────────────
 
 function exportXL(){
 
@@ -1258,7 +1344,7 @@ function exportXL(){
 
   // SUMMARY
   const s1 = XLSX.utils.aoa_to_sheet([
-    ['CA CALC PRO — IND AS 116'],
+    ['FINOSUTRA — IND AS 116 LEASE REPORT'],
     [],
     ['Initial Lease Liability',R.pv],
     ['ROU Asset',R.pv],
@@ -1316,7 +1402,7 @@ function exportXL(){
 
   XLSX.writeFile(
     wb,
-    'CACalcPro_IndAS116.xlsx'
+    'Finosutra_IndAS116.xlsx'
   );
 }
 
