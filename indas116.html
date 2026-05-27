@@ -1128,12 +1128,12 @@ function sw(id,btn){
 /* ═══════════════════════════════════════════════════════
    RAZORPAY PAYMENT
 ═══════════════════════════════════════════════════════ */
-document.getElementById('btnExp').onclick = exportXL;
+document.getElementById('btnExp').onclick = initiatePayment;
 
 function initiatePayment(){
   if(!R||!INP){ alert('Please calculate the lease schedule first.'); return; }
   var options = {
-    key:'rzp_live_Sty2e9lTXXXXXX',
+    key:'rzp_live_Sty2e9lT4uXzJJ',
     amount:9900,
     currency:'INR',
     name:'Finosutra',
