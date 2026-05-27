@@ -6,7 +6,6 @@
 <title>Finosutra — Finance on Autopilot</title>
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -318,7 +317,7 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
 
         <div class="field">
           <label>Commencement Date</label>
-          <input type="date" id="fDate" style="color-scheme:dark">
+          <input type="date" id="fDate">
           <div class="err-msg" id="eDate">Required</div>
         </div>
 
@@ -403,7 +402,7 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
 
         <div class="field">
           <label>Reporting / Balance Sheet Date</label>
-          <input type="date" id="fReportDate" style="color-scheme:dark">
+          <input type="date" id="fReportDate">
           <div class="hint">Leave blank to skip snapshot (e.g. 31 March 20XX)</div>
         </div>
 
@@ -1374,7 +1373,57 @@ function exportXL(){
      SNAPSHOT SHEET
   ===================================================== */
 
-
+  if(INP.reportDateVal){
+    const [ry,rm,rd2] = INP.reportDateVal.split("-").map(Number);
+    const reportDate = new Date(ry, rm-1, rd2);
+    const [sy,sm,sd] = INP.d.split("-").map(Number);
+    const startDate2  = new Date(sy, sm-1, sd);
+    const monthsPerPeriod2 = 12 / R.freq;
+    const rInt = reportDate.getFullYear()*10000 + (reportDate.getMonth()+1)*100 + reportDate.getDate();
+    let snapshotIdx = -1;
+    for(let i=0;i<R.sched.length;i++){
+      const pEndM = startDate2.getMonth() + (i+1)*monthsPerPeriod2;
+      const lastDay2 = new Date(startDate2.getFullYear(), pEndM, 0);
+      const eInt = lastDay2.getFullYear()*10000 + (lastDay2.getMonth()+1)*100 + lastDay2.getDate();
+      if(rInt >= eInt){ snapshotIdx = i; } else { break; }
+    }
+    if(snapshotIdx >= 0){
+      const snap2 = R.sched[snapshotIdx];
+      const cumInt2 = R.sched.slice(0,snapshotIdx+1).reduce((s,x)=>s+x.int,0);
+      const cumDep2 = (snapshotIdx+1) * R.dep;
+      const rouNBV2 = Math.max(0, R.rouInitial - cumDep2);
+      const remPeriods2 = R.sched.length - (snapshotIdx+1);
+      const nextPeriods2 = Math.min(R.freq, remPeriods2);
+      let currentPortion2 = 0;
+      for(let i=snapshotIdx+1; i<snapshotIdx+1+nextPeriods2 && i<R.sched.length; i++){
+        currentPortion2 += R.sched[i].principal;
+      }
+      const nonCurrent2 = Math.max(0, snap2.cL - currentPortion2);
+      const snapshotSheetData = [
+        ["BALANCE SHEET SNAPSHOT"],
+        ["As at", INP.reportDateVal],
+        [],
+        ["Item","Amount"],
+        ["ROU Asset NBV", rouNBV2],
+        ["Lease Liability (Current)", currentPortion2],
+        ["Lease Liability (Non-current)", nonCurrent2],
+        ["Total Lease Liability", snap2.cL],
+        ["Cumulative Interest (P&L)", cumInt2],
+        ["Cumulative Depreciation", cumDep2],
+        ["Periods Elapsed", snapshotIdx+1],
+        ["Periods Remaining", remPeriods2]
+      ];
+      const ws4 = XLSX.utils.aoa_to_sheet(snapshotSheetData);
+      ws4["!cols"] = [{wch:35},{wch:25}];
+      styleRange(ws4,"A1:B1",HEADER);
+      styleRange(ws4,"A4:B4",SUBHEADER);
+      for(let i=5;i<=10;i++){
+        const c = ws4["B"+i];
+        if(c) c.s = MONEY;
+      }
+      XLSX.utils.book_append_sheet(wb,ws4,"Reporting Snapshot");
+    }
+  }
 
   /* =====================================================
      ANNUAL ROLLFORWARD
@@ -1460,5 +1509,6 @@ const fy = fyLabel(pEnd);
 
 }
 </script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </body>
 </html>
