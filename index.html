@@ -7,6 +7,7 @@
 <meta name="description" content="Smart finance tools for CAs, CFOs and finance teams in India. IND AS 116 lease accounting, GST reconciliation, Excel templates and more."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
 <style>
@@ -649,8 +650,8 @@ footer{
       <div class="stat-label">16 Aligned</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num">₹99</div>
-      <div class="stat-label">Excel export</div>
+      <div class="stat-num">2</div>
+      <div class="stat-label">Live Tools</div>
     </div>
     <div class="stat-item">
       <div class="stat-num">100%</div>
@@ -717,22 +718,24 @@ footer{
         </div>
       </div>
 
-      <!-- Card 2 -->
-      <div class="prod-card">
+      <!-- Card 2: Security Deposit — LIVE -->
+      <div class="prod-card featured">
+        <div class="featured-ribbon">Live Now</div>
         <div class="prod-icon"><i class="fa-solid fa-building"></i></div>
-        <span class="prod-badge badge-soon">Coming Soon</span>
-        <h3>Fixed Asset Register</h3>
-        <p>Manage asset lifecycle, block-wise depreciation and compliance reporting with full automation.</p>
+        <span class="prod-badge badge-live">● Live</span>
+        <h3>Security Deposit Calculator</h3>
+        <p>IND AS 109 / IFRS 9 fair value tool for security deposits. Day 1 discount, EIR amortisation, journal entries and balance sheet impact.</p>
         <ul class="feat-list">
-          <li><i class="fa-solid fa-check"></i> Block-wise depreciation (Companies Act)</li>
-          <li><i class="fa-solid fa-check"></i> Asset addition / disposal tracking</li>
-          <li><i class="fa-solid fa-check"></i> Schedule II compliant</li>
+          <li><i class="fa-solid fa-check"></i> Fair value (PV) at inception</li>
+          <li><i class="fa-solid fa-check"></i> Full EIR amortisation schedule</li>
+          <li><i class="fa-solid fa-check"></i> Journal entries — all periods</li>
+          <li><i class="fa-solid fa-check"></i> BS &amp; P&amp;L impact table</li>
         </ul>
         <div class="card-footer">
           <span class="card-tag">SaaS Tool</span>
-          <button class="btn btn-sm" onclick="notifyMe('Fixed Asset Register')">
-            Notify me
-          </button>
+          <a href="security-deposit.html" class="btn btn-primary btn-sm">
+            Open tool <i class="fa-solid fa-arrow-right"></i>
+          </a>
         </div>
       </div>
 
@@ -848,69 +851,89 @@ footer{
 <!-- ── PRICING ────────────────────────────────────── -->
 <section class="section section-alt" id="pricing">
   <div class="wrap">
+
     <div class="section-hd center">
       <div class="section-eyebrow">Pricing</div>
-      <h2 class="section-title">Simple, transparent pricing</h2>
-      <p class="section-desc">Start free. Upgrade when your team needs more.</p>
+      <h2 class="section-title">Simple, honest pricing</h2>
+      <p class="section-desc">Use every tool free. Pay only when you need a professional export or download — no subscriptions required yet.</p>
     </div>
 
     <div class="pricing-grid">
 
+      <!-- Free -->
       <div class="price-card">
-        <div class="price-name">Free</div>
-        <div class="price-amount">₹0</div>
-        <div class="price-period">forever, no credit card needed</div>
+        <div class="price-name">Free — Always</div>
+        <div class="price-amount">&#8377;0</div>
+        <div class="price-period">no account needed &middot; forever free</div>
         <div class="price-divider"></div>
         <ul class="price-features">
-          <li><i class="fa-solid fa-check yes"></i> Access to free calculators</li>
-          <li><i class="fa-solid fa-check yes"></i> 5 lease calculations / month</li>
-          <li><i class="fa-solid fa-check yes"></i> View amortization schedules</li>
-          <li class="dim"><i class="fa-solid fa-xmark no"></i> Excel report export</li>
-          <li class="dim"><i class="fa-solid fa-xmark no"></i> Template downloads</li>
-          <li class="dim"><i class="fa-solid fa-xmark no"></i> PPT resources</li>
+          <li><i class="fa-solid fa-check yes"></i> IND AS 116 Lease Calculator</li>
+          <li><i class="fa-solid fa-check yes"></i> Full amortization schedule</li>
+          <li><i class="fa-solid fa-check yes"></i> Journal entries &amp; summary</li>
+          <li><i class="fa-solid fa-check yes"></i> Annual FY rollforward</li>
+          <li><i class="fa-solid fa-check yes"></i> All future calculators</li>
+          <li class="dim"><i class="fa-solid fa-xmark no"></i> Excel audit-ready export</li>
         </ul>
-        <a href="#contact" class="price-btn">Get started free</a>
+        <a href="indas116.html" class="price-btn">Open free tool</a>
       </div>
 
+      <!-- Excel Export — Featured -->
       <div class="price-card popular">
         <div class="popular-tag">Most Popular</div>
-        <div class="price-name">Pro</div>
-        <div class="price-amount"><sup>₹</sup>999</div>
-        <div class="price-period">per user / month · billed monthly</div>
+        <div class="price-name">Excel Export</div>
+        <div class="price-amount"><sup>&#8377;</sup>99</div>
+        <div class="price-period">per report &middot; one-time &middot; no subscription</div>
         <div class="price-divider"></div>
         <ul class="price-features">
-          <li><i class="fa-solid fa-check yes"></i> Unlimited lease calculations</li>
-          <li><i class="fa-solid fa-check yes"></i> Unlimited Excel exports</li>
-          <li><i class="fa-solid fa-check yes"></i> All SaaS tools (when live)</li>
-          <li><i class="fa-solid fa-check yes"></i> Excel template downloads</li>
-          <li><i class="fa-solid fa-check yes"></i> PPT resource library</li>
-          <li><i class="fa-solid fa-check yes"></i> Priority email support</li>
+          <li><i class="fa-solid fa-check yes"></i> Everything in Free</li>
+          <li><i class="fa-solid fa-check yes"></i> Audit-ready Excel workbook</li>
+          <li><i class="fa-solid fa-check yes"></i> 5-sheet formatted report</li>
+          <li><i class="fa-solid fa-check yes"></i> Cover + Amortization + JEs</li>
+          <li><i class="fa-solid fa-check yes"></i> Balance sheet snapshot</li>
+          <li><i class="fa-solid fa-check yes"></i> Finosutra-branded, client-ready</li>
         </ul>
-        <a href="#contact" class="price-btn primary">Start Pro — ₹999/mo</a>
+        <a href="indas116.html" class="price-btn primary">Try tool &mdash; export for &#8377;99</a>
       </div>
 
+      <!-- Downloads Coming Soon -->
       <div class="price-card">
-        <div class="price-name">Team</div>
-        <div class="price-amount"><sup>₹</sup>2,499</div>
-        <div class="price-period">up to 5 users / month</div>
+        <div class="price-name">Downloads</div>
+        <div class="price-amount"><sup>&#8377;</sup>199<span style="font-size:16px;font-weight:500;color:var(--text-muted)">+</span></div>
+        <div class="price-period">per item &middot; one-time &middot; yours forever</div>
         <div class="price-divider"></div>
         <ul class="price-features">
-          <li><i class="fa-solid fa-check yes"></i> Everything in Pro</li>
-          <li><i class="fa-solid fa-check yes"></i> Multi-user workspace</li>
-          <li><i class="fa-solid fa-check yes"></i> Custom branding on exports</li>
-          <li><i class="fa-solid fa-check yes"></i> Dedicated onboarding call</li>
-          <li><i class="fa-solid fa-check yes"></i> Phone & WhatsApp support</li>
-          <li><i class="fa-solid fa-check yes"></i> Invoice for GST purposes</li>
+          <li><i class="fa-solid fa-check yes"></i> Excel financial model templates</li>
+          <li><i class="fa-solid fa-check yes"></i> IND AS training PPT decks</li>
+          <li><i class="fa-solid fa-check yes"></i> MIS dashboard templates</li>
+          <li><i class="fa-solid fa-check yes"></i> GST training slide sets</li>
+          <li><i class="fa-solid fa-check yes"></i> Budget vs actuals trackers</li>
+          <li><i class="fa-solid fa-clock" style="color:#F59E0B"></i> <span style="color:#D97706;font-weight:600">Launching soon</span></li>
         </ul>
-        <a href="#contact" class="price-btn">Contact us for Team plan</a>
+        <button class="price-btn" onclick="notifyMe('Excel Templates &amp; PPT Downloads')">Notify me when live</button>
       </div>
 
     </div>
 
-    <p style="text-align:center;font-size:12px;color:var(--text-muted);margin-top:24px">
+    <!-- Subscription coming soon banner -->
+    <div style="max-width:960px;margin:28px auto 0;padding:20px 28px;background:linear-gradient(135deg,#EEF2FF,#F5F3FF);border:1px solid rgba(99,102,241,0.2);border-radius:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--brand);margin-bottom:4px">
+          <i class="fa-solid fa-rocket" style="margin-right:6px"></i>Subscription plans coming soon
+        </div>
+        <div style="font-size:13px;color:var(--text-secondary);max-width:520px;line-height:1.6">
+          Once we launch 3+ tools, we will introduce <strong>Pro (&#8377;499/mo)</strong> for unlimited exports and <strong>Team (&#8377;1,499/mo)</strong> for CA firms. Join the waitlist to get early-bird pricing.
+        </div>
+      </div>
+      <button onclick="notifyMe('Subscription Plan')" class="btn btn-primary" style="white-space:nowrap">
+        <i class="fa-solid fa-bell"></i> Join waitlist
+      </button>
+    </div>
+
+    <p style="text-align:center;font-size:12px;color:var(--text-muted);margin-top:20px">
       <i class="fa-solid fa-lock" style="margin-right:4px"></i>
-      Secure payments via Razorpay &nbsp;·&nbsp; GST invoice available &nbsp;·&nbsp; Cancel anytime
+      Secure payments via Razorpay &nbsp;&middot;&nbsp; GST invoice available &nbsp;&middot;&nbsp; No hidden charges
     </p>
+
   </div>
 </section>
 
@@ -941,7 +964,7 @@ footer{
             <div class="contact-icon"><i class="fa-brands fa-whatsapp"></i></div>
             <div class="contact-item-text">
               <div class="contact-label">WhatsApp</div>
-              <div class="contact-value">Coming soon</div>
+              <div class="contact-value">Message us on WhatsApp — <a href="mailto:fino.sutra07@gmail.com">email us first</a></div>
             </div>
           </div>
 
@@ -957,7 +980,7 @@ footer{
             <div class="contact-icon"><i class="fa-brands fa-linkedin"></i></div>
             <div class="contact-item-text">
               <div class="contact-label">LinkedIn</div>
-              <div class="contact-value">Coming soon</div>
+              <div class="contact-value"><a href="https://linkedin.com/company/finosutra" target="_blank">linkedin.com/company/finosutra</a></div>
             </div>
           </div>
         </div>
@@ -1040,6 +1063,7 @@ footer{
       <div class="footer-col">
         <h5>Products</h5>
         <a href="indas116.html">IND AS 116 Tool</a>
+        <a href="security-deposit.html">Security Deposit Tool</a>
         <a href="#products">Fixed Asset Register</a>
         <a href="#products">GST Reconciliation</a>
         <a href="#products">Excel Templates</a>
@@ -1058,17 +1082,17 @@ footer{
         <a href="#home">About us</a>
         <a href="#pricing">Pricing</a>
         <a href="#contact">Contact</a>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
       </div>
 
     </div>
 
     <div class="footer-bottom">
-      <p>© 2025 Finosutra. All rights reserved. Made with care in Mumbai, India.</p>
+      <p>© 2026 Finosutra. All rights reserved. Made with care in Mumbai, India.</p>
       <p>
-        <a href="#">Privacy</a> &nbsp;·&nbsp;
-        <a href="#">Terms</a> &nbsp;·&nbsp;
+        <a href="privacy.html">Privacy</a> &nbsp;·&nbsp;
+        <a href="terms.html">Terms</a> &nbsp;·&nbsp;
         <a href="mailto:fino.sutra07@gmail.com">fino.sutra07@gmail.com</a>
       </p>
     </div>
