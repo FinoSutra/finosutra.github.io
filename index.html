@@ -2,9 +2,29 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
+<title>Finosutra — Finance on Autopilot | IND AS, GST & Finance Tools for CAs</title>
+<meta name="description" content="Free finance tools for CAs, CFOs and accountants in India. IND AS 116 lease calculator, GST calculator, EMI calculator, security deposit PV tool and more. Finance on Autopilot."/>
+<meta name="keywords" content="finance tools india, IND AS 116 calculator, IFRS 16 calculator, GST calculator india, EMI calculator india, security deposit calculator, CA tools, CFO tools, financial reporting tools, lease accounting india"/>
+<meta name="author" content="Finosutra"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://finosutra.github.io/"/>
+
+<!-- Open Graph -->
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Finosutra"/>
+<meta property="og:title" content="Finosutra — Finance on Autopilot"/>
+<meta property="og:description" content="Free finance tools for CAs, CFOs and accountants in India. IND AS, GST, EMI calculators and more."/>
+<meta property="og:url" content="https://finosutra.github.io/"/>
+<meta property="og:image" content="https://finosutra.github.io/og-image.png"/>
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Finosutra — Finance on Autopilot"/>
+<meta name="twitter:description" content="Free finance tools for CAs, CFOs and accountants in India. IND AS, GST, EMI calculators and more."/>
+<meta name="twitter:image" content="https://finosutra.github.io/og-image.png"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Finosutra — Finance on Autopilot</title>
-<meta name="description" content="Smart finance tools for CAs, CFOs and finance teams in India. IND AS 116 lease accounting, GST reconciliation, Excel templates and more."/>
+
+
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
@@ -635,9 +655,30 @@ footer{
   .footer-grid{grid-template-columns:1fr}
 }
 </style>
+<!-- Google Analytics GA4 — replace G-Z2G710PHNQ with your real Measurement ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Z2G710PHNQ');
+</script>
 </head>
 
 <body>
+
+<!-- ── ANNOUNCEMENT BAR ──────────────────────────── -->
+<div id="announcementBar" style="background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;text-align:center;padding:10px 48px;font-size:13px;font-weight:500;position:relative;z-index:1001;line-height:1.5;">
+  <span style="margin-right:8px;">&#127381;</span>
+  <strong>New:</strong>&nbsp; GST Calculator &amp; EMI Calculator are now live &mdash;
+  <a href="#calculators" style="color:#fff;font-weight:700;text-decoration:underline;text-underline-offset:3px;margin:0 6px;">Try free &rarr;</a>
+  <button
+    onclick="document.getElementById('announcementBar').style.display='none'"
+    aria-label="Dismiss"
+    style="position:absolute;right:16px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.2);border:none;color:#fff;width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;line-height:1;font-family:inherit;">
+    &times;
+  </button>
+</div>
 
 <!-- ── NAVBAR ────────────────────────────────────── -->
 <nav>
@@ -648,8 +689,10 @@ footer{
     </a>
 
     <ul class="nav-links" id="navLinks">
-      <li><a href="#products">Products</a></li>
-      <li><a href="#how-it-works">How it works</a></li>
+      <li><a href="#indas-tools">IND AS Tools</a></li>
+      <li><a href="#gst-tools">GST Tools</a></li>
+      <li><a href="#calculators">Calculators</a></li>
+      <li><a href="#templates">Templates</a></li>
       <li><a href="#pricing">Pricing</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -685,8 +728,8 @@ footer{
     <a href="indas116.html" class="btn btn-primary">
       Try IND AS 116 Calculator &nbsp;<i class="fa-solid fa-arrow-right"></i>
     </a>
-    <a href="#products" class="btn">
-      Explore all products
+    <a href="#indas-tools" class="btn">
+      Explore all tools
     </a>
   </div>
 
@@ -700,7 +743,7 @@ footer{
       <div class="stat-label">16 Aligned</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num">2</div>
+      <div class="stat-num">4</div>
       <div class="stat-label">Live Tools</div>
     </div>
     <div class="stat-item">
@@ -711,162 +754,351 @@ footer{
 </section>
 </div>
 
-<!-- ── PRODUCTS ───────────────────────────────────── -->
-<section class="section section-alt" id="products">
+<!-- ── IND AS / IFRS TOOLS ──────────────────────────── -->
+<section class="section section-alt" id="indas-tools">
   <div class="wrap">
-
-    <div class="section-hd center">
-      <div class="section-eyebrow">Our products</div>
-      <h2 class="section-title">Everything your finance team needs</h2>
-      <p class="section-desc">From SaaS tools to Excel templates, free calculators and downloadable resources.</p>
+    <div class="section-hd">
+      <div class="section-eyebrow">IND AS / IFRS Compliance</div>
+      <h2 class="section-title">IND AS &amp; IFRS Tools</h2>
+      <p class="section-desc">Audit-ready tools built to Indian accounting standards — not foreign software retrofitted for India.</p>
     </div>
-
-    <!-- Category tiles -->
-    <div class="cats-grid">
-      <div class="cat-tile">
-        <div class="cat-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
-        <h4>SaaS Tools</h4>
-        <p>Web-based finance automation tools</p>
-      </div>
-      <div class="cat-tile">
-        <div class="cat-icon"><i class="fa-solid fa-table"></i></div>
-        <h4>Excel Templates</h4>
-        <p>Ready-to-use professional models</p>
-      </div>
-      <div class="cat-tile">
-        <div class="cat-icon"><i class="fa-solid fa-calculator"></i></div>
-        <h4>Free Calculators</h4>
-        <p>IND AS, GST, depreciation & more</p>
-      </div>
-      <div class="cat-tile">
-        <div class="cat-icon"><i class="fa-solid fa-display"></i></div>
-        <h4>Downloadable PPTs</h4>
-        <p>Finance training & presentation decks</p>
-      </div>
-    </div>
-
-    <!-- Product cards -->
     <div class="products-grid">
 
-      <!-- Card 1: Live tool -->
       <div class="prod-card featured">
         <div class="featured-ribbon">Live Now</div>
         <div class="prod-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-        <span class="prod-badge badge-live">● Live</span>
+        <span class="prod-badge badge-live">&#9679; Live</span>
         <h3>IND AS 116 Lease Calculator</h3>
         <p>Generate lease liabilities, ROU assets, amortization schedules and journal entries — fully IND AS 116 and IFRS 16 compliant.</p>
         <ul class="feat-list">
-          <li><i class="fa-solid fa-check"></i> Present value & amortization schedule</li>
+          <li><i class="fa-solid fa-check"></i> Present value &amp; amortization schedule</li>
           <li><i class="fa-solid fa-check"></i> Current / Non-current liability split</li>
           <li><i class="fa-solid fa-check"></i> Journal entries (4 JEs)</li>
-          <li><i class="fa-solid fa-check"></i> Audit-ready Excel export (₹99)</li>
+          <li><i class="fa-solid fa-check"></i> Audit-ready Excel export (&#8377;99)</li>
         </ul>
         <div class="card-footer">
-          <span class="card-tag">SaaS Tool</span>
-          <a href="indas116.html" class="btn btn-primary btn-sm">
-            Open tool <i class="fa-solid fa-arrow-right"></i>
-          </a>
+          <span class="card-tag">SaaS Tool &middot; IND AS 116</span>
+          <a href="indas116.html" class="btn btn-primary btn-sm">Open tool <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </div>
 
-      <!-- Card 2: Security Deposit — LIVE -->
       <div class="prod-card featured">
         <div class="featured-ribbon">Live Now</div>
         <div class="prod-icon"><i class="fa-solid fa-building"></i></div>
-        <span class="prod-badge badge-live">● Live</span>
+        <span class="prod-badge badge-live">&#9679; Live</span>
         <h3>Security Deposit Calculator</h3>
         <p>IND AS 109 / IFRS 9 fair value tool for security deposits. Day 1 discount, EIR amortisation, journal entries and balance sheet impact.</p>
         <ul class="feat-list">
           <li><i class="fa-solid fa-check"></i> Fair value (PV) at inception</li>
           <li><i class="fa-solid fa-check"></i> Full EIR amortisation schedule</li>
-          <li><i class="fa-solid fa-check"></i> Journal entries — all periods</li>
+          <li><i class="fa-solid fa-check"></i> Journal entries &mdash; all periods</li>
           <li><i class="fa-solid fa-check"></i> BS &amp; P&amp;L impact table</li>
         </ul>
         <div class="card-footer">
-          <span class="card-tag">SaaS Tool</span>
-          <a href="security-deposit.html" class="btn btn-primary btn-sm">
-            Open tool <i class="fa-solid fa-arrow-right"></i>
-          </a>
+          <span class="card-tag">SaaS Tool &middot; IND AS 109</span>
+          <a href="security-deposit.html" class="btn btn-primary btn-sm">Open tool <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </div>
 
-      <!-- Card 3 -->
       <div class="prod-card">
-        <div class="prod-icon"><i class="fa-solid fa-receipt"></i></div>
+        <div class="prod-icon"><i class="fa-solid fa-landmark"></i></div>
         <span class="prod-badge badge-soon">Coming Soon</span>
-        <h3>GST Reconciliation</h3>
-        <p>Auto-reconcile GSTR-2B mismatches, vendor data and input tax credit reports.</p>
+        <h3>Fixed Asset Register</h3>
+        <p>IND AS 16 compliant fixed asset tracking — additions, disposals, depreciation (SLM &amp; WDV) and full schedule of fixed assets.</p>
         <ul class="feat-list">
-          <li><i class="fa-solid fa-check"></i> GSTR-2B matching</li>
+          <li><i class="fa-solid fa-check"></i> Block-wise depreciation schedule</li>
+          <li><i class="fa-solid fa-check"></i> Additions &amp; disposals tracker</li>
+          <li><i class="fa-solid fa-check"></i> SLM &amp; WDV methods</li>
+        </ul>
+        <div class="card-footer">
+          <span class="card-tag">SaaS Tool &middot; IND AS 16</span>
+          <button class="btn btn-sm" onclick="notifyMe('Fixed Asset Register')">Notify me</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── GST TOOLS ──────────────────────────────────── -->
+<section class="section" id="gst-tools">
+  <div class="wrap">
+    <div class="section-hd">
+      <div class="section-eyebrow">GST Automation</div>
+      <h2 class="section-title">GST Tools</h2>
+      <p class="section-desc">From instant calculations to full GSTR-2B reconciliation — everything your GST workflow needs.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;">
+
+      <div class="prod-card featured">
+        <div class="featured-ribbon">Live Now</div>
+        <div class="prod-icon"><i class="fa-solid fa-receipt"></i></div>
+        <span class="prod-badge badge-live">&#9679; Live</span>
+        <h3>GST Calculator</h3>
+        <p>Add or remove GST instantly. Get CGST + SGST (intra-state) or IGST (inter-state) split. All slabs — 5%, 12%, 18%, 28%. 100% free.</p>
+        <ul class="feat-list">
+          <li><i class="fa-solid fa-check"></i> Add GST &amp; Remove GST modes</li>
+          <li><i class="fa-solid fa-check"></i> CGST + SGST / IGST split</li>
+          <li><i class="fa-solid fa-check"></i> All slabs — 0%, 5%, 12%, 18%, 28%</li>
+          <li><i class="fa-solid fa-check"></i> GST rate quick reference guide</li>
+        </ul>
+        <div class="card-footer">
+          <span class="card-tag">Free Tool</span>
+          <a href="gst-calculator.html" class="btn btn-primary btn-sm">Open calculator <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <div class="prod-card">
+        <div class="prod-icon"><i class="fa-solid fa-rotate"></i></div>
+        <span class="prod-badge badge-soon">Coming Soon</span>
+        <h3>GST Reconciliation Tool</h3>
+        <p>Auto-reconcile GSTR-2B mismatches, vendor data and input tax credit reports. Built for CA firms handling high-volume GST data.</p>
+        <ul class="feat-list">
+          <li><i class="fa-solid fa-check"></i> GSTR-2B vs purchase register matching</li>
           <li><i class="fa-solid fa-check"></i> Vendor-level reconciliation</li>
           <li><i class="fa-solid fa-check"></i> ITC analytics dashboard</li>
         </ul>
         <div class="card-footer">
           <span class="card-tag">SaaS Tool</span>
-          <button class="btn btn-sm" onclick="notifyMe('GST Reconciliation')">
-            Notify me
-          </button>
+          <button class="btn btn-sm" onclick="notifyMe('GST Reconciliation')">Join waitlist</button>
         </div>
       </div>
 
-      <!-- Card 4 -->
-      <div class="prod-card">
-        <div class="prod-icon"><i class="fa-solid fa-calculator"></i></div>
-        <span class="prod-badge badge-free">Free</span>
-        <h3>Finance Calculators</h3>
-        <p>Instant calculators for IND AS compliance, EMI, depreciation, GST interest and more — always free.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FREE CALCULATORS ───────────────────────────── -->
+<section class="section section-alt" id="calculators">
+  <div class="wrap">
+    <div class="section-hd">
+      <div class="section-eyebrow">Free Calculators</div>
+      <h2 class="section-title">Finance Calculators &mdash; Always Free</h2>
+      <p class="section-desc">Quick calculators for everyday finance decisions. No login. No signup. Just open and calculate.</p>
+    </div>
+    <div class="products-grid">
+
+      <div class="prod-card featured">
+        <div class="featured-ribbon">Live Now</div>
+        <div class="prod-icon"><i class="fa-solid fa-money-bill-wave"></i></div>
+        <span class="prod-badge badge-live">&#9679; Live</span>
+        <h3>EMI Calculator</h3>
+        <p>Calculate monthly EMI for home loan, car loan, personal loan or business loan. Full amortization schedule with yearly summary — free.</p>
         <ul class="feat-list">
-          <li><i class="fa-solid fa-check"></i> IND AS 116 quick calculator</li>
-          <li><i class="fa-solid fa-check"></i> GST interest & late fee calculator</li>
-          <li><i class="fa-solid fa-check"></i> Depreciation (SLM & WDV)</li>
+          <li><i class="fa-solid fa-check"></i> Home, Car, Personal &amp; Business loan</li>
+          <li><i class="fa-solid fa-check"></i> Monthly &amp; yearly amortization schedule</li>
+          <li><i class="fa-solid fa-check"></i> Principal vs interest donut chart</li>
+          <li><i class="fa-solid fa-check"></i> Tenure in years or months</li>
+        </ul>
+        <div class="card-footer">
+          <span class="card-tag">100% Free</span>
+          <a href="emi-calculator.html" class="btn btn-primary btn-sm">Open calculator <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <div class="prod-card">
+        <div class="prod-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <span class="prod-badge badge-soon">Coming Soon</span>
+        <h3>Depreciation Calculator</h3>
+        <p>SLM &amp; WDV depreciation as per Companies Act and Income Tax Act. Block-wise schedule with residual value and useful life.</p>
+        <ul class="feat-list">
+          <li><i class="fa-solid fa-check"></i> SLM &amp; WDV methods</li>
+          <li><i class="fa-solid fa-check"></i> Companies Act &amp; IT Act rates</li>
+          <li><i class="fa-solid fa-check"></i> Full depreciation schedule</li>
         </ul>
         <div class="card-footer">
           <span class="card-tag">Free Tool</span>
-          <button class="btn btn-sm" onclick="notifyMe('Free Calculators')">
-            Coming soon
-          </button>
+          <button class="btn btn-sm" onclick="notifyMe('Depreciation Calculator')">Notify me</button>
         </div>
       </div>
 
-      <!-- Card 5 -->
       <div class="prod-card">
-        <div class="prod-icon"><i class="fa-solid fa-table"></i></div>
+        <div class="prod-icon"><i class="fa-solid fa-calendar-xmark"></i></div>
         <span class="prod-badge badge-soon">Coming Soon</span>
-        <h3>Excel Templates</h3>
-        <p>Professional financial model templates — MIS reports, budget trackers, loan schedules and more.</p>
+        <h3>TDS Interest Calculator</h3>
+        <p>Calculate TDS default interest under Section 201A for late deduction and late deposit. With day-wise interest computation.</p>
         <ul class="feat-list">
-          <li><i class="fa-solid fa-check"></i> MIS dashboard templates</li>
-          <li><i class="fa-solid fa-check"></i> Budget vs actuals tracker</li>
-          <li><i class="fa-solid fa-check"></i> Loan amortization models</li>
+          <li><i class="fa-solid fa-check"></i> Late deduction interest (1%/mo)</li>
+          <li><i class="fa-solid fa-check"></i> Late deposit interest (1.5%/mo)</li>
+          <li><i class="fa-solid fa-check"></i> Day-wise computation</li>
         </ul>
         <div class="card-footer">
-          <span class="card-tag">Paid Download</span>
-          <button class="btn btn-sm" onclick="notifyMe('Excel Templates')">
-            Notify me
-          </button>
+          <span class="card-tag">Free Tool</span>
+          <button class="btn btn-sm" onclick="notifyMe('TDS Interest Calculator')">Notify me</button>
         </div>
       </div>
 
-      <!-- Card 6 -->
+    </div>
+    <p style="text-align:center;font-size:12px;color:var(--text-muted);margin-top:28px;">
+      <i class="fa-solid fa-shield-halved" style="margin-right:4px;color:var(--brand)"></i>
+      All calculations run entirely in your browser &mdash; no data is stored or shared.
+    </p>
+  </div>
+</section>
+
+<!-- ── TEMPLATES & RESOURCES ──────────────────────── -->
+<section class="section" id="templates">
+  <div class="wrap">
+    <div class="section-hd">
+      <div class="section-eyebrow">Downloads &amp; Resources</div>
+      <h2 class="section-title">Excel Templates &amp; Training PPTs</h2>
+      <p class="section-desc">Professional Excel models and IND AS / GST training decks — built for CA firms and finance teams.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;">
+
+      <div class="prod-card featured">
+        <div class="featured-ribbon">Live Now</div>
+        <div class="prod-icon"><i class="fa-solid fa-table"></i></div>
+        <span class="prod-badge badge-live">&#9679; Live</span>
+        <h3>Excel Templates</h3>
+        <p>Professional financial model templates — Fixed Asset Register, MIS dashboard, budget trackers and more. Buy once, use forever.</p>
+        <ul class="feat-list">
+          <li><i class="fa-solid fa-check"></i> Fixed Asset Register (&#8377;199)</li>
+          <li><i class="fa-solid fa-check"></i> MIS dashboard &mdash; coming soon</li>
+          <li><i class="fa-solid fa-check"></i> Budget vs actuals tracker</li>
+        </ul>
+        <div class="card-footer">
+          <span class="card-tag">From &#8377;199</span>
+          <a href="templates.html" class="btn btn-primary btn-sm">Browse templates <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+
       <div class="prod-card">
         <div class="prod-icon"><i class="fa-solid fa-person-chalkboard"></i></div>
         <span class="prod-badge badge-soon">Coming Soon</span>
         <h3>Training PPTs</h3>
-        <p>Downloadable presentation decks for IND AS, GST, IFRS and finance team training.</p>
+        <p>Downloadable presentation decks for IND AS, GST, IFRS and finance team training. Client-ready for CA firm meetings.</p>
         <ul class="feat-list">
-          <li><i class="fa-solid fa-check"></i> IND AS overview decks</li>
+          <li><i class="fa-solid fa-check"></i> IND AS overview &amp; deep-dive decks</li>
           <li><i class="fa-solid fa-check"></i> GST training slide sets</li>
           <li><i class="fa-solid fa-check"></i> IFRS vs IND AS comparison</li>
         </ul>
         <div class="card-footer">
           <span class="card-tag">Paid Download</span>
-          <button class="btn btn-sm" onclick="notifyMe('Training PPTs')">
-            Notify me
-          </button>
+          <button class="btn btn-sm" onclick="notifyMe('Training PPTs')">Notify me</button>
         </div>
       </div>
 
     </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ──────────────────────────────── -->
+<section class="section section-alt" id="testimonials">
+  <div class="wrap">
+
+    <div class="section-hd center">
+      <div class="section-eyebrow">Trusted by Finance Professionals</div>
+      <h2 class="section-title">What CAs &amp; CFOs are saying</h2>
+      <p class="section-desc">Finance professionals across India use Finosutra to save hours on compliance work every month.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+
+      <!-- Testimonial 1 -->
+      <div style="background:var(--bg-white);border:1px solid var(--border-light);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:16px;position:relative;">
+        <div style="display:flex;gap:4px;margin-bottom:4px;">
+          <i class="fa-solid fa-star" style="color:#F59E0B;font-size:13px;"></i>
+          <i class="fa-solid fa-star" style="color:#F59E0B;font-size:13px;"></i>
+          <i class="fa-solid fa-star" style="color:#F59E0B;font-size:13px;"></i>
+          <i class="fa-solid fa-star" style="color:#F59E0B;font-size:13px;"></i>
+          <i class="fa-solid fa-star" style="color:#F59E0B;font-size:13px;"></i>
+        </div>
+        <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;font-style:italic;flex:1;">
+          &ldquo;IND AS 116 used to take our team a full day per client. With Finosutra, we generate the complete schedule, journal entries and Excel report in under 10 minutes. This is exactly what CA firms needed.&rdquo;
+        </p>
+        <div style="display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--border-light);">
+          <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#6366F1,#8B5CF6);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;">RP</div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:var(--text-primary);">Rahul Patil</div>
+            <div style="font-size:11px;color:var(--text-muted);">Chartered Accountant &middot; Mumbai</div>
+          </div>
+          <span style="margin-left:auto;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;background:#EEF2FF;color:var(--brand);">IND AS 116</span>
+        </div>
+      </div>
+
+      <!-- Testimonial 2 -->
+      <div style="background:var(--bg-white);border:1.5px solid rgba(99,102,241,0.25);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow-md);display:flex;flex-direction:column;gap:16px;position:relative;">
+        <div style="position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-size:10px;font-weight:700;padding:3px 14px;border-radius:100px;white-space:nowrap;letter-spacing:0.04em;">FEATURED</div>
+        <div style="display:flex;gap:4px;margin-bottom:4px;">
+          <i class="fa-solid fa-star" style="color:#F59E0B;font-size:13px;"></i>
+          <i class="fa-solid fa-star" style="color:#F59E0B;font-size:13px;"></i>
+          <i class="fa-solid fa-star" style="color:#F59E0B;font-size:13px;"></i>
+          <i class="fa-solid fa-star" style="color:#F59E0B;font-size:13px;"></i>
+          <i class="fa-solid fa-star" style="color:#F59E0B;font-size:13px;"></i>
+        </div>
+        <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;font-style:italic;flex:1;">
+          &ldquo;As a CFO of a mid-size company with 40+ leases, IND AS 116 compliance was a nightmare every quarter. Finosutra&rsquo;s tool handles the entire schedule and gives us audit-ready output. The &#8377;99 Excel export is worth every rupee.&rdquo;
+        </p>
+        <div style="display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--border-light);">
+          <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#059669,#10B981);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;">SM</div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:var(--text-primary);">Sanjay Mehta</div>
+            <div style="font-size:11px;color:var(--text-muted);">CFO &middot; Manufacturing SME &middot; Pune</div>
+          </div>
+          <span style="margin-left:auto;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;background:#ECFDF5;color:#059669;">Excel Export</span>
+        </div>
+      </div>
+
+      <!-- Testimonial 3 -->
+      <div style="background:var(--bg-white);border:1px solid var(--border-light);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:16px;position:relative;">
+        <div style="display:flex;gap:4px;margin-bottom:4px;">
+          <i class="fa-solid fa-star" style="color:#F59E0B;font-size:13px;"></i>
+          <i class="fa-solid fa-star" style="color:#F59E0B;font-size:13px;"></i>
+          <i class="fa-solid fa-star" style="color:#F59E0B;font-size:13px;"></i>
+          <i class="fa-solid fa-star" style="color:#F59E0B;font-size:13px;"></i>
+          <i class="fa-solid fa-star" style="color:#F59E0B;font-size:13px;"></i>
+        </div>
+        <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;font-style:italic;flex:1;">
+          &ldquo;The Security Deposit calculator is something I never thought I&rsquo;d find for free online. IND AS 109 fair value calculations used to mean hours in Excel. Now I just enter the inputs and get the full EIR schedule and journal entries instantly.&rdquo;
+        </p>
+        <div style="display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--border-light);">
+          <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#D97706,#F59E0B);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;">PD</div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:var(--text-primary);">Priya Desai</div>
+            <div style="font-size:11px;color:var(--text-muted);">Finance Manager &middot; Startup &middot; Bengaluru</div>
+          </div>
+          <span style="margin-left:auto;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;background:#FFFBEB;color:#D97706;">IND AS 109</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Trust bar -->
+    <div style="margin-top:40px;padding:20px 28px;background:linear-gradient(135deg,#EEF2FF,#F5F3FF);border:1px solid var(--border);border-radius:14px;display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <i class="fa-solid fa-shield-halved" style="color:var(--brand);font-size:20px;"></i>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--text-primary);">100% Browser-based</div>
+          <div style="font-size:11px;color:var(--text-muted);">No data stored or shared</div>
+        </div>
+      </div>
+      <div style="width:1px;height:36px;background:var(--border);"></div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <i class="fa-solid fa-file-invoice-dollar" style="color:var(--brand);font-size:20px;"></i>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--text-primary);">IND AS &amp; IFRS Compliant</div>
+          <div style="font-size:11px;color:var(--text-muted);">Built to Indian standards</div>
+        </div>
+      </div>
+      <div style="width:1px;height:36px;background:var(--border);"></div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <i class="fa-solid fa-bolt" style="color:var(--brand);font-size:20px;"></i>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--text-primary);">Instant Results</div>
+          <div style="font-size:11px;color:var(--text-muted);">No setup, no login needed</div>
+        </div>
+      </div>
+      <div style="width:1px;height:36px;background:var(--border);"></div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <i class="fa-solid fa-user-tie" style="color:var(--brand);font-size:20px;"></i>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--text-primary);">Built by Finance Pros</div>
+          <div style="font-size:11px;color:var(--text-muted);">For CAs, CFOs &amp; Finance Teams</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -960,7 +1192,7 @@ footer{
           <li><i class="fa-solid fa-check yes"></i> Budget vs actuals trackers</li>
           <li><i class="fa-solid fa-clock" style="color:#F59E0B"></i> <span style="color:#D97706;font-weight:600">Launching soon</span></li>
         </ul>
-        <button class="price-btn" onclick="notifyMe('Excel Templates &amp; PPT Downloads')">Notify me when live</button>
+        <button class="price-btn" onclick="window.location.href='templates.html'">Notify me when live</button>
       </div>
 
     </div>
@@ -1112,25 +1344,24 @@ footer{
       </div>
 
       <div class="footer-col">
-        <h5>Products</h5>
-        <a href="indas116.html">IND AS 116 Tool</a>
+        <h5>IND AS Tools</h5>
+        <a href="indas116.html">IND AS 116 Calculator</a>
         <a href="security-deposit.html">Security Deposit Tool</a>
-        <a href="#products">Fixed Asset Register</a>
-        <a href="#products">GST Reconciliation</a>
-        <a href="#products">Excel Templates</a>
-        <a href="#products">Calculators</a>
+        <a href="#indas-tools">Fixed Asset Register</a>
       </div>
 
       <div class="footer-col">
-        <h5>Resources</h5>
-        <a href="#products">PPT Downloads</a>
-        <a href="#products">Training Material</a>
-        <a href="#how-it-works">Documentation</a>
+        <h5>GST &amp; Calculators</h5>
+        <a href="gst-calculator.html">GST Calculator</a>
+        <a href="emi-calculator.html">EMI Calculator</a>
+        <a href="#gst-tools">GST Reconciliation</a>
+        <a href="#calculators">Depreciation Calculator</a>
       </div>
 
       <div class="footer-col">
         <h5>Company</h5>
-        <a href="#home">About us</a>
+        <a href="templates.html">Excel Templates</a>
+        <a href="#templates">Training PPTs</a>
         <a href="#pricing">Pricing</a>
         <a href="#contact">Contact</a>
         <a href="privacy.html">Privacy Policy</a>
@@ -1150,7 +1381,7 @@ footer{
   </div>
 </footer>
 
-<!-- ── NOTIFY ME MODAL ────────────────────────────── -->
+<!-- ── NOTIFY ME MODAL ──────────────────── -->
 <div id="notifyModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center">
   <div style="background:#fff;border-radius:16px;padding:32px;max-width:420px;width:90%;margin:20px">
     <h3 style="font-size:18px;font-weight:700;margin-bottom:8px">Get notified when it's ready</h3>
@@ -1163,12 +1394,8 @@ footer{
         <input type="email" name="email" placeholder="you@company.com" required/>
       </div>
       <div style="display:flex;gap:10px">
-        <button type="submit" class="btn btn-primary" style="flex:1;justify-content:center">
-          Notify me
-        </button>
-        <button type="button" class="btn" onclick="closeNotify()" style="flex:1;justify-content:center">
-          Cancel
-        </button>
+        <button type="submit" class="btn btn-primary" style="flex:1;justify-content:center">Notify me</button>
+        <button type="button" class="btn" onclick="closeNotify()" style="flex:1;justify-content:center">Cancel</button>
       </div>
     </form>
     <div id="notifySuccess" style="display:none;margin-top:14px;padding:12px;background:#DCFCE7;border-radius:8px;font-size:13px;color:#166534;text-align:center">
@@ -1178,13 +1405,46 @@ footer{
 </div>
 
 <script>
-// ── Mobile nav toggle ─────────────────────────────
 document.getElementById('navToggle').onclick = function(){
   var links = document.getElementById('navLinks');
   var actions = document.getElementById('navActions');
   links.classList.toggle('open');
   actions.classList.toggle('open');
-  this.querySelector('i').className =
-    links.classList.contains('open')
-    ? 'fa-solid fa-xmark'
-    : 'fa-so
+  this.querySelector('i').className = links.classList.contains('open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+};
+function handleFormSubmit(e){
+  e.preventDefault();
+  document.getElementById('formSuccess').style.display = 'block';
+  e.target.reset();
+}
+function notifyMe(product){
+  document.getElementById('notifyProduct').value = product;
+  document.getElementById('notifyProductName').textContent = 'We\'ll email you as soon as '+product+' is ready to use.';
+  document.getElementById('notifyModal').style.display = 'flex';
+}
+function closeNotify(){
+  document.getElementById('notifyModal').style.display = 'none';
+  document.getElementById('notifySuccess').style.display = 'none';
+}
+function handleNotify(e){
+  e.preventDefault();
+  document.getElementById('notifySuccess').style.display = 'block';
+  setTimeout(function(){ closeNotify(); }, 2500);
+}
+document.getElementById('notifyModal').onclick = function(e){ if(e.target===this) closeNotify(); };
+</script>
+
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/919999999999?text=Hi%2C%20I%20found%20Finosutra%20and%20would%20like%20to%20know%20more%20about%20your%20finance%20tools."
+   target="_blank"
+   title="Chat with us on WhatsApp"
+   style="position:fixed;bottom:24px;right:24px;z-index:9998;width:54px;height:54px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,0.35);text-decoration:none;transition:transform .2s,box-shadow .2s;"
+   onmouseover="this.style.transform='scale(1.1)';this.style.boxShadow='0 6px 24px rgba(37,211,102,0.5)'"
+   onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 16px rgba(37,211,102,0.35)'">
+  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#fff">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+</body>
+</html>
