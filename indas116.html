@@ -1483,4 +1483,33 @@ pEnd.setMonth(
 
 // Actual month-end
 pEnd.setMonth(pEnd.getMonth()+1);
-pEnd.se
+pEnd.setDate(0);
+
+    const fy2 = fyLabel(pEnd);
+    if(!fyMap[fy2]){
+      fyMap[fy2] = { fy:fy2, openL: x.oL, interest:0, payments:0, principal:0, closeL:0, periods:0 };
+    }
+    fyMap[fy2].interest  += x.int;
+    fyMap[fy2].payments  += x.pmt;
+    fyMap[fy2].principal += x.principal;
+    fyMap[fy2].closeL     = x.cL;
+    fyMap[fy2].periods++;
+  });
+
+  Object.values(fyMap).forEach(function(row){
+    annualRows.push([row.fy, row.openL, row.interest, row.payments, row.principal, row.closeL]);
+  });
+
+  const ws5 = XLSX.utils.aoa_to_sheet(annualRows);
+  ws5['!cols'] = [{wch:20},{wch:22},{wch:18},{wch:18},{wch:18},{wch:22}];
+  styleRange(ws5,'A1:F1',HEADER);
+
+  XLSX.utils.book_append_sheet(wb, ws5, 'Annual Rollforward');
+
+  XLSX.writeFile(wb, 'Finosutra_IndAS116_Report.xlsx');
+}
+
+</script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</body>
+</html>
