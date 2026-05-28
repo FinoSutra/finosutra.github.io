@@ -6,7 +6,7 @@
 <title>Finosutra — Finance on Autopilot</title>
 <meta name="description" content="Smart finance tools for CAs, CFOs and finance teams in India. IND AS 116 lease accounting, GST reconciliation, Excel templates and more."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
@@ -21,14 +21,15 @@
   --text-primary:#111827;
   --text-secondary:#6B7280;
   --text-muted:#9CA3AF;
-  --bg:#F9FAFB;
+  --bg:#F7F8FF;
   --bg-white:#FFFFFF;
-  --border:rgba(99,102,241,0.18);
-  --border-light:rgba(99,102,241,0.1);
-  --radius:12px;
-  --radius-sm:8px;
-  --shadow:0 1px 3px rgba(0,0,0,0.08),0 4px 16px rgba(99,102,241,0.07);
-  --shadow-md:0 4px 24px rgba(99,102,241,0.12);
+  --border:rgba(99,102,241,0.15);
+  --border-light:rgba(99,102,241,0.08);
+  --radius:14px;
+  --radius-sm:9px;
+  --shadow:0 1px 3px rgba(0,0,0,0.04),0 6px 20px rgba(99,102,241,0.07);
+  --shadow-md:0 4px 32px rgba(99,102,241,0.11),0 1px 4px rgba(0,0,0,0.04);
+  --shadow-hover:0 10px 44px rgba(99,102,241,0.17),0 2px 8px rgba(0,0,0,0.05);
 }
 
 html{scroll-behavior:smooth}
@@ -38,18 +39,21 @@ body{
   background:var(--bg);
   color:var(--text-primary);
   line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
 
 /* ── NAVBAR ─────────────────────────────────────── */
 nav{
-  background:rgba(255,255,255,0.95);
-  backdrop-filter:blur(12px);
+  background:rgba(255,255,255,0.97);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
   border-bottom:1px solid var(--border-light);
   padding:0 32px;
   position:sticky;
   top:0;
   z-index:1000;
-  box-shadow:0 1px 12px rgba(99,102,241,0.06);
+  box-shadow:0 1px 0 var(--border-light),0 4px 20px rgba(99,102,241,0.05);
 }
 
 .nav-inner{
@@ -111,15 +115,15 @@ nav{
 .btn:hover{border-color:var(--brand);color:var(--brand)}
 
 .btn-primary{
-  background:linear-gradient(135deg,#6366F1,#8B5CF6);
+  background:linear-gradient(135deg,#6366F1 0%,#8B5CF6 100%);
   border-color:transparent;color:#fff;
-  box-shadow:0 3px 12px rgba(99,102,241,0.3);
+  box-shadow:0 4px 14px rgba(99,102,241,0.35),0 1px 3px rgba(99,102,241,0.2);
 }
 .btn-primary:hover{
-  background:linear-gradient(135deg,#4F46E5,#7C3AED);
+  background:linear-gradient(135deg,#4F46E5 0%,#7C3AED 100%);
   color:#fff;border-color:transparent;
-  transform:translateY(-1px);
-  box-shadow:0 5px 18px rgba(99,102,241,0.4);
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(99,102,241,0.45),0 2px 6px rgba(99,102,241,0.2);
 }
 
 .btn-sm{padding:7px 14px;font-size:13px}
@@ -131,28 +135,43 @@ nav{
 }
 
 /* ── HERO ────────────────────────────────────────── */
+.hero-section{
+  background:linear-gradient(180deg,#EDEEFF 0%,#F7F8FF 70%);
+  border-bottom:1px solid var(--border-light);
+}
+
 .hero{
-  padding:80px 32px 72px;
+  padding:88px 32px 80px;
   max-width:1160px;margin:0 auto;
   text-align:center;
+  position:relative;
+}
+
+.hero::before{
+  content:'';
+  position:absolute;top:-40px;left:50%;transform:translateX(-50%);
+  width:900px;height:500px;
+  background:radial-gradient(ellipse at 50% 30%,rgba(99,102,241,0.10) 0%,transparent 70%);
+  pointer-events:none;
 }
 
 .hero-badge{
   display:inline-flex;align-items:center;gap:8px;
-  background:var(--brand-light);
+  background:rgba(255,255,255,0.9);
   border:1px solid var(--brand-mid);
-  color:var(--brand);
+  color:var(--brand-dark);
   font-size:12px;font-weight:600;
-  padding:6px 14px;border-radius:100px;
-  margin-bottom:24px;
+  padding:7px 16px;border-radius:100px;
+  margin-bottom:28px;
   letter-spacing:0.02em;
+  box-shadow:0 2px 8px rgba(99,102,241,0.1);
 }
 
 .hero h1{
-  font-size:48px;font-weight:700;
-  line-height:1.15;letter-spacing:-0.5px;
+  font-size:52px;font-weight:700;
+  line-height:1.12;letter-spacing:-0.8px;
   color:var(--text-primary);
-  max-width:720px;margin:0 auto 20px;
+  max-width:740px;margin:0 auto 22px;
 }
 
 .hero h1 em{
@@ -190,12 +209,13 @@ nav{
 .stat-item:last-child{border-right:none}
 
 .stat-num{
-  font-size:26px;font-weight:700;
+  font-size:24px;font-weight:700;
   background:linear-gradient(135deg,#6366F1,#8B5CF6);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:-0.3px;
 }
-.stat-label{font-size:12px;color:var(--text-muted);margin-top:3px;font-weight:500}
+.stat-label{font-size:11px;color:var(--text-muted);margin-top:4px;font-weight:600;letter-spacing:0.03em;text-transform:uppercase}
 
 /* ── SECTION SHARED ──────────────────────────────── */
 .section{padding:80px 32px}
@@ -211,7 +231,8 @@ nav{
 }
 .section-title{
   font-size:32px;font-weight:700;
-  letter-spacing:-0.3px;margin-bottom:14px;
+  letter-spacing:-0.4px;margin-bottom:14px;
+  color:var(--text-primary);
 }
 .section-desc{
   font-size:16px;color:var(--text-secondary);
@@ -232,15 +253,16 @@ nav{
   background:var(--bg-white);
   border:1px solid var(--border-light);
   border-radius:var(--radius);
-  padding:24px 20px;
+  padding:26px 20px;
   text-align:center;
-  transition:border-color .2s,box-shadow .2s,transform .15s;
+  transition:border-color .2s,box-shadow .22s,transform .18s;
   cursor:default;
+  box-shadow:var(--shadow);
 }
 .cat-tile:hover{
-  border-color:var(--brand-mid);
+  border-color:rgba(99,102,241,0.3);
   box-shadow:var(--shadow-md);
-  transform:translateY(-2px);
+  transform:translateY(-3px);
 }
 
 .cat-icon{
@@ -268,25 +290,37 @@ nav{
   border-radius:16px;
   padding:28px;
   display:flex;flex-direction:column;
-  transition:border-color .2s,box-shadow .2s,transform .15s;
+  transition:border-color .22s,box-shadow .22s,transform .18s;
   position:relative;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.prod-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#6366F1,#8B5CF6);
+  opacity:0;
+  transition:opacity .22s;
 }
 .prod-card:hover{
-  border-color:var(--brand-mid);
-  box-shadow:var(--shadow-md);
-  transform:translateY(-2px);
+  border-color:var(--border);
+  box-shadow:var(--shadow-hover);
+  transform:translateY(-3px);
 }
+.prod-card:hover::before{opacity:1}
 .prod-card.featured{
-  border:2px solid var(--brand);
-  box-shadow:0 0 0 4px rgba(99,102,241,0.08);
+  border:1.5px solid rgba(99,102,241,0.35);
+  box-shadow:0 0 0 3px rgba(99,102,241,0.06),var(--shadow-md);
 }
+.prod-card.featured::before{opacity:1}
 
 .featured-ribbon{
   position:absolute;top:16px;right:16px;
   background:linear-gradient(135deg,#6366F1,#8B5CF6);
   color:#fff;font-size:10px;font-weight:700;
-  padding:3px 10px;border-radius:100px;
+  padding:4px 12px;border-radius:100px;
   letter-spacing:0.05em;
+  box-shadow:0 2px 8px rgba(99,102,241,0.3);
 }
 
 .prod-icon{
@@ -329,20 +363,30 @@ nav{
 /* ── HOW IT WORKS ────────────────────────────────── */
 .steps-grid{
   display:grid;grid-template-columns:repeat(3,1fr);gap:32px;
+  position:relative;
+}
+
+.steps-grid::before{
+  content:'';
+  position:absolute;top:22px;left:calc(16.66% + 22px);right:calc(16.66% + 22px);
+  height:1px;background:linear-gradient(90deg,var(--brand-mid),var(--brand-mid));
+  opacity:0.5;
 }
 
 .step{text-align:center;padding:16px}
 
 .step-num{
-  width:44px;height:44px;
+  width:46px;height:46px;
   background:linear-gradient(135deg,#6366F1,#8B5CF6);
   border-radius:50%;
   display:flex;align-items:center;justify-content:center;
   font-size:16px;font-weight:700;color:#fff;
-  margin:0 auto 18px;
+  margin:0 auto 20px;
+  box-shadow:0 4px 14px rgba(99,102,241,0.35);
+  position:relative;z-index:1;
 }
-.step h4{font-size:15px;font-weight:700;margin-bottom:8px}
-.step p{font-size:13px;color:var(--text-secondary);line-height:1.65}
+.step h4{font-size:15px;font-weight:700;margin-bottom:8px;color:var(--text-primary)}
+.step p{font-size:13px;color:var(--text-secondary);line-height:1.7}
 
 /* ── PRICING ─────────────────────────────────────── */
 .pricing-grid{
@@ -355,11 +399,16 @@ nav{
   border:1px solid var(--border-light);
   border-radius:16px;padding:32px 28px;
   position:relative;
+  box-shadow:var(--shadow);
+  transition:transform .2s,box-shadow .2s;
 }
+.price-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
 .price-card.popular{
-  border:2px solid var(--brand);
-  box-shadow:0 0 0 4px rgba(99,102,241,0.07);
+  border:1.5px solid rgba(99,102,241,0.4);
+  background:linear-gradient(160deg,#FAFBFF 0%,#F3F0FF 100%);
+  box-shadow:0 0 0 4px rgba(99,102,241,0.06),var(--shadow-md);
 }
+.price-card.popular:hover{transform:translateY(-3px);box-shadow:0 0 0 4px rgba(99,102,241,0.08),var(--shadow-hover)}
 
 .popular-tag{
   position:absolute;top:-13px;left:50%;transform:translateX(-50%);
@@ -447,8 +496,8 @@ nav{
   background:var(--bg-white);
   border:1px solid var(--border-light);
   border-radius:16px;
-  padding:32px;
-  box-shadow:var(--shadow);
+  padding:36px;
+  box-shadow:var(--shadow-md);
 }
 
 .form-title{font-size:16px;font-weight:700;margin-bottom:6px}
@@ -565,8 +614,8 @@ footer{
     z-index:999;
   }
   .nav-toggle{display:block}
-  .hero{padding:48px 20px 48px}
-  .hero h1{font-size:30px}
+  .hero{padding:56px 20px 56px}
+  .hero h1{font-size:34px;letter-spacing:-0.5px}
   .hero p{font-size:15px}
   .hero-stats{flex-direction:column;gap:0}
   .stat-item{border-right:none;border-bottom:1px solid var(--border-light)}
@@ -618,6 +667,7 @@ footer{
 </nav>
 
 <!-- ── HERO ──────────────────────────────────────── -->
+<div class="hero-section">
 <section class="hero" id="home">
   <div class="hero-badge">
     <i class="fa-solid fa-shield-halved"></i>
@@ -659,6 +709,7 @@ footer{
     </div>
   </div>
 </section>
+</div>
 
 <!-- ── PRODUCTS ───────────────────────────────────── -->
 <section class="section section-alt" id="products">
@@ -1055,8 +1106,8 @@ footer{
         <p>Finance on autopilot — smart tools built for CAs, CFOs and finance teams across India.</p>
         <div class="footer-social">
           <a href="mailto:fino.sutra07@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a>
-          <a href="#" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-          <a href="#" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="https://linkedin.com/company/finosutra" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="mailto:fino.sutra07@gmail.com" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
         </div>
       </div>
 
@@ -1136,73 +1187,4 @@ document.getElementById('navToggle').onclick = function(){
   this.querySelector('i').className =
     links.classList.contains('open')
     ? 'fa-solid fa-xmark'
-    : 'fa-solid fa-bars';
-};
-
-// Close nav on link click (mobile)
-document.querySelectorAll('.nav-links a').forEach(function(a){
-  a.onclick = function(){
-    document.getElementById('navLinks').classList.remove('open');
-    document.getElementById('navActions').classList.remove('open');
-    document.getElementById('navToggle').querySelector('i').className = 'fa-solid fa-bars';
-  };
-});
-
-// ── Contact form ──────────────────────────────────
-function handleFormSubmit(e){
-  e.preventDefault();
-  var form = e.target;
-  fetch('/', {
-    method:'POST',
-    headers:{'Content-Type':'application/x-www-form-urlencoded'},
-    body: new URLSearchParams(new FormData(form)).toString()
-  })
-  .then(function(){
-    form.reset();
-    document.getElementById('formSuccess').style.display = 'block';
-  })
-  .catch(function(){
-    // Fallback: submit normally (works on Netlify)
-    form.submit();
-  });
-}
-
-// ── Notify me modal ───────────────────────────────
-function notifyMe(product){
-  document.getElementById('notifyProductName').textContent =
-    'Leave your email and we\'ll notify you when "' + product + '" is ready.';
-  document.getElementById('notifyProduct').value = product;
-  document.getElementById('notifySuccess').style.display = 'none';
-  var modal = document.getElementById('notifyModal');
-  modal.style.display = 'flex';
-}
-
-function closeNotify(){
-  document.getElementById('notifyModal').style.display = 'none';
-}
-
-function handleNotify(e){
-  e.preventDefault();
-  var form = e.target;
-  fetch('/', {
-    method:'POST',
-    headers:{'Content-Type':'application/x-www-form-urlencoded'},
-    body: new URLSearchParams(new FormData(form)).toString()
-  })
-  .then(function(){
-    form.reset();
-    document.getElementById('notifySuccess').style.display = 'block';
-  })
-  .catch(function(){
-    form.submit();
-  });
-}
-
-// Close modal on backdrop click
-document.getElementById('notifyModal').onclick = function(e){
-  if(e.target === this) closeNotify();
-};
-</script>
-
-</body>
-</html>
+    : 'fa-so

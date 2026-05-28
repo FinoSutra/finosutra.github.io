@@ -15,39 +15,40 @@
 :root{
   --brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;
   --brand-mid:#C7D2FE;--text-primary:#111827;--text-secondary:#6B7280;
-  --text-muted:#9CA3AF;--bg:#F9FAFB;--bg-white:#FFFFFF;
-  --border:rgba(99,102,241,0.18);--border-light:rgba(99,102,241,0.1);
-  --radius:12px;--radius-sm:8px;
+  --text-muted:#9CA3AF;--bg:#F7F8FF;--bg-white:#FFFFFF;
+  --border:rgba(99,102,241,0.15);--border-light:rgba(99,102,241,0.08);
+  --radius:14px;--radius-sm:9px;
 }
 html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-primary);line-height:1.7}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-primary);line-height:1.7;-webkit-font-smoothing:antialiased;}
 
 nav{
-  background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);
+  background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border-bottom:1px solid var(--border-light);padding:0 32px;
-  position:sticky;top:0;z-index:1000;box-shadow:0 1px 12px rgba(99,102,241,0.06);
+  position:sticky;top:0;z-index:1000;
+  box-shadow:0 1px 0 var(--border-light),0 4px 20px rgba(99,102,241,0.05);
 }
 .nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff;}
+.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff;box-shadow:0 2px 8px rgba(99,102,241,0.3);}
 .logo-text{font-size:18px;font-weight:700;color:var(--text-primary);letter-spacing:-0.3px;}
 .logo-text span{color:var(--brand)}
-.btn-back{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;border:1.5px solid var(--border);background:var(--bg-white);color:var(--text-secondary);transition:all .15s;}
-.btn-back:hover{border-color:var(--brand);color:var(--brand)}
+.btn-back{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;border:1.5px solid var(--border);background:var(--bg-white);color:var(--text-secondary);transition:all .15s;box-shadow:0 1px 3px rgba(0,0,0,0.04);}
+.btn-back:hover{border-color:var(--brand);color:var(--brand);background:var(--brand-light);}
 
-.page-hero{background:linear-gradient(135deg,#EEF2FF,#F5F3FF);border-bottom:1px solid var(--border-light);padding:48px 32px;}
+.page-hero{background:linear-gradient(160deg,#EDEEFF 0%,#F2EEFF 100%);border-bottom:1px solid var(--border-light);padding:56px 32px;}
 .page-hero-inner{max-width:800px;margin:0 auto;}
-.eyebrow{font-size:11px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;}
-.page-hero h1{font-size:32px;font-weight:700;letter-spacing:-0.3px;margin-bottom:10px;}
-.page-hero p{font-size:14px;color:var(--text-secondary);}
+.eyebrow{font-size:11px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:12px;}
+.page-hero h1{font-size:34px;font-weight:700;letter-spacing:-0.4px;margin-bottom:10px;color:var(--text-primary);}
+.page-hero p{font-size:14px;color:var(--text-secondary);line-height:1.7;}
 
-.content{max-width:800px;margin:0 auto;padding:52px 32px 80px;}
-.section-block{margin-bottom:40px;}
-.section-block h2{font-size:18px;font-weight:700;color:var(--text-primary);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border-light);}
-.section-block p{font-size:14px;color:var(--text-secondary);margin-bottom:12px;line-height:1.75;}
-.section-block ul{padding-left:20px;margin-bottom:12px;}
-.section-block ul li{font-size:14px;color:var(--text-secondary);margin-bottom:8px;line-height:1.7;}
-.highlight-box{background:var(--brand-light);border:1px solid var(--brand-mid);border-radius:var(--radius-sm);padding:16px 20px;margin-bottom:12px;font-size:13px;color:#3730A3;line-height:1.7;}
+.content{max-width:800px;margin:0 auto;padding:56px 32px 88px;}
+.section-block{margin-bottom:44px;}
+.section-block h2{font-size:17px;font-weight:700;color:var(--text-primary);margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border-light);letter-spacing:-0.2px;}
+.section-block p{font-size:14px;color:var(--text-secondary);margin-bottom:12px;line-height:1.8;}
+.section-block ul{padding-left:22px;margin-bottom:12px;}
+.section-block ul li{font-size:14px;color:var(--text-secondary);margin-bottom:10px;line-height:1.75;}
+.highlight-box{background:var(--brand-light);border:1px solid var(--brand-mid);border-radius:var(--radius-sm);padding:18px 22px;margin-bottom:16px;font-size:13px;color:#3730A3;line-height:1.75;box-shadow:0 2px 8px rgba(99,102,241,0.08);}
 .highlight-box strong{color:var(--brand-dark);}
 
 footer{background:#111827;padding:32px;text-align:center;}
@@ -56,8 +57,8 @@ footer a{color:#9CA3AF;text-decoration:none;}
 footer a:hover{color:#fff;}
 
 @media(max-width:768px){
-  nav{padding:0 20px}.page-hero{padding:36px 20px}.content{padding:36px 20px 60px}
-  .page-hero h1{font-size:26px}
+  nav{padding:0 20px}.page-hero{padding:40px 20px}.content{padding:40px 20px 64px}
+  .page-hero h1{font-size:28px}
 }
 </style>
 </head>
@@ -171,14 +172,4 @@ footer a:hover{color:#fff;}
   <div class="section-block">
     <h2>12. Contact Us</h2>
     <p>For any questions, concerns or requests regarding this Privacy Policy, please contact us at:</p>
-    <p><strong>Finosutra</strong><br>Email: <a href="mailto:fino.sutra07@gmail.com" style="color:var(--brand)">fino.sutra07@gmail.com</a><br>Mumbai, Maharashtra, India</p>
-  </div>
-
-</div>
-
-<footer>
-  <p>© 2026 Finosutra. All rights reserved. &nbsp;·&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="terms.html">Terms of Service</a> &nbsp;·&nbsp; <a href="index.html">Home</a></p>
-</footer>
-
-</body>
-</html>
+    <p><strong>Finosutra</strong><br>Email: <a href="mailto:fino.sutra07@gmail.com" style="color:var(-
