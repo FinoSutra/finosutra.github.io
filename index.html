@@ -684,8 +684,7 @@ footer{
 <nav>
   <div class="nav-inner">
     <a href="#" class="logo">
-      <div class="logo-icon">FS</div>
-      <span class="logo-text">Fino<span>sutra</span></span>
+      <img src="logo.png" alt="Finosutra" style="height:72px;width:auto;display:block;">
     </a>
 
     <ul class="nav-links" id="navLinks">
@@ -912,6 +911,59 @@ footer{
         </div>
       </div>
 
+
+    </div>
+    <p style="text-align:center;font-size:12px;color:var(--text-muted);margin-top:28px;">
+      <i class="fa-solid fa-shield-halved" style="margin-right:4px;color:var(--brand)"></i>
+      All calculations run entirely in your browser &mdash; no data is stored or shared.
+    </p>
+  </div>
+</section>
+
+<!-- ── INCOME TAX ────────────────────────────────── -->
+<section class="section section-alt" id="income-tax">
+  <div class="wrap">
+    <div class="section-hd">
+      <div class="section-eyebrow">Income Tax — FY 2025-26</div>
+      <h2 class="section-title">Income Tax Calculator &amp; Reports</h2>
+      <p class="section-desc">New vs Old Regime comparison, full slab computation, capital gains, deductions — and a CA-ready Excel report for &#8377;99.</p>
+    </div>
+    <div class="products-grid">
+
+      <div class="prod-card featured">
+        <div class="featured-ribbon">Live Now</div>
+        <div class="prod-icon"><i class="fa-solid fa-file-invoice"></i></div>
+        <span class="prod-badge badge-live">&#9679; Live</span>
+        <h3>Income Tax Calculator</h3>
+        <p>Professional-grade income tax calculator for FY 2025-26 / AY 2026-27. Enter your income once — get New vs Old Regime comparison, 87A rebate, surcharge, capital gains tax, and net payable instantly.</p>
+        <ul class="feat-list">
+          <li><i class="fa-solid fa-check"></i> New &amp; Old Regime side-by-side comparison</li>
+          <li><i class="fa-solid fa-check"></i> HRA exemption, 80C / 80D / NPS deductions</li>
+          <li><i class="fa-solid fa-check"></i> Capital gains (LTCG / STCG), 87A rebate &amp; surcharge</li>
+          <li><i class="fa-solid fa-check"></i> Download 5-sheet CA-ready Excel report — &#8377;99</li>
+        </ul>
+        <div class="card-footer">
+          <span class="card-tag">Free + &#8377;99 Excel</span>
+          <a href="india-tax-calculator.html" class="btn btn-primary btn-sm">Open calculator <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <div class="prod-card">
+        <div class="prod-icon"><i class="fa-solid fa-receipt"></i></div>
+        <span class="prod-badge badge-soon">Coming Soon</span>
+        <h3>ITR Filing Assistant</h3>
+        <p>Guided ITR-1, ITR-2 and ITR-3 preparation with pre-filled data from Form 16 and Form 26AS. One-click XML generation for efiling.</p>
+        <ul class="feat-list">
+          <li><i class="fa-solid fa-check"></i> ITR-1, ITR-2, ITR-3 support</li>
+          <li><i class="fa-solid fa-check"></i> Form 26AS integration</li>
+          <li><i class="fa-solid fa-check"></i> XML export for income tax portal</li>
+        </ul>
+        <div class="card-footer">
+          <span class="card-tag">Coming Soon</span>
+          <button class="btn btn-sm" onclick="notifyMe('ITR Filing Assistant')">Notify me</button>
+        </div>
+      </div>
+
       <div class="prod-card">
         <div class="prod-icon"><i class="fa-solid fa-calendar-xmark"></i></div>
         <span class="prod-badge badge-soon">Coming Soon</span>
@@ -923,16 +975,28 @@ footer{
           <li><i class="fa-solid fa-check"></i> Day-wise computation</li>
         </ul>
         <div class="card-footer">
-          <span class="card-tag">Free Tool</span>
+          <span class="card-tag">Coming Soon</span>
           <button class="btn btn-sm" onclick="notifyMe('TDS Interest Calculator')">Notify me</button>
         </div>
       </div>
 
+      <div class="prod-card">
+        <div class="prod-icon"><i class="fa-solid fa-coins"></i></div>
+        <span class="prod-badge badge-soon">Coming Soon</span>
+        <h3>TDS Calculator &amp; Challan</h3>
+        <p>Compute TDS on salary, rent, professional fees, and contract payments. Generate 280/281 challan details with section-wise summary.</p>
+        <ul class="feat-list">
+          <li><i class="fa-solid fa-check"></i> TDS on Salary (192), Rent (194I), Prof. Fees (194J)</li>
+          <li><i class="fa-solid fa-check"></i> 234A/B/C interest auto-computation</li>
+          <li><i class="fa-solid fa-check"></i> Challan 280 / 281 details</li>
+        </ul>
+        <div class="card-footer">
+          <span class="card-tag">Coming Soon</span>
+          <button class="btn btn-sm" onclick="notifyMe('TDS Calculator')">Notify me</button>
+        </div>
+      </div>
+
     </div>
-    <p style="text-align:center;font-size:12px;color:var(--text-muted);margin-top:28px;">
-      <i class="fa-solid fa-shield-halved" style="margin-right:4px;color:var(--brand)"></i>
-      All calculations run entirely in your browser &mdash; no data is stored or shared.
-    </p>
   </div>
 </section>
 
@@ -1167,6 +1231,61 @@ footer{
         <div class="price-amount"><sup>&#8377;</sup>99</div>
         <div class="price-period">per report &middot; one-time &middot; no subscription</div>
         <div class="price-divider"></div>
+
+        <!-- Excel Export Preview -->
+        <div style="margin:16px 0;border-radius:9px;overflow:hidden;border:1px solid #D1D5DB;font-size:9px;font-family:'Inter',sans-serif;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+          <!-- Title bar -->
+          <div style="background:#1D6F42;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-weight:600;color:#fff;font-size:9.5px;"><i class="fas fa-file-excel" style="margin-right:5px;"></i>IND_AS_116_Lease_Schedule.xlsx</span>
+            <div style="display:flex;gap:4px;">
+              <div style="width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.35);"></div>
+              <div style="width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.35);"></div>
+              <div style="width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.35);"></div>
+            </div>
+          </div>
+          <!-- Column headers -->
+          <div style="display:grid;grid-template-columns:68px repeat(4,1fr);background:#E8F5E9;border-bottom:1px solid #C8E6C9;">
+            <div style="padding:4px 6px;font-weight:700;color:#1B5E20;border-right:1px solid #C8E6C9;">Period</div>
+            <div style="padding:4px 6px;font-weight:700;color:#1B5E20;border-right:1px solid #C8E6C9;">Opening (₹)</div>
+            <div style="padding:4px 6px;font-weight:700;color:#1B5E20;border-right:1px solid #C8E6C9;">Finance Chg</div>
+            <div style="padding:4px 6px;font-weight:700;color:#1B5E20;border-right:1px solid #C8E6C9;">Payment</div>
+            <div style="padding:4px 6px;font-weight:700;color:#1B5E20;">Closing (₹)</div>
+          </div>
+          <!-- Row 1 -->
+          <div style="display:grid;grid-template-columns:68px repeat(4,1fr);background:#fff;border-bottom:1px solid #F3F4F6;">
+            <div style="padding:4px 6px;color:#374151;border-right:1px solid #F3F4F6;">FY 2024-25</div>
+            <div style="padding:4px 6px;color:#374151;border-right:1px solid #F3F4F6;">24,80,000</div>
+            <div style="padding:4px 6px;color:#059669;font-weight:600;border-right:1px solid #F3F4F6;">1,48,800</div>
+            <div style="padding:4px 6px;color:#374151;border-right:1px solid #F3F4F6;">3,60,000</div>
+            <div style="padding:4px 6px;color:#374151;">22,68,800</div>
+          </div>
+          <!-- Row 2 -->
+          <div style="display:grid;grid-template-columns:68px repeat(4,1fr);background:#F9FAFB;border-bottom:1px solid #F3F4F6;">
+            <div style="padding:4px 6px;color:#374151;border-right:1px solid #F3F4F6;">FY 2025-26</div>
+            <div style="padding:4px 6px;color:#374151;border-right:1px solid #F3F4F6;">22,68,800</div>
+            <div style="padding:4px 6px;color:#059669;font-weight:600;border-right:1px solid #F3F4F6;">1,36,128</div>
+            <div style="padding:4px 6px;color:#374151;border-right:1px solid #F3F4F6;">3,60,000</div>
+            <div style="padding:4px 6px;color:#374151;">20,44,928</div>
+          </div>
+          <!-- Row 3 -->
+          <div style="display:grid;grid-template-columns:68px repeat(4,1fr);background:#fff;border-bottom:1px solid #F3F4F6;">
+            <div style="padding:4px 6px;color:#374151;border-right:1px solid #F3F4F6;">FY 2026-27</div>
+            <div style="padding:4px 6px;color:#374151;border-right:1px solid #F3F4F6;">20,44,928</div>
+            <div style="padding:4px 6px;color:#059669;font-weight:600;border-right:1px solid #F3F4F6;">1,22,696</div>
+            <div style="padding:4px 6px;color:#374151;border-right:1px solid #F3F4F6;">3,60,000</div>
+            <div style="padding:4px 6px;color:#374151;">18,07,624</div>
+          </div>
+          <!-- More rows -->
+          <div style="background:#F9FAFB;padding:3px 8px;color:#9CA3AF;text-align:center;border-bottom:1px solid #E5E7EB;letter-spacing:2px;">· · · 2 more periods</div>
+          <!-- Sheet tabs -->
+          <div style="background:#EFEFEF;display:flex;border-top:1px solid #D1D5DB;">
+            <div style="padding:4px 9px;font-weight:700;background:#1D6F42;color:#fff;border-right:1px solid #D1D5DB;white-space:nowrap;">Amortization</div>
+            <div style="padding:4px 8px;color:#6B7280;border-right:1px solid #D1D5DB;white-space:nowrap;">Journal Entries</div>
+            <div style="padding:4px 8px;color:#6B7280;border-right:1px solid #D1D5DB;white-space:nowrap;">Cover</div>
+            <div style="padding:4px 8px;color:#6B7280;white-space:nowrap;">BS Impact</div>
+          </div>
+        </div>
+        <div style="font-size:10.5px;color:#6B7280;text-align:center;margin-bottom:4px;">↑ Sample of your ₹99 Excel export</div>
         <ul class="price-features">
           <li><i class="fa-solid fa-check yes"></i> Everything in Free</li>
           <li><i class="fa-solid fa-check yes"></i> Audit-ready Excel workbook</li>
@@ -1279,9 +1398,7 @@ footer{
         <div class="form-title">Send us a message</div>
         <div class="form-subtitle">We typically reply within 1 business day.</div>
 
-        <form name="contact" method="POST" data-netlify="true" onsubmit="handleFormSubmit(event)">
-          <input type="hidden" name="form-name" value="contact"/>
-
+        <form id="contactForm" action="https://formspree.io/f/xvzyyrvp" method="POST" onsubmit="handleFormSubmit(event)">
           <div class="form-row">
             <div class="form-field">
               <label>Your name</label>
@@ -1332,8 +1449,7 @@ footer{
 
       <div class="footer-brand">
         <a href="#" class="logo">
-          <div class="logo-icon">FS</div>
-          <span class="logo-text">Fino<span>sutra</span></span>
+          <img src="logo.png" alt="Finosutra" style="height:32px;width:auto;display:block;">
         </a>
         <p>Finance on autopilot — smart tools built for CAs, CFOs and finance teams across India.</p>
         <div class="footer-social">
@@ -1354,6 +1470,7 @@ footer{
         <h5>GST &amp; Calculators</h5>
         <a href="gst-calculator.html">GST Calculator</a>
         <a href="emi-calculator.html">EMI Calculator</a>
+            <a href="india-tax-calculator.html">Income Tax Calculator</a>
         <a href="#gst-tools">GST Reconciliation</a>
         <a href="#calculators">Depreciation Calculator</a>
       </div>
@@ -1386,8 +1503,7 @@ footer{
   <div style="background:#fff;border-radius:16px;padding:32px;max-width:420px;width:90%;margin:20px">
     <h3 style="font-size:18px;font-weight:700;margin-bottom:8px">Get notified when it's ready</h3>
     <p style="font-size:13px;color:var(--text-secondary);margin-bottom:20px" id="notifyProductName"></p>
-    <form name="waitlist" method="POST" data-netlify="true" onsubmit="handleNotify(event)">
-      <input type="hidden" name="form-name" value="waitlist"/>
+    <form name="waitlist" action="https://formspree.io/f/xnjrrvop" method="POST" onsubmit="handleNotify(event)">
       <input type="hidden" name="product" id="notifyProduct"/>
       <div class="form-field" style="margin-bottom:16px">
         <label>Email address</label>
@@ -1414,8 +1530,35 @@ document.getElementById('navToggle').onclick = function(){
 };
 function handleFormSubmit(e){
   e.preventDefault();
-  document.getElementById('formSuccess').style.display = 'block';
-  e.target.reset();
+  var form = e.target;
+  var btn = form.querySelector('button[type="submit"]');
+  var originalText = btn.innerHTML;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+  btn.disabled = true;
+
+  var data = new FormData(form);
+
+  fetch(form.action, {
+    method: 'POST',
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  })
+  .then(function(response) {
+    if (response.ok) {
+      document.getElementById('formSuccess').style.display = 'block';
+      form.reset();
+      btn.innerHTML = '<i class="fa-solid fa-check"></i> Sent!';
+    } else {
+      return response.json().then(function(data) {
+        throw new Error(data.error || 'Form submission failed');
+      });
+    }
+  })
+  .catch(function(error) {
+    btn.innerHTML = originalText;
+    btn.disabled = false;
+    alert('Oops! Message could not be sent. Please email us directly at fino.sutra07@gmail.com');
+  });
 }
 function notifyMe(product){
   document.getElementById('notifyProduct').value = product;
@@ -1428,8 +1571,26 @@ function closeNotify(){
 }
 function handleNotify(e){
   e.preventDefault();
-  document.getElementById('notifySuccess').style.display = 'block';
-  setTimeout(function(){ closeNotify(); }, 2500);
+  var form = e.target;
+  var btn = form.querySelector('button[type="submit"]');
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+  btn.disabled = true;
+
+  fetch(form.action, {
+    method: 'POST',
+    body: new FormData(form),
+    headers: { 'Accept': 'application/json' }
+  })
+  .then(function(r) {
+    document.getElementById('notifySuccess').style.display = 'block';
+    form.reset();
+    setTimeout(function(){ closeNotify(); }, 2500);
+  })
+  .catch(function() {
+    btn.innerHTML = 'Notify me';
+    btn.disabled = false;
+    alert('Could not save — please email fino.sutra07@gmail.com to join the waitlist.');
+  });
 }
 document.getElementById('notifyModal').onclick = function(e){ if(e.target===this) closeNotify(); };
 </script>
