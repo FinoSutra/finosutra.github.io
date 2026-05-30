@@ -42,6 +42,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .logo{font-family:'Inter',sans-serif;font-weight:800;font-size:20px;color:var(--primary);letter-spacing:-.5px}
 .logo span{color:var(--orange)}
 .badge{background:var(--primary);color:#fff;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;letter-spacing:.5px;font-family:'DM Mono',monospace}
+.btn-back{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;text-decoration:none;border:1.5px solid var(--border);color:var(--muted);transition:all .15s;white-space:nowrap}
+.btn-back:hover{border-color:var(--brand);color:var(--brand);background:var(--brand-light)}
+
 /* ---- LAYOUT ---- */
 .app{display:grid;grid-template-columns:280px 1fr;min-height:calc(100vh - 56px);gap:0}
 .sidebar{background:#fafafa;border-right:1px solid var(--border);padding:16px 0;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto}

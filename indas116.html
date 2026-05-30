@@ -262,6 +262,12 @@ tr:nth-child(even):hover td{background:rgba(99,102,241,0.05)}
   display:flex;align-items:center;justify-content:flex-end;gap:12px;background:#FAFAFF
 }
 .exp-note{font-size:11px;color:#9CA3AF}
+.exp-info-card{padding:14px 18px;background:#EEF2FF;border-top:1px solid rgba(99,102,241,0.2);border-bottom:1px solid rgba(99,102,241,0.2);}
+.exp-info-title{font-size:12px;font-weight:700;color:#4F46E5;margin-bottom:8px;}
+.exp-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;}
+.exp-info-item{font-size:11px;color:#4B5563;display:flex;align-items:flex-start;gap:5px;line-height:1.4;}
+.exp-info-item::before{content:"✓";color:#6366F1;font-weight:700;flex-shrink:0;}
+.exp-info-note{font-size:10px;color:#9CA3AF;margin-top:8px;padding-top:8px;border-top:1px solid rgba(99,102,241,0.15);}
 
 .btn-exp{
   display:flex;align-items:center;gap:7px;padding:9px 18px;
@@ -546,9 +552,25 @@ tr:nth-child(even):hover td{background:rgba(99,102,241,0.05)}
         </div>
       </div>
 
+      <!-- EXPORT INFO CARD -->
+      <div class="exp-info-card">
+        <div class="exp-info-title">📊 What's inside the Excel Report — ₹99</div>
+        <div class="exp-info-grid">
+          <div class="exp-info-item">Lease amortisation schedule (full tenure)</div>
+          <div class="exp-info-item">ROU Asset depreciation schedule</div>
+          <div class="exp-info-item">Day 1 inception journal entry</div>
+          <div class="exp-info-item">Year-wise journal entries (all periods)</div>
+          <div class="exp-info-item">Reporting date snapshot (any date)</div>
+          <div class="exp-info-item">Balance Sheet & P&amp;L impact summary</div>
+          <div class="exp-info-item">Finance charge & principal split</div>
+          <div class="exp-info-item">Ind AS 116 / IFRS 16 compliant format</div>
+        </div>
+        <div class="exp-info-note">One-time payment · Instant download · CA &amp; audit-ready format · Secure via Razorpay</div>
+      </div>
+
       <div class="exp-row">
         <span class="exp-note" id="expNote"></span>
-        <button class="btn-exp" id="btnExp">⬇ Export to Excel &nbsp;<span style="font-size:10px;opacity:.8;">₹99</span></button>
+        <button class="btn-exp" id="btnExp">⬇ Download Excel Report &nbsp;<span style="font-size:10px;opacity:.8;">₹99</span></button>
       </div>
 
     </div>
@@ -1541,7 +1563,7 @@ pEnd.setDate(0);
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <!-- WhatsApp Floating Button -->
-<a href="https://wa.me/919999999999?text=Hi%2C%20I%20found%20Finosutra%20and%20would%20like%20to%20know%20more%20about%20your%20finance%20tools."
+<a href="https://wa.me/918208063319?text=Hi%2C%20I%20found%20Finosutra%20and%20would%20like%20to%20know%20more%20about%20your%20finance%20tools."
    target="_blank"
    title="Chat with us on WhatsApp"
    style="position:fixed;bottom:24px;right:24px;z-index:9998;width:54px;height:54px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,0.35);text-decoration:none;transition:transform .2s,box-shadow .2s;"

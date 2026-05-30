@@ -181,6 +181,12 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
 .std-table td:first-child{font-weight:700;color:var(--text)}
 
 /* ── EXPORT ROW ── */
+.exp-info-card{margin:0 16px 0;padding:14px 16px;background:#EEF2FF;border:1px solid rgba(99,102,241,0.2);border-radius:10px;}
+.exp-info-title{font-size:12px;font-weight:700;color:#4F46E5;margin-bottom:8px;}
+.exp-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;}
+.exp-info-item{font-size:11px;color:#4B5563;display:flex;align-items:flex-start;gap:5px;line-height:1.4;}
+.exp-info-item::before{content:"✓";color:#6366F1;font-weight:700;flex-shrink:0;}
+.exp-info-note{font-size:10px;color:#9CA3AF;margin-top:8px;padding-top:8px;border-top:1px solid rgba(99,102,241,0.15);}
 .exp-row{padding:14px 22px;border-top:1px solid var(--border-light);display:flex;align-items:center;justify-content:flex-end;gap:12px;background:#FAFAFF}
 .exp-note{font-size:11px;color:var(--muted2)}
 .btn-exp{display:flex;align-items:center;gap:7px;padding:9px 18px;background:linear-gradient(135deg,#6366F1,#8B5CF6);border:none;border-radius:8px;font-size:12px;font-weight:700;color:#fff;cursor:pointer;font-family:'Inter',sans-serif;box-shadow:0 3px 10px rgba(99,102,241,0.3);transition:all .15s}
@@ -348,11 +354,27 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
         <div id="conceptsAll"></div>
       </div>
 
+      <!-- EXPORT INFO CARD -->
+      <div class="exp-info-card" id="expInfoCard" style="display:none">
+        <div class="exp-info-title">📊 What's inside the Excel Report — ₹99</div>
+        <div class="exp-info-grid">
+          <div class="exp-info-item">Fair Value computation (PV workings)</div>
+          <div class="exp-info-item">Day 1 journal entry (Dr / Cr)</div>
+          <div class="exp-info-item">Year-wise amortisation schedule</div>
+          <div class="exp-info-item">Annual interest unwinding table</div>
+          <div class="exp-info-item">Balance Sheet impact (each year)</div>
+          <div class="exp-info-item">P&amp;L impact — finance income/cost</div>
+          <div class="exp-info-item">All journal entries (Year 1 to end)</div>
+          <div class="exp-info-item">Ind AS 109 / IFRS 9 compliant format</div>
+        </div>
+        <div class="exp-info-note">One-time payment · Instant download · CA &amp; audit-ready format · Secure via Razorpay</div>
+      </div>
+
       <!-- EXPORT ROW -->
       <div class="exp-row" id="expRow" style="display:none">
         <span class="exp-note" id="expNote"></span>
         <button class="btn-exp" onclick="initiatePayment()">
-          <i class="fa-solid fa-file-excel"></i> Export to Excel &nbsp;<span style="font-size:10px;opacity:.8">&#8377;99</span>
+          <i class="fa-solid fa-file-excel"></i> Download Excel Report &nbsp;<span style="font-size:10px;opacity:.8">₹99</span>
         </button>
       </div>
     </div>
@@ -572,6 +594,7 @@ function calculate(){
   document.getElementById('emptyState').style.display = 'none';
   document.getElementById('resultContent').style.display = 'block';
   document.getElementById('expRow').style.display = 'flex';
+  document.getElementById('expInfoCard').style.display = 'block';
   document.getElementById('expNote').textContent = tenure+' year schedule · '+(isIndAS?'Ind AS 109':'IFRS 9')+' compliant';
   showTab('summary');
 }
@@ -716,7 +739,7 @@ window.onload = function(){ calculate(); };
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <!-- WhatsApp Floating Button -->
-<a href="https://wa.me/919999999999?text=Hi%2C%20I%20found%20Finosutra%20and%20would%20like%20to%20know%20more%20about%20your%20finance%20tools."
+<a href="https://wa.me/918208063319?text=Hi%2C%20I%20found%20Finosutra%20and%20would%20like%20to%20know%20more%20about%20your%20finance%20tools."
    target="_blank"
    title="Chat with us on WhatsApp"
    style="position:fixed;bottom:24px;right:24px;z-index:9998;width:54px;height:54px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,0.35);text-decoration:none;transition:transform .2s,box-shadow .2s;"
