@@ -731,6 +731,45 @@ function exportXL(){
   styleRange(ws3,'A1:D1',HEADER); styleRange(ws3,'A2:A4',SUBHDR);
   XLSX.utils.book_append_sheet(wb,ws3,'Journal Entries');
 
+  /* ── BALANCE SHEET & P&L IMPACT ── */
+  var bsRows = [
+    ['BALANCE SHEET & P&L IMPACT — IND AS 109 / IFRS 9 SECURITY DEPOSIT'],
+    [],
+    ['BALANCE SHEET IMPACT ON DAY 1', '', ''],
+    ['Item', 'Classification', 'Amount (₹)'],
+  ];
+  if(SD.isGiven){
+    bsRows.push(['Security Deposit — Financial Asset', 'Non-Current Assets', SD.pv]);
+    bsRows.push(['Prepaid Rent (Day 1 Discount)', 'Current / Non-Current Asset', SD.discount]);
+    bsRows.push(['Cash Paid (Nominal Deposit)', 'Outflow', SD.deposit]);
+  } else {
+    bsRows.push(['Security Deposit — Financial Liability', 'Non-Current Liabilities', SD.pv]);
+    bsRows.push(['Deferred Rental Income (Day 1 Discount)', 'Deferred Income', SD.discount]);
+    bsRows.push(['Cash Received (Nominal Deposit)', 'Inflow', SD.deposit]);
+  }
+  bsRows.push([]);
+  bsRows.push(['P&L IMPACT — YEAR-WISE', '', '', '']);
+  bsRows.push(['Year', SD.isGiven ? 'Finance Income (₹)' : 'Finance Cost (₹)', SD.isGiven ? 'Rent Expense (₹)' : 'Rental Income (₹)', 'Net P&L Impact (₹)']);
+  SD.sched.forEach(function(r){
+    var net = SD.isGiven ? r.interest - SD.rentPY : SD.rentPY - r.interest;
+    bsRows.push([r.year, r.interest, SD.rentPY, net]);
+  });
+  var totInt = SD.sched.reduce(function(s,r){return s+r.interest;},0);
+  bsRows.push(['TOTAL', totInt, SD.rentPY*SD.sched.length, SD.isGiven ? totInt - SD.rentPY*SD.sched.length : SD.rentPY*SD.sched.length - totInt]);
+  bsRows.push([]);
+  bsRows.push(['KEY METRICS', '', '']);
+  bsRows.push(['Nominal Deposit Amount', '', SD.deposit]);
+  bsRows.push(['Fair Value on Day 1 (PV)', '', SD.pv]);
+  bsRows.push(['Day 1 Discount', '', SD.discount]);
+  bsRows.push(['Effective Interest Rate (EIR)', '', (SD.rate*100).toFixed(2)+'%']);
+  bsRows.push(['Tenure', '', SD.tenure+' years']);
+  bsRows.push(['Total Interest Unwound over tenure', '', SD.totalInterest]);
+
+  var ws4 = XLSX.utils.aoa_to_sheet(bsRows);
+  ws4['!cols'] = [{wch:44},{wch:28},{wch:20},{wch:20}];
+  styleRange(ws4,'A1:D1',HEADER);
+  XLSX.utils.book_append_sheet(wb,ws4,'BS & P&L Impact');
+
   XLSX.writeFile(wb,'Finosutra_SecurityDeposit_Report.xlsx');
 }
 
@@ -751,6 +790,3 @@ window.onload = function(){ calculate(); };
 </a>
 </body>
 </html>
-      jeRows.push(['Year '+r.year+' — Unwinding','Finance Cost',r.interest,'']);
-      jeRows.push(['Year '+r.year+' — Unwinding','Security Deposit — FL','',r.interest]);
-      jeRows.push(['Yea

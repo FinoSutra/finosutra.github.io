@@ -1483,4 +1483,138 @@ function exportXL(){
   XLSX.utils.book_append_sheet(wb,ws3,"Journal Entries");
 
   /* =====================================================
-     
+     ANNUAL FY ROLLFORWARD
+  ===================================================== */
+
+  const startDate2 = new Date(INP.d);
+  const mpp = 12 / R.freq;
+  const fyMap2 = {};
+
+  R.sched.forEach((x, idx) => {
+    const pEnd = new Date(startDate2);
+    pEnd.setMonth(pEnd.getMonth() + ((idx + 1) * mpp) - 1);
+    pEnd.setMonth(pEnd.getMonth() + 1);
+    pEnd.setDate(0);
+    const fy = fyLabel(pEnd);
+    if (!fyMap2[fy]) {
+      fyMap2[fy] = { fy, openL: x.oL, interest: 0, payments: 0, principal: 0, closeL: 0, depreciation: 0, rouNBV: 0 };
+    }
+    fyMap2[fy].interest     += x.int;
+    fyMap2[fy].payments     += x.pmt;
+    fyMap2[fy].principal    += x.principal;
+    fyMap2[fy].closeL        = x.cL;
+    fyMap2[fy].depreciation += x.dep;
+    fyMap2[fy].rouNBV        = x.rouC;
+  });
+
+  const fyRows2 = Object.values(fyMap2);
+  let totRFInt = 0, totRFPmt = 0, totRFPrinc = 0, totRFDep = 0;
+
+  const rfRows = [
+    ["FY", "Opening Lease Liability", "Interest Expense", "Lease Payments", "Principal Repaid", "Closing Lease Liability", "Depreciation (ROU)", "ROU Asset NBV"]
+  ];
+  fyRows2.forEach(row => {
+    totRFInt   += row.interest;
+    totRFPmt   += row.payments;
+    totRFPrinc += row.principal;
+    totRFDep   += row.depreciation;
+    rfRows.push([row.fy, row.openL, row.interest, row.payments, row.principal, row.closeL, row.depreciation, row.rouNBV]);
+  });
+  rfRows.push(["TOTAL", "", totRFInt, totRFPmt, totRFPrinc, "", totRFDep, ""]);
+
+  const ws4 = XLSX.utils.aoa_to_sheet(rfRows);
+  ws4["!cols"] = Array(8).fill({wch:22});
+  styleRange(ws4, "A1:H1", HEADER);
+  styleRange(ws4, "A" + (rfRows.length) + ":H" + (rfRows.length), SUBHEADER);
+  for (let r = 2; r <= rfRows.length; r++) {
+    for (let c = 2; c <= 8; c++) {
+      const cell = ws4[XLSX.utils.encode_cell({r: r - 1, c: c - 1})];
+      if (cell) cell.s = {...NORMAL, ...MONEY};
+    }
+  }
+  ws4["!freeze"] = {xSplit: 0, ySplit: 1};
+  XLSX.utils.book_append_sheet(wb, ws4, "Annual Rollforward");
+
+  /* =====================================================
+     BALANCE SHEET SNAPSHOT
+  ===================================================== */
+
+  const rdVal = INP.reportDateVal;
+  let bsRows = [["BALANCE SHEET SNAPSHOT — IND AS 116 IMPACT"]];
+  bsRows.push([]);
+
+  if (rdVal) {
+    const rd = new Date(rdVal);
+    const rdLabel = rd.toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'});
+    const mppBS = 12 / R.freq;
+    const startDateBS = new Date(INP.d);
+    let snapIdx = -1;
+    for (let i = 0; i < R.sched.length; i++) {
+      const pEnd = new Date(startDateBS);
+      pEnd.setMonth(pEnd.getMonth() + ((i + 1) * mppBS));
+      pEnd.setDate(0);
+      if (pEnd <= rd) snapIdx = i;
+      else break;
+    }
+    if (snapIdx >= 0) {
+      const snap = R.sched[snapIdx];
+      const cumDep = (snapIdx + 1) * R.dep;
+      const rouNBV = Math.max(0, R.rouInitial - cumDep);
+      const remPeriods = R.sched.length - (snapIdx + 1);
+      const next12 = Math.min(R.freq, remPeriods);
+      let currentPortion = 0;
+      for (let i = snapIdx + 1; i <= snapIdx + next12 && i < R.sched.length; i++) {
+        currentPortion += R.sched[i].principal;
+      }
+      const nonCurrentPortion = Math.max(0, snap.cL - currentPortion);
+
+      bsRows.push(["Reporting / Balance Sheet Date", rdLabel]);
+      bsRows.push([]);
+      bsRows.push(["NON-CURRENT ASSETS", "", ""]);
+      bsRows.push(["Right-of-Use Asset (Cost)", "", R.rouInitial]);
+      bsRows.push(["Less: Accumulated Depreciation", "", -cumDep]);
+      bsRows.push(["Net Book Value — ROU Asset", "", rouNBV]);
+      bsRows.push([]);
+      bsRows.push(["LIABILITIES", "", ""]);
+      bsRows.push(["Lease Liability — Non-Current", "", nonCurrentPortion]);
+      bsRows.push(["Lease Liability — Current", "", currentPortion]);
+      bsRows.push(["Total Lease Liability", "", snap.cL]);
+      bsRows.push([]);
+      bsRows.push(["P&L IMPACT (Cumulative to date)", "", ""]);
+      const cumInt = R.sched.slice(0, snapIdx + 1).reduce((s, x) => s + x.int, 0);
+      bsRows.push(["Finance Cost (Interest Expense)", "", cumInt]);
+      bsRows.push(["Depreciation — ROU Asset", "", cumDep]);
+      bsRows.push(["Total P&L Charge", "", cumInt + cumDep]);
+    } else {
+      bsRows.push(["Note: Reporting date is before lease commencement.", "", ""]);
+      bsRows.push(["Initial Lease Liability (at commencement)", "", R.pv]);
+      bsRows.push(["Initial ROU Asset (at commencement)", "", R.rouInitial]);
+    }
+  } else {
+    bsRows.push(["Note: No reporting date entered. Showing position at lease commencement.", "", ""]);
+    bsRows.push(["Initial Lease Liability", "", R.pv]);
+    bsRows.push(["Current Lease Liability", "", R.currentLiab]);
+    bsRows.push(["Non-Current Lease Liability", "", R.nonCurrentLiab]);
+    bsRows.push(["Initial ROU Asset", "", R.rouInitial]);
+  }
+
+  const ws5 = XLSX.utils.aoa_to_sheet(bsRows);
+  ws5["!cols"] = [{wch:42}, {wch:22}, {wch:22}];
+  styleRange(ws5, "A1:C1", HEADER);
+  for (let r = 2; r <= bsRows.length; r++) {
+    for (let c = 3; c <= 3; c++) {
+      const cell = ws5[XLSX.utils.encode_cell({r: r - 1, c: c - 1})];
+      if (cell && typeof cell.v === 'number') cell.s = {...MONEY};
+    }
+  }
+  XLSX.utils.book_append_sheet(wb, ws5, "Balance Sheet Snapshot");
+
+  /* =====================================================
+     DOWNLOAD
+  ===================================================== */
+
+  XLSX.writeFile(wb, "Finosutra_IND_AS_116_Lease_Report.xlsx");
+}
+
+</body>
+</html>
