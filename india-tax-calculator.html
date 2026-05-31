@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Income Tax Calculator FY 2025-26 | AY 2026-27 | Finosutra</title>
-<meta name="description" content="Free India Income Tax Calculator for FY 2025-26 (AY 2026-27). Compare New vs Old Regime, compute 87A rebate, HRA exemption, capital gains, 80C/80D deductions and more."/>
-<meta name="keywords" content="income tax calculator India 2025-26, new regime tax calculator, old regime tax calculator, 87A rebate, HRA exemption, capital gains tax India, AY 2026-27"/>
+<title>Income Tax Calculator FY 2026-27 | AY 2027-28 | Finosutra</title>
+<meta name="description" content="Free India Income Tax Calculator for FY 2026-27 (AY 2027-28). Compare New vs Old Regime, compute 87A rebate, HRA exemption, capital gains, 80C/80D deductions and more."/>
+<meta name="keywords" content="income tax calculator India 2026-27, new regime tax calculator, old regime tax calculator, 87A rebate, HRA exemption, capital gains tax India, AY 2027-28"/>
 <link rel="canonical" href="https://finosutra.github.io/india-tax-calculator.html"/>
 <!-- Open Graph -->
-<meta property="og:title" content="Income Tax Calculator FY 2025-26 | Finosutra"/>
+<meta property="og:title" content="Income Tax Calculator FY 2026-27 | Finosutra"/>
 <meta property="og:description" content="Free professional-grade India income tax calculator. New vs Old Regime comparison, capital gains, deductions, and more."/>
 <meta property="og:url" content="https://finosutra.github.io/india-tax-calculator.html"/>
 <meta property="og:image" content="https://finosutra.github.io/og-image.png"/>
@@ -204,7 +204,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
   </a>
   <div style="display:flex;align-items:center;gap:10px">
     <span style="font-size:12px;color:var(--muted)">Income Tax Calculator</span>
-    <span class="badge">FY 2025-26</span>
+    <span class="badge">FY 2026-27</span>
   </div>
 </header>
 
@@ -254,7 +254,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 <section id="sec-personal" class="section active">
   <div class="section-header">
     <div class="section-title">Personal Information</div>
-    <div class="section-sub">Taxpayer details for FY 2025-26 / AY 2026-27</div>
+    <div class="section-sub">Taxpayer details for FY 2026-27 / AY 2027-28</div>
   </div>
   <div class="card">
     <div class="card-title">Basic Details <span class="tag tag-blue">REQUIRED</span></div>
@@ -754,7 +754,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 <section id="sec-result" class="section">
   <div class="section-header">
     <div class="section-title">Tax Computation Summary</div>
-    <div class="section-sub">FY 2025-26 | AY 2026-27</div>
+    <div class="section-sub">FY 2026-27 | AY 2027-28</div>
   </div>
   <div id="result-area">
     <div class="notif notif-info">ℹ️ Click "🧮 Calculate Tax" to compute your tax liability.</div>
@@ -789,8 +789,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 // TAX CONFIGURATION — All rates, limits, slabs driven from config
 // ===================================================================
 const TAX_CONFIG = {
-  financialYear: "2025-26",
-  assessmentYear: "2026-27",
+  financialYear: "2026-27",
+  assessmentYear: "2027-28",
   regimes: {
     new: {
       name: "New Tax Regime",
@@ -906,7 +906,7 @@ function calcAge(){
   const dob = document.getElementById('dob').value;
   if(!dob) return;
   const born = new Date(dob);
-  const refDate = new Date('2026-03-31'); // end of FY 2025-26
+  const refDate = new Date('2027-03-31'); // end of FY 2026-27
   let age = refDate.getFullYear() - born.getFullYear();
   const m = refDate.getMonth() - born.getMonth();
   if(m<0||(m===0&&refDate.getDate()<born.getDate())) age--;
@@ -1397,7 +1397,7 @@ function renderResult(nr, or){
     <!-- COMPARISON CARDS -->
     <div class="hero-banner">
       <h2>Tax Computation Complete</h2>
-      <p>FY 2025-26 | AY 2026-27 | Regime Comparison Below</p>
+      <p>FY 2026-27 | AY 2027-28 | Regime Comparison Below</p>
     </div>
 
     <div class="regime-compare">
@@ -1623,7 +1623,7 @@ function initiateExcelPayment(){
     amount: 9900, // ₹99 in paise
     currency: 'INR',
     name: 'Finosutra',
-    description: 'Income Tax Computation Report — FY 2025-26',
+    description: 'Income Tax Computation Report — FY 2026-27',
     image: 'logo.png',
     prefill: { name: name },
     notes: { product: 'Tax Calculator Excel Export' },
@@ -1676,7 +1676,7 @@ function generateAndDownloadExcel(paymentId){
   // ─── SHEET 1: COVER ───
   const coverData = [
     ['FINOSUTRA — Finance on Autopilot', '', '', ''],
-    ['Income Tax Computation Report — FY 2025-26 | AY 2026-27','','',''],
+    ['Income Tax Computation Report — FY 2026-27 | AY 2027-28','','',''],
     [''],
     ['TAXPAYER DETAILS', '', '', ''],
     ['Name',              name,            '', ''],
@@ -1708,7 +1708,7 @@ function generateAndDownloadExcel(paymentId){
 
   // ─── SHEET 2: INCOME SCHEDULE ───
   const incData = [
-    ['INCOME SCHEDULE — FY 2025-26 | AY 2026-27', '', '', ''],
+    ['INCOME SCHEDULE — FY 2026-27 | AY 2027-28', '', '', ''],
     ['HEAD OF INCOME', 'NOTES', 'NEW REGIME (₹)', 'OLD REGIME (₹)'],
     ['A.  INCOME FROM SALARY','','',''],
     ['Gross Salary',                   'As per Form 16',          inr(nr.grossSalary),       inr(or.grossSalary)],
@@ -1766,7 +1766,7 @@ function generateAndDownloadExcel(paymentId){
 
   // ─── SHEET 4: TAX COMPUTATION (detailed) ───
   const taxData = [
-    ['TAX COMPUTATION — New Regime vs Old Regime — FY 2025-26', '', '', ''],
+    ['TAX COMPUTATION — New Regime vs Old Regime — FY 2026-27', '', '', ''],
     ['PARTICULARS', 'NOTES', 'NEW REGIME (₹)', 'OLD REGIME (₹)'],
     [''],
     ['INCOME','','',''],
@@ -1776,7 +1776,7 @@ function generateAndDownloadExcel(paymentId){
     ['Agricultural Income (Exempt)',  'For integration',inr(nr.agriIncome||0),     inr(or.agriIncome||0)],
     [''],
     ['SLAB TAX','','',''],
-    ['Income Tax on Normal Slab',     'Per FY 2025-26 slabs', inr(nr.slabTax),     inr(or.slabTax)],
+    ['Income Tax on Normal Slab',     'Per FY 2026-27 slabs', inr(nr.slabTax),     inr(or.slabTax)],
     ['Tax on Capital Gains',          'LTCG/STCG rates',      inr(nr.cgTax),       inr(or.cgTax)],
     ['Tax on Special Rate Income',    '@30% (Lottery etc.)',   inr(nr.specialTax),  inr(or.specialTax)],
     ['Total Tax Before Rebate',       '',              inr(nr.slabTax+nr.cgTax+nr.specialTax), inr(or.slabTax+or.cgTax+or.specialTax)],
@@ -1809,7 +1809,7 @@ function generateAndDownloadExcel(paymentId){
 
   // ─── SHEET 5: SLAB SCHEDULE ───
   const slabData = [
-    ['TAX SLAB SCHEDULE — FY 2025-26 | AY 2026-27', '', '', ''],
+    ['TAX SLAB SCHEDULE — FY 2026-27 | AY 2027-28', '', '', ''],
     [''],
     ['NEW TAX REGIME', '', '', ''],
     ['Income Range', 'From (₹)', 'To (₹)', 'Tax Rate'],
@@ -1844,7 +1844,7 @@ function generateAndDownloadExcel(paymentId){
 
   // ─── Download ───
   const taxpayerName = (name || 'Taxpayer').replace(/[^a-zA-Z0-9]/g,'_');
-  const filename = 'Finosutra_Tax_Report_FY2025-26_'+taxpayerName+'.xlsx';
+  const filename = 'Finosutra_Tax_Report_FY2026-27_'+taxpayerName+'.xlsx';
   XLSX.writeFile(wb, filename);
 
   // Success message
@@ -1861,11 +1861,46 @@ function generateAndDownloadExcel(paymentId){
 setRegime('new');
 </script>
 
+<!-- FAQ Section -->
+<div style="max-width:820px;margin:48px auto 40px;padding:0 20px;">
+  <h2 style="font-size:20px;font-weight:700;color:#1E293B;margin-bottom:24px;font-family:Inter,sans-serif;">Frequently Asked Questions — Income Tax FY 2026-27</h2>
+
+  <details style="border:1px solid #E2E8F0;border-radius:10px;margin-bottom:10px;background:#fff;">
+    <summary style="padding:16px 20px;font-weight:600;font-size:14px;color:#1E293B;cursor:pointer;font-family:Inter,sans-serif;list-style:none;">Which tax regime is better — New or Old for FY 2026-27?</summary>
+    <div style="padding:0 20px 16px;font-size:14px;color:#475569;line-height:1.7;font-family:Inter,sans-serif;">It depends on your deductions. The <strong>New Regime</strong> is usually better if your total deductions (80C + 80D + HRA + home loan interest etc.) are below approximately ₹3.75 lakh. For most salaried individuals with PF, PPF, LIC, and home loans, the Old Regime often wins. Use this calculator's "Compute &amp; Compare" feature to see the exact difference — it runs both regimes simultaneously with your actual numbers.</div>
+  </details>
+
+  <details style="border:1px solid #E2E8F0;border-radius:10px;margin-bottom:10px;background:#fff;">
+    <summary style="padding:16px 20px;font-weight:600;font-size:14px;color:#1E293B;cursor:pointer;font-family:Inter,sans-serif;list-style:none;">What is the Section 87A rebate for FY 2026-27?</summary>
+    <div style="padding:0 20px 16px;font-size:14px;color:#475569;line-height:1.7;font-family:Inter,sans-serif;">Under the <strong>New Regime</strong>, the Section 87A rebate is ₹60,000 — applicable if total income is up to ₹12,00,000. This means zero tax for incomes up to ₹12 lakh under New Regime (plus ₹75,000 standard deduction makes it effectively ₹12.75 lakh NIL for salaried). Under the <strong>Old Regime</strong>, the rebate is ₹12,500 for income up to ₹5,00,000. Note: rebate does not apply on special rate income like LTCG, STCG on equity, or lottery winnings.</div>
+  </details>
+
+  <details style="border:1px solid #E2E8F0;border-radius:10px;margin-bottom:10px;background:#fff;">
+    <summary style="padding:16px 20px;font-weight:600;font-size:14px;color:#1E293B;cursor:pointer;font-family:Inter,sans-serif;list-style:none;">What is the standard deduction for salaried employees in FY 2026-27?</summary>
+    <div style="padding:0 20px 16px;font-size:14px;color:#475569;line-height:1.7;font-family:Inter,sans-serif;">The standard deduction for salaried employees is <strong>₹75,000</strong> under the New Tax Regime and <strong>₹50,000</strong> under the Old Tax Regime. This is a flat deduction from gross salary — no proof required. Pensioners also get standard deduction of ₹50,000 (Old Regime). Family pension has a separate deduction of 1/3rd or ₹15,000, whichever is lower.</div>
+  </details>
+
+  <details style="border:1px solid #E2E8F0;border-radius:10px;margin-bottom:10px;background:#fff;">
+    <summary style="padding:16px 20px;font-weight:600;font-size:14px;color:#1E293B;cursor:pointer;font-family:Inter,sans-serif;list-style:none;">How is LTCG on equity taxed in FY 2026-27?</summary>
+    <div style="padding:0 20px 16px;font-size:14px;color:#475569;line-height:1.7;font-family:Inter,sans-serif;">Long-term capital gains (LTCG) on listed equity shares and equity mutual funds are taxed at <strong>12.5%</strong> (without indexation) for gains above ₹1,25,000 per year. The first ₹1,25,000 of LTCG is fully exempt. Short-term capital gains (STCG) on equity are taxed at <strong>20%</strong>. These changes were introduced via Budget 2024 with effect from 23 July 2024. No cess surcharge benefit or 87A rebate applies on these special rate taxes.</div>
+  </details>
+
+  <details style="border:1px solid #E2E8F0;border-radius:10px;margin-bottom:10px;background:#fff;">
+    <summary style="padding:16px 20px;font-weight:600;font-size:14px;color:#1E293B;cursor:pointer;font-family:Inter,sans-serif;list-style:none;">What deductions are allowed in the New Tax Regime?</summary>
+    <div style="padding:0 20px 16px;font-size:14px;color:#475569;line-height:1.7;font-family:Inter,sans-serif;">Under the New Tax Regime, most deductions are not available. The key ones that ARE allowed: <strong>Standard Deduction ₹75,000</strong> (salaried), <strong>80CCD(2)</strong> — Employer NPS contribution (up to 10% of Basic), <strong>Section 10(10)</strong> — Gratuity exemption, <strong>Section 10(10A)</strong> — Commuted pension, and <strong>Section 10(10AA)</strong> — Leave encashment. Deductions like 80C (PPF, ELSS, LIC), 80D (medical insurance), HRA exemption, and home loan interest (SOP) are NOT available under New Regime.</div>
+  </details>
+
+  <details style="border:1px solid #E2E8F0;border-radius:10px;margin-bottom:10px;background:#fff;">
+    <summary style="padding:16px 20px;font-weight:600;font-size:14px;color:#1E293B;cursor:pointer;font-family:Inter,sans-serif;list-style:none;">When do I need to pay advance tax?</summary>
+    <div style="padding:0 20px 16px;font-size:14px;color:#475569;line-height:1.7;font-family:Inter,sans-serif;">Advance tax must be paid if your estimated tax liability (after TDS) exceeds ₹10,000 in a year. The schedule for FY 2026-27: <strong>15 June</strong> — 15% of total tax; <strong>15 September</strong> — 45% cumulative; <strong>15 December</strong> — 75% cumulative; <strong>15 March</strong> — 100%. Senior citizens (60+) without business income are exempt from advance tax. Non-payment attracts interest under Section 234B and 234C at 1% per month.</div>
+  </details>
+</div>
+
 <!-- FOOTER -->
 <footer style="background:#F9FAFB;border-top:1px solid #E5E7EB;padding:24px;text-align:center;font-size:12px;color:#9CA3AF;margin-top:40px">
   <div style="max-width:800px;margin:0 auto">
     <img src="logo.png" alt="Finosutra" style="height:32px;margin-bottom:8px;opacity:.7">
-    <div style="margin-bottom:8px">Income Tax Calculator FY 2025-26 | AY 2026-27</div>
+    <div style="margin-bottom:8px">Income Tax Calculator FY 2026-27 | AY 2027-28</div>
     <div style="color:#D1D5DB;font-size:11px">
       ⚠ This tool is for educational and estimation purposes only. Consult a qualified CA for official filing advice.
     </div>
