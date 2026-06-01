@@ -1615,18 +1615,10 @@ function exportXL(){
       if (cell && typeof cell.v === 'number') cell.s = {...MONEY};
     }
   }
-  XLSX.utils.book_append_sheet(wb, ws5, "Balance Sheet Snapshot");
-
-  /* =====================================================
-     DOWNLOAD
-  ===================================================== */
-
-  XLSX.writeFile(wb, "Finosutra_IND_AS_116_Lease_Report.xlsx");
+  XLSX.utils.book_append_sheet(wb, ws5, "Balance Sheet Impact");
+  XLSX.utils.writeFile(wb, "Finosutra_IND_AS_116_Report.xlsx");
 }
-
-<a href="https://wa.me/918208063319?text=Hi%20Finosutra%2C%20I%20need%20help%20with%20IND%20AS%20116%20lease%20calculation" class="wa-btn" target="_blank" rel="noopener">
-  <i class="fa-brands fa-whatsapp"></i>
-</a>
+</script>
 
 </body>
 </html>
