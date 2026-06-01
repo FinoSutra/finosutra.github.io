@@ -31,7 +31,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -321,6 +320,9 @@ tr:nth-child(even):hover td{background:rgba(99,102,241,0.05)}
   .tbl-wrap,.je-wrap,.sum-pad{max-height:none}
   .snapshot-grid{grid-template-columns:1fr 1fr}
 }
+.wa-btn{position:fixed;bottom:24px;right:24px;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,.4);z-index:999;text-decoration:none;transition:transform .2s}
+.wa-btn:hover{transform:scale(1.08)}
+.wa-btn i{color:#fff;font-size:24px}
 </style>
 <!-- Google Analytics GA4 — replace G-Z2G710PHNQ with your real Measurement ID -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
@@ -329,6 +331,9 @@ tr:nth-child(even):hover td{background:rgba(99,102,241,0.05)}
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-Z2G710PHNQ');
+</script>
+<script>
+  function gaEvent(n,p){ if(typeof gtag==='function') gtag('event',n,p||{}); }
 </script>
 </head>
 
@@ -695,6 +700,7 @@ function fyLabel(date){
    MAIN CALCULATE BUTTON
 ═══════════════════════════════════════════════════════ */
 document.getElementById('btnCalc').onclick = function(){
+  gaEvent('calculator_used', { tool_name: 'IND AS 116 Lease Calculator' });
 
   const d       = document.getElementById('fDate').value;
   const t       = document.getElementById('fTerm').value;
@@ -1245,6 +1251,7 @@ document.getElementById('btnExp').onclick = initiatePayment;
 
 function initiatePayment(){
   if(!R||!INP){ alert('Please calculate the lease schedule first.'); return; }
+  gaEvent('payment_initiated', { tool_name: 'IND AS 116', amount: 99, currency: 'INR' });
   var options = {
     key:'rzp_live_Sty2e9lT4uXzJJ',
     amount:9900,
@@ -1254,12 +1261,12 @@ function initiatePayment(){
     image:'',
     theme:{color:'#6366F1'},
     modal:{ondismiss:function(){ showToast('Payment cancelled. No charges made.','#8B5CF6'); }},
-    handler:function(response){ showToast('✓ Payment successful! Downloading your report...','#5EC98A'); setTimeout(function(){exportXL();},800); },
+    handler:function(response){ gaEvent('purchase', { tool_name: 'IND AS 116', value: 99, currency: 'INR', transaction_id: response.razorpay_payment_id }); showToast('✓ Payment successful! Downloading your report...','#5EC98A'); setTimeout(function(){exportXL();},800); },
     prefill:{name:'',email:'',contact:''}
   };
   try{
     var rzp = new Razorpay(options);
-    rzp.on('payment.failed',function(resp){ showToast('Payment failed: '+resp.error.description,'#FF8A80'); });
+    rzp.on('payment.failed',function(resp){ gaEvent('payment_failed', { tool_name: 'IND AS 116', reason: resp.error.description }); showToast('Payment failed: '+resp.error.description,'#FF8A80'); });
     rzp.open();
   } catch(e){
     alert('Could not open payment window. Please check your connection and try again.');
@@ -1617,6 +1624,9 @@ function exportXL(){
   XLSX.writeFile(wb, "Finosutra_IND_AS_116_Lease_Report.xlsx");
 }
 
-</script>
+<a href="https://wa.me/918208063319?text=Hi%20Finosutra%2C%20I%20need%20help%20with%20IND%20AS%20116%20lease%20calculation" class="wa-btn" target="_blank" rel="noopener">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
 </body>
 </html>

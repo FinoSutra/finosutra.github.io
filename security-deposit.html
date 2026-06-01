@@ -211,6 +211,7 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
   gtag('js', new Date());
   gtag('config', 'G-Z2G710PHNQ');
 </script>
+<script>function gaEvent(n,p){ if(typeof gtag==='function') gtag('event',n,p||{}); }</script>
 </head>
 <body>
 
@@ -418,6 +419,7 @@ var FULL = function(n){
 var FN = function(n){ return Math.round(n).toLocaleString('en-IN'); };
 
 function calculate(){
+  gaEvent('calculator_used', { tool_name: 'IND AS 109 Security Deposit Calculator' });
   var deposit = parseFloat(document.getElementById('depositAmt').value)||0;
   var rate    = parseFloat(document.getElementById('marketRate').value)/100||0;
   var tenure  = parseFloat(document.getElementById('tenure').value)||0;

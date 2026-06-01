@@ -16,6 +16,7 @@
 <!-- GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+<script>function gaEvent(n,p){ if(typeof gtag==='function') gtag('event',n,p||{}); }</script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 :root{
@@ -1363,6 +1364,7 @@ function getInputs(){
 let lastResults = null;
 
 function calculate(){
+  gaEvent('calculator_used', { tool_name: 'Income Tax Calculator FY 2025-26' });
   const inputs = getInputs();
   const newResult = computeForRegime('new', inputs);
   const oldResult = computeForRegime('old', inputs);

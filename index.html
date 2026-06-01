@@ -1610,6 +1610,28 @@ document.getElementById('navToggle').onclick = function(){
   actions.classList.toggle('open');
   this.querySelector('i').className = links.classList.contains('open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
 };
+// GA4 helper
+function gaEvent(eventName, params){
+  if(typeof gtag === 'function') gtag('event', eventName, params || {});
+}
+
+// Track "Open tool" button clicks
+document.querySelectorAll('a.btn').forEach(function(link){
+  link.addEventListener('click', function(){
+    var label = (link.textContent || '').trim().replace(/\s+/g,' ');
+    var dest = link.getAttribute('href') || '';
+    gaEvent('tool_open', { tool_name: dest, button_label: label });
+  });
+});
+
+// Track "Notify me" modal opens
+function notifyMe(product){
+  document.getElementById('notifyProduct').value = product;
+  document.getElementById('notifyProductName').textContent = 'We\'ll email you as soon as '+product+' is ready to use.';
+  document.getElementById('notifyModal').style.display = 'flex';
+  gaEvent('waitlist_open', { product_name: product });
+}
+
 function handleFormSubmit(e){
   e.preventDefault();
   var form = e.target;
@@ -1630,6 +1652,7 @@ function handleFormSubmit(e){
       document.getElementById('formSuccess').style.display = 'block';
       form.reset();
       btn.innerHTML = '<i class="fa-solid fa-check"></i> Sent!';
+      gaEvent('contact_form_submit', { form_id: 'contactForm' });
     } else {
       return response.json().then(function(data) {
         throw new Error(data.error || 'Form submission failed');
@@ -1642,11 +1665,6 @@ function handleFormSubmit(e){
     alert('Oops! Message could not be sent. Please email us directly at fino.sutra07@gmail.com');
   });
 }
-function notifyMe(product){
-  document.getElementById('notifyProduct').value = product;
-  document.getElementById('notifyProductName').textContent = 'We\'ll email you as soon as '+product+' is ready to use.';
-  document.getElementById('notifyModal').style.display = 'flex';
-}
 function closeNotify(){
   document.getElementById('notifyModal').style.display = 'none';
   document.getElementById('notifySuccess').style.display = 'none';
@@ -1655,6 +1673,7 @@ function handleNotify(e){
   e.preventDefault();
   var form = e.target;
   var btn = form.querySelector('button[type="submit"]');
+  var productName = document.getElementById('notifyProduct').value;
   btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
   btn.disabled = true;
 
@@ -1666,6 +1685,7 @@ function handleNotify(e){
   .then(function(r) {
     document.getElementById('notifySuccess').style.display = 'block';
     form.reset();
+    gaEvent('waitlist_signup', { product_name: productName });
     setTimeout(function(){ closeNotify(); }, 2500);
   })
   .catch(function() {
