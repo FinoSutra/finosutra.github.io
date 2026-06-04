@@ -3,83 +3,91 @@
 
   <!-- Homepage -->
   <url>
-    <loc>https://finosutra.com/</loc>
-    <lastmod>2026-05-31</lastmod>
+    <loc>https://www.finosutra.com/</loc>
+    <lastmod>2026-06-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <!-- IND AS Tools -->
   <url>
-    <loc>https://finosutra.com/indas116.html</loc>
-    <lastmod>2026-05-31</lastmod>
+    <loc>https://www.finosutra.com/indas116.html</loc>
+    <lastmod>2026-06-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://finosutra.com/security-deposit.html</loc>
-    <lastmod>2026-05-31</lastmod>
+    <loc>https://www.finosutra.com/security-deposit.html</loc>
+    <lastmod>2026-06-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- GST Tools -->
   <url>
-    <loc>https://finosutra.com/gst-calculator.html</loc>
-    <lastmod>2026-05-31</lastmod>
+    <loc>https://www.finosutra.com/gst-calculator.html</loc>
+    <lastmod>2026-06-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- Calculators -->
   <url>
-    <loc>https://finosutra.com/emi-calculator.html</loc>
-    <lastmod>2026-05-31</lastmod>
+    <loc>https://www.finosutra.com/emi-calculator.html</loc>
+    <lastmod>2026-06-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- Calculators (continued) -->
   <url>
-    <loc>https://finosutra.com/india-tax-calculator.html</loc>
-    <lastmod>2026-05-31</lastmod>
+    <loc>https://www.finosutra.com/india-tax-calculator.html</loc>
+    <lastmod>2026-06-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://finosutra.com/salary-calculator.html</loc>
-    <lastmod>2026-05-31</lastmod>
+    <loc>https://www.finosutra.com/salary-calculator.html</loc>
+    <lastmod>2026-06-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://finosutra.com/hra-calculator.html</loc>
-    <lastmod>2026-05-31</lastmod>
+    <loc>https://www.finosutra.com/hra-calculator.html</loc>
+    <lastmod>2026-06-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://finosutra.com/gratuity-calculator.html</loc>
-    <lastmod>2026-05-31</lastmod>
+    <loc>https://www.finosutra.com/gratuity-calculator.html</loc>
+    <lastmod>2026-06-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+
+  <!-- Templates & Downloads -->
+  <url>
+    <loc>https://www.finosutra.com/templates.html</loc>
+    <lastmod>2026-06-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
   <!-- Legal -->
   <url>
-    <loc>https://finosutra.com/privacy.html</loc>
-    <lastmod>2026-05-31</lastmod>
+    <loc>https://www.finosutra.com/privacy.html</loc>
+    <lastmod>2026-06-04</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://finosutra.com/terms.html</loc>
-    <lastmod>2026-05-31</lastmod>
+    <loc>https://www.finosutra.com/terms.html</loc>
+    <lastmod>2026-06-04</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

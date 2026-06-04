@@ -7,21 +7,21 @@
 <meta name="keywords" content="IND AS 109 security deposit calculator, security deposit fair value india, present value security deposit, IFRS 9 security deposit, EIR amortization, Day 1 loss calculator, financial instruments IND AS 109"/>
 <meta name="author" content="Finosutra"/>
 <meta name="robots" content="index, follow"/>
-<link rel="canonical" href="https://finosutra.com/security-deposit.html"/>
+<link rel="canonical" href="https://www.finosutra.com/security-deposit.html"/>
 
 <!-- Open Graph -->
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Finosutra"/>
 <meta property="og:title" content="IND AS 109 Security Deposit Fair Value Calculator — Finosutra"/>
 <meta property="og:description" content="Free IND AS 109 / IFRS 9 security deposit calculator. Present value, EIR amortization, journal entries and balance sheet impact."/>
-<meta property="og:url" content="https://finosutra.com/security-deposit.html"/>
-<meta property="og:image" content="https://finosutra.com/og-image.png"/>
+<meta property="og:url" content="https://www.finosutra.com/security-deposit.html"/>
+<meta property="og:image" content="https://www.finosutra.com/og-image.png"/>
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="IND AS 109 Security Deposit Fair Value Calculator — Finosutra"/>
 <meta name="twitter:description" content="Free IND AS 109 / IFRS 9 security deposit calculator. Present value, EIR amortization, journal entries and balance sheet impact."/>
-<meta name="twitter:image" content="https://finosutra.com/og-image.png"/>
+<meta name="twitter:image" content="https://www.finosutra.com/og-image.png"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 
@@ -202,6 +202,43 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
   .page-header{padding:28px 16px 20px}
   nav{padding:0 16px}
 }
+
+/* ── STICKY EXPORT CTA ── */
+#sticky-export-bar {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(135deg, #1E293B, #0F172A);
+  padding: 14px 24px;
+  z-index: 1000;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.25);
+  border-top: 2px solid #6366F1;
+  font-family: 'Inter', sans-serif;
+}
+#sticky-export-bar .sticky-text { color: #fff; font-size: 14px; font-weight: 600; line-height: 1.4; }
+#sticky-export-bar .sticky-sub  { color: #94A3B8; font-size: 12px; font-weight: 400; }
+#sticky-export-bar .sticky-btn  {
+  background: linear-gradient(135deg, #6366F1, #8B5CF6);
+  color: #fff; border: none; border-radius: 10px;
+  padding: 12px 28px; font-size: 15px; font-weight: 700;
+  cursor: pointer; white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(99,102,241,0.5);
+  transition: transform .15s, box-shadow .15s;
+  font-family: 'Inter', sans-serif;
+}
+#sticky-export-bar .sticky-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99,102,241,0.6); }
+#sticky-export-bar .sticky-close {
+  background: none; border: none; color: #64748B;
+  font-size: 20px; cursor: pointer; padding: 4px 8px; line-height: 1;
+}
+@media(max-width:600px){
+  #sticky-export-bar { flex-direction: column; align-items: flex-start; padding: 14px 16px; }
+  #sticky-export-bar .sticky-btn { width: 100%; text-align: center; }
+}
+
 </style>
 <!-- Google Analytics GA4 — replace G-Z2G710PHNQ with your real Measurement ID -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
@@ -219,7 +256,7 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
 <nav>
   <div class="nav-inner">
     <a href="index.html" class="logo">
-      <img src="logo.png" alt="Finosutra" style="height:72px;width:auto;display:block;">
+      <img loading="eager" src="logo.png" alt="Finosutra" style="height:72px;width:auto;display:block;">
     </a>
     <div class="nav-right">
       <a href="index.html" class="btn-back">
@@ -233,7 +270,7 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
 <!-- PAGE HEADER -->
 <div class="page-header">
   <div class="page-label">Security Deposit Accounting Calculator</div>
-  <h1>Ind AS 109 / IFRS 9<br>Security Deposit — Fair Value Tool</h1>
+  <h1>IND AS 109 / IFRS 9 Security Deposit Fair Value Calculator</h1>
   <p>Compute fair value at inception, Day 1 discount, complete EIR amortisation schedule, journal entries, and balance sheet / P&amp;L impact for security deposits given or received.</p>
 </div>
 
@@ -597,6 +634,7 @@ function calculate(){
   document.getElementById('resultContent').style.display = 'block';
   document.getElementById('expRow').style.display = 'flex';
   document.getElementById('expInfoCard').style.display = 'block';
+  document.getElementById('sticky-export-bar').style.display = 'flex';
   document.getElementById('expNote').textContent = tenure+' year schedule · '+(isIndAS?'Ind AS 109':'IFRS 9')+' compliant';
   showTab('summary');
 }
@@ -623,10 +661,12 @@ function initiatePayment(){
     description: 'Security Deposit Report — Excel Export',
     theme: { color: '#6366F1' },
     modal: { ondismiss: function(){ showToast('Payment cancelled. No charges made.','cancel'); } },
-    handler: function(response){ showToast('Payment successful! Downloading your report...','success'); setTimeout(exportXL, 800); },
+    handler: function(response){ showToast('Payment successful! Downloading your report...','success'); setTimeout(function(){ exportXL(); try{localStorage.removeItem('fino_sd_state');}catch(e){} }, 800); },
     prefill: { name:'', email:'', contact:'' }
   };
   try {
+    // Save state before payment (mobile UPI kills JS memory)
+    try { localStorage.setItem('fino_sd_state', JSON.stringify({data: SD, ts: Date.now()})); } catch(e){}
     var rzp = new Razorpay(options);
     rzp.on('payment.failed', function(resp){ showToast('Payment failed: '+resp.error.description,'fail'); });
     rzp.open();
@@ -779,6 +819,43 @@ window.onload = function(){ calculate(); };
 </script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
+
+
+<div id="sd-recovery-banner" style="display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1E293B;color:#fff;padding:14px 24px;border-radius:12px;font-family:Inter,sans-serif;font-size:14px;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,.3);display:flex;align-items:center;gap:14px;">
+  <span>✅ Payment confirmed — your data was restored.</span>
+  <button onclick="recoverSD()" style="background:#6366F1;color:#fff;border:none;padding:8px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px;">Download Excel</button>
+  <button onclick="document.getElementById('sd-recovery-banner').style.display='none'" style="background:transparent;color:#94A3B8;border:none;cursor:pointer;font-size:18px;line-height:1;">✕</button>
+</div>
+<script>
+(function(){
+  try {
+    var saved = localStorage.getItem('fino_sd_state');
+    if(!saved) return;
+    var obj = JSON.parse(saved);
+    if(Date.now() - obj.ts > 30*60*1000){ localStorage.removeItem('fino_sd_state'); return; }
+    SD = obj.data;
+    var banner = document.getElementById('sd-recovery-banner');
+    if(banner) banner.style.display='flex';
+  } catch(e){}
+})();
+function recoverSD(){
+  document.getElementById('sd-recovery-banner').style.display='none';
+  exportXL();
+  try{localStorage.removeItem('fino_sd_state');}catch(e){}
+}
+</script>
+
+<!-- STICKY EXPORT BAR -->
+<div id="sticky-export-bar">
+  <div>
+    <div class="sticky-text">✅ Your schedule is ready — get the audit-ready Excel report</div>
+    <div class="sticky-sub">Fair value workings · EIR schedule · Journal entries · BS & P&L impact · One-time ₹99</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+    <button class="sticky-btn" onclick="initiatePayment()">⬇ Download Excel — ₹99</button>
+    <button class="sticky-close" onclick="document.getElementById('sticky-export-bar').style.display='none'" title="Dismiss">✕</button>
+  </div>
+</div>
 
 </body>
 </html>

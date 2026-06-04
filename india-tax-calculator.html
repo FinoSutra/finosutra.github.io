@@ -6,12 +6,12 @@
 <title>Income Tax Calculator FY 2026-27 | AY 2027-28 | Finosutra</title>
 <meta name="description" content="Free India Income Tax Calculator for FY 2026-27 (AY 2027-28). Compare New vs Old Regime, compute 87A rebate, HRA exemption, capital gains, 80C/80D deductions and more."/>
 <meta name="keywords" content="income tax calculator India 2026-27, new regime tax calculator, old regime tax calculator, 87A rebate, HRA exemption, capital gains tax India, AY 2027-28"/>
-<link rel="canonical" href="https://finosutra.com/india-tax-calculator.html"/>
+<link rel="canonical" href="https://www.finosutra.com/india-tax-calculator.html"/>
 <!-- Open Graph -->
 <meta property="og:title" content="Income Tax Calculator FY 2026-27 | Finosutra"/>
 <meta property="og:description" content="Free professional-grade India income tax calculator. New vs Old Regime comparison, capital gains, deductions, and more."/>
-<meta property="og:url" content="https://finosutra.com/india-tax-calculator.html"/>
-<meta property="og:image" content="https://finosutra.com/og-image.png"/>
+<meta property="og:url" content="https://www.finosutra.com/india-tax-calculator.html"/>
+<meta property="og:image" content="https://www.finosutra.com/og-image.png"/>
 <meta property="og:type" content="website"/>
 <!-- GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
@@ -195,13 +195,54 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <!-- Razorpay -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Income Tax Calculator FY 2026-27 | AY 2027-28",
+  "url": "https://www.finosutra.com/india-tax-calculator.html",
+  "description": "Professional income tax calculator for FY 2026-27. New vs Old Regime comparison, 87A rebate, HRA, 80C deductions, capital gains and surcharge. Download CA-ready Excel for ₹99.",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web Browser",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "creator": { "@type": "Organization", "name": "Finosutra", "url": "https://www.finosutra.com" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Which is better — New Regime or Old Regime for FY 2026-27?",
+      "acceptedAnswer": { "@type": "Answer", "text": "It depends on your deductions. The New Regime offers lower slab rates but removes most deductions (80C, HRA, LTA). The Old Regime allows deductions and is better if your total deductions exceed ₹3.75 lakh. Use Finosutra's calculator to compare both regimes instantly." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the income tax slab for FY 2026-27 under the New Regime?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Under the New Regime for FY 2026-27: 0% up to ₹3 lakh, 5% from ₹3-7 lakh, 10% from ₹7-10 lakh, 15% from ₹10-12 lakh, 20% from ₹12-15 lakh, and 30% above ₹15 lakh. A standard deduction of ₹75,000 is also available." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Section 87A rebate for FY 2026-27?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Under the New Regime, individuals with taxable income up to ₹12 lakh get a full tax rebate under Section 87A, making their effective tax zero. Under the Old Regime, the rebate applies to income up to ₹5 lakh." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this income tax calculator free?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, the full income tax calculation — including New vs Old Regime comparison, HRA exemption, 80C/80D deductions, capital gains and surcharge — is completely free. A 5-sheet CA-ready Excel report is available for ₹99." }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
 <!-- HEADER -->
 <header class="header">
   <a href="index.html" style="display:flex;align-items:center;text-decoration:none">
-    <img src="logo.png" alt="Finosutra" style="height:44px;width:auto;display:block;">
+    <img loading="eager" src="logo.png" alt="Finosutra" style="height:44px;width:auto;display:block;">
   </a>
   <div style="display:flex;align-items:center;gap:10px">
     <span style="font-size:12px;color:var(--muted)">Income Tax Calculator</span>
@@ -250,6 +291,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 
 <!-- MAIN CONTENT -->
 <main class="main">
+<h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Income Tax Calculator FY 2026-27 — New vs Old Regime | Finosutra</h1>
+
 
 <!-- ==================== PERSONAL INFO ==================== -->
 <section id="sec-personal" class="section active">
@@ -1357,7 +1400,7 @@ function getInputs(){
 let lastResults = null;
 
 function calculate(){
-  gaEvent('calculator_used', { tool_name: 'Income Tax Calculator FY 2025-26' });
+  gaEvent('calculator_used', { tool_name: 'Income Tax Calculator FY 2026-27' });
   const inputs = getInputs();
   const newResult = computeForRegime('new', inputs);
   const oldResult = computeForRegime('old', inputs);
@@ -1627,6 +1670,7 @@ function initiateExcelPayment(){
       btn.innerHTML = '⬇ Download Excel Report — ₹99';
       btn.disabled = false;
       generateAndDownloadExcel(response.razorpay_payment_id);
+      try{localStorage.removeItem('fino_tax_state');}catch(e){}
     },
     modal: {
       ondismiss: function(){
@@ -1635,6 +1679,8 @@ function initiateExcelPayment(){
       }
     }
   };
+  // Save state before payment (mobile UPI kills JS memory)
+  try { localStorage.setItem('fino_tax_state', JSON.stringify({data: lastResults, ts: Date.now()})); } catch(e){}
   const rzp = new Razorpay(options);
   rzp.open();
 }
@@ -1878,5 +1924,29 @@ setRegime('new');
 </div>
 
 
+
+<div id="tax-recovery-banner" style="display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1E293B;color:#fff;padding:14px 24px;border-radius:12px;font-family:Inter,sans-serif;font-size:14px;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,.3);align-items:center;gap:14px;">
+  <span>✅ Payment confirmed — your data was restored.</span>
+  <button onclick="recoverTax()" style="background:#6366F1;color:#fff;border:none;padding:8px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px;">Download Excel</button>
+  <button onclick="document.getElementById('tax-recovery-banner').style.display='none'" style="background:transparent;color:#94A3B8;border:none;cursor:pointer;font-size:18px;line-height:1;">✕</button>
+</div>
+<script>
+(function(){
+  try {
+    var saved = localStorage.getItem('fino_tax_state');
+    if(!saved) return;
+    var obj = JSON.parse(saved);
+    if(Date.now() - obj.ts > 30*60*1000){ localStorage.removeItem('fino_tax_state'); return; }
+    lastResults = obj.data;
+    var banner = document.getElementById('tax-recovery-banner');
+    if(banner) banner.style.display='flex';
+  } catch(e){}
+})();
+function recoverTax(){
+  document.getElementById('tax-recovery-banner').style.display='none';
+  generateAndDownloadExcel('RECOVERED');
+  try{localStorage.removeItem('fino_tax_state');}catch(e){}
+}
+</script>
 </body>
 </html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=1128"/>
+<title>Finosutra LinkedIn Banner — 1128×191</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  width:1128px;height:191px;overflow:hidden;
+  font-family:'Inter',-apple-system,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.canvas{
+  position:relative;width:1128px;height:191px;overflow:hidden;
+  background:#1E1B4B;
+}
+
+/* Grid overlay */
+.bg-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(99,102,241,0.12) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(99,102,241,0.12) 1px,transparent 1px);
+  background-size:48px 48px;
+  pointer-events:none;
+}
+
+/* Glow accents */
+.glow-l{
+  position:absolute;width:500px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(99,102,241,0.35) 0%,transparent 65%);
+  top:-150px;left:-80px;pointer-events:none;
+}
+.glow-r{
+  position:absolute;width:380px;height:380px;border-radius:50%;
+  background:radial-gradient(circle,rgba(139,92,246,0.25) 0%,transparent 65%);
+  bottom:-120px;right:80px;pointer-events:none;
+}
+
+/* Left: Logo + tagline */
+.left{
+  position:absolute;left:0;top:0;
+  width:340px;height:191px;
+  padding:28px 0 28px 44px;
+  display:flex;flex-direction:column;justify-content:center;
+  border-right:1px solid rgba(99,102,241,0.25);
+}
+.logo-wrap{margin-bottom:10px;}
+
+.tagline{
+  font-size:12px;font-weight:500;color:rgba(255,255,255,0.5);
+  letter-spacing:1.5px;text-transform:uppercase;
+}
+
+/* Center: Value props */
+.center{
+  position:absolute;left:340px;top:0;
+  width:500px;height:191px;
+  padding:0 40px;
+  display:flex;flex-direction:column;justify-content:center;
+  gap:10px;
+}
+.headline{
+  font-size:22px;font-weight:800;color:#FFFFFF;
+  letter-spacing:-0.8px;line-height:1.15;
+  margin-bottom:4px;
+}
+.headline span{
+  background:linear-gradient(120deg,#818CF8 0%,#A78BFA 60%,#C4B5FD 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.pills{display:flex;flex-wrap:wrap;gap:7px;}
+.pill{
+  padding:4px 12px;border-radius:20px;font-size:10px;font-weight:600;
+  letter-spacing:0.5px;white-space:nowrap;
+}
+.pill-purple{background:rgba(99,102,241,0.2);border:1px solid rgba(99,102,241,0.4);color:#A5B4FC;}
+.pill-green{background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.35);color:#6EE7B7;}
+.pill-amber{background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);color:#FCD34D;}
+
+/* Right: Stats */
+.right{
+  position:absolute;right:0;top:0;
+  width:288px;height:191px;
+  padding:24px 36px;
+  display:flex;flex-direction:column;justify-content:center;gap:14px;
+  border-left:1px solid rgba(99,102,241,0.25);
+}
+.stat{display:flex;flex-direction:column;gap:2px;}
+.stat-val{
+  font-size:22px;font-weight:800;color:#FFFFFF;
+  letter-spacing:-0.5px;line-height:1;
+}
+.stat-val span{
+  font-size:13px;font-weight:500;color:#818CF8;margin-left:3px;
+}
+.stat-lbl{font-size:10px;font-weight:500;color:rgba(255,255,255,0.4);letter-spacing:0.8px;text-transform:uppercase;}
+.stat-divider{width:100%;height:1px;background:rgba(99,102,241,0.2);}
+
+/* URL bottom right */
+.url{
+  position:absolute;bottom:12px;right:16px;
+  font-size:10px;color:rgba(255,255,255,0.25);font-weight:500;letter-spacing:0.5px;
+}
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <div class="bg-grid"></div>
+  <div class="glow-l"></div>
+  <div class="glow-r"></div>
+
+  <!-- LEFT: Logo -->
+  <div class="left">
+    <div class="logo-wrap">
+      <img src="logo.png" alt="Finosutra" style="height:72px;width:auto;display:block;filter:brightness(0) invert(1);">
+    </div>
+    <div class="tagline">Finance on Autopilot</div>
+  </div>
+
+  <!-- CENTER: Headline + tools -->
+  <div class="center">
+    <div class="headline">
+      Smarter Finance Tools<br>for <span>CAs, CFOs &amp; Finance Teams</span>
+    </div>
+    <div class="pills">
+      <div class="pill pill-purple">IND AS 116 / IFRS 16</div>
+      <div class="pill pill-purple">Security Deposit</div>
+      <div class="pill pill-green">GST Calculator</div>
+      <div class="pill pill-green">Income Tax</div>
+      <div class="pill pill-amber">EMI Calculator</div>
+      <div class="pill pill-amber">Excel Templates</div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Stats -->
+  <div class="right">
+    <div class="stat">
+      <div class="stat-val">6<span>Tools</span></div>
+      <div class="stat-lbl">Live &amp; Free to Use</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <div class="stat-val">100%<span></span></div>
+      <div class="stat-lbl">Browser-based · No Login</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <div class="stat-val">IND AS<span></span></div>
+      <div class="stat-lbl">India-Specific Standards</div>
+    </div>
+  </div>
+
+  <div class="url">finosutra.github.io</div>
+
+</div>
+</body>
+</html>

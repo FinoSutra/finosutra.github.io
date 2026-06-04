@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=1200"/>
+<title>Finosutra OG Image — 1200×630</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  width:1200px;height:630px;overflow:hidden;
+  background:#F7F8FF;
+  font-family:'Inter',-apple-system,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.canvas{position:relative;width:1200px;height:630px;overflow:hidden;}
+
+/* ── Background ── */
+.bg-glow-l{
+  position:absolute;width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(99,102,241,0.12) 0%,transparent 65%);
+  top:-200px;left:-100px;pointer-events:none;
+}
+.bg-glow-r{
+  position:absolute;width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(139,92,246,0.08) 0%,transparent 70%);
+  bottom:-80px;right:100px;pointer-events:none;
+}
+.bg-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(99,102,241,0.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(99,102,241,0.07) 1px,transparent 1px);
+  background-size:60px 60px;pointer-events:none;
+}
+
+/* ── Left zone ── */
+.left{
+  position:absolute;top:0;left:0;
+  width:610px;height:630px;
+  padding:52px 60px;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+
+.logo{display:flex;align-items:center;}
+
+/* Headline block */
+.headline-block{flex:1;display:flex;flex-direction:column;justify-content:center;padding:8px 0;}
+.eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
+  color:#6366F1;margin-bottom:16px;
+}
+.headline{
+  font-size:56px;font-weight:900;line-height:1.0;letter-spacing:-2.5px;
+  color:#111827;margin-bottom:18px;
+}
+.headline .gt{
+  background:linear-gradient(120deg,#6366F1 0%,#8B5CF6 50%,#A855F7 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.subtitle{font-size:15px;font-weight:400;color:#6B7280;line-height:1.6;max-width:430px;margin-bottom:24px;}
+
+.badges{display:flex;flex-wrap:wrap;gap:8px;}
+.badge{padding:5px 13px;border-radius:20px;font-size:11px;font-weight:600;}
+.bi{background:#EEF2FF;border:1px solid rgba(99,102,241,0.3);color:#4F46E5;}
+.bg_{background:#ECFDF5;border:1px solid rgba(16,185,129,0.3);color:#059669;}
+.ba{background:#FFFBEB;border:1px solid rgba(245,158,11,0.3);color:#D97706;}
+
+/* Trust bar */
+.trust-bar{display:flex;align-items:center;}
+.ti_{display:flex;align-items:center;gap:6px;font-size:11px;color:#9CA3AF;font-weight:500;padding-right:16px;}
+.td{width:5px;height:5px;border-radius:50%;background:#6366F1;flex-shrink:0;}
+.tdiv{width:1px;height:12px;background:#E5E7EB;margin-right:16px;}
+
+/* ── Vertical separator ── */
+.v-sep{
+  position:absolute;left:610px;top:40px;width:1px;height:550px;
+  background:linear-gradient(to bottom,transparent 0%,rgba(99,102,241,0.2) 25%,rgba(99,102,241,0.2) 75%,transparent 100%);
+}
+
+/* ── Right panel ── */
+.right{
+  position:absolute;top:0;left:610px;
+  width:590px;height:630px;
+  padding:44px 0 44px 48px;overflow:hidden;
+}
+
+/* ── Main dashboard card ── */
+.dash-card{
+  width:490px;
+  background:#FFFFFF;
+  border:1px solid rgba(99,102,241,0.18);
+  border-radius:16px;padding:22px 22px 18px;
+  box-shadow:0 4px 32px rgba(99,102,241,0.1),0 1px 4px rgba(0,0,0,0.04);
+  position:relative;z-index:2;
+}
+.dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.dash-title{font-size:12px;font-weight:600;color:#6B7280;letter-spacing:0.3px;}
+.live-badge{
+  font-size:10px;font-weight:700;padding:3px 9px;
+  background:#ECFDF5;border:1px solid rgba(16,185,129,0.35);
+  border-radius:6px;color:#059669;letter-spacing:1px;
+}
+
+/* Metrics grid */
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.metric{
+  background:#F7F8FF;border:1px solid rgba(99,102,241,0.1);
+  border-radius:10px;padding:12px 14px;
+}
+.metric-lbl{font-size:10px;color:#9CA3AF;font-weight:500;margin-bottom:5px;}
+.metric-val{font-size:19px;font-weight:700;letter-spacing:-0.5px;}
+.metric-sub{font-size:9.5px;color:#D1D5DB;margin-top:2px;}
+.cp{color:#6366F1;}.cw{color:#111827;}.cg{color:#059669;}.ca{color:#D97706;}
+
+/* Mini bar chart */
+.chart-lbl{font-size:10px;color:#9CA3AF;margin-bottom:7px;}
+.bars{display:flex;align-items:flex-end;gap:6px;height:42px;}
+.bar{flex:1;border-radius:3px 3px 0 0;background:linear-gradient(to top,#6366F1,#A78BFA);opacity:.8;}
+
+/* ── Floating mini cards ── */
+.card-gst{
+  position:absolute;top:34px;right:8px;width:182px;
+  background:#FFFFFF;
+  border:1px solid rgba(16,185,129,0.25);
+  border-radius:13px;padding:16px;z-index:3;
+  box-shadow:0 4px 20px rgba(16,185,129,0.12),0 1px 4px rgba(0,0,0,0.05);
+}
+.mini-lbl{font-size:10.5px;font-weight:600;color:#9CA3AF;margin-bottom:8px;}
+.mini-val{font-size:26px;font-weight:800;color:#059669;letter-spacing:-1px;line-height:1;}
+.mini-sub{font-size:9.5px;color:#D1D5DB;margin-top:5px;}
+
+.card-je{
+  position:absolute;bottom:36px;right:8px;width:205px;
+  background:#FFFFFF;
+  border:1px solid rgba(99,102,241,0.18);
+  border-radius:13px;padding:16px;z-index:3;
+  box-shadow:0 4px 20px rgba(99,102,241,0.1),0 1px 4px rgba(0,0,0,0.04);
+}
+.je-title{font-size:9.5px;font-weight:700;color:#9CA3AF;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;}
+.je-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid #F3F4F6;}
+.je-row:last-child{border-bottom:none;}
+.je-acc{font-size:11px;color:#6B7280;}
+.je-dr{font-size:11px;font-weight:700;color:#059669;}
+.je-cr{font-size:11px;font-weight:700;color:#EF4444;}
+
+/* ── URL corner ── */
+.url-corner{position:absolute;bottom:24px;right:24px;font-size:11px;color:#D1D5DB;font-weight:500;}
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <div class="bg-glow-l"></div>
+  <div class="bg-glow-r"></div>
+  <div class="bg-grid"></div>
+
+  <!-- Left content -->
+  <div class="left">
+    <div class="logo">
+      <img src="logo.png" alt="Finosutra" style="height:84px;width:auto;display:block;">
+    </div>
+
+    <div class="headline-block">
+      <div class="eyebrow">Finance Automation SaaS · India</div>
+      <div class="headline">Finance on<br><span class="gt">Autopilot</span></div>
+      <div class="subtitle">IND AS 116 · IND AS 109 · GST · EMI<br>Professional tools for CAs, CFOs &amp; Finance Teams</div>
+      <div class="badges">
+        <div class="badge bi">IND AS 116 / IFRS 16</div>
+        <div class="badge bi">Security Deposit</div>
+        <div class="badge bg_">GST Calculator</div>
+        <div class="badge ba">EMI Calculator</div>
+      </div>
+    </div>
+
+    <div class="trust-bar">
+      <div class="ti_"><div class="td"></div>Free to use</div>
+      <div class="tdiv"></div>
+      <div class="ti_"><div class="td"></div>Excel export</div>
+      <div class="tdiv"></div>
+      <div class="ti_"><div class="td"></div>Built for India</div>
+      <div class="tdiv"></div>
+      <div class="ti_"><div class="td"></div>finosutra.github.io</div>
+    </div>
+  </div>
+
+  <div class="v-sep"></div>
+
+  <!-- Right panel -->
+  <div class="right">
+    <div class="dash-card">
+      <div class="dash-header">
+        <div class="dash-title">IND AS 116 — Lease Amortization Schedule</div>
+        <div class="live-badge">LIVE</div>
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="metric-lbl">Lease Liability</div><div class="metric-val cp">₹24.8L</div><div class="metric-sub">Opening balance</div></div>
+        <div class="metric"><div class="metric-lbl">ROU Asset</div><div class="metric-val cw">₹26.2L</div><div class="metric-sub">Day 1 recognition</div></div>
+        <div class="metric"><div class="metric-lbl">Finance Charge</div><div class="metric-val cg">₹1.48L</div><div class="metric-sub">Year 1 P&amp;L</div></div>
+        <div class="metric"><div class="metric-lbl">Depreciation</div><div class="metric-val ca">₹5.24L</div><div class="metric-sub">Annual (SLM)</div></div>
+      </div>
+      <div class="chart-lbl">Lease liability — 5-year amortization</div>
+      <div class="bars">
+        <div class="bar" style="height:100%"></div>
+        <div class="bar" style="height:82%"></div>
+        <div class="bar" style="height:63%"></div>
+        <div class="bar" style="height:44%"></div>
+        <div class="bar" style="height:24%"></div>
+      </div>
+    </div>
+
+    <div class="card-gst">
+      <div class="mini-lbl">GST Payable</div>
+      <div class="mini-val">₹18,000</div>
+      <div class="mini-sub">₹1,00,000 × 18% IGST</div>
+    </div>
+
+    <div class="card-je">
+      <div class="je-title">Journal Entry · Day 1</div>
+      <div class="je-row"><div class="je-acc">ROU Asset A/c</div><div class="je-dr">Dr ₹26.2L</div></div>
+      <div class="je-row"><div class="je-acc">Lease Liability</div><div class="je-cr">Cr ₹24.8L</div></div>
+      <div class="je-row"><div class="je-acc">Prepaid Rent</div><div class="je-cr">Cr ₹1.4L</div></div>
+    </div>
+  </div>
+
+  <div class="url-corner">finosutra.github.io</div>
+
+</div>
+</body>
+</html>
