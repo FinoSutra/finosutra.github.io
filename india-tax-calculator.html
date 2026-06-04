@@ -190,6 +190,17 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 /* ---- SPECIAL HIGHLIGHT ---- */
 .tax-zero{font-family:'Inter',sans-serif;font-size:36px;font-weight:800;color:var(--green);text-align:center;padding:20px}
 .tax-zero-sub{text-align:center;color:var(--muted);font-size:13px;margin-top:4px}
+.wa-btn{position:fixed;bottom:24px;right:24px;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,.4);z-index:999;text-decoration:none;transition:transform .2s}.wa-btn:hover{transform:scale(1.08)}.wa-btn i{color:#fff;font-size:24px}
+
+/* ── STICKY EXPORT CTA ── */
+#sticky-export-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#1E293B,#0F172A);padding:14px 24px;z-index:1000;align-items:center;justify-content:space-between;gap:16px;box-shadow:0 -4px 24px rgba(0,0,0,.25);border-top:2px solid #6366F1;font-family:'Inter',sans-serif;}
+#sticky-export-bar .sticky-text{color:#fff;font-size:14px;font-weight:600;line-height:1.4}
+#sticky-export-bar .sticky-sub{color:#94A3B8;font-size:12px;font-weight:400}
+#sticky-export-bar .sticky-btn{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 4px 16px rgba(99,102,241,.5);transition:transform .15s,box-shadow .15s;font-family:'Inter',sans-serif;}
+#sticky-export-bar .sticky-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(99,102,241,.6)}
+#sticky-export-bar .sticky-close{background:none;border:none;color:#64748B;font-size:20px;cursor:pointer;padding:4px 8px;line-height:1}
+@media(max-width:600px){#sticky-export-bar{flex-direction:column;align-items:flex-start;padding:14px 16px}#sticky-export-bar .sticky-btn{width:100%;text-align:center}}
+
 </style>
 <!-- SheetJS for Excel generation -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -1405,6 +1416,7 @@ function calculate(){
   const newResult = computeForRegime('new', inputs);
   const oldResult = computeForRegime('old', inputs);
   lastResults = { new: newResult, old: oldResult, inputs };
+  document.getElementById('sticky-export-bar').style.display='flex';
   renderResult(newResult, oldResult);
 }
 
@@ -1948,5 +1960,22 @@ function recoverTax(){
   try{localStorage.removeItem('fino_tax_state');}catch(e){}
 }
 </script>
+
+<a href="https://wa.me/918208063319?text=Hi%20Finosutra%2C%20I%20need%20help%20with%20Income%20Tax%20calculation" class="wa-btn" target="_blank" rel="noopener">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<!-- STICKY EXPORT BAR -->
+<div id="sticky-export-bar">
+  <div>
+    <div class="sticky-text">✅ Your report is ready — get the audit-ready Excel</div>
+    <div class="sticky-sub">New vs Old Regime · HRA · 80C/80D · Capital gains · CA-ready report · One-time ₹99</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+    <button class="sticky-btn" onclick="initiateExcelPayment()">⬇ Download Excel — ₹99</button>
+    <button class="sticky-close" onclick="document.getElementById('sticky-export-bar').style.display='none'" title="Dismiss">✕</button>
+  </div>
+</div>
+
 </body>
 </html>

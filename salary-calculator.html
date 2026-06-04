@@ -182,6 +182,16 @@ footer img{height:28px;margin-bottom:8px;opacity:.6}
   .hero h1{font-size:24px}
 }
 .faq-section{padding:32px 0 40px}.faq-title{font-size:20px;font-weight:800;color:var(--text);margin-bottom:20px}.faq-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 20px;margin-bottom:10px}.faq-q{font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px}.faq-a{font-size:13px;color:var(--muted);line-height:1.7}
+
+/* ── STICKY EXPORT CTA ── */
+#sticky-export-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#1E293B,#0F172A);padding:14px 24px;z-index:1000;align-items:center;justify-content:space-between;gap:16px;box-shadow:0 -4px 24px rgba(0,0,0,.25);border-top:2px solid #6366F1;font-family:'Inter',sans-serif;}
+#sticky-export-bar .sticky-text{color:#fff;font-size:14px;font-weight:600;line-height:1.4}
+#sticky-export-bar .sticky-sub{color:#94A3B8;font-size:12px;font-weight:400}
+#sticky-export-bar .sticky-btn{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 4px 16px rgba(99,102,241,.5);transition:transform .15s,box-shadow .15s;font-family:'Inter',sans-serif;}
+#sticky-export-bar .sticky-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(99,102,241,.6)}
+#sticky-export-bar .sticky-close{background:none;border:none;color:#64748B;font-size:20px;cursor:pointer;padding:4px 8px;line-height:1}
+@media(max-width:600px){#sticky-export-bar{flex-direction:column;align-items:flex-start;padding:14px 16px}#sticky-export-bar .sticky-btn{width:100%;text-align:center}}
+
 </style>
 <script type="application/ld+json">
 {
@@ -631,6 +641,7 @@ function calculate(){
   const nr = compute(ctc, 'new');
   const or = compute(ctc, 'old');
   lastResult = {nr, or, ctc};
+  document.getElementById('sticky-export-bar').style.display='flex';
 
   document.getElementById('emptyState').style.display = 'none';
   document.getElementById('resultArea').style.display = 'block';
@@ -959,5 +970,18 @@ function recoverSal(){
   try{localStorage.removeItem('fino_sal_state');}catch(e){}
 }
 </script>
+
+<!-- STICKY EXPORT BAR -->
+<div id="sticky-export-bar">
+  <div>
+    <div class="sticky-text">✅ Your report is ready — get the audit-ready Excel</div>
+    <div class="sticky-sub">CTC breakup · New vs Old regime · PF · TDS · Full salary report · One-time ₹99</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+    <button class="sticky-btn" onclick="initiatePayment()">⬇ Download Excel — ₹99</button>
+    <button class="sticky-close" onclick="document.getElementById('sticky-export-bar').style.display='none'" title="Dismiss">✕</button>
+  </div>
+</div>
+
 </body>
 </html>
