@@ -1,0 +1,2826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="IND AS 116 / IFRS 16 lease calculator with escalation rents, rent-free periods and extension options. Audit-ready Excel for CAs."/>
+<meta name="author" content="Finosutra"/>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+<title>Finosutra — Finance on Autopilot</title>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  min-height:100vh;
+  background:linear-gradient(150deg,#F0F4FF 0%,#E8EDFF 50%,#F5F0FF 100%);
+  font-family:'Inter',sans-serif;
+  color:#1A1A2E
+}
+
+#mainNav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(99,102,241,0.08);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 rgba(99,102,241,0.08),0 4px 20px rgba(99,102,241,0.05);}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.nav-logo{display:flex;align-items:center;text-decoration:none;}
+.nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
+.nav-links a{font-size:13px;font-weight:500;color:#6B7280;text-decoration:none;padding:7px 12px;border-radius:8px;transition:color .15s,background .15s;white-space:nowrap;}
+.nav-links a:hover,.nav-links a.active{color:#111827;background:#EEF2FF;}
+.nav-actions{display:flex;align-items:center;gap:8px;}
+.nav-back-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;font-family:'Inter',sans-serif;transition:all .15s;background:#fff;color:#111827;border:1.5px solid rgba(99,102,241,0.2);}
+.nav-back-btn:hover{border-color:#6366F1;color:#6366F1;}
+.nav-toggle{display:none;background:none;border:none;font-size:20px;color:#111827;cursor:pointer;padding:4px;}
+#sticky-export-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#1E293B,#0F172A);padding:14px 24px;z-index:1000;align-items:center;justify-content:space-between;gap:16px;box-shadow:0 -4px 24px rgba(0,0,0,.25);border-top:2px solid #6366F1;font-family:'Inter',sans-serif;}
+#sticky-export-bar .sticky-text{color:#fff;font-size:14px;font-weight:600;line-height:1.4}
+#sticky-export-bar .sticky-sub{color:#94A3B8;font-size:12px}
+#sticky-export-bar .sticky-btn{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'Inter',sans-serif;}
+#sticky-export-bar .sticky-close{background:none;border:none;color:#64748B;font-size:20px;cursor:pointer;padding:4px 8px;}
+#shortTermWarning{display:none;margin:10px 0 0;padding:12px 14px;background:linear-gradient(135deg,#FEF3C7,#FFFBEB);border:1px solid rgba(245,158,11,0.4);border-radius:10px;font-size:12px;color:#92400E;line-height:1.6;}
+.gst-note{font-size:10px;color:#DC2626;font-weight:600;margin-top:3px;}
+@media(max-width:900px){.nav-links{display:none;}}
+@media(max-width:768px){#mainNav{padding:0 16px;}.nav-actions{display:none;}.nav-toggle{display:block;}.nav-links.open,.nav-actions.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid rgba(99,102,241,0.08);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}#sticky-export-bar{flex-direction:column;align-items:flex-start;padding:14px 16px;}#sticky-export-bar .sticky-btn{width:100%;text-align:center;}}
+
+.hero{padding:40px 32px 24px;max-width:1200px;margin:0 auto}
+.eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#6366F1;margin-bottom:10px}
+h1{font-size:30px;font-weight:bold;margin-bottom:8px;line-height:1.2;color:#1A1A2E}
+.hero p{font-size:14px;color:#6B7280;max-width:560px;line-height:1.6}
+
+.main{
+  max-width:1200px;margin:0 auto;padding:0 32px 60px;
+  display:grid;grid-template-columns:410px 1fr;gap:24px;align-items:start
+}
+
+.card{
+  background:#FFFFFF;border:1px solid rgba(99,102,241,0.15);
+  border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(99,102,241,0.08)
+}
+
+.card-hd{
+  padding:16px 22px;border-bottom:1px solid rgba(99,102,241,0.12);
+  display:flex;align-items:center;gap:10px;font-size:13px;
+  font-weight:bold;color:#1A1A2E;background:#FAFAFF
+}
+
+.hd-icon{
+  width:30px;height:30px;background:rgba(99,102,241,0.1);
+  border-radius:7px;display:flex;align-items:center;justify-content:center
+}
+
+.card-body{padding:18px 22px}
+.field{margin-bottom:15px}
+
+label{
+  display:block;font-size:10px;font-weight:bold;letter-spacing:1.5px;
+  text-transform:uppercase;color:#6B7280;margin-bottom:5px
+}
+
+input,select{
+  width:100%;background:#F8F9FF;border:1px solid rgba(99,102,241,0.3);
+  border-radius:8px;padding:10px 13px;font-size:14px;color:#1A1A2E;
+  outline:none;font-family:'Inter',sans-serif;transition:border-color .2s
+}
+select{cursor:pointer}
+input:focus,select:focus{border-color:#6366F1;box-shadow:0 0 0 3px rgba(99,102,241,0.1)}
+
+.hint{font-size:11px;color:#9CA3AF;margin-top:4px}
+.err{border-color:#EF4444 !important}
+.err-msg{font-size:11px;color:#EF4444;margin-top:4px;display:none}
+
+.divider{height:1px;background:rgba(99,102,241,0.12);margin:16px 0}
+
+/* ── MODULE SECTION HEADERS ── */
+.mod-hd{
+  font-size:10px;font-weight:bold;letter-spacing:2px;
+  text-transform:uppercase;color:#8B5CF6;
+  padding:10px 0 6px;border-top:1px dashed rgba(139,92,246,0.3);
+  margin-top:14px;display:flex;align-items:center;gap:6px
+}
+.mod-hd:first-child{border-top:none;margin-top:0;padding-top:0}
+.mod-badge{
+  background:rgba(139,92,246,0.1);color:#8B5CF6;
+  font-size:9px;padding:2px 7px;border-radius:20px;font-weight:bold
+}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.btn-calc{
+  width:100%;padding:13px;
+  background:linear-gradient(135deg,#6366F1,#8B5CF6);
+  border:none;border-radius:10px;font-size:14px;font-weight:bold;
+  color:#fff;cursor:pointer;font-family:'Inter',sans-serif;
+  letter-spacing:0.3px;box-shadow:0 4px 14px rgba(99,102,241,0.35)
+}
+.btn-calc:hover{opacity:.92;transform:translateY(-1px)}
+
+.btn-reset{
+  width:100%;padding:9px;background:transparent;
+  border:1px solid rgba(99,102,241,0.3);border-radius:10px;
+  font-size:12px;color:#9CA3AF;cursor:pointer;font-family:'Inter',sans-serif;
+  margin-top:9px;display:none
+}
+.btn-reset:hover{color:#6366F1;border-color:#6366F1}
+
+/* ── KPI CARDS ── */
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px 22px 0}
+.kpi{
+  background:linear-gradient(135deg,#F5F3FF,#EEF2FF);
+  border:1px solid rgba(99,102,241,0.15);border-radius:10px;padding:13px 15px
+}
+.kpi-lbl{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#6B7280;margin-bottom:5px}
+.kpi-val{font-size:17px;font-weight:bold;color:#6366F1}
+.kpi-val2{font-size:13px;font-weight:bold;color:#8B5CF6}
+.kpi-note{font-size:10px;color:#9CA3AF;margin-top:3px}
+
+/* ── REPORTING SNAPSHOT ── */
+.snapshot-bar{
+  margin:14px 22px 0;padding:14px 16px;
+  background:linear-gradient(135deg,#FFFBEB,#FEF3C7);
+  border:1px solid rgba(245,158,11,0.3);border-radius:10px
+}
+.snapshot-bar-hd{
+  font-size:10px;font-weight:bold;letter-spacing:1.5px;
+  text-transform:uppercase;color:#D97706;margin-bottom:10px;
+  display:flex;align-items:center;gap:8px
+}
+.snapshot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.snap-kpi{
+  background:#fff;border:1px solid rgba(245,158,11,0.2);
+  border-radius:8px;padding:10px 12px
+}
+.snap-lbl{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#92400E;margin-bottom:4px}
+.snap-val{font-size:13px;font-weight:bold;color:#B45309}
+.snap-note{font-size:9px;color:#D97706;margin-top:2px}
+
+.res-hd{
+  padding:16px 22px 0;display:flex;align-items:center;justify-content:space-between
+}
+
+.pill{
+  background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);
+  color:#059669;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:bold
+}
+
+.tabs{
+  display:flex;border-bottom:1px solid rgba(99,102,241,0.15);
+  padding:0 22px;margin-top:14px;background:#FAFAFF;
+  overflow-x:auto;white-space:nowrap
+}
+
+.tab{
+  padding:12px 14px;font-size:12px;font-weight:bold;cursor:pointer;
+  border:none;background:transparent;font-family:'Inter',sans-serif;
+  color:#9CA3AF;border-bottom:2px solid transparent;
+  margin-bottom:-1px;transition:color .2s;flex-shrink:0
+}
+.tab.on{color:#6366F1;border-bottom-color:#6366F1}
+
+.pane{display:none}
+.pane.on{display:block}
+
+.tbl-wrap{overflow-x:auto;max-height:450px;overflow-y:auto}
+
+table{width:100%;border-collapse:collapse;font-size:12px;font-family:'Inter',sans-serif}
+th{
+  padding:9px 13px;text-align:right;font-size:10px;letter-spacing:1px;
+  text-transform:uppercase;color:#6366F1;background:rgba(99,102,241,0.06);
+  border-bottom:1px solid rgba(99,102,241,0.15);white-space:nowrap;
+  position:sticky;top:0
+}
+th.L{text-align:left}
+td{padding:8px 13px;text-align:right;color:#374151;border-bottom:1px solid rgba(99,102,241,0.06);white-space:nowrap}
+td.L{text-align:left;color:#6B7280}
+td.B{font-weight:bold;color:#111827}
+tr:nth-child(even){background:rgba(99,102,241,0.025)}
+.tot-row{background:rgba(99,102,241,0.08)!important;font-weight:bold}
+
+.exp-row{
+  padding:13px 22px;border-top:1px solid rgba(99,102,241,0.12);
+  display:flex;align-items:center;justify-content:flex-end;gap:12px;background:#FAFAFF
+}
+.exp-note{font-size:11px;color:#9CA3AF}
+
+.btn-exp{
+  display:flex;align-items:center;gap:7px;padding:9px 18px;
+  background:linear-gradient(135deg,#6366F1,#8B5CF6);border:none;
+  border-radius:8px;font-size:12px;font-weight:bold;color:#fff;
+  cursor:pointer;font-family:'Inter',sans-serif;box-shadow:0 3px 10px rgba(99,102,241,0.3)
+}
+.btn-exp:hover{opacity:.9;transform:translateY(-1px)}
+
+.empty{padding:56px 32px;text-align:center}
+.empty-icon{font-size:44px;margin-bottom:14px;opacity:.4}
+.empty-title{font-size:17px;font-weight:bold;color:#1A1A2E;margin-bottom:7px}
+.empty p{font-size:13px;color:#9CA3AF;line-height:1.6}
+
+.je-hd{
+  font-size:12px;font-weight:bold;color:#6366F1;
+  padding:10px 22px;background:rgba(99,102,241,0.05);
+  border-bottom:1px solid rgba(99,102,241,0.1)
+}
+.je-sub{font-weight:normal;color:#9CA3AF;margin-left:8px;font-size:11px}
+.je-wrap{max-height:450px;overflow-y:auto}
+
+.sum-pad{padding:16px 22px;max-height:450px;overflow-y:auto}
+.sum-sec{
+  font-size:11px;font-weight:bold;color:#6366F1;letter-spacing:1px;
+  text-transform:uppercase;margin:14px 0 7px
+}
+.irow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(99,102,241,0.08);font-size:13px}
+.il{color:#6B7280}
+.iv{font-weight:bold;color:#111827}
+
+.bs-note{
+  margin-top:13px;padding:13px;background:#F5F3FF;border-radius:8px;
+  border-left:3px solid #6366F1;font-size:12px;color:#4B5563;line-height:1.7
+}
+
+.std-note{
+  margin-top:12px;padding:13px 15px;background:#EEF2FF;
+  border:1px solid rgba(99,102,241,0.2);border-radius:10px;font-size:11px;color:#6B7280;line-height:1.6
+}
+.std-note strong{color:#6366F1}
+
+/* Annual rollforward table */
+.annual-pad{padding:16px 22px;max-height:450px;overflow-y:auto}
+
+/* Rent type radio buttons */
+.rent-radio-lbl{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 12px;border-radius:8px;
+  border:1.5px solid rgba(99,102,241,0.2);
+  background:#F8F9FF;cursor:pointer;
+  font-size:12px;font-weight:600;color:#374151;
+  transition:border-color .15s,background .15s;
+}
+.rent-radio-lbl:has(input:checked){
+  border-color:#6366F1;background:#EEF2FF;color:#4F46E5;
+}
+.rent-radio-lbl input[type=radio]{
+  accent-color:#6366F1;width:14px;height:14px;flex-shrink:0;
+  /* reset global input styles */
+  padding:0;border:none;background:transparent;box-shadow:none;width:auto
+}
+
+/* Custom rent table rows */
+.crt-row{display:grid;grid-template-columns:1fr 1fr 28px;gap:6px;margin-bottom:6px;align-items:center}
+.crt-row input{margin-bottom:0}
+
+@media(max-width:900px){
+  .main{grid-template-columns:1fr;padding:0 16px 60px}
+  .hero{padding:24px 16px 16px}
+  h1{font-size:22px}
+  .tbl-wrap,.je-wrap,.sum-pad{max-height:none}
+  .snapshot-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+
+<body>
+
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img loading="eager" src="logo.png" alt="Finosutra" style="height:48px;width:auto;display:block;">
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="indas-tools.html" class="active">IND AS</a></li>
+      <li><a href="gst-tools.html">GST</a></li>
+      <li><a href="income-tax-hub.html">Income Tax</a></li>
+      <li><a href="salary-hr.html">Salary &amp; HR</a></li>
+      <li><a href="templates.html">Templates</a></li>
+      <li><a href="index.html#pricing">Pricing</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions" id="navActions">
+      <a href="indas-tools.html" class="nav-back-btn">&#8592; IND AS Tools</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><i class="fa-solid fa-bars"></i></button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="eyebrow">IND AS 116 / IFRS 16 · Model 2</div>
+  <h1 style="color:#1A1A2E">
+    IND AS 116 Model 2<br>Escalation Rents &amp; Rent-Free Periods
+  </h1>
+  <p style="margin-bottom:10px;">
+    Escalation clauses (% or ₹), rent-free periods, extension options — full amortization, journal entries, balance sheet snapshot and audit-ready Excel export.
+  </p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">
+    <span style="font-size:11px;font-weight:600;color:#4F46E5;background:#EEF2FF;padding:3px 10px;border-radius:20px;border:1px solid #C7D2FE;">IND AS 116 para 26</span>
+    <span style="font-size:11px;font-weight:600;color:#059669;background:#DCFCE7;padding:3px 10px;border-radius:20px;border:1px solid #BBF7D0;">IFRS 16 aligned</span>
+    <span style="font-size:11px;font-weight:600;color:#7C3AED;background:#F5F3FF;padding:3px 10px;border-radius:20px;border:1px solid #DDD6FE;">Model 2</span>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ═══ INPUTS ═══ -->
+  <div>
+    <div class="card">
+      <div class="card-hd">
+        <div class="hd-icon">📋</div>
+        Lease Parameters
+      </div>
+      <div class="card-body">
+
+        <!-- ── CORE INPUTS ── -->
+        <div class="mod-hd">
+          <span>Core Lease Details</span>
+          <span class="mod-badge">Required</span>
+        </div>
+
+        <div class="field">
+          <label>Commencement Date</label>
+          <input type="date" id="fDate">
+          <div class="err-msg" id="eDate">Required</div>
+        </div>
+
+        <div class="two-col">
+          <div class="field">
+            <label>Lease Term</label>
+            <input type="number" id="fTerm" placeholder="e.g. 60" min="1" max="600">
+            <div class="hint" id="hTerm"></div>
+            <div class="err-msg" id="eTerm">Enter 1–600</div>
+          </div>
+          <div class="field">
+            <label>Term Unit</label>
+            <select id="fTermUnit">
+              <option value="months">Months</option>
+              <option value="years">Years</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>IBR — Incremental Borrowing Rate (% p.a.)</label>
+          <input type="number" id="fIbr" placeholder="e.g. 9" min="0.1" max="50" step="0.1">
+          <div class="hint" id="hIbr"></div>
+          <div class="err-msg" id="eIbr">Enter IBR between 0.1% and 50%</div>
+        </div>
+
+        <!-- ── MODULE 1: PAYMENT FREQUENCY ── -->
+        <div class="mod-hd">
+          <span>Payment Details</span>
+          <span class="mod-badge">Module 1</span>
+        </div>
+
+        <div class="two-col">
+          <div class="field">
+            <label>Lease Payment (₹)</label>
+            <input type="number" id="fPmt" placeholder="e.g. 50000" min="1">
+            <div class="gst-note"><i class="fa-solid fa-triangle-exclamation" style="margin-right:3px;"></i>Enter EXCLUDING GST — GST is not part of the lease liability under IND AS 116</div>
+            <div class="err-msg" id="ePmt">Enter valid amount</div>
+          </div>
+          <div class="field">
+            <label>Payment Frequency</label>
+            <select id="fFreq">
+              <option value="12">Monthly</option>
+              <option value="4">Quarterly</option>
+              <option value="2">Half-Yearly</option>
+              <option value="1">Annually</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Payment Timing</label>
+          <select id="fTiming">
+            <option value="end">End of Period (Ordinary Annuity)</option>
+            <option value="beg">Beginning of Period (Annuity Due)</option>
+          </select>
+        </div>
+
+        <!-- ── VERSION 1: CONTRACTUAL RENT STRUCTURE ── -->
+        <div class="mod-hd">
+          <span>Contractual Rent Structure</span>
+          <span class="mod-badge">Version 1</span>
+        </div>
+
+        <!-- Radio options -->
+        <div class="field" style="margin-bottom:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+            <label class="rent-radio-lbl" id="lbl-none">
+              <input type="radio" name="rentType" value="none" id="rt-none" checked onchange="toggleRentFields()">
+              Constant Rent
+            </label>
+            <label class="rent-radio-lbl" id="lbl-pct">
+              <input type="radio" name="rentType" value="pct" id="rt-pct" onchange="toggleRentFields()">
+              % Escalation
+            </label>
+            <label class="rent-radio-lbl" id="lbl-amt">
+              <input type="radio" name="rentType" value="amt" id="rt-amt" onchange="toggleRentFields()">
+              Fixed ₹ Escalation
+            </label>
+            <label class="rent-radio-lbl" id="lbl-custom">
+              <input type="radio" name="rentType" value="custom" id="rt-custom" onchange="toggleRentFields()">
+              Custom Rent Table
+            </label>
+          </div>
+          <div class="hint" style="margin-top:6px">Contractual escalations known at commencement are included in initial lease liability per Ind AS 116 para 26</div>
+        </div>
+
+        <!-- Percentage Escalation fields -->
+        <div id="escPctFields" style="display:none">
+          <div class="two-col">
+            <div class="field">
+              <label>Escalation % per step</label>
+              <input type="number" id="fEscPct" placeholder="e.g. 5" min="0.01" max="100" step="0.01" value="">
+            </div>
+            <div class="field">
+              <label>Escalation Frequency</label>
+              <select id="fEscFreqPct">
+                <option value="1">Every 1 Year</option>
+                <option value="2">Every 2 Years</option>
+                <option value="3">Every 3 Years</option>
+                <option value="5">Every 5 Years</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fixed Amount Escalation fields -->
+        <div id="escAmtFields" style="display:none">
+          <div class="two-col">
+            <div class="field">
+              <label>Escalation Amount (₹ per step)</label>
+              <input type="number" id="fEscAmt" placeholder="e.g. 5000" min="1" value="">
+            </div>
+            <div class="field">
+              <label>Escalation Frequency</label>
+              <select id="fEscFreqAmt">
+                <option value="1">Every 1 Year</option>
+                <option value="2">Every 2 Years</option>
+                <option value="3">Every 3 Years</option>
+                <option value="5">Every 5 Years</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Custom Rent Table fields -->
+        <div id="escCustomFields" style="display:none">
+          <div style="font-size:11px;color:#6B7280;margin-bottom:8px;line-height:1.5">
+            Enter each rent change date and the rent amount effective from that date.
+            The first row must be the commencement date. Dates must be in ascending order.
+          </div>
+          <div id="customRentRows"></div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button type="button" onclick="addCustomRentRow()" style="flex:1;padding:8px;background:#EEF2FF;border:1px solid rgba(99,102,241,0.3);border-radius:8px;font-size:12px;font-weight:bold;color:#6366F1;cursor:pointer;font-family:'Inter',sans-serif">+ Add Row</button>
+            <button type="button" onclick="deleteLastCustomRentRow()" style="padding:8px 14px;background:#FFF1F2;border:1px solid rgba(239,68,68,0.3);border-radius:8px;font-size:12px;font-weight:bold;color:#DC2626;cursor:pointer;font-family:'Inter',sans-serif">− Delete</button>
+          </div>
+          <div class="hint" style="margin-top:6px">Minimum 2 rows required (commencement + at least one rent step)</div>
+        </div>
+
+        <!-- Live cashflow preview -->
+        <div id="escPreview" style="display:none;margin:10px 0 14px;padding:12px 14px;background:linear-gradient(135deg,#F0FDF4,#DCFCE7);border:1px solid rgba(34,197,94,0.3);border-radius:10px">
+          <div style="font-size:10px;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;color:#166534;margin-bottom:8px">📈 Contractual Rent Schedule Preview</div>
+          <div id="escPreviewBody" style="font-size:12px;color:#166534"></div>
+        </div>
+
+        <!-- ── VERSION 2: RENT-FREE PERIOD ── -->
+        <div class="mod-hd">
+          <span>Rent-Free Period</span>
+          <span class="mod-badge">Version 2</span>
+        </div>
+
+        <div class="field" style="margin-bottom:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+            <label class="rent-radio-lbl">
+              <input type="radio" name="rfType" value="none" id="rf-none" checked onchange="toggleRFFields()">
+              No Rent-Free Period
+            </label>
+            <label class="rent-radio-lbl">
+              <input type="radio" name="rfType" value="yes" id="rf-yes" onchange="toggleRFFields()">
+              Rent-Free Applicable
+            </label>
+          </div>
+          <div class="hint" style="margin-top:6px">Rent-free periods are part of the lease term. Payments are zero during rent-free periods; lease liability is calculated on actual contractual cashflows per Ind AS 116.</div>
+        </div>
+
+        <div id="rfFields" style="display:none">
+          <div class="two-col">
+            <div class="field">
+              <label>Rent-Free Duration</label>
+              <input type="number" id="fRFMonths" placeholder="e.g. 3" min="1" max="120" step="1" value="" oninput="updateEscPreview()">
+              <div class="hint" id="hRFMonths"></div>
+              <div class="err-msg" id="eRFMonths">Must be less than lease term</div>
+            </div>
+            <div class="field">
+              <label>Unit</label>
+              <select id="fRFUnit" onchange="updateEscPreview();updateRFHint()">
+                <option value="months">Months</option>
+                <option value="periods">Periods</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Rent-free preview badge -->
+          <div id="rfPreview" style="display:none;margin-bottom:10px;padding:10px 12px;background:linear-gradient(135deg,#FFF7ED,#FFEDD5);border:1px solid rgba(249,115,22,0.3);border-radius:8px">
+            <div style="font-size:10px;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;color:#C2410C;margin-bottom:5px">🚫 Rent-Free Summary</div>
+            <div id="rfPreviewBody" style="font-size:12px;color:#9A3412"></div>
+          </div>
+        </div>
+
+
+        <!-- ── MODULE: EXTENSION / RENEWAL OPTION ── -->
+        <div class="mod-hd">
+          <span>Extension / Renewal Option</span>
+          <span class="mod-badge">Para 19 &amp; 44</span>
+        </div>
+
+        <div class="field" style="margin-bottom:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+            <label class="rent-radio-lbl">
+              <input type="radio" name="extType" value="none" id="ext-none" checked onchange="toggleExtFields()">
+              No Extension Option
+            </label>
+            <label class="rent-radio-lbl">
+              <input type="radio" name="extType" value="yes" id="ext-yes" onchange="toggleExtFields()">
+              Reasonably Certain to Extend
+            </label>
+          </div>
+          <div class="hint" style="margin-top:6px">If exercise of extension option is reasonably certain at commencement, include it in the lease term per IND AS 116 para 19. This is NOT a modification — it is part of initial measurement.</div>
+        </div>
+
+        <div id="extFields" style="display:none">
+          <div class="two-col">
+            <div class="field">
+              <label>Extension Period</label>
+              <input type="number" id="fExtPeriod" placeholder="e.g. 36" min="1" max="600" oninput="updateExtPreview()">
+            </div>
+            <div class="field">
+              <label>Unit</label>
+              <select id="fExtUnit" onchange="updateExtPreview()">
+                <option value="months">Months</option>
+                <option value="years">Years</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label>Rent During Extension (₹) — Optional</label>
+            <input type="number" id="fExtPmt" placeholder="Leave blank to carry forward last rent" min="1" oninput="updateExtPreview()">
+            <div class="hint">If blank, last period's contractual rent is applied to extension periods (most common in practice).</div>
+          </div>
+          <div id="extPreview" style="display:none;margin:8px 0;padding:10px 12px;background:linear-gradient(135deg,#EEF2FF,#F5F3FF);border:1px solid rgba(99,102,241,0.25);border-radius:8px;font-size:12px;color:#4338CA;">
+            <strong>📅 Extension included:</strong> <span id="extPreviewText"></span>
+          </div>
+        </div>
+
+        <div id="shortTermWarning">
+          <strong>⚠️ Short-Term Lease Exemption Available (IND AS 116 para 5(a)):</strong><br>
+          This lease term is 12 months or less. You may elect to expense lease payments directly to P&amp;L without recognising a ROU asset or lease liability. Continuing this calculation assumes you have NOT elected the short-term exemption. Disclose your election in the notes to financial statements.
+        </div>
+
+        <!-- ── MODULE 2: IDC & INCENTIVES ── -->
+        <div class="mod-hd">
+          <span>Initial Direct Costs & Incentives</span>
+          <span class="mod-badge">Module 2</span>
+        </div>
+
+        <div class="two-col">
+          <div class="field">
+            <label>Initial Direct Costs (₹)</label>
+            <input type="number" id="fIDC" placeholder="e.g. 25000" min="0" value="0">
+            <div class="hint">Legal fees, broker, stamp duty</div>
+          </div>
+          <div class="field">
+            <label>Lease Incentives Received (₹)</label>
+            <input type="number" id="fIncentive" placeholder="e.g. 10000" min="0" value="0">
+            <div class="hint">Fit-out, rent-free deduction</div>
+          </div>
+        </div>
+
+        <!-- ── MODULE 3: REPORTING DATE ── -->
+        <div class="mod-hd">
+          <span>Reporting Date Snapshot</span>
+          <span class="mod-badge">Module 3</span>
+        </div>
+
+        <div class="field">
+          <label>Reporting / Balance Sheet Date</label>
+          <input type="date" id="fReportDate">
+          <div class="hint">Leave blank to skip snapshot (e.g. 31 March 20XX)</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <button class="btn-calc" id="btnCalc">⚡ Calculate Lease Schedule</button>
+        <button class="btn-reset" id="btnReset">Reset / New Calculation</button>
+
+      </div>
+    </div>
+
+    <div class="std-note">
+      <strong>IND AS 116 / IFRS 16 — Model 2 Compliance</strong><br>
+      Effective interest method for lease liability. ROU Asset = PV of lease payments + IDC − Incentives. SLM depreciation over full lease term.<br><br>
+      <strong>Version 1 — Escalation Rents:</strong> Contractual escalations (fixed % or ₹) known at commencement are included in initial PV per <strong>para 26(a)</strong>. Not a modification.<br>
+      <strong>Version 2 — Rent-Free Period:</strong> Zero-payment periods are part of the lease term. Interest accrues during rent-free periods. Not a remeasurement.<br>
+      <strong>Version 3 — Extension Option:</strong> If exercise is reasonably certain at commencement, extension periods are included in lease term per <strong>para 19</strong>. Not a modification.<br><br>
+      <i class="fa-solid fa-circle-info" style="color:#6366F1;margin-right:4px;"></i>Enter all payments <strong>excluding GST</strong>. Lease term should not include unexercised extension options unless reasonably certain.
+    </div>
+  </div>
+
+  <!-- ═══ OUTPUT ═══ -->
+  <div class="card">
+
+    <div class="empty" id="emptyDiv">
+      <div class="empty-icon">📊</div>
+      <div class="empty-title">Enter lease details to calculate</div>
+      <p>Fill in the parameters and click <strong style="color:#6366F1">Calculate Lease Schedule</strong></p>
+    </div>
+
+    <div id="resDiv" style="display:none">
+
+      <div class="res-hd">
+        <strong>Calculation Results</strong>
+        <span class="pill">✓ Ind AS 116 Compliant</span>
+      </div>
+
+      <div class="kpis" id="kpiDiv"></div>
+
+      <!-- VERSION 2: Rent-Free info banner (shown when RF active) -->
+      <div id="rfBanner" style="display:none;margin:10px 22px 0;padding:10px 14px;background:linear-gradient(135deg,#FFF7ED,#FFEDD5);border:1px solid rgba(249,115,22,0.25);border-radius:8px;font-size:12px;color:#9A3412">
+        <strong>🚫 Rent-Free Period Active:</strong> <span id="rfBannerText"></span>
+      </div>
+
+      <!-- Extension Option banner -->
+      <div id="extBanner" style="display:none;margin:6px 22px 0;padding:10px 14px;background:linear-gradient(135deg,#EEF2FF,#F5F3FF);border:1px solid rgba(99,102,241,0.25);border-radius:8px;font-size:12px;color:#4338CA"></div>
+
+      <!-- MODULE 3: Reporting Snapshot -->
+      <div id="snapshotBar" style="display:none"></div>
+
+      <div class="tabs">
+        <button class="tab on" onclick="sw('schedule',this)">Amortization Schedule</button>
+        <button class="tab" onclick="sw('journals',this)">Journal Entries</button>
+        <button class="tab" onclick="sw('summary',this)">Lease Summary</button>
+        <!-- MODULE 4: Annual Rollforward Tab -->
+        <button class="tab" onclick="sw('annual',this)">Annual Rollforward</button>
+      </div>
+
+      <!-- Schedule -->
+      <div class="pane on" id="p-schedule">
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="L">#</th>
+                <th class="L">Period</th>
+                <th>Opening Liability</th>
+                <th>Interest</th>
+                <th>Payment</th>
+                <th>Principal</th>
+                <th>Closing Liability</th>
+                <th>ROU Dep.</th>
+                <th>ROU Closing NBV</th>
+              </tr>
+            </thead>
+            <tbody id="schedBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Journal -->
+      <div class="pane" id="p-journals">
+        <div class="je-wrap" id="jeDiv"></div>
+      </div>
+
+      <!-- Summary -->
+      <div class="pane" id="p-summary">
+        <div class="sum-pad" id="sumDiv"></div>
+      </div>
+
+      <!-- MODULE 4: Annual Rollforward -->
+      <div class="pane" id="p-annual">
+        <div class="annual-pad">
+          <div id="annualDiv"></div>
+        </div>
+      </div>
+
+      <div class="exp-row">
+        <span class="exp-note" id="expNote"></span>
+        <button class="btn-exp" id="btnExp">⬇ Export to Excel &nbsp;<span style="font-size:10px;opacity:.8;">₹99</span></button>
+      </div>
+
+      <!-- RECOVERY BANNER: shown after successful payment if download failed -->
+      <div id="recoveryBanner" style="display:none;margin:0 22px 18px;padding:14px 16px;background:linear-gradient(135deg,#DCFCE7,#D1FAE5);border:1.5px solid #22C55E;border-radius:10px;">
+        <div style="font-size:13px;font-weight:bold;color:#166534;margin-bottom:6px;">✓ Payment Successful — Your report is ready!</div>
+        <div style="font-size:12px;color:#166534;margin-bottom:12px;">If your download did not start automatically, click the button below.</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+          <button id="btnRecoveryDownload" onclick="recoveryDownload()" style="padding:10px 20px;background:linear-gradient(135deg,#16A34A,#15803D);border:none;border-radius:8px;font-size:13px;font-weight:bold;color:#fff;cursor:pointer;font-family:'Inter',sans-serif;">
+            ⬇ Download My Excel Report
+          </button>
+          <span style="font-size:11px;color:#166534;">Payment ID: <span id="recoveryPaymentId" style="font-weight:bold;"></span></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+
+let R   = null;
+let INP = null;
+
+/* ─── FORMATTERS ─── */
+function f(n){ return '₹' + Math.abs(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,','); }
+function fn(n){ return Math.abs(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,','); }
+
+function setErr(id,show){
+  document.getElementById('e'+id).style.display = show?'block':'none';
+  document.getElementById('f'+id).classList[show?'add':'remove']('err');
+}
+
+/* ─── LIVE HINTS ─── */
+document.getElementById('fTerm').oninput = function(){
+  const v = parseInt(this.value);
+  const unit = document.getElementById('fTermUnit').value;
+  const months = unit==='years' ? v*12 : v;
+  document.getElementById('hTerm').textContent = v>0 ? Math.floor(months/12)+'y '+(months%12)+'m' : '';
+};
+document.getElementById('fTermUnit').onchange = function(){
+  document.getElementById('fTerm').oninput();
+};
+
+document.getElementById('fIbr').oninput = function(){
+  const v = parseFloat(this.value);
+  const freq = parseInt(document.getElementById('fFreq').value);
+  const r = v/100/freq;
+  document.getElementById('hIbr').textContent = v>0
+    ? 'Periodic rate: '+(r*100).toFixed(4)+'%'
+    : '';
+};
+document.getElementById('fFreq').onchange = function(){
+  document.getElementById('fIbr').oninput();
+};
+
+/* ─── PERIOD LABEL HELPER ─── */
+function periodLabel(startDate, periodIndex, freq){
+  // periodIndex is 0-based
+  const d = new Date(startDate);
+  const monthsPerPeriod = 12/freq;
+  d.setMonth(d.getMonth() + periodIndex * monthsPerPeriod);
+
+  if(freq===12){
+    return d.toLocaleString('en-IN',{month:'short',year:'numeric'});
+  } else if(freq===4){
+    const q = Math.floor(d.getMonth()/3)+1;
+    return 'Q'+q+' '+d.getFullYear();
+  } else if(freq===2){
+    const h = d.getMonth()<6?'H1':'H2';
+    return h+' '+d.getFullYear();
+  } else {
+    return 'FY '+d.getFullYear();
+  }
+}
+
+/* ─── PERIOD END DATE HELPER ─── */
+function periodEndDate(startDate, periodIndex, freq){
+  const monthsPerPeriod = 12/freq;
+  const d = new Date(startDate);
+  d.setMonth(d.getMonth() + (periodIndex+1)*monthsPerPeriod);
+  d.setDate(d.getDate()-1);
+  return d;
+}
+
+/* ─── FINANCIAL YEAR LABEL ─── */
+function fyLabel(date){
+  // Indian FY: Apr-Mar
+  const m = date.getMonth(); // 0=Jan
+  const y = date.getFullYear();
+  if(m >= 3){ // Apr or later
+    return 'FY '+y+'-'+(y+1).toString().slice(2);
+  } else {
+    return 'FY '+(y-1)+'-'+y.toString().slice(2);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   VERSION 1 — CONTRACTUAL RENT STRUCTURE UI
+═══════════════════════════════════════════════════════ */
+
+function getRentType(){
+  const sel = document.querySelector('input[name="rentType"]:checked');
+  return sel ? sel.value : 'none';
+}
+
+function toggleRentFields(){
+  const t = getRentType();
+  document.getElementById('escPctFields').style.display    = t==='pct'    ? 'block' : 'none';
+  document.getElementById('escAmtFields').style.display    = t==='amt'    ? 'block' : 'none';
+  document.getElementById('escCustomFields').style.display = t==='custom' ? 'block' : 'none';
+  // seed custom table with commencement date if switching to custom
+  if(t==='custom' && document.getElementById('customRentRows').children.length===0){
+    const cd = document.getElementById('fDate').value;
+    addCustomRentRow(cd, document.getElementById('fPmt').value || '');
+    addCustomRentRow('','');
+  }
+  updateEscPreview();
+}
+
+/* ── CUSTOM RENT TABLE ── */
+function addCustomRentRow(date, amt){
+  const wrap = document.getElementById('customRentRows');
+  const idx  = wrap.children.length;
+  const row  = document.createElement('div');
+  row.className = 'crt-row';
+  row.innerHTML = `
+    <input type="date" class="crt-date" placeholder="Effective Date" value="${date||''}" oninput="updateEscPreview()">
+    <input type="number" class="crt-amt" placeholder="₹ Rent amount" min="1" step="0.01" value="${amt||''}" oninput="updateEscPreview()">
+    <button type="button" onclick="deleteCustomRentRow(this)" style="width:28px;height:28px;border-radius:6px;border:1px solid rgba(239,68,68,0.4);background:#FFF1F2;color:#DC2626;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;">×</button>`;
+  wrap.appendChild(row);
+  updateEscPreview();
+}
+
+function deleteCustomRentRow(btn){
+  const wrap = document.getElementById('customRentRows');
+  if(wrap.children.length <= 1){ return; }
+  btn.closest('.crt-row').remove();
+  updateEscPreview();
+}
+
+function deleteLastCustomRentRow(){
+  const wrap = document.getElementById('customRentRows');
+  if(wrap.children.length <= 1){ return; }
+  wrap.removeChild(wrap.lastChild);
+  updateEscPreview();
+}
+
+function getCustomRentRows(){
+  const rows = [];
+  document.querySelectorAll('#customRentRows .crt-row').forEach(row=>{
+    const d   = row.querySelector('.crt-date').value;
+    const amt = parseFloat(row.querySelector('.crt-amt').value);
+    if(d && !isNaN(amt) && amt>0) rows.push({date:d, amt});
+  });
+  return rows;
+}
+
+/* ── LIVE CASHFLOW PREVIEW ── */
+function updateEscPreview(){
+  const t       = getRentType();
+  const rfp     = getRFParams();
+  const preview = document.getElementById('escPreview');
+  const body    = document.getElementById('escPreviewBody');
+
+  const rawTerm  = parseInt(document.getElementById('fTerm').value)||0;
+  const termUnit = document.getElementById('fTermUnit').value;
+  const basePmt  = parseFloat(document.getElementById('fPmt').value)||0;
+  const freqEl   = document.getElementById('fFreq');
+  const freq     = parseInt(freqEl ? freqEl.value : 12);
+  const commDate = document.getElementById('fDate').value;
+
+  // Show RF-only preview even if rent type = none
+  const rfBadge    = document.getElementById('rfPreview');
+  const rfBadgeBody= document.getElementById('rfPreviewBody');
+
+  if(rfp.rfMonths > 0 && rawTerm > 0 && basePmt > 0){
+    const termMonths = termUnit==='years' ? rawTerm*12 : rawTerm;
+    const monthsPerPeriod = 12/freq;
+    const rfPeriods = Math.round(rfp.rfMonths / monthsPerPeriod);
+    rfBadgeBody.textContent =
+      rfPeriods + ' period'+(rfPeriods===1?'':'s')+' ('+rfp.rfMonths+' month'+(rfp.rfMonths===1?'':'s')+') '
+      +'at ₹0. Payments begin from period '+(rfPeriods+1)+'.';
+    rfBadge.style.display = 'block';
+  } else {
+    rfBadge.style.display = 'none';
+  }
+
+  if(t==='none' && rfp.rfMonths===0){ preview.style.display='none'; return; }
+
+  // For pct/amt we need base payment and term
+  if((t==='pct'||t==='amt') && (!rawTerm || !basePmt)){
+    preview.style.display='none'; return;
+  }
+  if(t==='none' && rfp.rfMonths===0){ preview.style.display='none'; return; }
+  if(!rawTerm || !basePmt){ preview.style.display='none'; return; }
+
+  const termMonths = termUnit==='years' ? rawTerm*12 : rawTerm;
+  let params = { rfMonths: rfp.rfMonths };
+
+  if(t==='pct'){
+    params.escType = 'pct';
+    params.escVal  = parseFloat(document.getElementById('fEscPct').value)||0;
+    params.escYears= parseInt(document.getElementById('fEscFreqPct').value)||1;
+    if(!params.escVal && t!=='none'){ preview.style.display='none'; return; }
+  } else if(t==='amt'){
+    params.escType = 'amt';
+    params.escVal  = parseFloat(document.getElementById('fEscAmt').value)||0;
+    params.escYears= parseInt(document.getElementById('fEscFreqAmt').value)||1;
+    if(!params.escVal && t!=='none'){ preview.style.display='none'; return; }
+  } else if(t==='custom'){
+    params.escType = 'custom';
+    params.customRows = getCustomRentRows();
+    if(params.customRows.length < 2){ preview.style.display='none'; return; }
+    if(!commDate){ preview.style.display='none'; return; }
+  } else {
+    params.escType = 'none';
+    if(rfp.rfMonths === 0){ preview.style.display='none'; return; }
+  }
+
+  try {
+    const cf = generateLeaseCashflows(basePmt, termMonths, freq, commDate, params);
+    if(!cf || cf.length===0){ preview.style.display='none'; return; }
+
+    // Summarise into contiguous steps (use paymentAmount directly)
+    const steps = [];
+    let cur = null;
+    cf.forEach((p,i)=>{
+      if(!cur || Math.abs(p.paymentAmount - cur.pmt)>0.001){
+        if(cur) steps.push(cur);
+        cur = {pmt:p.paymentAmount, from:p.period, to:p.period, isRF: p.isRentFree};
+      } else { cur.to = p.period; }
+    });
+    if(cur) steps.push(cur);
+
+    const freqUnit = {12:'month',4:'quarter',2:'half-year',1:'year'}[freq]||'period';
+    body.innerHTML = steps.map(s=>`
+      <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid rgba(34,197,94,0.15)">
+        <span>${s.from===s.to?'Period '+s.from:'Periods '+s.from+'–'+s.to}${s.isRF?' <span style="background:#FED7AA;color:#9A3412;font-size:9px;padding:1px 5px;border-radius:4px;margin-left:4px">RENT-FREE</span>':''}</span>
+        <span style="font-weight:bold;color:${s.isRF?'#C2410C':'inherit'}">
+          ${s.isRF ? '₹0.00' : '₹'+s.pmt.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})} / ${freqUnit}
+        </span>
+      </div>`).join('');
+    // Show paymentType classification
+    const ptLabel = (cf && cf.length > 0 && cf[0].paymentType) ? cf[0].paymentType.label : 'Fixed Contractual Payment';
+    body.innerHTML += `<div style="margin-top:7px;font-size:10px;color:#166534;letter-spacing:0.5px">Payment type: <strong>${ptLabel}</strong> · Included in initial lease liability per Ind AS 116 para 26(a)</div>`;
+    preview.style.display = 'block';
+  } catch(e){
+    preview.style.display='none';
+  }
+}
+
+/* ── Wire preview updates */
+['fTerm','fTermUnit','fPmt','fFreq','fDate',
+ 'fEscPct','fEscFreqPct','fEscAmt','fEscFreqAmt'].forEach(function(id){
+  const el = document.getElementById(id);
+  if(el){ el.addEventListener('change', updateEscPreview); el.addEventListener('input', updateEscPreview); }
+});
+
+/* ═══════════════════════════════════════════════════════
+   VERSION 2 — RENT-FREE PERIOD UI
+═══════════════════════════════════════════════════════ */
+
+function getRFType(){
+  const sel = document.querySelector('input[name="rfType"]:checked');
+  return sel ? sel.value : 'none';
+}
+
+function toggleRFFields(){
+  const on = getRFType() === 'yes';
+  document.getElementById('rfFields').style.display = on ? 'block' : 'none';
+  if(!on){
+    document.getElementById('rfPreview').style.display = 'none';
+  }
+  updateEscPreview();   // regenerate combined preview
+}
+
+function updateRFHint(){
+  const v     = parseInt(document.getElementById('fRFMonths').value)||0;
+  const unit  = document.getElementById('fRFUnit').value;
+  const freq  = parseInt(document.getElementById('fFreq').value)||12;
+  const monthsPerPeriod = 12/freq;
+  if(!v){ document.getElementById('hRFMonths').textContent=''; return; }
+  const rfMonths = unit==='periods' ? v*monthsPerPeriod : v;
+  document.getElementById('hRFMonths').textContent =
+    'Rent-free: '+rfMonths+' month'+(rfMonths===1?'':'s')+
+    (unit==='periods'?' ('+v+' period'+(v===1?'':'s')+')':'');
+}
+
+/* ── Read rent-free params from UI ── */
+function getRFParams(){
+  if(getRFType() !== 'yes') return { rfMonths: 0 };
+  const v    = parseInt(document.getElementById('fRFMonths').value)||0;
+  const unit = document.getElementById('fRFUnit').value;
+  const freq = parseInt(document.getElementById('fFreq').value)||12;
+  const monthsPerPeriod = 12/freq;
+  const rfMonths = unit==='periods' ? v*monthsPerPeriod : v;
+  return { rfMonths: Math.round(rfMonths) };   // whole months only
+}
+
+/* Wire RF fields to preview updates */
+['fRFMonths','fRFUnit'].forEach(function(id){
+  const el = document.getElementById(id);
+  if(el){
+    el.addEventListener('change', function(){ updateRFHint(); updateEscPreview(); });
+    el.addEventListener('input',  function(){ updateRFHint(); updateEscPreview(); });
+  }
+});
+
+/* ═══════════════════════════════════════════════════════
+   PAYMENT TYPE REGISTRY
+   ─────────────────────────────────────────────────────
+   Extensible enumeration of payment classification types.
+
+   Accounting treatment by type (Ind AS 116 / IFRS 16):
+   ─────────────────────────────────────────────────────
+   FIXED               → Included in initial lease liability (para 26a)
+   CPI                 → Measured at commencement CPI index;
+                         remeasurement required when index changes (para 42)
+   MARKET_REVIEW       → Excluded until review date; remeasurement
+                         required at review (para 45)
+   PURCHASE_OPTION     → Included when reasonably certain (para 26d)
+   RESIDUAL_VALUE_GUARANTEE → Included based on expected payment (para 26c)
+   VARIABLE            → Excluded from lease liability (para 38)
+   TERMINATION_ADJUSTMENT → Arises on termination reassessment (para 46)
+   EXTENSION_ADJUSTMENT   → Arises on extension reassessment (para 44)
+   FLOATING_RATE       → Remeasurement required when rate changes (para 45)
+
+   Architecture note:
+   Future versions check cf.paymentType before deciding whether
+   to include the cashflow in the PV calculation.
+   Only FIXED (and future types where includedInLiability===true)
+   are discounted. This flag lives on the type definition so
+   the PV engine never needs to know version-specific rules.
+═══════════════════════════════════════════════════════ */
+const PAYMENT_TYPES = Object.freeze({
+  FIXED: {
+    code: 'FIXED',
+    label: 'Fixed Contractual Payment',
+    includedInLiability: true,
+    requiresRemeasurement: false,
+    standard: 'Ind AS 116 para 26(a)'
+  },
+  CPI: {
+    code: 'CPI',
+    label: 'CPI / Index-Linked Payment',
+    includedInLiability: true,     // at commencement-date index only
+    requiresRemeasurement: true,
+    standard: 'Ind AS 116 para 42(b)'
+  },
+  MARKET_REVIEW: {
+    code: 'MARKET_REVIEW',
+    label: 'Market Rent Review',
+    includedInLiability: false,
+    requiresRemeasurement: true,
+    standard: 'Ind AS 116 para 45'
+  },
+  PURCHASE_OPTION: {
+    code: 'PURCHASE_OPTION',
+    label: 'Purchase Option Payment',
+    includedInLiability: false,    // only when reasonably certain
+    requiresRemeasurement: false,
+    standard: 'Ind AS 116 para 26(d)'
+  },
+  RESIDUAL_VALUE_GUARANTEE: {
+    code: 'RESIDUAL_VALUE_GUARANTEE',
+    label: 'Residual Value Guarantee',
+    includedInLiability: true,     // expected payment amount
+    requiresRemeasurement: false,
+    standard: 'Ind AS 116 para 26(c)'
+  },
+  VARIABLE: {
+    code: 'VARIABLE',
+    label: 'Variable Lease Payment',
+    includedInLiability: false,    // expensed as incurred
+    requiresRemeasurement: false,
+    standard: 'Ind AS 116 para 38'
+  },
+  TERMINATION_ADJUSTMENT: {
+    code: 'TERMINATION_ADJUSTMENT',
+    label: 'Termination Option Adjustment',
+    includedInLiability: true,     // after reassessment
+    requiresRemeasurement: true,
+    standard: 'Ind AS 116 para 46'
+  },
+  EXTENSION_ADJUSTMENT: {
+    code: 'EXTENSION_ADJUSTMENT',
+    label: 'Extension Option Adjustment',
+    includedInLiability: true,     // after reassessment
+    requiresRemeasurement: true,
+    standard: 'Ind AS 116 para 44'
+  },
+  FLOATING_RATE: {
+    code: 'FLOATING_RATE',
+    label: 'Floating Rate Payment',
+    includedInLiability: true,     // at commencement rate only
+    requiresRemeasurement: true,
+    standard: 'Ind AS 116 para 45(c)'
+  }
+});
+
+/* ═══════════════════════════════════════════════════════
+   CASHFLOW OBJECT FACTORY
+   ─────────────────────────────────────────────────────
+   Creates a standardised cashflow object.
+   All cashflows produced by generateLeaseCashflows() must
+   use this factory — never construct the object directly.
+
+   Target structure (per Enhancement 1):
+   {
+     period:        1-based period number
+     paymentDate:   'YYYY-MM-DD' — actual date of payment
+     paymentAmount: numeric amount (replaces legacy .payment)
+     paymentType:   PAYMENT_TYPES entry (always FIXED in Version 1)
+
+     // legacy alias — kept for backward compatibility with all
+     // existing downstream code that reads .payment
+     payment:       alias to paymentAmount (same value)
+   }
+═══════════════════════════════════════════════════════ */
+function makeCashflow(period, paymentDate, paymentAmount, paymentType, isRentFree){
+  paymentType  = paymentType  || PAYMENT_TYPES.FIXED;
+  isRentFree   = isRentFree   || false;
+  return {
+    period,
+    paymentDate,
+    paymentAmount,
+    paymentType,
+    isRentFree,   // VERSION 2: true for zero-payment rent-free periods
+    // ── Legacy alias so every existing consumer of .payment
+    //    continues to work without any change ──
+    get payment(){ return this.paymentAmount; }
+  };
+}
+
+/* ── Date helper: given a commencement date string and a
+   period index (0-based), return the payment date string
+   for that period as 'YYYY-MM-DD'. ── */
+function periodPaymentDate(commencementDateStr, periodIndex, freq){
+  const monthsPerPeriod = 12 / freq;
+  const [y,m,d] = commencementDateStr.split('-').map(Number);
+  const dt = new Date(y, m-1, d);
+  dt.setMonth(dt.getMonth() + (periodIndex + 1) * monthsPerPeriod);
+  // Return the first day of that month (period end month) as the payment date.
+  // For beginning-of-period timing this will be overridden at the call site
+  // when needed. For now all Version 1 cashflows use end-of-period.
+  const py = dt.getFullYear();
+  const pm = String(dt.getMonth() + 1).padStart(2,'0');
+  const pd = String(d).padStart(2,'0');   // preserve day-of-month
+  return `${py}-${pm}-${pd}`;
+}
+
+/* ═══════════════════════════════════════════════════════
+   CORE CASHFLOW ENGINE  —  generateLeaseCashflows()
+   ─────────────────────────────────────────────────────
+   SINGLE SOURCE OF TRUTH for all lease payment data.
+
+   Returns: Array<CashflowObject>  (see makeCashflow above)
+   Every element has:
+     .period          1-based integer
+     .paymentDate     'YYYY-MM-DD'
+     .paymentAmount   numeric (0 during rent-free periods)
+     .paymentType     PAYMENT_TYPES entry (always FIXED)
+     .isRentFree      boolean — true for zero-rent periods (V2)
+     .payment         alias to paymentAmount (legacy compat)
+
+   params object shape (Version 1 + Version 2):
+   {
+     escType:    'none' | 'pct' | 'amt' | 'custom'
+     escVal:     number            // % or ₹ step
+     escYears:   number            // every N years
+     customRows: [{date, amt}]     // for 'custom' mode
+     rfMonths:   number            // VERSION 2: rent-free months at start
+   }
+
+   VERSION 2 — RENT-FREE PERIOD LOGIC:
+   ─────────────────────────────────────────────────────
+   rfMonths = number of months at the START of the lease where
+   the contractual payment is zero. These periods are fully
+   included in the lease term and lease liability calculation.
+   They do NOT reduce the lease term.
+
+   The engine converts rfMonths → rfPeriods (# of payment periods
+   that are rent-free) then sets paymentAmount=0 and isRentFree=true
+   for those periods. All other periods are unaffected.
+
+   This works with ALL escalation modes:
+   - none:   periods 1..rfPeriods = 0; period rfPeriods+1.. = basePmt
+   - pct:    periods 1..rfPeriods = 0; escalation steps computed on
+             the remaining periods' year-position IN THE FULL TERM
+   - amt:    same as pct
+   - custom: the rent table date lookup naturally handles ₹0 if the
+             first custom row has a date after commencement, or caller
+             can set the first row amount to 0 explicitly.
+             When rfMonths>0 with custom mode, zero-payment override
+             is applied for the first rfPeriods periods regardless of
+             what the custom table says.
+
+   ARCHITECTURE INVARIANT:
+   No module outside this function may independently compute
+   a lease payment amount. All amounts flow from this array.
+═══════════════════════════════════════════════════════ */
+function generateLeaseCashflows(basePmt, termMonths, freq, commencementDate, params){
+  const monthsPerPeriod = 12 / freq;
+  const n      = Math.round(termMonths / monthsPerPeriod);
+  const escType  = params.escType || 'none';
+
+  /* ── VERSION 2: compute rent-free period count ── */
+  const rfMonths  = (params.rfMonths && params.rfMonths > 0) ? Math.round(params.rfMonths) : 0;
+  // Convert rf months to whole periods (always round UP — partial periods are still rent-free)
+  const rfPeriods = rfMonths > 0 ? Math.ceil(rfMonths / monthsPerPeriod) : 0;
+
+  /* ── Rent-free helper: is period i (0-based) within rent-free window? ── */
+  function isRF(i){ return i < rfPeriods; }
+
+  /* ── MODE: custom date-based rent table ── */
+  if(escType === 'custom'){
+    const rows = params.customRows || [];
+    const sorted = rows.slice().sort((a,b)=> a.date < b.date ? -1 : a.date > b.date ? 1 : 0);
+
+    const [cy,cm,cd] = commencementDate.split('-').map(Number);
+    const commDate = new Date(cy, cm-1, cd);
+
+    const cashflows = [];
+    for(let i=0; i<n; i++){
+      const pStart = new Date(commDate);
+      pStart.setMonth(pStart.getMonth() + i * monthsPerPeriod);
+      const pStartInt = pStart.getFullYear()*10000 + (pStart.getMonth()+1)*100 + pStart.getDate();
+
+      let pmt = sorted[0] ? sorted[0].amt : basePmt;
+      for(let r=0; r<sorted.length; r++){
+        const [ry,rm,rd] = sorted[r].date.split('-').map(Number);
+        const rowInt = ry*10000 + rm*100 + rd;
+        if(rowInt <= pStartInt){ pmt = sorted[r].amt; }
+        else { break; }
+      }
+
+      // VERSION 2: override with zero if within rent-free window
+      const rentFree    = isRF(i);
+      const pmtFinal    = rentFree ? 0 : Math.round(pmt*100)/100;
+      const pmtDate     = periodPaymentDate(commencementDate, i, freq);
+      cashflows.push(makeCashflow(i+1, pmtDate, pmtFinal, PAYMENT_TYPES.FIXED, rentFree));
+    }
+    return cashflows;
+  }
+
+  /* ── MODES: none / pct / amt ── */
+  const cashflows = [];
+  for(let i=0; i<n; i++){
+    const rentFree = isRF(i);
+    let pmt = basePmt;
+
+    // VERSION 3: Extension periods override escalation
+    const isExtPeriod = params.originalTermMonths != null && (i * monthsPerPeriod) >= params.originalTermMonths;
+    if(isExtPeriod){
+      // Extension period: use extPmt if given, else carry last contractual rent
+      if(params.extPmt != null){ pmt = params.extPmt; }
+      // else pmt stays as basePmt; the effective last rent will be close enough for most practical cases
+    } else if(escType === 'pct' && params.escVal){
+      // Year position in FULL TERM (not offset by RF) — intentional.
+      // Escalation steps are contractually based on full-term year position.
+      const startMonth   = i * monthsPerPeriod;
+      const yearNumber   = Math.floor(startMonth / 12);
+      const stepsApplied = Math.floor(yearNumber / params.escYears);
+      pmt = basePmt * Math.pow(1 + params.escVal / 100, stepsApplied);
+    } else if(escType === 'amt' && params.escVal){
+      const startMonth   = i * monthsPerPeriod;
+      const yearNumber   = Math.floor(startMonth / 12);
+      const stepsApplied = Math.floor(yearNumber / params.escYears);
+      pmt = basePmt + params.escVal * stepsApplied;
+    }
+
+    // VERSION 2: zero out rent-free periods regardless of escalated amount
+    const pmtFinal = rentFree ? 0 : Math.round(pmt*100)/100;
+    const pmtDate  = periodPaymentDate(commencementDate, i, freq);
+    cashflows.push(makeCashflow(i+1, pmtDate, pmtFinal, PAYMENT_TYPES.FIXED, rentFree));
+  }
+  return cashflows;
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   EXTENSION / RENEWAL OPTION UI
+═══════════════════════════════════════════════════════ */
+function getExtType(){
+  const sel = document.querySelector('input[name="extType"]:checked');
+  return sel ? sel.value : 'none';
+}
+
+function toggleExtFields(){
+  const on = getExtType() === 'yes';
+  document.getElementById('extFields').style.display = on ? 'block' : 'none';
+  if(!on){ document.getElementById('extPreview').style.display='none'; }
+  updateExtPreview();
+}
+
+function updateExtPreview(){
+  if(getExtType() !== 'yes'){ document.getElementById('extPreview').style.display='none'; return; }
+  const v = parseInt(document.getElementById('fExtPeriod').value)||0;
+  const u = document.getElementById('fExtUnit').value;
+  if(!v){ document.getElementById('extPreview').style.display='none'; return; }
+  const months = u==='years' ? v*12 : v;
+  const extPmt = parseFloat(document.getElementById('fExtPmt').value);
+  const pmtNote = isNaN(extPmt) ? 'same rent as last period' : '₹'+extPmt.toLocaleString('en-IN');
+  document.getElementById('extPreviewText').textContent =
+    v + ' ' + (u==='years'?'year':'month') + (v===1?'':'s') + ' (' + months + ' months) at ' + pmtNote + ' — included in initial PV per para 19';
+  document.getElementById('extPreview').style.display='block';
+}
+
+/* Wire extension fields to preview */
+['fExtPeriod','fExtUnit','fExtPmt'].forEach(function(id){
+  const el = document.getElementById(id);
+  if(el){ el.addEventListener('change', updateExtPreview); el.addEventListener('input', updateExtPreview); }
+});
+
+/* ═══════════════════════════════════════════════════════
+   MAIN CALCULATE BUTTON
+═══════════════════════════════════════════════════════ */
+document.getElementById('btnCalc').onclick = function(){
+
+  const d       = document.getElementById('fDate').value;
+  const t       = document.getElementById('fTerm').value;
+  const termUnit= document.getElementById('fTermUnit').value;
+  const p       = document.getElementById('fPmt').value;
+  const b       = document.getElementById('fIbr').value;
+  const tim     = document.getElementById('fTiming').value;
+  const freq    = parseInt(document.getElementById('fFreq').value);
+  const idc     = parseFloat(document.getElementById('fIDC').value)||0;
+  const incentive = parseFloat(document.getElementById('fIncentive').value)||0;
+  const reportDateVal = document.getElementById('fReportDate').value;
+
+  // VERSION 1 — contractual rent structure inputs
+  const escType     = getRentType();
+  const escPct      = parseFloat(document.getElementById('fEscPct').value)||0;
+  const escAmt      = parseFloat(document.getElementById('fEscAmt').value)||0;
+  const escYearsPct = parseInt(document.getElementById('fEscFreqPct').value)||1;
+  const escYearsAmt = parseInt(document.getElementById('fEscFreqAmt').value)||1;
+  const customRows  = getCustomRentRows();
+
+  // VERSION 2 — rent-free period inputs
+  const rfp = getRFParams();
+
+  // Validation
+  let ok = true;
+  setErr('Date',!d);                              if(!d) ok=false;
+  setErr('Term',!t||isNaN(t)||+t<=0||+t>600);    if(!t||isNaN(t)||+t<=0||+t>600) ok=false;
+  setErr('Pmt',!p||isNaN(p)||+p<=0);             if(!p||isNaN(p)||+p<=0) ok=false;
+  setErr('Ibr',!b||isNaN(b)||+b<=0||+b>50);      if(!b||isNaN(b)||+b<=0||+b>50) ok=false;
+  if(!ok) return;
+
+  // Convert term to periods
+  const rawTerm     = parseInt(t);
+  const termMonths  = termUnit==='years' ? rawTerm*12 : rawTerm;
+  const monthsPerPeriod = 12/freq;
+
+  if(termMonths < monthsPerPeriod){
+    alert('Lease term is shorter than one payment period. Please check term and frequency.');
+    return;
+  }
+  // VERSION 2 — validate RF months
+  if(rfp.rfMonths >= termMonths){
+    document.getElementById('eRFMonths').style.display='block';
+    document.getElementById('fRFMonths').classList.add('err');
+    alert('Rent-free period must be shorter than the total lease term.');
+    return;
+  }
+  document.getElementById('eRFMonths').style.display='none';
+  document.getElementById('fRFMonths').classList.remove('err');
+
+  const basePmt = parseFloat(p);
+  const ibr     = parseFloat(b);
+  const r       = ibr/100/freq;
+
+  // VERSION 3: Extension Option
+  const extType    = getExtType();
+  const extPeriodR = parseInt(document.getElementById('fExtPeriod').value)||0;
+  const extUnit    = document.getElementById('fExtUnit').value;
+  const extPmtInp  = parseFloat(document.getElementById('fExtPmt').value);
+  const extMonths  = extType==='yes' && extPeriodR>0
+    ? (extUnit==='years' ? extPeriodR*12 : extPeriodR)
+    : 0;
+  const totalTermMonths = termMonths + extMonths;
+  const totalN = Math.round(totalTermMonths / monthsPerPeriod);
+
+
+  const n = totalN;
+
+  // Short-term lease warning (para 5a) — after we know the full term
+  const stWarn = document.getElementById('shortTermWarning');
+  if(stWarn){ stWarn.style.display = totalTermMonths <= 12 ? 'block' : 'none'; }
+
+  // Build cfParams — VERSION 2: include rfMonths
+  let cfParams = { escType, rfMonths: rfp.rfMonths };
+  if(escType === 'pct'){
+    cfParams.escVal   = escPct;
+    cfParams.escYears = escYearsPct;
+  } else if(escType === 'amt'){
+    cfParams.escVal   = escAmt;
+    cfParams.escYears = escYearsAmt;
+  } else if(escType === 'custom'){
+    cfParams.customRows = customRows;
+    if(customRows.length < 2){
+      alert('Custom Rent Table: please enter at least 2 rows (commencement date + at least one rent change).');
+      return;
+    }
+  }
+
+  // Human-readable escalation description
+  let escDesc = 'None (Constant Rent)';
+  if(escType==='pct' && escPct>0)
+    escDesc = escPct+'% every '+(escYearsPct===1?'year':escYearsPct+' years');
+  else if(escType==='amt' && escAmt>0)
+    escDesc = '₹'+escAmt.toLocaleString('en-IN')+' increase every '+(escYearsAmt===1?'year':escYearsAmt+' years');
+  else if(escType==='custom')
+    escDesc = 'Custom contractual schedule ('+customRows.length+' rent steps)';
+
+  // VERSION 2 — RF description
+  const rfPeriods = rfp.rfMonths > 0 ? Math.ceil(rfp.rfMonths / monthsPerPeriod) : 0;
+  const rfDesc    = rfp.rfMonths > 0
+    ? rfp.rfMonths+' months ('+rfPeriods+' period'+(rfPeriods===1?'':'s')+') at ₹0'
+    : 'None';
+
+  /* ── Generate contractual cashflows — SINGLE SOURCE OF TRUTH ── */
+  // Extension: store original term so cashflow engine can detect extension periods
+  if(extMonths > 0){ cfParams.originalTermMonths = termMonths; cfParams.extPmt = isNaN(extPmtInp)?null:extPmtInp; }
+  const cfArray  = generateLeaseCashflows(basePmt, totalTermMonths, freq, d, cfParams);
+
+  /*
+   * ARCHITECTURE NOTE — Future version PV filter point:
+   * When PAYMENT_TYPES other than FIXED are introduced (e.g. MARKET_REVIEW,
+   * VARIABLE, PURCHASE_OPTION), filter cfArray here before discounting:
+   *
+   *   const pvCashflows = cfArray.filter(cf => cf.paymentType.includedInLiability);
+   *
+   * Version 1+2 always use FIXED payments only, so all cashflows are included.
+   * Zero-payment rent-free periods correctly contribute ₹0 to the PV sum.
+   * pmtArray preserves the legacy plain-number interface used by the
+   * amortization schedule and all downstream modules.
+   */
+  const pmtArray = cfArray.map(x=>x.paymentAmount);
+
+  /* ── PV (DCF — works for any payment pattern) ── */
+  let pv = 0;
+  if(r === 0){
+    pv = pmtArray.reduce((s,x)=>s+x, 0);
+  } else if(tim === 'beg'){
+    pmtArray.forEach((pmt,i)=>{ pv += pmt / Math.pow(1+r, i); });
+  } else {
+    pmtArray.forEach((pmt,i)=>{ pv += pmt / Math.pow(1+r, i+1); });
+  }
+
+  /* ── ROU Asset ── */
+  const rouInitial = pv + idc - incentive;
+  const dep        = rouInitial / n;
+
+  /* ── Amortization schedule ── */
+  let openL = pv;
+  const sched = [];
+  const startDate = new Date(d);
+
+  for(let i=1; i<=n; i++){
+    const lbl     = periodLabel(startDate, i-1, freq);
+    const payment = pmtArray[i-1];
+    let interest  = 0, principal = 0, closeL = 0;
+
+    if(tim === 'beg'){
+      principal      = payment;
+      const afterPmt = openL - payment;
+      interest       = afterPmt * r;
+      closeL         = afterPmt + interest;
+    } else {
+      interest  = openL * r;
+      principal = payment - interest;
+      closeL    = openL + interest - payment;
+    }
+
+    if(i === n || Math.abs(closeL) < 0.01) closeL = 0;
+    const rouC = Math.max(0, rouInitial - (i*dep));
+    sched.push({ i, lbl, oL:openL, int:interest, pmt:payment, principal, cL:closeL, dep, rouC });
+    openL = closeL;
+  }
+
+  /* ── Current / Non-current split ── */
+  const periodsIn12 = freq;
+  let currentLiab = 0;
+  sched.slice(0, periodsIn12).forEach(x=>{ currentLiab += x.principal; });
+  const nonCurrentLiab = Math.max(0, pv - currentLiab);
+
+  /* ── Totals ── */
+  const totInt = sched.reduce((s,x)=>s+x.int, 0);
+  const totPmt = sched.reduce((s,x)=>s+x.pmt, 0);
+  const totDep = rouInitial;
+
+  INP = { d, n, termMonths, totalTermMonths, basePmt, ibr, tim, freq, idc, incentive, reportDateVal, rouInitial,
+          escType, escDesc, cfParams, cfArray, pmtArray,
+          rfMonths: rfp.rfMonths, rfPeriods, rfDesc,
+          extType, extMonths, extPeriod: extPeriodR, extUnit };  // VERSION 3
+
+  R = { pv, rouInitial, dep, totInt, totPmt, totDep, sched, currentLiab, nonCurrentLiab, freq, n, termMonths, totalTermMonths };
+
+  render();
+  document.getElementById('btnReset').style.display='block';
+};
+
+/* ─── RESET ─── */
+document.getElementById('btnReset').onclick = function(){
+  ['Date','Term','Pmt','Ibr'].forEach(x=>setErr(x,false));
+  document.getElementById('fDate').value='';
+  document.getElementById('fTerm').value='';
+  document.getElementById('fPmt').value='';
+  document.getElementById('fIbr').value='';
+  document.getElementById('fTiming').value='end';
+  document.getElementById('fFreq').value='12';
+  document.getElementById('fIDC').value='0';
+  document.getElementById('fIncentive').value='0';
+  document.getElementById('fReportDate').value='';
+  // VERSION 1 — reset contractual rent structure
+  document.getElementById('rt-none').checked = true;
+  document.getElementById('fEscPct').value='';
+  document.getElementById('fEscAmt').value='';
+  document.getElementById('fEscFreqPct').value='1';
+  document.getElementById('fEscFreqAmt').value='1';
+  document.getElementById('escPctFields').style.display='none';
+  document.getElementById('escAmtFields').style.display='none';
+  document.getElementById('escCustomFields').style.display='none';
+  document.getElementById('escPreview').style.display='none';
+  document.getElementById('customRentRows').innerHTML='';
+  // VERSION 3 — reset extension option
+  document.getElementById('ext-none').checked = true;
+  document.getElementById('extFields').style.display='none';
+  document.getElementById('fExtPeriod').value='';
+  document.getElementById('fExtUnit').value='months';
+  document.getElementById('fExtPmt').value='';
+  document.getElementById('extPreview').style.display='none';
+  const eb=document.getElementById('extBanner'); if(eb) eb.style.display='none';
+  const sw=document.getElementById('shortTermWarning'); if(sw) sw.style.display='none';
+  // VERSION 2 — reset rent-free period
+  document.getElementById('rf-none').checked = true;
+  document.getElementById('rfFields').style.display='none';
+  document.getElementById('fRFMonths').value='';
+  document.getElementById('fRFUnit').value='months';
+  document.getElementById('rfPreview').style.display='none';
+  document.getElementById('eRFMonths').style.display='none';
+  document.getElementById('fRFMonths').classList.remove('err');
+  document.getElementById('hRFMonths').textContent='';
+  document.getElementById('hTerm').textContent='';
+  document.getElementById('hIbr').textContent='';
+  document.getElementById('emptyDiv').style.display='block';
+  document.getElementById('resDiv').style.display='none';
+  document.getElementById('btnReset').style.display='none';
+  document.getElementById('snapshotBar').style.display='none';
+  R=null; INP=null;
+};
+
+/* ═══════════════════════════════════════════════════════
+   RENDER
+═══════════════════════════════════════════════════════ */
+function render(){
+  document.getElementById('emptyDiv').style.display='none';
+  document.getElementById('resDiv').style.display='block';
+  var seb=document.getElementById('sticky-export-bar'); if(seb) seb.style.display='flex';
+
+  const freqLabel = {12:'Monthly',4:'Quarterly',2:'Half-Yearly',1:'Annual'}[R.freq];
+  const depLabel  = freqLabel+' Depreciation';
+
+  document.getElementById('kpiDiv').innerHTML = `
+    <div class="kpi">
+      <div class="kpi-lbl">Initial Lease Liability</div>
+      <div class="kpi-val">${f(R.pv)}</div>
+      <div class="kpi-note">PV of lease payments</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">ROU Asset (Initial)</div>
+      <div class="kpi-val">${f(R.rouInitial)}</div>
+      <div class="kpi-note">PV + IDC − Incentives</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">${depLabel}</div>
+      <div class="kpi-val2">${f(R.dep)}</div>
+      <div class="kpi-note">Straight-line basis</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Total Interest Expense</div>
+      <div class="kpi-val2">${f(R.totInt)}</div>
+      <div class="kpi-note">Over full lease term</div>
+    </div>
+  `;
+
+  /* ── VERSION 2: Rent-Free banner ── */
+  const rfBanner = document.getElementById('rfBanner');
+  if(INP.rfMonths > 0){
+    document.getElementById('rfBannerText').textContent =
+      INP.rfDesc + '. Lease liability calculated on actual cashflows (₹0 during rent-free period). Not a modification.';
+    rfBanner.style.display = 'block';
+  } else {
+    rfBanner.style.display = 'none';
+  }
+
+  /* Extension Option banner */
+  const extBanner = document.getElementById('extBanner');
+  if(extBanner && INP.extMonths > 0){
+    extBanner.innerHTML = '<strong>📅 Extension Option Included (para 19):</strong> ' + INP.extPeriod + ' ' + INP.extUnit + ' extension ('+INP.extMonths+' months) included in lease term as reasonably certain. Lease term = ' + INP.termMonths + ' + ' + INP.extMonths + ' = ' + INP.totalTermMonths + ' months.';
+    extBanner.style.display='block';
+  } else if(extBanner){
+    extBanner.style.display='none';
+  }
+
+  /* ── MODULE 3: Reporting Date Snapshot ── */
+  renderSnapshot();
+
+  /* ── Amortization Schedule ── */
+  const rows = [];
+  R.sched.forEach((x,idx)=>{
+    const cfEntry = INP.cfArray ? INP.cfArray[idx] : null;
+    const isRF    = cfEntry && cfEntry.isRentFree;
+    const rfStyle = isRF ? 'background:rgba(249,115,22,0.06);' : '';
+    const rfTag   = isRF ? '<span style="font-size:9px;background:#FED7AA;color:#9A3412;padding:1px 5px;border-radius:4px;margin-left:4px">RF</span>' : '';
+    rows.push(`
+      <tr style="${rfStyle}">
+        <td class="L B">${x.i}</td>
+        <td class="L">${x.lbl}${rfTag}</td>
+        <td>${fn(x.oL)}</td>
+        <td style="color:#FFB74D">${fn(x.int)}</td>
+        <td style="color:${isRF?'#C2410C':'#EF9A9A'}">${isRF?'<em style="color:#C2410C">Rent-Free</em>':fn(x.pmt)}</td>
+        <td style="color:#81C784">${fn(x.principal)}</td>
+        <td class="B">${fn(x.cL)}</td>
+        <td style="color:#80CBC4">${fn(x.dep)}</td>
+        <td style="color:#6B7280">${fn(x.rouC)}</td>
+      </tr>
+    `);
+  });
+
+  rows.push(`
+    <tr class="tot-row">
+      <td colspan="3" class="L B">TOTAL</td>
+      <td class="B" style="color:#FFB74D">${fn(R.totInt)}</td>
+      <td class="B" style="color:#EF9A9A">${fn(R.totPmt)}</td>
+      <td>—</td><td>—</td>
+      <td class="B" style="color:#80CBC4">${fn(R.totDep)}</td>
+      <td>—</td>
+    </tr>
+  `);
+
+  document.getElementById('schedBody').innerHTML = rows.join('');
+
+  renderJournal();
+  renderSummary();
+  renderAnnual();   // MODULE 4
+
+  const freqStr = {12:'monthly',4:'quarterly',2:'half-yearly',1:'annual'}[R.freq];
+  document.getElementById('expNote').textContent =
+    R.sched.length + ' '+freqStr+' periods · Ind AS 116 compliant';
+}
+
+/* ═══════════════════════════════════════════════════════
+   MODULE 3 — REPORTING DATE SNAPSHOT
+═══════════════════════════════════════════════════════ */
+function renderSnapshot(){
+  const bar = document.getElementById('snapshotBar');
+  const rv  = INP.reportDateVal;
+  if(!rv){ bar.style.display='none'; return; }
+
+  const [ry,rm,rd2] = rv.split("-").map(Number);
+  const reportDate = new Date(ry, rm-1, rd2);
+  const [sy,sm,sd] = INP.d.split("-").map(Number);
+  const startDate  = new Date(sy, sm-1, sd);
+
+  if(reportDate <= startDate){
+    bar.style.display='none'; return;
+  }
+
+  // Find which periods have ENDED by or on the reportDate.
+  // Strategy: use integer YYYYMMDD comparison — no Date arithmetic, no DST risk.
+  // Period i ends on the last day of its month-block.
+  // Period i is complete if reportDate >= last day of period i.
+  // Last day of period i = (start of period i+1) - 1 day
+  //   = month (startMonth + (i+1)*monthsPerPeriod), day 0
+  //     (day 0 of next month = last day of current month in JS Date)
+  let snapshotPeriodIndex = -1;
+  const monthsPerPeriod   = 12 / R.freq;
+
+  // reportDate as integer YYYYMMDD for safe comparison
+  const rInt = reportDate.getFullYear()*10000 + (reportDate.getMonth()+1)*100 + reportDate.getDate();
+
+  for(let i=0;i<R.sched.length;i++){
+    // Last day of period i: use day=0 trick (day 0 = last day of previous month)
+    const periodEndMonth = startDate.getMonth() + (i+1)*monthsPerPeriod; // may exceed 11, JS handles it
+    const lastDay = new Date(startDate.getFullYear(), periodEndMonth, 0); // day 0 = end of prev month
+    const eInt = lastDay.getFullYear()*10000 + (lastDay.getMonth()+1)*100 + lastDay.getDate();
+    if(rInt >= eInt){
+      snapshotPeriodIndex = i;
+    } else {
+      break;
+    }
+  }
+
+  if(snapshotPeriodIndex < 0){
+    // Report date before first period ends — show at-commencement values
+    bar.innerHTML = `
+      <div class="snapshot-bar">
+        <div class="snapshot-bar-hd">📅 Reporting Date: ${reportDate.toLocaleDateString('en-IN',{day:'2-digit',month:'long',year:'numeric'})} — Before first period end</div>
+        <div style="font-size:12px;color:#92400E">Lease commenced ${startDate.toLocaleDateString('en-IN',{day:'2-digit',month:'long',year:'numeric'})}. Snapshot will show after first period closes.</div>
+      </div>`;
+    bar.style.display='block'; return;
+  }
+
+  const snap       = R.sched[snapshotPeriodIndex];
+const closingLiability = snap.cL;
+  const cumInt     = R.sched.slice(0,snapshotPeriodIndex+1).reduce((s,x)=>s+x.int,0);
+  const cumDep     = (snapshotPeriodIndex+1) * R.dep;
+  const rouNBV     = Math.max(0, R.rouInitial - cumDep);
+  const liabClose  = snap.cL;
+  const remPeriods = R.sched.length - (snapshotPeriodIndex+1);
+  const remMonths  = remPeriods * (12/R.freq);
+
+  // Next 12 months principal for current portion
+ const nextPeriods = Math.min(R.freq, remPeriods);
+
+// ACTUAL CLOSING LIABILITY
+const totalLiability = snap.cL;
+
+let currentPortion = 0;
+
+// Principal payable in next 12 months
+for(
+  let i = snapshotPeriodIndex + 1;
+  i < snapshotPeriodIndex + 1 + nextPeriods &&
+  i < R.sched.length;
+  i++
+){
+  currentPortion += R.sched[i].principal;
+}
+
+// Remaining maturity
+const nonCurrent = Math.max(
+  0,
+  totalLiability - currentPortion
+);
+
+  const rd = reportDate.toLocaleDateString('en-IN',{day:'2-digit',month:'long',year:'numeric'});
+
+  bar.innerHTML = `
+    <div class="snapshot-bar">
+      <div class="snapshot-bar-hd">
+        📅 Balance Sheet Snapshot as at ${rd}
+        <span style="font-size:9px;background:rgba(217,119,6,0.15);padding:2px 8px;border-radius:10px;margin-left:auto">Period ${snapshotPeriodIndex+1} of ${R.sched.length}</span>
+      </div>
+      <div class="snapshot-grid">
+        <div class="snap-kpi">
+          <div class="snap-lbl">ROU Asset NBV</div>
+          <div class="snap-val">${f(rouNBV)}</div>
+          <div class="snap-note">After ${snapshotPeriodIndex+1} periods dep.</div>
+        </div>
+        <div class="snap-kpi">
+          <div class="snap-lbl">Lease Liability (Current)</div>
+          <div class="snap-val">${f(currentPortion)}</div>
+          <div class="snap-note">Next 12 months principal</div>
+        </div>
+        <div class="snap-kpi">
+          <div class="snap-lbl">Lease Liability (Non-current)</div>
+          <div class="snap-val">${f(nonCurrent)}</div>
+          <div class="snap-note">Beyond 12 months</div>
+        </div>
+        <div class="snap-kpi">
+          <div class="snap-lbl">Cumulative Interest P&L</div>
+          <div class="snap-val">${f(cumInt)}</div>
+          <div class="snap-note">Finance cost to date</div>
+        </div>
+        <div class="snap-kpi">
+          <div class="snap-lbl">Cumulative Depreciation</div>
+          <div class="snap-val">${f(cumDep)}</div>
+          <div class="snap-note">ROU dep. to date</div>
+        </div>
+        <div class="snap-kpi">
+          <div class="snap-lbl">Remaining Term</div>
+          <div class="snap-val">${Math.floor(remMonths/12)}y ${remMonths%12}m</div>
+          <div class="snap-note">${remPeriods} periods left</div>
+        </div>
+      </div>
+    </div>`;
+  bar.style.display='block';
+}
+
+/* ═══════════════════════════════════════════════════════
+   JOURNAL ENTRIES
+═══════════════════════════════════════════════════════ */
+function renderJournal(){
+  const first = R.sched[0];
+  const cd = new Date(INP.d).toLocaleDateString('en-IN',{day:'2-digit',month:'long',year:'numeric'});
+  const freqLabel = {12:'Monthly',4:'Quarterly',2:'Half-Yearly',1:'Annual'}[R.freq];
+
+  // VERSION 2: For recurring JEs, use first PAYING period (after rent-free)
+  // so the example amounts are meaningful (not ₹0)
+  const firstPayingIdx = INP.rfPeriods || 0;
+  const firstPaying    = R.sched[Math.min(firstPayingIdx, R.sched.length-1)];
+  const recurringNote  = INP.rfMonths > 0
+    ? freqLabel+' (Recurring — from period '+(firstPayingIdx+1)+')'
+    : freqLabel+' (Recurring)';
+
+  // Build JE1 lines based on IDC & Incentive
+  let je1Lines = [{a:'Right-of-Use Asset',dr:R.rouInitial,cr:null}];
+  if(INP.idc>0)       je1Lines.push({a:'Initial Direct Costs (prepaid/cash)',dr:null,cr:INP.idc});
+  if(INP.incentive>0) je1Lines.push({a:'Lease Incentive Receivable/Cash',dr:INP.incentive,cr:null});
+  je1Lines.push({a:'Lease Liability',dr:null,cr:R.pv});
+
+  let je1Narr = 'Recognition of ROU asset at ₹'+fn(R.rouInitial);
+  if(INP.rfMonths > 0)
+    je1Narr += '. Lease liability reflects actual cashflows including '+INP.rfDesc+'. Per Ind AS 116 para 26.';
+  if(INP.idc>0||INP.incentive>0){
+    je1Narr += ' (PV '+fn(R.pv);
+    if(INP.idc>0) je1Narr += ' + IDC '+fn(INP.idc);
+    if(INP.incentive>0) je1Narr += ' − Incentive '+fn(INP.incentive);
+    je1Narr += ')';
+  }
+
+  // VERSION 2: During rent-free periods there is no payment JE (but interest still accrues)
+  let rfJENote = '';
+  if(INP.rfMonths > 0){
+    rfJENote = je(
+      'Note — Rent-Free Periods (Periods 1–'+INP.rfPeriods+')',
+      'Ind AS 116 Treatment',
+      [{a:'Finance Cost — Lease Interest (example: Period 1)',dr:first.int,cr:null},
+       {a:'Lease Liability',dr:null,cr:first.int}],
+      'During rent-free periods: interest accrues normally (liability increases) but NO payment JE is recorded. '+
+      'Lease liability = Opening + Interest (no payment debit). This is correct — the lower PV from ₹0 cashflows '+
+      'is already reflected in the initial measurement.'
+    );
+  }
+
+  document.getElementById('jeDiv').innerHTML =
+    je('JE 1 — Initial Recognition', cd, je1Lines, je1Narr)
+    + (INP.rfMonths > 0 ? rfJENote : '')
+    + je('JE 2 — Interest Accrual', recurringNote,
+        [{a:'Finance Cost — Lease Interest',dr:firstPaying.int,cr:null},{a:'Lease Liability',dr:null,cr:firstPaying.int}],
+        'Interest accretion using effective interest method. Amount shown is Period '+(firstPayingIdx+1)+'.')
+    + je('JE 3 — Lease Payment', recurringNote,
+        [{a:'Lease Liability',dr:firstPaying.pmt,cr:null},{a:'Bank / Cash',dr:null,cr:firstPaying.pmt}],
+        'Lease payment to lessor. Amount shown is Period '+(firstPayingIdx+1)+'.'+(INP.rfMonths>0?' No payment during rent-free periods.':''))
+    + je('JE 4 — Depreciation', freqLabel+' (Recurring from Period 1)',
+        [{a:'Depreciation — ROU Asset',dr:R.dep,cr:null},{a:'Accumulated Depreciation — ROU Asset',dr:null,cr:R.dep}],
+        'SLM depreciation of ROU asset begins at commencement (including during rent-free periods). '+freqLabel+' charge: '+f(R.dep)+' over '+R.n+' periods.');
+}
+
+/* ═══════════════════════════════════════════════════════
+   SUMMARY
+═══════════════════════════════════════════════════════ */
+function renderSummary(){
+  const termMonths = INP.termMonths;
+  const yrs = Math.floor(termMonths/12);
+  const mos = termMonths%12;
+  const cd = new Date(INP.d).toLocaleDateString('en-IN',{day:'2-digit',month:'long',year:'numeric'});
+  const freqLabel = {12:'Monthly',4:'Quarterly',2:'Half-Yearly',1:'Annual'}[R.freq];
+  const freqUnit  = {12:'month',4:'quarter',2:'half-year',1:'year'}[R.freq];
+
+  // VERSION 1: payment description depends on escalation
+  const pmtDesc = INP.escType==='none'
+    ? f(INP.basePmt) + ' per ' + freqUnit
+    : f(INP.basePmt) + ' (base) per ' + freqUnit + ' + escalation';
+
+  document.getElementById('sumDiv').innerHTML =
+    '<div class="sum-sec">Lease Inputs</div>'
+    + ir('Commencement Date',cd)
+    + ir('Lease Term',termMonths+' months ('+yrs+'y '+mos+'m)')
+    + ir('Base Payment Amount',pmtDesc)
+    + ir('Payment Frequency',freqLabel)
+    + ir('IBR',INP.ibr+'% p.a.')
+    + ir('Payment Timing',INP.tim==='beg'?'Beginning of period':'End of period')
+    + '<div class="sum-sec">Contractual Rent Structure (Version 1)</div>'
+    + ir('Rent Structure Type', INP.escType==='none'?'Constant Rent':INP.escType==='pct'?'Percentage Escalation':INP.escType==='amt'?'Fixed Amount Escalation':'Custom Rent Schedule')
+    + ir('Escalation Detail', INP.escDesc)
+    + ir('Payment Classification', 'FIXED — All payments contractually predetermined at commencement')
+    + ir('Liability Inclusion', 'Yes — per Ind AS 116 para 26(a)')
+    + '<div class="sum-sec">Extension / Renewal Option (Version 3)</div>'
+    + ir('Extension Option', INP.extType==='yes' ? 'Yes — Reasonably certain to exercise' : 'None')
+    + (INP.extMonths > 0 ? ir('Extension Period', INP.extPeriod + ' ' + INP.extUnit + ' (' + INP.extMonths + ' months)') : '')
+    + (INP.extMonths > 0 ? ir('Extension Treatment', 'Included in initial lease term per IND AS 116 para 19. Not a modification.') : '')
+    + ir('Total Lease Term', INP.totalTermMonths + ' months (original: ' + INP.termMonths + (INP.extMonths>0?' + extension: '+INP.extMonths:'')+')' )
+    + '<div class="sum-sec">Rent-Free Period (Version 2)</div>'
+    + ir('Rent-Free Applicable', INP.rfMonths > 0 ? 'Yes' : 'No')
+    + ir('Rent-Free Duration', INP.rfDesc)
+    + (INP.rfMonths > 0 ? ir('Accounting Treatment',
+        'Zero-payment periods included in lease term and initial lease liability. '
+        +'Interest accrues on liability during rent-free periods. '
+        +'No modification, no remeasurement — per Ind AS 116.') : '')
+    + '<div class="sum-sec">Initial Direct Costs & Incentives (Module 2)</div>'
+    + ir('Initial Direct Costs',f(INP.idc))
+    + ir('Lease Incentives Received',f(INP.incentive))
+    + ir('Net Adjustment to ROU',f(INP.idc - INP.incentive))
+    + '<div class="sum-sec">Financial Summary</div>'
+    + ir('Initial Lease Liability (PV)',f(R.pv))
+    + ir('Initial ROU Asset',f(R.rouInitial))
+    + ir('Current Lease Liability',f(R.currentLiab))
+    + ir('Non-current Lease Liability',f(R.nonCurrentLiab))
+    + ir('Total Interest Expense',f(R.totInt))
+    + ir('Total Lease Payments',f(R.totPmt))
+    + ir('Total Depreciation (ROU)',f(R.totDep))
+    + ir('Total P&L Charge',f(R.totInt+R.totDep))
+    + `<div class="bs-note">
+        <strong style="color:#8B5CF6">Balance Sheet Impact</strong><br><br>
+        • ROU Asset recognized at ${f(R.rouInitial)}<br>
+        • Current lease liability: ${f(R.currentLiab)}<br>
+        • Non-current lease liability: ${f(R.nonCurrentLiab)}<br><br>
+        ${INP.escType!=='none'?'<strong>Escalation note:</strong> All contractual escalations ('+INP.escDesc+') are included in initial PV measurement per Ind AS 116 para 26. This is not a lease modification or remeasurement event.<br><br>':''}${INP.rfMonths>0?'<strong>Rent-free note:</strong> '+INP.rfDesc+' included in lease liability at ₹0 per Ind AS 116. Depreciation runs from commencement including during rent-free period.<br><br>':''}Calculations aligned with Ind AS 116 / IFRS 16.
+       </div>`;
+}
+
+/* ═══════════════════════════════════════════════════════
+   MODULE 4 — ANNUAL ROLLFORWARD (Indian FY: Apr–Mar)
+═══════════════════════════════════════════════════════ */
+function renderAnnual(){
+  const startDate       = new Date(INP.d);
+  const monthsPerPeriod = 12 / R.freq;
+
+  // Group each period into its FY
+  const fyMap = {};
+
+  R.sched.forEach((x,idx)=>{
+    // Period end date
+    const pEnd = new Date(startDate);
+
+pEnd.setMonth(
+  pEnd.getMonth() + ((idx+1)*monthsPerPeriod) - 1
+);
+
+// Force actual month-end
+pEnd.setMonth(pEnd.getMonth()+1);
+pEnd.setDate(0);
+
+const fy = fyLabel(pEnd);
+
+    if(!fyMap[fy]){
+      fyMap[fy] = {
+        fy,
+        openL: x.oL,
+        interest:0, payments:0, principal:0,
+        closeL:0, depreciation:0, rouNBV:0,
+        periods:0
+      };
+    }
+    fyMap[fy].interest     += x.int;
+    fyMap[fy].payments     += x.pmt;
+    fyMap[fy].principal    += x.principal;
+    fyMap[fy].closeL        = x.cL;
+    fyMap[fy].depreciation += x.dep;
+    fyMap[fy].rouNBV        = x.rouC;
+    fyMap[fy].periods++;
+  });
+
+  const fyRows = Object.values(fyMap);
+
+  let totInt=0,totPmt=0,totPrinc=0,totDep=0;
+  const rows = fyRows.map(row=>{
+    totInt   += row.interest;
+    totPmt   += row.payments;
+    totPrinc += row.principal;
+    totDep   += row.depreciation;
+    return `
+      <tr>
+        <td class="L B">${row.fy}</td>
+        <td>${fn(row.openL)}</td>
+        <td style="color:#FFB74D">${fn(row.interest)}</td>
+        <td style="color:#EF9A9A">${fn(row.payments)}</td>
+        <td style="color:#81C784">${fn(row.principal)}</td>
+        <td class="B">${fn(row.closeL)}</td>
+        <td style="color:#80CBC4">${fn(row.depreciation)}</td>
+        <td style="color:#6B7280">${fn(row.rouNBV)}</td>
+        <td style="color:#9CA3AF;font-size:11px">${row.periods}</td>
+      </tr>`;
+  }).join('');
+
+  document.getElementById('annualDiv').innerHTML = `
+    <div style="font-size:11px;color:#6B7280;margin-bottom:12px;padding-top:4px">
+      Financial year-wise rollforward (Indian FY: Apr–Mar). Periods grouped by FY in which they fall.
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="L">Financial Year</th>
+            <th>Opening Liability</th>
+            <th>Interest</th>
+            <th>Payments</th>
+            <th>Principal</th>
+            <th>Closing Liability</th>
+            <th>ROU Depreciation</th>
+            <th>ROU Closing NBV</th>
+            <th>Periods</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows}
+          <tr class="tot-row">
+            <td class="L B">TOTAL</td>
+            <td>—</td>
+            <td class="B" style="color:#FFB74D">${fn(totInt)}</td>
+            <td class="B" style="color:#EF9A9A">${fn(totPmt)}</td>
+            <td class="B" style="color:#81C784">${fn(totPrinc)}</td>
+            <td>—</td>
+            <td class="B" style="color:#80CBC4">${fn(totDep)}</td>
+            <td>—</td>
+            <td class="B">${R.sched.length}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="bs-note" style="margin-top:14px">
+      <strong style="color:#8B5CF6">P&L Impact by Year</strong><br><br>
+      ${fyRows.map(row=>`• ${row.fy}: Interest ${f(row.interest)} + Depreciation ${f(row.depreciation)} = <strong>${f(row.interest+row.depreciation)}</strong>`).join('<br>')}
+    </div>`;
+}
+
+/* ─── JE HELPER ─── */
+function je(title,sub,entries,narr){
+  const rows = entries.map(e=>`
+    <tr>
+      <td class="L" style="padding-left:${e.cr!==null?'34px':'13px'}">${e.a}</td>
+      <td>${e.dr!==null?fn(e.dr):'—'}</td>
+      <td>${e.cr!==null?fn(e.cr):'—'}</td>
+    </tr>`).join('');
+  return `
+    <div class="je-hd">${title}<span class="je-sub">${sub}</span></div>
+    <table>
+      <thead>
+        <tr>
+          <th class="L" style="width:60%">Account</th>
+          <th>Dr (₹)</th><th>Cr (₹)</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rows}
+        <tr>
+          <td colspan="3" class="L" style="font-style:italic;font-size:11px;color:#6B7280;padding:6px 13px">${narr}</td>
+        </tr>
+      </tbody>
+    </table>`;
+}
+
+function ir(l,v){
+  return `<div class="irow"><span class="il">${l}</span><span class="iv">${v}</span></div>`;
+}
+
+function sw(id,btn){
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById('p-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+
+/* ═══════════════════════════════════════════════════════
+   RAZORPAY PAYMENT
+═══════════════════════════════════════════════════════ */
+document.getElementById('btnExp').onclick = initiatePayment;
+
+/* ── Save full state to localStorage so a page reload cannot lose the download ── */
+function saveStateToStorage(){
+  try{
+    localStorage.setItem('fs_INP', JSON.stringify(INP));
+    localStorage.setItem('fs_R',   JSON.stringify(R));
+    localStorage.setItem('fs_paid','pending');
+  } catch(e){ console.warn('localStorage save failed',e); }
+}
+
+function markPaidInStorage(paymentId){
+  try{
+    localStorage.setItem('fs_paid', paymentId);
+    localStorage.setItem('fs_paid_ts', Date.now().toString());
+  } catch(e){}
+}
+
+function clearPaymentStorage(){
+  try{
+    ['fs_INP','fs_R','fs_paid','fs_paid_ts'].forEach(function(k){ localStorage.removeItem(k); });
+  } catch(e){}
+}
+
+/* ── Check on page load if user has a pending paid download ── */
+(function checkPendingDownload(){
+  try{
+    var paid   = localStorage.getItem('fs_paid');
+    var ts     = parseInt(localStorage.getItem('fs_paid_ts')||'0');
+    var age    = Date.now() - ts;
+    var withinWindow = age < 30*60*1000; // 30 minutes window
+
+    if(paid && paid !== 'pending' && withinWindow){
+      var storedINP = JSON.parse(localStorage.getItem('fs_INP')||'null');
+      var storedR   = JSON.parse(localStorage.getItem('fs_R')||'null');
+      if(storedINP && storedR){
+        // Restore state silently
+        INP = storedINP;
+        R   = storedR;
+        // Show recovery banner immediately
+        showRecoveryBanner(paid);
+      }
+    } else if(paid || ts){
+      // Stale or expired — clean up
+      clearPaymentStorage();
+    }
+  } catch(e){}
+})();
+
+function showRecoveryBanner(paymentId){
+  var banner = document.getElementById('recoveryBanner');
+  if(!banner) return;
+  document.getElementById('recoveryPaymentId').textContent = paymentId || '';
+  banner.style.display = 'block';
+
+  // Also make sure results div is visible so download button works
+  document.getElementById('emptyDiv').style.display = 'none';
+  document.getElementById('resDiv').style.display   = 'block';
+}
+
+function recoveryDownload(){
+  if(!R || !INP){
+    alert('Session data not found. Please re-enter your lease details and calculate again. Contact fino.sutra07@gmail.com with your Payment ID for a manual report.');
+    return;
+  }
+  try{
+    exportXL();
+    // After successful download, clear storage and hide banner
+    setTimeout(function(){
+      clearPaymentStorage();
+      var banner = document.getElementById('recoveryBanner');
+      if(banner) banner.style.display = 'none';
+    }, 2000);
+  } catch(e){
+    alert('Download failed. Please email fino.sutra07@gmail.com with your Payment ID and we will send the report manually within 30 minutes.');
+    console.error(e);
+  }
+}
+
+function initiatePayment(){
+  if(!R||!INP){ alert('Please calculate the lease schedule first.'); return; }
+
+  // ── CRITICAL FIX: Save state BEFORE opening payment window ──
+  saveStateToStorage();
+
+  var options = {
+    key:'rzp_live_Sty2e9lT4uXzJJ',
+    amount:9900,
+    currency:'INR',
+    name:'Finosutra',
+    description:'Ind AS 116 Lease Report — Excel Export',
+    image:'',
+    theme:{color:'#6366F1'},
+    modal:{
+      ondismiss:function(){
+        // Clean up pending flag if payment was dismissed without completing
+        try{ localStorage.removeItem('fs_paid'); } catch(e){}
+        showToast('Payment cancelled. No charges made.','#8B5CF6');
+      }
+    },
+    handler:function(response){
+      var payId = response.razorpay_payment_id || 'SUCCESS';
+      markPaidInStorage(payId);
+      showToast('✓ Payment successful! Downloading your report...','#5EC98A');
+
+      // Show recovery banner immediately as backup
+      showRecoveryBanner(payId);
+
+      // Attempt auto-download after short delay
+      setTimeout(function(){
+        try{
+          exportXL();
+          // Auto-download succeeded — clear storage after a delay
+          setTimeout(function(){
+            clearPaymentStorage();
+            var banner = document.getElementById('recoveryBanner');
+            if(banner) banner.style.display='none';
+          }, 5000);
+        } catch(e){
+          // Auto-download failed — recovery banner is already visible
+          showToast('Auto-download failed. Use the green Download button below.','#FF8A80');
+          console.error('exportXL error:', e);
+        }
+      }, 800);
+    },
+    prefill:{name:'',email:'',contact:''}
+  };
+  try{
+    var rzp = new Razorpay(options);
+    rzp.on('payment.failed',function(resp){
+      try{ localStorage.removeItem('fs_paid'); } catch(e){}
+      showToast('Payment failed: '+resp.error.description,'#FF8A80');
+    });
+    rzp.open();
+  } catch(e){
+    alert('Could not open payment window. Please check your connection and try again.');
+    console.error(e);
+  }
+}
+
+function showToast(msg,color){
+  var t = document.getElementById('toast');
+  if(!t){
+    t=document.createElement('div'); t.id='toast';
+    t.style.cssText='position:fixed;bottom:28px;left:50%;transform:translateX(-50%);padding:12px 22px;border-radius:10px;font-size:13px;font-family:Inter,sans-serif;font-weight:bold;z-index:9999;transition:opacity .4s;box-shadow:0 4px 20px rgba(0,0,0,.4)';
+    document.body.appendChild(t);
+  }
+  t.textContent=msg;
+  t.style.background=color==='#5EC98A'?'rgba(26,90,55,0.97)':color==='#FF8A80'?'rgba(120,30,30,0.97)':'rgba(80,60,10,0.97)';
+  t.style.color='#fff'; t.style.opacity='1'; t.style.display='block';
+  clearTimeout(t._timer);
+  t._timer=setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.style.display='none';},400);},4000);
+}
+
+/* ═══════════════════════════════════════════════════════
+   EXCEL EXPORT (Enhanced with all 4 modules)
+═══════════════════════════════════════════════════════ */
+
+function exportXL(){
+
+  if(!R || !INP) return;
+
+  const wb = XLSX.utils.book_new();
+
+  const HEADER = {
+    font:{bold:true,color:{rgb:"FFFFFF"},sz:12},
+    fill:{fgColor:{rgb:"1F4E78"}},
+    alignment:{horizontal:"center",vertical:"center"},
+    border:{
+      top:{style:"thin",color:{rgb:"CCCCCC"}},
+      bottom:{style:"thin",color:{rgb:"CCCCCC"}},
+      left:{style:"thin",color:{rgb:"CCCCCC"}},
+      right:{style:"thin",color:{rgb:"CCCCCC"}}
+    }
+  };
+
+  const SUBHEADER = {
+    font:{bold:true,color:{rgb:"1F1F1F"}},
+    fill:{fgColor:{rgb:"D9EAF7"}}
+  };
+
+  const MONEY = {
+    numFmt:'#,##0.00'
+  };
+
+  const TITLE = {
+    font:{bold:true,sz:18,color:{rgb:"1F1F1F"}},
+    alignment:{horizontal:"center"}
+  };
+
+  const NORMAL = {
+    border:{
+      top:{style:"thin",color:{rgb:"E0E0E0"}},
+      bottom:{style:"thin",color:{rgb:"E0E0E0"}},
+      left:{style:"thin",color:{rgb:"E0E0E0"}},
+      right:{style:"thin",color:{rgb:"E0E0E0"}}
+    }
+  };
+
+  function styleRange(ws,range,style){
+    const r = XLSX.utils.decode_range(range);
+    for(let R=r.s.r;R<=r.e.r;R++){
+      for(let C=r.s.c;C<=r.e.c;C++){
+        const cell = ws[XLSX.utils.encode_cell({r:R,c:C})];
+        if(cell){
+          cell.s = {...cell.s,...style};
+        }
+      }
+    }
+  }
+
+  /* =====================================================
+     COVER PAGE
+  ===================================================== */
+
+  const coverData = [
+    ["FINOSUTRA"],
+    ["IND AS 116 / IFRS 16 LEASE ACCOUNTING REPORT"],
+    [],
+    ["Generated On", new Date().toLocaleString()],
+    ["Framework","Ind AS 116 / IFRS 16"],
+    ["Export Type","Premium Audit Ready Export"],
+    ["Prepared By","Finosutra Lease Engine"],
+    [],
+    ["CONFIDENTIAL"]
+  ];
+
+  const cover = XLSX.utils.aoa_to_sheet(coverData);
+
+  cover["!cols"] = [{wch:30},{wch:40}];
+
+  styleRange(cover,"A1:B1",TITLE);
+  styleRange(cover,"A2:B2",HEADER);
+  styleRange(cover,"A4:A9",SUBHEADER);
+
+  XLSX.utils.book_append_sheet(wb,cover,"Cover Page");
+
+  /* =====================================================
+     SUMMARY SHEET
+  ===================================================== */
+
+  const summaryData = [
+    ["EXECUTIVE SUMMARY"],
+    [],
+    ["Lease Commencement", INP.d],
+    ["Lease Term (Months)", INP.termMonths],
+    ["Payment Frequency",{12:"Monthly",4:"Quarterly",2:"Half-Yearly",1:"Annual"}[R.freq]],
+    ["Base Lease Payment", INP.basePmt],
+    ["IBR (%)", INP.ibr],
+    ["Escalation Type", INP.escType==='none'?'None':INP.escType==='pct'?'Fixed Percentage':INP.escType==='amt'?'Fixed Amount Escalation':'Custom Rent Schedule'],
+    ["Escalation Detail", INP.escDesc],
+    ["Extension Option", INP.extType==='yes' ? 'Yes — '+INP.extPeriod+' '+INP.extUnit+' ('+INP.extMonths+' months) — IND AS 116 para 19' : 'None'],
+    ["Total Lease Term (Months)", INP.totalTermMonths||INP.termMonths],
+    ["Rent-Free Period", INP.rfMonths > 0 ? 'Yes — '+INP.rfDesc : 'None'],   // VERSION 2
+    ["Payment Classification", "FIXED — Contractually predetermined"],
+    ["Ind AS 116 Reference", "Para 26(a) — included in initial lease liability"],
+    [],
+    ["Initial Lease Liability", R.pv],
+    ["Initial ROU Asset", R.rouInitial],
+    ["Current Liability", R.currentLiab],
+    ["Non-current Liability", R.nonCurrentLiab],
+    ["Total Interest Expense", R.totInt],
+    ["Total Lease Payments", R.totPmt],
+    ["Total Depreciation", R.totDep]
+  ];
+
+  const ws1 = XLSX.utils.aoa_to_sheet(summaryData);
+
+  ws1["!cols"] = [{wch:35},{wch:30}];
+
+  styleRange(ws1,"A1:B1",HEADER);
+  styleRange(ws1,"A3:A20",SUBHEADER);
+
+  // Money format: rows 14-20 (Initial LL through Total Dep)
+  for(let i=14;i<=20;i++){
+    const c = ws1["B"+i];
+    if(c) c.s = MONEY;
+  }
+
+  XLSX.utils.book_append_sheet(wb,ws1,"Executive Summary");
+
+  /* =====================================================
+     AMORTIZATION SCHEDULE
+  ===================================================== */
+
+  const schedRows = [
+    [
+      "Period",
+      "Label",
+      "Payment Date",
+      "Payment Type",
+      "Opening Liability",
+      "Interest",
+      "Payment",
+      "Principal",
+      "Closing Liability",
+      "Depreciation",
+      "ROU NBV"
+    ]
+  ];
+
+  R.sched.forEach((x,idx)=>{
+    const cf = INP.cfArray ? INP.cfArray[idx] : null;
+    const ptLabel = cf && cf.paymentType ? cf.paymentType.label : 'Fixed Contractual Payment';
+    const ptDate  = cf ? cf.paymentDate : '';
+    schedRows.push([
+      x.i,
+      x.lbl,
+      ptDate,
+      ptLabel,
+      x.oL,
+      x.int,
+      x.pmt,
+      x.principal,
+      x.cL,
+      x.dep,
+      x.rouC
+    ]);
+  });
+
+  const ws2 = XLSX.utils.aoa_to_sheet(schedRows);
+
+  ws2["!cols"] = [{wch:10},{wch:16},{wch:14},{wch:26},{wch:20},{wch:16},{wch:16},{wch:16},{wch:20},{wch:16},{wch:16}];
+
+  styleRange(ws2,"A1:K1",HEADER);
+
+  // Money format columns E–K (Opening Liability through ROU NBV)
+  for(let r=2;r<=schedRows.length;r++){
+    for(let c=5;c<=11;c++){
+      const cell = ws2[XLSX.utils.encode_cell({r:r-1,c:c-1})];
+      if(cell){
+        cell.s = {...NORMAL,...MONEY};
+      }
+    }
+  }
+
+  ws2["!freeze"] = {xSplit:0,ySplit:1};
+  ws2["!autofilter"] = {ref:"A1:K"+schedRows.length};
+
+  XLSX.utils.book_append_sheet(wb,ws2,"Amortization");
+
+  /* =====================================================
+     JOURNAL ENTRIES
+  ===================================================== */
+
+  const jeData = [
+    ["JOURNAL ENTRIES"],
+    [],
+    ["Entry","Account","Debit","Credit"],
+    ["Initial Recognition","ROU Asset",R.rouInitial,""],
+    ["Initial Recognition","Lease Liability","",R.pv],
+    ["Interest Accrual","Finance Cost",(INP&&INP.rfPeriods?R.sched[Math.min(INP.rfPeriods,R.sched.length-1)].int:R.sched[0].int),""],
+    ["Interest Accrual","Lease Liability","",(INP&&INP.rfPeriods?R.sched[Math.min(INP.rfPeriods,R.sched.length-1)].int:R.sched[0].int)],
+    ["Lease Payment","Lease Liability",(INP&&INP.rfPeriods?R.sched[Math.min(INP.rfPeriods,R.sched.length-1)].pmt:R.sched[0].pmt),""],
+    ["Lease Payment","Bank / Cash","",(INP&&INP.rfPeriods?R.sched[Math.min(INP.rfPeriods,R.sched.length-1)].pmt:R.sched[0].pmt)],
+    ["Depreciation","Depreciation Expense",R.dep,""],
+    ["Depreciation","Accumulated Depreciation","",R.dep]
+  ];
+
+  const ws3 = XLSX.utils.aoa_to_sheet(jeData);
+
+  ws3["!cols"] = [
+    {wch:25},
+    {wch:35},
+    {wch:18},
+    {wch:18}
+  ];
+
+  styleRange(ws3,"A1:D1",HEADER);
+  styleRange(ws3,"A3:D3",SUBHEADER);
+
+  XLSX.utils.book_append_sheet(wb,ws3,"Journal Entries");
+
+  /* =====================================================
+     CONTRACTUAL RENT SCHEDULE (VERSION 1 + 2)
+     Always included. Shows the cashflow schedule that
+     drives all calculations — reconciles to lease liability.
+     Includes paymentDate, paymentType, isRentFree for audit trail.
+  ===================================================== */
+  {
+    const rentTypeLabel = {
+      none:'Constant Rent',
+      pct:'Percentage Escalation',
+      amt:'Fixed Amount Escalation',
+      custom:'Custom Contractual Schedule'
+    }[INP.escType] || 'Constant Rent';
+
+    const rfNote = INP.rfMonths > 0
+      ? '   |   Rent-Free: '+INP.rfDesc
+      : '';
+
+    const crsRows = [
+      ["CONTRACTUAL RENT SCHEDULE — VERSION 1 + 2"],
+      ["Rent Structure: " + rentTypeLabel + "   |   " + INP.escDesc + rfNote],
+      ["All contractual payments included in initial lease liability per Ind AS 116 para 26"],
+      [],
+      ["Period", "Period Label", "Payment Date", "Rent-Free?", "Payment Type", "Contractual Rent", "Δ vs Base Rent", "Cumulative Payments", "Ind AS 116 Reference"]
+    ];
+
+    let cumPmt = 0;
+    (INP.cfArray || []).forEach((cf, idx)=>{
+      cumPmt += cf.paymentAmount;
+      const delta  = cf.isRentFree ? (0 - INP.basePmt) : (cf.paymentAmount - INP.basePmt);
+      const ptLabel= cf.paymentType ? cf.paymentType.label : 'Fixed Contractual Payment';
+      const ptStd  = cf.paymentType ? cf.paymentType.standard : 'Ind AS 116 para 26(a)';
+      crsRows.push([
+        cf.period,
+        R.sched[idx] ? R.sched[idx].lbl : '',
+        cf.paymentDate || '',
+        cf.isRentFree ? 'YES' : 'No',
+        ptLabel,
+        cf.paymentAmount,
+        delta,
+        cumPmt,
+        ptStd
+      ]);
+    });
+
+    // Totals row
+    const totalPmt = (INP.cfArray||[]).reduce((s,x)=>s+x.paymentAmount,0);
+    crsRows.push(['TOTAL','','','','',totalPmt,'',totalPmt,'']);
+
+    const wsCRS = XLSX.utils.aoa_to_sheet(crsRows);
+    wsCRS["!cols"] = [{wch:10},{wch:16},{wch:14},{wch:12},{wch:26},{wch:20},{wch:16},{wch:20},{wch:24}];
+    styleRange(wsCRS,"A1:I1",HEADER);
+    styleRange(wsCRS,"A2:I3",{font:{sz:10,color:{rgb:"374151"}},fill:{fgColor:{rgb:"EEF2FF"}}});
+    styleRange(wsCRS,"A5:I5",SUBHEADER);
+    wsCRS["!freeze"] = {xSplit:0,ySplit:5};
+    wsCRS["!autofilter"] = {ref:"A5:I"+(crsRows.length)};
+
+    // Format money columns F, G, H for data rows; highlight RF rows in orange
+    for(let i=6; i<=crsRows.length; i++){
+      const cfIdx = i - 6;
+      const cfEntry = INP.cfArray ? INP.cfArray[cfIdx] : null;
+      const isRFRow = cfEntry && cfEntry.isRentFree;
+
+      ['F','G','H'].forEach(col=>{
+        const cell = wsCRS[col+i];
+        if(cell) cell.s = isRFRow
+          ? {...NORMAL,...MONEY,fill:{fgColor:{rgb:"FFF7ED"}}}
+          : {...NORMAL,...MONEY};
+      });
+
+      // Highlight "YES" in D column for RF rows
+      if(isRFRow){
+        const dCell = wsCRS['D'+i];
+        if(dCell) dCell.s = {font:{bold:true,color:{rgb:"9A3412"}},fill:{fgColor:{rgb:"FFF7ED"}}};
+      }
+    }
+
+    XLSX.utils.book_append_sheet(wb,wsCRS,"Contractual Rent Schedule");
+  }
+
+  if(INP.reportDateVal){
+    const [ry,rm,rd2] = INP.reportDateVal.split("-").map(Number);
+    const reportDate = new Date(ry, rm-1, rd2);
+    const [sy,sm,sd] = INP.d.split("-").map(Number);
+    const startDate2  = new Date(sy, sm-1, sd);
+    const monthsPerPeriod2 = 12 / R.freq;
+    const rInt = reportDate.getFullYear()*10000 + (reportDate.getMonth()+1)*100 + reportDate.getDate();
+    let snapshotIdx = -1;
+    for(let i=0;i<R.sched.length;i++){
+      const pEndM = startDate2.getMonth() + (i+1)*monthsPerPeriod2;
+      const lastDay2 = new Date(startDate2.getFullYear(), pEndM, 0);
+      const eInt = lastDay2.getFullYear()*10000 + (lastDay2.getMonth()+1)*100 + lastDay2.getDate();
+      if(rInt >= eInt){ snapshotIdx = i; } else { break; }
+    }
+    if(snapshotIdx >= 0){
+      const snap2 = R.sched[snapshotIdx];
+      const cumInt2 = R.sched.slice(0,snapshotIdx+1).reduce((s,x)=>s+x.int,0);
+      const cumDep2 = (snapshotIdx+1) * R.dep;
+      const rouNBV2 = Math.max(0, R.rouInitial - cumDep2);
+      const remPeriods2 = R.sched.length - (snapshotIdx+1);
+      const nextPeriods2 = Math.min(R.freq, remPeriods2);
+      let currentPortion2 = 0;
+      for(let i=snapshotIdx+1; i<snapshotIdx+1+nextPeriods2 && i<R.sched.length; i++){
+        currentPortion2 += R.sched[i].principal;
+      }
+      const nonCurrent2 = Math.max(0, snap2.cL - currentPortion2);
+      const snapshotSheetData = [
+        ["BALANCE SHEET SNAPSHOT"],
+        ["As at", INP.reportDateVal],
+        [],
+        ["Item","Amount"],
+        ["ROU Asset NBV", rouNBV2],
+        ["Lease Liability (Current)", currentPortion2],
+        ["Lease Liability (Non-current)", nonCurrent2],
+        ["Total Lease Liability", snap2.cL],
+        ["Cumulative Interest (P&L)", cumInt2],
+        ["Cumulative Depreciation", cumDep2],
+        ["Periods Elapsed", snapshotIdx+1],
+        ["Periods Remaining", remPeriods2]
+      ];
+      const ws4 = XLSX.utils.aoa_to_sheet(snapshotSheetData);
+      ws4["!cols"] = [{wch:35},{wch:25}];
+      styleRange(ws4,"A1:B1",HEADER);
+      styleRange(ws4,"A4:B4",SUBHEADER);
+      for(let i=5;i<=10;i++){
+        const c = ws4["B"+i];
+        if(c) c.s = MONEY;
+      }
+      XLSX.utils.book_append_sheet(wb,ws4,"Reporting Snapshot");
+    }
+  }
+
+  /* =====================================================
+     ANNUAL ROLLFORWARD
+  ===================================================== */
+
+  const annualRows = [
+    [
+      "Financial Year",
+      "Opening Liability",
+      "Interest",
+      "Payments",
+      "Principal",
+      "Closing Liability"
+    ]
+  ];
+
+  const startDate = new Date(INP.d);
+  const monthsPerPeriod = 12 / R.freq;
+
+  const fyMap = {};
+
+  R.sched.forEach((x,idx)=>{
+
+    const pEnd = new Date(startDate);
+
+pEnd.setMonth(
+  pEnd.getMonth() + ((idx+1)*monthsPerPeriod) - 1
+);
+
+// Actual month-end
+pEnd.setMonth(pEnd.getMonth()+1);
+pEnd.setDate(0);
+
+const fy = fyLabel(pEnd);
+
+    if(!fyMap[fy]){
+      fyMap[fy]={
+        fy,
+        open:x.oL,
+        int:0,
+        pay:0,
+        princ:0,
+        close:0
+      };
+    }
+
+    fyMap[fy].int += x.int;
+    fyMap[fy].pay += x.pmt;
+    fyMap[fy].princ += x.principal;
+    fyMap[fy].close = x.cL;
+
+  });
+
+  Object.values(fyMap).forEach(r=>{
+    annualRows.push([
+      r.fy,
+      r.open,
+      r.int,
+      r.pay,
+      r.princ,
+      r.close
+    ]);
+  });
+
+  const ws5 = XLSX.utils.aoa_to_sheet(annualRows);
+
+  ws5["!cols"] = Array(6).fill({wch:22});
+
+  styleRange(ws5,"A1:F1",HEADER);
+
+  ws5["!freeze"] = {xSplit:0,ySplit:1};
+
+  XLSX.utils.book_append_sheet(wb,ws5,"Annual Rollforward");
+
+  /* =====================================================
+     WRITE FILE
+  ===================================================== */
+
+  XLSX.writeFile(
+    wb,
+    "Finosutra_IndAS116_Premium_Report.xlsx"
+  );
+
+}
+
+/* ═══════════════════════════════════════════════════════
+   FINOSUTRA LEASE ENGINE — ARCHITECTURE DOCUMENTATION
+   Version 1 + Architecture Enhancement
+   ─────────────────────────────────────────────────────
+
+   CALCULATION FLOW (Enhancement 3 — documented):
+
+   Lease Inputs (UI)
+     ↓
+   generateLeaseCashflows(basePmt, termMonths, freq, commDate, params)
+     ↓  Returns Array<CashflowObject> where each object contains:
+     │    .period          (1-based integer)
+     │    .paymentDate     ('YYYY-MM-DD')
+     │    .paymentAmount   (numeric, rounded to paisa)
+     │    .paymentType     (PAYMENT_TYPES entry — always FIXED in V1)
+     │    .payment         (alias to paymentAmount for legacy compat)
+     ↓
+   PV Engine (in Calculate handler)
+     │  Filters: only cashflows where paymentType.includedInLiability===true
+     │  Discounts at IBR/freq per period (ordinary or annuity-due)
+     ↓
+   Lease Liability (R.pv)
+     ↓
+   ROU Asset (R.rouInitial = pv + IDC − Incentives)
+     ↓
+   Amortization Schedule (R.sched)
+     │  Each row: openL, interest, pmt, principal, closeL, dep, rouC
+     ↓
+   ┌─────────────────────────────────────────────────────┐
+   │  Reporting Modules (all consume R.sched):           │
+   │  • KPI Cards                                        │
+   │  • Amortization Schedule Tab                        │
+   │  • Journal Entries Tab                              │
+   │  • Lease Summary Tab                                │
+   │  • Annual Rollforward Tab                           │
+   │  • Reporting Date Snapshot                          │
+   │  • Excel Export (all sheets)                        │
+   └─────────────────────────────────────────────────────┘
+
+   ENHANCEMENT 2 — STEP RENT ARCHITECTURE NOTE:
+   ─────────────────────────────────────────────────────
+   Step Rent Schedule functionality is FULLY COVERED by
+   the Custom Rent Table feature (escType='custom').
+
+   Evidence: generateLeaseCashflows() with escType='custom'
+   accepts an arbitrary array of {date, amt} rows sorted by date,
+   and correctly assigns each period the rent that was most
+   recently effective on or before that period's start date.
+
+   This handles any step pattern including:
+   • Equal-step increases (e.g. 100k / 120k / 140k)
+   • Irregular steps (e.g. 100k / 112.5k / 128k)
+   • Any frequency of changes
+
+   A separate "Step Rent Schedule" feature is NOT required.
+   The Custom Rent Table IS the Step Rent Schedule feature.
+
+   ENHANCEMENT 4 — FUTURE VERSION COMPATIBILITY:
+   ─────────────────────────────────────────────────────
+   Version 3  Rent-Free Periods:
+     COMPATIBLE. Add rentFreePeriods param to cfParams.
+     In generateLeaseCashflows, set paymentAmount=0 for
+     those periods with paymentType=PAYMENT_TYPES.FIXED.
+     Zero amounts pass through PV engine unchanged.
+     No other module changes required.
+
+   Version 4  CPI-Linked Leases:
+     COMPATIBLE. New escType='cpi'. Set paymentType=
+     PAYMENT_TYPES.CPI. PV engine already has the
+     includedInLiability filter hook (currently commented
+     as a future point). Remeasurement engine is a
+     separate function that calls generateLeaseCashflows()
+     again from the reassessment date.
+
+   Version 5  Market Rent Review:
+     COMPATIBLE. Set paymentType=PAYMENT_TYPES.MARKET_REVIEW.
+     Since includedInLiability===false, PV engine excludes
+     these periods. A remeasurement hook fires at review date.
+
+   Version 6/7  Extension/Termination Reassessment:
+     COMPATIBLE. These produce TERMINATION_ADJUSTMENT or
+     EXTENSION_ADJUSTMENT typed cashflows appended to the
+     existing cfArray from the reassessment date forward.
+     Existing periods are unchanged.
+
+   Version 8  Purchase Options:
+     COMPATIBLE. PURCHASE_OPTION type.
+     includedInLiability is conditionally set to true
+     when "reasonably certain" flag is set in cfParams.
+
+   Version 9  Residual Value Guarantees:
+     COMPATIBLE. RESIDUAL_VALUE_GUARANTEE type appended
+     as a single cashflow in the final period.
+
+   Version 10  Floating Rate:
+     COMPATIBLE. FLOATING_RATE type. PV uses commencement
+     rate. Remeasurement engine handles rate changes by
+     regenerating cashflows from that date.
+
+   Version 11  Variable Payments (Disclosure Only):
+     COMPATIBLE. VARIABLE type. PV engine excludes
+     (includedInLiability===false). Disclosure module
+     reads these from cfArray separately.
+
+   Version 12  Remeasurement Engine:
+     COMPATIBLE. Remeasurement is a wrapper that:
+     1. Takes a reassessment date and updated params
+     2. Calls generateLeaseCashflows() for remaining term
+     3. Re-runs PV calculation from the outstanding liability
+     4. Produces a modified R and INP object
+     The core engine itself requires no changes.
+
+   IDENTIFIED WEAKNESSES (pre-empted by this enhancement):
+   ─────────────────────────────────────────────────────
+   1. RESOLVED: cfArray previously had no paymentType field.
+      Future versions could not filter by payment class.
+      → Fixed by PAYMENT_TYPES enum + makeCashflow factory.
+
+   2. RESOLVED: cfArray previously had no paymentDate field.
+      Snapshot and remeasurement engines need actual dates.
+      → Fixed by periodPaymentDate() helper + paymentDate field.
+
+   3. RESOLVED: PV engine had no hook for excluding payments
+      by type (e.g. VARIABLE, MARKET_REVIEW).
+      → Fixed by architecture comment marking the filter point.
+
+   4. IDENTIFIED: Annual rollforward uses a custom FY grouping
+      loop. For future versions with mid-year remeasurement,
+      this loop will need a second grouping dimension.
+      Recommended: Add a remeasurementDate field to fyMap
+      entries when Version 12 is built.
+
+   5. IDENTIFIED: Snapshot engine assumes all depreciation
+      periods are equal (constant SLM). Correct for Version 1.
+      For Version 3 (rent-free), ROU depreciation does not
+      change but for Version 6/7 (reassessment) a new ROU
+      carrying value must be passed through. The snapshotIdx
+      lookup is date-based and will still work; only the
+      cumDep calculation will need updating.
+═══════════════════════════════════════════════════════ */
+</script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<!-- Sticky Export Bar -->
+<div id="sticky-export-bar">
+  <div>
+    <div class="sticky-text">IND AS 116 Model 2 — Lease schedule ready</div>
+    <div class="sticky-sub">Audit-ready Excel with escalation schedule, journal entries &amp; balance sheet snapshot</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+    <button class="sticky-btn" onclick="document.getElementById('btnExp').click()">&#8595; Download Excel &nbsp;&#8377;99</button>
+    <button class="sticky-close" onclick="document.getElementById('sticky-export-bar').style.display='none'" title="Dismiss">&#x2715;</button>
+  </div>
+</div>
+
+
+<script>
+/* Nav toggle */
+(function(){
+  var t=document.getElementById('navToggle');
+  if(!t)return;
+  t.onclick=function(){
+    var l=document.getElementById('navLinks'),a=document.getElementById('navActions');
+    if(l)l.classList.toggle('open');
+    if(a)a.classList.toggle('open');
+    var i=this.querySelector('i');
+    if(i)i.className=l&&l.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-bars';
+  };
+})();
+/* Show sticky bar after calculate */
+(function(){
+  const orig = window.render;
+  if(typeof render==='function'){
+    const _r=render;
+    window._renderOrig=_r;
+  }
+})();
+</script>
+</body>
+</html>

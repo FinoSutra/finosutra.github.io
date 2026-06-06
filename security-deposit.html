@@ -240,6 +240,19 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
 }
 
 .wa-btn{position:fixed;bottom:24px;right:24px;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,.4);z-index:999;text-decoration:none;transition:transform .2s}.wa-btn:hover{transform:scale(1.08)}.wa-btn i{color:#fff;font-size:24px}
+
+/* ── UNIFIED NAV (injected) ── */
+#mainNav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(99,102,241,0.08);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 rgba(99,102,241,0.08),0 4px 20px rgba(99,102,241,0.05);}
+#mainNav .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+#mainNav .nav-logo{display:flex;align-items:center;text-decoration:none;}
+#mainNav .nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
+#mainNav .nav-links a{font-size:13px;font-weight:500;color:#6B7280;text-decoration:none;padding:7px 11px;border-radius:8px;transition:color .15s,background .15s;white-space:nowrap;}
+#mainNav .nav-links a:hover{color:#111827;background:#EEF2FF;}
+#mainNav .nav-back-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;font-family:'Inter',sans-serif;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;box-shadow:0 3px 12px rgba(99,102,241,0.3);transition:all .15s;white-space:nowrap;}
+#mainNav .nav-back-btn:hover{background:linear-gradient(135deg,#4F46E5,#7C3AED);transform:translateY(-1px);}
+#mainNav .nav-toggle{display:none;background:none;border:none;font-size:20px;color:#111827;cursor:pointer;padding:4px;}
+@media(max-width:900px){#mainNav .nav-links{display:none;}}
+@media(max-width:768px){#mainNav{padding:0 16px;}#mainNav .nav-actions{display:none;}#mainNav .nav-toggle{display:block;}#mainNav .nav-links.open,#mainNav .nav-actions.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid rgba(99,102,241,0.08);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
 </style>
 <!-- Google Analytics GA4 — replace G-Z2G710PHNQ with your real Measurement ID -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
@@ -254,17 +267,25 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
 <body>
 
 <!-- NAV -->
-<nav>
+<nav id="mainNav">
   <div class="nav-inner">
-    <a href="index.html" class="logo">
-      <img loading="eager" src="logo.png" alt="Finosutra" style="height:72px;width:auto;display:block;">
+    <a href="index.html" class="nav-logo">
+      <img loading="eager" src="logo.png" alt="Finosutra" style="height:48px;width:auto;display:block;">
     </a>
-    <div class="nav-right">
-      <a href="index.html" class="btn-back">
-        <i class="fa-solid fa-arrow-left"></i> Back to Home
-      </a>
-      <span class="nav-badge">IND AS 109 &middot; IFRS 9</span>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="indas-tools.html">IND AS Tools</a></li>
+      <li><a href="income-tax-hub.html">Income Tax</a></li>
+      <li><a href="salary-hr.html">Salary &amp; HR</a></li>
+      <li><a href="templates.html">Templates</a></li>
+      <li><a href="index.html#pricing">Pricing</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions" id="navActions">
+      <a href="index.html" class="nav-back-btn">&#8592; All Tools</a>
     </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
   </div>
 </nav>
 
@@ -291,19 +312,19 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
 
         <div class="field">
           <label class="field-label">Deposit Amount (Nominal)</label>
-          <input type="number" id="depositAmt" value="1000000" placeholder="e.g. 1000000"/>
+          <input type="number" id="depositAmt" placeholder="e.g. 1000000"/>
           <div class="hint">Full amount to be paid / received</div>
         </div>
 
         <div class="field">
           <label class="field-label">Market Interest Rate (% p.a.)</label>
-          <input type="number" id="marketRate" value="10" step="0.01" placeholder="e.g. 10"/>
+          <input type="number" id="marketRate" step="0.01" placeholder="e.g. 10"/>
           <div class="hint">Incremental borrowing rate / EIR</div>
         </div>
 
         <div class="field">
           <label class="field-label">Deposit Tenure (Years)</label>
-          <input type="number" id="tenure" value="5" step="0.5" min="0.5" placeholder="e.g. 5"/>
+          <input type="number" id="tenure" step="0.5" min="0.5" placeholder="e.g. 5"/>
         </div>
 
         <hr class="divider"/>
@@ -667,7 +688,7 @@ function initiatePayment(){
   };
   try {
     // Save state before payment (mobile UPI kills JS memory)
-    try { localStorage.setItem('fino_sd_state', JSON.stringify({data: SD, ts: Date.now()})); } catch(e){}
+    try { localStorage.removeItem('fino_sd_state'); } catch(e){}
     var rzp = new Razorpay(options);
     rzp.on('payment.failed', function(resp){ showToast('Payment failed: '+resp.error.description,'fail'); });
     rzp.open();
@@ -821,31 +842,6 @@ window.onload = function(){ calculate(); };
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 
-
-<div id="sd-recovery-banner" style="display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1E293B;color:#fff;padding:14px 24px;border-radius:12px;font-family:Inter,sans-serif;font-size:14px;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,.3);display:flex;align-items:center;gap:14px;">
-  <span>✅ Payment confirmed — your data was restored.</span>
-  <button onclick="recoverSD()" style="background:#6366F1;color:#fff;border:none;padding:8px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px;">Download Excel</button>
-  <button onclick="document.getElementById('sd-recovery-banner').style.display='none'" style="background:transparent;color:#94A3B8;border:none;cursor:pointer;font-size:18px;line-height:1;">✕</button>
-</div>
-<script>
-(function(){
-  try {
-    var saved = localStorage.getItem('fino_sd_state');
-    if(!saved) return;
-    var obj = JSON.parse(saved);
-    if(Date.now() - obj.ts > 30*60*1000){ localStorage.removeItem('fino_sd_state'); return; }
-    SD = obj.data;
-    var banner = document.getElementById('sd-recovery-banner');
-    if(banner) banner.style.display='flex';
-  } catch(e){}
-})();
-function recoverSD(){
-  document.getElementById('sd-recovery-banner').style.display='none';
-  exportXL();
-  try{localStorage.removeItem('fino_sd_state');}catch(e){}
-}
-</script>
-
 <!-- STICKY EXPORT BAR -->
 <div id="sticky-export-bar">
   <div>
@@ -862,5 +858,20 @@ function recoverSD(){
 <a href="https://wa.me/918208063319?text=Hi%20Finosutra%2C%20I%20need%20help%20with%20Security%20Deposit%20calculation" class="wa-btn" target="_blank" rel="noopener">
   <i class="fa-brands fa-whatsapp"></i>
 </a>
+
+<script>
+(function(){
+  var t=document.getElementById('navToggle');
+  if(!t) return;
+  t.onclick=function(){
+    var l=document.getElementById('navLinks');
+    var a=document.getElementById('navActions');
+    if(l) l.classList.toggle('open');
+    if(a) a.classList.toggle('open');
+    var i=this.querySelector('i');
+    if(i) i.className=l&&l.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-bars';
+  };
+})();
+</script>
 </body>
 </html>

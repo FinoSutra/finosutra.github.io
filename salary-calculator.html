@@ -192,6 +192,19 @@ footer img{height:28px;margin-bottom:8px;opacity:.6}
 #sticky-export-bar .sticky-close{background:none;border:none;color:#64748B;font-size:20px;cursor:pointer;padding:4px 8px;line-height:1}
 @media(max-width:600px){#sticky-export-bar{flex-direction:column;align-items:flex-start;padding:14px 16px}#sticky-export-bar .sticky-btn{width:100%;text-align:center}}
 
+
+/* ── UNIFIED NAV (injected) ── */
+#mainNav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(99,102,241,0.08);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 rgba(99,102,241,0.08),0 4px 20px rgba(99,102,241,0.05);}
+#mainNav .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+#mainNav .nav-logo{display:flex;align-items:center;text-decoration:none;}
+#mainNav .nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
+#mainNav .nav-links a{font-size:13px;font-weight:500;color:#6B7280;text-decoration:none;padding:7px 11px;border-radius:8px;transition:color .15s,background .15s;white-space:nowrap;}
+#mainNav .nav-links a:hover{color:#111827;background:#EEF2FF;}
+#mainNav .nav-back-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;font-family:'Inter',sans-serif;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;box-shadow:0 3px 12px rgba(99,102,241,0.3);transition:all .15s;white-space:nowrap;}
+#mainNav .nav-back-btn:hover{background:linear-gradient(135deg,#4F46E5,#7C3AED);transform:translateY(-1px);}
+#mainNav .nav-toggle{display:none;background:none;border:none;font-size:20px;color:#111827;cursor:pointer;padding:4px;}
+@media(max-width:900px){#mainNav .nav-links{display:none;}}
+@media(max-width:768px){#mainNav{padding:0 16px;}#mainNav .nav-actions{display:none;}#mainNav .nav-toggle{display:block;}#mainNav .nav-links.open,#mainNav .nav-actions.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid rgba(99,102,241,0.08);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
 </style>
 <script type="application/ld+json">
 {
@@ -220,6 +233,21 @@ footer img{height:28px;margin-bottom:8px;opacity:.6}
       "@type": "Question",
       "name": "What is the difference between CTC and in-hand salary?",
       "acceptedAnswer": { "@type": "Answer", "text": "CTC (Cost to Company) is the total amount an employer spends on an employee, including PF, gratuity, and other benefits. In-hand salary is what you actually receive after deductions like PF, TDS, and Professional Tax. Typically in-hand is 65-80% of CTC." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the standard deduction for salaried employees in FY 2026-27?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Salaried employees get a standard deduction of ₹75,000 under the New Tax Regime for FY 2026-27. Under the Old Regime, the standard deduction is ₹50,000. This deduction is automatic — no bills or proofs are needed. It directly reduces your taxable salary income." }
+    },
+    {
+      "@type": "Question",
+      "name": "How much TDS is deducted from salary per month?",
+      "acceptedAnswer": { "@type": "Answer", "text": "TDS on salary is calculated by estimating your full-year tax liability and dividing by 12. Under the New Regime, if your annual taxable income is below ₹12 lakh, Section 87A rebate means zero tax and no TDS is deducted." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is gratuity included in CTC?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Most employers include gratuity in CTC — typically 4.81% of Basic salary. Gratuity is only paid when you complete 5 or more years of continuous service. If you leave before 5 years, you do not receive this amount despite it being part of your CTC." }
     }
   ]
 }
@@ -228,15 +256,25 @@ footer img{height:28px;margin-bottom:8px;opacity:.6}
 <body>
 
 <!-- NAV -->
-<nav class="nav">
-  <a href="index.html"><img loading="eager" src="logo.png" alt="Finosutra" style="height:44px;width:auto;display:block"></a>
-  <div class="nav-links">
-    <a href="indas116.html">IND AS 116</a>
-    <a href="gst-calculator.html">GST</a>
-    <a href="india-tax-calculator.html">Income Tax</a>
-    <a href="salary-calculator.html" class="active">Salary</a>
-    <a href="emi-calculator.html">EMI</a>
-    <a href="index.html#contact" class="nav-cta">Contact</a>
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img loading="eager" src="logo.png" alt="Finosutra" style="height:48px;width:auto;display:block;">
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="indas-tools.html">IND AS Tools</a></li>
+      <li><a href="income-tax-hub.html">Income Tax</a></li>
+      <li><a href="salary-hr.html">Salary &amp; HR</a></li>
+      <li><a href="templates.html">Templates</a></li>
+      <li><a href="index.html#pricing">Pricing</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions" id="navActions">
+      <a href="index.html" class="nav-back-btn">&#8592; All Tools</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
   </div>
 </nav>
 
@@ -486,6 +524,18 @@ footer img{height:28px;margin-bottom:8px;opacity:.6}
     <div class="faq-item">
       <div class="faq-q">How is EPF (Employee PF) calculated?</div>
       <div class="faq-a">Employee PF contribution is 12% of Basic salary (capped at ₹1,800/month if Basic exceeds ₹15,000). Employer also contributes 12% of Basic — 3.67% to EPF and 8.33% to EPS. Both contributions are part of your CTC but only the employee share reduces your in-hand salary.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What is the standard deduction for salaried employees in FY 2026-27?</div>
+      <div class="faq-a">Salaried employees get a standard deduction of ₹75,000 under the New Tax Regime for FY 2026-27. Under the Old Regime, the standard deduction is ₹50,000. This deduction is automatic — no bills or proofs are needed. It directly reduces your taxable salary income.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How much TDS is deducted from salary per month?</div>
+      <div class="faq-a">TDS on salary is calculated by estimating your full-year tax liability and dividing by 12. Your employer deducts TDS monthly based on your salary structure, declared investments (Form 12BB), and the regime you chose. Under the New Regime, if your annual taxable income is below ₹12 lakh, Section 87A rebate means zero tax and no TDS is deducted.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Is gratuity included in CTC?</div>
+      <div class="faq-a">Yes. Most employers include gratuity in CTC — typically 4.81% of Basic salary (calculated as 15/26 × monthly Basic). However, gratuity is only paid when you complete 5 or more years of continuous service. If you leave before 5 years, you do not receive this amount, yet it was part of your CTC.</div>
     </div>
   </div>
 
@@ -943,45 +993,31 @@ function generateExcel(paymentId){
    onmouseover="this.style.transform='scale(1.1)';this.style.boxShadow='0 6px 24px rgba(37,211,102,0.5)'"
    onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 16px rgba(37,211,102,0.35)'">
   <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#fff">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-  </svg>
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.709.306 1.262.489 1.79.49.308.001.598-.092.851-.257.237-.154.487-.317.638-.476.155-.163.297-.365.424-.576.201-.334.271-.721.158-1.104z"/></svg>
 </a>
 
-<div id="sal-recovery-banner" style="display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1E293B;color:#fff;padding:14px 24px;border-radius:12px;font-family:Inter,sans-serif;font-size:14px;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,.3);align-items:center;gap:14px;">
-  <span>✅ Payment confirmed — your data was restored.</span>
-  <button onclick="recoverSal()" style="background:#6366F1;color:#fff;border:none;padding:8px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px;">Download Excel</button>
-  <button onclick="document.getElementById('sal-recovery-banner').style.display='none'" style="background:transparent;color:#94A3B8;border:none;cursor:pointer;font-size:18px;line-height:1;">✕</button>
-</div>
 <script>
 (function(){
-  try {
-    var saved = localStorage.getItem('fino_sal_state');
-    if(!saved) return;
-    var obj = JSON.parse(saved);
-    if(Date.now() - obj.ts > 30*60*1000){ localStorage.removeItem('fino_sal_state'); return; }
-    lastResult = obj.data;
-    var banner = document.getElementById('sal-recovery-banner');
-    if(banner) banner.style.display='flex';
-  } catch(e){}
+  var t=document.getElementById('navToggle');
+  if(!t) return;
+  t.onclick=function(){
+    var l=document.getElementById('navLinks');
+    var a=document.getElementById('navActions');
+    if(l) l.classList.toggle('open');
+    if(a) a.classList.toggle('open');
+    var i=this.querySelector('i');
+    if(i) i.className=l&&l.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-bars';
+  };
 })();
-function recoverSal(){
-  document.getElementById('sal-recovery-banner').style.display='none';
-  generateExcel('RECOVERED');
-  try{localStorage.removeItem('fino_sal_state');}catch(e){}
-}
 </script>
 
-<!-- STICKY EXPORT BAR -->
 <div id="sticky-export-bar">
   <div>
-    <div class="sticky-text">✅ Your report is ready — get the audit-ready Excel</div>
-    <div class="sticky-sub">CTC breakup · New vs Old regime · PF · TDS · Full salary report · One-time ₹99</div>
+    <div class="sticky-text">Your salary breakdown is ready</div>
+    <div class="sticky-sub">Download the formatted salary report — professional PDF/Excel</div>
   </div>
-  <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
-    <button class="sticky-btn" onclick="initiatePayment()">⬇ Download Excel — ₹99</button>
-    <button class="sticky-close" onclick="document.getElementById('sticky-export-bar').style.display='none'" title="Dismiss">✕</button>
-  </div>
+  <button class="sticky-btn" onclick="initiatePayment()">Download Salary Report &nbsp;&#8377;99</button>
+  <button class="sticky-close" onclick="this.parentElement.style.display=&#39;none&#39;" title="Close">&#x2715;</button>
 </div>
-
 </body>
 </html>

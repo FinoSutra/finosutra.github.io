@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>GST Tools India — Calculator &amp; Reconciliation | Finosutra</title>
+<meta name="description" content="GST calculator with CGST, SGST and IGST split. GST reconciliation coming soon. Free for CAs and finance teams."/>
+<meta name="author" content="Finosutra"/>
+<meta name="robots" content="index,follow"/>
+<link rel="canonical" href="https://www.finosutra.com/gst-tools.html"/>
+<meta property="og:title" content="GST Tools India — Calculator &amp; Reconciliation | Finosutra"/>
+<meta property="og:description" content="GST calculator with CGST, SGST and IGST split. GST reconciliation coming soon. Free for CAs and finance teams."/>
+<meta property="og:image" content="https://www.finosutra.com/og-image.png"/>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;--brand-mid:#C7D2FE;--text:#111827;--muted:#6B7280;--faint:#9CA3AF;--bg:#F7F8FF;--white:#FFFFFF;--border:rgba(99,102,241,0.12);--border-light:rgba(99,102,241,0.07);--radius:14px;--radius-sm:9px;--shadow:0 1px 3px rgba(0,0,0,0.04),0 6px 20px rgba(99,102,241,0.07);--shadow-md:0 4px 32px rgba(99,102,241,0.11);}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;}
+nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border-light);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 var(--border-light),0 4px 20px rgba(99,102,241,0.05);}
+.nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.nav-logo{display:flex;align-items:center;text-decoration:none;}
+.nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
+.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;padding:7px 12px;border-radius:8px;transition:color .15s,background .15s;white-space:nowrap;}
+.nav-links a:hover,.nav-links a.active{color:var(--text);background:var(--brand-light);}
+.nav-actions{display:flex;align-items:center;gap:8px;}
+.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;font-family:'Inter',sans-serif;transition:all .15s;background:var(--white);color:var(--text);border:1.5px solid var(--border);}
+.nav-btn:hover{border-color:var(--brand);color:var(--brand);}
+.nav-toggle{display:none;background:none;border:none;font-size:20px;color:var(--text);cursor:pointer;padding:4px;}
+@media(max-width:900px){.nav-links{display:none;}}
+@media(max-width:768px){nav{padding:0 16px;}.nav-actions{display:none;}.nav-toggle{display:block;}.nav-links.open,.nav-actions.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid var(--border-light);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
+.page-hero{padding:48px 32px 40px;border-bottom:1px solid var(--border-light);}
+.page-hero-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;gap:20px;}
+.page-hero-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.page-hero h1{font-size:30px;font-weight:800;letter-spacing:-.5px;color:var(--text);margin-bottom:6px;}
+.page-hero p{font-size:14px;color:var(--muted);line-height:1.7;max-width:560px;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;margin-top:10px;}
+.section{padding:40px 32px 60px;}
+.wrap{max-width:1160px;margin:0 auto;}
+.group{margin-bottom:44px;}
+.group-hd{font-size:10px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.group-hd::after{content:'';flex:1;height:1px;background:var(--border-light);}
+.tools-list{display:flex;flex-direction:column;gap:10px;}
+.tool-row{display:flex;align-items:center;gap:14px;padding:16px 18px;background:var(--white);border:1px solid var(--border-light);border-radius:12px;text-decoration:none;transition:all .18s;position:relative;overflow:hidden;}
+.tool-row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:4px 0 0 4px;}
+.tool-row.live{border-color:rgba(99,102,241,0.18);box-shadow:var(--shadow);}
+.tool-row.live::before{background:linear-gradient(180deg,#6366F1,#8B5CF6);}
+.tool-row.wip::before{background:#F59E0B;}
+.tool-row.soon::before{background:#E5E7EB;}
+.tool-row.live:hover{border-color:rgba(99,102,241,0.4);box-shadow:var(--shadow-md);transform:translateX(3px);}
+.tool-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.tool-body{flex:1;min-width:0;}
+.tool-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.tool-desc{font-size:12px;color:var(--muted);line-height:1.5;}
+.tool-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0;}
+.badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;}
+.badge-live{background:#DCFCE7;color:#166534;}
+.badge-wip{background:#FEF3C7;color:#B45309;}
+.badge-soon{background:#F3F4F6;color:#6B7280;}
+.tool-price{font-size:11px;color:var(--faint);}
+.tool-open{font-size:11px;font-weight:700;color:var(--brand);}
+.btn-notify{font-size:11px;font-weight:600;color:var(--muted);background:none;border:1px solid var(--border);border-radius:6px;padding:4px 10px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s;}
+.btn-notify:hover{border-color:var(--brand);color:var(--brand);}
+footer{background:#111827;padding:32px;color:#9CA3AF;}
+.footer-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.footer-links{display:flex;gap:14px;flex-wrap:wrap;}
+.footer-links a{font-size:12px;color:#6B7280;text-decoration:none;}
+@media(max-width:768px){.page-hero{padding:32px 20px;}.page-hero-inner{flex-direction:column;align-items:flex-start;}.section{padding:32px 20px 48px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img loading="eager" src="logo.png" alt="Finosutra" style="height:52px;width:auto;display:block;">
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="indas-tools.html">IND AS</a></li>
+      <li><a href="gst-tools.html" class="active">GST</a></li>
+      <li><a href="income-tax-hub.html">Income Tax</a></li>
+      <li><a href="salary-hr.html">Salary &amp; HR</a></li>
+      <li><a href="templates.html">Templates</a></li>
+      <li><a href="index.html#pricing">Pricing</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions" id="navActions">
+      <a href="index.html" class="nav-btn">&#8592; All Tools</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><i class="fa-solid fa-bars"></i></button>
+  </div>
+</nav>
+<div class="page-hero" style="background:linear-gradient(135deg,#F0FDF4,#ECFDF5);">
+  <div class="page-hero-inner">
+    <div class="page-hero-icon" style="background:#15803D;color:#fff;"><i class="fa-solid fa-receipt"></i></div>
+    <div>
+      <h1>GST Tools</h1>
+      <p>GST calculation, reconciliation and compliance tools — built for CAs, GST practitioners and finance teams in India.</p>
+      <div class="hero-badge" style="color:#15803D;background:#F0FDF4;"><i class="fa-solid fa-check-circle"></i>&nbsp; 1 live tool &nbsp;&middot;&nbsp; 1 coming soon</div>
+    </div>
+  </div>
+</div>
+<div class="section">
+<div class="wrap">
+  <div class="group">
+    <div class="group-hd">GST Calculators</div>
+    <div class="tools-list"><a href="gst-calculator.html" class="tool-row live"><div class="tool-icon" style="background:#F0FDF4;color:#15803D;"><i class="fa-solid fa-receipt"></i></div><div class="tool-body"><div class="tool-title">GST Calculator</div><div class="tool-desc">GST-inclusive and GST-exclusive amounts &middot; CGST + SGST + IGST split &middot; All GST rates (5%, 12%, 18%, 28%)</div></div><div class="tool-right"><span class="badge badge-live">Live</span><span class="tool-price">Free</span><span class="tool-open">Open &rarr;</span></div></a>
+    </div>
+  </div>
+  <div class="group">
+    <div class="group-hd">Reconciliation &amp; Compliance</div>
+    <div class="tools-list"><div class="tool-row soon"><div class="tool-icon" style="background:#F3F4F6;color:#9CA3AF;"><i class="fa-solid fa-right-left"></i></div><div class="tool-body"><div class="tool-title">GST Reconciliation Tool</div><div class="tool-desc">GSTR-2A vs purchase register matching &middot; Auto-identify mismatches &middot; ITC reconciliation &middot; Export to Excel</div></div><div class="tool-right"><span class="badge badge-soon">Coming soon</span><button class="btn-notify" onclick="notifyMe('GST Reconciliation')">Notify me</button></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div>
+      <img src="logo.png" alt="Finosutra" style="height:28px;width:auto;display:block;margin-bottom:4px;">
+      <p style="font-size:12px;">&#169; 2026 Finosutra. Finance on Autopilot.</p>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="indas-tools.html">IND AS</a>
+      <a href="gst-tools.html">GST</a>
+      <a href="income-tax-hub.html">Income Tax</a>
+      <a href="salary-hr.html">Salary &amp; HR</a>
+      <a href="templates.html">Templates</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+</footer>
+<div id="notifyModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:16px;padding:32px;max-width:400px;width:90%;margin:20px;">
+    <h3 style="font-size:17px;font-weight:700;margin-bottom:8px;">Get notified when it's ready</h3>
+    <p style="font-size:13px;color:#6B7280;margin-bottom:18px;" id="notifyProductName"></p>
+    <form action="https://formspree.io/f/xnjrrvop" method="POST" onsubmit="handleNotify(event)">
+      <input type="hidden" name="product" id="notifyProduct"/>
+      <input type="email" name="email" placeholder="you@company.com" required style="width:100%;padding:10px 13px;border:1.5px solid #E5E7EB;border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;outline:none;margin-bottom:12px;"/>
+      <div style="display:flex;gap:10px;">
+        <button type="submit" style="flex:1;padding:10px;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;">Notify me</button>
+        <button type="button" onclick="closeNotify()" style="flex:1;padding:10px;background:#fff;border:1.5px solid #E5E7EB;border-radius:8px;font-size:14px;cursor:pointer;font-family:'Inter',sans-serif;">Cancel</button>
+      </div>
+    </form>
+    <div id="notifySuccess" style="display:none;margin-top:12px;padding:12px;background:#DCFCE7;border-radius:8px;font-size:13px;color:#166534;text-align:center;"><i class="fa-solid fa-circle-check"></i> You're on the list!</div>
+  </div>
+</div>
+<script>
+(function(){var t=document.getElementById('navToggle');if(!t)return;t.onclick=function(){var l=document.getElementById('navLinks'),a=document.getElementById('navActions');if(l)l.classList.toggle('open');if(a)a.classList.toggle('open');var i=this.querySelector('i');if(i)i.className=l&&l.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-bars';};})();
+function gaEvent(n,p){if(typeof gtag==='function')gtag('event',n,p||{});}
+function notifyMe(product){document.getElementById('notifyProduct').value=product;document.getElementById('notifyProductName').textContent="We'll email you as soon as "+product+" is ready.";document.getElementById('notifyModal').style.display='flex';gaEvent('waitlist_open',{product_name:product});}
+function closeNotify(){document.getElementById('notifyModal').style.display='none';document.getElementById('notifySuccess').style.display='none';}
+function handleNotify(e){e.preventDefault();var form=e.target,btn=form.querySelector('button[type="submit"]'),pname=document.getElementById('notifyProduct').value;btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i>';btn.disabled=true;fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}}).then(function(){document.getElementById('notifySuccess').style.display='block';form.reset();gaEvent('waitlist_signup',{product_name:pname});setTimeout(closeNotify,2500);}).catch(function(){btn.innerHTML='Notify me';btn.disabled=false;});}
+document.getElementById('notifyModal').onclick=function(e){if(e.target===this)closeNotify();};
+</script>
+</body>
+</html>
