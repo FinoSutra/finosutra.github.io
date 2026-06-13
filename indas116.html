@@ -1646,13 +1646,9 @@ document.getElementById('btnExp').onclick = function(){
     setTimeout(function(){ try{ exportXL(); } catch(e){ console.error(e); } }, 300);
     return;
   }
-  // Non-Pro: ₹99 flow
-  if(capturedEmail){ initiatePayment(); return; }
+  // Non-Pro: go directly to ₹99 Razorpay payment
   gaEvent('begin_checkout', { tool_name: 'IND AS 116', value: 99, currency: 'INR' });
-  var wrap = document.getElementById('emailGateWrap');
-  wrap.style.display = 'block';
-  document.getElementById('egEmail').focus();
-  wrap.scrollIntoView({behavior:'smooth', block:'nearest'});
+  initiatePayment();
 };
 
 document.getElementById('egSubmit').onclick = function(){
@@ -1772,6 +1768,18 @@ function recoveryDownload(){
 
 function initiatePayment(){
   if(!R||!INP){ alert('Please calculate the lease schedule first.'); return; }
+
+  // Dynamically load Razorpay if not yet available (CDN may not have loaded)
+  if(typeof Razorpay === 'undefined'){
+    showToast('Loading payment…','#6366F1');
+    var s = document.createElement('script');
+    s.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    s.onload = function(){ initiatePayment(); };
+    s.onerror = function(){ showToast('Could not load payment. Please check your internet connection.','#EF4444'); };
+    document.head.appendChild(s);
+    return;
+  }
+
   gaEvent('payment_initiated', { tool_name: 'IND AS 116', amount: 99, currency: 'INR' });
 
   // ── CRITICAL: Save state BEFORE opening payment window ──
