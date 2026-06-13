@@ -1697,6 +1697,12 @@ function initiateExcelPayment(){
     alert('Please calculate your tax first before downloading.');
     return;
   }
+  // Pro subscriber — free download, skip payment
+  if(window.isProUser){
+    if(typeof showToast === 'function') showToast('✓ Downloading your Pro report…','#5EC98A');
+    setTimeout(function(){ generateAndDownloadExcel('PRO_'+Date.now()); }, 300);
+    return;
+  }
   const btn = document.getElementById('btnExp');
   if(!btn) return;
   btn.innerHTML = '⏳ Opening payment...';
@@ -1979,6 +1985,5 @@ setRegime('new');
   </details>
 
 </div>
-
 </body>
 </html>

@@ -2112,7 +2112,15 @@ function sw(id,btn){
 /* ═══════════════════════════════════════════════════════
    RAZORPAY PAYMENT
 ═══════════════════════════════════════════════════════ */
-document.getElementById('btnExp').onclick = initiatePayment;
+document.getElementById('btnExp').onclick = function(){
+  // Pro subscriber — free download, skip payment
+  if(window.isProUser){
+    if(typeof showToast === 'function') showToast('✓ Downloading your Pro report…','#5EC98A');
+    setTimeout(function(){ try{ exportXL(); } catch(e){ console.error(e); } }, 300);
+    return;
+  }
+  initiatePayment();
+};
 
 /* ── Save full state to localStorage so a page reload cannot lose the download ── */
 function saveStateToStorage(){
@@ -2819,7 +2827,14 @@ const fy = fyLabel(pEnd);
      The core engine itself requires no changes.
 
    IDENTIFIED WEAKNESSES (pre-empted by this enhancement):
-   ─────────────────────────────────────────────────────
+   ──────────�
+   (End of architecture documentation — future versions will build on this engine)
+*/
+</script>
+
+</body>
+</html>
+��───
    1. RESOLVED: cfArray previously had no paymentType field.
       Future versions could not filter by payment class.
       → Fixed by PAYMENT_TYPES enum + makeCashflow factory.
