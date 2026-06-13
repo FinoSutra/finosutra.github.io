@@ -1613,10 +1613,8 @@ function sw(id,btn){
 // ── Email gate logic ──
 var capturedEmail = '';
 
-document.getElementById('btnExp').onclick = async function(){
-  if(!R||!INP){ alert('Please calculate the lease schedule first.'); return; }
-
-  // ── Direct Pro check — self-contained, no dependency on auth block variables ──
+// ── Self-contained Pro check helper (no auth block dependency) ──
+async function _checkProDirect(){
   try {
     if(window.supabase && window.supabase.createClient){
       var _c = window.supabase.createClient(
@@ -1630,16 +1628,34 @@ document.getElementById('btnExp').onclick = async function(){
           .eq('user_id',_sess.user.id).eq('status','active')
           .gt('current_period_end',_now)
           .order('created_at',{ascending:false}).limit(1).maybeSingle();
-        if(!_sub.error && _sub.data){
-          // ✅ Confirmed Pro — free export
-          gaEvent('excel_downloaded', { tool_name: 'IND AS 116', trigger: 'pro_subscription' });
-          showToast('✓ Downloading your Pro report…','#5EC98A');
-          setTimeout(function(){ try{ exportXL(); } catch(e){ console.error(e); } }, 300);
-          return;
-        }
+        return { isPro: !_sub.error && !!_sub.data, client: _c };
       }
+      return { isPro: false, client: _c };
     }
   } catch(e){ console.warn('Pro check error:', e); }
+  return { isPro: false, client: null };
+}
+
+// ── On page load: update button label for Pro users ──
+window.addEventListener('load', async function(){
+  var result = await _checkProDirect();
+  if(result.isPro){
+    updateExportBtnLabel(true);
+  }
+});
+
+document.getElementById('btnExp').onclick = async function(){
+  if(!R||!INP){ alert('Please calculate the lease schedule first.'); return; }
+
+  var result = await _checkProDirect();
+  if(result.isPro){
+    // ✅ Confirmed Pro — free export
+    updateExportBtnLabel(true);
+    gaEvent('excel_downloaded', { tool_name: 'IND AS 116', trigger: 'pro_subscription' });
+    showToast('✓ Downloading your Pro report…','#5EC98A');
+    setTimeout(function(){ try{ exportXL(); } catch(e){ console.error(e); } }, 300);
+    return;
+  }
 
   // Not Pro → ₹99 payment
   gaEvent('begin_checkout', { tool_name: 'IND AS 116', value: 99, currency: 'INR' });
