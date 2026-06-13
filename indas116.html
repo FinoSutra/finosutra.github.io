@@ -1636,12 +1636,18 @@ async function _checkProDirect(){
   return { isPro: false, client: null };
 }
 
+// ── Inline label updater (no auth block dependency) ──
+function _setProBtnLabel(){
+  var btn = document.getElementById('btnExp');
+  if(btn) btn.innerHTML = '&#8659;&nbsp; Download Excel Report <span class="pro-free-tag">PRO FREE</span>';
+  var sticky = document.querySelector('#sticky-export-bar .sticky-btn');
+  if(sticky) sticky.innerHTML = '&#8659; Download Excel Report &nbsp;<span class="pro-free-tag">PRO FREE</span>';
+}
+
 // ── On page load: update button label for Pro users ──
 window.addEventListener('load', async function(){
   var result = await _checkProDirect();
-  if(result.isPro){
-    updateExportBtnLabel(true);
-  }
+  if(result.isPro){ _setProBtnLabel(); }
 });
 
 document.getElementById('btnExp').onclick = async function(){
@@ -1650,9 +1656,9 @@ document.getElementById('btnExp').onclick = async function(){
   var result = await _checkProDirect();
   if(result.isPro){
     // ✅ Confirmed Pro — free export
-    updateExportBtnLabel(true);
+    _setProBtnLabel();
     gaEvent('excel_downloaded', { tool_name: 'IND AS 116', trigger: 'pro_subscription' });
-    showToast('✓ Downloading your Pro report…','#5EC98A');
+    showToast('\u2713 Downloading your Pro report\u2026','#5EC98A');
     setTimeout(function(){ try{ exportXL(); } catch(e){ console.error(e); } }, 300);
     return;
   }
