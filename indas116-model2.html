@@ -767,6 +767,18 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
   </div>
 </div>
 
+<!-- Sticky export bar (shown after calculation) -->
+<div id="sticky-export-bar">
+  <div>
+    <div class="sticky-text">✅ Your lease schedule is ready — get the audit-ready Excel report</div>
+    <div class="sticky-sub">Amortization · Journal entries · Annual rollforward · IND AS 116 compliant</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+    <button class="sticky-btn" onclick="handleStickyExportClick()">⬇ Download Excel Report &nbsp;₹99</button>
+    <button class="sticky-close" onclick="document.getElementById('sticky-export-bar').style.display='none'" title="Dismiss">✕</button>
+  </div>
+</div>
+
 <script>
 
 let R   = null;
@@ -2176,6 +2188,11 @@ function recoveryDownload(){
     alert('Download failed. Please email fino.sutra07@gmail.com with your Payment ID and we will send the report manually within 30 minutes.');
     console.error(e);
   }
+}
+
+function handleStickyExportClick(){
+  if(window.isProUser){ exportXL(); return; }
+  initiatePayment();
 }
 
 function initiatePayment(){

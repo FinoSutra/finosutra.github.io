@@ -438,7 +438,7 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
       <!-- EXPORT ROW -->
       <div class="exp-row" id="expRow" style="display:none">
         <span class="exp-note" id="expNote"></span>
-        <button class="btn-exp" id="btnExp" onclick="initiatePayment()">
+        <button class="btn-exp" id="btnExp" onclick="handleExportClick()">
           <i class="fa-solid fa-file-excel"></i> Download Excel Report &nbsp;<span style="font-size:10px;opacity:.8">₹99</span>
         </button>
       </div>
@@ -727,6 +727,12 @@ function buildJE(title, lines){
   return '<div class="je-wrap"><div class="je-head">'+title+'</div><table class="je-table"><thead><tr><th>Account</th><th>Dr Amount</th><th>Cr Amount</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
 
+/* ── EXPORT CLICK HANDLER (Pro = free, Free = ₹99) ── */
+function handleExportClick(){
+  if(window.isProUser){ exportXL(); return; }
+  initiatePayment();
+}
+
 /* ── RAZORPAY PAYMENT ── */
 function initiatePayment(){
   if(!SD){ alert('Please calculate the deposit schedule first.'); return; }
@@ -904,7 +910,7 @@ window.onload = function(){ calculate(); };
     <div class="sticky-sub">Fair value workings · EIR schedule · Journal entries · BS & P&L impact · One-time ₹99</div>
   </div>
   <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
-    <button class="sticky-btn" onclick="initiatePayment()">⬇ Download Excel — ₹99</button>
+    <button class="sticky-btn" onclick="handleExportClick()">⬇ Download Excel — ₹99</button>
     <button class="sticky-close" onclick="document.getElementById('sticky-export-bar').style.display='none'" title="Dismiss">✕</button>
   </div>
 </div>

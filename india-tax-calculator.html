@@ -1697,7 +1697,8 @@ function initiateExcelPayment(){
     alert('Please calculate your tax first before downloading.');
     return;
   }
-  const btn = document.getElementById('excel-export-btn');
+  const btn = document.getElementById('btnExp');
+  if(!btn) return;
   btn.innerHTML = '⏳ Opening payment...';
   btn.disabled = true;
 
@@ -1735,6 +1736,11 @@ function initiateExcelPayment(){
 // EXCEL GENERATION — SheetJS
 // ===================================================================
 function generateAndDownloadExcel(paymentId){
+  if(!lastResults){
+    if(typeof showToast==='function') showToast('Please calculate your tax first.','#FF8A80');
+    else alert('Please calculate your tax first.');
+    return;
+  }
   const r = lastResults;
   const nr = r.new;
   const or = r.old;
