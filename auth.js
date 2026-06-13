@@ -67,6 +67,8 @@
       '.fs-nav-pro-badge{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-size:10px;font-weight:800;padding:2px 8px;border-radius:20px;letter-spacing:.5px;}',
       '.fs-nav-signout-btn{background:none;border:1px solid #E5E7EB;color:#9CA3AF;padding:5px 10px;border-radius:6px;font-size:11px;cursor:pointer;transition:all .15s;font-family:Inter,sans-serif;}',
       '.fs-nav-signout-btn:hover{border-color:#EF4444;color:#EF4444;}',
+      '.fs-nav-profile-btn{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#EEF2FF;color:#6366F1;font-size:14px;text-decoration:none;transition:background .15s;}',
+      '.fs-nav-profile-btn:hover{background:#C7D2FE;}',
       /* PRO UPGRADE BANNER */
       '#fsProBanner{display:none;margin-top:20px;background:linear-gradient(135deg,#EEF2FF,#F5F3FF);border:1.5px solid #C7D2FE;border-radius:14px;padding:20px 22px;position:relative;overflow:hidden;}',
       '#fsProBanner::before{content:"";position:absolute;top:-30px;right:-30px;width:100px;height:100px;background:radial-gradient(circle,rgba(139,92,246,.15),transparent 70%);pointer-events:none;}',
@@ -238,6 +240,7 @@
           '<div class="fs-nav-user-wrap">' +
             '<span class="fs-nav-user-email" title="' + user.email + '">' + shortEmail + '</span>' +
             proBadge +
+            '<a href="/profile.html" class="fs-nav-profile-btn" title="My Account">&#128100;</a>' +
             '<button onclick="fsHandleLogout()" class="fs-nav-signout-btn">Sign Out</button>' +
           '</div>' + backHTML2;
       }
@@ -450,39 +453,43 @@
 
   async function fsActivatePro(paymentId) {
     try {
-      var sd = await global.supaClient.auth.getSession();
-      var token = sd.data.session && sd.data.session.access_token;
-      if (!token) throw new Error('No active session. Please log in again.');
+      var userId = global.currentUser && global.currentUser.id;
+      if (!userId) throw new Error('No active session. Please log in again.');
 
-      var res  = await fetch(EDGE_URL, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-        body:    JSON.stringify({ payment_id: paymentId })
-      });
-      var data = await res.json();
+      var now    = new Date().toISOString();
+      var expiry = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
 
-      if (data.success) {
-        global.isProUser = true;
-        fsUpdateNavUI(global.currentUser, true);
-        var pb = document.getElementById('fsProBanner');
-        if (pb) pb.style.display = 'none';
-        var pa = document.getElementById('fsProActivated');
-        if (pa) {
-          pa.style.display = 'block';
-          setTimeout(function () { pa.style.display = 'none'; }, 8000);
-        }
-        if (typeof global.gtag === 'function') {
-          global.gtag('event', 'purchase', {
-            transaction_id: paymentId,
-            value:          499,
-            currency:       'INR',
-            items: [{ item_id: 'pro_monthly', item_name: 'Finosutra Pro — 30 Days', price: 499, quantity: 1 }]
-          });
-        }
-        global.showToast('🎉 Pro activated! All exports are now free.', '#5EC98A');
-      } else {
-        throw new Error(data.error || 'Activation failed');
+      var res = await global.supaClient
+        .from('subscriptions')
+        .insert({
+          user_id:              userId,
+          plan:                 'pro',
+          status:               'active',
+          razorpay_payment_id:  paymentId,
+          current_period_start: now,
+          current_period_end:   expiry
+        });
+
+      if (res.error) throw res.error;
+
+      global.isProUser = true;
+      fsUpdateNavUI(global.currentUser, true);
+      var pb = document.getElementById('fsProBanner');
+      if (pb) pb.style.display = 'none';
+      var pa = document.getElementById('fsProActivated');
+      if (pa) {
+        pa.style.display = 'block';
+        setTimeout(function () { pa.style.display = 'none'; }, 8000);
       }
+      if (typeof global.gtag === 'function') {
+        global.gtag('event', 'purchase', {
+          transaction_id: paymentId,
+          value:          499,
+          currency:       'INR',
+          items: [{ item_id: 'pro_monthly', item_name: 'Finosutra Pro — 30 Days', price: 499, quantity: 1 }]
+        });
+      }
+      global.showToast('🎉 Pro activated! All exports are now free.', '#5EC98A');
     } catch (e) {
       global.showToast('Activation failed: ' + e.message + '. Email fino.sutra07@gmail.com with Payment ID: ' + paymentId, '#FF8A80');
       var pb = document.getElementById('fsProBanner');

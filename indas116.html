@@ -2543,34 +2543,39 @@ function initiateProSubscription(){
 
 async function activateProSubscription(paymentId){
   try {
-    var sessionData = await supaClient.auth.getSession();
-    var token = sessionData.data.session ? sessionData.data.session.access_token : null;
-    if(!token){ showToast('Session expired. Please log in again.','#EF4444'); return; }
+    var userId = currentUser && currentUser.id;
+    if(!userId){ showToast('Session expired. Please log in again.','#EF4444'); return; }
 
-    var res = await fetch('https://uymuivmktvtxmodblxie.supabase.co/functions/v1/confirm-subscription', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-      body: JSON.stringify({ payment_id: paymentId })
-    });
-    var data = await res.json();
+    var now    = new Date().toISOString();
+    var expiry = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
 
-    if(data.success){
-      isProUser = true;
-      updateNavUI(currentUser, true);
-      var banner = document.getElementById('proUpgradeBanner');
-      if(banner) banner.style.display = 'none';
-      var activated = document.getElementById('proActivatedBanner');
-      if(activated){ activated.style.display = 'block'; setTimeout(function(){ activated.style.display='none'; }, 8000); }
-      gaEvent('purchase', {
-        transaction_id: paymentId,
-        value: 499,
-        currency: 'INR',
-        items: [{ item_id: 'pro_monthly', item_name: 'Finosutra Pro', price: 499 }]
+    var res = await supaClient
+      .from('subscriptions')
+      .insert({
+        user_id:              userId,
+        plan:                 'pro',
+        status:               'active',
+        razorpay_payment_id:  paymentId,
+        current_period_start: now,
+        current_period_end:   expiry
       });
-      showToast('🎉 Pro activated! All exports are free for 30 days.','#5EC98A');
-    } else {
-      showToast('Activation failed: ' + (data.error || 'Contact support with payment ID: ' + paymentId),'#EF4444');
-    }
+
+    if(res.error) throw res.error;
+
+    isProUser = true;
+    if(typeof window.isProUser !== 'undefined') window.isProUser = true;
+    updateNavUI(currentUser, true);
+    var banner = document.getElementById('proUpgradeBanner');
+    if(banner) banner.style.display = 'none';
+    var activated = document.getElementById('proActivatedBanner');
+    if(activated){ activated.style.display = 'block'; setTimeout(function(){ activated.style.display='none'; }, 8000); }
+    gaEvent('purchase', {
+      transaction_id: paymentId,
+      value: 499,
+      currency: 'INR',
+      items: [{ item_id: 'pro_monthly', item_name: 'Finosutra Pro', price: 499 }]
+    });
+    showToast('🎉 Pro activated! All exports are free for 30 days.','#5EC98A');
   } catch(e) {
     showToast('Activation error. Contact support with payment ID: ' + paymentId,'#EF4444');
     console.error('activateProSubscription error:', e);
