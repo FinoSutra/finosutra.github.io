@@ -1616,10 +1616,13 @@ var capturedEmail = '';
 document.getElementById('btnExp').onclick = async function(){
   if(!R||!INP){ alert('Please calculate the lease schedule first.'); return; }
 
-  // ── Direct Pro check (works even if auth block fails to init) ──
+  // ── Direct Pro check — self-contained, no dependency on auth block variables ──
   try {
-    if(window.supabase){
-      var _c = window.supabase.createClient(SUPA_URL||'https://uymuivmktvtxmodblxie.supabase.co', SUPA_KEY||'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5bXVpdm1rdHZ0eG1vZGJseGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzMjk5NTYsImV4cCI6MjA5NjkwNTk1Nn0.7dsdrDmYR8R891_Cc68K75tUlmwi49KExGGQbBq3qmg');
+    if(window.supabase && window.supabase.createClient){
+      var _c = window.supabase.createClient(
+        'https://uymuivmktvtxmodblxie.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5bXVpdm1rdHZ0eG1vZGJseGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzMjk5NTYsImV4cCI6MjA5NjkwNTk1Nn0.7dsdrDmYR8R891_Cc68K75tUlmwi49KExGGQbBq3qmg'
+      );
       var _sess = (await _c.auth.getSession()).data.session;
       if(_sess){
         var _now = new Date().toISOString();
