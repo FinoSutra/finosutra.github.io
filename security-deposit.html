@@ -263,6 +263,8 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
   gtag('config', 'G-Z2G710PHNQ');
 </script>
 <script>function gaEvent(n,p){ if(typeof gtag==='function') gtag('event',n,p||{}); }</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
 </head>
 <body>
 
@@ -273,6 +275,7 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
       <img loading="eager" src="logo.png" alt="Finosutra" style="height:48px;width:auto;display:block;">
     </a>
     <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
       <li><a href="indas-tools.html">IND AS Tools</a></li>
       <li><a href="income-tax-hub.html">Income Tax</a></li>
       <li><a href="salary-hr.html">Salary &amp; HR</a></li>
@@ -416,6 +419,8 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
 
       <!-- EXPORT INFO CARD -->
       <div class="exp-info-card" id="expInfoCard" style="display:none">
+        <div style="font-size:13px;font-weight:700;color:#4F46E5;margin-bottom:4px;">📊 Get the audit-ready Excel — drop it straight into your workpapers</div>
+        <div style="font-size:11px;color:#6B7280;margin-bottom:10px;">One-time ₹99 · Instant download · CA &amp; audit-ready format</div>
         <div class="exp-info-title">📊 What's inside the Excel Report — ₹99</div>
         <div class="exp-info-grid">
           <div class="exp-info-item">Fair Value computation (PV workings)</div>
@@ -433,7 +438,7 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
       <!-- EXPORT ROW -->
       <div class="exp-row" id="expRow" style="display:none">
         <span class="exp-note" id="expNote"></span>
-        <button class="btn-exp" onclick="initiatePayment()">
+        <button class="btn-exp" id="btnExp" onclick="initiatePayment()">
           <i class="fa-solid fa-file-excel"></i> Download Excel Report &nbsp;<span style="font-size:10px;opacity:.8">₹99</span>
         </button>
       </div>
@@ -441,6 +446,56 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
   </div>
 
 </div>
+
+<!-- FAQ -->
+<style>
+.faq-section{max-width:1200px;margin:0 auto;padding:8px 32px 48px}
+.faq-title{font-size:20px;font-weight:800;color:var(--text);margin-bottom:20px}
+.faq-item{background:var(--card);border:1px solid var(--border-light);border-radius:12px;padding:16px 20px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.faq-q{font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px}
+.faq-a{font-size:13px;color:var(--muted);line-height:1.7}
+</style>
+<div class="faq-section">
+  <div class="faq-title">Frequently Asked Questions</div>
+  <div class="faq-item">
+    <div class="faq-q">How is a refundable security deposit accounted for under IND AS 109 / IFRS 9?</div>
+    <div class="faq-a">A refundable, interest-free security deposit is a financial asset (if paid) or financial liability (if received). On Day 1 it is measured at fair value — the present value of the amount refundable at the end of the lease, discounted using a market interest rate. It is not recorded at its nominal value.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Why is the security deposit discounted to present value?</div>
+    <div class="faq-a">Because an interest-free deposit refundable years later is worth less today than its face value. IND AS 109 requires financial instruments to be measured at fair value on initial recognition, so the deposit is discounted at the effective interest rate (EIR) over the deposit tenure.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">What is the "Day 1 difference" on a security deposit?</div>
+    <div class="faq-a">It is the gap between the nominal deposit paid and its present value on Day 1. For a deposit paid, this difference is treated as prepaid rent (a lease prepayment); for a deposit received, it is treated as deferred rental income. It represents the benefit of holding interest-free funds.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">How are the Day 1 difference and the discount unwound over the lease term?</div>
+    <div class="faq-a">The prepaid rent (or deferred income) is amortised to the P&L on a straight-line basis as additional rent expense (or rental income) over the lease term. Separately, the deposit's present value is "unwound" each year using the EIR, recognised as finance income (if paid) or finance cost (if received), until it equals the nominal refundable amount at the end.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">What discount rate should I use for a security deposit?</div>
+    <div class="faq-a">Use a market rate of interest for a similar instrument with a similar credit risk and tenure — often the incremental borrowing rate (IBR) of the entity. This calculator lets you enter the rate directly so you can match your auditor's assumption.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Does this treatment apply to deposits both given and received?</div>
+    <div class="faq-a">Yes. A deposit given (e.g. by a tenant) is a financial asset with finance income and prepaid rent. A deposit received (e.g. by a landlord) is a financial liability with finance cost and deferred rental income. This calculator handles both sides under IND AS 109 / IFRS 9.</div>
+  </div>
+</div>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"How is a refundable security deposit accounted for under IND AS 109 / IFRS 9?","acceptedAnswer":{"@type":"Answer","text":"A refundable, interest-free security deposit is a financial asset (if paid) or financial liability (if received). On Day 1 it is measured at fair value — the present value of the amount refundable at the end of the lease, discounted using a market interest rate. It is not recorded at its nominal value."}},
+    {"@type":"Question","name":"Why is the security deposit discounted to present value?","acceptedAnswer":{"@type":"Answer","text":"Because an interest-free deposit refundable years later is worth less today than its face value. IND AS 109 requires financial instruments to be measured at fair value on initial recognition, so the deposit is discounted at the effective interest rate over the deposit tenure."}},
+    {"@type":"Question","name":"What is the Day 1 difference on a security deposit?","acceptedAnswer":{"@type":"Answer","text":"It is the gap between the nominal deposit paid and its present value on Day 1. For a deposit paid, this difference is treated as prepaid rent; for a deposit received, it is treated as deferred rental income."}},
+    {"@type":"Question","name":"How are the Day 1 difference and the discount unwound over the lease term?","acceptedAnswer":{"@type":"Answer","text":"The prepaid rent or deferred income is amortised to the P&L straight-line over the lease term. The deposit's present value is unwound each year using the effective interest rate as finance income (if paid) or finance cost (if received), until it equals the nominal refundable amount at the end."}},
+    {"@type":"Question","name":"What discount rate should I use for a security deposit?","acceptedAnswer":{"@type":"Answer","text":"Use a market rate of interest for a similar instrument with similar credit risk and tenure — often the entity's incremental borrowing rate. This calculator lets you enter the rate directly so you can match your auditor's assumption."}},
+    {"@type":"Question","name":"Does this treatment apply to deposits both given and received?","acceptedAnswer":{"@type":"Answer","text":"Yes. A deposit given is a financial asset with finance income and prepaid rent. A deposit received is a financial liability with finance cost and deferred rental income. This calculator handles both sides under IND AS 109 / IFRS 9."}}
+  ]
+}
+</script>
 
 <script>
 let depType = 'given', stdType = 'indas';

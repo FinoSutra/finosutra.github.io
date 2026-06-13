@@ -264,6 +264,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 }
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
 </head>
 <body>
 
@@ -274,6 +276,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
       <img loading="eager" src="logo.png" alt="Finosutra" style="height:48px;width:auto;display:block;">
     </a>
     <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
       <li><a href="indas-tools.html">IND AS Tools</a></li>
       <li><a href="income-tax-hub.html">Income Tax</a></li>
       <li><a href="salary-hr.html">Salary &amp; HR</a></li>
@@ -837,7 +840,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
     <div class="notif notif-info">ℹ️ Click "🧮 Calculate Tax" to compute your tax liability.</div>
   </div>
   <div class="btn-row" id="result-actions" style="display:none">
-    <button class="btn btn-primary btn-lg" id="excel-export-btn" onclick="initiateExcelPayment()">
+    <button class="btn btn-primary btn-lg" id="btnExp" onclick="initiateExcelPayment()">
       ⬇ Download Excel Report — ₹99
     </button>
     <button class="btn btn-ghost" onclick="recalculate()">↻ Recalculate</button>
@@ -845,7 +848,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 
   <!-- Excel Export Info Card -->
   <div id="excel-info-card" style="display:none;margin-top:16px;background:#EEF2FF;border:1px solid rgba(99,102,241,0.25);border-radius:12px;padding:18px 20px">
-    <div style="font-weight:700;color:#4F46E5;font-size:13px;margin-bottom:10px">📊 What's inside the Excel Report (₹99)</div>
+    <div style="font-size:13px;font-weight:700;color:#4F46E5;margin-bottom:4px;">📊 Get the audit-ready Excel — drop it straight into your workpapers</div>
+    <div style="font-size:11px;color:#6B7280;margin-bottom:10px;">One-time ₹99 · Instant download · CA-grade format</div>
+    <div style="font-weight:600;color:#4F46E5;font-size:12px;margin-bottom:8px;">What's inside:</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px;color:#4B5563">
       <div>✓ Sheet 1 — Cover & Tax Summary</div>
       <div>✓ Sheet 2 — Income Schedule (all heads)</div>

@@ -252,6 +252,8 @@ footer img{height:28px;margin-bottom:8px;opacity:.6}
   ]
 }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
 </head>
 <body>
 
@@ -469,6 +471,8 @@ footer img{height:28px;margin-bottom:8px;opacity:.6}
 
       <!-- Export info -->
       <div class="exp-info-card">
+        <div style="font-size:13px;font-weight:700;color:#4F46E5;margin-bottom:4px;">📊 Get the audit-ready Excel — drop it straight into your workpapers</div>
+        <div style="font-size:11px;color:#6B7280;margin-bottom:10px;">One-time ₹99 · Instant download · CA-grade format</div>
         <div class="exp-info-title">📊 What's inside the Salary Report — ₹99</div>
         <div class="exp-info-grid">
           <div class="exp-info-item">Monthly & Annual salary breakup</div>
@@ -484,7 +488,7 @@ footer img{height:28px;margin-bottom:8px;opacity:.6}
       </div>
       <div class="exp-row">
         <span class="exp-note" id="expNote">Complete salary slip with all workings</span>
-        <button class="btn-exp" onclick="initiatePayment()">
+        <button class="btn-exp" id="btnExp" onclick="initiatePayment()">
           <i class="fa-solid fa-file-excel"></i> Download Salary Report &nbsp;<span style="font-size:10px;opacity:.8">₹99</span>
         </button>
       </div>

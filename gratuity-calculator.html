@@ -166,6 +166,46 @@ footer img{height:28px;margin-bottom:8px;opacity:.6}
 @media(max-width:900px){#mainNav .nav-links{display:none;}}
 @media(max-width:768px){#mainNav{padding:0 16px;}#mainNav .nav-actions{display:none;}#mainNav .nav-toggle{display:block;}#mainNav .nav-links.open,#mainNav .nav-actions.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid rgba(99,102,241,0.08);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the gratuity formula?",
+      "acceptedAnswer": { "@type": "Answer", "text": "For employees covered under the Payment of Gratuity Act: Gratuity = (Last drawn Basic+DA × 15 × Years of service) ÷ 26. For non-covered employees: (Last drawn salary × 15 × Years) ÷ 30. Government employees may receive gratuity at different rates as per service rules." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the minimum service required for gratuity?",
+      "acceptedAnswer": { "@type": "Answer", "text": "An employee must complete a minimum of 5 years of continuous service to be eligible for gratuity. However, this condition is waived in case of death or permanent disability — gratuity is payable regardless of years served." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the maximum gratuity exemption under Section 10(10)?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The maximum gratuity exemption under Section 10(10) is ₹20,00,000 (₹20 lakhs). This limit was last revised in 2018. Any gratuity above ₹20 lakhs is taxable at your applicable income tax slab rate." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is gratuity fully tax-free for government employees?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Gratuity received by Central or State Government employees, employees of local authorities, and defence personnel is fully exempt from income tax under Section 10(10)(i) — with no upper limit." }
+    },
+    {
+      "@type": "Question",
+      "name": "How are months rounded in gratuity calculation?",
+      "acceptedAnswer": { "@type": "Answer", "text": "For employees covered under the Payment of Gratuity Act, if the remaining months after completed years are 6 or more, they are rounded up to the next full year. For example, 7 years and 7 months = 8 years for gratuity calculation." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is gratuity available under New Tax Regime?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Section 10(10) gratuity exemption is available under both the New and Old Tax Regime. It is not an exemption to be foregone like HRA — it is a specific statutory exemption applicable under both regimes." }
+    }
+  ]
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
 </head>
 <body>
 
@@ -176,6 +216,7 @@ footer img{height:28px;margin-bottom:8px;opacity:.6}
     </a>
     <ul class="nav-links" id="navLinks">
       <li><a href="indas-tools.html">IND AS Tools</a></li>
+      <li><a href="gst-tools.html">GST</a></li>
       <li><a href="income-tax-hub.html">Income Tax</a></li>
       <li><a href="salary-hr.html">Salary &amp; HR</a></li>
       <li><a href="templates.html">Templates</a></li>

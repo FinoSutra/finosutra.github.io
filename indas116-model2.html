@@ -11,7 +11,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
-<title>Finosutra — Finance on Autopilot</title>
+<title>IND AS 116 Calculator with Escalation Rents (Model 2) | Free | Finosutra</title>
+<link rel="canonical" href="https://www.finosutra.com/indas116-model2.html"/>
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 
@@ -278,6 +279,48 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
   .snapshot-grid{grid-template-columns:1fr 1fr}
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What are escalation rents and how are they treated under IND AS 116?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Escalation rents are lease payments that increase by a fixed percentage at specified intervals. Under IND AS 116, these are classified as fixed in-substance payments. The present value of all future escalated payments must be included in the lease liability at commencement."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between Model 1 (flat rent) and Model 2 (escalation rent)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Model 1 assumes a constant rent throughout the lease term. Model 2 handles leases where the rent increases at regular intervals by a fixed percentage. Use Model 2 whenever your lease agreement contains a rent escalation clause."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does IND AS 116 require remeasurement when rent escalation occurs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. If the escalation rate was fixed and contractually specified at commencement, no remeasurement is required when the escalation actually happens. Remeasurement is only triggered by changes to the lease term, changes to the discount rate, or modifications to the underlying lease agreement."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What journal entries are needed for an escalating rent lease under IND AS 116?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Four entries: (1) Commencement — Dr. ROU Asset / Cr. Lease Liability. (2) Each period Finance charge — Dr. Finance Cost / Cr. Lease Liability. (3) Each period Payment — Dr. Lease Liability / Cr. Bank. (4) Each period Depreciation — Dr. Depreciation / Cr. Accumulated Depreciation on ROU Asset."
+      }
+    }
+  ]
+}
+</script>
 </head>
 
 <body>
@@ -288,6 +331,7 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
       <img loading="eager" src="logo.png" alt="Finosutra" style="height:48px;width:auto;display:block;">
     </a>
     <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
       <li><a href="indas-tools.html" class="active">IND AS</a></li>
       <li><a href="gst-tools.html">GST</a></li>
       <li><a href="income-tax-hub.html">Income Tax</a></li>
@@ -2772,55 +2816,12 @@ const fy = fyLabel(pEnd);
 
    4. IDENTIFIED: Annual rollforward uses a custom FY grouping
       loop. For future versions with mid-year remeasurement,
-      this loop will need a second grouping dimension.
-      Recommended: Add a remeasurementDate field to fyMap
-      entries when Version 12 is built.
+      
+      this will require the FY grouping to be updated to handle
+      mid-year remeasurement start points.
+   ─────────────────────────────────────────────────────────────
+*/
 
-   5. IDENTIFIED: Snapshot engine assumes all depreciation
-      periods are equal (constant SLM). Correct for Version 1.
-      For Version 3 (rent-free), ROU depreciation does not
-      change but for Version 6/7 (reassessment) a new ROU
-      carrying value must be passed through. The snapshotIdx
-      lookup is date-based and will still work; only the
-      cumDep calculation will need updating.
-═══════════════════════════════════════════════════════ */
-</script>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-<!-- Sticky Export Bar -->
-<div id="sticky-export-bar">
-  <div>
-    <div class="sticky-text">IND AS 116 Model 2 — Lease schedule ready</div>
-    <div class="sticky-sub">Audit-ready Excel with escalation schedule, journal entries &amp; balance sheet snapshot</div>
-  </div>
-  <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
-    <button class="sticky-btn" onclick="document.getElementById('btnExp').click()">&#8595; Download Excel &nbsp;&#8377;99</button>
-    <button class="sticky-close" onclick="document.getElementById('sticky-export-bar').style.display='none'" title="Dismiss">&#x2715;</button>
-  </div>
-</div>
-
-
-<script>
-/* Nav toggle */
-(function(){
-  var t=document.getElementById('navToggle');
-  if(!t)return;
-  t.onclick=function(){
-    var l=document.getElementById('navLinks'),a=document.getElementById('navActions');
-    if(l)l.classList.toggle('open');
-    if(a)a.classList.toggle('open');
-    var i=this.querySelector('i');
-    if(i)i.className=l&&l.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-bars';
-  };
-})();
-/* Show sticky bar after calculate */
-(function(){
-  const orig = window.render;
-  if(typeof render==='function'){
-    const _r=render;
-    window._renderOrig=_r;
-  }
-})();
 </script>
 </body>
 </html>
