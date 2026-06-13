@@ -2339,7 +2339,7 @@ function updateNavUI(user, isPro){
   if(!navActions) return;
   if(!user){
     navActions.innerHTML =
-      '<button onclick="showAuthModal('login')" class="nav-login-btn">Log In</button>' +
+      '<button onclick="showAuthModal(\'login\')" class="nav-login-btn">Log In</button>' +
       '<a href="index.html" class="nav-back-btn">&#8592; All Tools</a>';
   } else {
     var shortEmail = user.email.length > 22 ? user.email.slice(0,20) + '…' : user.email;
