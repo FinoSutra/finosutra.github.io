@@ -311,16 +311,7 @@ tr:nth-child(even):hover td{background:rgba(99,102,241,0.05)}
 #egSubmit{padding:8px 16px;background:linear-gradient(135deg,#6366F1,#8B5CF6);border:none;border-radius:7px;font-size:12px;font-weight:700;color:#fff;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;}
 #egSubmit:hover{opacity:.9;}
 #egError{font-size:11px;color:#EF4444;margin-top:5px;display:none;}
-/* ── Soft email capture (post-calculation) ── */
-#softEmailBar{display:none;margin:0 0 0 0;padding:14px 20px;background:linear-gradient(135deg,#F0FDF4,#ECFDF5);border-top:1px solid #BBF7D0;border-bottom:1px solid #BBF7D0;}
-#softEmailBar .seb-title{font-size:12px;font-weight:700;color:#15803D;margin-bottom:3px;}
-#softEmailBar .seb-sub{font-size:11px;color:#6B7280;margin-bottom:10px;}
-.seb-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
-#sebEmail{flex:1;min-width:180px;padding:7px 11px;border:1.5px solid #BBF7D0;border-radius:7px;font-size:12px;font-family:'Inter',sans-serif;color:#1E293B;outline:none;background:#fff;}
-#sebEmail:focus{border-color:#16A34A;}
-#sebSubmit{padding:7px 14px;background:#16A34A;border:none;border-radius:7px;font-size:12px;font-weight:700;color:#fff;cursor:pointer;font-family:'Inter',sans-serif;}
-#sebSubmit:hover{background:#15803D;}
-#sebDone{font-size:12px;font-weight:600;color:#15803D;display:none;}
+
 
 .empty{padding:56px 32px;text-align:center}
 .empty-icon{font-size:44px;margin-bottom:14px;opacity:.4}
@@ -842,16 +833,6 @@ tr:nth-child(even):hover td{background:rgba(99,102,241,0.05)}
         </div>
       </div>
 
-      <!-- SOFT EMAIL CAPTURE BAR -->
-      <div id="softEmailBar">
-        <div class="seb-title">📬 Get these results in your inbox — free</div>
-        <div class="seb-sub">We'll email you a summary so you can reference it anytime. No spam, ever.</div>
-        <div class="seb-row">
-          <input type="email" id="sebEmail" placeholder="yourname@example.com" autocomplete="email">
-          <button id="sebSubmit">Send me results</button>
-          <span id="sebDone">✓ Sent! Check your inbox.</span>
-        </div>
-      </div>
 
       <!-- EXPORT INFO CARD -->
       <div class="exp-info-card">
@@ -1210,11 +1191,6 @@ function render(){
   document.getElementById('emptyDiv').style.display='none';
   document.getElementById('resDiv').style.display='block';
   document.getElementById('sticky-export-bar').style.display='flex';
-  // Show soft email capture bar (only if email not already captured)
-  if(!capturedEmail){
-    var seb = document.getElementById('softEmailBar');
-    if(seb) seb.style.display='block';
-  }
 
   const freqLabel = {12:'Monthly',4:'Quarterly',2:'Half-Yearly',1:'Annual'}[R.freq];
   const depLabel  = freqLabel+' Depreciation';
@@ -1675,26 +1651,6 @@ document.getElementById('egEmail').addEventListener('keydown', function(e){
   if(e.key==='Enter') document.getElementById('egSubmit').click();
 });
 
-// ── Soft email capture logic ──
-document.getElementById('sebSubmit').onclick = function(){
-  var emailEl = document.getElementById('sebEmail');
-  var val = emailEl.value.trim();
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)){ emailEl.style.borderColor='#EF4444'; emailEl.focus(); return; }
-  emailEl.style.borderColor='';
-  document.getElementById('sebSubmit').style.display='none';
-  document.getElementById('sebDone').style.display='inline';
-  gaEvent('generate_lead', { tool_name: 'IND AS 116', lead_source: 'post_calculation_soft' });
-  // Send to Formspree (replace xgobpvwn with your actual ID)
-  fetch('https://formspree.io/f/xgobpvwn',{
-    method:'POST',
-    headers:{'Content-Type':'application/json','Accept':'application/json'},
-    body:JSON.stringify({email:val, source:'IND AS 116 post-calculation soft capture', tool:'indas116'})
-  }).catch(function(){});
-};
-
-document.getElementById('sebEmail').addEventListener('keydown', function(e){
-  if(e.key==='Enter') document.getElementById('sebSubmit').click();
-});
 
 /* ── Save full state to localStorage so a page reload cannot lose the download ── */
 function saveStateToStorage(){
