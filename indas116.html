@@ -2336,6 +2336,8 @@ async function checkSubscription(userId){
       .eq('user_id', userId)
       .eq('status', 'active')
       .gt('current_period_end', now)
+      .order('created_at', { ascending: false })
+      .limit(1)
       .maybeSingle();
     return !res.error && res.data !== null;
   } catch(e){ return false; }
@@ -2557,6 +2559,13 @@ async function activateProSubscription(paymentId){
     var now    = new Date().toISOString();
     var expiry = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
 
+    // Delete existing active subscriptions first (prevent duplicate rows)
+    await supaClient
+      .from('subscriptions')
+      .delete()
+      .eq('user_id', userId)
+      .eq('status', 'active');
+
     var res = await supaClient
       .from('subscriptions')
       .insert({
@@ -2576,20 +2585,17 @@ async function activateProSubscription(paymentId){
     var banner = document.getElementById('proUpgradeBanner');
     if(banner) banner.style.display = 'none';
     var activated = document.getElementById('proActivatedBanner');
-    if(activated){ activated.style.display = 'block'; setTimeout(function(){ activated.style.display='none'; }, 8000); }
-    gaEvent('purchase', {
-      transaction_id: paymentId,
-      value: 499,
-      currency: 'INR',
-      items: [{ item_id: 'pro_monthly', item_name: 'Finosutra Pro', price: 499 }]
-    });
-    showToast('🎉 Pro activated! All exports are free for 30 days.','#5EC98A');
-  } catch(e) {
-    showToast('Activation error. Contact support with payment ID: ' + paymentId,'#EF4444');
+    if(activated){ activated.style.display = 'block'; }
+    updateExportBtnLabel(true);
+    showToast('🎉 Pro activated! Downloading your report now…','#5EC98A');
+    gaEvent('purchase', { transaction_id: paymentId, value: 499, currency: 'INR', items:[{item_name:'Finosutra Pro',price:499}] });
+    setTimeout(function(){ try{ exportXL(); } catch(e){ console.error(e); } }, 800);
+  } catch(e){
     console.error('activateProSubscription error:', e);
+    showToast('Activation failed. Please contact support at fino.sutra07@gmail.com','#EF4444');
   }
 }
-
 </script>
+
 </body>
 </html>

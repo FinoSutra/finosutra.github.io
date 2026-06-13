@@ -293,6 +293,8 @@
         .eq('user_id', userId)
         .eq('status', 'active')
         .gt('current_period_end', now)
+        .order('created_at', { ascending: false })
+        .limit(1)
         .maybeSingle();
       return !res.error && res.data !== null;
     } catch (e) { return false; }
@@ -459,6 +461,13 @@
       var now    = new Date().toISOString();
       var expiry = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
 
+      // Delete existing active subscriptions for this user first (prevent duplicates)
+      await global.supaClient
+        .from('subscriptions')
+        .delete()
+        .eq('user_id', userId)
+        .eq('status', 'active');
+
       var res = await global.supaClient
         .from('subscriptions')
         .insert({
@@ -516,31 +525,12 @@
     if (typeof global.supabase !== 'undefined') {
       global.supaClient = global.supabase.createClient(SUPA_URL, SUPA_KEY);
       fsCheckAuthState();
-    } else {
-      // SDK not loaded yet — wait for it
-      var tries = 0;
-      var poll = setInterval(function () {
-        tries++;
-        if (typeof global.supabase !== 'undefined') {
-          clearInterval(poll);
-          global.supaClient = global.supabase.createClient(SUPA_URL, SUPA_KEY);
-          fsCheckAuthState();
-        } else if (tries > 20) {
-          clearInterval(poll);
-          console.warn('[auth.js] Supabase SDK not found after 10s. Auth disabled.');
-          fsUpdateNavUI(null, false);
-        }
-      }, 500);
     }
   });
 
-  // Also expose key functions under short names for backward compat with indas116.html
-  global.showAuthModal          = global.fsShowAuthModal;
-  global.closeAuthModal         = global.fsCloseAuthModal;
-  global.switchAuthTab          = global.fsSwitchTab;
-  global.handleLogin            = global.fsHandleLogin;
-  global.handleSignup           = global.fsHandleSignup;
-  global.handleLogout           = global.fsHandleLogout;
-  global.initiateProSubscription = global.fsInitiateProSubscription;
+  // ── Backward-compat aliases ───────────────────────────────────────────────────
+  global.showAuthModal    = global.fsShowAuthModal    = function(){ var o=document.getElementById('fsAuthOverlay'); if(o) o.style.display='flex'; };
+  global.closeAuthModal   = global.fsCloseAuthModal   = function(){ var o=document.getElementById('fsAuthOverlay'); if(o) o.style.display='none'; };
+  global.showToast        = global.fsShowToast        = global.showToast || function(msg,color){ var t=document.createElement('div'); t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:'+(color||'#1E293B')+';color:#fff;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:600;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.2);font-family:Inter,sans-serif'; t.textContent=msg; document.body.appendChild(t); setTimeout(function(){t.remove();},3000); };
 
 })(window);
