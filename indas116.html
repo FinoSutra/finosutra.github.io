@@ -1613,16 +1613,32 @@ function sw(id,btn){
 // ── Email gate logic ──
 var capturedEmail = '';
 
-document.getElementById('btnExp').onclick = function(){
+document.getElementById('btnExp').onclick = async function(){
   if(!R||!INP){ alert('Please calculate the lease schedule first.'); return; }
-  // PRO SUBSCRIBER — free unlimited export, skip payment
-  if(isProUser){
-    gaEvent('excel_downloaded', { tool_name: 'IND AS 116', trigger: 'pro_subscription' });
-    showToast('✓ Downloading your Pro report…','#5EC98A');
-    setTimeout(function(){ try{ exportXL(); } catch(e){ console.error(e); } }, 300);
-    return;
-  }
-  // Non-Pro: go directly to ₹99 Razorpay payment
+
+  // ── Direct Pro check (works even if auth block fails to init) ──
+  try {
+    if(window.supabase){
+      var _c = window.supabase.createClient(SUPA_URL||'https://uymuivmktvtxmodblxie.supabase.co', SUPA_KEY||'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5bXVpdm1rdHZ0eG1vZGJseGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzMjk5NTYsImV4cCI6MjA5NjkwNTk1Nn0.7dsdrDmYR8R891_Cc68K75tUlmwi49KExGGQbBq3qmg');
+      var _sess = (await _c.auth.getSession()).data.session;
+      if(_sess){
+        var _now = new Date().toISOString();
+        var _sub = await _c.from('subscriptions').select('id')
+          .eq('user_id',_sess.user.id).eq('status','active')
+          .gt('current_period_end',_now)
+          .order('created_at',{ascending:false}).limit(1).maybeSingle();
+        if(!_sub.error && _sub.data){
+          // ✅ Confirmed Pro — free export
+          gaEvent('excel_downloaded', { tool_name: 'IND AS 116', trigger: 'pro_subscription' });
+          showToast('✓ Downloading your Pro report…','#5EC98A');
+          setTimeout(function(){ try{ exportXL(); } catch(e){ console.error(e); } }, 300);
+          return;
+        }
+      }
+    }
+  } catch(e){ console.warn('Pro check error:', e); }
+
+  // Not Pro → ₹99 payment
   gaEvent('begin_checkout', { tool_name: 'IND AS 116', value: 99, currency: 'INR' });
   initiatePayment();
 };
