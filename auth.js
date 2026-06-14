@@ -455,32 +455,29 @@
 
   async function fsActivatePro(paymentId) {
     try {
-      var userId = global.currentUser && global.currentUser.id;
-      if (!userId) throw new Error('No active session. Please log in again.');
+      if (!global.currentUser) throw new Error('No active session. Please log in again.');
 
-      var now    = new Date().toISOString();
-      var expiry = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+      // Get the user's JWT token to authenticate with the Edge Function
+      var sessionData = await global.supaClient.auth.getSession();
+      var jwt = sessionData.data.session && sessionData.data.session.access_token;
+      if (!jwt) throw new Error('Session expired. Please log in again.');
 
-      // Delete existing active subscriptions for this user first (prevent duplicates)
-      await global.supaClient
-        .from('subscriptions')
-        .delete()
-        .eq('user_id', userId)
-        .eq('status', 'active');
+      // Call Edge Function — it verifies payment with Razorpay, then writes to DB
+      var response = await fetch(EDGE_URL, {
+        method:  'POST',
+        headers: {
+          'Content-Type':  'application/json',
+          'Authorization': 'Bearer ' + jwt
+        },
+        body: JSON.stringify({ payment_id: paymentId })
+      });
 
-      var res = await global.supaClient
-        .from('subscriptions')
-        .insert({
-          user_id:              userId,
-          plan:                 'pro',
-          status:               'active',
-          razorpay_payment_id:  paymentId,
-          current_period_start: now,
-          current_period_end:   expiry
-        });
+      var result = await response.json();
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Activation failed. Please contact support.');
+      }
 
-      if (res.error) throw res.error;
-
+      // Payment verified and DB updated by server — now update UI
       global.isProUser = true;
       fsUpdateNavUI(global.currentUser, true);
       var pb = document.getElementById('fsProBanner');

@@ -2511,31 +2511,27 @@ function initiateProSubscription(){
 
 async function activateProSubscription(paymentId){
   try {
-    var userId = currentUser && currentUser.id;
-    if(!userId){ showToast('Session expired. Please log in again.','#EF4444'); return; }
+    if(!currentUser){ showToast('Session expired. Please log in again.','#EF4444'); return; }
 
-    var now    = new Date().toISOString();
-    var expiry = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+    // Get JWT to authenticate with Edge Function
+    var sessionData = await supaClient.auth.getSession();
+    var jwt = sessionData.data.session && sessionData.data.session.access_token;
+    if(!jwt){ showToast('Session expired. Please log in again.','#EF4444'); return; }
 
-    // Delete existing active subscriptions first (prevent duplicate rows)
-    await supaClient
-      .from('subscriptions')
-      .delete()
-      .eq('user_id', userId)
-      .eq('status', 'active');
+    // Call Edge Function — verifies payment with Razorpay, then writes to DB
+    var response = await fetch(EDGE_FUNCTION_URL, {
+      method:  'POST',
+      headers: {
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + jwt
+      },
+      body: JSON.stringify({ payment_id: paymentId })
+    });
 
-    var res = await supaClient
-      .from('subscriptions')
-      .insert({
-        user_id:              userId,
-        plan:                 'pro',
-        status:               'active',
-        razorpay_payment_id:  paymentId,
-        current_period_start: now,
-        current_period_end:   expiry
-      });
-
-    if(res.error) throw res.error;
+    var result = await response.json();
+    if(!response.ok || !result.success){
+      throw new Error(result.error || 'Activation failed. Please contact support.');
+    }
 
     isProUser = true;
     if(typeof window.isProUser !== 'undefined') window.isProUser = true;
@@ -2550,7 +2546,7 @@ async function activateProSubscription(paymentId){
     setTimeout(function(){ try{ exportXL(); } catch(e){ console.error(e); } }, 800);
   } catch(e){
     console.error('activateProSubscription error:', e);
-    showToast('Activation failed. Please contact support at fino.sutra07@gmail.com','#EF4444');
+    showToast('Activation failed: ' + e.message + '. Please contact support at fino.sutra07@gmail.com','#EF4444');
   }
 }
 </script>
