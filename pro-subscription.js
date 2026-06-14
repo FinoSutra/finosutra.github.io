@@ -45,6 +45,16 @@
       return;
     }
 
+    // Already Pro? Don't open Razorpay again
+    var now = new Date().toISOString();
+    var proRes = await client.from('subscriptions').select('id')
+      .eq('user_id', session.user.id).eq('status', 'active')
+      .gt('current_period_end', now).limit(1).maybeSingle();
+    if (!proRes.error && proRes.data) {
+      _toast('✅ You are already on Finosutra Pro! Enjoy unlimited exports.', '#5EC98A');
+      return;
+    }
+
     _toast('Setting up your Pro subscription…', '#6366F1');
 
     try {
