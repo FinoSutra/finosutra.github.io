@@ -337,7 +337,7 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
       <li><a href="indas-tools.html" class="active">IND AS</a></li>
       <li><a href="gst-tools.html">GST</a></li>
       <li><a href="income-tax-hub.html">Income Tax</a></li>
-      <li><a href="salary-hr.html">Salary &amp; HR</a></li>
+      <li><a href="salary-hr.html">Personal Finance</a></li>
       <li><a href="templates.html">Templates</a></li>
       <li><a href="index.html#pricing">Pricing</a></li>
       <li><a href="index.html#contact">Contact</a></li>
@@ -2779,92 +2779,12 @@ const fy = fyLabel(pEnd);
      ↓
    ┌─────────────────────────────────────────────────────┐
    │  Reporting Modules (all consume R.sched):           │
-   │  • KPI Cards                                        │
-   │  • Amortization Schedule Tab                        │
-   │  • Journal Entries Tab                              │
-   │  • Lease Summary Tab                                │
-   │  • Annual Rollforward Tab                           │
-   │  • Reporting Date Snapshot                          │
-   │  • Excel Export (all sheets)                        │
+   │  - Lease Liability Summary                          │
+   │  - ROU Asset Schedule                               │
+   │  - Amortization / Journal Entry Schedule            │
    └─────────────────────────────────────────────────────┘
+═══════════════════════════════════════════════════════ */
 
-   ENHANCEMENT 2 — STEP RENT ARCHITECTURE NOTE:
-   ─────────────────────────────────────────────────────
-   Step Rent Schedule functionality is FULLY COVERED by
-   the Custom Rent Table feature (escType='custom').
-
-   Evidence: generateLeaseCashflows() with escType='custom'
-   accepts an arbitrary array of {date, amt} rows sorted by date,
-   and correctly assigns each period the rent that was most
-   recently effective on or before that period's start date.
-
-   This handles any step pattern including:
-   • Equal-step increases (e.g. 100k / 120k / 140k)
-   • Irregular steps (e.g. 100k / 112.5k / 128k)
-   • Any frequency of changes
-
-   A separate "Step Rent Schedule" feature is NOT required.
-   The Custom Rent Table IS the Step Rent Schedule feature.
-
-   ENHANCEMENT 4 — FUTURE VERSION COMPATIBILITY:
-   ─────────────────────────────────────────────────────
-   Version 3  Rent-Free Periods:
-     COMPATIBLE. Add rentFreePeriods param to cfParams.
-     In generateLeaseCashflows, set paymentAmount=0 for
-     those periods with paymentType=PAYMENT_TYPES.FIXED.
-     Zero amounts pass through PV engine unchanged.
-     No other module changes required.
-
-   Version 4  CPI-Linked Leases:
-     COMPATIBLE. New escType='cpi'. Set paymentType=
-     PAYMENT_TYPES.CPI. PV engine already has the
-     includedInLiability filter hook (currently commented
-     as a future point). Remeasurement engine is a
-     separate function that calls generateLeaseCashflows()
-     again from the reassessment date.
-
-   Version 5  Market Rent Review:
-     COMPATIBLE. Set paymentType=PAYMENT_TYPES.MARKET_REVIEW.
-     Since includedInLiability===false, PV engine excludes
-     these periods. A remeasurement hook fires at review date.
-
-   Version 6/7  Extension/Termination Reassessment:
-     COMPATIBLE. These produce TERMINATION_ADJUSTMENT or
-     EXTENSION_ADJUSTMENT typed cashflows appended to the
-     existing cfArray from the reassessment date forward.
-     Existing periods are unchanged.
-
-   Version 8  Purchase Options:
-     COMPATIBLE. PURCHASE_OPTION type.
-     includedInLiability is conditionally set to true
-     when "reasonably certain" flag is set in cfParams.
-
-   Version 9  Residual Value Guarantees:
-     COMPATIBLE. RESIDUAL_VALUE_GUARANTEE type appended
-     as a single cashflow in the final period.
-
-   Version 10  Floating Rate:
-     COMPATIBLE. FLOATING_RATE type. PV uses commencement
-     rate. Remeasurement engine handles rate changes by
-     regenerating cashflows from that date.
-
-   Version 11  Variable Payments (Disclosure Only):
-     COMPATIBLE. VARIABLE type. PV engine excludes
-     (includedInLiability===false). Disclosure module
-     reads these from cfArray separately.
-
-   Version 12  Remeasurement Engine:
-     COMPATIBLE. Remeasurement is a wrapper that:
-     1. Takes a reassessment date and updated params
-     2. Calls generateLeaseCashflows() for remaining term
-     3. Re-runs PV calculation from the outstanding liability
-     4. Produces a modified R and INP object
-     The core engine itself requires no changes.
-
-   IDENTIFIED WEAKNESSES (pre-empted by this enhancement):
-   ──────────�
-   (End of architecture documentation — future versions will build on this engine)
-*/
 </script>
 
 </body>
