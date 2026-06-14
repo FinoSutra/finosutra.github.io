@@ -410,45 +410,8 @@ tr:nth-child(even):hover td{background:rgba(99,102,241,0.05)}
 @media(max-width:900px){#mainNav .nav-links{display:none;}}
 @media(max-width:768px){#mainNav{padding:0 16px;}#mainNav .nav-actions{display:none;}#mainNav .nav-toggle{display:block;}#mainNav .nav-links.open,#mainNav .nav-actions.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid rgba(99,102,241,0.08);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
 
-/* ── AUTH MODAL ── */
-#authOverlay{display:none;position:fixed;inset:0;background:rgba(15,15,30,0.55);z-index:9999;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
-#authOverlay.show{display:flex!important;}
-#authModal{background:#fff;border-radius:20px;padding:36px 32px 28px;width:440px;max-width:94vw;position:relative;box-shadow:0 32px 80px rgba(0,0,0,0.22);animation:authSlideIn .22s ease;}
-@keyframes authSlideIn{from{transform:translateY(16px);opacity:0;}to{transform:translateY(0);opacity:1;}}
-.auth-tab{background:none;border:none;border-bottom:2px solid transparent;padding:10px 20px;font-size:14px;font-weight:600;color:#9CA3AF;cursor:pointer;margin-bottom:-2px;transition:color .15s,border-color .15s;}
-.auth-tab.active{color:#6366F1;border-bottom-color:#6366F1;}
-.auth-field{margin-bottom:14px;}
-.auth-field label{display:block;font-size:12px;font-weight:600;color:#374151;margin-bottom:5px;}
-.auth-field input{width:100%;padding:10px 12px;border:1.5px solid #D1D5DB;border-radius:8px;font-size:14px;color:#111827;outline:none;box-sizing:border-box;transition:border-color .15s;}
-.auth-field input:focus{border-color:#6366F1;box-shadow:0 0 0 3px rgba(99,102,241,0.12);}
-.auth-err{font-size:12px;color:#EF4444;margin-bottom:12px;padding:8px 12px;background:#FEF2F2;border-radius:7px;display:none;}
-.auth-submit{width:100%;padding:12px;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .15s;font-family:'Inter',sans-serif;}
-.auth-submit:hover{opacity:.9;}.auth-submit:disabled{opacity:.55;cursor:not-allowed;}
-.auth-link-btn{background:none;border:none;color:#6366F1;font-size:13px;font-weight:600;cursor:pointer;text-decoration:underline;padding:0;font-family:'Inter',sans-serif;}
-/* ── NAV AUTH STATE ── */
-.nav-login-btn{background:none;border:1.5px solid #6366F1;color:#6366F1;padding:6px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif;white-space:nowrap;}
-.nav-login-btn:hover{background:#EEF2FF;}
-.nav-user-wrap{display:flex;align-items:center;gap:8px;}
-.nav-user-email{font-size:12px;color:#6B7280;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.nav-pro-badge{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-size:10px;font-weight:800;padding:2px 8px;border-radius:20px;letter-spacing:.5px;}
-.nav-signout-btn{background:none;border:1px solid #E5E7EB;color:#9CA3AF;padding:5px 10px;border-radius:6px;font-size:11px;cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif;}
-.nav-signout-btn:hover{border-color:#EF4444;color:#EF4444;}
 /* Pro export badge on button */
 .pro-free-tag{display:inline-block;background:#D1FAE5;color:#065F46;font-size:11px;font-weight:700;padding:1px 8px;border-radius:20px;margin-left:8px;vertical-align:middle;}
-/* ── PRO UPGRADE BANNER ── */
-#proUpgradeBanner{display:none;margin-top:20px;background:linear-gradient(135deg,#EEF2FF,#F5F3FF);border:1.5px solid #C7D2FE;border-radius:14px;padding:20px 22px;position:relative;overflow:hidden;}
-#proUpgradeBanner::before{content:'';position:absolute;top:-30px;right:-30px;width:100px;height:100px;background:radial-gradient(circle,rgba(139,92,246,.15),transparent 70%);pointer-events:none;}
-.pro-banner-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;}
-.pro-banner-info{}
-.pro-banner-title{font-size:15px;font-weight:800;color:#111827;margin-bottom:4px;}
-.pro-banner-sub{font-size:12px;color:#6B7280;margin-bottom:10px;}
-.pro-banner-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:0;}
-.pro-pill{font-size:11px;font-weight:600;color:#4F46E5;background:#E0E7FF;padding:3px 10px;border-radius:20px;}
-.pro-banner-cta{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;}
-.btn-subscribe{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;border:none;border-radius:10px;padding:11px 22px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 4px 14px rgba(99,102,241,.35);transition:transform .15s,box-shadow .15s;font-family:'Inter',sans-serif;}
-.btn-subscribe:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(99,102,241,.45);}
-.pro-cta-note{font-size:10px;color:#9CA3AF;text-align:right;}
-@media(max-width:540px){.pro-banner-cta{align-items:flex-start;}.pro-cta-note{text-align:left;}}
 
 </style>
 <!-- Google Analytics GA4 — replace G-Z2G710PHNQ with your real Measurement ID -->
@@ -509,75 +472,10 @@ tr:nth-child(even):hover td{background:rgba(99,102,241,0.05)}
 }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
 </head>
 
 <body>
-
-<!-- ═══════════════════════════════════════════════════════════════
-     FINOSUTRA AUTH MODAL — Login / Signup
-     ═══════════════════════════════════════════════════════════════ -->
-<div id="authOverlay" onclick="if(event.target===this)closeAuthModal()">
-  <div id="authModal">
-
-    <!-- Close button -->
-    <button onclick="closeAuthModal()" style="position:absolute;top:14px;right:18px;background:none;border:none;font-size:24px;color:#D1D5DB;cursor:pointer;line-height:1;" aria-label="Close">&#215;</button>
-
-    <!-- Logo / brand -->
-    <div style="text-align:center;margin-bottom:20px;">
-      <div style="font-size:22px;font-weight:800;background:linear-gradient(135deg,#6366F1,#8B5CF6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Finosutra</div>
-      <p id="authSubtitle" style="font-size:13px;color:#6B7280;margin-top:3px;"></p>
-    </div>
-
-    <!-- Tabs -->
-    <div style="display:flex;border-bottom:2px solid #F3F4F6;margin-bottom:22px;">
-      <button class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">Log In</button>
-      <button class="auth-tab" id="tabSignup" onclick="switchAuthTab('signup')">Create Account</button>
-    </div>
-
-    <!-- Login form -->
-    <div id="loginForm">
-      <div class="auth-field">
-        <label>Email</label>
-        <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email">
-      </div>
-      <div class="auth-field">
-        <label>Password</label>
-        <input type="password" id="loginPassword" placeholder="Your password" autocomplete="current-password">
-      </div>
-      <div class="auth-err" id="loginError"></div>
-      <button class="auth-submit" id="loginSubmit" onclick="handleLogin()">Log In</button>
-      <p style="text-align:center;font-size:13px;color:#6B7280;margin-top:14px;">
-        No account? <button class="auth-link-btn" onclick="switchAuthTab('signup')">Create one free</button>
-      </p>
-    </div>
-
-    <!-- Signup form -->
-    <div id="signupForm" style="display:none;">
-      <div class="auth-field">
-        <label>Email</label>
-        <input type="email" id="signupEmail" placeholder="you@example.com" autocomplete="email">
-      </div>
-      <div class="auth-field">
-        <label>Password <span style="color:#9CA3AF;font-weight:400;">(min. 8 chars)</span></label>
-        <input type="password" id="signupPassword" placeholder="Create a password" autocomplete="new-password">
-      </div>
-      <div class="auth-err" id="signupError"></div>
-      <button class="auth-submit" id="signupSubmit" onclick="handleSignup()">Create Free Account</button>
-      <p style="text-align:center;font-size:13px;color:#6B7280;margin-top:14px;">
-        Already have an account? <button class="auth-link-btn" onclick="switchAuthTab('login')">Log in</button>
-      </p>
-    </div>
-
-    <!-- Success state -->
-    <div id="authSuccess" style="display:none;text-align:center;padding:12px 0;">
-      <div style="font-size:52px;line-height:1;margin-bottom:14px;" id="authSuccessIcon">✅</div>
-      <h3 id="authSuccessTitle" style="font-size:18px;font-weight:700;color:#111827;margin-bottom:8px;"></h3>
-      <p id="authSuccessText" style="font-size:14px;color:#6B7280;line-height:1.55;"></p>
-    </div>
-
-  </div>
-</div>
-
 
 <nav id="mainNav">
   <div class="nav-inner">
@@ -850,33 +748,6 @@ tr:nth-child(even):hover td{background:rgba(99,102,241,0.05)}
         <div id="egError">Please enter a valid email address.</div>
       </div>
 
-
-      <!-- PRO UPGRADE BANNER — visible to logged-in non-Pro users only -->
-      <div id="proUpgradeBanner">
-        <div class="pro-banner-top">
-          <div class="pro-banner-info">
-            <div class="pro-banner-title">⚡ Upgrade to Finosutra Pro</div>
-            <div class="pro-banner-sub">Unlimited Excel exports this month. No per-report fees.</div>
-            <div class="pro-banner-pills">
-              <span class="pro-pill">✓ Unlimited exports</span>
-              <span class="pro-pill">✓ All tools included</span>
-              <span class="pro-pill">✓ CA-grade format</span>
-            </div>
-          </div>
-          <div class="pro-banner-cta">
-            <button class="btn-subscribe" onclick="initiateProSubscription()">
-              Upgrade to Pro &nbsp;₹499<span style="font-size:10px;font-weight:500;opacity:.85;">/mo</span>
-            </button>
-            <span class="pro-cta-note">Secure payment via Razorpay</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- PRO ACTIVATED SUCCESS — shown briefly after upgrade -->
-      <div id="proActivatedBanner" style="display:none;margin-top:12px;padding:14px 18px;background:linear-gradient(135deg,#DCFCE7,#D1FAE5);border:1.5px solid #22C55E;border-radius:10px;text-align:center;">
-        <div style="font-size:14px;font-weight:700;color:#166534;">🎉 Pro is now active! This and all future exports are free.</div>
-        <div style="font-size:11px;color:#166534;margin-top:4px;">Your Pro access is valid for 30 days from today.</div>
-      </div>
 
       <!-- RECOVERY BANNER: shown after successful payment if download failed -->
       <div id="recoveryBanner" style="display:none;margin-top:16px;padding:14px 16px;background:linear-gradient(135deg,#DCFCE7,#D1FAE5);border:1.5px solid #22C55E;border-radius:10px;">
@@ -2181,340 +2052,15 @@ function exportXL(){
 
 
 <script>
-// ═══════════════════════════════════════════════════════════════════════════════
-// FINOSUTRA — Supabase Auth + Subscription Gate
-// ═══════════════════════════════════════════════════════════════════════════════
-
-var currentUser = null;
-var isProUser   = false;
-var supaClient  = null;
-
-var SUPA_URL = 'https://uymuivmktvtxmodblxie.supabase.co';
-var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5bXVpdm1rdHZ0eG1vZGJseGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzMjk5NTYsImV4cCI6MjA5NjkwNTk1Nn0.7dsdrDmYR8R891_Cc68K75tUlmwi49KExGGQbBq3qmg';
-
-// ── Init on page load ──
-window.addEventListener('load', async function(){
-  var upgradeIntent = new URLSearchParams(window.location.search).get('upgrade');
-
-  if(typeof window.supabase !== 'undefined'){
-    supaClient = window.supabase.createClient(SUPA_URL, SUPA_KEY);
-    try {
-      await checkAuthState(); // wait until session + subscription are known
-    } catch(e) {
-      console.warn('Auth init error:', e);
-      updateNavUI(null, false);
-    }
-  } else {
-    console.warn('Supabase SDK not loaded');
-    updateNavUI(null, false);
-  }
-
-  // Auth state is now settled — handle upgrade intent
-  if(upgradeIntent) handleUpgradeParam();
-});
-
-// ── Check session on load ──
-async function checkAuthState(){
-  try {
-    var sessionData = await supaClient.auth.getSession();
-    var session = sessionData.data.session;
-    if(session){
-      currentUser = session.user;
-      isProUser = await checkSubscription(session.user.id);
-      updateNavUI(session.user, isProUser);
-      updateExportBtnLabel(isProUser);
-    } else {
-      updateNavUI(null, false);
-    }
-
-    // Listen for future auth changes (login/logout)
-    supaClient.auth.onAuthStateChange(async function(event, session){
-      if(session){
-        currentUser = session.user;
-        isProUser = await checkSubscription(session.user.id);
-        updateNavUI(session.user, isProUser);
-        updateExportBtnLabel(isProUser);
-      } else {
-        currentUser = null;
-        isProUser = false;
-        updateNavUI(null, false);
-        updateExportBtnLabel(false);
-      }
-    });
-  } catch(e){ console.warn('checkAuthState error:', e); updateNavUI(null, false); }
-}
-
-// ── Handle ?upgrade=true landing from homepage ──────────────────────────────
-// Called after auth state is known. Guides user into the Pro flow automatically.
-function handleUpgradeParam(){
-  var params = new URLSearchParams(window.location.search);
-  if(!params.get('upgrade')) return;
-
-  // Clean the URL (remove ?upgrade=true without page reload)
-  var cleanUrl = window.location.pathname;
-  window.history.replaceState({}, '', cleanUrl);
-
-  if(isProUser){
-    // Already Pro — show a friendly toast
-    showToast('✓ You\'re already on Pro! Exports are free.', '#5EC98A');
-    return;
-  }
-
-  if(!currentUser){
-    // Not logged in — open signup modal with a Pro-intent message
-    setTimeout(function(){
-      showAuthModal('signup');
-      var subtitle = document.getElementById('authSubtitle');
-      if(subtitle) subtitle.textContent = 'Create your account to subscribe to Pro ₹499/mo';
-    }, 300);
-    return;
-  }
-
-  // Logged in, not Pro — scroll to upgrade banner and highlight it
-  var banner = document.getElementById('proUpgradeBanner');
-  if(banner){
-    banner.style.display = 'block';
-    setTimeout(function(){
-      banner.scrollIntoView({behavior:'smooth', block:'center'});
-      // Pulse animation to draw attention
-      banner.style.transition = 'box-shadow .3s';
-      banner.style.boxShadow = '0 0 0 4px rgba(99,102,241,0.4)';
-      setTimeout(function(){ banner.style.boxShadow = ''; }, 1800);
-    }, 400);
-  }
-}
-
-// ── Query subscriptions table ──
-async function checkSubscription(userId){
-  try {
-    var now = new Date().toISOString();
-    var res = await supaClient
-      .from('subscriptions')
-      .select('id')
-      .eq('user_id', userId)
-      .eq('status', 'active')
-      .gt('current_period_end', now)
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .maybeSingle();
-    return !res.error && res.data !== null;
-  } catch(e){ return false; }
-}
-
-// ── Update nav UI based on auth state ──
-function updateNavUI(user, isPro){
-  var navActions = document.getElementById('navActions');
-  if(!navActions) return;
-  if(!user){
-    navActions.innerHTML =
-      '<button onclick="showAuthModal(\'login\')" class="nav-login-btn">Log In</button>' +
-      '<a href="index.html" class="nav-back-btn">&#8592; All Tools</a>';
-  } else {
-    var shortEmail = user.email.length > 22 ? user.email.slice(0,20) + '…' : user.email;
-    var proBadge   = isPro ? '<span class="nav-pro-badge">PRO</span>' : '';
-    navActions.innerHTML =
-      '<div class="nav-user-wrap">' +
-        '<span class="nav-user-email" title="' + user.email + '">' + shortEmail + '</span>' +
-        proBadge +
-        '<button onclick="handleLogout()" class="nav-signout-btn">Sign Out</button>' +
-      '</div>' +
-      '<a href="index.html" class="nav-back-btn">&#8592; All Tools</a>';
-  }
-  // Show Pro upgrade banner for logged-in non-Pro users
-  var proBar = document.getElementById('proUpgradeBanner');
-  if(proBar) proBar.style.display = (user && !isPro) ? 'block' : 'none';
-}
-
-// ── Update export button label for Pro users ──
-function updateExportBtnLabel(isPro){
-  var btn = document.getElementById('btnExp');
-  if(!btn) return;
-  var stickyBtn = document.querySelector('#sticky-export-bar .sticky-btn');
-  if(isPro){
-    btn.innerHTML = '&#8659;&nbsp; Download Excel Report <span class="pro-free-tag">FREE</span>';
-    if(stickyBtn) stickyBtn.innerHTML = '&#8659; Download Excel Report &nbsp;<span class="pro-free-tag">PRO FREE</span>';
-  } else {
-    btn.innerHTML = '&#8659;&nbsp; Download Excel Report &nbsp;<strong>&#8377;99</strong>';
-    if(stickyBtn) stickyBtn.innerHTML = '&#8659; Download Excel Report &nbsp;&#8377;99';
-  }
-}
-
-// ── Show auth modal ──
-function showAuthModal(tab){
-  var overlay = document.getElementById('authOverlay');
-  overlay.style.display = 'flex';
-  // Reset forms
-  ['loginEmail','loginPassword','signupEmail','signupPassword'].forEach(function(id){
-    var el = document.getElementById(id); if(el) el.value = '';
-  });
-  ['loginError','signupError'].forEach(function(id){
-    var el = document.getElementById(id); if(el) el.style.display = 'none';
-  });
-  document.getElementById('loginForm').style.display   = 'block';
-  document.getElementById('signupForm').style.display  = 'none';
-  document.getElementById('authSuccess').style.display = 'none';
-  switchAuthTab(tab || 'login');
-  setTimeout(function(){
-    var first = (tab === 'signup') ? document.getElementById('signupEmail') : document.getElementById('loginEmail');
-    if(first) first.focus();
-  }, 120);
-}
-
-function closeAuthModal(){
-  document.getElementById('authOverlay').style.display = 'none';
-}
-
-// ── Switch tabs ──
-function switchAuthTab(tab){
-  document.getElementById('loginForm').style.display  = (tab==='login')  ? 'block' : 'none';
-  document.getElementById('signupForm').style.display = (tab==='signup') ? 'block' : 'none';
-  document.getElementById('tabLogin').className  = 'auth-tab' + (tab==='login'  ? ' active' : '');
-  document.getElementById('tabSignup').className = 'auth-tab' + (tab==='signup' ? ' active' : '');
-  document.getElementById('authSubtitle').textContent = (tab==='login')
-    ? 'Sign in to access your account'
-    : 'Create your free Finosutra account';
-}
-
-// ── Login ──
-async function handleLogin(){
-  var email    = (document.getElementById('loginEmail').value||'').trim();
-  var password = document.getElementById('loginPassword').value || '';
-  var btn      = document.getElementById('loginSubmit');
-  var errEl    = document.getElementById('loginError');
-  if(!email || !password){ showAuthErr('loginError','Enter your email and password.'); return; }
-  btn.disabled = true; btn.textContent = 'Signing in…';
-  errEl.style.display = 'none';
-  try {
-    var res = await supaClient.auth.signInWithPassword({ email: email, password: password });
-    if(res.error) throw res.error;
-    currentUser = res.data.user;
-    isProUser   = await checkSubscription(currentUser.id);
-    updateNavUI(currentUser, isProUser);
-    updateExportBtnLabel(isProUser);
-    // Show success
-    document.getElementById('loginForm').style.display  = 'none';
-    document.getElementById('authSuccess').style.display = 'block';
-    document.getElementById('authSuccessIcon').textContent  = '👋';
-    document.getElementById('authSuccessTitle').textContent = 'Welcome back!';
-    document.getElementById('authSuccessText').textContent  = isProUser
-      ? '✅ Pro subscription active — Excel export is free for you!'
-      : 'You're signed in. Upgrade to Pro for unlimited free exports.';
-    setTimeout(closeAuthModal, 2800);
-  } catch(e){
-    showAuthErr('loginError', e.message || 'Login failed. Please try again.');
-  } finally { btn.disabled = false; btn.textContent = 'Log In'; }
-}
-
-// ── Signup ──
-async function handleSignup(){
-  var email    = (document.getElementById('signupEmail').value||'').trim();
-  var password = document.getElementById('signupPassword').value || '';
-  var btn      = document.getElementById('signupSubmit');
-  if(!email || !password){ showAuthErr('signupError','Enter your email and a password.'); return; }
-  if(password.length < 8){ showAuthErr('signupError','Password must be at least 8 characters.'); return; }
-  btn.disabled = true; btn.textContent = 'Creating account…';
-  document.getElementById('signupError').style.display = 'none';
-  try {
-    var res = await supaClient.auth.signUp({ email: email, password: password });
-    if(res.error) throw res.error;
-    document.getElementById('signupForm').style.display  = 'none';
-    document.getElementById('authSuccess').style.display = 'block';
-    document.getElementById('authSuccessIcon').textContent  = '🎉';
-    document.getElementById('authSuccessTitle').textContent = 'Account created!';
-    document.getElementById('authSuccessText').textContent  =
-      'Check your inbox (' + email + ') for a confirmation link, then log in.';
-  } catch(e){
-    showAuthErr('signupError', e.message || 'Sign up failed. Please try again.');
-  } finally { btn.disabled = false; btn.textContent = 'Create Free Account'; }
-}
-
-// ── Logout ──
-async function handleLogout(){
-  try {
-    await supaClient.auth.signOut();
-    currentUser = null; isProUser = false;
-    updateNavUI(null, false);
-    updateExportBtnLabel(false);
-    showToast('Signed out successfully.','#6B7280');
-  } catch(e){ console.warn('Logout error:', e); }
-}
-
-function showAuthErr(elId, msg){
-  var el = document.getElementById(elId);
-  el.textContent = msg; el.style.display = 'block';
-}
-
-// ── Keyboard shortcuts for auth forms ──
-document.addEventListener('keydown', function(e){
-  if(e.key === 'Escape' && document.getElementById('authOverlay').style.display === 'flex'){
-    closeAuthModal();
-  }
-});
-document.getElementById('loginPassword').addEventListener('keydown', function(e){
-  if(e.key==='Enter') handleLogin();
-});
-document.getElementById('signupPassword').addEventListener('keydown', function(e){
-  if(e.key==='Enter') handleSignup();
-});
-document.getElementById('loginEmail').addEventListener('keydown', function(e){
-  if(e.key==='Enter') document.getElementById('loginPassword').focus();
-});
-document.getElementById('signupEmail').addEventListener('keydown', function(e){
-  if(e.key==='Enter') document.getElementById('signupPassword').focus();
-});
-
-// ── Pro Subscription Flow ─────────────────────────────────────────────────────
-
+// ── Auth handled by auth.js — minimal shim for Razorpay activation ──
 var EDGE_FUNCTION_URL = 'https://uymuivmktvtxmodblxie.supabase.co/functions/v1/confirm-subscription';
-
-function initiateProSubscription(){
-  if(!currentUser){
-    showAuthModal('login');
-    showToast('Please log in first, then subscribe.','#6366F1');
-    return;
-  }
-  if(!supaClient){ showToast('Connection error. Please refresh.','#EF4444'); return; }
-
-  var options = {
-    key:      'rzp_live_Sty2e9lT4uXzJJ',
-    amount:   49900,        // ₹499 in paise
-    currency: 'INR',
-    name:     'Finosutra',
-    description: 'Pro Plan — Unlimited Excel Exports for 30 Days',
-    image:    '',
-    theme:    { color: '#6366F1' },
-    modal:    { ondismiss: function(){ showToast('Upgrade cancelled. No charges made.','#9CA3AF'); } },
-    prefill:  { email: currentUser.email, name: '', contact: '' },
-    notes:    { user_id: currentUser.id, plan: 'pro' },
-    handler:  async function(response){
-      var payId = response.razorpay_payment_id;
-      showToast('Payment received! Activating Pro…','#6366F1');
-      document.getElementById('proUpgradeBanner').style.pointerEvents = 'none';
-      document.getElementById('proUpgradeBanner').style.opacity = '.6';
-      await activateProSubscription(payId);
-    }
-  };
-
-  try{
-    var rzp = new Razorpay(options);
-    rzp.on('payment.failed', function(resp){
-      showToast('Payment failed: ' + (resp.error && resp.error.description || 'Unknown error'), '#FF8A80');
-      gaEvent('pro_payment_failed', { reason: resp.error && resp.error.description });
-    });
-    gaEvent('begin_checkout', { tool_name: 'Pro Plan', value: 499, currency: 'INR' });
-    rzp.open();
-  } catch(e){
-    alert('Could not open payment window. Please check your connection and try again.');
-    console.error(e);
-  }
-}
 
 async function activateProSubscription(paymentId){
   try {
-    if(!currentUser){ showToast('Session expired. Please log in again.','#EF4444'); return; }
+    if(!window.currentUser){ showToast('Session expired. Please log in again.','#EF4444'); return; }
 
     // Get JWT to authenticate with Edge Function
-    var sessionData = await supaClient.auth.getSession();
+    var sessionData = await window.supaClient.auth.getSession();
     var jwt = sessionData.data.session && sessionData.data.session.access_token;
     if(!jwt){ showToast('Session expired. Please log in again.','#EF4444'); return; }
 
@@ -2533,14 +2079,19 @@ async function activateProSubscription(paymentId){
       throw new Error(result.error || 'Activation failed. Please contact support.');
     }
 
-    isProUser = true;
-    if(typeof window.isProUser !== 'undefined') window.isProUser = true;
-    updateNavUI(currentUser, true);
-    var banner = document.getElementById('proUpgradeBanner');
-    if(banner) banner.style.display = 'none';
-    var activated = document.getElementById('proActivatedBanner');
-    if(activated){ activated.style.display = 'block'; }
-    updateExportBtnLabel(true);
+    // Update global Pro state (auth.js reads window.isProUser)
+    window.isProUser = true;
+
+    // Hide auth.js Pro banner, show activated message
+    var pb = document.getElementById('fsProBanner');
+    if(pb) pb.style.display = 'none';
+    var pa = document.getElementById('fsProActivated');
+    if(pa){ pa.style.display = 'block'; setTimeout(function(){ pa.style.display='none'; }, 8000); }
+
+    // Update export button label
+    var btn = document.getElementById('btnExp');
+    if(btn) btn.innerHTML = '&#8659;&nbsp; Download Excel Report <span class="pro-free-tag">PRO FREE</span>';
+
     showToast('🎉 Pro activated! Downloading your report now…','#5EC98A');
     gaEvent('purchase', { transaction_id: paymentId, value: 499, currency: 'INR', items:[{item_name:'Finosutra Pro',price:499}] });
     setTimeout(function(){ try{ exportXL(); } catch(e){ console.error(e); } }, 800);
@@ -2552,4 +2103,4 @@ async function activateProSubscription(paymentId){
 </script>
 
 </body>
-</html>
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
