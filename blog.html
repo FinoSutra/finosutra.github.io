@@ -44,6 +44,8 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);border-bottom:1
 .nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;padding:7px 12px;border-radius:8px;transition:color .15s,background .15s;white-space:nowrap;}
 .nav-links a:hover,.nav-links a.active{color:var(--text);background:var(--brand-light);}
 .nav-actions{display:flex;align-items:center;gap:8px;}
+.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-size:13px;font-weight:700;border-radius:10px;text-decoration:none;transition:opacity .15s;}
+.nav-btn:hover{opacity:.88;}
 .nav-toggle{display:none;background:none;border:none;font-size:20px;color:var(--text);cursor:pointer;padding:8px;}
 @media(max-width:900px){.nav-links{display:none;}}
 @media(max-width:768px){nav{padding:0 16px;}.nav-actions{display:none;}.nav-toggle{display:block;}.nav-links.open,.nav-actions.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid var(--border-light);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
@@ -124,7 +126,7 @@ footer{background:#111827;padding:48px 32px 28px;color:#9CA3AF;}
       <li><a href="index.html#pricing">Pricing</a></li>
     </ul>
     <div class="nav-actions" id="navActions">
-      <a href="index.html" style="font-size:13px;font-weight:600;color:var(--brand);text-decoration:none;">← Home</a>
+      <a href="indas116.html" class="nav-btn"><i class="fa-solid fa-bolt"></i> Try IND AS 116</a>
     </div>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><i class="fa-solid fa-bars"></i></button>
   </div>
