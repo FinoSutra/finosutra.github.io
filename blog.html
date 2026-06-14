@@ -108,6 +108,8 @@ footer{background:#111827;padding:48px 32px 28px;color:#9CA3AF;}
 
 @media(max-width:600px){.blog-grid{grid-template-columns:1fr;padding:0 16px 48px;}.blog-hero{padding:36px 16px 28px;}.blog-filters{padding:0 16px 20px;}.blog-cta{padding:0 16px;}.blog-cta-inner{padding:28px 24px;}}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
 </head>
 <body>
 
@@ -117,13 +119,14 @@ footer{background:#111827;padding:48px 32px 28px;color:#9CA3AF;}
       <img src="logo.png" alt="Finosutra" style="height:44px;width:auto;">
     </a>
     <ul class="nav-links" id="navLinks">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="indas-tools.html">IND AS Tools</a></li>
+      <li><a href="indas-tools.html">IND AS</a></li>
+      <li><a href="gst-tools.html">GST</a></li>
       <li><a href="income-tax-hub.html">Income Tax</a></li>
       <li><a href="salary-hr.html">Personal Finance</a></li>
       <li><a href="templates.html">Templates</a></li>
       <li><a href="blog.html" class="active">Blog</a></li>
       <li><a href="index.html#pricing">Pricing</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
     </ul>
     <div class="nav-actions" id="navActions">
       <a href="indas116.html" class="nav-btn"><i class="fa-solid fa-bolt"></i> Try IND AS 116</a>
@@ -265,4 +268,14 @@ footer{background:#111827;padding:48px 32px 28px;color:#9CA3AF;}
     if(i)i.className=l&&l.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-bars';
   };
   // Filter buttons (UI only for now)
-  document.querySelectorAll('.filter
+  document.querySelectorAll('.filter-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
+      this.classList.add('active');
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
