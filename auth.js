@@ -250,6 +250,13 @@
     var banner = document.getElementById('fsProBanner');
     if (banner) banner.style.display = (user && !isPro) ? 'block' : 'none';
 
+    // Hide all "Subscribe to Pro" buttons for existing Pro users
+    if (user && isPro) {
+      document.querySelectorAll('[onclick="fsInitiateProSubscription()"], [onclick*="initiateProSubscription"]').forEach(function(btn) {
+        btn.style.display = 'none';
+      });
+    }
+
     // Update export button label
     fsUpdateExportLabel(isPro);
   }
@@ -400,6 +407,11 @@
 
   // ── Pro subscription payment ──────────────────────────────────────────────────
   global.fsInitiateProSubscription = function () {
+    // Already Pro? Never open payment again
+    if (global.isProUser) {
+      global.showToast('✅ You are already on Finosutra Pro! Enjoy unlimited exports.', '#5EC98A');
+      return;
+    }
     if (!global.currentUser) {
       global.fsShowAuthModal('signup');
       global.showToast('Create an account first, then subscribe to Pro.', '#6366F1');
