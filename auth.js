@@ -250,12 +250,16 @@
     var banner = document.getElementById('fsProBanner');
     if (banner) banner.style.display = (user && !isPro) ? 'block' : 'none';
 
-    // Hide all "Subscribe to Pro" buttons for existing Pro users
-    if (user && isPro) {
-      document.querySelectorAll('[onclick="fsInitiateProSubscription()"], [onclick*="initiateProSubscription"]').forEach(function(btn) {
-        btn.style.display = 'none';
-      });
-    }
+    // Show/hide Subscribe to Pro buttons based on Pro status
+    document.querySelectorAll('[onclick="fsInitiateProSubscription()"], [onclick*="initiateProSubscription"]').forEach(function(btn) {
+      if (user && isPro) {
+        btn.style.display = 'none'; // Pro user — hide button entirely
+      } else {
+        btn.style.display = '';     // Free user or logged out — show and re-enable
+        btn.disabled = false;
+        btn.style.opacity = '';
+      }
+    });
 
     // Update export button label
     fsUpdateExportLabel(isPro);
@@ -530,6 +534,13 @@
     injectAuthModal();
     injectProBanner();
     wrapExportButton();
+
+    // Disable all Pro subscribe buttons until we confirm the user's status
+    // Prevents race-condition clicks before async auth check completes
+    document.querySelectorAll('[onclick="fsInitiateProSubscription()"], [onclick*="initiateProSubscription"]').forEach(function(btn) {
+      btn.disabled = true;
+      btn.style.opacity = '0.6';
+    });
 
     if (typeof global.supabase !== 'undefined') {
       global.supaClient = global.supabase.createClient(SUPA_URL, SUPA_KEY);
