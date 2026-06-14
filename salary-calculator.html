@@ -253,6 +253,7 @@ footer img{height:28px;margin-bottom:8px;opacity:.6}
 }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="pro-subscription.js"></script>
 <script src="auth.js"></script>
 </head>
 <body>
@@ -1022,11 +1023,17 @@ function generateExcel(paymentId){
 </script>
 
 <div id="sticky-export-bar">
-  <div>
+  <div style="flex:1;">
     <div class="sticky-text">Your salary breakdown is ready</div>
-    <div class="sticky-sub">Download the formatted salary report — professional PDF/Excel</div>
+    <div class="sticky-sub">Download the formatted salary report · ₹99 one-time or ₹499/mo unlimited</div>
   </div>
-  <button class="sticky-btn" onclick="initiatePayment()">Download Salary Report &nbsp;&#8377;99</button>
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+    <button class="sticky-btn" onclick="initiatePayment()">⬇ Export ₹99</button>
+    <button onclick="initiateProSubscription('Salary Calculator')"
+      style="display:inline-flex;align-items:center;gap:6px;padding:11px 18px;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:13px;font-weight:700;border:none;border-radius:10px;cursor:pointer;white-space:nowrap;">
+      🚀 Pro ₹499/mo — Unlimited
+    </button>
+  </div>
   <button class="sticky-close" onclick="document.getElementById('sticky-export-bar').style.display='none'">✕</button>
 </div>
 

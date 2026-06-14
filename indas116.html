@@ -1674,6 +1674,142 @@ function initiatePayment(){
   }
 }
 
+// ── Pro Subscription Flow ──────────────────────────────────────────────────
+// Called when user clicks "Upgrade to Pro ₹499/month"
+async function initiateProSubscription(){
+  var _c = window._supabaseClient;
+  if(!_c){
+    var _sb = window.supabase || (window.supabase = window.supabase);
+    _c = window.supabase.createClient(
+      'https://uymuivmktvtxmodblxie.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5bXVpdm1rdHZ0eG1vZGJseGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzMjk5NTYsImV4cCI6MjA5NjkwNTk1Nn0.7dsdrDmYR8R891_Cc68K75tUlmwi49KExGGQbBq3qmg'
+    );
+  }
+
+  // Get session
+  var sessData = await _c.auth.getSession();
+  var session  = sessData.data.session;
+
+  if(!session){
+    // Not logged in — prompt signup/login
+    showProAuthModal(_c);
+    return;
+  }
+
+  showToast('Setting up your Pro subscription…','#6366F1');
+
+  try {
+    // Call Edge Function to create Razorpay subscription
+    var res = await fetch(
+      'https://uymuivmktvtxmodblxie.supabase.co/functions/v1/create-razorpay-sub',
+      {
+        method : 'POST',
+        headers: {
+          'Content-Type' : 'application/json',
+          'Authorization': 'Bearer ' + session.access_token,
+        },
+        body: JSON.stringify({ user_id: session.user.id, email: session.user.email }),
+      }
+    );
+
+    var data = await res.json();
+    if(!data.subscription_id){
+      showToast('Could not create subscription. Please try again.','#EF4444');
+      console.error('Edge fn error:', data);
+      return;
+    }
+
+    // Open Razorpay checkout for the subscription
+    var rzpPro = new Razorpay({
+      key        : 'rzp_live_Sty2e9lT4uXzJJ',
+      subscription_id: data.subscription_id,
+      name       : 'Finosutra',
+      description: 'Pro Plan — Unlimited Exports',
+      image      : '',
+      theme      : { color: '#6366F1' },
+      prefill    : { email: session.user.email },
+      handler    : function(response){
+        gaEvent('pro_subscription_started', { tool_name: 'IND AS 116' });
+        showToast('🎉 Welcome to Finosutra Pro! Activating your account…','#5EC98A');
+        // Wait 4s for webhook to fire, then reload to show Pro state
+        setTimeout(function(){ location.reload(); }, 4000);
+      },
+      modal: {
+        ondismiss: function(){
+          showToast('Subscription cancelled. No charges made.','#8B5CF6');
+        }
+      }
+    });
+    rzpPro.on('payment.failed', function(resp){
+      showToast('Payment failed: ' + resp.error.description,'#EF4444');
+    });
+    rzpPro.open();
+
+  } catch(err) {
+    showToast('Network error. Please try again.','#EF4444');
+    console.error(err);
+  }
+}
+
+// ── Simple login/signup modal for Pro upsell ──
+function showProAuthModal(client){
+  var existing = document.getElementById('proAuthModal');
+  if(existing){ existing.style.display='flex'; return; }
+
+  var modal = document.createElement('div');
+  modal.id = 'proAuthModal';
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:10000;display:flex;align-items:center;justify-content:center;';
+  modal.innerHTML = `
+    <div style="background:#fff;border-radius:16px;padding:32px;max-width:400px;width:90%;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.3);">
+      <button onclick="document.getElementById('proAuthModal').style.display='none'"
+        style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:#6B7280;">×</button>
+      <div style="font-size:24px;margin-bottom:8px;">🚀</div>
+      <h3 style="font-size:18px;font-weight:800;color:#111827;margin:0 0 6px;">Upgrade to Finosutra Pro</h3>
+      <p style="font-size:13px;color:#6B7280;margin:0 0 20px;">Sign in or create a free account to subscribe.</p>
+      <input id="proEmail" type="email" placeholder="your@email.com"
+        style="width:100%;padding:10px 14px;border:1.5px solid #D1D5DB;border-radius:8px;font-size:14px;margin-bottom:10px;box-sizing:border-box;outline:none;"/>
+      <input id="proPassword" type="password" placeholder="Password (min 6 chars)"
+        style="width:100%;padding:10px 14px;border:1.5px solid #D1D5DB;border-radius:8px;font-size:14px;margin-bottom:16px;box-sizing:border-box;outline:none;"/>
+      <button onclick="doProSignup()" id="proSignupBtn"
+        style="width:100%;padding:12px;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-size:14px;font-weight:700;border:none;border-radius:10px;cursor:pointer;margin-bottom:10px;">
+        Create Account & Subscribe
+      </button>
+      <button onclick="doProLogin()" id="proLoginBtn"
+        style="width:100%;padding:12px;background:#F3F4F6;color:#374151;font-size:14px;font-weight:600;border:none;border-radius:10px;cursor:pointer;">
+        I already have an account — Sign In
+      </button>
+      <p id="proAuthErr" style="color:#EF4444;font-size:12px;margin:10px 0 0;display:none;"></p>
+    </div>`;
+  document.body.appendChild(modal);
+
+  window._proAuthClient = client;
+}
+
+async function doProSignup(){
+  var email = document.getElementById('proEmail').value.trim();
+  var pass  = document.getElementById('proPassword').value;
+  var err   = document.getElementById('proAuthErr');
+  if(!email||!pass){ err.textContent='Please enter email and password.'; err.style.display='block'; return; }
+  document.getElementById('proSignupBtn').textContent = 'Creating account…';
+  var { error } = await window._proAuthClient.auth.signUp({ email, password: pass });
+  if(error){ err.textContent = error.message; err.style.display='block'; document.getElementById('proSignupBtn').textContent='Create Account & Subscribe'; return; }
+  document.getElementById('proAuthModal').style.display='none';
+  showToast('Account created! Check your email to verify, then come back to subscribe.','#5EC98A');
+}
+
+async function doProLogin(){
+  var email = document.getElementById('proEmail').value.trim();
+  var pass  = document.getElementById('proPassword').value;
+  var err   = document.getElementById('proAuthErr');
+  if(!email||!pass){ err.textContent='Please enter email and password.'; err.style.display='block'; return; }
+  document.getElementById('proLoginBtn').textContent = 'Signing in…';
+  var { error } = await window._proAuthClient.auth.signInWithPassword({ email, password: pass });
+  if(error){ err.textContent = error.message; err.style.display='block'; document.getElementById('proLoginBtn').textContent='I already have an account — Sign In'; return; }
+  document.getElementById('proAuthModal').style.display='none';
+  initiateProSubscription();
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 function showToast(msg,color){
   var t = document.getElementById('toast');
   if(!t){
@@ -2021,12 +2157,19 @@ function exportXL(){
 
 <!-- Sticky Export Bar (shown after calculation) -->
 <div id="sticky-export-bar">
-  <div>
+  <div style="flex:1;">
     <div class="sticky-text">✓ Calculation done — get the audit-ready Excel</div>
-    <div class="sticky-sub">Full schedule · Journal entries · Drop into workpapers · ₹99 one-time</div>
+    <div class="sticky-sub" id="stickySubText">Full schedule · Journal entries · Drop into workpapers · ₹99 one-time or ₹499/mo unlimited</div>
   </div>
-  <button class="sticky-btn" onclick="document.getElementById('btnExp').click()">⬇ Download Excel Report &nbsp;₹99</button>
-  <button class="sticky-close" onclick="this.parentElement.style.display='none'" title="Close">x</button>
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+    <button class="sticky-btn" onclick="document.getElementById('btnExp').click()" id="stickyExpBtn">⬇ Export ₹99</button>
+    <button id="stickyProBtn" onclick="initiateProSubscription()"
+      style="display:inline-flex;align-items:center;gap:6px;padding:11px 18px;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:13px;font-weight:700;border:none;border-radius:10px;cursor:pointer;white-space:nowrap;transition:opacity .15s;"
+      onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
+      🚀 Pro ₹499/mo — Unlimited
+    </button>
+  </div>
+  <button class="sticky-close" onclick="this.parentElement.style.display='none'" title="Close">×</button>
 </div>
 
 
@@ -2104,4 +2247,4 @@ async function activateProSubscription(paymentId){
 </script>
 
 </body>
-</html>                                                                                                                   
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          

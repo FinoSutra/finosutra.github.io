@@ -281,6 +281,7 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
 </style>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="pro-subscription.js"></script>
 <script src="auth.js"></script>
 <script type="application/ld+json">
 {
@@ -770,12 +771,16 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
 
 <!-- Sticky export bar (shown after calculation) -->
 <div id="sticky-export-bar">
-  <div>
+  <div style="flex:1;">
     <div class="sticky-text">✅ Your lease schedule is ready — get the audit-ready Excel report</div>
-    <div class="sticky-sub">Amortization · Journal entries · Annual rollforward · IND AS 116 compliant</div>
+    <div class="sticky-sub">Amortization · Journal entries · Annual rollforward · ₹99 one-time or ₹499/mo unlimited</div>
   </div>
-  <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
-    <button class="sticky-btn" onclick="handleStickyExportClick()">⬇ Download Excel Report &nbsp;₹99</button>
+  <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap;">
+    <button class="sticky-btn" onclick="handleStickyExportClick()">⬇ Export ₹99</button>
+    <button onclick="initiateProSubscription('IND AS 116 Model 2')"
+      style="display:inline-flex;align-items:center;gap:6px;padding:11px 18px;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:13px;font-weight:700;border:none;border-radius:10px;cursor:pointer;white-space:nowrap;">
+      🚀 Pro ₹499/mo — Unlimited
+    </button>
     <button class="sticky-close" onclick="document.getElementById('sticky-export-bar').style.display='none'" title="Dismiss">✕</button>
   </div>
 </div>
@@ -2827,14 +2832,14 @@ const fy = fyLabel(pEnd);
      The core engine itself requires no changes.
 
    IDENTIFIED WEAKNESSES (pre-empted by this enhancement):
-   ──────────�
+   ──────────�
    (End of architecture documentation — future versions will build on this engine)
 */
 </script>
 
 </body>
 </html>
-��───
+��───
    1. RESOLVED: cfArray previously had no paymentType field.
       Future versions could not filter by payment class.
       → Fixed by PAYMENT_TYPES enum + makeCashflow factory.
