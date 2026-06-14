@@ -171,6 +171,19 @@
     };
   }
 
+  // ── Auto-hide Pro button for existing Pro users on page load ────────────
+  window.addEventListener('load', async function () {
+    try {
+      var status = await window.checkProStatus();
+      if (status.isPro) {
+        // Hide every Pro upgrade button on the page
+        document.querySelectorAll('[onclick*="initiateProSubscription"]').forEach(function (btn) {
+          btn.style.display = 'none';
+        });
+      }
+    } catch (e) { /* silent */ }
+  });
+
   // ── Internal toast helper ────────────────────────────────────────────────
   function _toast(msg, color) {
     // Delegate to page-level showToast if it exists

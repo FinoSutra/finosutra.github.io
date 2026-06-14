@@ -1475,6 +1475,9 @@ function _setProBtnLabel(){
   if(btn) btn.innerHTML = '&#8659;&nbsp; Download Excel Report <span class="pro-free-tag">PRO FREE</span>';
   var sticky = document.querySelector('#sticky-export-bar .sticky-btn');
   if(sticky) sticky.innerHTML = '&#8659; Download Excel Report &nbsp;<span class="pro-free-tag">PRO FREE</span>';
+  // Hide Pro upgrade button — user is already Pro
+  var proBtn = document.getElementById('stickyProBtn');
+  if(proBtn) proBtn.style.display = 'none';
 }
 
 // ── On page load: update button label for Pro users ──
