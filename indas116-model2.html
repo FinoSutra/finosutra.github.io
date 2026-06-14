@@ -769,6 +769,36 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
   </div>
 </div>
 
+<!-- FAQ Section -->
+<div style="max-width:820px;margin:48px auto 40px;padding:0 20px;">
+  <h2 style="font-size:20px;font-weight:700;color:#1E293B;margin-bottom:24px;font-family:Inter,sans-serif;">Frequently Asked Questions — IND AS 116 Model 2</h2>
+
+  <details style="border:1px solid #E2E8F0;border-radius:10px;margin-bottom:10px;background:#fff;">
+    <summary style="padding:16px 20px;font-weight:600;font-size:14px;color:#1E293B;cursor:pointer;font-family:Inter,sans-serif;list-style:none;">What is the difference between IND AS 116 Model 1 and Model 2?</summary>
+    <div style="padding:0 20px 16px;font-size:14px;color:#475569;line-height:1.7;font-family:Inter,sans-serif;">Model 1 (Full Retrospective) applies IND AS 116 as if it had always been in effect — restating all prior periods. Model 2 (Modified Retrospective) applies the standard from the transition date only, with no restatement of comparatives. Under Model 2, the ROU asset at transition is set equal to the lease liability (adjusted for prepaid/accrued rent), which simplifies the transition. Most Indian companies adopted Model 2 on transition to IND AS 116 due to its lower cost and complexity.</div>
+  </details>
+
+  <details style="border:1px solid #E2E8F0;border-radius:10px;margin-bottom:10px;background:#fff;">
+    <summary style="padding:16px 20px;font-weight:600;font-size:14px;color:#1E293B;cursor:pointer;font-family:Inter,sans-serif;list-style:none;">How is the ROU asset measured at transition under Model 2?</summary>
+    <div style="padding:0 20px 16px;font-size:14px;color:#475569;line-height:1.7;font-family:Inter,sans-serif;">Under Model 2, the ROU asset at commencement equals the lease liability (present value of remaining payments discounted at the IBR on the transition date), adjusted for any prepaid rent or accrued lease payments, plus initial direct costs. This is simpler than Model 1, which requires measuring the ROU asset as if the standard had always applied. The lease liability is always calculated as the PV of remaining lease payments at the IBR on the transition date.</div>
+  </details>
+
+  <details style="border:1px solid #E2E8F0;border-radius:10px;margin-bottom:10px;background:#fff;">
+    <summary style="padding:16px 20px;font-weight:600;font-size:14px;color:#1E293B;cursor:pointer;font-family:Inter,sans-serif;list-style:none;">What discount rate is used under IND AS 116 Model 2?</summary>
+    <div style="padding:0 20px 16px;font-size:14px;color:#475569;line-height:1.7;font-family:Inter,sans-serif;">Under Model 2 (Modified Retrospective), the lessee uses the <strong>Incremental Borrowing Rate (IBR) as at the date of initial application</strong> — not the rate at the original commencement date of the lease. This is a key practical difference from Model 1. The IBR is the rate a lessee would pay to borrow funds on a collateralised basis over a similar term and in a similar economic environment.</div>
+  </details>
+
+  <details style="border:1px solid #E2E8F0;border-radius:10px;margin-bottom:10px;background:#fff;">
+    <summary style="padding:16px 20px;font-weight:600;font-size:14px;color:#1E293B;cursor:pointer;font-family:Inter,sans-serif;list-style:none;">How are escalation rents and rent-free periods handled in Model 2?</summary>
+    <div style="padding:0 20px 16px;font-size:14px;color:#475569;line-height:1.7;font-family:Inter,sans-serif;">Contractual escalations (fixed % or fixed ₹ amounts) known at commencement are included in the initial PV calculation per IND AS 116 para 26(a). Rent-free periods are treated as zero-payment periods within the lease term — interest still accrues on the outstanding liability during those periods. Neither is treated as a lease modification; they are part of the original lease terms factored into the initial measurement.</div>
+  </details>
+
+  <details style="border:1px solid #E2E8F0;border-radius:10px;margin-bottom:10px;background:#fff;">
+    <summary style="padding:16px 20px;font-weight:600;font-size:14px;color:#1E293B;cursor:pointer;font-family:Inter,sans-serif;list-style:none;">How do I cancel my Finosutra Pro subscription?</summary>
+    <div style="padding:0 20px 16px;font-size:14px;color:#475569;line-height:1.7;font-family:Inter,sans-serif;">To cancel your Pro subscription, simply email us at <a href="mailto:fino.sutra07@gmail.com" style="color:#6366F1;font-weight:600;">fino.sutra07@gmail.com</a> with your registered email address and the subject line "Cancel Subscription". We process all cancellation requests within 24 hours. You will continue to have full Pro access until the end of your current billing period — no charges are made after cancellation.</div>
+  </details>
+</div>
+
 <!-- Sticky export bar (shown after calculation) -->
 <div id="sticky-export-bar">
   <div style="flex:1;">
@@ -2837,29 +2867,5 @@ const fy = fyLabel(pEnd);
 */
 </script>
 
-</body>
-</html>
-��───
-   1. RESOLVED: cfArray previously had no paymentType field.
-      Future versions could not filter by payment class.
-      → Fixed by PAYMENT_TYPES enum + makeCashflow factory.
-
-   2. RESOLVED: cfArray previously had no paymentDate field.
-      Snapshot and remeasurement engines need actual dates.
-      → Fixed by periodPaymentDate() helper + paymentDate field.
-
-   3. RESOLVED: PV engine had no hook for excluding payments
-      by type (e.g. VARIABLE, MARKET_REVIEW).
-      → Fixed by architecture comment marking the filter point.
-
-   4. IDENTIFIED: Annual rollforward uses a custom FY grouping
-      loop. For future versions with mid-year remeasurement,
-      
-      this will require the FY grouping to be updated to handle
-      mid-year remeasurement start points.
-   ─────────────────────────────────────────────────────────────
-*/
-
-</script>
 </body>
 </html>
