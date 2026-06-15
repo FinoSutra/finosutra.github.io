@@ -105,10 +105,17 @@
         '</div>' +
         '<div id="fsLoginForm">' +
           '<div class="fs-auth-field"><label>Email</label><input type="email" id="fsLoginEmail" placeholder="you@example.com" autocomplete="email"></div>' +
-          '<div class="fs-auth-field"><label>Password</label><input type="password" id="fsLoginPassword" placeholder="Your password" autocomplete="current-password"></div>' +
+          '<div class="fs-auth-field"><label style="display:flex;justify-content:space-between;align-items:center;">Password <button class="fs-auth-link" onclick="fsSwitchTab(\'forgot\')" style="font-size:12px;font-weight:500;">Forgot password?</button></label><input type="password" id="fsLoginPassword" placeholder="Your password" autocomplete="current-password"></div>' +
           '<div class="fs-auth-err" id="fsLoginError"></div>' +
           '<button class="fs-auth-submit" id="fsLoginSubmit" onclick="fsHandleLogin()">Log In</button>' +
           '<p style="text-align:center;font-size:13px;color:#6B7280;margin-top:14px;font-family:Inter,sans-serif;">No account? <button class="fs-auth-link" onclick="fsSwitchTab(\'signup\')">Create one free</button></p>' +
+        '</div>' +
+        '<div id="fsForgotForm" style="display:none;">' +
+          '<p style="font-size:13px;color:#6B7280;margin-bottom:18px;line-height:1.5;font-family:Inter,sans-serif;">Enter your registered email and we\'ll send a password reset link.</p>' +
+          '<div class="fs-auth-field"><label>Email</label><input type="email" id="fsForgotEmail" placeholder="you@example.com" autocomplete="email"></div>' +
+          '<div class="fs-auth-err" id="fsForgotError"></div>' +
+          '<button class="fs-auth-submit" id="fsForgotSubmit" onclick="fsHandleForgotPassword()">Send Reset Link</button>' +
+          '<p style="text-align:center;font-size:13px;color:#6B7280;margin-top:14px;font-family:Inter,sans-serif;"><button class="fs-auth-link" onclick="fsSwitchTab(\'login\')">&#8592; Back to Log In</button></p>' +
         '</div>' +
         '<div id="fsSignupForm" style="display:none;">' +
           '<div class="fs-auth-field"><label>Email</label><input type="email" id="fsSignupEmail" placeholder="you@example.com" autocomplete="email"></div>' +
@@ -319,15 +326,17 @@
     ['fsLoginEmail', 'fsLoginPassword', 'fsSignupEmail', 'fsSignupPassword'].forEach(function (id) {
       var el = document.getElementById(id); if (el) el.value = '';
     });
-    ['fsLoginError', 'fsSignupError'].forEach(function (id) {
+    ['fsLoginError', 'fsSignupError', 'fsForgotError'].forEach(function (id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
+    var fe = document.getElementById('fsForgotEmail'); if (fe) fe.value = '';
     document.getElementById('fsLoginForm').style.display   = 'block';
     document.getElementById('fsSignupForm').style.display  = 'none';
+    document.getElementById('fsForgotForm').style.display  = 'none';
     document.getElementById('fsAuthSuccess').style.display = 'none';
     fsSwitchTab(tab || 'login');
     setTimeout(function () {
-      var el = document.getElementById(tab === 'signup' ? 'fsSignupEmail' : 'fsLoginEmail');
+      var el = document.getElementById(tab === 'signup' ? 'fsSignupEmail' : tab === 'forgot' ? 'fsForgotEmail' : 'fsLoginEmail');
       if (el) el.focus();
     }, 120);
   };
@@ -340,10 +349,13 @@
   global.fsSwitchTab = function (tab) {
     document.getElementById('fsLoginForm').style.display  = tab === 'login'  ? 'block' : 'none';
     document.getElementById('fsSignupForm').style.display = tab === 'signup' ? 'block' : 'none';
+    document.getElementById('fsForgotForm').style.display = tab === 'forgot' ? 'block' : 'none';
     document.getElementById('fsTabLogin').className  = 'fs-auth-tab' + (tab === 'login'  ? ' active' : '');
     document.getElementById('fsTabSignup').className = 'fs-auth-tab' + (tab === 'signup' ? ' active' : '');
     document.getElementById('fsAuthSubtitle').textContent = tab === 'login'
       ? 'Sign in to access your account'
+      : tab === 'forgot'
+      ? 'Reset your password'
       : 'Create your free Finosutra account';
   };
 
@@ -393,6 +405,28 @@
     } catch (e) {
       fsShowErr('fsSignupError', e.message || 'Sign up failed. Please try again.');
     } finally { btn.disabled = false; btn.textContent = 'Create Free Account'; }
+  };
+
+  global.fsHandleForgotPassword = async function () {
+    var email = (document.getElementById('fsForgotEmail').value || '').trim();
+    var btn   =  document.getElementById('fsForgotSubmit');
+    if (!email) { fsShowErr('fsForgotError', 'Please enter your email address.'); return; }
+    btn.disabled = true; btn.textContent = 'Sending…';
+    document.getElementById('fsForgotError').style.display = 'none';
+    try {
+      var origin = window.location.origin;
+      var res = await global.supaClient.auth.resetPasswordForEmail(email, {
+        redirectTo: origin + '/reset-password.html'
+      });
+      if (res.error) throw res.error;
+      document.getElementById('fsForgotForm').style.display  = 'none';
+      document.getElementById('fsAuthSuccess').style.display = 'block';
+      document.getElementById('fsSuccessIcon').textContent   = '📧';
+      document.getElementById('fsSuccessTitle').textContent  = 'Reset link sent!';
+      document.getElementById('fsSuccessText').textContent   = 'Check your inbox at ' + email + '. Click the link in the email to set a new password.';
+    } catch (e) {
+      fsShowErr('fsForgotError', e.message || 'Could not send reset email. Please try again.');
+    } finally { btn.disabled = false; btn.textContent = 'Send Reset Link'; }
   };
 
   global.fsHandleLogout = async function () {
@@ -545,6 +579,11 @@
     if (typeof global.supabase !== 'undefined') {
       global.supaClient = global.supabase.createClient(SUPA_URL, SUPA_KEY);
       fsCheckAuthState();
+    }
+
+    // Auto-open forgot password panel if redirected from reset-password.html
+    if (new URLSearchParams(window.location.search).get('forgot') === '1') {
+      setTimeout(function () { global.fsShowAuthModal('forgot'); }, 400);
     }
   });
 
