@@ -414,9 +414,8 @@
     btn.disabled = true; btn.textContent = 'Sending…';
     document.getElementById('fsForgotError').style.display = 'none';
     try {
-      var origin = window.location.origin;
       var res = await global.supaClient.auth.resetPasswordForEmail(email, {
-        redirectTo: origin + '/reset-password.html'
+        redirectTo: 'https://www.finosutra.com/reset-password.html'
       });
       if (res.error) throw res.error;
       document.getElementById('fsForgotForm').style.display  = 'none';
