@@ -397,6 +397,9 @@
     try {
       var res = await global.supaClient.auth.signUp({ email: email, password: password });
       if (res.error) throw res.error;
+      if (typeof global.gtag === 'function') {
+        global.gtag('event', 'sign_up', { method: 'email' });
+      }
       document.getElementById('fsSignupForm').style.display  = 'none';
       document.getElementById('fsAuthSuccess').style.display = 'block';
       document.getElementById('fsSuccessIcon').textContent   = '🎉';
