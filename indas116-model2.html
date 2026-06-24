@@ -753,6 +753,70 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
         <button class="btn-exp" id="btnExp">⬇ Export to Excel &nbsp;<span style="font-size:10px;opacity:.8;">₹99</span></button>
       </div>
 
+      <!-- FREE LEAD CAPTURE — added 2026-06-25, fixed to use Web3Forms (no longer relies on mailto) 2026-06-25 -->
+      <div id="leadCaptureBanner" style="margin:0 22px 18px;border:1.5px dashed #A5A0F5;border-radius:12px;padding:16px 18px;background:#F5F3FF;">
+        <div style="font-size:13px;font-weight:bold;color:#1E293B;margin-bottom:4px;">📧 Not ready to pay? Get this schedule emailed to you — free</div>
+        <div style="font-size:12px;color:#64748B;margin-bottom:12px;">A one-page summary, no charge, no signup.</div>
+        <div id="leadCaptureForm" style="display:flex;gap:8px;flex-wrap:wrap;">
+          <input type="email" id="leadEmail" placeholder="yourname@example.com" style="flex:1;min-width:180px;padding:10px 13px;border:1.5px solid #C7D2FE;border-radius:8px;font-size:13px;font-family:'Inter',sans-serif;color:#1E293B;outline:none;">
+          <button id="leadSubmitBtn" onclick="submitLeadCapture()" style="padding:10px 18px;background:linear-gradient(135deg,#6366F1,#8B5CF6);border:none;border-radius:8px;font-size:13px;font-weight:bold;color:#fff;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;">Email me →</button>
+        </div>
+        <div id="leadEmailError" style="display:none;font-size:11px;color:#DC2626;margin-top:6px;">Please enter a valid email address.</div>
+        <div id="leadCaptureFailMsg" style="display:none;font-size:11px;color:#DC2626;margin-top:6px;">Something went wrong sending this. Please email us directly at fino.sutra07@gmail.com and we'll send it manually.</div>
+        <div id="leadCaptureThanks" style="display:none;font-size:13px;color:#166534;font-weight:bold;">✓ Got it — we'll send your lease schedule to your inbox shortly.</div>
+      </div>
+
+      <!-- PRO UPSELL — added 2026-06-25 -->
+      <div style="margin:0 22px 18px;border-radius:12px;padding:18px 20px;background:linear-gradient(135deg,#6366F1,#8B5CF6);">
+        <div style="font-size:14px;font-weight:bold;color:#fff;margin-bottom:6px;">Managing more than one lease?</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.9);line-height:1.6;margin-bottom:14px;max-width:460px;">Pro gives you unlimited calculations, saved schedules and Excel exports for ₹499/month — less than the cost of 5 one-off downloads.</div>
+        <a href="index.html#pricing" style="display:inline-flex;align-items:center;gap:6px;padding:10px 18px;background:#fff;border-radius:8px;font-size:13px;font-weight:bold;color:#6366F1;font-family:'Inter',sans-serif;text-decoration:none;">See Pro plans →</a>
+      </div>
+
+      <script>
+      function submitLeadCapture(){
+        var emailInput = document.getElementById('leadEmail');
+        var email = emailInput.value.trim();
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if(!emailRegex.test(email)){
+          document.getElementById('leadEmailError').style.display='block';
+          return;
+        }
+        document.getElementById('leadEmailError').style.display='none';
+        document.getElementById('leadCaptureFailMsg').style.display='none';
+
+        var btn = document.getElementById('leadSubmitBtn');
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
+
+        fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            access_key: '50d60a7e-6552-4847-accd-34529e67f5fc',
+            subject: 'New free lead - lease schedule request (indas116-model2.html)',
+            from_name: 'Finosutra Lead Capture',
+            email: email,
+            message: 'Visitor requested their lease schedule emailed for free.\nPage: indas116-model2.html\nVisitor email: ' + email
+          })
+        })
+        .then(function(res){ return res.json(); })
+        .then(function(data){
+          if(data.success){
+            document.getElementById('leadCaptureForm').style.display='none';
+            document.getElementById('leadCaptureThanks').style.display='block';
+          } else {
+            throw new Error('submit failed');
+          }
+        })
+        .catch(function(){
+          btn.disabled = false;
+          btn.textContent = 'Email me →';
+          document.getElementById('leadCaptureFailMsg').style.display='block';
+        });
+      }
+      </script>
+
       <!-- RECOVERY BANNER: shown after successful payment if download failed -->
       <div id="recoveryBanner" style="display:none;margin:0 22px 18px;padding:14px 16px;background:linear-gradient(135deg,#DCFCE7,#D1FAE5);border:1.5px solid #22C55E;border-radius:10px;">
         <div style="font-size:13px;font-weight:bold;color:#166534;margin-bottom:6px;">✓ Payment Successful — Your report is ready!</div>
@@ -2786,6 +2850,10 @@ const fy = fyLabel(pEnd);
 ═══════════════════════════════════════════════════════ */
 
 </script>
+
+<footer style="background:#111827;padding:24px 20px;text-align:center;">
+  <p style="font-size:12px;color:#9CA3AF;margin:0;">© 2026 Finosutra · GSTIN: 27ACWPW1076G1ZX · Mumbai, Maharashtra, India · <a href="mailto:fino.sutra07@gmail.com" style="color:#9CA3AF;text-decoration:none;">fino.sutra07@gmail.com</a> · <a href="terms.html" style="color:#9CA3AF;text-decoration:none;">Terms</a></p>
+</footer>
 
 </body>
 </html>
