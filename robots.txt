@@ -1,0 +1,10 @@
+# robots.txt — Finosutra (https://finosutra.com)
+# Allow all crawlers to index the full site
+
+User-agent: *
+Allow: /
+
+# Block access to any future admin or private paths (none yet, future-proofing)
+# Disallow: /admin/
+
+Sitemap: https://finosutra.com/sitemap.xml

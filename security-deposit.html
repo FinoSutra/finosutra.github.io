@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>IND AS 109 Security Deposit Fair Value Calculator — Free | Finosutra</title>
+<meta name="description" content="Free IND AS 109 / IFRS 9 security deposit present value calculator. Compute Day 1 discount, EIR amortization schedule, journal entries and balance sheet impact instantly."/>
+<meta name="keywords" content="IND AS 109 security deposit calculator, security deposit fair value india, present value security deposit, IFRS 9 security deposit, EIR amortization, Day 1 loss calculator, financial instruments IND AS 109"/>
+<meta name="author" content="Finosutra"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://www.finosutra.com/security-deposit.html"/>
+
+<!-- Open Graph -->
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Finosutra"/>
+<meta property="og:title" content="IND AS 109 Security Deposit Fair Value Calculator — Finosutra"/>
+<meta property="og:description" content="Free IND AS 109 / IFRS 9 security deposit calculator. Present value, EIR amortization, journal entries and balance sheet impact."/>
+<meta property="og:url" content="https://www.finosutra.com/security-deposit.html"/>
+<meta property="og:image" content="https://www.finosutra.com/og-image.png"/>
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="IND AS 109 Security Deposit Fair Value Calculator — Finosutra"/>
+<meta name="twitter:description" content="Free IND AS 109 / IFRS 9 security deposit calculator. Present value, EIR amortization, journal entries and balance sheet impact."/>
+<meta name="twitter:image" content="https://www.finosutra.com/og-image.png"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+<style>
+:root {
+  --brand:#6366F1; --brand-dark:#4F46E5; --brand-light:#EEF2FF; --brand-mid:#C7D2FE;
+  --bg:#F9FAFB; --surface:#F9FAFB; --card:#FFFFFF;
+  --border:rgba(99,102,241,0.18); --border-light:rgba(99,102,241,0.08);
+  --text:#111827; --muted:#6B7280; --muted2:#9CA3AF;
+  --green:#10B981; --green-light:#ECFDF5;
+  --orange:#F97316; --orange-light:#FFF7ED;
+  --red:#EF4444; --red-light:#FEF2F2;
+  --blue:#3B82F6; --blue-light:#EFF6FF;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:linear-gradient(160deg,#EDEEFF 0%,#EAF0FF 40%,#F2EEFF 100%);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;min-height:100vh;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+
+/* ── NAV ── */
+nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border-light);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 var(--border-light),0 4px 20px rgba(99,102,241,0.05)}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff;flex-shrink:0}
+.logo-text{font-size:18px;font-weight:700;color:var(--text);letter-spacing:-0.3px}
+.logo-text span{color:var(--brand)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.nav-badge{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;letter-spacing:0.3px}
+.btn-back{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;border:1.5px solid var(--border);background:#fff;color:var(--muted);transition:all .15s}
+.btn-back:hover{border-color:var(--brand);color:var(--brand)}
+
+/* ── PAGE HEADER ── */
+.page-header{padding:40px 32px 32px;max-width:1200px;margin:0 auto}
+.page-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--brand);margin-bottom:10px}
+.page-header h1{font-size:clamp(24px,4vw,34px);font-weight:700;line-height:1.15;color:var(--text);margin-bottom:10px}
+.page-header p{font-size:14px;color:var(--muted);max-width:580px;line-height:1.7}
+
+/* ── LAYOUT ── */
+.main-layout{max-width:1200px;margin:0 auto;padding:24px 32px 60px;display:grid;grid-template-columns:360px 1fr;gap:24px;align-items:start}
+
+/* ── CARD ── */
+.card{background:var(--card);border:1px solid rgba(99,102,241,0.10);border-radius:18px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04),0 8px 32px rgba(99,102,241,0.09);}
+.card+.card{margin-top:16px}
+.card-header{padding:14px 20px;border-bottom:1px solid var(--border-light);display:flex;align-items:center;gap:10px;background:#FAFAFF}
+.card-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;background:var(--brand-light);flex-shrink:0}
+.card-header h3{font-size:13px;font-weight:700;color:var(--text)}
+.card-body{padding:20px}
+
+/* ── FORM ── */
+.field{margin-bottom:16px}
+.field-label{display:block;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.field input,.field select{width:100%;background:#F8F9FF;border:1.5px solid rgba(99,102,241,0.2);border-radius:8px;padding:10px 13px;color:var(--text);font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:border-color .15s,box-shadow .15s;appearance:none}
+.field input:focus,.field select:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(99,102,241,0.1);background:#fff}
+.hint{font-size:11px;color:var(--muted2);margin-top:4px}
+.toggle-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tog-btn{padding:10px 8px;border-radius:9px;border:1.5px solid rgba(99,102,241,0.15);background:#F9FAFB;color:var(--muted);font-family:'Inter',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .18s;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,0.04);}
+.tog-btn:hover{border-color:var(--brand);color:var(--brand-dark);}
+.tog-btn.active{background:linear-gradient(135deg,#EEF2FF,#F0EDFF);border-color:var(--brand);color:var(--brand-dark);font-weight:700;box-shadow:0 2px 8px rgba(99,102,241,0.15);}
+.divider{border:none;border-top:1px solid var(--border-light);margin:16px 0}
+.req-tag{display:inline-block;background:var(--brand-light);color:var(--brand);font-size:9px;font-weight:700;letter-spacing:0.8px;padding:2px 7px;border-radius:4px;text-transform:uppercase;margin-left:6px;vertical-align:middle}
+.mod-hd{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--brand);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+
+.calc-btn{width:100%;padding:13px;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;border:none;border-radius:10px;cursor:pointer;transition:all .15s;letter-spacing:0.2px;box-shadow:0 4px 14px rgba(99,102,241,0.35)}
+.calc-btn:hover{opacity:.92;transform:translateY(-1px)}
+
+/* ── RESULT PANEL ── */
+.result-card{background:var(--card);border:1px solid var(--border-light);border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(99,102,241,0.06)}
+.tabs-bar{display:flex;border-bottom:1px solid var(--border-light);background:#FAFAFF;overflow-x:auto;padding:0 4px}
+.tab-btn{padding:12px 16px;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:'Inter',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap;margin-bottom:-1px}
+.tab-btn.active{color:var(--brand);border-bottom-color:var(--brand)}
+.tab-pane{display:none;padding:22px}
+.tab-pane.active{display:block}
+
+/* ── KPI GRID ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:22px}
+.kpi{background:linear-gradient(145deg,#F8F6FF,#EEF2FF);border:1px solid rgba(99,102,241,0.12);border-radius:12px;padding:15px 16px;box-shadow:0 2px 8px rgba(99,102,241,0.06);transition:transform .15s,box-shadow .15s;}
+.kpi:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(99,102,241,0.12)}
+.kpi-label{font-size:9px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.kpi-value{font-size:20px;font-weight:700;letter-spacing:-0.3px}
+.kpi-sub{font-size:11px;color:var(--muted2);margin-top:3px}
+.c-purple{color:var(--brand)} .c-green{color:var(--green)} .c-orange{color:var(--orange)} .c-red{color:var(--red)} .c-blue{color:var(--blue)}
+
+/* ── SECTION HEAD ── */
+.sec-head{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--brand);margin:20px 0 10px;display:flex;align-items:center;gap:8px}
+.sec-head::after{content:'';flex:1;height:1px;background:var(--border-light)}
+
+/* ── FORMULA BOX ── */
+.formula-box{background:#F8F9FF;border:1px solid var(--border-light);border-radius:10px;padding:16px 18px;font-size:13px;line-height:2;color:var(--muted)}
+.formula-box .f-line{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.formula-box strong{color:var(--text)}
+.formula-box .result{color:var(--green);font-weight:700;font-size:15px}
+.formula-box .discount{color:var(--orange);font-weight:600}
+.formula-divider{border:none;border-top:1px solid var(--border-light);margin:10px 0}
+
+/* ── JOURNAL ── */
+.je-wrap{margin-bottom:14px;border:1px solid var(--border-light);border-radius:10px;overflow:hidden}
+.je-head{padding:9px 14px;background:var(--brand-light);border-bottom:1px solid var(--border-light);font-size:11px;font-weight:700;color:var(--brand-dark);letter-spacing:0.5px}
+.je-table{width:100%;border-collapse:collapse}
+.je-table th{padding:7px 12px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border-light);text-align:left;background:#FAFAFF}
+.je-table th:nth-child(2),.je-table th:nth-child(3){text-align:right}
+.je-table td{padding:8px 12px;font-size:13px;border-bottom:1px solid rgba(99,102,241,0.04)}
+.je-table tr:last-child td{border-bottom:none}
+.je-table td:nth-child(2),.je-table td:nth-child(3){text-align:right;font-weight:600}
+.je-table .dr-acct{color:var(--text)}
+.je-table .cr-acct{color:var(--muted);padding-left:20px}
+.je-table .amt-dr{color:var(--blue)}
+.je-table .amt-cr{color:var(--green)}
+.tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:0.8px;padding:2px 6px;border-radius:4px;margin-right:6px;vertical-align:middle}
+.tag-dr{background:var(--blue-light);color:var(--blue)}
+.tag-cr{background:var(--green-light);color:var(--green)}
+
+/* ── SCHEDULE TABLE ── */
+.tbl-wrap{overflow-x:auto}
+.sch-table{width:100%;border-collapse:collapse;min-width:580px;font-size:13px}
+.sch-table thead th{padding:9px 12px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--brand);border-bottom:2px solid var(--border-light);text-align:right;background:#FAFAFF;white-space:nowrap;position:sticky;top:0}
+.sch-table thead th:first-child,.sch-table thead th:nth-child(2){text-align:left}
+.sch-table td{padding:9px 12px;text-align:right;border-bottom:1px solid rgba(99,102,241,0.05)}
+.sch-table td:first-child,.sch-table td:nth-child(2){text-align:left}
+.sch-table tr:hover td{background:rgba(99,102,241,0.025)}
+.sch-table tfoot td{background:#FAFAFF;font-weight:700;border-top:2px solid var(--border-light)}
+.yr-badge{display:inline-block;background:var(--brand-light);color:var(--brand);font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px}
+
+/* ── IMPACT TABLE ── */
+.imp-table{width:100%;border-collapse:collapse;font-size:13px}
+.imp-table thead th{padding:9px 14px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--brand);border-bottom:2px solid var(--border-light);text-align:right;background:#FAFAFF}
+.imp-table thead th:first-child{text-align:left}
+.imp-table td{padding:9px 14px;text-align:right;border-bottom:1px solid rgba(99,102,241,0.05);font-size:13px}
+.imp-table td:first-child{text-align:left;color:var(--muted)}
+.imp-table .total-row td{font-weight:700;background:#FAFAFF;border-top:2px solid var(--border-light);color:var(--text)!important}
+
+/* ── CONCEPT ── */
+.concept-card{background:#F8F9FF;border:1px solid var(--border-light);border-radius:10px;padding:16px 18px;margin-bottom:14px}
+.concept-card h4{font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px}
+.concept-card h4 span{color:var(--brand)}
+.concept-card p{font-size:13px;color:var(--muted);line-height:1.75}
+.concept-card p strong{color:var(--text)}
+
+/* ── NOTE BAR ── */
+.note-bar{background:#F8F9FF;border-left:3px solid var(--brand);border-radius:0 8px 8px 0;padding:9px 14px;font-size:12px;color:var(--muted);line-height:1.7;margin-top:14px}
+
+/* ── EMPTY ── */
+.empty-state{text-align:center;padding:64px 24px;color:var(--muted2)}
+.empty-state .emo{font-size:36px;margin-bottom:12px}
+.empty-state p{font-size:13px;color:var(--muted)}
+.empty-state p+p{margin-top:4px;font-size:12px;color:var(--muted2)}
+
+/* ── COMPLIANCE ── */
+.comply-badge{display:inline-flex;align-items:center;gap:5px;background:var(--green-light);border:1px solid #A7F3D0;color:var(--green);font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px}
+
+/* ── STD TABLE ── */
+.std-table{width:100%;border-collapse:collapse;margin-top:12px;font-size:12px}
+.std-table th{padding:8px 12px;background:#FAFAFF;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border:1px solid var(--border-light);text-align:left}
+.std-table td{padding:8px 12px;border:1px solid rgba(99,102,241,0.06);color:var(--muted)}
+.std-table td:first-child{font-weight:700;color:var(--text)}
+
+/* ── EXPORT ROW ── */
+.exp-info-card{margin:0 16px 0;padding:14px 16px;background:#EEF2FF;border:1px solid rgba(99,102,241,0.2);border-radius:10px;}
+.exp-info-title{font-size:12px;font-weight:700;color:#4F46E5;margin-bottom:8px;}
+.exp-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;}
+.exp-info-item{font-size:11px;color:#4B5563;display:flex;align-items:flex-start;gap:5px;line-height:1.4;}
+.exp-info-item::before{content:"✓";color:#6366F1;font-weight:700;flex-shrink:0;}
+.exp-info-note{font-size:10px;color:#9CA3AF;margin-top:8px;padding-top:8px;border-top:1px solid rgba(99,102,241,0.15);}
+.exp-row{padding:14px 22px;border-top:1px solid var(--border-light);display:flex;align-items:center;justify-content:flex-end;gap:12px;background:#FAFAFF}
+.exp-note{font-size:11px;color:var(--muted2)}
+.btn-exp{display:flex;align-items:center;gap:7px;padding:9px 18px;background:linear-gradient(135deg,#6366F1,#8B5CF6);border:none;border-radius:8px;font-size:12px;font-weight:700;color:#fff;cursor:pointer;font-family:'Inter',sans-serif;box-shadow:0 3px 10px rgba(99,102,241,0.3);transition:all .15s}
+.btn-exp:hover{opacity:.9;transform:translateY(-1px)}
+
+/* ── STANDARDS NOTE ── */
+.std-note{margin-top:16px;padding:14px 16px;background:var(--brand-light);border:1px solid var(--brand-mid);border-radius:12px;font-size:12px;color:#3730A3;line-height:1.7}
+.std-note strong{color:var(--brand-dark)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .main-layout{grid-template-columns:1fr;padding:16px 16px 60px}
+  .page-header{padding:28px 16px 20px}
+  nav{padding:0 16px}
+}
+
+/* ── STICKY EXPORT CTA ── */
+#sticky-export-bar {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(135deg, #1E293B, #0F172A);
+  padding: 14px 24px;
+  z-index: 1000;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.25);
+  border-top: 2px solid #6366F1;
+  font-family: 'Inter', sans-serif;
+}
+#sticky-export-bar .sticky-text { color: #fff; font-size: 14px; font-weight: 600; line-height: 1.4; }
+#sticky-export-bar .sticky-sub  { color: #94A3B8; font-size: 12px; font-weight: 400; }
+#sticky-export-bar .sticky-btn  {
+  background: linear-gradient(135deg, #6366F1, #8B5CF6);
+  color: #fff; border: none; border-radius: 10px;
+  padding: 12px 28px; font-size: 15px; font-weight: 700;
+  cursor: pointer; white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(99,102,241,0.5);
+  transition: transform .15s, box-shadow .15s;
+  font-family: 'Inter', sans-serif;
+}
+#sticky-export-bar .sticky-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99,102,241,0.6); }
+#sticky-export-bar .sticky-close {
+  background: none; border: none; color: #64748B;
+  font-size: 20px; cursor: pointer; padding: 4px 8px; line-height: 1;
+}
+@media(max-width:600px){
+  #sticky-export-bar { flex-direction: column; align-items: flex-start; padding: 14px 16px; }
+  #sticky-export-bar .sticky-btn { width: 100%; text-align: center; }
+}
+
+.wa-btn{position:fixed;bottom:24px;right:24px;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,.4);z-index:999;text-decoration:none;transition:transform .2s}.wa-btn:hover{transform:scale(1.08)}.wa-btn i{color:#fff;font-size:24px}
+
+/* ── UNIFIED NAV (injected) ── */
+#mainNav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(99,102,241,0.08);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 rgba(99,102,241,0.08),0 4px 20px rgba(99,102,241,0.05);}
+#mainNav .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+#mainNav .nav-logo{display:flex;align-items:center;text-decoration:none;}
+#mainNav .nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
+#mainNav .nav-links a{font-size:13px;font-weight:500;color:#6B7280;text-decoration:none;padding:7px 11px;border-radius:8px;transition:color .15s,background .15s;white-space:nowrap;}
+#mainNav .nav-links a:hover{color:#111827;background:#EEF2FF;}
+#mainNav .nav-back-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;font-family:'Inter',sans-serif;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;box-shadow:0 3px 12px rgba(99,102,241,0.3);transition:all .15s;white-space:nowrap;}
+#mainNav .nav-back-btn:hover{background:linear-gradient(135deg,#4F46E5,#7C3AED);transform:translateY(-1px);}
+#mainNav .nav-toggle{display:none;background:none;border:none;font-size:20px;color:#111827;cursor:pointer;padding:4px;}
+@media(max-width:900px){#mainNav .nav-links{display:none;}}
+@media(max-width:768px){#mainNav{padding:0 16px;}#mainNav .nav-actions{display:none;}#mainNav .nav-toggle{display:block;}#mainNav .nav-links.open,#mainNav .nav-actions.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid rgba(99,102,241,0.08);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
+</style>
+<!-- Google Analytics GA4 — replace G-Z2G710PHNQ with your real Measurement ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Z2G710PHNQ');
+</script>
+<script>function gaEvent(n,p){ if(typeof gtag==='function') gtag('event',n,p||{}); }</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img loading="eager" src="logo.png" alt="Finosutra" style="height:48px;width:auto;display:block;">
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="indas-tools.html">IND AS</a></li>
+      <li><a href="gst-tools.html">GST</a></li>
+      <li><a href="income-tax-hub.html">Income Tax</a></li>
+      <li><a href="salary-hr.html">Personal Finance</a></li>
+      <li><a href="templates.html">Templates</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="index.html#pricing">Pricing</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions" id="navActions">
+      <a href="index.html" class="nav-back-btn">&#8592; All Tools</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-label">Security Deposit Accounting Calculator</div>
+  <h1>IND AS 109 / IFRS 9 Security Deposit Fair Value Calculator</h1>
+  <p>Compute fair value at inception, Day 1 discount, complete EIR amortisation schedule, journal entries, and balance sheet / P&amp;L impact for security deposits given or received.</p>
+  <p style="font-size:13px;margin-top:10px;color:#6366F1;"><i class="fa-solid fa-book-open" style="margin-right:5px;"></i><a href="blog/ind-as-109-security-deposit-accounting.html" style="color:#6366F1;text-decoration:none;font-weight:600;">New to IND AS 109? Read our complete guide →</a></p>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="main-layout">
+
+  <!-- LEFT: INPUT -->
+  <div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">&#x2699;&#xFE0F;</div>
+        <h3>Deposit Parameters</h3>
+      </div>
+      <div class="card-body">
+
+        <div class="mod-hd">Core Details <span class="req-tag">Required</span></div>
+
+        <div class="field">
+          <label class="field-label">Deposit Amount (Nominal)</label>
+          <input type="number" id="depositAmt" placeholder="e.g. 1000000"/>
+          <div class="hint">Full amount to be paid / received</div>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Market Interest Rate (% p.a.)</label>
+          <input type="number" id="marketRate" step="0.01" placeholder="e.g. 10"/>
+          <div class="hint">Incremental borrowing rate / EIR</div>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Deposit Tenure (Years)</label>
+          <input type="number" id="tenure" step="0.5" min="0.5" placeholder="e.g. 5"/>
+        </div>
+
+        <hr class="divider"/>
+        <div class="mod-hd">Deposit Type</div>
+
+        <div class="field">
+          <label class="field-label">Who is this for?</label>
+          <div class="toggle-grid">
+            <button class="tog-btn active" id="btnGiven" onclick="setType('given')">&#x1F4E4; Given (Tenant)</button>
+            <button class="tog-btn" id="btnReceived" onclick="setType('received')">&#x1F4E5; Received (Landlord)</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Reporting Standard</label>
+          <div class="toggle-grid">
+            <button class="tog-btn active" id="btnIndAS" onclick="setStd('indas')">Ind AS</button>
+            <button class="tog-btn" id="btnIFRS" onclick="setStd('ifrs')">IFRS</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Currency</label>
+          <select id="currency">
+            <option value="&#8377;">&#8377; Indian Rupee</option>
+            <option value="$">$ US Dollar</option>
+            <option value="&euro;">&euro; Euro</option>
+            <option value="&pound;">&pound; British Pound</option>
+          </select>
+        </div>
+
+        <button class="calc-btn" onclick="calculate()">&#x26A1; Calculate Deposit Schedule</button>
+      </div>
+    </div>
+
+    <div class="std-note">
+      <strong>Standards Compliance</strong><br/>
+      Ind AS 109 / IFRS 9 — Financial Instruments. EIR method for unwinding.
+      Day 1 discount treated as Prepaid Rent (given) or Deferred Income (received).
+      Straight-line amortisation of discount over tenure per Ind AS 116 / IFRS 16.
+    </div>
+  </div>
+
+  <!-- RIGHT: OUTPUT -->
+  <div class="result-card">
+    <div id="emptyState" class="empty-state">
+      <div class="emo">&#x1F9FE;</div>
+      <p>Enter deposit parameters and click Calculate</p>
+      <p>Full accounting treatment will appear here</p>
+    </div>
+
+    <div id="resultContent" style="display:none">
+      <div class="tabs-bar">
+        <button class="tab-btn active" onclick="showTab('summary')">Summary</button>
+        <button class="tab-btn" onclick="showTab('journal')">Journal Entries</button>
+        <button class="tab-btn" onclick="showTab('schedule')">Amortisation Schedule</button>
+        <button class="tab-btn" onclick="showTab('impact')">BS &amp; P&amp;L Impact</button>
+        <button class="tab-btn" onclick="showTab('concepts')">Concepts</button>
+      </div>
+
+      <!-- SUMMARY -->
+      <div class="tab-pane active" id="tab-summary">
+        <div class="kpi-grid" id="kpiGrid"></div>
+        <div class="sec-head">Fair Value Computation</div>
+        <div id="fvBox"></div>
+        <div class="sec-head" style="margin-top:20px">Day 1 — Inception Journal Entry</div>
+        <div id="day1JE"></div>
+      </div>
+
+      <!-- JOURNAL -->
+      <div class="tab-pane" id="tab-journal">
+        <div id="journalAll"></div>
+      </div>
+
+      <!-- SCHEDULE -->
+      <div class="tab-pane" id="tab-schedule">
+        <div id="scheduleAll"></div>
+      </div>
+
+      <!-- IMPACT -->
+      <div class="tab-pane" id="tab-impact">
+        <div id="impactAll"></div>
+      </div>
+
+      <!-- CONCEPTS -->
+      <div class="tab-pane" id="tab-concepts">
+        <div id="conceptsAll"></div>
+      </div>
+
+      <!-- EXPORT INFO CARD -->
+      <div class="exp-info-card" id="expInfoCard" style="display:none">
+        <div style="font-size:13px;font-weight:700;color:#4F46E5;margin-bottom:4px;">📊 Get the audit-ready Excel — drop it straight into your workpapers</div>
+        <div style="font-size:11px;color:#6B7280;margin-bottom:10px;">One-time ₹99 · Instant download · CA &amp; audit-ready format</div>
+        <div class="exp-info-title">📊 What's inside the Excel Report — ₹99</div>
+        <div class="exp-info-grid">
+          <div class="exp-info-item">Fair Value computation (PV workings)</div>
+          <div class="exp-info-item">Day 1 journal entry (Dr / Cr)</div>
+          <div class="exp-info-item">Year-wise amortisation schedule</div>
+          <div class="exp-info-item">Annual interest unwinding table</div>
+          <div class="exp-info-item">Balance Sheet impact (each year)</div>
+          <div class="exp-info-item">P&amp;L impact — finance income/cost</div>
+          <div class="exp-info-item">All journal entries (Year 1 to end)</div>
+          <div class="exp-info-item">Ind AS 109 / IFRS 9 compliant format</div>
+        </div>
+        <div class="exp-info-note">One-time payment · Instant download · CA &amp; audit-ready format · Secure via Razorpay</div>
+      </div>
+
+      <!-- EXPORT ROW -->
+      <div class="exp-row" id="expRow" style="display:none">
+        <span class="exp-note" id="expNote"></span>
+        <button class="btn-exp" id="btnExp" onclick="handleExportClick()">
+          <i class="fa-solid fa-file-excel"></i> Download Excel Report &nbsp;<span style="font-size:10px;opacity:.8">₹99</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FAQ -->
+<style>
+.faq-section{max-width:1200px;margin:0 auto;padding:8px 32px 48px}
+.faq-title{font-size:20px;font-weight:800;color:var(--text);margin-bottom:20px}
+.faq-item{background:var(--card);border:1px solid var(--border-light);border-radius:12px;padding:16px 20px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.faq-q{font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px}
+.faq-a{font-size:13px;color:var(--muted);line-height:1.7}
+</style>
+<div class="faq-section">
+  <div class="faq-title">Frequently Asked Questions</div>
+  <div class="faq-item">
+    <div class="faq-q">How is a refundable security deposit accounted for under IND AS 109 / IFRS 9?</div>
+    <div class="faq-a">A refundable, interest-free security deposit is a financial asset (if paid) or financial liability (if received). On Day 1 it is measured at fair value — the present value of the amount refundable at the end of the lease, discounted using a market interest rate. It is not recorded at its nominal value.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Why is the security deposit discounted to present value?</div>
+    <div class="faq-a">Because an interest-free deposit refundable years later is worth less today than its face value. IND AS 109 requires financial instruments to be measured at fair value on initial recognition, so the deposit is discounted at the effective interest rate (EIR) over the deposit tenure.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">What is the "Day 1 difference" on a security deposit?</div>
+    <div class="faq-a">It is the gap between the nominal deposit paid and its present value on Day 1. For a deposit paid, this difference is treated as prepaid rent (a lease prepayment); for a deposit received, it is treated as deferred rental income. It represents the benefit of holding interest-free funds.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">How are the Day 1 difference and the discount unwound over the lease term?</div>
+    <div class="faq-a">The prepaid rent (or deferred income) is amortised to the P&L on a straight-line basis as additional rent expense (or rental income) over the lease term. Separately, the deposit's present value is "unwound" each year using the EIR, recognised as finance income (if paid) or finance cost (if received), until it equals the nominal refundable amount at the end.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">What discount rate should I use for a security deposit?</div>
+    <div class="faq-a">Use a market rate of interest for a similar instrument with a similar credit risk and tenure — often the incremental borrowing rate (IBR) of the entity. This calculator lets you enter the rate directly so you can match your auditor's assumption.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Does this treatment apply to deposits both given and received?</div>
+    <div class="faq-a">Yes. A deposit given (e.g. by a tenant) is a financial asset with finance income and prepaid rent. A deposit received (e.g. by a landlord) is a financial liability with finance cost and deferred rental income. This calculator handles both sides under IND AS 109 / IFRS 9.</div>
+  </div>
+</div>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"How is a refundable security deposit accounted for under IND AS 109 / IFRS 9?","acceptedAnswer":{"@type":"Answer","text":"A refundable, interest-free security deposit is a financial asset (if paid) or financial liability (if received). On Day 1 it is measured at fair value — the present value of the amount refundable at the end of the lease, discounted using a market interest rate. It is not recorded at its nominal value."}},
+    {"@type":"Question","name":"Why is the security deposit discounted to present value?","acceptedAnswer":{"@type":"Answer","text":"Because an interest-free deposit refundable years later is worth less today than its face value. IND AS 109 requires financial instruments to be measured at fair value on initial recognition, so the deposit is discounted at the effective interest rate over the deposit tenure."}},
+    {"@type":"Question","name":"What is the Day 1 difference on a security deposit?","acceptedAnswer":{"@type":"Answer","text":"It is the gap between the nominal deposit paid and its present value on Day 1. For a deposit paid, this difference is treated as prepaid rent; for a deposit received, it is treated as deferred rental income."}},
+    {"@type":"Question","name":"How are the Day 1 difference and the discount unwound over the lease term?","acceptedAnswer":{"@type":"Answer","text":"The prepaid rent or deferred income is amortised to the P&L straight-line over the lease term. The deposit's present value is unwound each year using the effective interest rate as finance income (if paid) or finance cost (if received), until it equals the nominal refundable amount at the end."}},
+    {"@type":"Question","name":"What discount rate should I use for a security deposit?","acceptedAnswer":{"@type":"Answer","text":"Use a market rate of interest for a similar instrument with similar credit risk and tenure — often the entity's incremental borrowing rate. This calculator lets you enter the rate directly so you can match your auditor's assumption."}},
+    {"@type":"Question","name":"Does this treatment apply to deposits both given and received?","acceptedAnswer":{"@type":"Answer","text":"Yes. A deposit given is a financial asset with finance income and prepaid rent. A deposit received is a financial liability with finance cost and deferred rental income. This calculator handles both sides under IND AS 109 / IFRS 9."}}
+  ]
+}
+</script>
+
+<script>
+let depType = 'given', stdType = 'indas';
+let SD = null; // stores result for export
+
+function setType(t){
+  depType = t;
+  document.getElementById('btnGiven').classList.toggle('active', t==='given');
+  document.getElementById('btnReceived').classList.toggle('active', t==='received');
+  if(SD) calculate();
+}
+function setStd(s){
+  stdType = s;
+  document.getElementById('btnIndAS').classList.toggle('active', s==='indas');
+  document.getElementById('btnIFRS').classList.toggle('active', s==='ifrs');
+  if(SD) calculate();
+}
+function showTab(name){
+  var names = ['summary','journal','schedule','impact','concepts'];
+  document.querySelectorAll('.tab-btn').forEach(function(b,i){ b.classList.toggle('active', names[i]===name); });
+  document.querySelectorAll('.tab-pane').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('tab-'+name).classList.add('active');
+}
+
+var INR = function(n){
+  var cur = document.getElementById('currency').value;
+  if(Math.abs(n)>=10000000) return cur+(n/10000000).toFixed(2)+' Cr';
+  if(Math.abs(n)>=100000) return cur+(n/100000).toFixed(2)+' L';
+  return cur+Math.round(n).toLocaleString('en-IN');
+};
+var FULL = function(n){
+  var cur = document.getElementById('currency').value;
+  return cur+Math.round(n).toLocaleString('en-IN');
+};
+var FN = function(n){ return Math.round(n).toLocaleString('en-IN'); };
+
+function calculate(){
+  gaEvent('calculator_used', { tool_name: 'IND AS 109 Security Deposit Calculator' });
+  var deposit = parseFloat(document.getElementById('depositAmt').value)||0;
+  var rate    = parseFloat(document.getElementById('marketRate').value)/100||0;
+  var tenure  = parseFloat(document.getElementById('tenure').value)||0;
+  if(!deposit||!rate||!tenure){ alert('Please fill all fields.'); return; }
+
+  var pv       = deposit / Math.pow(1+rate, tenure);
+  var discount = deposit - pv;
+  var isGiven  = depType==='given';
+  var isIndAS  = stdType==='indas';
+  var std1     = isIndAS ? 'Ind AS 109' : 'IFRS 9';
+  var std2     = isIndAS ? 'Ind AS 116' : 'IFRS 16';
+  var rentPY   = discount / tenure;
+
+  var sched = [];
+  var cv = pv;
+  for(var y=1; y<=Math.ceil(tenure); y++){
+    var isLast  = y===Math.ceil(tenure);
+    var partial = (tenure%1!==0 && isLast) ? tenure%1 : 1;
+    var interest = cv * rate * partial;
+    var cvClose  = isLast ? deposit : cv+interest;
+    sched.push({ year:y, cvOpen:cv, interest:interest, cvClose:cvClose, isLast:isLast });
+    cv = cvClose;
+  }
+  var totalInterest = sched.reduce(function(s,r){ return s+r.interest; }, 0);
+
+  // Store for export
+  SD = { deposit:deposit, rate:rate, tenure:tenure, pv:pv, discount:discount,
+         isGiven:isGiven, isIndAS:isIndAS, std1:std1, std2:std2,
+         rentPY:rentPY, sched:sched, totalInterest:totalInterest };
+
+  // KPI
+  document.getElementById('kpiGrid').innerHTML =
+    kpi('Nominal Deposit', INR(deposit), 'Cash paid / received', 'c-purple') +
+    kpi('Fair Value (PV)', INR(pv), 'Recognised on Day 1', 'c-green') +
+    kpi('Day 1 Discount', INR(discount), isGiven?'Prepaid Rent':'Deferred Income', 'c-orange') +
+    kpi('EIR (Market Rate)', (rate*100).toFixed(2)+'%', 'Effective interest rate', 'c-blue') +
+    kpi('Tenure', tenure+' yrs', sched.length+' periods', '') +
+    kpi('Type', isGiven?'Given':'Received', isGiven?'Tenant':'Landlord', '');
+
+  // Formula box
+  document.getElementById('fvBox').innerHTML =
+    '<div class="formula-box">' +
+    '<div class="f-line"><strong>Formula:</strong> PV = Nominal &divide; (1 + r)<sup>n</sup></div>' +
+    '<div class="f-line"><strong>PV</strong> = '+FULL(deposit)+' &divide; (1 + '+(rate*100).toFixed(2)+'%)<sup>'+tenure+'</sup></div>' +
+    '<div class="f-line"><strong>PV</strong> = '+FULL(deposit)+' &divide; '+Math.pow(1+rate,tenure).toFixed(6)+'</div>' +
+    '<hr class="formula-divider"/>' +
+    '<div class="f-line"><span class="result">&#x2713; Fair Value = '+FULL(pv)+'</span></div>' +
+    '<div class="f-line"><span class="discount">Day 1 Discount = '+FULL(discount)+'</span> &rarr; '+(isGiven?'Prepaid Rent (Asset)':'Deferred Rental Income (Liability)')+'</div>' +
+    '</div>';
+
+  // Day 1 JE
+  var d1Html = isGiven
+    ? buildJE('Day 1 — Deposit Paid (Tenant / Lessee)', [
+        {side:'dr', acct:'Security Deposit — Financial Asset ('+std1+')', amt:pv},
+        {side:'dr', acct:'Prepaid Rent — Asset ('+std2+')', amt:discount},
+        {side:'cr', acct:'Bank / Cash', amt:deposit}
+      ])
+    : buildJE('Day 1 — Deposit Received (Landlord / Lessor)', [
+        {side:'dr', acct:'Bank / Cash', amt:deposit},
+        {side:'cr', acct:'Security Deposit — Financial Liability ('+std1+')', amt:pv},
+        {side:'cr', acct:'Deferred Rental Income — Liability ('+std2+')', amt:discount}
+      ]);
+  document.getElementById('day1JE').innerHTML = d1Html;
+
+  // Journal All
+  var jHtml =
+    '<div class="concept-card" style="background:var(--brand-light);border-color:rgba(99,102,241,0.2)">' +
+    '<h4><span>Journal Entry Logic — '+std1+'</span></h4>' +
+    '<p><strong>Day 1:</strong> Deposit at Fair Value. Difference = '+(isGiven?'Prepaid Rent (Asset)':'Deferred Income (Liability)')+'.<br/>' +
+    '<strong>Each Year:</strong> Unwinding of discount at EIR &rarr; '+(isGiven?'Finance Income':'Finance Cost')+'.<br/>' +
+    '<strong>Rent:</strong> '+(isGiven?'Prepaid Rent amortised to Rent Expense (straight-line).':'Deferred Income released to Rental Income (straight-line).')+'</p></div>' +
+    '<div class="sec-head">Day 1 — Inception</div>' + d1Html;
+
+  sched.forEach(function(r){
+    jHtml += '<div class="sec-head" style="margin-top:18px">Year '+r.year+' — Period End Entries</div>';
+    if(isGiven){
+      jHtml += buildJE('Year '+r.year+' — Unwinding of Discount (Finance Income)',[
+        {side:'dr',acct:'Security Deposit — Financial Asset ('+std1+')',amt:r.interest},
+        {side:'cr',acct:'Finance Income — Interest (P&L)',amt:r.interest}]);
+      jHtml += buildJE('Year '+r.year+' — Amortisation of Prepaid Rent',[
+        {side:'dr',acct:'Rent Expense (P&L)',amt:rentPY},
+        {side:'cr',acct:'Prepaid Rent (Asset)',amt:rentPY}]);
+    } else {
+      jHtml += buildJE('Year '+r.year+' — Unwinding of Discount (Finance Cost)',[
+        {side:'dr',acct:'Finance Cost — Interest (P&L)',amt:r.interest},
+        {side:'cr',acct:'Security Deposit — Financial Liability ('+std1+')',amt:r.interest}]);
+      jHtml += buildJE('Year '+r.year+' — Release of Deferred Rental Income',[
+        {side:'dr',acct:'Deferred Rental Income (Liability)',amt:rentPY},
+        {side:'cr',acct:'Rental Income (P&L)',amt:rentPY}]);
+    }
+    if(r.isLast){
+      jHtml += '<div class="sec-head" style="margin-top:18px">Year '+r.year+' — Deposit Refund at Maturity</div>';
+      jHtml += isGiven
+        ? buildJE('Cash Received — Deposit Refunded',[
+            {side:'dr',acct:'Bank / Cash',amt:deposit},
+            {side:'cr',acct:'Security Deposit — Financial Asset',amt:deposit}])
+        : buildJE('Cash Paid — Deposit Refunded',[
+            {side:'dr',acct:'Security Deposit — Financial Liability',amt:deposit},
+            {side:'cr',acct:'Bank / Cash',amt:deposit}]);
+    }
+  });
+  document.getElementById('journalAll').innerHTML = jHtml;
+
+  // Schedule
+  var sHtml =
+    '<div class="note-bar" style="margin-bottom:14px">EIR Method: Interest = Opening CV &times; '+(rate*100).toFixed(2)+'% &nbsp;|&nbsp; Rent '+(isGiven?'Expense':'Income')+' = '+FULL(rentPY)+' / year (Straight-line) &nbsp;|&nbsp; <span class="comply-badge">&#x2713; '+(isIndAS?'Ind AS':'IFRS')+' Compliant</span></div>' +
+    '<div class="tbl-wrap"><table class="sch-table"><thead><tr>' +
+    '<th>Year</th><th>Period</th><th>Opening CV</th>' +
+    '<th style="color:var(--orange)">Interest (EIR)</th>' +
+    '<th style="color:var(--green)">Closing CV</th>' +
+    '<th style="color:var(--red)">Rent '+(isGiven?'Exp':'Inc')+'</th>' +
+    '<th>Net P&amp;L</th></tr></thead><tbody>';
+  sched.forEach(function(r){
+    var net = isGiven ? r.interest-rentPY : rentPY-r.interest;
+    sHtml += '<tr><td><span class="yr-badge">Year '+r.year+'</span></td>' +
+      '<td style="color:var(--muted);font-size:12px">Year End</td>' +
+      '<td>'+FULL(r.cvOpen)+'</td>' +
+      '<td style="color:var(--orange);font-weight:600">'+FULL(r.interest)+'</td>' +
+      '<td style="color:var(--green);font-weight:600">'+FULL(r.cvClose)+'</td>' +
+      '<td style="color:var(--red)">'+FULL(rentPY)+'</td>' +
+      '<td style="color:'+(net>=0?'var(--green)':'var(--red)')+';font-weight:600">'+(net>=0?'+':'')+FULL(net)+'</td></tr>';
+  });
+  sHtml += '</tbody><tfoot><tr>' +
+    '<td colspan="3" style="text-align:left;color:var(--muted)">TOTAL</td>' +
+    '<td style="color:var(--orange)">'+FULL(totalInterest)+'</td><td></td>' +
+    '<td style="color:var(--red)">'+FULL(discount)+'</td>' +
+    '<td style="color:'+((totalInterest-discount)>=0?'var(--green)':'var(--red)')+'">'+FULL(totalInterest-discount)+'</td>' +
+    '</tr></tfoot></table></div>' +
+    '<div class="note-bar" style="margin-top:12px">&#x2714; Closing CV in final year = Nominal Deposit ('+FULL(deposit)+') &mdash; confirms correct EIR unwinding<br/>&#x2714; Total Interest Unwound = Day 1 Discount = '+FULL(discount)+'</div>';
+  document.getElementById('scheduleAll').innerHTML = sHtml;
+
+  // Impact
+  var iHtml = '<div class="sec-head">Balance Sheet — Carrying Value Summary</div><div style="overflow-x:auto;margin-bottom:24px"><table class="imp-table"><thead><tr><th>Line Item</th><th>Day 1</th>'+sched.map(function(r){ return '<th>Yr '+r.year+' End</th>'; }).join('')+'</tr></thead><tbody>';
+  if(isGiven){
+    iHtml += '<tr><td>Security Deposit — FA ('+std1+')</td><td class="c-purple">'+FULL(pv)+'</td>'+sched.map(function(r){ return '<td class="c-purple">'+FULL(r.cvClose)+'</td>'; }).join('')+'</tr>';
+    var rp = discount;
+    iHtml += '<tr><td>Prepaid Rent (Asset)</td><td class="c-orange">'+FULL(discount)+'</td>'+sched.map(function(){ rp-=rentPY; return '<td class="c-orange">'+FULL(Math.max(0,rp))+'</td>'; }).join('')+'</tr>';
+    var rp2 = discount;
+    iHtml += '<tr class="total-row"><td>Total Asset</td><td>'+FULL(pv+discount)+'</td>'+sched.map(function(r){ rp2-=rentPY; return '<td>'+FULL(r.cvClose+Math.max(0,rp2))+'</td>'; }).join('')+'</tr>';
+  } else {
+    iHtml += '<tr><td>Security Deposit — FL ('+std1+')</td><td class="c-red">'+FULL(pv)+'</td>'+sched.map(function(r){ return '<td class="c-red">'+FULL(r.cvClose)+'</td>'; }).join('')+'</tr>';
+    var rd = discount;
+    iHtml += '<tr><td>Deferred Rental Income (Liability)</td><td class="c-orange">'+FULL(discount)+'</td>'+sched.map(function(){ rd-=rentPY; return '<td class="c-orange">'+FULL(Math.max(0,rd))+'</td>'; }).join('')+'</tr>';
+  }
+  iHtml += '</tbody></table></div>';
+
+  iHtml += '<div class="sec-head">P&amp;L Impact — Per Year</div><div style="overflow-x:auto"><table class="imp-table"><thead><tr><th>P&amp;L Line</th>'+sched.map(function(r){ return '<th>Year '+r.year+'</th>'; }).join('')+'<th>Total</th></tr></thead><tbody>';
+  if(isGiven){
+    iHtml += '<tr><td>Finance Income (Interest)</td>'+sched.map(function(r){ return '<td class="c-green">+'+FULL(r.interest)+'</td>'; }).join('')+'<td class="c-green">+'+FULL(totalInterest)+'</td></tr>';
+    iHtml += '<tr><td>Rent Expense</td>'+sched.map(function(){ return '<td class="c-red">-'+FULL(rentPY)+'</td>'; }).join('')+'<td class="c-red">-'+FULL(discount)+'</td></tr>';
+    var netT = totalInterest-discount;
+    iHtml += '<tr class="total-row"><td>Net P&amp;L</td>'+sched.map(function(r){ var n=r.interest-rentPY; return '<td style="color:'+(n>=0?'var(--green)':'var(--red)')+';">'+(n>=0?'+':'')+FULL(n)+'</td>'; }).join('')+'<td style="color:'+(netT>=0?'var(--green)':'var(--red)')+';">'+(netT>=0?'+':'')+FULL(netT)+'</td></tr>';
+  } else {
+    iHtml += '<tr><td>Finance Cost (Interest)</td>'+sched.map(function(r){ return '<td class="c-red">-'+FULL(r.interest)+'</td>'; }).join('')+'<td class="c-red">-'+FULL(totalInterest)+'</td></tr>';
+    iHtml += '<tr><td>Rental Income</td>'+sched.map(function(){ return '<td class="c-green">+'+FULL(rentPY)+'</td>'; }).join('')+'<td class="c-green">+'+FULL(discount)+'</td></tr>';
+    var netT2 = discount-totalInterest;
+    iHtml += '<tr class="total-row"><td>Net P&amp;L</td>'+sched.map(function(r){ var n=rentPY-r.interest; return '<td style="color:'+(n>=0?'var(--green)':'var(--red)')+';">'+(n>=0?'+':'')+FULL(n)+'</td>'; }).join('')+'<td style="color:'+(netT2>=0?'var(--green)':'var(--red)')+';">'+(netT2>=0?'+':'')+FULL(netT2)+'</td></tr>';
+  }
+  iHtml += '</tbody></table></div><div class="note-bar" style="margin-top:14px">Finance '+(isGiven?'Income':'Cost')+' follows EIR (non-linear) &nbsp;&middot;&nbsp; Rent '+(isGiven?'Expense':'Income')+' is straight-line &nbsp;&middot;&nbsp; Net effect over full tenure = '+FULL(Math.abs(totalInterest-discount))+' '+(totalInterest>discount?'income':'cost')+'</div>';
+  document.getElementById('impactAll').innerHTML = iHtml;
+
+  // Concepts
+  document.getElementById('conceptsAll').innerHTML =
+    '<div class="concept-card"><h4>Why Fair Value? — <span>'+std1+' Para 43</span></h4><p>All financial instruments must be initially recognised at <strong>Fair Value</strong>. A security deposit is interest-free, so its Fair Value = Present Value of future cash flows at the <strong>market rate (EIR)</strong>. The excess of nominal over fair value = <strong>Day 1 Discount ('+FULL(discount)+')</strong>.</p></div>' +
+    '<div class="concept-card"><h4><span>'+(isGiven?'Prepaid Rent (Asset)':'Deferred Rental Income (Liability)')+'</span> — '+std2+'</h4><p>The Day 1 Discount represents a <strong>'+(isGiven?'rent concession received by the tenant':'rent concession given by the landlord')+'</strong>. Under '+std2+', this is capitalised as <strong>'+(isGiven?'Prepaid Rent':'Deferred Rental Income')+'</strong> and amortised on a <strong>straight-line basis</strong> = '+FULL(rentPY)+'/year over '+tenure+' years.</p></div>' +
+    '<div class="concept-card"><h4><span>Effective Interest Rate (EIR) Method</span></h4><p>Carrying value unwinds each period: <strong>Interest = Opening CV &times; '+(rate*100).toFixed(2)+'%</strong>. This is <strong>NOT straight-line</strong> &mdash; it compounds. Total interest unwound over the tenure = Day 1 Discount = <strong>'+FULL(discount)+'</strong>. Closing CV at maturity = Nominal Amount = <strong>'+FULL(deposit)+'</strong>.</p></div>' +
+    '<div class="concept-card"><h4><span>At Maturity</span> — Deposit Refund</h4><p>By maturity, carrying value = nominal deposit ('+FULL(deposit)+') because the discount is fully unwound. Cash flows and carrying value perfectly offset &rarr; <strong>zero net impact at maturity</strong>.</p></div>' +
+    '<table class="std-table"><thead><tr><th>Standard</th><th>Classification</th><th>Measurement</th><th>Day 1 Difference</th></tr></thead><tbody>' +
+    '<tr><td>'+std1+'</td><td>'+(isGiven?'Financial Asset (AC)':'Financial Liability (AC)')+'</td><td>Fair Value &rarr; EIR</td><td>'+(isGiven?'Prepaid Rent':'Deferred Income')+'</td></tr>' +
+    '<tr><td>'+std2+'</td><td>Lease Modification / Incentive</td><td>Straight-line</td><td>Amortised over tenure</td></tr>' +
+    '<tr><td style="color:var(--muted2)">Old GAAP / AS</td><td style="color:var(--muted2)">Loans &amp; Advances</td><td style="color:var(--muted2)">Cost / Nominal</td><td style="color:var(--muted2)">Not recognised</td></tr>' +
+    '</tbody></table>';
+
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('resultContent').style.display = 'block';
+  document.getElementById('expRow').style.display = 'flex';
+  document.getElementById('expInfoCard').style.display = 'block';
+  document.getElementById('sticky-export-bar').style.display = 'flex';
+  document.getElementById('expNote').textContent = tenure+' year schedule · '+(isIndAS?'Ind AS 109':'IFRS 9')+' compliant';
+  showTab('summary');
+}
+
+/* ── HELPERS ── */
+function kpi(label, value, sub, cls){
+  return '<div class="kpi"><div class="kpi-label">'+label+'</div><div class="kpi-value '+(cls?cls+'">':('">'))+value+'</div><div class="kpi-sub">'+sub+'</div></div>';
+}
+function buildJE(title, lines){
+  var rows = lines.map(function(l){
+    return '<tr><td class="'+(l.side==='dr'?'dr-acct':'cr-acct')+'"><span class="tag tag-'+l.side+'">'+l.side.toUpperCase()+'</span>'+(l.side==='cr'?'&nbsp;&nbsp;':'')+l.acct+'</td><td class="amt-dr">'+(l.side==='dr'?FULL(l.amt):'')+'</td><td class="amt-cr">'+(l.side==='cr'?FULL(l.amt):'')+'</td></tr>';
+  }).join('');
+  return '<div class="je-wrap"><div class="je-head">'+title+'</div><table class="je-table"><thead><tr><th>Account</th><th>Dr Amount</th><th>Cr Amount</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
+
+/* ── EXPORT CLICK HANDLER (Pro = free, Free = ₹99) ── */
+function handleExportClick(){
+  if(window.isProUser){ exportXL(); return; }
+  initiatePayment();
+}
+
+/* ── RAZORPAY PAYMENT ── */
+function initiatePayment(){
+  if(!SD){ alert('Please calculate the deposit schedule first.'); return; }
+
+  // Dynamically load Razorpay if not yet available (ad-blocker/firewall may
+  // have blocked the checkout.js <script> tag from loading on page load)
+  if(typeof Razorpay === 'undefined'){
+    showToast('Loading payment…','info');
+    var s = document.createElement('script');
+    s.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    s.onload = function(){ initiatePayment(); };
+    s.onerror = function(){ showToast('Payment blocked by your browser/network. Disable ad-blocker and retry, or email fino.sutra07@gmail.com.','fail'); };
+    document.head.appendChild(s);
+    return;
+  }
+
+  var options = {
+    key: 'rzp_live_Sty2e9lT4uXzJJ',
+    amount: 9900,
+    currency: 'INR',
+    name: 'Finosutra',
+    description: 'Security Deposit Report — Excel Export',
+    theme: { color: '#6366F1' },
+    modal: { ondismiss: function(){ showToast('Payment cancelled. No charges made.','cancel'); } },
+    handler: function(response){ showToast('Payment successful! Downloading your report...','success'); setTimeout(function(){ exportXL(); try{localStorage.removeItem('fino_sd_state');}catch(e){} }, 800); },
+    prefill: { name:'', email:'', contact:'' }
+  };
+  try {
+    // Save state before payment (mobile UPI kills JS memory)
+    try { localStorage.removeItem('fino_sd_state'); } catch(e){}
+    var rzp = new Razorpay(options);
+    rzp.on('payment.failed', function(resp){ showToast('Payment failed: '+resp.error.description,'fail'); });
+    rzp.open();
+  } catch(e) {
+    alert('Could not open payment window. This is usually caused by an ad-blocker or privacy extension blocking the payment script. Please disable it for this site and try again, or email fino.sutra07@gmail.com and we will help.');
+    console.error(e);
+  }
+}
+
+function showToast(msg, type){
+  var t = document.getElementById('toast');
+  if(!t){ t = document.createElement('div'); t.id='toast'; t.style.cssText='position:fixed;bottom:28px;left:50%;transform:translateX(-50%);padding:12px 22px;border-radius:10px;font-size:13px;font-family:Inter,sans-serif;font-weight:bold;z-index:9999;transition:opacity .4s;box-shadow:0 4px 20px rgba(0,0,0,.4)'; document.body.appendChild(t); }
+  t.textContent = msg;
+  t.style.background = type==='success'?'rgba(26,90,55,0.97)':type==='fail'?'rgba(120,30,30,0.97)':'rgba(80,60,10,0.97)';
+  t.style.color = '#fff'; t.style.opacity = '1'; t.style.display = 'block';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.style.display='none'; },400); }, 4000);
+}
+
+/* ── EXCEL EXPORT ── */
+function exportXL(){
+  if(!SD) return;
+  var wb = XLSX.utils.book_new();
+  var HEADER = { font:{bold:true,color:{rgb:"FFFFFF"},sz:12}, fill:{fgColor:{rgb:"1F4E78"}}, alignment:{horizontal:"center"} };
+  var SUBHDR = { font:{bold:true}, fill:{fgColor:{rgb:"D9EAF7"}} };
+  var MONEY  = { numFmt:'#,##0' };
+  var TITLE  = { font:{bold:true,sz:18}, alignment:{horizontal:"center"} };
+
+  function styleRange(ws, range, style){
+    var r = XLSX.utils.decode_range(range);
+    for(var R=r.s.r;R<=r.e.r;R++) for(var C=r.s.c;C<=r.e.c;C++){
+      var cell = ws[XLSX.utils.encode_cell({r:R,c:C})];
+      if(cell) cell.s = Object.assign({},cell.s,style);
+    }
+  }
+
+  // Cover
+  var cover = XLSX.utils.aoa_to_sheet([
+    ['FINOSUTRA'],
+    ['IND AS 109 / IFRS 9 — SECURITY DEPOSIT ACCOUNTING REPORT'],
+    [],
+    ['Generated On', new Date().toLocaleString()],
+    ['Standard', SD.std1+' / '+SD.std2],
+    ['Deposit Type', SD.isGiven?'Given (Tenant)':'Received (Landlord)'],
+    ['Export Type','Premium Audit Ready Export'],
+    [],['CONFIDENTIAL']
+  ]);
+  cover['!cols'] = [{wch:30},{wch:40}];
+  styleRange(cover,'A1:B1',TITLE); styleRange(cover,'A2:B2',HEADER); styleRange(cover,'A4:A9',SUBHDR);
+  XLSX.utils.book_append_sheet(wb,cover,'Cover Page');
+
+  // Summary
+  var ws1 = XLSX.utils.aoa_to_sheet([
+    ['EXECUTIVE SUMMARY'],
+    [],
+    ['Deposit Amount (Nominal)', SD.deposit],
+    ['Market Rate (EIR)',SD.rate*100],
+    ['Tenure (Years)',SD.tenure],
+    ['Deposit Type',SD.isGiven?'Given (Tenant)':'Received (Landlord)'],
+    ['Reporting Standard',SD.std1],
+    [],
+    ['Fair Value (PV) on Day 1', SD.pv],
+    ['Day 1 Discount', SD.discount],
+    [SD.isGiven?'Prepaid Rent / Year':'Deferred Income / Year', SD.rentPY],
+    ['Total Interest Unwound', SD.totalInterest]
+  ]);
+  ws1['!cols']=[{wch:35},{wch:25}];
+  styleRange(ws1,'A1:B1',HEADER); styleRange(ws1,'A3:A12',SUBHDR);
+  [9,10,11,12].forEach(function(i){ var c=ws1['B'+i]; if(c) c.s=MONEY; });
+  XLSX.utils.book_append_sheet(wb,ws1,'Summary');
+
+  // Amortisation Schedule
+  var schRows = [['Year','Opening CV','Interest (EIR)','Closing CV','Rent '+(SD.isGiven?'Expense':'Income'),'Net P&L']];
+  SD.sched.forEach(function(r){
+    var net = SD.isGiven ? r.interest-SD.rentPY : SD.rentPY-r.interest;
+    schRows.push([r.year, r.cvOpen, r.interest, r.cvClose, SD.rentPY, net]);
+  });
+  var ws2 = XLSX.utils.aoa_to_sheet(schRows);
+  ws2['!cols'] = [{wch:8},{wch:18},{wch:18},{wch:18},{wch:20},{wch:15}];
+  styleRange(ws2,'A1:F1',HEADER);
+  XLSX.utils.book_append_sheet(wb,ws2,'Amortisation Schedule');
+
+  // Journal Entries
+  var jeRows = [['Entry','Account','Debit','Credit'],
+    ['Day 1', SD.isGiven?'Security Deposit — FA':' Bank / Cash', SD.isGiven?SD.pv:SD.deposit,''],
+    ['Day 1', SD.isGiven?'Prepaid Rent':'Security Deposit — FL', SD.isGiven?SD.discount:'', SD.isGiven?'':SD.pv],
+    ['Day 1', SD.isGiven?'Bank / Cash':'Deferred Rental Income', SD.isGiven?'':SD.deposit, SD.isGiven?SD.deposit:SD.discount]
+  ];
+  SD.sched.forEach(function(r){
+    if(SD.isGiven){
+      jeRows.push(['Year '+r.year+' — Unwinding','Security Deposit — FA',r.interest,'']);
+      jeRows.push(['Year '+r.year+' — Unwinding','Finance Income','',r.interest]);
+      jeRows.push(['Year '+r.year+' — Rent','Rent Expense',SD.rentPY,'']);
+      jeRows.push(['Year '+r.year+' — Rent','Prepaid Rent','',SD.rentPY]);
+    } else {
+      jeRows.push(['Year '+r.year+' — Unwinding','Finance Cost',r.interest,'']);
+      jeRows.push(['Year '+r.year+' — Unwinding','Security Deposit — FL','',r.interest]);
+      jeRows.push(['Year '+r.year+' — Income','Deferred Rental Income',SD.rentPY,'']);
+      jeRows.push(['Year '+r.year+' — Income','Rental Income','',SD.rentPY]);
+    }
+  });
+  var ws3 = XLSX.utils.aoa_to_sheet(jeRows);
+  ws3['!cols']=[{wch:28},{wch:38},{wch:18},{wch:18}];
+  styleRange(ws3,'A1:D1',HEADER); styleRange(ws3,'A2:A4',SUBHDR);
+  XLSX.utils.book_append_sheet(wb,ws3,'Journal Entries');
+
+  /* ── BALANCE SHEET & P&L IMPACT ── */
+  var bsRows = [
+    ['BALANCE SHEET & P&L IMPACT — IND AS 109 / IFRS 9 SECURITY DEPOSIT'],
+    [],
+    ['BALANCE SHEET IMPACT ON DAY 1', '', ''],
+    ['Item', 'Classification', 'Amount (₹)'],
+  ];
+  if(SD.isGiven){
+    bsRows.push(['Security Deposit — Financial Asset', 'Non-Current Assets', SD.pv]);
+    bsRows.push(['Prepaid Rent (Day 1 Discount)', 'Current / Non-Current Asset', SD.discount]);
+    bsRows.push(['Cash Paid (Nominal Deposit)', 'Outflow', SD.deposit]);
+  } else {
+    bsRows.push(['Security Deposit — Financial Liability', 'Non-Current Liabilities', SD.pv]);
+    bsRows.push(['Deferred Rental Income (Day 1 Discount)', 'Deferred Income', SD.discount]);
+    bsRows.push(['Cash Received (Nominal Deposit)', 'Inflow', SD.deposit]);
+  }
+  bsRows.push([]);
+  bsRows.push(['P&L IMPACT — YEAR-WISE', '', '', '']);
+  bsRows.push(['Year', SD.isGiven ? 'Finance Income (₹)' : 'Finance Cost (₹)', SD.isGiven ? 'Rent Expense (₹)' : 'Rental Income (₹)', 'Net P&L Impact (₹)']);
+  SD.sched.forEach(function(r){
+    var net = SD.isGiven ? r.interest - SD.rentPY : SD.rentPY - r.interest;
+    bsRows.push([r.year, r.interest, SD.rentPY, net]);
+  });
+  var totInt = SD.sched.reduce(function(s,r){return s+r.interest;},0);
+  bsRows.push(['TOTAL', totInt, SD.rentPY*SD.sched.length, SD.isGiven ? totInt - SD.rentPY*SD.sched.length : SD.rentPY*SD.sched.length - totInt]);
+  bsRows.push([]);
+  bsRows.push(['KEY METRICS', '', '']);
+  bsRows.push(['Nominal Deposit Amount', '', SD.deposit]);
+  bsRows.push(['Fair Value on Day 1 (PV)', '', SD.pv]);
+  bsRows.push(['Day 1 Discount', '', SD.discount]);
+  bsRows.push(['Effective Interest Rate (EIR)', '', (SD.rate*100).toFixed(2)+'%']);
+  bsRows.push(['Tenure', '', SD.tenure+' years']);
+  bsRows.push(['Total Interest Unwound over tenure', '', SD.totalInterest]);
+
+  var ws4 = XLSX.utils.aoa_to_sheet(bsRows);
+  ws4['!cols'] = [{wch:44},{wch:28},{wch:20},{wch:20}];
+  styleRange(ws4,'A1:D1',HEADER);
+  XLSX.utils.book_append_sheet(wb,ws4,'BS & P&L Impact');
+
+  XLSX.writeFile(wb,'Finosutra_SecurityDeposit_Report.xlsx');
+}
+
+window.onload = function(){ calculate(); };
+</script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="pro-subscription.js"></script>
+
+
+<!-- STICKY EXPORT BAR -->
+<div id="sticky-export-bar">
+  <div style="flex:1;">
+    <div class="sticky-text">✅ Your schedule is ready — get the audit-ready Excel report</div>
+    <div class="sticky-sub">Fair value workings · EIR schedule · Journal entries · BS &amp; P&amp;L impact · ₹99 one-time or ₹499/mo unlimited</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap;">
+    <button class="sticky-btn" onclick="handleExportClick()">⬇ Export ₹99</button>
+    <button onclick="initiateProSubscription('IND AS 109 Security Deposit')"
+      style="display:inline-flex;align-items:center;gap:6px;padding:11px 18px;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:13px;font-weight:700;border:none;border-radius:10px;cursor:pointer;white-space:nowrap;">
+      🚀 Pro ₹499/mo — Unlimited
+    </button>
+    <button class="sticky-close" onclick="document.getElementById('sticky-export-bar').style.display='none'">✕</button>
+  </div>
+</div>
+
+<footer style="background:#111827;padding:24px 20px;text-align:center;">
+  <p style="font-size:12px;color:#9CA3AF;margin:0;">© 2026 Finosutra · GSTIN: 27ACWPW1076G1ZX · Mumbai, Maharashtra, India · <a href="mailto:fino.sutra07@gmail.com" style="color:#9CA3AF;text-decoration:none;">fino.sutra07@gmail.com</a> · <a href="terms.html" style="color:#9CA3AF;text-decoration:none;">Terms</a></p>
+</footer>
+
+</body>
+</html>

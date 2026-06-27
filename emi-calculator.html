@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>EMI Calculator India — Home Loan, Car Loan, Personal Loan | Finosutra</title>
+<meta name="description" content="Free EMI calculator India. Calculate monthly EMI for home loan, car loan, personal loan. Get total interest, principal breakdown and full amortization schedule instantly."/>
+<meta name="keywords" content="EMI calculator india, loan EMI calculator, home loan EMI calculator india, car loan EMI calculator, personal loan EMI, amortization schedule india, loan repayment calculator, monthly installment calculator"/>
+<meta name="author" content="Finosutra"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://www.finosutra.com/emi-calculator.html"/>
+
+<!-- Open Graph -->
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Finosutra"/>
+<meta property="og:title" content="EMI Calculator India — Free Loan Calculator | Finosutra"/>
+<meta property="og:description" content="Free EMI calculator for home loan, car loan and personal loan. Monthly EMI, total interest and full amortization schedule."/>
+<meta property="og:url" content="https://www.finosutra.com/emi-calculator.html"/>
+<meta property="og:image" content="https://www.finosutra.com/og-image.png"/>
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="EMI Calculator India — Free Loan Calculator | Finosutra"/>
+<meta name="twitter:description" content="Free EMI calculator for home loan, car loan and personal loan. Monthly EMI, total interest and full amortization schedule."/>
+<meta name="twitter:image" content="https://www.finosutra.com/og-image.png"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;
+  --brand-mid:#C7D2FE;--text-primary:#111827;--text-secondary:#6B7280;
+  --text-muted:#9CA3AF;--bg:#F7F8FF;--bg-white:#FFFFFF;
+  --border:rgba(99,102,241,0.15);--border-light:rgba(99,102,241,0.08);
+  --radius:14px;--radius-sm:9px;
+  --green:#059669;--green-bg:#ECFDF5;--green-border:rgba(5,150,105,0.2);
+  --red:#DC2626;--red-bg:#FEF2F2;
+  --orange:#D97706;--orange-bg:#FFFBEB;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-primary);-webkit-font-smoothing:antialiased;min-height:100vh;}
+
+/* ── NAV ── */
+nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border-light);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 var(--border-light),0 4px 20px rgba(99,102,241,0.05);}
+.nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff;box-shadow:0 2px 8px rgba(99,102,241,0.3);}
+.logo-text{font-size:18px;font-weight:700;color:var(--text-primary);letter-spacing:-0.3px;}
+.logo-text span{color:var(--brand)}
+.nav-links{display:flex;list-style:none;gap:4px;}
+.nav-links a{font-size:13px;font-weight:500;color:var(--text-secondary);text-decoration:none;padding:6px 12px;border-radius:7px;transition:all .15s;}
+.nav-links a:hover,.nav-links a.active{color:var(--brand);background:var(--brand-light);}
+.btn-back{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;border:1.5px solid var(--border);background:var(--bg-white);color:var(--text-secondary);transition:all .15s;}
+.btn-back:hover{border-color:var(--brand);color:var(--brand);background:var(--brand-light);}
+
+/* ── HERO ── */
+.page-hero{background:linear-gradient(160deg,#EDEEFF 0%,#F2EEFF 100%);border-bottom:1px solid var(--border-light);padding:48px 32px 40px;}
+.page-hero-inner{max-width:1160px;margin:0 auto;}
+.eyebrow{font-size:11px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px;}
+.page-hero h1{font-size:34px;font-weight:800;letter-spacing:-0.5px;margin-bottom:10px;color:var(--text-primary);line-height:1.2;}
+.page-hero p{font-size:14px;color:var(--text-secondary);line-height:1.7;max-width:560px;}
+.hero-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;}
+.hero-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;background:rgba(255,255,255,0.8);border:1px solid var(--border);color:var(--text-secondary);}
+.hero-badge i{color:var(--brand);font-size:10px}
+
+/* ── MAIN ── */
+.main{max-width:1160px;margin:0 auto;padding:36px 32px 80px;display:grid;grid-template-columns:380px 1fr;gap:28px;align-items:start;}
+
+/* ── CARDS ── */
+.card{background:var(--bg-white);border:1px solid var(--border-light);border-radius:var(--radius);padding:24px;box-shadow:0 4px 24px rgba(99,102,241,0.06);}
+.card-title{font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+.card-title i{color:var(--brand);}
+
+/* ── LOAN TYPE TABS ── */
+.loan-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;}
+.loan-tab{padding:6px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:var(--bg-white);color:var(--text-secondary);transition:all .15s;font-family:inherit;}
+.loan-tab.active{background:var(--brand);color:#fff;border-color:var(--brand);}
+
+/* ── FORM ── */
+.form-group{margin-bottom:18px;}
+.form-label{font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;}
+.form-hint{font-size:11px;color:var(--brand);font-weight:700;}
+.form-input{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-family:inherit;color:var(--text-primary);background:var(--bg-white);transition:border-color .15s;outline:none;}
+.form-input:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(99,102,241,0.08);}
+.input-prefix{position:relative;}
+.input-prefix .pfx{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:600;color:var(--text-secondary);}
+.input-prefix .sfx{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--text-muted);}
+.input-prefix input{padding-left:26px;}
+
+/* ── SLIDER ── */
+.slider-wrap{margin-top:8px;}
+input[type=range]{width:100%;-webkit-appearance:none;height:4px;border-radius:4px;background:linear-gradient(to right,var(--brand) 0%,var(--border) 0%);outline:none;cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--brand);box-shadow:0 2px 6px rgba(99,102,241,0.4);cursor:pointer;}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--brand);box-shadow:0 2px 6px rgba(99,102,241,0.4);cursor:pointer;border:none;}
+.slider-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted);margin-top:4px;}
+
+/* ── TENURE TOGGLE ── */
+.tenure-toggle{display:flex;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:3px;margin-bottom:8px;}
+.tenure-btn{flex:1;padding:6px;border:none;background:none;border-radius:7px;font-size:11px;font-weight:600;color:var(--text-secondary);cursor:pointer;transition:all .15s;font-family:inherit;}
+.tenure-btn.active{background:#fff;color:var(--brand);box-shadow:0 1px 4px rgba(99,102,241,0.15);}
+
+/* ── CALCULATE BTN ── */
+.btn-calc{width:100%;padding:13px;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;border:none;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:4px;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-calc:hover{background:linear-gradient(135deg,#4F46E5,#7C3AED);box-shadow:0 4px 20px rgba(99,102,241,0.35);transform:translateY(-1px);}
+.btn-reset{width:100%;padding:8px;background:none;color:var(--text-muted);border:none;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:4px;}
+.btn-reset:hover{color:var(--text-secondary);}
+
+/* ── RESULTS ── */
+.results-empty{text-align:center;padding:36px 20px;color:var(--text-muted);}
+.results-empty i{font-size:36px;margin-bottom:12px;display:block;color:var(--brand-mid);}
+.results-empty p{font-size:13px;line-height:1.6;}
+
+/* ── KPI GRID ── */
+.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+.kpi-box{border-radius:var(--radius-sm);padding:16px;}
+.kpi-box.main-emi{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;}
+.kpi-box.interest{background:var(--red-bg);border:1px solid rgba(220,38,38,0.15);}
+.kpi-box.total{background:var(--orange-bg);border:1px solid rgba(217,119,6,0.15);}
+.kpi-box.principal{background:var(--green-bg);border:1px solid var(--green-border);}
+.kpi-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;opacity:0.8;}
+.kpi-box.main-emi .kpi-lbl{color:rgba(255,255,255,0.85);}
+.kpi-box.interest .kpi-lbl{color:var(--red);}
+.kpi-box.total .kpi-lbl{color:var(--orange);}
+.kpi-box.principal .kpi-lbl{color:var(--green);}
+.kpi-val{font-size:18px;font-weight:800;letter-spacing:-0.4px;}
+.kpi-box.main-emi .kpi-val{color:#fff;font-size:22px;}
+.kpi-box.interest .kpi-val{color:#991B1B;}
+.kpi-box.total .kpi-val{color:#92400E;}
+.kpi-box.principal .kpi-val{color:#065F46;}
+.kpi-note{font-size:10px;margin-top:2px;opacity:0.7;}
+.kpi-box.main-emi .kpi-note{color:rgba(255,255,255,0.75);}
+
+/* ── PIE VISUAL ── */
+.pie-section{display:flex;align-items:center;gap:20px;background:var(--brand-light);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 20px;margin-bottom:16px;}
+.pie-wrap{flex-shrink:0;}
+.pie-labels{flex:1;}
+.pie-label-row{display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:8px;}
+.pie-label-row:last-child{margin-bottom:0;}
+.pie-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.pie-label-name{color:var(--text-secondary);flex:1;}
+.pie-label-val{font-weight:700;color:var(--text-primary);}
+.pie-label-pct{font-size:10px;color:var(--text-muted);}
+
+/* ── SCHEDULE TABLE ── */
+.sched-hd{font-size:13px;font-weight:700;color:var(--text-primary);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
+.sched-toggle{display:flex;gap:6px;}
+.sched-view-btn{padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:var(--bg-white);color:var(--text-secondary);font-family:inherit;transition:all .15s;}
+.sched-view-btn.active{background:var(--brand);color:#fff;border-color:var(--brand);}
+.tbl-wrap{overflow-x:auto;border-radius:var(--radius-sm);border:1px solid var(--border-light);}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{background:linear-gradient(135deg,#1F4E78,#2E75B6);color:#fff;padding:10px 12px;text-align:right;font-weight:600;white-space:nowrap;}
+th:first-child{text-align:left;}
+td{padding:9px 12px;text-align:right;border-bottom:1px solid var(--border-light);color:var(--text-secondary);}
+td:first-child{text-align:left;color:var(--text-primary);font-weight:500;}
+tr:last-child td{border-bottom:none;}
+tr:nth-child(even) td{background:#FAFBFF;}
+tr:hover td{background:var(--brand-light);}
+.tot-row td{background:linear-gradient(135deg,#EEF2FF,#F5F3FF);font-weight:700;color:var(--brand-dark);border-top:2px solid var(--brand-mid);}
+.int-cell{color:#DC2626;font-weight:600;}
+.prin-cell{color:#059669;font-weight:600;}
+
+/* ── TIPS CARD ── */
+.tips-card{background:linear-gradient(135deg,#EEF2FF,#F5F3FF);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-top:16px;}
+.tips-title{font-size:12px;font-weight:700;color:var(--brand-dark);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.06em;}
+.tip-row{display:flex;align-items:flex-start;gap:10px;font-size:12px;color:var(--text-secondary);padding:6px 0;border-bottom:1px solid rgba(99,102,241,0.08);}
+.tip-row:last-child{border-bottom:none;}
+.tip-row i{color:var(--brand);font-size:11px;margin-top:2px;flex-shrink:0;}
+
+/* ── FOOTER ── */
+footer{background:#111827;padding:28px 32px;text-align:center;}
+footer p{font-size:12px;color:#6B7280;}
+footer a{color:#9CA3AF;text-decoration:none;}
+footer a:hover{color:#fff;}
+
+@media(max-width:960px){
+  .main{grid-template-columns:1fr;padding:24px 20px 60px;}
+  .kpi-row{grid-template-columns:1fr 1fr;}
+  nav{padding:0 20px;}
+  .page-hero{padding:36px 20px 28px;}
+  .page-hero h1{font-size:26px;}
+}
+@media(max-width:480px){
+  .kpi-row{grid-template-columns:1fr;}
+  .pie-section{flex-direction:column;}
+}
+.faq-section{padding:32px 0 40px}.faq-title{font-size:20px;font-weight:800;color:var(--text);margin-bottom:20px}.faq-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 20px;margin-bottom:10px}.faq-q{font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px}.faq-a{font-size:13px;color:var(--muted);line-height:1.7}
+.wa-btn{position:fixed;bottom:24px;right:24px;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,.4);z-index:999;text-decoration:none;transition:transform .2s}.wa-btn:hover{transform:scale(1.08)}.wa-btn i{color:#fff;font-size:24px}
+
+/* ── UNIFIED NAV (injected) ── */
+#mainNav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(99,102,241,0.08);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 rgba(99,102,241,0.08),0 4px 20px rgba(99,102,241,0.05);}
+#mainNav .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+#mainNav .nav-logo{display:flex;align-items:center;text-decoration:none;}
+#mainNav .nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
+#mainNav .nav-links a{font-size:13px;font-weight:500;color:#6B7280;text-decoration:none;padding:7px 11px;border-radius:8px;transition:color .15s,background .15s;white-space:nowrap;}
+#mainNav .nav-links a:hover{color:#111827;background:#EEF2FF;}
+#mainNav .nav-back-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;font-family:'Inter',sans-serif;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;box-shadow:0 3px 12px rgba(99,102,241,0.3);transition:all .15s;white-space:nowrap;}
+#mainNav .nav-back-btn:hover{background:linear-gradient(135deg,#4F46E5,#7C3AED);transform:translateY(-1px);}
+#mainNav .nav-toggle{display:none;background:none;border:none;font-size:20px;color:#111827;cursor:pointer;padding:4px;}
+@media(max-width:900px){#mainNav .nav-links{display:none;}}
+@media(max-width:768px){#mainNav{padding:0 16px;}#mainNav .nav-actions{display:none;}#mainNav .nav-toggle{display:block;}#mainNav .nav-links.open,#mainNav .nav-actions.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid rgba(99,102,241,0.08);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
+</style>
+<!-- Google Analytics GA4 — replace G-Z2G710PHNQ with your real Measurement ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Z2G710PHNQ');
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "EMI Calculator India — Home Loan, Car Loan, Personal Loan",
+  "url": "https://www.finosutra.com/emi-calculator.html",
+  "description": "Calculate monthly EMI for home loan, car loan, personal loan or business loan. Full amortization schedule with yearly summary. Free — no login.",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web Browser",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "creator": { "@type": "Organization", "name": "Finosutra", "url": "https://www.finosutra.com" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How is EMI calculated?",
+      "acceptedAnswer": { "@type": "Answer", "text": "EMI = P × r × (1+r)^n / ((1+r)^n - 1), where P = Principal loan amount, r = Monthly interest rate (annual rate / 12 / 100), n = Loan tenure in months. Finosutra's EMI calculator computes this instantly with a full amortization schedule." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a loan amortization schedule?",
+      "acceptedAnswer": { "@type": "Answer", "text": "An amortization schedule is a table showing the breakdown of each EMI payment into principal and interest components over the loan tenure. It shows how the outstanding principal reduces with each payment." }
+    }
+  ]
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+</head>
+<body>
+
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img loading="eager" src="logo.png" alt="Finosutra" style="height:48px;width:auto;display:block;">
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="indas-tools.html">IND AS</a></li>
+      <li><a href="gst-tools.html">GST</a></li>
+      <li><a href="income-tax-hub.html">Income Tax</a></li>
+      <li><a href="salary-hr.html">Personal Finance</a></li>
+      <li><a href="templates.html">Templates</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="index.html#pricing">Pricing</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions" id="navActions">
+      <a href="index.html" class="nav-back-btn">&#8592; All Tools</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="eyebrow">Free Calculator</div>
+    <h1>EMI Calculator India</h1>
+    <p>Calculate monthly EMI for home loan, car loan, personal loan or any term loan. Get full amortization schedule with yearly summary — instantly, free.</p>
+    <div class="hero-badges">
+      <span class="hero-badge"><i class="fa-solid fa-house"></i> Home Loan</span>
+      <span class="hero-badge"><i class="fa-solid fa-car"></i> Car Loan</span>
+      <span class="hero-badge"><i class="fa-solid fa-user"></i> Personal Loan</span>
+      <span class="hero-badge"><i class="fa-solid fa-building"></i> Business Loan</span>
+      <span class="hero-badge"><i class="fa-solid fa-gift"></i> 100% Free</span>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- LEFT: INPUTS -->
+  <div>
+    <div class="card">
+      <div class="card-title"><i class="fa-solid fa-sliders"></i> Loan Details</div>
+
+      <!-- Loan Type -->
+      <div style="margin-bottom:16px;">
+        <div class="form-label" style="display:block;margin-bottom:8px;">Loan Type</div>
+        <div class="loan-tabs">
+          <button class="loan-tab active" onclick="setLoanType('home',this,8.5,240)">Home Loan</button>
+          <button class="loan-tab" onclick="setLoanType('car',this,9.5,84)">Car Loan</button>
+          <button class="loan-tab" onclick="setLoanType('personal',this,13,60)">Personal Loan</button>
+          <button class="loan-tab" onclick="setLoanType('business',this,12,60)">Business Loan</button>
+        </div>
+      </div>
+
+      <!-- Loan Amount -->
+      <div class="form-group">
+        <div class="form-label">
+          <span>Loan Amount</span>
+          <span class="form-hint" id="hLoan">₹50,00,000</span>
+        </div>
+        <div class="input-prefix">
+          <span class="pfx">₹</span>
+          <input type="number" id="fLoan" class="form-input" value="5000000" min="10000" max="100000000" step="10000" oninput="syncSlider('fLoan','sLoan');autoCalc()"/>
+        </div>
+        <div class="slider-wrap">
+          <input type="range" id="sLoan" min="10000" max="100000000" step="10000" value="5000000" oninput="syncInput('sLoan','fLoan','hLoan','₹',true);autoCalc()"/>
+          <div class="slider-labels"><span>₹10K</span><span>₹1 Cr</span></div>
+        </div>
+      </div>
+
+      <!-- Interest Rate -->
+      <div class="form-group">
+        <div class="form-label">
+          <span>Annual Interest Rate</span>
+          <span class="form-hint" id="hRate">8.5%</span>
+        </div>
+        <div class="input-prefix">
+          <input type="number" id="fRate" class="form-input" value="8.5" min="1" max="36" step="0.1" oninput="syncSlider('fRate','sRate');autoCalc()" style="padding-right:32px;"/>
+          <span class="sfx">%</span>
+        </div>
+        <div class="slider-wrap">
+          <input type="range" id="sRate" min="1" max="36" step="0.1" value="8.5" oninput="syncInput('sRate','fRate','hRate','','false','%');autoCalc()"/>
+          <div class="slider-labels"><span>1%</span><span>36%</span></div>
+        </div>
+      </div>
+
+      <!-- Tenure -->
+      <div class="form-group">
+        <div class="form-label">
+          <span>Loan Tenure</span>
+          <span class="form-hint" id="hTenure">20 Years</span>
+        </div>
+        <div class="tenure-toggle" id="tenureToggle">
+          <button class="tenure-btn active" onclick="setTenureUnit('years',this)">Years</button>
+          <button class="tenure-btn" onclick="setTenureUnit('months',this)">Months</button>
+        </div>
+        <div class="input-prefix">
+          <input type="number" id="fTenure" class="form-input" value="20" min="1" max="360" step="1" oninput="syncSlider('fTenure','sTenure');autoCalc()"/>
+          <span class="sfx" id="tenureUnit">Yrs</span>
+        </div>
+        <div class="slider-wrap">
+          <input type="range" id="sTenure" min="1" max="30" step="1" value="20" oninput="syncInput('sTenure','fTenure','hTenure','','false',' Years');autoCalc()"/>
+          <div class="slider-labels" id="tenureSliderLabels"><span>1 Yr</span><span>30 Yrs</span></div>
+        </div>
+      </div>
+
+      <button class="btn-calc" onclick="calculate()">
+        <i class="fa-solid fa-equals"></i> Calculate EMI
+      </button>
+      <button class="btn-reset" onclick="resetCalc()">↺ Reset</button>
+    </div>
+  </div>
+
+  <!-- RIGHT: RESULTS -->
+  <div>
+    <div class="card" id="resultsCard">
+
+      <!-- Empty state -->
+      <div class="results-empty" id="emptyState">
+        <i class="fa-solid fa-money-bill-wave"></i>
+        <p>Enter your loan details on the left<br>to see your EMI and full schedule.</p>
+      </div>
+
+      <div id="resultsDiv" style="display:none">
+
+        <!-- KPI Row -->
+        <div class="kpi-row" id="kpiRow"></div>
+
+        <!-- Pie visual -->
+        <div class="pie-section" id="pieSection"></div>
+
+        <!-- Schedule -->
+        <div class="sched-hd">
+          <span><i class="fa-solid fa-table" style="margin-right:6px;color:var(--brand)"></i>Amortization Schedule</span>
+          <div class="sched-toggle">
+            <button class="sched-view-btn active" onclick="showView('monthly',this)">Monthly</button>
+            <button class="sched-view-btn" onclick="showView('yearly',this)">Yearly</button>
+          </div>
+        </div>
+
+        <div class="tbl-wrap" id="schedWrap"></div>
+
+        <!-- Tips -->
+        <div class="tips-card">
+          <div class="tips-title"><i class="fa-solid fa-lightbulb" style="margin-right:6px"></i>Smart Loan Tips</div>
+          <div class="tip-row"><i class="fa-solid fa-arrow-down"></i><span><strong>Prepay when possible</strong> — even one extra EMI per year reduces total interest significantly.</span></div>
+          <div class="tip-row"><i class="fa-solid fa-percent"></i><span><strong>Rate matters more than tenure</strong> — a 0.5% lower rate saves more than 2 years less tenure.</span></div>
+          <div class="tip-row"><i class="fa-solid fa-calendar"></i><span><strong>Early payments hit principal harder</strong> — the first few years are mostly interest in reducing-balance loans.</span></div>
+          <div class="tip-row"><i class="fa-solid fa-shield-halved"></i><span><strong>Keep EMI below 40% of income</strong> — standard thumb rule for healthy debt-to-income ratio.</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- FAQ -->
+  <div class="faq-section">
+    <div class="faq-title">Frequently Asked Questions</div>
+    <div class="faq-item">
+      <div class="faq-q">How is EMI calculated?</div>
+      <div class="faq-a">EMI = P × r × (1+r)ⁿ ÷ [(1+r)ⁿ – 1], where P = Principal loan amount, r = Monthly interest rate (Annual Rate ÷ 12 ÷ 100), n = Loan tenure in months. Example: ₹10 lakh home loan at 8.5% for 20 years = EMI of ₹8,678/month.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What is a loan amortization schedule?</div>
+      <div class="faq-a">An amortization schedule shows the breakup of each EMI into principal and interest components over the entire loan tenure. In early months, most of the EMI goes towards interest. As the loan matures, the principal component increases. Finosutra's EMI calculator shows the full schedule month-by-month.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How can I reduce my EMI?</div>
+      <div class="faq-a">You can reduce your EMI by: (1) making a higher down payment to reduce principal, (2) negotiating a lower interest rate with your bank, (3) extending the loan tenure (though this increases total interest paid), or (4) making part-prepayments to reduce outstanding principal.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What is the difference between flat rate and reducing balance interest?</div>
+      <div class="faq-a">Flat rate interest is calculated on the original principal throughout the loan — making the effective interest rate much higher. Reducing balance (diminishing balance) interest is calculated on the outstanding principal each month — this is the standard method used by banks and shown in this calculator.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Does prepayment reduce EMI or tenure?</div>
+      <div class="faq-a">Banks usually give you the choice. Reducing tenure (keeping EMI the same) saves significantly more interest overall. Reducing EMI (keeping tenure the same) gives you monthly cash flow relief. Most financial advisors recommend reducing tenure for maximum savings.</div>
+    </div>
+  </div>
+
+<footer>
+  <p>© 2026 Finosutra. All rights reserved. GSTIN: 27ACWPW1076G1ZX &nbsp;·&nbsp;
+    <a href="privacy.html">Privacy</a> &nbsp;·&nbsp;
+    <a href="terms.html">Terms</a> &nbsp;·&nbsp;
+    <a href="index.html">Home</a> &nbsp;·&nbsp;
+    <a href="gst-calculator.html">GST Calculator</a>
+  </p>
+</footer>
+
+<script>
+/* ════════════════ STATE ════════════════ */
+var tenureUnit = 'years';
+var schedData  = [];
+var yearData   = [];
+
+/* ════════════════ LOAN TYPE PRESETS ════════════════ */
+function setLoanType(type, btn, rate, tenureMonths){
+  document.querySelectorAll('.loan-tab').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  document.getElementById('fRate').value  = rate;
+  document.getElementById('sRate').value  = rate;
+  document.getElementById('hRate').textContent = rate+'%';
+  updateSliderFill('sRate', 1, 36, rate);
+
+  // Set tenure in years
+  if(tenureUnit === 'years'){
+    var yrs = Math.round(tenureMonths/12);
+    document.getElementById('fTenure').value   = yrs;
+    document.getElementById('sTenure').value   = yrs;
+    document.getElementById('hTenure').textContent = yrs+' Years';
+    updateSliderFill('sTenure', 1, 30, yrs);
+  } else {
+    document.getElementById('fTenure').value   = tenureMonths;
+    document.getElementById('sTenure').value   = Math.min(tenureMonths, 360);
+    document.getElementById('hTenure').textContent = tenureMonths+' Months';
+  }
+  autoCalc();
+}
+
+/* ════════════════ TENURE UNIT ════════════════ */
+function setTenureUnit(unit, btn){
+  tenureUnit = unit;
+  document.querySelectorAll('#tenureToggle .tenure-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  document.getElementById('tenureUnit').textContent = unit==='years'?'Yrs':'Mo';
+  if(unit === 'years'){
+    document.getElementById('sTenure').max = '30';
+    document.getElementById('sTenure').step = '1';
+    document.getElementById('tenureSliderLabels').innerHTML = '<span>1 Yr</span><span>30 Yrs</span>';
+    var curr = parseInt(document.getElementById('fTenure').value)||60;
+    var yrs  = Math.max(1, Math.round(curr/12));
+    document.getElementById('fTenure').value = yrs;
+    document.getElementById('sTenure').value = Math.min(yrs,30);
+    document.getElementById('hTenure').textContent = yrs+' Years';
+  } else {
+    document.getElementById('sTenure').max = '360';
+    document.getElementById('sTenure').step = '6';
+    document.getElementById('tenureSliderLabels').innerHTML = '<span>1 Mo</span><span>360 Mo</span>';
+    var curr = parseInt(document.getElementById('fTenure').value)||20;
+    var mos  = curr <= 30 ? curr*12 : curr;
+    document.getElementById('fTenure').value = mos;
+    document.getElementById('sTenure').value = Math.min(mos,360);
+    document.getElementById('hTenure').textContent = mos+' Months';
+  }
+  autoCalc();
+}
+
+/* ════════════════ SLIDER SYNC ════════════════ */
+function syncSlider(inputId, sliderId){
+  var v = parseFloat(document.getElementById(inputId).value);
+  if(!isNaN(v)){
+    document.getElementById(sliderId).value = v;
+    var min = parseFloat(document.getElementById(sliderId).min);
+    var max = parseFloat(document.getElementById(sliderId).max);
+    updateSliderFill(sliderId, min, max, v);
+    if(inputId === 'fLoan') document.getElementById('hLoan').textContent = '₹'+fmtINR(v);
+    if(inputId === 'fRate') document.getElementById('hRate').textContent = v+'%';
+    if(inputId === 'fTenure') document.getElementById('hTenure').textContent = v+(tenureUnit==='years'?' Years':' Months');
+  }
+}
+
+function syncInput(sliderId, inputId, hintId, prefix, isINR, suffix){
+  var v = parseFloat(document.getElementById(sliderId).value);
+  document.getElementById(inputId).value = v;
+  var min = parseFloat(document.getElementById(sliderId).min);
+  var max = parseFloat(document.getElementById(sliderId).max);
+  updateSliderFill(sliderId, min, max, v);
+  var display = isINR==='true' ? prefix+fmtINR(v) : prefix+v+(suffix||'');
+  if(inputId==='fTenure') display = v+(tenureUnit==='years'?' Years':' Months');
+  document.getElementById(hintId).textContent = display;
+}
+
+function updateSliderFill(sliderId, min, max, val){
+  var pct = ((val-min)/(max-min))*100;
+  var el = document.getElementById(sliderId);
+  el.style.background = 'linear-gradient(to right, var(--brand) '+pct+'%, var(--border) '+pct+'%)';
+}
+
+/* ════════════════ FORMAT ════════════════ */
+function fmtINR(n){
+  return Math.round(n).toLocaleString('en-IN');
+}
+function fmt(n){
+  return '₹'+Math.round(n).toLocaleString('en-IN');
+}
+function fmtD(n){
+  return '₹'+n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+}
+
+/* ════════════════ AUTO CALC ════════════════ */
+function autoCalc(){
+  var loan = parseFloat(document.getElementById('fLoan').value);
+  var rate = parseFloat(document.getElementById('fRate').value);
+  var ten  = parseFloat(document.getElementById('fTenure').value);
+  if(loan>0 && rate>0 && ten>0) calculate();
+}
+
+/* ════════════════ CALCULATE ════════════════ */
+function calculate(){
+  var P = parseFloat(document.getElementById('fLoan').value);
+  var r = parseFloat(document.getElementById('fRate').value) / 100 / 12;
+  var t = parseFloat(document.getElementById('fTenure').value);
+  var n = tenureUnit==='years' ? t*12 : t;
+
+  if(!P||!r||!n||P<=0||n<=0) return;
+
+  // EMI formula: P * r * (1+r)^n / ((1+r)^n - 1)
+  var pow = Math.pow(1+r, n);
+  var emi = P * r * pow / (pow - 1);
+  var totalAmt  = emi * n;
+  var totalInt  = totalAmt - P;
+
+  // Build monthly schedule
+  schedData = [];
+  var bal = P;
+  for(var i=1; i<=n; i++){
+    var intAmt   = bal * r;
+    var prinAmt  = emi - intAmt;
+    bal = Math.max(0, bal - prinAmt);
+    if(i===n) bal=0;
+    schedData.push({
+      period: i, interest: intAmt, principal: prinAmt,
+      balance: bal, emi: emi
+    });
+  }
+
+  // Build yearly summary
+  yearData = [];
+  var yr = 1, yInt=0, yPrin=0, yEmi=0, yBal=0;
+  schedData.forEach(function(row, idx){
+    yInt  += row.interest;
+    yPrin += row.principal;
+    yEmi  += row.emi;
+    yBal   = row.balance;
+    if((idx+1)%12===0 || idx===n-1){
+      yearData.push({ year:yr, interest:yInt, principal:yPrin, emi:yEmi, balance:yBal });
+      yr++; yInt=0; yPrin=0; yEmi=0;
+    }
+  });
+
+  renderResults(P, emi, totalInt, totalAmt, n);
+}
+
+/* ════════════════ RENDER ════════════════ */
+function renderResults(P, emi, totalInt, totalAmt, n){
+  document.getElementById('emptyState').style.display  = 'none';
+  document.getElementById('resultsDiv').style.display  = 'block';
+
+  var intPct  = (totalInt/totalAmt*100).toFixed(1);
+  var prinPct = (P/totalAmt*100).toFixed(1);
+
+  // KPIs
+  document.getElementById('kpiRow').innerHTML =
+    kpi('Monthly EMI','main-emi', fmt(emi), 'Reducing balance method') +
+    kpi('Total Interest','interest', fmt(totalInt), intPct+'% of total outflow') +
+    kpi('Total Amount','total', fmt(totalAmt), 'Principal + Interest');
+
+  // Pie donut
+  var r=50, cx=60, cy=60, circumference=2*Math.PI*r;
+  var intDash   = circumference * (totalInt/totalAmt);
+  var prinDash  = circumference * (P/totalAmt);
+  document.getElementById('pieSection').innerHTML =
+    '<div class="pie-wrap">'+
+    '<svg width="120" height="120" viewBox="0 0 120 120">'+
+    '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="#E5E7EB" stroke-width="18"/>'+
+    '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="#DC2626" stroke-width="18"'+
+    ' stroke-dasharray="'+intDash+' '+circumference+'"'+
+    ' stroke-dashoffset="'+(-circumference*0)+'" transform="rotate(-90 '+cx+' '+cy+')" stroke-linecap="butt"/>'+
+    '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="#6366F1" stroke-width="18"'+
+    ' stroke-dasharray="'+prinDash+' '+circumference+'"'+
+    ' stroke-dashoffset="'+(-(intDash))+'" transform="rotate(-90 '+cx+' '+cy+')" stroke-linecap="butt"/>'+
+    '<text x="'+cx+'" y="'+(cy-4)+'" text-anchor="middle" font-size="11" font-weight="700" fill="#111827">'+n+'</text>'+
+    '<text x="'+cx+'" y="'+(cy+10)+'" text-anchor="middle" font-size="9" fill="#6B7280">months</text>'+
+    '</svg></div>'+
+    '<div class="pie-labels">'+
+    '<div class="pie-label-row"><div class="pie-dot" style="background:#6366F1"></div><span class="pie-label-name">Principal</span><span class="pie-label-val">'+fmt(P)+'</span><span class="pie-label-pct">&nbsp;'+prinPct+'%</span></div>'+
+    '<div class="pie-label-row"><div class="pie-dot" style="background:#DC2626"></div><span class="pie-label-name">Interest</span><span class="pie-label-val">'+fmt(totalInt)+'</span><span class="pie-label-pct">&nbsp;'+intPct+'%</span></div>'+
+    '<div class="pie-label-row"><div class="pie-dot" style="background:#D97706"></div><span class="pie-label-name">Total Outflow</span><span class="pie-label-val">'+fmt(totalAmt)+'</span><span class="pie-label-pct">&nbsp;100%</span></div>'+
+    '</div>';
+
+  showView('monthly', document.querySelector('.sched-view-btn.active'));
+}
+
+function kpi(label, cls, val, note){
+  return '<div class="kpi-box '+cls+'"><div class="kpi-lbl">'+label+'</div><div class="kpi-val">'+val+'</div><div class="kpi-note">'+note+'</div></div>';
+}
+
+/* ════════════════ SCHEDULE VIEWS ════════════════ */
+function showView(view, btn){
+  document.querySelectorAll('.sched-view-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+
+  if(view === 'monthly'){
+    renderMonthly();
+  } else {
+    renderYearly();
+  }
+}
+
+function renderMonthly(){
+  if(!schedData.length) return;
+  var rows = schedData.map(function(r){
+    return '<tr><td>'+r.period+'</td>'+
+      '<td>'+fmt(r.emi)+'</td>'+
+      '<td class="int-cell">'+fmt(r.interest)+'</td>'+
+      '<td class="prin-cell">'+fmt(r.principal)+'</td>'+
+      '<td>'+fmt(r.balance)+'</td></tr>';
+  }).join('');
+
+  var totInt   = schedData.reduce(function(s,r){return s+r.interest;},0);
+  var totPrin  = schedData.reduce(function(s,r){return s+r.principal;},0);
+  var totEmi   = schedData.reduce(function(s,r){return s+r.emi;},0);
+
+  document.getElementById('schedWrap').innerHTML =
+    '<table><thead><tr>'+
+    '<th style="text-align:left">Month</th><th>EMI</th>'+
+    '<th style="color:#FECACA">Interest</th><th style="color:#A7F3D0">Principal</th><th>Balance</th>'+
+    '</tr></thead><tbody>'+rows+
+    '<tr class="tot-row"><td>TOTAL</td><td>'+fmt(totEmi)+'</td>'+
+    '<td class="int-cell">'+fmt(totInt)+'</td><td class="prin-cell">'+fmt(totPrin)+'</td><td>—</td></tr>'+
+    '</tbody></table>';
+}
+
+function renderYearly(){
+  if(!yearData.length) return;
+  var rows = yearData.map(function(r){
+    return '<tr><td>Year '+r.year+'</td>'+
+      '<td>'+fmt(r.emi)+'</td>'+
+      '<td class="int-cell">'+fmt(r.interest)+'</td>'+
+      '<td class="prin-cell">'+fmt(r.principal)+'</td>'+
+      '<td>'+fmt(r.balance)+'</td></tr>';
+  }).join('');
+
+  var totInt   = yearData.reduce(function(s,r){return s+r.interest;},0);
+  var totPrin  = yearData.reduce(function(s,r){return s+r.principal;},0);
+  var totEmi   = yearData.reduce(function(s,r){return s+r.emi;},0);
+
+  document.getElementById('schedWrap').innerHTML =
+    '<table><thead><tr>'+
+    '<th style="text-align:left">Year</th><th>Total EMI</th>'+
+    '<th style="color:#FECACA">Interest</th><th style="color:#A7F3D0">Principal</th><th>Balance</th>'+
+    '</tr></thead><tbody>'+rows+
+    '<tr class="tot-row"><td>TOTAL</td><td>'+fmt(totEmi)+'</td>'+
+    '<td class="int-cell">'+fmt(totInt)+'</td><td class="prin-cell">'+fmt(totPrin)+'</td><td>—</td></tr>'+
+    '</tbody></table>';
+}
+
+/* ════════════════ RESET ════════════════ */
+function resetCalc(){
+  document.getElementById('fLoan').value   = '5000000';
+  document.getElementById('sLoan').value   = '5000000';
+  document.getElementById('hLoan').textContent = '₹50,00,000';
+  document.getElementById('fRate').value   = '8.5';
+  document.getElementById('sRate').value   = '8.5';
+  document.getElementById('hRate').textContent = '8.5%';
+  document.getElementById('fTenure').value = '20';
+  document.getElementById('sTenure').value = '20';
+  document.getElementById('hTenure').textContent = '20 Years';
+  updateSliderFill('sLoan',10000,100000000,5000000);
+  updateSliderFill('sRate',1,36,8.5);
+  updateSliderFill('sTenure',1,30,20);
+  document.getElementById('emptyState').style.display = 'block';
+  document.getElementById('resultsDiv').style.display = 'none';
+  schedData=[]; yearData=[];
+}
+
+/* Init sliders on load */
+updateSliderFill('sLoan',10000,100000000,5000000);
+updateSliderFill('sRate',1,36,8.5);
+updateSliderFill('sTenure',1,30,20);
+calculate();
+</script>
+
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/918208063319?text=Hi%2C%20I%20found%20Finosutra%20and%20would%20like%20to%20know%20more%20about%20your%20finance%20tools."
+   target="_blank"
+   title="Chat with us on WhatsApp"
+   style="position:fixed;bottom:24px;right:24px;z-index:9998;width:54px;height:54px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,0.35);text-decoration:none;transition:transform .2s,box-shadow .2s;"
+   onmouseover="this.style.transform='scale(1.1)';this.style.boxShadow='0 6px 24px rgba(37,211,102,0.5)'"
+   onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 16px rgba(37,211,102,0.35)'">
+  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#fff">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<a href="https://wa.me/918208063319?text=Hi%20Finosutra%2C%20I%20need%20help%20with%20EMI%20calculation" class="wa-btn" target="_blank" rel="noopener">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<script>
+(function(){
+  var t=document.getElementById('navToggle');
+  if(!t) return;
+  t.onclick=function(){
+    var l=document.getElementById('navLinks');
+    var a=document.getElementById('navActions');
+    if(l) l.classList.toggle('open');
+    if(a) a.classList.toggle('open');
+    var i=this.querySelector('i');
+    if(i) i.className=l&&l.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-bars';
+  };
+})();
+</script>
+</body>
+</html>

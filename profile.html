@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>My Account — Finosutra</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;
+  --text-primary:#111827;--text-secondary:#6B7280;--text-muted:#9CA3AF;
+  --bg:#F7F8FF;--bg-white:#FFFFFF;
+  --border:rgba(99,102,241,0.15);--border-light:rgba(99,102,241,0.08);
+  --radius:14px;--radius-sm:9px;
+  --green:#22C55E;--green-light:#DCFCE7;--green-dark:#166534;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-primary);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;}
+
+/* NAV */
+nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-light);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 var(--border-light);}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-right{display:flex;align-items:center;gap:12px;}
+#navActions{display:flex;align-items:center;gap:8px;}
+
+/* PAGE */
+.page-wrap{max-width:680px;margin:48px auto;padding:0 20px 80px;}
+
+/* LOADING */
+#loadingState{text-align:center;padding:80px 20px;color:var(--text-muted);font-size:15px;}
+.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--brand);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* NOT LOGGED IN */
+#loginPrompt{display:none;text-align:center;padding:60px 20px;background:var(--bg-white);border-radius:var(--radius);border:1px solid var(--border-light);}
+#loginPrompt .icon{font-size:52px;margin-bottom:16px;}
+#loginPrompt h2{font-size:22px;font-weight:700;margin-bottom:8px;}
+#loginPrompt p{font-size:14px;color:var(--text-secondary);margin-bottom:24px;}
+.btn-primary{display:inline-block;padding:12px 28px;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;text-decoration:none;font-family:Inter,sans-serif;transition:opacity .15s;}
+.btn-primary:hover{opacity:.9;}
+
+/* PROFILE CARD */
+#profileContent{display:none;}
+.profile-header{background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:var(--radius);padding:28px 28px 24px;color:#fff;margin-bottom:20px;position:relative;overflow:hidden;}
+.profile-header::before{content:"";position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:rgba(255,255,255,0.08);border-radius:50%;pointer-events:none;}
+.profile-avatar{width:56px;height:56px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:14px;border:2px solid rgba(255,255,255,0.3);}
+.profile-email{font-size:16px;font-weight:700;margin-bottom:4px;word-break:break-all;}
+.profile-since{font-size:12px;opacity:.75;}
+
+/* PLAN CARD */
+.plan-card{background:var(--bg-white);border-radius:var(--radius);border:1px solid var(--border-light);padding:24px 28px;margin-bottom:16px;box-shadow:0 2px 12px rgba(99,102,241,0.06);}
+.plan-card.pro-active{border-color:rgba(34,197,94,0.3);background:linear-gradient(135deg,#F0FFF4,#FFFFFF);}
+.plan-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.plan-label{font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;}
+.plan-badge{padding:4px 14px;border-radius:20px;font-size:12px;font-weight:800;letter-spacing:.5px;}
+.plan-badge.free{background:#F3F4F6;color:#6B7280;}
+.plan-badge.pro{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;}
+.plan-name{font-size:22px;font-weight:800;color:var(--text-primary);margin-bottom:6px;}
+.plan-desc{font-size:13px;color:var(--text-secondary);margin-bottom:18px;line-height:1.7;}
+.plan-meta{display:flex;flex-direction:column;gap:8px;}
+.plan-meta-row{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-secondary);}
+.plan-meta-row i{width:16px;color:var(--brand);}
+.plan-expiry{font-size:13px;font-weight:600;padding:10px 14px;border-radius:var(--radius-sm);margin-top:14px;}
+.plan-expiry.active{background:var(--green-light);color:var(--green-dark);}
+.plan-expiry.expired{background:#FEF2F2;color:#991B1B;}
+
+/* PRO UPGRADE */
+.upgrade-card{background:linear-gradient(135deg,#EEF2FF,#F5F3FF);border:1.5px solid #C7D2FE;border-radius:var(--radius);padding:24px 28px;margin-bottom:16px;}
+.upgrade-card h3{font-size:17px;font-weight:800;color:var(--text-primary);margin-bottom:6px;}
+.upgrade-card p{font-size:13px;color:var(--text-secondary);margin-bottom:18px;line-height:1.7;}
+.pro-features{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;}
+.pro-feature{display:flex;align-items:center;gap:8px;font-size:13px;color:#374151;}
+.pro-feature i{color:var(--brand);width:16px;}
+
+/* TOOLS SECTION */
+.tools-card{background:var(--bg-white);border-radius:var(--radius);border:1px solid var(--border-light);padding:24px 28px;margin-bottom:16px;}
+.tools-card h3{font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:16px;}
+.tool-list{display:flex;flex-direction:column;gap:10px;}
+.tool-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg);border-radius:var(--radius-sm);border:1px solid var(--border-light);}
+.tool-name{font-size:13px;font-weight:600;color:var(--text-primary);}
+.tool-link{font-size:12px;color:var(--brand);text-decoration:none;font-weight:600;}
+.tool-link:hover{text-decoration:underline;}
+.tool-status-free{font-size:11px;color:var(--text-muted);background:#F3F4F6;padding:2px 8px;border-radius:20px;}
+.tool-status-pro{font-size:11px;color:var(--green-dark);background:var(--green-light);padding:2px 8px;border-radius:20px;font-weight:700;}
+
+/* SIGN OUT */
+.signout-row{text-align:center;padding:8px 0;}
+.btn-signout{background:none;border:1.5px solid #E5E7EB;color:var(--text-muted);padding:10px 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif;transition:all .15s;}
+.btn-signout:hover{border-color:#EF4444;color:#EF4444;}
+
+footer{background:#111827;padding:28px;text-align:center;}
+footer p{font-size:13px;color:#6B7280;}
+footer a{color:#9CA3AF;text-decoration:none;}
+
+@media(max-width:640px){
+  nav{padding:0 16px;} .page-wrap{margin:28px auto;} .profile-header{padding:22px 20px;} .plan-card{padding:20px;} .tools-card{padding:20px;} .upgrade-card{padding:20px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <img src="logo.png" alt="Finosutra" style="height:56px;width:auto;display:block;">
+    </a>
+    <div class="nav-right">
+      <div id="navActions"></div>
+    </div>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- Loading -->
+  <div id="loadingState">
+    <div class="spinner"></div>
+    Loading your account…
+  </div>
+
+  <!-- Not logged in -->
+  <div id="loginPrompt">
+    <div class="icon">🔒</div>
+    <h2>Sign in to view your account</h2>
+    <p>Log in to see your plan, subscription status, and access your tools.</p>
+    <button class="btn-primary" onclick="fsShowAuthModal('login')">Log In to Finosutra</button>
+  </div>
+
+  <!-- Profile content -->
+  <div id="profileContent">
+
+    <!-- Header card -->
+    <div class="profile-header">
+      <div class="profile-avatar">👤</div>
+      <div class="profile-email" id="profileEmail">—</div>
+      <div class="profile-since" id="profileSince"></div>
+    </div>
+
+    <!-- Plan card -->
+    <div class="plan-card" id="planCard">
+      <div class="plan-card-header">
+        <span class="plan-label">Current Plan</span>
+        <span class="plan-badge free" id="planBadge">FREE</span>
+      </div>
+      <div class="plan-name" id="planName">Free Plan</div>
+      <div class="plan-desc" id="planDesc">Access all calculators. Pay ₹99 per Excel export or upgrade to Pro for unlimited downloads.</div>
+      <div class="plan-meta" id="planMeta"></div>
+      <div class="plan-expiry" id="planExpiry" style="display:none;"></div>
+    </div>
+
+    <!-- Upgrade card (shown for Free users) -->
+    <div class="upgrade-card" id="upgradeCard">
+      <h3>⚡ Upgrade to Finosutra Pro</h3>
+      <p>Unlimited Excel exports across all 5 paid tools for 30 days — ₹499/month.</p>
+      <div class="pro-features">
+        <div class="pro-feature"><i class="fa-solid fa-check"></i> Unlimited Excel exports (all tools)</div>
+        <div class="pro-feature"><i class="fa-solid fa-check"></i> CA-grade audit-ready format</div>
+        <div class="pro-feature"><i class="fa-solid fa-check"></i> IND AS 116, Income Tax, Salary, Security Deposit, HRA</div>
+        <div class="pro-feature"><i class="fa-solid fa-check"></i> 30-day access from payment date</div>
+      </div>
+      <button class="btn-primary" onclick="fsInitiateProSubscription()">Upgrade to Pro &nbsp;₹499/mo</button>
+    </div>
+
+    <!-- Tools access -->
+    <div class="tools-card">
+      <h3>Your Tools</h3>
+      <div class="tool-list">
+        <div class="tool-row">
+          <span class="tool-name">IND AS 116 Lease Calculator</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="tool-status-free" id="st-indas116">₹99/export</span>
+            <a href="indas116.html" class="tool-link">Open →</a>
+          </div>
+        </div>
+        <div class="tool-row">
+          <span class="tool-name">IND AS 116 Model 2</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="tool-status-free" id="st-indas2">₹99/export</span>
+            <a href="indas116-model2.html" class="tool-link">Open →</a>
+          </div>
+        </div>
+        <div class="tool-row">
+          <span class="tool-name">Income Tax Calculator</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="tool-status-free" id="st-tax">₹99/export</span>
+            <a href="india-tax-calculator.html" class="tool-link">Open →</a>
+          </div>
+        </div>
+        <div class="tool-row">
+          <span class="tool-name">Salary Calculator</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="tool-status-free" id="st-salary">₹99/export</span>
+            <a href="salary-calculator.html" class="tool-link">Open →</a>
+          </div>
+        </div>
+        <div class="tool-row">
+          <span class="tool-name">Security Deposit Calculator</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="tool-status-free" id="st-sd">₹99/export</span>
+            <a href="security-deposit.html" class="tool-link">Open →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sign out -->
+    <div class="signout-row">
+      <button class="btn-signout" onclick="fsHandleLogout().then(function(){ window.location.href='index.html'; })">Sign Out</button>
+    </div>
+
+  </div><!-- /profileContent -->
+</div>
+
+<footer>
+  <p>© 2026 Finosutra · GSTIN: 27ACWPW1076G1ZX · <a href="index.html">Home</a> · <a href="mailto:fino.sutra07@gmail.com">fino.sutra07@gmail.com</a> · <a href="terms.html">Terms</a></p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+<script>
+// ── Profile page logic ──────────────────────────────────────────────────────
+var SUPA_URL = 'https://uymuivmktvtxmodblxie.supabase.co';
+var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5bXVpdm1rdHZ0eG1vZGJseGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzMjk5NTYsImV4cCI6MjA5NjkwNTk1Nn0.7dsdrDmYR8R891_Cc68K75tUlmwi49KExGGQbBq3qmg';
+
+function showLoading(){ document.getElementById('loadingState').style.display='block'; document.getElementById('loginPrompt').style.display='none'; document.getElementById('profileContent').style.display='none'; }
+function showLoginPrompt(){ document.getElementById('loadingState').style.display='none'; document.getElementById('loginPrompt').style.display='block'; document.getElementById('profileContent').style.display='none'; }
+function showProfile(){ document.getElementById('loadingState').style.display='none'; document.getElementById('loginPrompt').style.display='none'; document.getElementById('profileContent').style.display='block'; }
+
+function formatDate(isoStr){
+  if(!isoStr) return '—';
+  var d = new Date(isoStr);
+  return d.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+}
+function daysLeft(isoStr){
+  if(!isoStr) return 0;
+  var ms = new Date(isoStr) - new Date();
+  return Math.max(0, Math.ceil(ms / (1000 * 60 * 60 * 24)));
+}
+
+async function loadProfile(){
+  showLoading();
+  var client = supabase.createClient(SUPA_URL, SUPA_KEY);
+  var sd = await client.auth.getSession();
+  var session = sd.data.session;
+
+  if(!session){
+    showLoginPrompt();
+    return;
+  }
+
+  var user = session.user;
+  document.getElementById('profileEmail').textContent = user.email;
+  var created = user.created_at ? 'Member since ' + formatDate(user.created_at) : '';
+  document.getElementById('profileSince').textContent = created;
+
+  // Check subscription
+  var now = new Date().toISOString();
+  var subRes = await client
+    .from('subscriptions')
+    .select('*')
+    .eq('user_id', user.id)
+    .eq('status', 'active')
+    .gt('current_period_end', now)
+    .order('current_period_end', { ascending: false })
+    .limit(1);
+
+  var sub = subRes.data && subRes.data.length > 0 ? subRes.data[0] : null;
+  var isPro = !!sub;
+
+  if(isPro){
+    // Pro user
+    var planCard = document.getElementById('planCard');
+    planCard.classList.add('pro-active');
+    document.getElementById('planBadge').className = 'plan-badge pro';
+    document.getElementById('planBadge').textContent = 'PRO';
+    document.getElementById('planName').textContent = 'Pro Plan';
+    document.getElementById('planDesc').textContent = 'Unlimited Excel exports across all paid tools. No per-download charges.';
+
+    var days = daysLeft(sub.current_period_end);
+    var expiryEl = document.getElementById('planExpiry');
+    expiryEl.style.display = 'block';
+    expiryEl.className = 'plan-expiry ' + (days > 0 ? 'active' : 'expired');
+    expiryEl.innerHTML = days > 0
+      ? '<i class="fa-solid fa-circle-check" style="margin-right:6px;"></i><strong>' + days + ' days</strong> remaining &nbsp;·&nbsp; Expires ' + formatDate(sub.current_period_end)
+      : '<i class="fa-solid fa-circle-xmark" style="margin-right:6px;"></i>Pro expired on ' + formatDate(sub.current_period_end) + ' — renew to continue free exports';
+
+    document.getElementById('planMeta').innerHTML =
+      '<div class="plan-meta-row"><i class="fa-solid fa-calendar-check"></i> Started: ' + formatDate(sub.current_period_start) + '</div>' +
+      (sub.razorpay_payment_id && sub.razorpay_payment_id !== 'manual_grant_20260613'
+        ? '<div class="plan-meta-row"><i class="fa-solid fa-receipt"></i> Payment ID: ' + sub.razorpay_payment_id + '</div>' : '');
+
+    document.getElementById('upgradeCard').style.display = days > 0 ? 'none' : 'block';
+    if(days <= 0){
+      document.getElementById('upgradeCard').querySelector('h3').textContent = '🔄 Renew Pro';
+      document.getElementById('upgradeCard').querySelector('p').textContent = 'Your Pro plan has expired. Renew for ₹499 to get another 30 days of unlimited exports.';
+    }
+
+    // Mark all tools as Pro Free
+    ['st-indas116','st-indas2','st-tax','st-salary','st-sd'].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el){ el.className='tool-status-pro'; el.textContent='PRO FREE'; }
+    });
+
+  } else {
+    // Free user — defaults already set
+    document.getElementById('upgradeCard').style.display = 'block';
+  }
+
+  showProfile();
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  loadProfile();
+
+  // Re-check after auth modal closes in case user just logged in
+  document.addEventListener('click', function(e){
+    if(e.target && e.target.id === 'fsAuthOverlay'){
+      setTimeout(loadProfile, 800);
+    }
+  });
+});
+
+// If auth.js triggers a login, reload profile
+var _origFsHandleLogin = window.fsHandleLogin;
+window.fsHandleLogin = async function(){
+  if(_origFsHandleLogin) await _origFsHandleLogin.apply(this, arguments);
+  setTimeout(loadProfile, 1200);
+};
+</script>
+</body>
+</html>
