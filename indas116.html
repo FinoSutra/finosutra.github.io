@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -360,16 +360,6 @@ tr:nth-child(even):hover td{background:rgba(99,102,241,0.05)}
   cursor:pointer;font-family:'Inter',sans-serif;box-shadow:0 3px 10px rgba(99,102,241,0.3)
 }
 .btn-exp:hover{opacity:.9;transform:translateY(-1px)}
-/* ── Email capture ── */
-#emailGateWrap{margin-top:10px;padding:14px 16px;background:#F8FAFF;border:1.5px solid #C7D2FE;border-radius:10px;display:none;}
-#emailGateWrap .eg-label{font-size:12px;font-weight:600;color:#374151;margin-bottom:8px;display:block;}
-#emailGateWrap .eg-sub{font-size:11px;color:#9CA3AF;margin-bottom:10px;display:block;}
-.eg-row{display:flex;gap:8px;align-items:center;}
-#egEmail{flex:1;padding:8px 12px;border:1.5px solid #C7D2FE;border-radius:7px;font-size:12px;font-family:'Inter',sans-serif;color:#1E293B;outline:none;}
-#egEmail:focus{border-color:#6366F1;}
-#egSubmit{padding:8px 16px;background:linear-gradient(135deg,#6366F1,#8B5CF6);border:none;border-radius:7px;font-size:12px;font-weight:700;color:#fff;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;}
-#egSubmit:hover{opacity:.9;}
-#egError{font-size:11px;color:#EF4444;margin-top:5px;display:none;}
 
 
 .empty{padding:56px 32px;text-align:center}
@@ -1058,81 +1048,6 @@ tr:nth-child(even):hover td{background:rgba(99,102,241,0.05)}
         <button class="btn-exp" id="btnExp">⬇ Download Excel Report &nbsp;<span style="font-size:10px;opacity:.8;">₹199</span></button>
         <button id="btnSavePortfolio" onclick="saveToPortfolio()" style="display:none;align-items:center;gap:6px;padding:10px 16px;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;border:1.5px solid #059669;background:#ECFDF5;color:#065F46;font-family:Inter,sans-serif;transition:all .15s;" title="Save this lease to your portfolio (Pro)">📂 Save to Portfolio</button>
       </div>
-
-      <!-- PRE-PAYMENT EMAIL GATE -->
-      <div id="emailGateWrap">
-        <span class="eg-label">📧 Where should we send your download link?</span>
-        <span class="eg-sub">Razorpay receipt sent to your email automatically.</span>
-        <div class="eg-row">
-          <input type="email" id="egEmail" placeholder="yourname@example.com" autocomplete="email">
-          <button id="egSubmit">Continue to Pay ₹199 →</button>
-        </div>
-        <div id="egError">Please enter a valid email address.</div>
-      </div>
-
-      <!-- FREE LEAD CAPTURE — added 2026-06-25, fixed to use Web3Forms (no longer relies on mailto) 2026-06-25 -->
-      <div id="leadCaptureBanner" style="border:1.5px dashed #A5A0F5;border-radius:12px;padding:16px 18px;margin-top:14px;background:#F5F3FF;">
-        <div style="font-size:13px;font-weight:700;color:#1E293B;margin-bottom:4px;">📧 Not ready to pay? Get this schedule emailed to you — free</div>
-        <div style="font-size:12px;color:#64748B;margin-bottom:12px;">A one-page summary, no charge, no signup.</div>
-        <div id="leadCaptureForm" style="display:flex;gap:8px;flex-wrap:wrap;">
-          <input type="email" id="leadEmail" placeholder="yourname@example.com" style="flex:1;min-width:180px;padding:10px 13px;border:1.5px solid #C7D2FE;border-radius:8px;font-size:13px;font-family:'Inter',sans-serif;color:#1E293B;outline:none;">
-          <button id="leadSubmitBtn" onclick="submitLeadCapture()" style="padding:10px 18px;background:linear-gradient(135deg,#6366F1,#8B5CF6);border:none;border-radius:8px;font-size:13px;font-weight:700;color:#fff;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;">Email me →</button>
-        </div>
-        <div id="leadEmailError" style="display:none;font-size:11px;color:#DC2626;margin-top:6px;">Please enter a valid email address.</div>
-        <div id="leadCaptureFailMsg" style="display:none;font-size:11px;color:#DC2626;margin-top:6px;">Something went wrong sending this. Please email us directly at fino.sutra07@gmail.com and we'll send it manually.</div>
-        <div id="leadCaptureThanks" style="display:none;font-size:13px;color:#166534;font-weight:600;">✓ Got it — we'll send your lease schedule to your inbox shortly.</div>
-      </div>
-
-      <!-- PRO UPSELL — added 2026-06-25 -->
-      <div style="border-radius:12px;padding:18px 20px;margin-top:14px;background:linear-gradient(135deg,#6366F1,#8B5CF6);">
-        <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:6px;">Managing more than one lease?</div>
-        <div style="font-size:12px;color:rgba(255,255,255,0.9);line-height:1.6;margin-bottom:14px;max-width:460px;">Pro gives you unlimited calculations, saved schedules and Excel exports for ₹499/month — less than the cost of 5 one-off downloads.</div>
-        <a href="index.html#pricing" style="display:inline-flex;align-items:center;gap:6px;padding:10px 18px;background:#fff;border-radius:8px;font-size:13px;font-weight:700;color:#6366F1;font-family:'Inter',sans-serif;text-decoration:none;">See Pro plans →</a>
-      </div>
-
-      <script>
-      function submitLeadCapture(){
-        var emailInput = document.getElementById('leadEmail');
-        var email = emailInput.value.trim();
-        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if(!emailRegex.test(email)){
-          document.getElementById('leadEmailError').style.display='block';
-          return;
-        }
-        document.getElementById('leadEmailError').style.display='none';
-        document.getElementById('leadCaptureFailMsg').style.display='none';
-
-        var btn = document.getElementById('leadSubmitBtn');
-        btn.disabled = true;
-        btn.textContent = 'Sending...';
-
-        fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify({
-            access_key: '50d60a7e-6552-4847-accd-34529e67f5fc',
-            subject: 'New free lead - lease schedule request (indas116.html)',
-            from_name: 'Finosutra Lead Capture',
-            email: email,
-            message: 'Visitor requested their lease schedule emailed for free.\nPage: indas116.html\nVisitor email: ' + email
-          })
-        })
-        .then(function(res){ return res.json(); })
-        .then(function(data){
-          if(data.success){
-            document.getElementById('leadCaptureForm').style.display='none';
-            document.getElementById('leadCaptureThanks').style.display='block';
-          } else {
-            throw new Error('submit failed');
-          }
-        })
-        .catch(function(){
-          btn.disabled = false;
-          btn.textContent = 'Email me →';
-          document.getElementById('leadCaptureFailMsg').style.display='block';
-        });
-      }
-      </script>
 
       <!-- RECOVERY BANNER: shown after successful payment if download failed -->
       <div id="recoveryBanner" style="display:none;margin-top:16px;padding:14px 16px;background:linear-gradient(135deg,#DCFCE7,#D1FAE5);border:1.5px solid #22C55E;border-radius:10px;">
@@ -2414,29 +2329,8 @@ function showIndas116UpsellBanner(){
   document.body.appendChild(b);
 }
 
-document.getElementById('egSubmit').onclick = function(){
-  var emailInput = document.getElementById('egEmail');
-  var err = document.getElementById('egError');
-  var val = emailInput.value.trim();
-  var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
-  if(!valid){ err.style.display='block'; emailInput.focus(); return; }
-  err.style.display='none';
-  capturedEmail = val;
-  document.getElementById('emailGateWrap').style.display='none';
-  gaEvent('generate_lead', { tool_name: 'IND AS 116', lead_source: 'pre_payment_gate' });
-  // Send lead to Formspree (replace xgobpvwn with your actual ID)
-  fetch('https://formspree.io/f/xgobpvwn',{
-    method:'POST',
-    headers:{'Content-Type':'application/json','Accept':'application/json'},
-    body:JSON.stringify({email:val, source:'IND AS 116 pre-payment', tool:'indas116'})
-  }).catch(function(){});
-  initiatePayment();
-};
 
 // Allow Enter key in email gate
-document.getElementById('egEmail').addEventListener('keydown', function(e){
-  if(e.key==='Enter') document.getElementById('egSubmit').click();
-});
 
 
 /* ── Save full state to localStorage so a page reload cannot lose the download ── */
