@@ -253,6 +253,13 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
 #mainNav .nav-toggle{display:none;background:none;border:none;font-size:20px;color:#111827;cursor:pointer;padding:4px;}
 @media(max-width:900px){#mainNav .nav-links{display:none;}}
 @media(max-width:768px){#mainNav{padding:0 16px;}#mainNav .nav-actions{display:none;}#mainNav .nav-toggle{display:block;}#mainNav .nav-links.open,#mainNav .nav-actions.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid rgba(99,102,241,0.08);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
+.site-footer{background:#1E1B4B;color:rgba(255,255,255,0.7);padding:28px 32px;text-align:center;font-size:12px;line-height:1.8;margin-top:40px;}
+.site-footer .footer-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:14px;}
+.site-footer .footer-badge{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:4px 13px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);display:inline-flex;align-items:center;gap:5px;}
+.site-footer .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-top:10px;}
+.site-footer .footer-links a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:11px;}
+.site-footer .footer-links a:hover{color:rgba(255,255,255,0.85);}
+.site-footer .footer-tagline{margin-top:12px;font-size:11px;color:rgba(255,255,255,0.35);}
 </style>
 <!-- Google Analytics GA4 — replace G-Z2G710PHNQ with your real Measurement ID -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
@@ -788,127 +795,250 @@ function showToast(msg, type){
 function exportXL(){
   if(!SD) return;
   var wb = XLSX.utils.book_new();
-  var HEADER = { font:{bold:true,color:{rgb:"FFFFFF"},sz:12}, fill:{fgColor:{rgb:"1F4E78"}}, alignment:{horizontal:"center"} };
-  var SUBHDR = { font:{bold:true}, fill:{fgColor:{rgb:"D9EAF7"}} };
-  var MONEY  = { numFmt:'#,##0' };
-  var TITLE  = { font:{bold:true,sz:18}, alignment:{horizontal:"center"} };
+
+  // ── Finosutra colour palette ──────────────────────────────────────────────
+  var C_BRAND  = '4F46E5';
+  var C_NAVY   = '1E1B4B';
+  var C_ACCENT = 'D97706';
+  var C_LIGHT  = 'EEF2FF';
+  var C_STRIPE = 'F8F9FF';
+  var C_GREEN  = '065F46';
+  var C_WHITE  = 'FFFFFF';
+  var C_BORDER = 'C7D2FE';
+  var INR      = '#,##0.00';
+
+  var bdr = {
+    top:{style:'thin',color:{rgb:C_BORDER}}, bottom:{style:'thin',color:{rgb:C_BORDER}},
+    left:{style:'thin',color:{rgb:C_BORDER}}, right:{style:'thin',color:{rgb:C_BORDER}}
+  };
+  var bdrMed = {
+    top:{style:'medium',color:{rgb:C_BRAND}}, bottom:{style:'medium',color:{rgb:C_BRAND}},
+    left:{style:'medium',color:{rgb:C_BRAND}}, right:{style:'medium',color:{rgb:C_BRAND}}
+  };
+
+  function mk(o){ return Object.assign({font:{name:'Calibri',sz:10},alignment:{vertical:'center'}}, o); }
+
+  var S = {
+    brand : mk({font:{name:'Calibri',sz:20,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:C_BRAND}}, alignment:{horizontal:'center',vertical:'center'}}),
+    nav   : mk({font:{name:'Calibri',sz:12,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:C_NAVY}},  alignment:{horizontal:'center',vertical:'center'}}),
+    hdr   : mk({font:{name:'Calibri',sz:10,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:C_BRAND}}, alignment:{horizontal:'center',vertical:'center',wrapText:true}, border:bdr}),
+    secHdr: mk({font:{name:'Calibri',sz:11,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:C_NAVY}},  alignment:{horizontal:'left',vertical:'center'},  border:bdr}),
+    subHdr: mk({font:{name:'Calibri',sz:10,bold:true,color:{rgb:C_NAVY}},     fill:{fgColor:{rgb:C_LIGHT}}, alignment:{horizontal:'left',vertical:'center'},  border:bdr}),
+    lbl   : mk({font:{name:'Calibri',sz:10,color:{rgb:C_NAVY}},               fill:{fgColor:{rgb:C_WHITE}}, alignment:{horizontal:'left',vertical:'center'},  border:bdr}),
+    lblS  : mk({font:{name:'Calibri',sz:10,color:{rgb:C_NAVY}},               fill:{fgColor:{rgb:C_STRIPE}},alignment:{horizontal:'left',vertical:'center'},  border:bdr}),
+    num   : mk({font:{name:'Calibri',sz:10,color:{rgb:C_NAVY}},               fill:{fgColor:{rgb:C_WHITE}}, alignment:{horizontal:'right',vertical:'center'}, border:bdr, numFmt:INR}),
+    numS  : mk({font:{name:'Calibri',sz:10,color:{rgb:C_NAVY}},               fill:{fgColor:{rgb:C_STRIPE}},alignment:{horizontal:'right',vertical:'center'}, border:bdr, numFmt:INR}),
+    tot   : mk({font:{name:'Calibri',sz:10,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:C_ACCENT}},alignment:{horizontal:'right',vertical:'center'}, border:bdrMed, numFmt:INR}),
+    totL  : mk({font:{name:'Calibri',sz:10,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:C_ACCENT}},alignment:{horizontal:'left',vertical:'center'},  border:bdrMed}),
+    good  : mk({font:{name:'Calibri',sz:10,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:'059669'}},alignment:{horizontal:'left',vertical:'center'},  border:bdrMed}),
+    pct   : mk({font:{name:'Calibri',sz:10,color:{rgb:C_NAVY}},               fill:{fgColor:{rgb:C_WHITE}}, alignment:{horizontal:'right',vertical:'center'}, border:bdr, numFmt:'0.00"%"'}),
+    ctr   : mk({font:{name:'Calibri',sz:10,color:{rgb:C_NAVY}},               alignment:{horizontal:'center',vertical:'center'}, border:bdr}),
+    meta  : mk({font:{name:'Calibri',sz:10,bold:true,color:{rgb:C_NAVY}},     fill:{fgColor:{rgb:C_LIGHT}}, alignment:{horizontal:'left',vertical:'center'}}),
+    metaV : mk({font:{name:'Calibri',sz:10,color:{rgb:C_NAVY}},               fill:{fgColor:{rgb:C_WHITE}}, alignment:{horizontal:'left',vertical:'center'}})
+  };
+
+  function cs(v,s){ return {t:'s',v:v||'',s:s}; }
+  function cn(v,s){ return {t:'n',v:v||0,s:s}; }
+  function cb(){    return {t:'z',v:'',s:{}}; }
 
   function styleRange(ws, range, style){
-    var r = XLSX.utils.decode_range(range);
-    for(var R=r.s.r;R<=r.e.r;R++) for(var C=r.s.c;C<=r.e.c;C++){
-      var cell = ws[XLSX.utils.encode_cell({r:R,c:C})];
-      if(cell) cell.s = Object.assign({},cell.s,style);
+    var rng = XLSX.utils.decode_range(range);
+    for(var r=rng.s.r;r<=rng.e.r;r++) for(var c=rng.s.c;c<=rng.e.c;c++){
+      var addr = XLSX.utils.encode_cell({r:r,c:c});
+      if(!ws[addr]) ws[addr]={t:'z',v:''};
+      ws[addr].s = Object.assign({},ws[addr].s||{},style);
     }
   }
 
-  // Cover
-  var cover = XLSX.utils.aoa_to_sheet([
-    ['FINOSUTRA'],
-    ['IND AS 109 / IFRS 9 — SECURITY DEPOSIT ACCOUNTING REPORT'],
-    [],
-    ['Generated On', new Date().toLocaleString()],
-    ['Standard', SD.std1+' / '+SD.std2],
-    ['Deposit Type', SD.isGiven?'Given (Tenant)':'Received (Landlord)'],
-    ['Export Type','Premium Audit Ready Export'],
-    [],['CONFIDENTIAL']
-  ]);
-  cover['!cols'] = [{wch:30},{wch:40}];
-  styleRange(cover,'A1:B1',TITLE); styleRange(cover,'A2:B2',HEADER); styleRange(cover,'A4:A9',SUBHDR);
-  XLSX.utils.book_append_sheet(wb,cover,'Cover Page');
+  function setRows(ws, rowDefs){
+    if(!ws['!rows']) ws['!rows']=[];
+    rowDefs.forEach(function(d){ while(ws['!rows'].length<=d[0]) ws['!rows'].push({}); ws['!rows'][d[0]]={hpt:d[1]}; });
+  }
 
-  // Summary
-  var ws1 = XLSX.utils.aoa_to_sheet([
-    ['EXECUTIVE SUMMARY'],
-    [],
-    ['Deposit Amount (Nominal)', SD.deposit],
-    ['Market Rate (EIR)',SD.rate*100],
-    ['Tenure (Years)',SD.tenure],
-    ['Deposit Type',SD.isGiven?'Given (Tenant)':'Received (Landlord)'],
-    ['Reporting Standard',SD.std1],
-    [],
-    ['Fair Value (PV) on Day 1', SD.pv],
-    ['Day 1 Discount', SD.discount],
-    [SD.isGiven?'Prepaid Rent / Year':'Deferred Income / Year', SD.rentPY],
-    ['Total Interest Unwound', SD.totalInterest]
-  ]);
-  ws1['!cols']=[{wch:35},{wch:25}];
-  styleRange(ws1,'A1:B1',HEADER); styleRange(ws1,'A3:A12',SUBHDR);
-  [9,10,11,12].forEach(function(i){ var c=ws1['B'+i]; if(c) c.s=MONEY; });
-  XLSX.utils.book_append_sheet(wb,ws1,'Summary');
+  var now = new Date();
+  var depositType = SD.isGiven ? 'Given (Tenant pays deposit)' : 'Received (Landlord receives deposit)';
 
-  // Amortisation Schedule
-  var schRows = [['Year','Opening CV','Interest (EIR)','Closing CV','Rent '+(SD.isGiven?'Expense':'Income'),'Net P&L']];
-  SD.sched.forEach(function(r){
-    var net = SD.isGiven ? r.interest-SD.rentPY : SD.rentPY-r.interest;
-    schRows.push([r.year, r.cvOpen, r.interest, r.cvClose, SD.rentPY, net]);
-  });
-  var ws2 = XLSX.utils.aoa_to_sheet(schRows);
-  ws2['!cols'] = [{wch:8},{wch:18},{wch:18},{wch:18},{wch:20},{wch:15}];
-  styleRange(ws2,'A1:F1',HEADER);
-  XLSX.utils.book_append_sheet(wb,ws2,'Amortisation Schedule');
+  /* ═══════════════════════════════════════
+     SHEET 1 — COVER PAGE
+  ═══════════════════════════════════════ */
+  (function(){
+    var ws = {};
+    ws['A1'] = cs('FINOSUTRA', S.brand);
+    ws['A2'] = cs('IND AS 109 / IFRS 9  ·  Security Deposit Accounting Report', S.nav);
+    ws['A3'] = cb();
+    ws['A4'] = cs('REPORT DETAILS', S.secHdr);
+    ws['A5'] = cs('Generated On',         S.meta);  ws['B5'] = cs(now.toLocaleString('en-IN'), S.metaV);
+    ws['A6'] = cs('Standard',             S.meta);  ws['B6'] = cs(SD.std1+' / '+SD.std2, S.metaV);
+    ws['A7'] = cs('Deposit Type',         S.meta);  ws['B7'] = cs(depositType, S.metaV);
+    ws['A8'] = cs('Deposit Amount (₹)',   S.meta);  ws['B8'] = cn(SD.deposit, Object.assign({},S.metaV,{numFmt:INR}));
+    ws['A9'] = cs('Effective Rate (EIR)', S.meta);  ws['B9'] = cs((SD.rate*100).toFixed(2)+'% p.a.', S.metaV);
+    ws['A10']= cs('Tenure',               S.meta);  ws['B10']= cs(SD.tenure+' years', S.metaV);
+    ws['A11']= cb();
+    ws['A12']= cs('KEY OUTPUTS', S.secHdr);
+    ws['A13']= cs('Fair Value on Day 1 (PV)', S.meta); ws['B13']= cn(SD.pv, Object.assign({},S.num));
+    ws['A14']= cs('Day 1 Discount',            S.meta); ws['B14']= cn(SD.discount, Object.assign({},S.num));
+    ws['A15']= cs(SD.isGiven?'Prepaid Rent / Year':'Deferred Income / Year', S.meta); ws['B15']= cn(SD.rentPY, Object.assign({},S.num));
+    ws['A16']= cs('Total Interest Unwound',    S.meta); ws['B16']= cn(SD.totalInterest, Object.assign({},S.num));
+    ws['A17']= cb();
+    ws['A18']= cs('Prepared by Finosutra  ·  finosutra.com', mk({font:{name:'Calibri',sz:9,color:{rgb:'9CA3AF'}},alignment:{horizontal:'center'}}));
+    ws['!ref']='A1:B18';
+    ws['!cols']=[{wch:36},{wch:32}];
+    setRows(ws,[[0,36],[1,22],[3,18],[11,18]]);
+    XLSX.utils.book_append_sheet(wb,ws,'Cover Page');
+  })();
 
-  // Journal Entries
-  var jeRows = [['Entry','Account','Debit','Credit'],
-    ['Day 1', SD.isGiven?'Security Deposit — FA':' Bank / Cash', SD.isGiven?SD.pv:SD.deposit,''],
-    ['Day 1', SD.isGiven?'Prepaid Rent':'Security Deposit — FL', SD.isGiven?SD.discount:'', SD.isGiven?'':SD.pv],
-    ['Day 1', SD.isGiven?'Bank / Cash':'Deferred Rental Income', SD.isGiven?'':SD.deposit, SD.isGiven?SD.deposit:SD.discount]
-  ];
-  SD.sched.forEach(function(r){
+  /* ═══════════════════════════════════════
+     SHEET 2 — AMORTISATION SCHEDULE
+  ═══════════════════════════════════════ */
+  (function(){
+    var hdrRow = [
+      cs('Year',                                    S.hdr),
+      cs('Opening Carrying Value (₹)',              S.hdr),
+      cs('Interest / Unwinding (₹)',                S.hdr),
+      cs('Closing Carrying Value (₹)',              S.hdr),
+      cs('Rent '+(SD.isGiven?'Expense':'Income')+' (₹)', S.hdr),
+      cs('Net P&L Impact (₹)',                      S.hdr)
+    ];
+
+    var rows = [hdrRow];
+    SD.sched.forEach(function(r, i){
+      var net = SD.isGiven ? r.interest - SD.rentPY : SD.rentPY - r.interest;
+      var even = i%2===0;
+      rows.push([
+        cs('Year '+r.year, even?S.ctr:Object.assign({},S.ctr,{fill:{fgColor:{rgb:C_STRIPE}}})),
+        cn(r.cvOpen,    even?S.num:S.numS),
+        cn(r.interest,  even?S.num:S.numS),
+        cn(r.cvClose,   even?S.num:S.numS),
+        cn(SD.rentPY,   even?S.num:S.numS),
+        cn(net,         even?S.num:S.numS)
+      ]);
+    });
+
+    var totInt  = SD.sched.reduce(function(a,r){return a+r.interest;},0);
+    var totRent = SD.rentPY * SD.sched.length;
+    var totNet  = SD.isGiven ? totInt - totRent : totRent - totInt;
+    rows.push([cs('TOTAL', S.totL), cn(0,Object.assign({},S.tot,{numFmt:''})), cn(totInt,S.tot), cn(0,Object.assign({},S.tot,{numFmt:''})), cn(totRent,S.tot), cn(totNet,S.tot)]);
+
+    var ws = XLSX.utils.aoa_to_sheet(rows);
+    ws['!cols']=[{wch:12},{wch:24},{wch:22},{wch:24},{wch:24},{wch:22}];
+    setRows(ws,[[0,20]]);
+    XLSX.utils.book_append_sheet(wb,ws,'Amortisation Schedule');
+  })();
+
+  /* ═══════════════════════════════════════
+     SHEET 3 — JOURNAL ENTRIES
+  ═══════════════════════════════════════ */
+  (function(){
+    var rows = [[
+      cs('Entry / Event', S.hdr),
+      cs('Account',       S.hdr),
+      cs('Debit (₹)',     S.hdr),
+      cs('Credit (₹)',    S.hdr)
+    ]];
+
+    function addSec(label){
+      rows.push([cs(label, S.secHdr), cs('',S.secHdr), cs('',S.secHdr), cs('',S.secHdr)]);
+    }
+    function addJE(entry, account, dr, cr, stripe){
+      rows.push([
+        cs(entry,   stripe?S.lblS:S.lbl),
+        cs(account, stripe?S.lblS:S.lbl),
+        dr!==''?cn(dr, stripe?S.numS:S.num):cs('—',stripe?Object.assign({},S.lblS,{alignment:{horizontal:'center',vertical:'center'}}):Object.assign({},S.lbl,{alignment:{horizontal:'center',vertical:'center'}})),
+        cr!==''?cn(cr, stripe?S.numS:S.num):cs('—',stripe?Object.assign({},S.lblS,{alignment:{horizontal:'center',vertical:'center'}}):Object.assign({},S.lbl,{alignment:{horizontal:'center',vertical:'center'}}))
+      ]);
+    }
+
+    addSec('DAY 1 — INITIAL RECOGNITION');
     if(SD.isGiven){
-      jeRows.push(['Year '+r.year+' — Unwinding','Security Deposit — FA',r.interest,'']);
-      jeRows.push(['Year '+r.year+' — Unwinding','Finance Income','',r.interest]);
-      jeRows.push(['Year '+r.year+' — Rent','Rent Expense',SD.rentPY,'']);
-      jeRows.push(['Year '+r.year+' — Rent','Prepaid Rent','',SD.rentPY]);
+      addJE('Day 1', 'Security Deposit — Financial Asset (Non-Current)',  SD.pv,      '',        false);
+      addJE('Day 1', 'Prepaid Rent (Day 1 Discount)',                     SD.discount,'',        true);
+      addJE('Day 1', 'Bank / Cash',                                       '',         SD.deposit,false);
     } else {
-      jeRows.push(['Year '+r.year+' — Unwinding','Finance Cost',r.interest,'']);
-      jeRows.push(['Year '+r.year+' — Unwinding','Security Deposit — FL','',r.interest]);
-      jeRows.push(['Year '+r.year+' — Income','Deferred Rental Income',SD.rentPY,'']);
-      jeRows.push(['Year '+r.year+' — Income','Rental Income','',SD.rentPY]);
+      addJE('Day 1', 'Bank / Cash',                                       SD.deposit, '',        false);
+      addJE('Day 1', 'Security Deposit — Financial Liability (Non-Current)','',      SD.pv,      true);
+      addJE('Day 1', 'Deferred Rental Income',                            '',         SD.discount,false);
     }
-  });
-  var ws3 = XLSX.utils.aoa_to_sheet(jeRows);
-  ws3['!cols']=[{wch:28},{wch:38},{wch:18},{wch:18}];
-  styleRange(ws3,'A1:D1',HEADER); styleRange(ws3,'A2:A4',SUBHDR);
-  XLSX.utils.book_append_sheet(wb,ws3,'Journal Entries');
 
-  /* ── BALANCE SHEET & P&L IMPACT ── */
-  var bsRows = [
-    ['BALANCE SHEET & P&L IMPACT — IND AS 109 / IFRS 9 SECURITY DEPOSIT'],
-    [],
-    ['BALANCE SHEET IMPACT ON DAY 1', '', ''],
-    ['Item', 'Classification', 'Amount (₹)'],
-  ];
-  if(SD.isGiven){
-    bsRows.push(['Security Deposit — Financial Asset', 'Non-Current Assets', SD.pv]);
-    bsRows.push(['Prepaid Rent (Day 1 Discount)', 'Current / Non-Current Asset', SD.discount]);
-    bsRows.push(['Cash Paid (Nominal Deposit)', 'Outflow', SD.deposit]);
-  } else {
-    bsRows.push(['Security Deposit — Financial Liability', 'Non-Current Liabilities', SD.pv]);
-    bsRows.push(['Deferred Rental Income (Day 1 Discount)', 'Deferred Income', SD.discount]);
-    bsRows.push(['Cash Received (Nominal Deposit)', 'Inflow', SD.deposit]);
-  }
-  bsRows.push([]);
-  bsRows.push(['P&L IMPACT — YEAR-WISE', '', '', '']);
-  bsRows.push(['Year', SD.isGiven ? 'Finance Income (₹)' : 'Finance Cost (₹)', SD.isGiven ? 'Rent Expense (₹)' : 'Rental Income (₹)', 'Net P&L Impact (₹)']);
-  SD.sched.forEach(function(r){
-    var net = SD.isGiven ? r.interest - SD.rentPY : SD.rentPY - r.interest;
-    bsRows.push([r.year, r.interest, SD.rentPY, net]);
-  });
-  var totInt = SD.sched.reduce(function(s,r){return s+r.interest;},0);
-  bsRows.push(['TOTAL', totInt, SD.rentPY*SD.sched.length, SD.isGiven ? totInt - SD.rentPY*SD.sched.length : SD.rentPY*SD.sched.length - totInt]);
-  bsRows.push([]);
-  bsRows.push(['KEY METRICS', '', '']);
-  bsRows.push(['Nominal Deposit Amount', '', SD.deposit]);
-  bsRows.push(['Fair Value on Day 1 (PV)', '', SD.pv]);
-  bsRows.push(['Day 1 Discount', '', SD.discount]);
-  bsRows.push(['Effective Interest Rate (EIR)', '', (SD.rate*100).toFixed(2)+'%']);
-  bsRows.push(['Tenure', '', SD.tenure+' years']);
-  bsRows.push(['Total Interest Unwound over tenure', '', SD.totalInterest]);
+    SD.sched.forEach(function(r, i){
+      var even = i%2===0;
+      addSec('YEAR '+r.year+' — EIR UNWINDING & RENT');
+      if(SD.isGiven){
+        addJE('Year '+r.year+' — Unwinding', 'Security Deposit — Financial Asset', r.interest, '',          false);
+        addJE('Year '+r.year+' — Unwinding', 'Finance Income (P&L)',                '',         r.interest,  true);
+        addJE('Year '+r.year+' — Rent',      'Rent Expense (P&L)',                  SD.rentPY,  '',          false);
+        addJE('Year '+r.year+' — Rent',      'Prepaid Rent',                        '',         SD.rentPY,   true);
+      } else {
+        addJE('Year '+r.year+' — Unwinding', 'Finance Cost (P&L)',                  r.interest, '',          false);
+        addJE('Year '+r.year+' — Unwinding', 'Security Deposit — Financial Liability','',       r.interest,  true);
+        addJE('Year '+r.year+' — Income',    'Deferred Rental Income',               SD.rentPY, '',          false);
+        addJE('Year '+r.year+' — Income',    'Rental Income (P&L)',                  '',        SD.rentPY,   true);
+      }
+    });
 
-  var ws4 = XLSX.utils.aoa_to_sheet(bsRows);
-  ws4['!cols'] = [{wch:44},{wch:28},{wch:20},{wch:20}];
-  styleRange(ws4,'A1:D1',HEADER);
-  XLSX.utils.book_append_sheet(wb,ws4,'BS & P&L Impact');
+    var ws = XLSX.utils.aoa_to_sheet(rows);
+    ws['!cols']=[{wch:28},{wch:46},{wch:18},{wch:18}];
+    setRows(ws,[[0,20]]);
+    XLSX.utils.book_append_sheet(wb,ws,'Journal Entries');
+  })();
+
+  /* ═══════════════════════════════════════
+     SHEET 4 — BS & P&L IMPACT
+  ═══════════════════════════════════════ */
+  (function(){
+    var rows = [];
+
+    function addSec(label, cols){ rows.push(Array(cols).fill(null).map(function(_,i){ return cs(i===0?label:'', S.secHdr); })); }
+    function addHdr(cells){ rows.push(cells.map(function(c){ return cs(c,S.hdr); })); }
+    function addRow(cells, stripe){
+      rows.push(cells.map(function(c,i){
+        if(c===null) return cb();
+        if(typeof c==='number') return cn(c, stripe?S.numS:S.num);
+        return cs(c, stripe?S.lblS:S.lbl);
+      }));
+    }
+    function addTot(cells){ rows.push(cells.map(function(c){ return typeof c==='number'?cn(c,S.tot):cs(c||'',S.totL); })); }
+
+    // Balance sheet section
+    addSec('BALANCE SHEET IMPACT — DAY 1', 3);
+    addHdr(['Item','Classification','Amount (₹)']);
+    if(SD.isGiven){
+      addRow(['Security Deposit — Financial Asset', 'Non-Current Assets',           SD.pv],      false);
+      addRow(['Prepaid Rent (Day 1 Discount)',       'Current / Non-Current Asset',  SD.discount],true);
+      addRow(['Cash Paid (Nominal Deposit)',          'Cash Outflow',                 SD.deposit], false);
+    } else {
+      addRow(['Security Deposit — Financial Liability','Non-Current Liabilities',    SD.pv],      false);
+      addRow(['Deferred Rental Income',               'Deferred Income',              SD.discount],true);
+      addRow(['Cash Received (Nominal Deposit)',       'Cash Inflow',                 SD.deposit], false);
+    }
+
+    rows.push([cb(),cb(),cb()]);
+
+    // P&L section
+    addSec('P&L IMPACT — YEAR BY YEAR', 4);
+    addHdr(['Year', SD.isGiven?'Finance Income (₹)':'Finance Cost (₹)', SD.isGiven?'Rent Expense (₹)':'Rental Income (₹)', 'Net P&L Impact (₹)']);
+    SD.sched.forEach(function(r, i){
+      var net = SD.isGiven ? r.interest - SD.rentPY : SD.rentPY - r.interest;
+      addRow(['Year '+r.year, r.interest, SD.rentPY, net], i%2!==0);
+    });
+    var totInt  = SD.sched.reduce(function(a,r){return a+r.interest;},0);
+    var totRent = SD.rentPY * SD.sched.length;
+    addTot(['TOTAL', totInt, totRent, SD.isGiven ? totInt-totRent : totRent-totInt]);
+
+    rows.push([cb(),cb(),cb(),cb()]);
+
+    // Key metrics
+    addSec('KEY METRICS', 3);
+    addRow(['Nominal Deposit Amount',              '₹', SD.deposit],   false);
+    addRow(['Fair Value on Day 1 (PV)',            '₹', SD.pv],        true);
+    addRow(['Day 1 Discount',                      '₹', SD.discount],  false);
+    addRow(['Effective Interest Rate (EIR)',        '',  (SD.rate*100).toFixed(2)+'%'], true);
+    addRow(['Tenure',                              '',  SD.tenure+' years'],            false);
+    addRow(['Total Interest Unwound (over tenure)','₹', SD.totalInterest],             true);
+
+    var ws = XLSX.utils.aoa_to_sheet(rows);
+    ws['!cols']=[{wch:44},{wch:32},{wch:20},{wch:20}];
+    XLSX.utils.book_append_sheet(wb,ws,'BS & P&L Impact');
+  })();
 
   XLSX.writeFile(wb,'Finosutra_SecurityDeposit_Report.xlsx');
 }
@@ -935,8 +1065,19 @@ window.onload = function(){ calculate(); };
   </div>
 </div>
 
-<footer style="background:#111827;padding:24px 20px;text-align:center;">
-  <p style="font-size:12px;color:#9CA3AF;margin:0;">© 2026 Finosutra · GSTIN: 27ACWPW1076G1ZX · Mumbai, Maharashtra, India · <a href="mailto:fino.sutra07@gmail.com" style="color:#9CA3AF;text-decoration:none;">fino.sutra07@gmail.com</a> · <a href="terms.html" style="color:#9CA3AF;text-decoration:none;">Terms</a></p>
+<footer class="site-footer">
+  <div class="footer-badges">
+    <span class="footer-badge">✓ IND AS 109 / IFRS 9 Compliant</span>
+    <span class="footer-badge">✓ EIR Amortization Schedule</span>
+    <span class="footer-badge">🇮🇳 Made in India for Indian CAs</span>
+  </div>
+  <div class="footer-links">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Use</a>
+    <a href="mailto:fino.sutra07@gmail.com">Contact</a>
+    <a href="blog.html">Blog</a>
+  </div>
+  <div class="footer-tagline">© 2025 Finosutra. Built for Chartered Accountants and Finance Teams across India.</div>
 </footer>
 
 </body>

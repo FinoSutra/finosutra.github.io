@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>IND AS 117 / IFRS 17 Insurance Contracts: Complete Guide with Examples | Finosutra</title>
+<meta name="description" content="Complete guide to IND AS 117 / IFRS 17 insurance contract accounting. Learn GMM, PAA and VFA models with worked examples, journal entries and comparison to old IND AS 104."/>
+<meta name="keywords" content="IND AS 117 guide, IFRS 17 insurance contracts, GMM BBA model, PAA model, VFA model, CSM contractual service margin, insurance accounting india, IND AS 117 journal entries, IFRS 17 explained"/>
+<meta name="author" content="Finosutra"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://www.finosutra.com/blog/ind-as-117-insurance-contracts.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Finosutra"/>
+<meta property="og:title" content="IND AS 117 / IFRS 17 Insurance Contracts: Complete Guide with Examples"/>
+<meta property="og:description" content="GMM, PAA and VFA models explained in plain English — with worked journal entries for a motor policy and a life insurance contract."/>
+<meta property="og:url" content="https://www.finosutra.com/blog/ind-as-117-insurance-contracts.html"/>
+<meta property="og:image" content="https://www.finosutra.com/og-image.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="IND AS 117 / IFRS 17 Insurance Contracts: Complete Guide with Examples"/>
+<meta name="twitter:description" content="GMM, PAA and VFA models explained in plain English — with worked journal entries for a motor policy and a life insurance contract."/>
+<meta name="twitter:image" content="https://www.finosutra.com/og-image.png"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "IND AS 117 / IFRS 17 Insurance Contracts: Complete Guide with Examples",
+  "description": "GMM, PAA and VFA models explained in plain English — with worked journal entries for a motor policy and a life insurance contract.",
+  "author": {"@type": "Organization", "name": "Finosutra"},
+  "publisher": {"@type": "Organization", "name": "Finosutra", "url": "https://www.finosutra.com"},
+  "datePublished": "2026-06-28",
+  "dateModified": "2026-06-28",
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.finosutra.com/blog/ind-as-117-insurance-contracts.html"}
+}
+</script>
+<style>
+:root{
+  --brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;--brand-mid:#C7D2FE;
+  --bg:#F9FAFB;--card:#FFFFFF;--border:rgba(99,102,241,0.18);--border-light:rgba(99,102,241,0.08);
+  --text:#111827;--muted:#6B7280;--muted2:#9CA3AF;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+/* NAV */
+nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-light);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 var(--border-light),0 4px 20px rgba(99,102,241,0.05)}
+.nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.nav-logo img{height:40px;width:auto;}
+.nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
+.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;padding:7px 12px;border-radius:8px;transition:color .15s,background .15s;}
+.nav-links a:hover{color:var(--text);background:var(--brand-light);}
+.nav-toggle{display:none;background:none;border:none;font-size:20px;color:var(--text);cursor:pointer;padding:8px;}
+@media(max-width:900px){.nav-links{display:none;}}
+@media(max-width:768px){nav{padding:0 16px;}.nav-toggle{display:block;}.nav-links.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid var(--border-light);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
+
+/* ARTICLE LAYOUT */
+.article-wrap{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+
+/* BREADCRUMB */
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted2);margin-bottom:24px;flex-wrap:wrap;}
+.breadcrumb a{color:var(--muted2);text-decoration:none;transition:color .15s;}
+.breadcrumb a:hover{color:var(--brand);}
+.breadcrumb span{color:var(--muted2);}
+
+/* ARTICLE HEADER */
+.article-tag{display:inline-block;background:var(--brand-light);color:var(--brand);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.4px;margin-bottom:16px;}
+.article-title{font-size:clamp(24px,4vw,36px);font-weight:800;line-height:1.2;letter-spacing:-0.5px;color:var(--text);margin-bottom:16px;}
+.article-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--muted);margin-bottom:32px;flex-wrap:wrap;}
+.article-meta span{display:flex;align-items:center;gap:5px;}
+.article-divider{height:1px;background:var(--border-light);margin-bottom:36px;}
+
+/* TOC */
+.toc{background:var(--brand-light);border:1px solid var(--brand-mid);border-radius:14px;padding:22px 26px;margin-bottom:40px;}
+.toc h3{font-size:13px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;}
+.toc ol{padding-left:18px;}
+.toc ol li{margin-bottom:6px;}
+.toc ol li a{font-size:14px;color:var(--brand-dark);text-decoration:none;font-weight:500;}
+.toc ol li a:hover{text-decoration:underline;}
+
+/* PROSE */
+.article-body h2{font-size:22px;font-weight:800;color:var(--text);margin:40px 0 14px;letter-spacing:-0.3px;}
+.article-body h3{font-size:17px;font-weight:700;color:var(--text);margin:28px 0 10px;}
+.article-body p{margin-bottom:16px;color:#1F2937;}
+.article-body ul,.article-body ol{padding-left:22px;margin-bottom:16px;}
+.article-body ul li,.article-body ol li{margin-bottom:8px;color:#1F2937;}
+.article-body strong{font-weight:700;color:var(--text);}
+
+/* CALLOUT BOX */
+.callout{background:var(--brand-light);border-left:4px solid var(--brand);border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0;}
+.callout p{margin:0;font-size:14px;color:var(--brand-dark);}
+.callout strong{color:var(--brand-dark);}
+
+.callout-green{background:#ECFDF5;border-left-color:#10B981;}
+.callout-green p{color:#065F46;}
+
+.callout-amber{background:#FFFBEB;border-left-color:#F59E0B;}
+.callout-amber p{color:#92400E;}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:24px 0;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+table th{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-weight:700;padding:10px 14px;text-align:left;}
+table td{padding:9px 14px;border-bottom:1px solid #F3F4F6;color:#1F2937;}
+table tr:nth-child(even) td{background:#F9FAFB;}
+table tr:last-child td{border-bottom:none;}
+
+/* JOURNAL ENTRY */
+.je-block{background:#F9FAFB;border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:20px 0;}
+.je-title{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px;}
+.je-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #F3F4F6;}
+.je-row:last-child{border-bottom:none;}
+.je-account{font-size:14px;font-weight:600;color:var(--text);}
+.je-account.cr{padding-left:24px;font-weight:500;color:var(--muted);}
+.je-amounts{display:flex;gap:32px;}
+.je-dr{font-size:14px;font-weight:700;color:#10B981;min-width:80px;text-align:right;}
+.je-cr{font-size:14px;font-weight:700;color:#6366F1;min-width:80px;text-align:right;}
+
+/* MODEL CARDS */
+.model-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:24px 0;}
+.model-card{border-radius:12px;padding:20px;border:1px solid var(--border-light);}
+.model-card.gmm{background:#EEF2FF;border-color:#C7D2FE;}
+.model-card.paa{background:#ECFDF5;border-color:#A7F3D0;}
+.model-card.vfa{background:#FFF7ED;border-color:#FDE68A;}
+.model-card h4{font-size:13px;font-weight:700;margin-bottom:6px;}
+.model-card.gmm h4{color:#4F46E5;}
+.model-card.paa h4{color:#065F46;}
+.model-card.vfa h4{color:#92400E;}
+.model-card p{font-size:12px;color:var(--muted);margin:0;line-height:1.5;}
+
+/* CTA */
+.cta-box{background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:16px;padding:28px 30px;margin:40px 0;text-align:center;}
+.cta-box h3{font-size:18px;font-weight:800;color:#fff;margin-bottom:8px;}
+.cta-box p{font-size:14px;color:rgba(255,255,255,.85);margin-bottom:18px;}
+.cta-box a{display:inline-block;background:#fff;color:var(--brand);font-size:14px;font-weight:700;padding:12px 26px;border-radius:10px;text-decoration:none;transition:transform .15s;}
+.cta-box a:hover{transform:translateY(-1px);}
+
+/* FOOTER */
+footer{background:#111827;padding:36px 32px 24px;color:#9CA3AF;}
+
+@media(max-width:600px){.article-wrap{padding:32px 16px 60px;}.je-amounts{gap:16px;}.model-grid{grid-template-columns:1fr;}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../auth.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo"><img src="../logo.png" alt="Finosutra"></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../indas-tools.html">IND AS</a></li>
+      <li><a href="../gst-tools.html">GST</a></li>
+      <li><a href="../income-tax-hub.html">Income Tax</a></li>
+      <li><a href="../salary-hr.html">Personal Finance</a></li>
+      <li><a href="../templates.html">Templates</a></li>
+      <li><a href="../blog.html">Blog</a></li>
+      <li><a href="../index.html#pricing">Pricing</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <a href="../blog.html" style="font-size:13px;font-weight:600;color:var(--brand);text-decoration:none;">← All Articles</a>
+      <button class="nav-toggle" id="navToggle"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
+
+<div class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span>›</span>
+    <a href="../blog.html">Blog</a>
+    <span>›</span>
+    <span>IND AS 117 Insurance Contracts Guide</span>
+  </nav>
+
+  <div class="article-tag">IND AS 117 / IFRS 17</div>
+  <h1 class="article-title">IND AS 117 / IFRS 17 Insurance Contracts: Complete Guide with Journal Entries &amp; Examples</h1>
+  <div class="article-meta">
+    <span><i class="fa-regular fa-calendar"></i> June 2026</span>
+    <span><i class="fa-regular fa-clock"></i> 14 min read</span>
+    <span><i class="fa-solid fa-user"></i> Finosutra Team</span>
+  </div>
+  <div class="article-divider"></div>
+
+  <div class="toc">
+    <h3>In This Article</h3>
+    <ol>
+      <li><a href="#what-is">What is IND AS 117 / IFRS 17?</a></li>
+      <li><a href="#scope">Scope — Which Contracts Are Covered?</a></li>
+      <li><a href="#key-terms">Key Terms You Must Know</a></li>
+      <li><a href="#three-models">Three Measurement Models</a></li>
+      <li><a href="#gmm-components">GMM in Depth: FCF + CSM</a></li>
+      <li><a href="#presentation">How Revenue is Presented</a></li>
+      <li><a href="#example-paa">Worked Example 1 — Motor Insurance (PAA)</a></li>
+      <li><a href="#example-gmm">Worked Example 2 — Life Insurance (GMM)</a></li>
+      <li><a href="#vs-104">IND AS 117 vs Old IND AS 104</a></li>
+      <li><a href="#transition">Transition Approaches</a></li>
+      <li><a href="#disclosures">Key Disclosures</a></li>
+      <li><a href="#faq">FAQs</a></li>
+    </ol>
+  </div>
+
+  <div class="article-body">
+
+    <h2 id="what-is">1. What is IND AS 117 / IFRS 17?</h2>
+    <p>IND AS 117 is the Indian Accounting Standard for insurance contracts, converged with <strong>IFRS 17</strong> issued by the International Accounting Standards Board (IASB). It replaces the old <strong>IND AS 104</strong> (Insurance Contracts), which was widely criticised for allowing insurers to use legacy accounting policies rather than a consistent measurement framework.</p>
+    <p>The new standard introduces a <strong>single, principled measurement model</strong> for all insurance contracts — bringing much-needed transparency and comparability to how insurers report their financials. It is applicable to insurance companies following IND AS and is expected to be effective for Indian entities from <strong>FY 2026-27</strong> onwards (subject to MCA notification).</p>
+
+    <div class="callout">
+      <p><strong>The big idea:</strong> Under IND AS 117, profit from insurance can only be recognised as you actually provide insurance coverage — not upfront when you collect the premium. This is a fundamental shift from old practice.</p>
+    </div>
+
+    <h2 id="scope">2. Scope — Which Contracts Are Covered?</h2>
+    <p>IND AS 117 applies to:</p>
+    <ul>
+      <li><strong>Insurance contracts</strong> issued by an entity (both direct insurance and reinsurance accepted)</li>
+      <li><strong>Reinsurance contracts held</strong> by an entity (where the entity buys cover from a reinsurer)</li>
+      <li><strong>Investment contracts with discretionary participation features (DPF)</strong> issued by entities that also issue insurance contracts</li>
+    </ul>
+    <p>The standard does <strong>not</strong> apply to:</p>
+    <ul>
+      <li>Warranties provided by manufacturers or retailers (covered by IND AS 115)</li>
+      <li>Employment benefit obligations (IND AS 19)</li>
+      <li>Financial guarantee contracts (IND AS 109, unless the issuer elects IND AS 117)</li>
+      <li>Fixed-fee service contracts such as roadside assistance contracts (IND AS 115)</li>
+    </ul>
+
+    <div class="callout-amber callout">
+      <p><strong>Practical point:</strong> A contract transfers <em>insurance risk</em> when the insurer agrees to compensate the policyholder for a specified uncertain future event that adversely affects the policyholder. If there's no insurance risk, it's not an insurance contract under IND AS 117 — check your contract terms carefully.</p>
+    </div>
+
+    <h2 id="key-terms">3. Key Terms You Must Know</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Term</th><th>Plain English Meaning</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Insurance Contract</strong></td><td>A contract where one party (insurer) accepts significant insurance risk from another party (policyholder) by agreeing to compensate if a specified uncertain event adversely affects the policyholder.</td></tr>
+          <tr><td><strong>Coverage Period</strong></td><td>The period during which the insurer provides insurance coverage — this is when revenue is recognised.</td></tr>
+          <tr><td><strong>Policyholder</strong></td><td>The party that holds rights under an insurance contract (the insured person or entity).</td></tr>
+          <tr><td><strong>Fulfillment Cash Flows (FCF)</strong></td><td>The expected present value of all future cash inflows (premiums) less outflows (claims, expenses) — plus a Risk Adjustment.</td></tr>
+          <tr><td><strong>Contractual Service Margin (CSM)</strong></td><td>The unearned profit in a group of insurance contracts — released to P&amp;L over the coverage period as the insurer provides services.</td></tr>
+          <tr><td><strong>Risk Adjustment (RA)</strong></td><td>Compensation an insurer requires for bearing the uncertainty about the amount and timing of cash flows from non-financial risk.</td></tr>
+          <tr><td><strong>Loss Component</strong></td><td>If a group of contracts is onerous (expected to be loss-making), the loss is recognised immediately in P&amp;L — there is no CSM for onerous contracts.</td></tr>
+          <tr><td><strong>Discount Rate</strong></td><td>Reflects the time value of money and characteristics of the insurance contract cash flows. Typically based on risk-free rates adjusted for illiquidity.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="three-models">4. Three Measurement Models</h2>
+    <p>IND AS 117 provides three ways to measure insurance contracts. The right model depends on the nature and duration of the contract:</p>
+
+    <div class="model-grid">
+      <div class="model-card gmm">
+        <h4><i class="fa-solid fa-building-columns"></i> GMM / BBA</h4>
+        <p><strong>General Measurement Model</strong> (also called Building Block Approach). The default model. Used for long-term contracts like life insurance, annuities, and complex liability covers.</p>
+      </div>
+      <div class="model-card paa">
+        <h4><i class="fa-solid fa-car"></i> PAA</h4>
+        <p><strong>Premium Allocation Approach</strong>. Simplified model for short-duration contracts (coverage ≤ 12 months, or contracts where PAA produces similar results to GMM). Used for motor, health, fire, marine insurance.</p>
+      </div>
+      <div class="model-card vfa">
+        <h4><i class="fa-solid fa-chart-line"></i> VFA</h4>
+        <p><strong>Variable Fee Approach</strong>. Used for contracts where policyholders participate directly in returns from a defined pool of underlying items (e.g., unit-linked or participating life policies). Replaces the CSM with a variable fee.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p><strong>Quick rule of thumb:</strong> Motor / health / fire insurance → PAA. Traditional life insurance (endowment, term, whole life) → GMM. Unit-linked / participating policies → VFA.</p>
+    </div>
+
+    <h2 id="gmm-components">5. GMM in Depth: FCF + CSM</h2>
+    <p>Under the General Measurement Model, the liability for a group of insurance contracts at any point in time has two components:</p>
+
+    <div class="callout-green callout">
+      <p><strong>Liability for Remaining Coverage = Fulfillment Cash Flows (FCF) + Contractual Service Margin (CSM)</strong><br>
+      FCF = PV of Future Cash Outflows − PV of Future Cash Inflows + Risk Adjustment</p>
+    </div>
+
+    <h3>Component 1: Fulfillment Cash Flows (FCF)</h3>
+    <p>FCF captures the best-estimate present value of what the insurer expects to pay and receive over the remaining coverage period:</p>
+    <ul>
+      <li><strong>Expected claims</strong> — probability-weighted best estimate of future claim payments</li>
+      <li><strong>Expected expenses</strong> — including claim handling costs and allocated overheads</li>
+      <li><strong>Less: Expected future premiums</strong> — future instalments or renewals where the insurer has a substantive right</li>
+      <li><strong>Plus: Risk Adjustment (RA)</strong> — explicit compensation for bearing non-financial risk uncertainty. The insurer estimates the amount it would require to be indifferent to an equivalent risk-free cash flow.</li>
+    </ul>
+
+    <h3>Component 2: Contractual Service Margin (CSM)</h3>
+    <p>The CSM is the unearned profit locked inside the contract at inception. Think of it as a "profit reserve" that cannot be recognised immediately — it is released to P&amp;L progressively as insurance services are provided.</p>
+    <ul>
+      <li>At inception: CSM = Negative of FCF (i.e., if FCF is −₹50,000 meaning net inflow, CSM = +₹50,000)</li>
+      <li>If FCF is positive at inception (contract is onerous), there is <strong>no CSM</strong> — a loss is recognised immediately</li>
+      <li>CSM is released to Insurance Revenue over the coverage period based on "coverage units" provided in the period</li>
+    </ul>
+
+    <h3>Subsequent Measurement</h3>
+    <p>Each period, the insurer updates FCF for changes in assumptions (mortality, morbidity, interest rates, expenses). Changes in FCF that relate to future services <strong>adjust the CSM</strong> (they don't hit P&amp;L). Changes that relate to current or past services, or financial risk changes at locked-in rates, flow to <strong>P&amp;L immediately</strong>.</p>
+
+    <h2 id="presentation">6. How Revenue is Presented</h2>
+    <p>This is where IND AS 117 differs most dramatically from old practice. Previously, insurers showed gross premium income as revenue. Under IND AS 117:</p>
+
+    <div class="callout-amber callout">
+      <p><strong>Insurance Revenue ≠ Premium Received.</strong> Insurance Revenue equals the amount of services provided in the period — which is the CSM released + expected claims for the period + risk adjustment released. The premium collected is not income until coverage is delivered.</p>
+    </div>
+
+    <p>The Income Statement under IND AS 117 looks like this:</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Line Item</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Insurance Revenue</strong></td><td>Services provided: expected claims + expenses + RA released + CSM released</td></tr>
+          <tr><td><strong>Insurance Service Expenses</strong></td><td>Actual claims incurred + actual expenses + changes in loss component</td></tr>
+          <tr><td><strong>Insurance Service Result</strong></td><td>Revenue − Service Expenses (the underwriting profit)</td></tr>
+          <tr><td><strong>Finance Income / Expense</strong></td><td>Unwinding of discount on FCF and CSM (interest effect)</td></tr>
+          <tr><td><strong>Net Insurance Finance Result</strong></td><td>Finance income less finance expense</td></tr>
+          <tr><td><strong>Profit / Loss</strong></td><td>Insurance Service Result + Finance Result + Investment Returns</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="example-paa">7. Worked Example 1 — Motor Insurance (PAA)</h2>
+    <p>Let's walk through a simple motor insurance policy using the Premium Allocation Approach.</p>
+
+    <div class="callout">
+      <p><strong>Policy details:</strong> Annual motor insurance policy · Premium ₹12,000 collected on 1 October 2024 · Policy period: 1 Oct 2024 to 30 Sep 2025 · Financial year end: 31 March 2025 · Expected claims ratio: 65% · Acquisition costs: ₹900 (paid upfront)</p>
+    </div>
+
+    <p>Under PAA, the liability for remaining coverage is essentially the unearned premium — very similar to the old "Unexpired Risk Reserve" concept but computed more rigorously.</p>
+
+    <h3>At Policy Inception (1 October 2024)</h3>
+    <p>On day one, the insurer collects ₹12,000 and recognises a liability for the full unearned premium. Acquisition costs of ₹900 are recognised as an asset (Deferred Acquisition Costs — DAC) and amortised over the coverage period.</p>
+
+    <div class="je-block">
+      <div class="je-title">Entry 1 — Premium Collection (1 Oct 2024)</div>
+      <div class="je-row">
+        <span class="je-account">Bank / Cash</span>
+        <div class="je-amounts"><span class="je-dr">Dr ₹12,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Liability for Remaining Coverage (LRC)</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr ₹12,000</span></div>
+      </div>
+    </div>
+
+    <div class="je-block">
+      <div class="je-title">Entry 2 — Acquisition Costs (1 Oct 2024)</div>
+      <div class="je-row">
+        <span class="je-account">Deferred Acquisition Costs (DAC) — Asset</span>
+        <div class="je-amounts"><span class="je-dr">Dr ₹900</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Bank / Payable to Agent</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr ₹900</span></div>
+      </div>
+    </div>
+
+    <h3>At Year End (31 March 2025 — 6 months into coverage)</h3>
+    <p>By 31 March 2025, 6 of the 12 months of coverage have elapsed (1 Oct 2024 to 31 Mar 2025 = 182 days out of 365 days ≈ 50%).</p>
+    <ul>
+      <li>Insurance Revenue = ₹12,000 × 50% = <strong>₹6,000</strong></li>
+      <li>DAC amortised = ₹900 × 50% = <strong>₹450</strong></li>
+      <li>Assume actual claims paid in H1 = ₹3,800</li>
+    </ul>
+
+    <div class="je-block">
+      <div class="je-title">Entry 3 — Revenue Recognition (31 Mar 2025)</div>
+      <div class="je-row">
+        <span class="je-account">Liability for Remaining Coverage (LRC)</span>
+        <div class="je-amounts"><span class="je-dr">Dr ₹6,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Insurance Revenue (P&amp;L)</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr ₹6,000</span></div>
+      </div>
+    </div>
+
+    <div class="je-block">
+      <div class="je-title">Entry 4 — DAC Amortisation (31 Mar 2025)</div>
+      <div class="je-row">
+        <span class="je-account">Insurance Acquisition Cost Expense (P&amp;L)</span>
+        <div class="je-amounts"><span class="je-dr">Dr ₹450</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Deferred Acquisition Costs (DAC)</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr ₹450</span></div>
+      </div>
+    </div>
+
+    <div class="je-block">
+      <div class="je-title">Entry 5 — Claims Incurred (31 Mar 2025)</div>
+      <div class="je-row">
+        <span class="je-account">Insurance Service Expenses (P&amp;L)</span>
+        <div class="je-amounts"><span class="je-dr">Dr ₹3,800</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Liability for Incurred Claims (LIC)</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr ₹3,800</span></div>
+      </div>
+    </div>
+
+    <h3>Balance Sheet at 31 March 2025</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Item</th><th>Amount</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Deferred Acquisition Costs (Asset)</td><td>₹450</td><td>₹900 − ₹450 amortised</td></tr>
+          <tr><td>Liability for Remaining Coverage</td><td>₹6,000</td><td>₹12,000 − ₹6,000 earned</td></tr>
+          <tr><td>Liability for Incurred Claims</td><td>₹3,800</td><td>Claims reported but unpaid</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Income Statement extract — FY ending 31 Mar 2025</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Line</th><th>Amount</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Insurance Revenue</td><td>₹6,000</td></tr>
+          <tr><td>Insurance Service Expenses (claims)</td><td>(₹3,800)</td></tr>
+          <tr><td>Insurance Acquisition Costs</td><td>(₹450)</td></tr>
+          <tr><td><strong>Insurance Service Result</strong></td><td><strong>₹1,750</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="example-gmm">8. Worked Example 2 — Life Insurance (GMM)</h2>
+    <p>Now let's look at a long-term life insurance policy under the General Measurement Model.</p>
+
+    <div class="callout">
+      <p><strong>Policy details:</strong> 5-year term life insurance · Annual premium ₹20,000 (paid each April 1) · Sum Assured ₹20,00,000 on death · Inception: 1 April 2024 · Discount rate: 7% p.a. · Best-estimate annual claim cost (mortality): ₹4,000 · Annual expenses: ₹1,500 · Risk Adjustment: ₹2,500 at inception</p>
+    </div>
+
+    <h3>Step 1: Calculate FCF at Inception (1 April 2024)</h3>
+    <p>FCF = PV of expected future outflows (claims + expenses) − PV of future premiums + Risk Adjustment</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Item</th><th>Calculation</th><th>Amount (₹)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>PV of future claims + expenses (Years 2-5)</td><td>₹5,500 × PV annuity @ 7% for 4 yrs = ₹5,500 × 3.387</td><td>₹18,629</td></tr>
+          <tr><td>PV of future premiums (Years 2-5)</td><td>₹20,000 × PV annuity @ 7% for 4 yrs = ₹20,000 × 3.387</td><td>(₹67,740)</td></tr>
+          <tr><td>Risk Adjustment</td><td>Given</td><td>₹2,500</td></tr>
+          <tr><td><strong>FCF at Inception</strong></td><td></td><td><strong>(₹46,611)</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>FCF is <strong>negative ₹46,611</strong> — meaning the contract has a net expected inflow (profitable). Therefore CSM = +₹46,611.</p>
+
+    <div class="callout-green callout">
+      <p><strong>Initial CSM = −FCF = ₹46,611.</strong> This is the unearned profit that will be released over 5 years of coverage. The insurer cannot book this profit upfront.</p>
+    </div>
+
+    <h3>Step 2: Journal Entry at Inception (1 April 2024)</h3>
+    <p>At inception, the insurer receives the first year's premium of ₹20,000 and recognises the insurance contract liability. The liability at inception = FCF + CSM = (−₹46,611) + ₹46,611 = <strong>₹0</strong>. This makes intuitive sense — on day one, the insurer has collected one premium and the two components exactly offset.</p>
+
+    <div class="je-block">
+      <div class="je-title">Entry 1 — Initial Recognition (1 April 2024)</div>
+      <div class="je-row">
+        <span class="je-account">Bank / Cash (Year 1 premium)</span>
+        <div class="je-amounts"><span class="je-dr">Dr ₹20,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Liability for Remaining Coverage — FCF component</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr (₹46,611)</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Liability for Remaining Coverage — CSM component</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr ₹46,611</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Insurance Revenue (Year 1 services rendered)</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr ₹20,000</span></div>
+      </div>
+    </div>
+
+    <p class="callout-amber callout" style="padding:12px 16px;border-radius:0 8px 8px 0;"><strong>Note:</strong> For simplicity this example recognises Year 1 revenue at inception. In practice, Year 1 coverage is delivered through the year and revenue is recognised monthly.</p>
+
+    <h3>Step 3: CSM Release Each Year</h3>
+    <p>The CSM of ₹46,611 is released over 5 years based on coverage units. Assuming equal coverage each year, annual CSM release = ₹46,611 ÷ 5 = <strong>₹9,322 per year</strong>.</p>
+
+    <div class="je-block">
+      <div class="je-title">Entry 2 — Annual CSM Release to Revenue</div>
+      <div class="je-row">
+        <span class="je-account">Liability for Remaining Coverage — CSM</span>
+        <div class="je-amounts"><span class="je-dr">Dr ₹9,322</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Insurance Revenue (P&amp;L)</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr ₹9,322</span></div>
+      </div>
+    </div>
+
+    <div class="je-block">
+      <div class="je-title">Entry 3 — Annual Claims Incurred (if a death claim is paid)</div>
+      <div class="je-row">
+        <span class="je-account">Insurance Service Expenses (P&amp;L)</span>
+        <div class="je-amounts"><span class="je-dr">Dr ₹4,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Claims Payable / Bank</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr ₹4,000</span></div>
+      </div>
+    </div>
+
+    <h3>Annual Insurance Revenue breakdown (each year, simplified)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Component</th><th>Amount</th><th>Source</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Expected claims released</td><td>₹4,000</td><td>Services provided (coverage for death risk)</td></tr>
+          <tr><td>Expected expenses released</td><td>₹1,500</td><td>Services provided</td></tr>
+          <tr><td>Risk Adjustment released</td><td>₹500</td><td>RA ÷ 5 years</td></tr>
+          <tr><td>CSM released</td><td>₹9,322</td><td>Profit earned for coverage provided</td></tr>
+          <tr><td><strong>Total Insurance Revenue</strong></td><td><strong>₹15,322</strong></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout-green callout">
+      <p><strong>Note:</strong> Premium collected (₹20,000) ≠ Insurance Revenue (₹15,322). The ₹4,678 difference is the finance income component recognised separately — it's the unwinding of the discount on future premiums yet to be collected.</p>
+    </div>
+
+    <h2 id="vs-104">9. IND AS 117 vs Old IND AS 104</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Aspect</th><th>Old IND AS 104</th><th>New IND AS 117</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Revenue recognition</td><td>Gross premium = revenue (collected basis)</td><td>Insurance Revenue = services delivered (not premiums collected)</td></tr>
+          <tr><td>Profit at inception</td><td>Could recognise Day 1 profits</td><td>No Day 1 profit — locked into CSM and released over coverage</td></tr>
+          <tr><td>Measurement basis</td><td>Legacy accounting policies allowed; inconsistent across entities</td><td>Consistent FCF + CSM framework (or PAA / VFA as applicable)</td></tr>
+          <tr><td>Discount rate</td><td>Often locked-in historical rates; inconsistent</td><td>Current rates reflecting contract cash flows; updated each period</td></tr>
+          <tr><td>Onerous contracts</td><td>Liability adequacy test — catch-up loss provision</td><td>Loss recognised immediately via loss component; no CSM for onerous groups</td></tr>
+          <tr><td>Claims liability</td><td>Best estimate with margin; less transparent</td><td>Liability for Incurred Claims (LIC) = FCF for incurred claims; explicit RA</td></tr>
+          <tr><td>Reinsurance</td><td>Often netted; limited disclosures</td><td>Reinsurance contracts held measured separately; cannot net with gross</td></tr>
+          <tr><td>Comparability</td><td>Low — different entities used different policies</td><td>High — single framework across all insurers</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="transition">10. Transition Approaches</h2>
+    <p>IND AS 117 provides three transition approaches for the opening balance at the date of initial application. All three produce the same liability at transition — but the way historical data is used differs:</p>
+    <ul>
+      <li><strong>Full Retrospective Approach</strong> — Apply IND AS 117 as if it had always existed. Most accurate but data-intensive. Requires historical assumption data going back to contract inception.</li>
+      <li><strong>Modified Retrospective Approach</strong> — Apply IND AS 117 retrospectively but with certain practical modifications where full retrospective data is unavailable. Strikes a balance between accuracy and practicality.</li>
+      <li><strong>Fair Value Approach</strong> — Determine the CSM at transition as the difference between the IND AS 117 fair value of the group and the FCF at that date. Least data-intensive; acceptable when historical data is limited.</li>
+    </ul>
+
+    <div class="callout">
+      <p><strong>Most Indian insurers are expected to use the Modified Retrospective or Fair Value approach</strong> given the practical challenges of sourcing historical assumption sets for contracts issued decades ago (e.g., old endowment policies).</p>
+    </div>
+
+    <h2 id="disclosures">11. Key Disclosures</h2>
+    <p>IND AS 117 requires extensive disclosures to help users understand how insurance contracts affect the financial statements. The main requirements (Para 93–132) include:</p>
+    <ul>
+      <li><strong>Reconciliation of opening and closing balances</strong> of the insurance contract assets / liabilities — showing movements due to new contracts, CSM release, changes in estimates, experience variances, and finance effects</li>
+      <li><strong>Insurance Revenue and expenses breakdown</strong> — how revenue is split between claims, expenses, RA release, and CSM release</li>
+      <li><strong>Maturity analysis</strong> — undiscounted expected cash flows for remaining coverage by time bucket</li>
+      <li><strong>Judgements and assumptions</strong> — significant assumptions used in estimating FCF; sensitivity analysis for key variables (mortality, morbidity, lapse rates, discount rates)</li>
+      <li><strong>Transition disclosures</strong> — which approach was applied and why; quantitative impact at transition</li>
+    </ul>
+
+    <div class="cta-box">
+      <h3>Stay ahead of IND AS changes</h3>
+      <p>Finosutra's IND AS tools help CAs and finance teams with IND AS 116 lease accounting today — with more standards on the way.</p>
+      <a href="../indas-tools.html">Explore IND AS Tools →</a>
+    </div>
+
+    <h2 id="faq">12. Frequently Asked Questions</h2>
+
+    <h3>Is IND AS 117 effective in India right now?</h3>
+    <p>As of June 2026, IND AS 117 has not yet been notified by MCA for mandatory application in India. It is expected to be effective for Indian insurance companies from <strong>FY 2026-27</strong>, with a comparative period of FY 2025-26. Insurance entities should begin impact assessments and systems implementation now.</p>
+
+    <h3>Does IND AS 117 apply to general insurance companies too?</h3>
+    <p>Yes. IND AS 117 applies to all entities that issue insurance contracts — both life and non-life (general) insurance companies, as well as reinsurers. Non-life insurers with mostly short-duration contracts will typically use the <strong>PAA model</strong>, which is simpler and requires less data than GMM.</p>
+
+    <h3>What happens to Day 1 profit under IND AS 117?</h3>
+    <p>Under IND AS 117, any profit expected from a profitable group of insurance contracts at inception is deferred into the CSM and cannot be recognised immediately. It is released progressively as the insurer provides coverage services. This prevents insurers from front-loading profits and gives users a more faithful picture of earnings quality.</p>
+
+    <h3>How is the CSM different from a deferred revenue?</h3>
+    <p>The CSM is conceptually similar to deferred revenue but goes further — it specifically represents the unearned profit margin, not gross unearned premiums. The FCF component handles expected claims and expenses separately, so the CSM is a pure profit deferral. Under old IND AS 104, the closest equivalent was the Unexpired Risk Reserve, but it was not required to reflect a specific profit margin.</p>
+
+    <h3>Can a group of insurance contracts have a negative CSM?</h3>
+    <p>No. If FCF at inception shows that a group of contracts is <strong>onerous</strong> (expected loss), the CSM is set to zero and the expected loss is recognised immediately in P&amp;L via a "loss component." There is no negative CSM. This is a significant difference from the old Liability Adequacy Test, which was only a catch-up mechanism.</p>
+
+    <h3>How does IND AS 117 affect key ratios for insurers?</h3>
+    <p>Several financial metrics change significantly. The <strong>combined ratio</strong> calculation changes because insurance revenue no longer equals gross premiums. <strong>Return on equity</strong> patterns shift because profits emerge over the coverage period rather than upfront. Investors and analysts will need to recalibrate their models. Insurers should proactively communicate the financial impact to analysts during the transition period.</p>
+
+  </div><!-- end article-body -->
+
+  <div style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border-light);">
+    <p style="font-size:13px;color:var(--muted);margin-bottom:16px;"><strong>Related Tools &amp; Articles</strong></p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;">
+      <a href="../indas-tools.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 16px;background:var(--brand-light);border:1px solid var(--brand-mid);border-radius:10px;font-size:13px;font-weight:600;color:var(--brand);text-decoration:none;">⚡ IND AS Tools Hub</a>
+      <a href="ind-as-116-lease-accounting-guide.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 16px;background:#F9FAFB;border:1px solid var(--border);border-radius:10px;font-size:13px;font-weight:600;color:var(--text);text-decoration:none;">→ IND AS 116 Lease Accounting Guide</a>
+      <a href="ind-as-109-security-deposit-accounting.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 16px;background:#F9FAFB;border:1px solid var(--border);border-radius:10px;font-size:13px;font-weight:600;color:var(--text);text-decoration:none;">→ IND AS 109 Security Deposit Guide</a>
+      <a href="../blog.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 16px;background:#F9FAFB;border:1px solid var(--border);border-radius:10px;font-size:13px;font-weight:600;color:var(--text);text-decoration:none;">← All Articles</a>
+    </div>
+  </div>
+
+</div><!-- end article-wrap -->
+
+<footer style="background:#111827;padding:28px 32px;color:#9CA3AF;">
+  <div style="max-width:1160px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px;">
+    <p>© 2026 Finosutra. All rights reserved.</p>
+    <p><a href="../privacy.html" style="color:#6B7280;text-decoration:none;">Privacy</a> &nbsp;·&nbsp; <a href="../terms.html" style="color:#6B7280;text-decoration:none;">Terms</a> &nbsp;·&nbsp; <a href="mailto:fino.sutra07@gmail.com" style="color:#6B7280;text-decoration:none;">fino.sutra07@gmail.com</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var t=document.getElementById('navToggle');
+  if(!t)return;
+  t.onclick=function(){
+    var l=document.getElementById('navLinks');
+    if(l)l.classList.toggle('open');
+    var i=this.querySelector('i');
+    if(i)i.className=l&&l.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-bars';
+  };
+})();
+</script>
+</body>
+</html>

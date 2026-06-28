@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -17,7 +17,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 <style>
 :root{
   --brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;
@@ -205,6 +205,13 @@ footer img{height:28px;margin-bottom:8px;opacity:.6}
 #mainNav .nav-toggle{display:none;background:none;border:none;font-size:20px;color:#111827;cursor:pointer;padding:4px;}
 @media(max-width:900px){#mainNav .nav-links{display:none;}}
 @media(max-width:768px){#mainNav{padding:0 16px;}#mainNav .nav-actions{display:none;}#mainNav .nav-toggle{display:block;}#mainNav .nav-links.open,#mainNav .nav-actions.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid rgba(99,102,241,0.08);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
+.site-footer{background:#1E1B4B;color:rgba(255,255,255,0.7);padding:28px 32px;text-align:center;font-size:12px;line-height:1.8;margin-top:40px;}
+.site-footer .footer-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:14px;}
+.site-footer .footer-badge{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:4px 13px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);display:inline-flex;align-items:center;gap:5px;}
+.site-footer .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-top:10px;}
+.site-footer .footer-links a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:11px;}
+.site-footer .footer-links a:hover{color:rgba(255,255,255,0.85);}
+.site-footer .footer-tagline{margin-top:12px;font-size:11px;color:rgba(255,255,255,0.35);}
 </style>
 <script type="application/ld+json">
 {
@@ -546,22 +553,19 @@ footer img{height:28px;margin-bottom:8px;opacity:.6}
     </div>
   </div>
 
-<footer>
-  <div class="wrap">
-    <img loading="lazy" src="logo.png" alt="Finosutra">
-    <div>In-Hand Salary Calculator FY 2026-27 | AY 2027-28</div>
-    <div style="font-size:11px;color:#D1D5DB;margin-top:4px">⚠ For estimation purposes only. Actual in-hand salary may vary based on employer policy and state laws.</div>
-    <div class="footer-links">
-      <a href="index.html">Home</a>
-      <a href="india-tax-calculator.html">Income Tax</a>
-      <a href="indas116.html">IND AS 116</a>
-      <a href="gst-calculator.html">GST</a>
-      <a href="emi-calculator.html">EMI</a>
-      <a href="privacy.html" style="color:var(--muted2)">Privacy</a>
-      <a href="terms.html" style="color:var(--muted2)">Terms</a>
-    </div>
-    <div style="margin-top:10px;color:#D1D5DB;font-size:11px">© 2025–2026 Finosutra · Finance on Autopilot · finosutra.com · GSTIN: 27ACWPW1076G1ZX</div>
+<footer class="site-footer">
+  <div class="footer-badges">
+    <span class="footer-badge">✓ FY 2026-27 Tax Rules</span>
+    <span class="footer-badge">✓ New &amp; Old Regime</span>
+    <span class="footer-badge">🇮🇳 Made in India for Indian CAs</span>
   </div>
+  <div class="footer-links">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Use</a>
+    <a href="mailto:fino.sutra07@gmail.com">Contact</a>
+    <a href="blog.html">Blog</a>
+  </div>
+  <div class="footer-tagline">© 2025 Finosutra. Built for Chartered Accountants and Finance Teams across India.</div>
 </footer>
 
 <script>
@@ -853,139 +857,210 @@ function initiatePayment(){
 function generateExcel(paymentId){
   const {nr, or, ctc} = lastResult;
 
-  const HEADER = {font:{bold:true,color:{rgb:"FFFFFF"},sz:12},fill:{fgColor:{rgb:"1F4E78"}},alignment:{horizontal:"center",vertical:"center"}};
-  const SUBHDR = {font:{bold:true,color:{rgb:"1F1F1F"}},fill:{fgColor:{rgb:"D9EAF7"}}};
-  const MONEY  = {numFmt:'#,##0'};
-  const TITLE  = {font:{bold:true,sz:18,color:{rgb:"1F1F1F"}},alignment:{horizontal:"center"}};
-  const GOOD   = {font:{bold:true,color:{rgb:"FFFFFF"}},fill:{fgColor:{rgb:"1A5C38"}},alignment:{horizontal:"center"}};
-  const NORMAL = {border:{top:{style:"thin",color:{rgb:"E0E0E0"}},bottom:{style:"thin",color:{rgb:"E0E0E0"}},left:{style:"thin",color:{rgb:"E0E0E0"}},right:{style:"thin",color:{rgb:"E0E0E0"}}}};
+  // ── Finosutra colour palette ──────────────────────────────────────────────
+  const C_BRAND  = '4F46E5';
+  const C_NAVY   = '1E1B4B';
+  const C_ACCENT = 'D97706';
+  const C_LIGHT  = 'EEF2FF';
+  const C_STRIPE = 'F8F9FF';
+  const C_GREEN  = '059669';
+  const C_WHITE  = 'FFFFFF';
+  const C_BORDER = 'C7D2FE';
+  const INR0     = '#,##0';
+  const PCT      = '0.0"%"';
 
-  function styleRange(ws, range, style){
-    const r = XLSX.utils.decode_range(range);
-    for(let R=r.s.r;R<=r.e.r;R++) for(let C=r.s.c;C<=r.e.c;C++){
-      const cell = ws[XLSX.utils.encode_cell({r:R,c:C})];
-      if(cell) cell.s = Object.assign({},cell.s,style);
-    }
-  }
-  function applyMoney(ws, startRow, endRow, cols){
-    for(let r=startRow;r<=endRow;r++) cols.forEach(c=>{
-      const cell = ws[XLSX.utils.encode_cell({r:r-1,c:c-1})];
-      if(cell && typeof cell.v==='number') cell.s = {...NORMAL,...MONEY};
-    });
+  const bdr = {
+    top:{style:'thin',color:{rgb:C_BORDER}}, bottom:{style:'thin',color:{rgb:C_BORDER}},
+    left:{style:'thin',color:{rgb:C_BORDER}}, right:{style:'thin',color:{rgb:C_BORDER}}
+  };
+  const bdrMed = {
+    top:{style:'medium',color:{rgb:C_BRAND}}, bottom:{style:'medium',color:{rgb:C_BRAND}},
+    left:{style:'medium',color:{rgb:C_BRAND}}, right:{style:'medium',color:{rgb:C_BRAND}}
+  };
+
+  function mk(o){ return Object.assign({font:{name:'Calibri',sz:10},alignment:{vertical:'center'}}, o); }
+
+  const S = {
+    brand : mk({font:{name:'Calibri',sz:18,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:C_BRAND}}, alignment:{horizontal:'center',vertical:'center'}}),
+    nav   : mk({font:{name:'Calibri',sz:12,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:C_NAVY}},  alignment:{horizontal:'center',vertical:'center'}}),
+    hdr   : mk({font:{name:'Calibri',sz:10,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:C_BRAND}}, alignment:{horizontal:'center',vertical:'center',wrapText:true}, border:bdr}),
+    secHdr: mk({font:{name:'Calibri',sz:11,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:C_NAVY}},  alignment:{horizontal:'left',vertical:'center'},  border:bdr}),
+    lbl   : mk({font:{name:'Calibri',sz:10,color:{rgb:C_NAVY}},               fill:{fgColor:{rgb:C_WHITE}}, alignment:{horizontal:'left',vertical:'center'},  border:bdr}),
+    lblS  : mk({font:{name:'Calibri',sz:10,color:{rgb:C_NAVY}},               fill:{fgColor:{rgb:C_STRIPE}},alignment:{horizontal:'left',vertical:'center'},  border:bdr}),
+    num   : mk({font:{name:'Calibri',sz:10,color:{rgb:C_NAVY}},               fill:{fgColor:{rgb:C_WHITE}}, alignment:{horizontal:'right',vertical:'center'}, border:bdr, numFmt:INR0}),
+    numS  : mk({font:{name:'Calibri',sz:10,color:{rgb:C_NAVY}},               fill:{fgColor:{rgb:C_STRIPE}},alignment:{horizontal:'right',vertical:'center'}, border:bdr, numFmt:INR0}),
+    pctC  : mk({font:{name:'Calibri',sz:10,color:{rgb:C_NAVY}},               fill:{fgColor:{rgb:C_WHITE}}, alignment:{horizontal:'right',vertical:'center'}, border:bdr}),
+    pctCS : mk({font:{name:'Calibri',sz:10,color:{rgb:C_NAVY}},               fill:{fgColor:{rgb:C_STRIPE}},alignment:{horizontal:'right',vertical:'center'}, border:bdr}),
+    tot   : mk({font:{name:'Calibri',sz:10,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:C_ACCENT}},alignment:{horizontal:'right',vertical:'center'}, border:bdrMed, numFmt:INR0}),
+    totL  : mk({font:{name:'Calibri',sz:10,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:C_ACCENT}},alignment:{horizontal:'left',vertical:'center'},  border:bdrMed}),
+    good  : mk({font:{name:'Calibri',sz:11,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:C_GREEN}}, alignment:{horizontal:'right',vertical:'center'}, border:bdrMed, numFmt:INR0}),
+    goodL : mk({font:{name:'Calibri',sz:11,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:C_GREEN}}, alignment:{horizontal:'left',vertical:'center'},  border:bdrMed}),
+    meta  : mk({font:{name:'Calibri',sz:10,bold:true,color:{rgb:C_NAVY}},     fill:{fgColor:{rgb:C_LIGHT}}, alignment:{horizontal:'left',vertical:'center'}}),
+    metaV : mk({font:{name:'Calibri',sz:10,color:{rgb:C_NAVY}},               fill:{fgColor:{rgb:C_WHITE}}, alignment:{horizontal:'left',vertical:'center'}})
+  };
+
+  function cs(v,s){ return {t:'s',v:String(v==null?'':v),s:s}; }
+  function cn(v,s){ return {t:'n',v:Number(v)||0,s:s}; }
+  function cb(){    return {t:'z',v:'',s:{}}; }
+
+  function setRows(ws, defs){
+    if(!ws['!rows']) ws['!rows']=[];
+    defs.forEach(function(d){ while(ws['!rows'].length<=d[0]) ws['!rows'].push({}); ws['!rows'][d[0]]={hpt:d[1]}; });
   }
 
   const wb = XLSX.utils.book_new();
+  const now = new Date();
+  const betterRegime = nr.net_annual >= or.net_annual ? 'New Tax Regime' : 'Old Tax Regime';
+  const monthlySaving = Math.abs(nr.net_monthly - or.net_monthly);
 
-  // ── COVER ──
-  const coverData = [
-    ['FINOSUTRA'],
-    ['IN-HAND SALARY REPORT — FY 2026-27 | AY 2027-28'],
-    [],
-    ['Generated On', new Date().toLocaleString()],
-    ['Cost to Company (CTC)', '\u20b9'+inr(ctc)+' per annum'],
-    ['Recommended Regime', nr.net_annual>=or.net_annual ? 'New Tax Regime' : 'Old Tax Regime'],
-    ['New Regime In-Hand (Monthly)', '\u20b9'+inr(nr.net_monthly)],
-    ['Old Regime In-Hand (Monthly)', '\u20b9'+inr(or.net_monthly)],
-    ['Monthly Saving', '\u20b9'+Math.abs(nr.net_monthly-or.net_monthly).toLocaleString('en-IN')+' with '+(nr.net_annual>=or.net_annual?'New':'Old')+' Regime'],
-    ['Payment ID', paymentId],
-    [],
-    ['Prepared By', 'Finosutra \u00b7 finosutra.com'],
-    ['Disclaimer', 'For estimation only. Consult a CA for official filing.'],
-  ];
-  const wsCover = XLSX.utils.aoa_to_sheet(coverData);
-  wsCover['!cols'] = [{wch:32},{wch:44}];
-  styleRange(wsCover,'A1:B1',TITLE);
-  styleRange(wsCover,'A2:B2',HEADER);
-  styleRange(wsCover,'A4:A13',SUBHDR);
-  XLSX.utils.book_append_sheet(wb, wsCover, 'Cover');
-
-  // ── NEW & OLD REGIME SHEETS ──
-  function sheetData(r, label){
-    return [
-      [label+' \u2014 FY 2026-27 | AY 2027-28', '', '', ''],
-      ['PARTICULARS', 'ANNUAL (\u20b9)', 'MONTHLY (\u20b9)', '% OF CTC'],
-      ['Cost to Company (CTC)', ctc, Math.round(ctc/12), '100%'],
-      [''],
-      ['EARNINGS', '', '', ''],
-      ['Basic Salary',       r.basic,       Math.round(r.basic/12),       pct(r.basic,ctc)],
-      ['HRA',                r.hra,         Math.round(r.hra/12),         pct(r.hra,ctc)],
-      ['Special Allowance',  r.special,     Math.round(r.special/12),     pct(r.special,ctc)],
-      r.other_allow>0 ? ['Other Allowances', r.other_allow, Math.round(r.other_allow/12), pct(r.other_allow,ctc)] : null,
-      ['Gross Salary',       r.gross,       Math.round(r.gross/12),       pct(r.gross,ctc)],
-      [''],
-      ['EMPLOYER COSTS (included in CTC, not in hand)', '', '', ''],
-      ['PF Employer (12%)',  r.pf_employer, Math.round(r.pf_employer/12), pct(r.pf_employer,ctc)],
-      ['Gratuity (4.81%)',   r.gratuity,    Math.round(r.gratuity/12),    pct(r.gratuity,ctc)],
-      [''],
-      ['DEDUCTIONS', '', '', ''],
-      ['PF Employee (12%)',  r.pf_employee, Math.round(r.pf_employee/12), ''],
-      ['Professional Tax',   r.prof_tax,    Math.round(r.prof_tax/12),    ''],
-      ['Income Tax TDS ('+r.regime+' regime)', r.tds, Math.round(r.tds/12), ''],
-      ['Total Deductions',   r.total_deducted, Math.round(r.total_deducted/12), ''],
-      [''],
-      ['NET IN-HAND SALARY', r.net_annual,  r.net_monthly,                pct(r.net_annual,ctc)],
-      [''],
-      ['TAX WORKING', '', '', ''],
-      ['Gross Salary',                                r.gross,            '', ''],
-      ['Less: HRA Exemption',                         r.hra_exempt||0,    '', ''],
-      ['Less: Standard Deduction',                    r.std_ded||0,       '', ''],
-      ['Taxable Salary',                              r.taxable_salary,   '', ''],
-      ['Less: Deductions (80C/80D etc.)',              r.total_deductions, '', ''],
-      ['Net Taxable Income',                          r.taxable_income,   '', ''],
-      ['Income Tax (TDS)',                            r.tds,              '', ''],
-      [''],
-      ['\u26a0 For estimation purposes only. Consult a CA for official filing.','','',''],
-    ].filter(Boolean);
+  /* ═══════════════════════════════════════
+     SHEET 1 — COVER
+  ═══════════════════════════════════════ */
+  {
+    const ws = {};
+    ws['A1'] = cs('FINOSUTRA', S.brand);
+    ws['A2'] = cs('In-Hand Salary Report  ·  FY 2026-27 | AY 2027-28', S.nav);
+    ws['A3'] = cb();
+    ws['A4'] = cs('REPORT SUMMARY', S.secHdr);
+    ws['A5'] = cs('Generated On',                S.meta);  ws['B5'] = cs(now.toLocaleString('en-IN'), S.metaV);
+    ws['A6'] = cs('Cost to Company (CTC)',        S.meta);  ws['B6'] = cn(ctc, Object.assign({},S.metaV,{numFmt:INR0}));
+    ws['A7'] = cs('Recommended Regime',           S.meta);  ws['B7'] = cs(betterRegime, S.metaV);
+    ws['A8'] = cs('New Regime — Monthly In-Hand', S.meta); ws['B8'] = cn(nr.net_monthly, Object.assign({},S.metaV,{numFmt:INR0}));
+    ws['A9'] = cs('Old Regime — Monthly In-Hand', S.meta); ws['B9'] = cn(or.net_monthly, Object.assign({},S.metaV,{numFmt:INR0}));
+    ws['A10']= cs('Monthly Saving',               S.meta);  ws['B10']= cn(monthlySaving, Object.assign({},S.metaV,{numFmt:INR0}));
+    ws['A11']= cs('Payment ID',                   S.meta);  ws['B11']= cs(paymentId, S.metaV);
+    ws['A12']= cb();
+    ws['A13']= cs('Prepared by Finosutra  ·  finosutra.com', mk({font:{name:'Calibri',sz:9,color:{rgb:'9CA3AF'}},alignment:{horizontal:'center'}}));
+    ws['A14']= cs('⚠ For estimation only. Consult a CA for official filing.', mk({font:{name:'Calibri',sz:9,italic:true,color:{rgb:'9CA3AF'}},alignment:{horizontal:'center'}}));
+    ws['!ref']='A1:B14';
+    ws['!cols']=[{wch:36},{wch:36}];
+    setRows(ws,[[0,36],[1,22],[3,18]]);
+    XLSX.utils.book_append_sheet(wb, ws, 'Cover');
   }
 
-  const ws1 = XLSX.utils.aoa_to_sheet(sheetData(nr,'NEW TAX REGIME'));
-  ws1['!cols'] = [{wch:42},{wch:18},{wch:16},{wch:12}];
-  styleRange(ws1,'A1:D1',HEADER);
-  styleRange(ws1,'A2:D2',SUBHDR);
-  styleRange(ws1,'A21:D21',GOOD);
-  applyMoney(ws1,3,32,[2,3]);
-  ws1['!freeze'] = {xSplit:0,ySplit:2};
-  XLSX.utils.book_append_sheet(wb, ws1, 'New Regime');
+  /* ═══════════════════════════════════════
+     HELPER — Build Regime Sheet
+  ═══════════════════════════════════════ */
+  function buildRegimeSheet(r, label, brandColor){
+    const rows = [];
 
-  const ws2 = XLSX.utils.aoa_to_sheet(sheetData(or,'OLD TAX REGIME'));
-  ws2['!cols'] = [{wch:42},{wch:18},{wch:16},{wch:12}];
-  styleRange(ws2,'A1:D1',HEADER);
-  styleRange(ws2,'A2:D2',SUBHDR);
-  styleRange(ws2,'A21:D21',GOOD);
-  applyMoney(ws2,3,32,[2,3]);
-  ws2['!freeze'] = {xSplit:0,ySplit:2};
-  XLSX.utils.book_append_sheet(wb, ws2, 'Old Regime');
+    function addBrand(text, cols){
+      const st = mk({font:{name:'Calibri',sz:14,bold:true,color:{rgb:C_WHITE}},fill:{fgColor:{rgb:brandColor}},alignment:{horizontal:'center',vertical:'center'}});
+      const row = [cs(text, st)];
+      for(let i=1;i<cols;i++) row.push(cs('', mk({fill:{fgColor:{rgb:brandColor}}})));
+      rows.push(row);
+    }
+    function addHdr(cells){ rows.push(cells.map(c=>cs(c,S.hdr))); }
+    function addSec(text, cols){
+      const row = [cs(text, S.secHdr)];
+      for(let i=1;i<cols;i++) row.push(cs('',S.secHdr));
+      rows.push(row);
+    }
+    function addRow(lbl, annual, monthly, pctVal, stripe){
+      const L = stripe?S.lblS:S.lbl;
+      const N = stripe?S.numS:S.num;
+      const P = stripe?S.pctCS:S.pctC;
+      rows.push([
+        cs(lbl, L),
+        annual!=null ? cn(annual, N) : cs('—', Object.assign({},L,{alignment:{horizontal:'center',vertical:'center'}})),
+        monthly!=null ? cn(monthly, N) : cs('—', Object.assign({},L,{alignment:{horizontal:'center',vertical:'center'}})),
+        pctVal!=null ? cs(pctVal, P) : cs('', L)
+      ]);
+    }
+    function addTot(lbl, annual, monthly, pctVal){
+      rows.push([cs(lbl,S.totL), cn(annual,S.tot), cn(monthly,S.tot), cs(pctVal||'',S.totL)]);
+    }
+    function addGood(lbl, annual, monthly, pctVal){
+      rows.push([cs(lbl,S.goodL), cn(annual,S.good), cn(monthly,S.good), cs(pctVal||'',S.goodL)]);
+    }
+    function addBlank(cols){ rows.push(Array(cols).fill(null).map(()=>cb())); }
 
-  // ── REGIME COMPARISON ──
-  const better = nr.net_annual>=or.net_annual ? 'New Regime' : 'Old Regime';
-  const saving = Math.abs(nr.net_monthly - or.net_monthly);
-  const compare = [
-    ['NEW VS OLD REGIME COMPARISON \u2014 FY 2026-27', '', ''],
-    ['CTC: \u20b9'+inr(ctc)+' per annum', '', ''],
-    [],
-    ['PARTICULARS', 'NEW REGIME (\u20b9)', 'OLD REGIME (\u20b9)'],
-    ['Gross Salary',          nr.gross,              or.gross],
-    ['HRA Exemption',         nr.hra_exempt||0,      or.hra_exempt||0],
-    ['Standard Deduction',    nr.std_ded||0,         or.std_ded||0],
-    ['Total Deductions',      nr.total_deductions,   or.total_deductions],
-    ['Taxable Income',        nr.taxable_income,     or.taxable_income],
-    ['Income Tax (TDS)',      nr.tds,                or.tds],
-    ['PF Employee',           nr.pf_employee,        or.pf_employee],
-    ['Professional Tax',      nr.prof_tax,           or.prof_tax],
-    ['Total Deductions',      nr.total_deducted,     or.total_deducted],
-    ['Monthly In-Hand',       nr.net_monthly,        or.net_monthly],
-    ['Annual In-Hand',        nr.net_annual,         or.net_annual],
-    [],
-    ['\u2713 '+better+' is BETTER \u2014 saves \u20b9'+saving.toLocaleString('en-IN')+'/month', '', ''],
-  ];
-  const ws3 = XLSX.utils.aoa_to_sheet(compare);
-  ws3['!cols'] = [{wch:36},{wch:20},{wch:20}];
-  styleRange(ws3,'A1:C1',HEADER);
-  styleRange(ws3,'A4:C4',SUBHDR);
-  styleRange(ws3,'A17:C17',GOOD);
-  applyMoney(ws3,5,15,[2,3]);
-  ws3['!freeze'] = {xSplit:0,ySplit:4};
-  XLSX.utils.book_append_sheet(wb, ws3, 'Regime Comparison');
+    addBrand(label + '  —  FY 2026-27 | AY 2027-28', 4);
+    addHdr(['PARTICULARS', 'ANNUAL (₹)', 'MONTHLY (₹)', '% OF CTC']);
+    addRow('Cost to Company (CTC)', ctc, Math.round(ctc/12), '100%', false);
+    addBlank(4);
+    addSec('EARNINGS', 4);
+    addRow('Basic Salary',      r.basic,        Math.round(r.basic/12),        pct(r.basic,ctc),      false);
+    addRow('HRA',                r.hra,          Math.round(r.hra/12),          pct(r.hra,ctc),         true);
+    addRow('Special Allowance',  r.special,      Math.round(r.special/12),      pct(r.special,ctc),    false);
+    if(r.other_allow>0) addRow('Other Allowances', r.other_allow, Math.round(r.other_allow/12), pct(r.other_allow,ctc), true);
+    addTot('Gross Salary',       r.gross,        Math.round(r.gross/12),        pct(r.gross,ctc));
+    addBlank(4);
+    addSec('EMPLOYER COSTS (in CTC, not in-hand)', 4);
+    addRow('PF — Employer (12%)',   r.pf_employer, Math.round(r.pf_employer/12), pct(r.pf_employer,ctc), false);
+    addRow('Gratuity (4.81%)',            r.gratuity,    Math.round(r.gratuity/12),    pct(r.gratuity,ctc),    true);
+    addBlank(4);
+    addSec('DEDUCTIONS', 4);
+    addRow('PF — Employee (12%)',   r.pf_employee,   Math.round(r.pf_employee/12),   null, false);
+    addRow('Professional Tax',            r.prof_tax,      Math.round(r.prof_tax/12),      null, true);
+    addRow('Income Tax TDS ('+r.regime+' regime)', r.tds, Math.round(r.tds/12),           null, false);
+    addTot('Total Deductions',            r.total_deducted, Math.round(r.total_deducted/12), null);
+    addBlank(4);
+    addGood('NET IN-HAND SALARY',         r.net_annual,   r.net_monthly,                  pct(r.net_annual,ctc));
+    addBlank(4);
+    addSec('TAX WORKING', 4);
+    addRow('Gross Salary',                r.gross,            null, null, false);
+    addRow('Less: HRA Exemption',         r.hra_exempt||0,    null, null, true);
+    addRow('Less: Standard Deduction',    r.std_ded||0,       null, null, false);
+    addRow('Taxable Salary',              r.taxable_salary,   null, null, true);
+    addRow('Less: Deductions (80C/80D)', r.total_deductions,  null, null, false);
+    addRow('Net Taxable Income',          r.taxable_income,   null, null, true);
+    addRow('Income Tax (TDS)',            r.tds,              null, null, false);
+    addBlank(4);
+    rows.push([cs('⚠ Estimation only. Consult a CA for official filing.',mk({font:{name:'Calibri',sz:9,italic:true,color:{rgb:'9CA3AF'}}})),cb(),cb(),cb()]);
+
+    const ws = XLSX.utils.aoa_to_sheet(rows);
+    ws['!cols']=[{wch:44},{wch:18},{wch:16},{wch:14}];
+    ws['!freeze']={xSplit:0,ySplit:2};
+    setRows(ws,[[0,30],[1,18]]);
+    return ws;
+  }
+
+  XLSX.utils.book_append_sheet(wb, buildRegimeSheet(nr,'NEW TAX REGIME', C_BRAND),  'New Regime');
+  XLSX.utils.book_append_sheet(wb, buildRegimeSheet(or,'OLD TAX REGIME', '7C3AED'), 'Old Regime');
+
+  /* ═══════════════════════════════════════
+     SHEET 4 — REGIME COMPARISON
+  ═══════════════════════════════════════ */
+  {
+    const better = nr.net_annual >= or.net_annual ? 'New Regime' : 'Old Regime';
+    const saving = Math.abs(nr.net_monthly - or.net_monthly);
+
+    const rows = [];
+    function addHdr2(cells){ rows.push(cells.map(c=>cs(c,S.hdr))); }
+    function addSec2(t){ rows.push([cs(t,S.secHdr),cs('',S.secHdr),cs('',S.secHdr)]); }
+    function addRow2(lbl,nv,ov,stripe){
+      const L=stripe?S.lblS:S.lbl, N=stripe?S.numS:S.num;
+      rows.push([cs(lbl,L), typeof nv==='number'?cn(nv,N):cs(nv||'—',L), typeof ov==='number'?cn(ov,N):cs(ov||'—',L)]);
+    }
+    function addTot2(lbl,nv,ov){ rows.push([cs(lbl,S.totL),cn(nv,S.tot),cn(ov,S.tot)]); }
+    function addGood2(lbl,nv,ov){ rows.push([cs(lbl,S.goodL),cn(nv,S.good),cn(ov,S.good)]); }
+
+    rows.push([cs('FINOSUTRA  ·  New vs Old Regime Comparison  ·  FY 2026-27',S.brand),cs('',S.brand),cs('',S.brand)]);
+    rows.push([cs('CTC: ₹'+inr(ctc)+' per annum',S.nav),cs('',S.nav),cs('',S.nav)]);
+    addHdr2(['PARTICULARS','NEW REGIME (₹)','OLD REGIME (₹)']);
+    addSec2('INCOME & TAX');
+    addRow2('Gross Salary',          nr.gross,            or.gross,            false);
+    addRow2('HRA Exemption',         nr.hra_exempt||0,    or.hra_exempt||0,    true);
+    addRow2('Standard Deduction',    nr.std_ded||0,       or.std_ded||0,       false);
+    addRow2('Total Deductions',      nr.total_deductions, or.total_deductions, true);
+    addRow2('Net Taxable Income',    nr.taxable_income,   or.taxable_income,   false);
+    addRow2('Income Tax (TDS)',      nr.tds,              or.tds,              true);
+    addSec2('TAKE HOME');
+    addRow2('PF — Employee',    nr.pf_employee,      or.pf_employee,      false);
+    addRow2('Professional Tax',      nr.prof_tax,         or.prof_tax,         true);
+    addTot2('Total Deductions',      nr.total_deducted,   or.total_deducted);
+    addGood2('Monthly In-Hand (₹)', nr.net_monthly,  or.net_monthly);
+    addGood2('Annual In-Hand (₹)',  nr.net_annual,   or.net_annual);
+    rows.push([cb(),cb(),cb()]);
+    rows.push([cs('✓ '+better+' is BETTER — saves ₹'+saving.toLocaleString('en-IN')+'/month', S.goodL), cs('',S.goodL), cs('',S.goodL)]);
+
+    const ws3 = XLSX.utils.aoa_to_sheet(rows);
+    ws3['!cols']=[{wch:40},{wch:22},{wch:22}];
+    ws3['!freeze']={xSplit:0,ySplit:3};
+    setRows(ws3,[[0,36],[1,22],[2,18]]);
+    XLSX.utils.book_append_sheet(wb, ws3, 'Regime Comparison');
+  }
 
   XLSX.writeFile(wb, 'Finosutra_Salary_Report_FY2026-27.xlsx');
 
