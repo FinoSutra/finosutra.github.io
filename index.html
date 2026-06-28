@@ -114,6 +114,15 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
 @media(max-width:768px){.hero{padding:56px 20px;} .hero h1{font-size:34px;} .section{padding:52px 20px;} .cats-grid{grid-template-columns:1fr 1fr;} .contact-grid{grid-template-columns:1fr;} .form-row{grid-template-columns:1fr;} .hero-btns{flex-direction:column;align-items:center;} .pricing-strip{flex-direction:column;align-items:flex-start;}}
 @media(max-width:480px){.cats-grid{grid-template-columns:1fr;}}
 @media(max-width:600px){.indas-models-grid{grid-template-columns:1fr !important;}}
+.pricing-plans-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px;}
+.footer-cols-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,0.07);margin-bottom:28px;}
+@media(max-width:768px){
+  .pricing-plans-grid{grid-template-columns:1fr;}
+  .footer-cols-grid{grid-template-columns:1fr 1fr;gap:24px;}
+}
+@media(max-width:480px){
+  .footer-cols-grid{grid-template-columns:1fr;}
+}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="auth.js"></script>
@@ -346,7 +355,7 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
     </div>
 
     <!-- 3-column plan cards -->
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px;">
+    <div class="pricing-plans-grid">
 
       <!-- Free -->
       <div style="background:#fff;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px 20px;">
@@ -495,7 +504,7 @@ function toggleBilling(){
 
 <footer style="background:#111827;padding:48px 32px 28px;color:#9CA3AF;">
   <div style="max-width:1160px;margin:0 auto;">
-    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,0.07);margin-bottom:28px;">
+    <div class="footer-cols-grid">
       <div>
         <img loading="lazy" src="logo.png" alt="Finosutra" style="height:32px;width:auto;display:block;margin-bottom:12px;">
         <p style="font-size:13px;line-height:1.7;max-width:220px;">Finance on autopilot — smart tools built for CAs, CFOs and finance teams across India.</p>
@@ -563,6 +572,25 @@ function handleFormSubmit(e) {
   })
   .catch(function() { form.submit(); });
 }
+</script>
+
+<script>
+(function(){
+  var btn = document.getElementById('navToggle');
+  var links = document.querySelector('.nav-links');
+  var actions = document.querySelector('.nav-actions');
+  if(!btn) return;
+  btn.addEventListener('click', function(){
+    links && links.classList.toggle('open');
+    actions && actions.classList.toggle('open');
+  });
+  document.addEventListener('click', function(e){
+    if(!btn.contains(e.target) && links && !links.contains(e.target)){
+      links.classList.remove('open');
+      actions && actions.classList.remove('open');
+    }
+  });
+})();
 </script>
 
 </body>
