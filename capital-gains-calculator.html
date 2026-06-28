@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -358,6 +358,36 @@ table.tbl td:last-child{text-align:right;font-weight:600}
 </div><!-- /layout -->
 </div><!-- /wrap -->
 
+<style>
+.fs-share-bar{display:flex;align-items:center;gap:10px;padding:14px 24px;max-width:1200px;margin:0 auto 20px;flex-wrap:wrap}
+.fs-share-lbl{font-size:13px;font-weight:600;color:#6B7280;margin-right:4px}
+.fs-share-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;transition:all .15s;border:1.5px solid #E5E7EB;background:#fff;color:#374151;line-height:1}
+.fs-share-btn:hover{border-color:#6366F1;color:#4F46E5;background:#EEF2FF}
+.fs-wa-btn{border-color:#25D366;color:#128C7E;background:#F0FDF4}
+.fs-wa-btn:hover{background:#25D366;color:#fff;border-color:#25D366}
+.fs-li-btn{border-color:#0A66C2;color:#0A66C2;background:#EFF6FF}
+.fs-li-btn:hover{background:#0A66C2;color:#fff;border-color:#0A66C2}
+</style>
+<div class="fs-share-bar">
+  <span class="fs-share-lbl">Share:</span>
+  <button class="fs-share-btn" id="fsCopyBtn" onclick="fsCopyLink(this)"><i class="fa-solid fa-link"></i> Copy link</button>
+  <a class="fs-share-btn fs-wa-btn" id="fsWaShare" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+  <a class="fs-share-btn fs-li-btn" id="fsLiShare" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+</div>
+<script>
+function fsCopyLink(btn){
+  navigator.clipboard.writeText(location.href).then(function(){
+    btn.innerHTML='<i class="fa-solid fa-check"></i> Copied!';
+    setTimeout(function(){btn.innerHTML='<i class="fa-solid fa-link"></i> Copy link';},2000);
+  });
+}
+(function(){
+  var u=encodeURIComponent(location.href);
+  var t=encodeURIComponent(document.title+' — '+location.href);
+  var wa=document.getElementById('fsWaShare'); if(wa) wa.href='https://wa.me/?text='+t;
+  var li=document.getElementById('fsLiShare'); if(li) li.href='https://www.linkedin.com/sharing/share-offsite/?url='+u;
+})();
+</script>
 <footer class="site-footer">
   <div class="footer-badges">
     <span class="footer-badge">✓ Finance Act 2024 Rates</span>
