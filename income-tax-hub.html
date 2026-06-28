@@ -71,6 +71,13 @@ footer{background:#111827;padding:32px;color:#9CA3AF;}
 .footer-links{display:flex;gap:14px;flex-wrap:wrap;}
 .footer-links a{font-size:12px;color:#6B7280;text-decoration:none;}
 @media(max-width:768px){.page-hero{padding:32px 20px;}.page-hero-inner{flex-direction:column;align-items:flex-start;}.section{padding:32px 20px 48px;}}
+.site-footer{background:#1E1B4B;color:rgba(255,255,255,0.7);padding:28px 32px;text-align:center;font-size:12px;line-height:1.8;margin-top:40px;}
+.site-footer .footer-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:14px;}
+.site-footer .footer-badge{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:4px 13px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);display:inline-flex;align-items:center;gap:5px;}
+.site-footer .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-top:10px;}
+.site-footer .footer-links a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:11px;}
+.site-footer .footer-links a:hover{color:rgba(255,255,255,0.85);}
+.site-footer .footer-tagline{margin-top:12px;font-size:11px;color:rgba(255,255,255,0.35);}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="auth.js"></script>
@@ -121,23 +128,19 @@ footer{background:#111827;padding:32px;color:#9CA3AF;}
   </div>
 </div>
 </div>
-<footer>
-  <div class="footer-inner">
-    <div>
-      <img src="logo.png" alt="Finosutra" style="height:28px;width:auto;display:block;margin-bottom:4px;">
-      <p style="font-size:12px;">&#169; 2026 Finosutra. Finance on Autopilot.</p>
-    </div>
-    <div class="footer-links">
-      <a href="index.html">Home</a>
-      <a href="indas-tools.html">IND AS</a>
-      <a href="gst-tools.html">GST</a>
-      <a href="income-tax-hub.html">Income Tax</a>
-      <a href="salary-hr.html">Personal Finance</a>
-      <a href="templates.html">Templates</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-    </div>
+<footer class="site-footer">
+  <div class="footer-badges">
+    <span class="footer-badge">✓ FY 2026-27 Income Tax Tools</span>
+    <span class="footer-badge">✓ New vs Old Regime Analysis</span>
+    <span class="footer-badge">🇮🇳 Made in India for Indian CAs</span>
   </div>
+  <div class="footer-links">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Use</a>
+    <a href="mailto:fino.sutra07@gmail.com">Contact</a>
+    <a href="blog.html">Blog</a>
+  </div>
+  <div class="footer-tagline">© 2025 Finosutra. Built for Chartered Accountants and Finance Teams across India.</div>
 </footer>
 <div id="notifyModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;">
   <div style="background:#fff;border-radius:16px;padding:32px;max-width:400px;width:90%;margin:20px;">

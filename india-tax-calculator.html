@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -207,9 +207,16 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 #mainNav .nav-toggle{display:none;background:none;border:none;font-size:20px;color:#111827;cursor:pointer;padding:4px;}
 @media(max-width:900px){#mainNav .nav-links{display:none;}}
 @media(max-width:768px){#mainNav{padding:0 16px;}#mainNav .nav-actions{display:none;}#mainNav .nav-toggle{display:block;}#mainNav .nav-links.open,#mainNav .nav-actions.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid rgba(99,102,241,0.08);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
+.site-footer{background:#1E1B4B;color:rgba(255,255,255,0.7);padding:28px 32px;text-align:center;font-size:12px;line-height:1.8;margin-top:40px;}
+.site-footer .footer-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:14px;}
+.site-footer .footer-badge{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:4px 13px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);display:inline-flex;align-items:center;gap:5px;}
+.site-footer .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-top:10px;}
+.site-footer .footer-links a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:11px;}
+.site-footer .footer-links a:hover{color:rgba(255,255,255,0.85);}
+.site-footer .footer-tagline{margin-top:12px;font-size:11px;color:rgba(255,255,255,0.35);}
 </style>
-<!-- SheetJS for Excel generation -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<!-- SheetJS with style support -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 <!-- Razorpay -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script type="application/ld+json">
@@ -1461,8 +1468,16 @@ function calculate(){
 }
 
 function recalculate(){
-  calculate();
-  goSection('result');
+  // NOTE: Previously this just re-ran calculate() + stayed on the result
+  // page. Since no inputs can change while already on the result page,
+  // it silently re-rendered the identical numbers — which looked like a
+  // broken/dead button to users (reported via ISSUES docx, 2026-06-13).
+  // Fix: send the user back to their inputs so "Recalculate" actually
+  // does something, with a toast confirming the action + next step.
+  if(typeof showToast === 'function'){
+    showToast('Edit any field below, then click "Compute & Compare" to see updated results.', '#6366F1');
+  }
+  goSection('personal');
 }
 
 // ===================================================================
@@ -1711,6 +1726,19 @@ function initiateExcelPayment(){
   }
   const btn = document.getElementById('btnExp');
   if(!btn) return;
+
+  // Dynamically load Razorpay if not yet available (ad-blocker/firewall may
+  // have blocked the checkout.js <script> tag from loading on page load)
+  if(typeof Razorpay === 'undefined'){
+    if(typeof showToast === 'function') showToast('Loading payment…','#6366F1');
+    var s = document.createElement('script');
+    s.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    s.onload = function(){ initiateExcelPayment(); };
+    s.onerror = function(){ if(typeof showToast === 'function') showToast('Payment blocked by your browser/network. Disable ad-blocker and retry, or email fino.sutra07@gmail.com.','#EF4444'); };
+    document.head.appendChild(s);
+    return;
+  }
+
   btn.innerHTML = '⏳ Opening payment...';
   btn.disabled = true;
 
@@ -1740,8 +1768,15 @@ function initiateExcelPayment(){
   };
   // Save state before payment (mobile UPI kills JS memory)
   try { localStorage.setItem('fino_tax_state', JSON.stringify({data: lastResults, ts: Date.now()})); } catch(e){}
-  const rzp = new Razorpay(options);
-  rzp.open();
+  try{
+    const rzp = new Razorpay(options);
+    rzp.open();
+  } catch(e){
+    btn.innerHTML = '⬇ Download Excel Report — ₹99';
+    btn.disabled = false;
+    alert('Could not open payment window. This is usually caused by an ad-blocker or privacy extension blocking the payment script. Please disable it for this site and try again, or email fino.sutra07@gmail.com and we will help.');
+    console.error(e);
+  }
 }
 
 // ===================================================================
@@ -1763,189 +1798,310 @@ function generateAndDownloadExcel(paymentId){
 
   const wb = XLSX.utils.book_new();
 
-  // ── Styles helper (cell objects) ──
-  function C(v, s){ return { v, s }; }
+  // ── Finosutra colour palette ──────────────────────────────────────────────
+  const C_BRAND  = '4F46E5';
+  const C_NAVY   = '1E1B4B';
+  const C_ACCENT = 'D97706';
+  const C_LIGHT  = 'EEF2FF';
+  const C_STRIPE = 'F8F9FF';
+  const C_GREEN  = '059669';
+  const C_WHITE  = 'FFFFFF';
+  const C_BORDER = 'C7D2FE';
+  const INR_FMT  = '#,##0';
 
-  const PURPLE   = '6366F1';
-  const DPURPLE  = '1E1B4B';
-  const WHITE    = 'FFFFFF';
-  const LBLUE    = 'EEF2FF';
-  const GREEN_BG = 'ECFDF5';
-  const GRAY_BG  = 'F8FAFC';
-  const INPUT_C  = '0000FF';
-  const LINK_C   = '008000';
+  const bdr = {
+    top:{style:'thin',color:{rgb:C_BORDER}}, bottom:{style:'thin',color:{rgb:C_BORDER}},
+    left:{style:'thin',color:{rgb:C_BORDER}}, right:{style:'thin',color:{rgb:C_BORDER}}
+  };
+  const bdrMed = {
+    top:{style:'medium',color:{rgb:C_BRAND}}, bottom:{style:'medium',color:{rgb:C_BRAND}},
+    left:{style:'medium',color:{rgb:C_BRAND}}, right:{style:'medium',color:{rgb:C_BRAND}}
+  };
+
+  function mk(o){ return Object.assign({font:{name:'Calibri',sz:10},alignment:{vertical:'center'}}, o); }
+
+  const S = {
+    brand : mk({font:{name:'Calibri',sz:18,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:C_BRAND}}, alignment:{horizontal:'center',vertical:'center'}}),
+    nav   : mk({font:{name:'Calibri',sz:11,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:C_NAVY}},  alignment:{horizontal:'center',vertical:'center'}}),
+    hdr   : mk({font:{name:'Calibri',sz:10,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:C_BRAND}}, alignment:{horizontal:'center',vertical:'center',wrapText:true}, border:bdr}),
+    secHdr: mk({font:{name:'Calibri',sz:11,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:C_NAVY}},  alignment:{horizontal:'left',vertical:'center'},  border:bdr}),
+    subHdr: mk({font:{name:'Calibri',sz:10,bold:true,color:{rgb:C_NAVY}},     fill:{fgColor:{rgb:C_LIGHT}}, alignment:{horizontal:'left',vertical:'center'},  border:bdr}),
+    lbl   : mk({font:{name:'Calibri',sz:10,color:{rgb:C_NAVY}},               fill:{fgColor:{rgb:C_WHITE}}, alignment:{horizontal:'left',vertical:'center'},  border:bdr}),
+    lblS  : mk({font:{name:'Calibri',sz:10,color:{rgb:C_NAVY}},               fill:{fgColor:{rgb:C_STRIPE}},alignment:{horizontal:'left',vertical:'center'},  border:bdr}),
+    note  : mk({font:{name:'Calibri',sz:10,color:{rgb:'6B7280'}},             fill:{fgColor:{rgb:C_WHITE}}, alignment:{horizontal:'left',vertical:'center'},  border:bdr}),
+    noteS : mk({font:{name:'Calibri',sz:10,color:{rgb:'6B7280'}},             fill:{fgColor:{rgb:C_STRIPE}},alignment:{horizontal:'left',vertical:'center'},  border:bdr}),
+    num   : mk({font:{name:'Calibri',sz:10,color:{rgb:C_NAVY}},               fill:{fgColor:{rgb:C_WHITE}}, alignment:{horizontal:'right',vertical:'center'}, border:bdr, numFmt:INR_FMT}),
+    numS  : mk({font:{name:'Calibri',sz:10,color:{rgb:C_NAVY}},               fill:{fgColor:{rgb:C_STRIPE}},alignment:{horizontal:'right',vertical:'center'}, border:bdr, numFmt:INR_FMT}),
+    tot   : mk({font:{name:'Calibri',sz:10,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:C_ACCENT}},alignment:{horizontal:'right',vertical:'center'}, border:bdrMed, numFmt:INR_FMT}),
+    totL  : mk({font:{name:'Calibri',sz:10,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:C_ACCENT}},alignment:{horizontal:'left',vertical:'center'},  border:bdrMed}),
+    good  : mk({font:{name:'Calibri',sz:10,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:C_GREEN}}, alignment:{horizontal:'right',vertical:'center'}, border:bdrMed, numFmt:INR_FMT}),
+    goodL : mk({font:{name:'Calibri',sz:10,bold:true,color:{rgb:C_WHITE}},    fill:{fgColor:{rgb:C_GREEN}}, alignment:{horizontal:'left',vertical:'center'},  border:bdrMed}),
+    meta  : mk({font:{name:'Calibri',sz:10,bold:true,color:{rgb:C_NAVY}},     fill:{fgColor:{rgb:C_LIGHT}}, alignment:{horizontal:'left',vertical:'center'}}),
+    metaV : mk({font:{name:'Calibri',sz:10,color:{rgb:C_NAVY}},               fill:{fgColor:{rgb:C_WHITE}}, alignment:{horizontal:'left',vertical:'center'}}),
+    slab  : mk({font:{name:'Calibri',sz:10,color:{rgb:C_NAVY}},               fill:{fgColor:{rgb:C_WHITE}}, alignment:{horizontal:'center',vertical:'center'},border:bdr}),
+    slabS : mk({font:{name:'Calibri',sz:10,color:{rgb:C_NAVY}},               fill:{fgColor:{rgb:C_STRIPE}},alignment:{horizontal:'center',vertical:'center'},border:bdr})
+  };
+
+  function cs(v,s){ return {t:'s',v:String(v==null?'':v),s:s}; }
+  function cn(v,s){ return {t:'n',v:Number(v)||0,s:s}; }
+  function cb(){    return {t:'z',v:'',s:{}}; }
+
+  function setRows(ws, defs){
+    if(!ws['!rows']) ws['!rows']=[];
+    defs.forEach(function(d){ while(ws['!rows'].length<=d[0]) ws['!rows'].push({}); ws['!rows'][d[0]]={hpt:d[1]}; });
+  }
+  function styleRange(ws, range, style){
+    const rng = XLSX.utils.decode_range(range);
+    for(let r=rng.s.r;r<=rng.e.r;r++) for(let c=rng.s.c;c<=rng.e.c;c++){
+      const addr = XLSX.utils.encode_cell({r,c});
+      if(!ws[addr]) ws[addr]={t:'z',v:''};
+      ws[addr].s = Object.assign({},ws[addr].s||{},style);
+    }
+  }
 
   function inr(n){ return Math.round(n||0).toLocaleString('en-IN'); }
-  function pct(n){ return ((n||0)*100).toFixed(2)+'%'; }
 
-  // ─── SHEET 1: COVER ───
-  const coverData = [
-    ['FINOSUTRA — Finance on Autopilot', '', '', ''],
-    ['Income Tax Computation Report — FY 2026-27 | AY 2027-28','','',''],
-    [''],
-    ['TAXPAYER DETAILS', '', '', ''],
-    ['Name',              name,            '', ''],
-    ['PAN',               pan,             '', ''],
-    ['Date of Birth',     dob,             '', ''],
-    ['Category',          inp.category==='super_senior'?'Super Senior (80+)':inp.category==='senior'?'Senior Citizen (60-79)':'Individual (Below 60)', '', ''],
-    ['Tax Regime Compared','New vs Old Regime', '', ''],
-    [''],
-    ['TAX SUMMARY', '', 'NEW REGIME (₹)', 'OLD REGIME (₹)'],
-    ['Gross Total Income',           '', inr(nr.grossTotalIncome),    inr(or.grossTotalIncome)],
-    ['Total Deductions',             '', inr(nr.totalDeductions),     inr(or.totalDeductions)],
-    ['Taxable Income',               '', inr(nr.taxableNormal),       inr(or.taxableNormal)],
-    ['Slab Tax',                     '', inr(nr.slabTax),             inr(or.slabTax)],
-    ['Capital Gains Tax',            '', inr(nr.cgTax),               inr(or.cgTax)],
-    ['Rebate u/s 87A',               '', inr(nr.rebate),              inr(or.rebate)],
-    ['Surcharge',                    '', inr(nr.surcharge),           inr(or.surcharge)],
-    ['Health & Education Cess (4%)', '', inr(nr.cess),                inr(or.cess)],
-    ['TOTAL TAX LIABILITY',          '', inr(nr.totalTax),            inr(or.totalTax)],
-    ['Tax Credits (TDS / Advance)',  '', inr(nr.totalCredits),        inr(or.totalCredits)],
-    [nr.totalTax<=or.totalTax?'✓ RECOMMENDED — New Regime saves ₹'+inr(Math.abs(nr.totalTax-or.totalTax)):'✓ RECOMMENDED — Old Regime saves ₹'+inr(Math.abs(or.totalTax-nr.totalTax)), '', '', ''],
-    ['NET TAX PAYABLE / (REFUND)', '', inr(nr.netPayable), inr(or.netPayable)],
-    [''],
-    ['Payment ID: '+paymentId, '', 'Generated by Finosutra', 'finosutra.com'],
-    ['⚠ For estimation only. Consult a CA for official filing.','','',''],
-  ];
-  const wsCover = XLSX.utils.aoa_to_sheet(coverData);
-  wsCover['!cols'] = [{wch:40},{wch:28},{wch:20},{wch:20}];
-  XLSX.utils.book_append_sheet(wb, wsCover, 'Cover');
+  const now = new Date();
+  const betterRegime = nr.totalTax <= or.totalTax ? 'New Tax Regime' : 'Old Tax Regime';
+  const taxSaving = Math.abs(nr.totalTax - or.totalTax);
 
-  // ─── SHEET 2: INCOME SCHEDULE ───
-  const incData = [
-    ['INCOME SCHEDULE — FY 2026-27 | AY 2027-28', '', '', ''],
-    ['HEAD OF INCOME', 'NOTES', 'NEW REGIME (₹)', 'OLD REGIME (₹)'],
-    ['A.  INCOME FROM SALARY','','',''],
-    ['Gross Salary',                   'As per Form 16',          inr(nr.grossSalary),       inr(or.grossSalary)],
-    ['Less: HRA Exemption [10(13A)]',  'Metro/Non-metro calc',    nr.hraExempt?'-'+inr(nr.hraExempt):'—',  or.hraExempt?'-'+inr(or.hraExempt):'—'],
-    ['Less: Standard Deduction [16(ia)]','₹75,000 / ₹50,000',    '-'+inr(nr.stdDed),        '-'+inr(or.stdDed)],
-    ['Less: Professional Tax [16(iii)]','Max ₹2,500',             nr.profTax?'-'+inr(nr.profTax):'—',       or.profTax?'-'+inr(or.profTax):'—'],
-    ['Net Salary Income',               '',                        inr(nr.salaryTotal),       inr(or.salaryTotal)],
-    [''],
-    ['B.  INCOME FROM HOUSE PROPERTY','','',''],
-    ['Self-Occupied (Interest loss)',  'Capped at ₹2,00,000',     nr.sopIncome?inr(nr.sopIncome):'—',        or.sopIncome?inr(or.sopIncome):'—'],
-    ['Let-Out Property (Net)',         'After 30% std ded',        nr.lopNet?inr(nr.lopNet):'—',              or.lopNet?inr(or.lopNet):'—'],
-    ['Net House Property Income',      'Loss capped at ₹2L',       inr(nr.housePropertyIncome), inr(or.housePropertyIncome)],
-    [''],
-    ['C.  CAPITAL GAINS','','',''],
-    ['Equity LTCG (after ₹1.25L exempt)','12.5% flat',            inr(nr.eqLTCGTaxable),     inr(or.eqLTCGTaxable)],
-    ['Equity STCG',                   '20% flat',                  inr(nr.cg.eq_stcg),        inr(or.cg.eq_stcg)],
-    ['Property LTCG',                 '12.5% or 20% indexed',      inr(nr.cg.prop_ltcg),      inr(or.cg.prop_ltcg)],
-    ['Other CG (slab-rated)',          'Normal slab rates',         inr(nr.cgSlab),            inr(or.cgSlab)],
-    [''],
-    ['D.  BUSINESS / PROFESSIONAL INCOME','','',''],
-    ['Total Business Income',          'Presumptive + Other',       inr(nr.businessIncome),    inr(or.businessIncome)],
-    [''],
-    ['E.  OTHER SOURCES','','',''],
-    ['Total Other Sources',            'Interest + Dividend + Gift',inr(nr.otherSources),      inr(or.otherSources)],
-    ['Special Rate Income (Lottery)',  '@30%',                      inr(nr.specialIncome),     inr(or.specialIncome)],
-    [''],
-    ['GROSS TOTAL INCOME',             '',                          inr(nr.grossTotalIncome),  inr(or.grossTotalIncome)],
-  ];
-  const wsInc = XLSX.utils.aoa_to_sheet(incData);
-  wsInc['!cols'] = [{wch:38},{wch:26},{wch:20},{wch:20}];
-  XLSX.utils.book_append_sheet(wb, wsInc, 'Income Schedule');
+  /* ═════════════════════════════════════════
+     SHEET 1 — COVER
+  ═════════════════════════════════════════ */
+  {
+    const ws = {};
+    ws['A1'] = cs('FINOSUTRA', S.brand);
+    ws['A2'] = cs('Income Tax Computation Report  ·  FY 2026-27 | AY 2027-28', S.nav);
+    ws['A3'] = cb();
+    ws['A4'] = cs('TAXPAYER DETAILS', S.secHdr);
+    ws['A5'] = cs('Name',           S.meta);  ws['B5'] = cs(name, S.metaV);
+    ws['A6'] = cs('PAN',            S.meta);  ws['B6'] = cs(pan,  S.metaV);
+    ws['A7'] = cs('Date of Birth',  S.meta);  ws['B7'] = cs(dob,  S.metaV);
+    ws['A8'] = cs('Category',       S.meta);  ws['B8'] = cs(inp.category==='super_senior'?'Super Senior (80+)':inp.category==='senior'?'Senior Citizen (60-79)':'Individual (Below 60)', S.metaV);
+    ws['A9'] = cs('Generated On',   S.meta);  ws['B9'] = cs(now.toLocaleString('en-IN'), S.metaV);
+    ws['A10']= cs('Payment ID',     S.meta);  ws['B10']= cs(paymentId, S.metaV);
+    ws['A11']= cb();
+    ws['A12']= cs('TAX SUMMARY', S.secHdr);
+    ws['A13']= cs('',S.hdr); ws['B13']= cs('NEW REGIME (₹)', S.hdr); ws['C13']= cs('OLD REGIME (₹)', S.hdr);
+    const summaryRows = [
+      ['Gross Total Income',           nr.grossTotalIncome,   or.grossTotalIncome],
+      ['Total Deductions',             nr.totalDeductions,    or.totalDeductions],
+      ['Taxable Income',               nr.taxableNormal,      or.taxableNormal],
+      ['Slab Tax',                     nr.slabTax,            or.slabTax],
+      ['Capital Gains Tax',            nr.cgTax,              or.cgTax],
+      ['Rebate u/s 87A',               nr.rebate,             or.rebate],
+      ['Surcharge',                    nr.surcharge,          or.surcharge],
+      ['Health & Education Cess (4%)', nr.cess,               or.cess],
+      ['TOTAL TAX LIABILITY',          nr.totalTax,           or.totalTax],
+      ['Tax Credits (TDS / Advance)',  nr.totalCredits,       or.totalCredits],
+      ['NET TAX PAYABLE / (REFUND)',   nr.netPayable,         or.netPayable],
+    ];
+    summaryRows.forEach(function(row, i){
+      const stripe = i%2!==0;
+      const rowNum = 14 + i;
+      const isTot = row[0]==='TOTAL TAX LIABILITY' || row[0]==='NET TAX PAYABLE / (REFUND)';
+      ws['A'+rowNum] = cs(row[0], isTot ? S.totL : (stripe?S.lblS:S.lbl));
+      ws['B'+rowNum] = cn(row[1], isTot ? S.tot  : (stripe?S.numS:S.num));
+      ws['C'+rowNum] = cn(row[2], isTot ? S.tot  : (stripe?S.numS:S.num));
+    });
+    const recRow = 25;
+    ws['A'+recRow] = cs(betterRegime+' RECOMMENDED — Tax Saving: ₹'+inr(taxSaving), S.goodL);
+    ws['B'+recRow] = cs('', S.goodL);
+    ws['C'+recRow] = cs('', S.goodL);
+    ws['A26']= cb();
+    ws['A27']= cs('Prepared by Finosutra  ·  finosutra.com', mk({font:{name:'Calibri',sz:9,color:{rgb:'9CA3AF'}},alignment:{horizontal:'center'}}));
+    ws['A28']= cs('⚠ For estimation only. Consult a CA for official filing.', mk({font:{name:'Calibri',sz:9,italic:true,color:{rgb:'9CA3AF'}},alignment:{horizontal:'center'}}));
+    ws['!ref']='A1:C28';
+    ws['!cols']=[{wch:38},{wch:22},{wch:22}];
+    setRows(ws,[[0,36],[1,22],[3,18],[11,18],[12,18]]);
+    XLSX.utils.book_append_sheet(wb, ws, 'Cover');
+  }
 
-  // ─── SHEET 3: DEDUCTIONS ───
-  const dedData = [
-    ['DEDUCTIONS SCHEDULE — Chapter VI-A (Old Regime)', '', '', ''],
-    ['SECTION', 'LIMIT', 'ENTERED (₹)', 'ALLOWED (₹)'],
-    ['80C — EPF / PPF / ELSS / LIC etc.', 'Max ₹1,50,000', inr((inp.epf||0)+(inp.ppf||0)+(inp.elss||0)+(inp.lic||0)+(inp.tax_fd||0)+(inp.nsc||0)+(inp.tuition||0)+(inp.hl_principal||0)+(inp.other_80c||0)), inr(or.ded80C)],
-    ['80CCD(1B) — Additional NPS',         'Max ₹50,000',   inr(inp.nps_additional||0),   inr(or.ded80CCD1B)],
-    ['80CCD(2) — Employer NPS',            '10% of Basic',   inr(inp.emp_nps||0),          inr(or.ded80CCD2)],
-    ['80D — Medical Insurance',            '₹25K+₹25K',      inr((inp.med_self||0)+(inp.med_parents||0)), inr(or.ded80D)],
-    ['80E — Education Loan Interest',      'No limit',        inr(inp.d80e||0),             inr(or.ded80E)],
-    ['80EE / 80EEA — Home Loan Interest',  'Max ₹50K/₹1.5L', inr((inp.d80ee||0)+(inp.d80eea||0)), '—'],
-    ['80G — Donations (50% qualifying)',   '10% of GTI',      inr(inp.d80g||0),             '—'],
-    ['80TTA / 80TTB — Interest',           '₹10K / ₹50K',    inr((inp.d80tta||0)+(inp.d80ttb||0)), '—'],
-    ['Other Deductions',                   '',                inr(inp.other_ded||0),        '—'],
-    [''],
-    ['TOTAL DEDUCTIONS (Old Regime)',       '',               '',                           inr(or.totalDeductions)],
-    ['New Regime Deductions (80CCD2+Std)', '',               '',                           inr(nr.totalDeductions)],
-    [''],
-    ['NOTE: Deductions in New Regime restricted to Standard Deduction (₹75,000) + 80CCD(2) only.','','',''],
-  ];
-  const wsDed = XLSX.utils.aoa_to_sheet(dedData);
-  wsDed['!cols'] = [{wch:40},{wch:22},{wch:18},{wch:18}];
-  XLSX.utils.book_append_sheet(wb, wsDed, 'Deductions');
+  /* ═════════════════════════════════════════
+     SHEET 2 — INCOME SCHEDULE
+  ═════════════════════════════════════════ */
+  {
+    const rows = [];
+    function addBrand(){ rows.push([cs('INCOME SCHEDULE — FY 2026-27 | AY 2027-28',S.brand),cs('',S.brand),cs('',S.brand),cs('',S.brand)]); }
+    function addHdr(cells){ rows.push(cells.map(c=>cs(c,S.hdr))); }
+    function addSec(t){ rows.push([cs(t,S.secHdr),cs('',S.secHdr),cs('',S.secHdr),cs('',S.secHdr)]); }
+    function addRow(lbl,note,nv,ov,stripe,isTot){
+      const L=stripe?S.lblS:S.lbl, N=stripe?S.numS:S.num;
+      rows.push([
+        cs(lbl,  isTot?S.totL:L),
+        cs(note||'', isTot?S.totL:(stripe?S.noteS:S.note)),
+        cs(String(nv), isTot?S.tot:N),
+        cs(String(ov), isTot?S.tot:N)
+      ]);
+    }
+    function blank(){ rows.push([cb(),cb(),cb(),cb()]); }
 
-  // ─── SHEET 4: TAX COMPUTATION (detailed) ───
-  const taxData = [
-    ['TAX COMPUTATION — New Regime vs Old Regime — FY 2026-27', '', '', ''],
-    ['PARTICULARS', 'NOTES', 'NEW REGIME (₹)', 'OLD REGIME (₹)'],
-    [''],
-    ['INCOME','','',''],
-    ['Gross Total Income',            '',              inr(nr.grossTotalIncome),    inr(or.grossTotalIncome)],
-    ['Less: Total Deductions',        'Ch VI-A',       nr.totalDeductions?'-'+inr(nr.totalDeductions):'—', '-'+inr(or.totalDeductions)],
-    ['Taxable Income (Normal Slab)',  '',              inr(nr.taxableNormal),       inr(or.taxableNormal)],
-    ['Agricultural Income (Exempt)',  'For integration',inr(nr.agriIncome||0),     inr(or.agriIncome||0)],
-    [''],
-    ['SLAB TAX','','',''],
-    ['Income Tax on Normal Slab',     'Per FY 2026-27 slabs', inr(nr.slabTax),     inr(or.slabTax)],
-    ['Tax on Capital Gains',          'LTCG/STCG rates',      inr(nr.cgTax),       inr(or.cgTax)],
-    ['Tax on Special Rate Income',    '@30% (Lottery etc.)',   inr(nr.specialTax),  inr(or.specialTax)],
-    ['Total Tax Before Rebate',       '',              inr(nr.slabTax+nr.cgTax+nr.specialTax), inr(or.slabTax+or.cgTax+or.specialTax)],
-    [''],
-    ['REBATE & RELIEF','','',''],
-    ['Less: Rebate u/s 87A',          nr.rebate?'Full rebate (≤₹12L)':'Not applicable', nr.rebate?'-'+inr(nr.rebate):'—', or.rebate?'-'+inr(or.rebate):'—'],
-    ['Tax After Rebate',              '',              inr(nr.taxAfterRebate),      inr(or.taxAfterRebate)],
-    [''],
-    ['SURCHARGE & CESS','','',''],
-    ['Add: Surcharge',                nr.surcharge?'Applicable':'Nil (income < ₹50L)', nr.surcharge?inr(nr.surcharge):'—', or.surcharge?inr(or.surcharge):'—'],
-    ['Less: Marginal Relief',         '',              nr.marginalRelief?'-'+inr(nr.marginalRelief):'—', or.marginalRelief?'-'+inr(or.marginalRelief):'—'],
-    ['Add: Health & Education Cess',  '@4% on tax+surcharge',  inr(nr.cess),       inr(or.cess)],
-    [''],
-    ['TOTAL TAX LIABILITY',           '',              inr(nr.totalTax),            inr(or.totalTax)],
-    [''],
-    ['TAX REGIME RECOMMENDATION',     '', nr.totalTax<=or.totalTax?'✓ RECOMMENDED':'', or.totalTax<nr.totalTax?'✓ RECOMMENDED':''],
-    ['Tax Saving',                    nr.totalTax<=or.totalTax?'New saves ₹'+inr(or.totalTax-nr.totalTax):'Old saves ₹'+inr(nr.totalTax-or.totalTax),
-     nr.totalTax<=or.totalTax?'SAVE ₹'+inr(or.totalTax-nr.totalTax):'', or.totalTax<nr.totalTax?'SAVE ₹'+inr(nr.totalTax-or.totalTax):''],
-    [''],
-    ['TAX CREDITS & FINAL PAYABLE','','',''],
-    ['Less: TDS on Salary',           'Per Form 16',   inr(inp.tds_salary||0),      inr(inp.tds_salary||0)],
-    ['Less: TDS on Other Income',     'Per Form 26AS', inr(inp.tds_other||0),       inr(inp.tds_other||0)],
-    ['Less: Advance Tax Paid',        '',              inr(inp.advance_tax||0),     inr(inp.advance_tax||0)],
-    ['Add: Interest 234A/B/C',        'If applicable', inr(inp.int_234a+inp.int_234b+inp.int_234c||0), inr(inp.int_234a+inp.int_234b+inp.int_234c||0)],
-    ['NET TAX PAYABLE / (REFUND)',    '',              inr(nr.netPayable),           inr(or.netPayable)],
-  ];
-  const wsTax = XLSX.utils.aoa_to_sheet(taxData);
-  wsTax['!cols'] = [{wch:36},{wch:28},{wch:20},{wch:20}];
-  XLSX.utils.book_append_sheet(wb, wsTax, 'Tax Computation');
+    addBrand();
+    addHdr(['HEAD OF INCOME','NOTES','NEW REGIME (₹)','OLD REGIME (₹)']);
+    addSec('A.  INCOME FROM SALARY');
+    addRow('Gross Salary',                   'As per Form 16',       inr(nr.grossSalary),  inr(or.grossSalary),  false,false);
+    addRow('Less: HRA Exemption [10(13A)]',  'Metro/Non-metro',      nr.hraExempt?'-'+inr(nr.hraExempt):'—', or.hraExempt?'-'+inr(or.hraExempt):'—', true,false);
+    addRow('Less: Standard Deduction [16(ia)]','₹75,000/₹50,000',   '-'+inr(nr.stdDed),   '-'+inr(or.stdDed),   false,false);
+    addRow('Less: Professional Tax [16(iii)]','Max ₹2,500',          nr.profTax?'-'+inr(nr.profTax):'—', or.profTax?'-'+inr(or.profTax):'—', true,false);
+    addRow('Net Salary Income',              '',                      inr(nr.salaryTotal),  inr(or.salaryTotal),  false,true);
+    blank();
+    addSec('B.  INCOME FROM HOUSE PROPERTY');
+    addRow('Self-Occupied (Interest loss)',   'Capped at ₹2,00,000', nr.sopIncome?inr(nr.sopIncome):'—', or.sopIncome?inr(or.sopIncome):'—', false,false);
+    addRow('Let-Out Property (Net)',          'After 30% std ded',   nr.lopNet?inr(nr.lopNet):'—', or.lopNet?inr(or.lopNet):'—', true,false);
+    addRow('Net House Property',             'Loss capped at ₹2L',   inr(nr.housePropertyIncome), inr(or.housePropertyIncome), false,true);
+    blank();
+    addSec('C.  CAPITAL GAINS');
+    addRow('Equity LTCG (after ₹1.25L)',     '12.5% flat',          inr(nr.eqLTCGTaxable), inr(or.eqLTCGTaxable), false,false);
+    addRow('Equity STCG',                     '20% flat',            inr(nr.cg.eq_stcg),    inr(or.cg.eq_stcg),    true,false);
+    addRow('Property LTCG',                   '12.5%/20% indexed',   inr(nr.cg.prop_ltcg),  inr(or.cg.prop_ltcg),  false,false);
+    addRow('Other CG (slab-rated)',           'Normal slabs',         inr(nr.cgSlab),        inr(or.cgSlab),        true,false);
+    blank();
+    addSec('D.  BUSINESS / PROFESSIONAL');
+    addRow('Total Business Income',           'Presumptive + Other',  inr(nr.businessIncome), inr(or.businessIncome), false,false);
+    blank();
+    addSec('E.  OTHER SOURCES');
+    addRow('Total Other Sources',             'Interest+Dividend+Gift',inr(nr.otherSources),  inr(or.otherSources),  false,false);
+    addRow('Special Rate Income (Lottery)',   '@30%',                  inr(nr.specialIncome), inr(or.specialIncome), true,false);
+    blank();
+    addRow('GROSS TOTAL INCOME',              '',                      inr(nr.grossTotalIncome), inr(or.grossTotalIncome), false,true);
 
-  // ─── SHEET 5: SLAB SCHEDULE ───
-  const slabData = [
-    ['TAX SLAB SCHEDULE — FY 2026-27 | AY 2027-28', '', '', ''],
-    [''],
-    ['NEW TAX REGIME', '', '', ''],
-    ['Income Range', 'From (₹)', 'To (₹)', 'Tax Rate'],
-    ['Nil',       '0',         '4,00,000',   '0%'],
-    ['5%',        '4,00,001',  '8,00,000',   '5%'],
-    ['10%',       '8,00,001',  '12,00,000',  '10%'],
-    ['15%',       '12,00,001', '16,00,000',  '15%'],
-    ['20%',       '16,00,001', '20,00,000',  '20%'],
-    ['25%',       '20,00,001', '24,00,000',  '25%'],
-    ['30%',       '24,00,001', 'Above',      '30%'],
-    ['Standard Deduction: ₹75,000 | Rebate u/s 87A: Full rebate if income ≤ ₹12,00,000','','',''],
-    [''],
-    ['OLD TAX REGIME — Individual (Below 60)', '', '', ''],
-    ['Income Range', 'From (₹)', 'To (₹)', 'Tax Rate'],
-    ['Nil',       '0',         '2,50,000',   '0%'],
-    ['5%',        '2,50,001',  '5,00,000',   '5%'],
-    ['20%',       '5,00,001',  '10,00,000',  '20%'],
-    ['30%',       '10,00,001', 'Above',      '30%'],
-    ['Standard Deduction: ₹50,000 | Rebate u/s 87A: ₹12,500 if income ≤ ₹5,00,000','','',''],
-    [''],
-    ['SPECIAL RATES (Both Regimes)','','',''],
-    ['Equity LTCG (above ₹1,25,000 exempt)', '12.5% flat', '', ''],
-    ['Equity STCG',                           '20% flat',   '', ''],
-    ['Property LTCG',                         '12.5% (or 20% with indexation — pre Jul 2024)', '', ''],
-    ['Lottery / Gaming / Horse Race',         '30% flat',   '', ''],
-    ['Surcharge on LTCG — Capped at',         '15%',        '', ''],
-    ['Health & Education Cess',               '4% on all tax + surcharge', '', ''],
-  ];
-  const wsSlab = XLSX.utils.aoa_to_sheet(slabData);
-  wsSlab['!cols'] = [{wch:46},{wch:16},{wch:16},{wch:16}];
-  XLSX.utils.book_append_sheet(wb, wsSlab, 'Slab Schedule');
+    const ws = XLSX.utils.aoa_to_sheet(rows);
+    ws['!cols']=[{wch:38},{wch:26},{wch:20},{wch:20}];
+    ws['!freeze']={xSplit:0,ySplit:2};
+    setRows(ws,[[0,30],[1,18]]);
+    XLSX.utils.book_append_sheet(wb, ws, 'Income Schedule');
+  }
+
+  /* ═════════════════════════════════════════
+     SHEET 3 — DEDUCTIONS
+  ═════════════════════════════════════════ */
+  {
+    const rows = [];
+    function addBrand(){ rows.push([cs('DEDUCTIONS — Chapter VI-A (Old Regime)',S.brand),cs('',S.brand),cs('',S.brand),cs('',S.brand)]); }
+    function addHdr(cells){ rows.push(cells.map(c=>cs(c,S.hdr))); }
+    function addRow(sec,lim,entered,allowed,stripe){
+      const L=stripe?S.lblS:S.lbl;
+      rows.push([cs(sec,L), cs(lim||'',stripe?S.noteS:S.note), cs(entered||'—',L), cs(allowed||'—',L)]);
+    }
+    function addTot(lbl,v){ rows.push([cs(lbl,S.totL),cs('',S.totL),cs('',S.totL),cs(v,S.tot)]); }
+
+    addBrand();
+    addHdr(['SECTION','LIMIT','ENTERED (₹)','ALLOWED (₹)']);
+    addRow('80C — EPF/PPF/ELSS/LIC/Tax FD etc.', 'Max ₹1,50,000', inr((inp.epf||0)+(inp.ppf||0)+(inp.elss||0)+(inp.lic||0)+(inp.tax_fd||0)+(inp.nsc||0)+(inp.tuition||0)+(inp.hl_principal||0)+(inp.other_80c||0)), inr(or.ded80C), false);
+    addRow('80CCD(1B) — Additional NPS',          'Max ₹50,000',   inr(inp.nps_additional||0), inr(or.ded80CCD1B), true);
+    addRow('80CCD(2) — Employer NPS',             '10% of Basic',  inr(inp.emp_nps||0),          inr(or.ded80CCD2),  false);
+    addRow('80D — Medical Insurance',             '₹25K+₹25K',     inr((inp.med_self||0)+(inp.med_parents||0)), inr(or.ded80D), true);
+    addRow('80E — Education Loan Interest',       'No limit',       inr(inp.d80e||0),             inr(or.ded80E),     false);
+    addRow('80EE/80EEA — Home Loan Interest',     'Max ₹50K/₹1.5L',inr((inp.d80ee||0)+(inp.d80eea||0)), '—', true);
+    addRow('80G — Donations (50% qualifying)',    '10% of GTI',     inr(inp.d80g||0),             '—',                false);
+    addRow('80TTA/80TTB — Interest',              '₹10K/₹50K',     inr((inp.d80tta||0)+(inp.d80ttb||0)), '—',        true);
+    addRow('Other Deductions',                    '',               inr(inp.other_ded||0),        '—',                false);
+    rows.push([cb(),cb(),cb(),cb()]);
+    addTot('TOTAL DEDUCTIONS — Old Regime', inr(or.totalDeductions));
+    addTot('New Regime (Std Ded + 80CCD2)', inr(nr.totalDeductions));
+    rows.push([cb(),cb(),cb(),cb()]);
+    rows.push([cs('NOTE: New Regime allows only Standard Deduction (₹75,000) + 80CCD(2) employer NPS.',mk({font:{name:'Calibri',sz:9,italic:true,color:{rgb:'9CA3AF'}}})),cb(),cb(),cb()]);
+
+    const ws = XLSX.utils.aoa_to_sheet(rows);
+    ws['!cols']=[{wch:42},{wch:20},{wch:18},{wch:18}];
+    ws['!freeze']={xSplit:0,ySplit:2};
+    setRows(ws,[[0,30],[1,18]]);
+    XLSX.utils.book_append_sheet(wb, ws, 'Deductions');
+  }
+
+  /* ═════════════════════════════════════════
+     SHEET 4 — TAX COMPUTATION
+  ═════════════════════════════════════════ */
+  {
+    const rows = [];
+    function addBrand(){ rows.push([cs('TAX COMPUTATION — New vs Old Regime — FY 2026-27',S.brand),cs('',S.brand),cs('',S.brand),cs('',S.brand)]); }
+    function addHdr(cells){ rows.push(cells.map(c=>cs(c,S.hdr))); }
+    function addSec(t){ rows.push([cs(t,S.secHdr),cs('',S.secHdr),cs('',S.secHdr),cs('',S.secHdr)]); }
+    function addRow(lbl,note,nv,ov,stripe,isTot){
+      const L=stripe?S.lblS:S.lbl, N=stripe?S.numS:S.num;
+      rows.push([cs(lbl,isTot?S.totL:L), cs(note||'',isTot?S.totL:(stripe?S.noteS:S.note)), cs(nv,isTot?S.tot:N), cs(ov,isTot?S.tot:N)]);
+    }
+    function addRec(lbl,nv,ov){ rows.push([cs(lbl,S.goodL),cs('',S.goodL),cs(nv,S.goodL),cs(ov,S.goodL)]); }
+    function blank(){ rows.push([cb(),cb(),cb(),cb()]); }
+
+    addBrand();
+    addHdr(['PARTICULARS','NOTES','NEW REGIME (₹)','OLD REGIME (₹)']);
+    addSec('INCOME');
+    addRow('Gross Total Income',           '',            inr(nr.grossTotalIncome), inr(or.grossTotalIncome), false,false);
+    addRow('Less: Total Deductions',       'Ch VI-A',     nr.totalDeductions?'-'+inr(nr.totalDeductions):'—', '-'+inr(or.totalDeductions), true,false);
+    addRow('Taxable Income (Normal Slab)', '',            inr(nr.taxableNormal),    inr(or.taxableNormal),    false,true);
+    blank();
+    addSec('SLAB TAX');
+    addRow('Income Tax on Normal Slab',    'FY 2026-27 slabs',  inr(nr.slabTax),   inr(or.slabTax),   false,false);
+    addRow('Tax on Capital Gains',         'LTCG/STCG rates',   inr(nr.cgTax),     inr(or.cgTax),     true,false);
+    addRow('Tax on Special Rate Income',   '@30% (Lottery)',     inr(nr.specialTax),inr(or.specialTax),false,false);
+    addRow('Total Tax Before Rebate',      '',                   inr(nr.slabTax+nr.cgTax+nr.specialTax), inr(or.slabTax+or.cgTax+or.specialTax), true,true);
+    blank();
+    addSec('REBATE & RELIEF');
+    addRow('Less: Rebate u/s 87A',         nr.rebate?'Full rebate (≤₹12L)':'Not applicable', nr.rebate?'-'+inr(nr.rebate):'—', or.rebate?'-'+inr(or.rebate):'—', false,false);
+    addRow('Tax After Rebate',             '',            inr(nr.taxAfterRebate),   inr(or.taxAfterRebate),   true,false);
+    blank();
+    addSec('SURCHARGE & CESS');
+    addRow('Add: Surcharge',               nr.surcharge?'Applicable':'Nil (< ₹50L)', nr.surcharge?inr(nr.surcharge):'—', or.surcharge?inr(or.surcharge):'—', false,false);
+    addRow('Less: Marginal Relief',        '',            nr.marginalRelief?'-'+inr(nr.marginalRelief):'—', or.marginalRelief?'-'+inr(or.marginalRelief):'—', true,false);
+    addRow('Health & Education Cess',      '@4%',         inr(nr.cess),             inr(or.cess),             false,false);
+    blank();
+    addRow('TOTAL TAX LIABILITY',          '',            inr(nr.totalTax),         inr(or.totalTax),         false,true);
+    blank();
+    addSec('REGIME RECOMMENDATION');
+    addRec(betterRegime+' RECOMMENDED — Tax Saving: ₹'+inr(taxSaving), nr.totalTax<=or.totalTax?'✓ SAVE ₹'+inr(taxSaving):'', or.totalTax<nr.totalTax?'✓ SAVE ₹'+inr(taxSaving):'');
+    blank();
+    addSec('TAX CREDITS & NET PAYABLE');
+    addRow('Less: TDS on Salary',          'Per Form 16', '-'+inr(inp.tds_salary||0),'-'+inr(inp.tds_salary||0),false,false);
+    addRow('Less: TDS on Other Income',    'Per 26AS',    '-'+inr(inp.tds_other||0), '-'+inr(inp.tds_other||0), true,false);
+    addRow('Less: Advance Tax',            '',            '-'+inr(inp.advance_tax||0),'-'+inr(inp.advance_tax||0),false,false);
+    addRow('Add: Interest 234A/B/C',       'If applicable',inr((inp.int_234a||0)+(inp.int_234b||0)+(inp.int_234c||0)),inr((inp.int_234a||0)+(inp.int_234b||0)+(inp.int_234c||0)),true,false);
+    addRow('NET TAX PAYABLE / (REFUND)',   '',            inr(nr.netPayable),       inr(or.netPayable),       false,true);
+
+    const ws = XLSX.utils.aoa_to_sheet(rows);
+    ws['!cols']=[{wch:36},{wch:26},{wch:20},{wch:20}];
+    ws['!freeze']={xSplit:0,ySplit:2};
+    setRows(ws,[[0,30],[1,18]]);
+    XLSX.utils.book_append_sheet(wb, ws, 'Tax Computation');
+  }
+
+  /* ═════════════════════════════════════════
+     SHEET 5 — SLAB SCHEDULE
+  ═════════════════════════════════════════ */
+  {
+    const rows = [];
+    rows.push([cs('TAX SLAB SCHEDULE — FY 2026-27 | AY 2027-28',S.brand),cs('',S.brand),cs('',S.brand),cs('',S.brand)]);
+    rows.push([cb(),cb(),cb(),cb()]);
+    rows.push([cs('NEW TAX REGIME',S.secHdr),cs('',S.secHdr),cs('',S.secHdr),cs('',S.secHdr)]);
+    rows.push(['Income Range','From (₹)','To (₹)','Tax Rate'].map(c=>cs(c,S.hdr)));
+    [['Nil','0','4,00,000','0%'],['5%','4,00,001','8,00,000','5%'],['10%','8,00,001','12,00,000','10%'],
+     ['15%','12,00,001','16,00,000','15%'],['20%','16,00,001','20,00,000','20%'],
+     ['25%','20,00,001','24,00,000','25%'],['30%','24,00,001','Above','30%']].forEach(function(row,i){
+      rows.push(row.map(function(c){ return cs(c,i%2===0?S.slab:S.slabS); }));
+    });
+    rows.push([cs('Standard Deduction ₹75,000  |  Rebate u/s 87A: Full rebate if income ≤ ₹12,00,000',mk({font:{name:'Calibri',sz:9,italic:true,color:{rgb:'6B7280'}}})),cb(),cb(),cb()]);
+    rows.push([cb(),cb(),cb(),cb()]);
+    rows.push([cs('OLD TAX REGIME — Individual (Below 60)',S.secHdr),cs('',S.secHdr),cs('',S.secHdr),cs('',S.secHdr)]);
+    rows.push(['Income Range','From (₹)','To (₹)','Tax Rate'].map(c=>cs(c,S.hdr)));
+    [['Nil','0','2,50,000','0%'],['5%','2,50,001','5,00,000','5%'],
+     ['20%','5,00,001','10,00,000','20%'],['30%','10,00,001','Above','30%']].forEach(function(row,i){
+      rows.push(row.map(function(c){ return cs(c,i%2===0?S.slab:S.slabS); }));
+    });
+    rows.push([cs('Standard Deduction ₹50,000  |  Rebate u/s 87A: ₹12,500 if income ≤ ₹5,00,000',mk({font:{name:'Calibri',sz:9,italic:true,color:{rgb:'6B7280'}}})),cb(),cb(),cb()]);
+    rows.push([cb(),cb(),cb(),cb()]);
+    rows.push([cs('SPECIAL RATES (Both Regimes)',S.secHdr),cs('',S.secHdr),cs('',S.secHdr),cs('',S.secHdr)]);
+    rows.push([cs('Equity LTCG (above ₹1,25,000 exempt)',S.lbl),cs('12.5% flat',S.note),cb(),cb()]);
+    rows.push([cs('Equity STCG',S.lblS),cs('20% flat',S.noteS),cb(),cb()]);
+    rows.push([cs('Property LTCG',S.lbl),cs('12.5% (or 20% indexed — pre Jul 2024)',S.note),cb(),cb()]);
+    rows.push([cs('Lottery / Gaming / Horse Race',S.lblS),cs('30% flat',S.noteS),cb(),cb()]);
+    rows.push([cs('Surcharge on LTCG — Capped at',S.lbl),cs('15%',S.note),cb(),cb()]);
+    rows.push([cs('Health & Education Cess',S.lblS),cs('4% on all tax + surcharge',S.noteS),cb(),cb()]);
+
+    const ws = XLSX.utils.aoa_to_sheet(rows);
+    ws['!cols']=[{wch:46},{wch:18},{wch:16},{wch:14}];
+    setRows(ws,[[0,30],[2,18],[9,18],[16,18]]);
+    XLSX.utils.book_append_sheet(wb, ws, 'Slab Schedule');
+  }
 
   // ─── Download ───
   const taxpayerName = (name || 'Taxpayer').replace(/[^a-zA-Z0-9]/g,'_');
@@ -1991,6 +2147,21 @@ setRegime('new');
   </details>
 
 </div>
+
+<footer class="site-footer">
+  <div class="footer-badges">
+    <span class="footer-badge">✓ FY 2026-27 Income Tax Rules</span>
+    <span class="footer-badge">✓ New vs Old Regime Comparison</span>
+    <span class="footer-badge">🇮🇳 Made in India for Indian CAs</span>
+  </div>
+  <div class="footer-links">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Use</a>
+    <a href="mailto:fino.sutra07@gmail.com">Contact</a>
+    <a href="blog.html">Blog</a>
+  </div>
+  <div class="footer-tagline">© 2025 Finosutra. Built for Chartered Accountants and Finance Teams across India.</div>
+</footer>
 
 </body>
 </html>
