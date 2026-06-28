@@ -8,6 +8,7 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="auth.js"></script>
@@ -15,14 +16,18 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{min-height:100vh;background:linear-gradient(160deg,#EDEEFF 0%,#EAF0FF 40%,#F2EEFF 100%);font-family:'Inter',sans-serif;color:#111827;-webkit-font-smoothing:antialiased;}
-header{border-bottom:1px solid rgba(99,102,241,0.1);padding:0 32px;background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;height:64px;box-shadow:0 1px 0 rgba(99,102,241,0.08),0 4px 20px rgba(99,102,241,0.05);}
-.logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
-.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:13px;color:#fff}
-.logo-name{font-size:17px;font-weight:bold;color:#1A1A2E}
-.logo-sub{font-size:10px;color:#6366F1;letter-spacing:2px;text-transform:uppercase}
-#navActions{display:flex;align-items:center;gap:12px;}
-.nav-btn{text-decoration:none;font-size:13px;font-weight:600;color:#6366F1;padding:8px 14px;border-radius:8px;background:#EEF2FF;transition:0.2s;}
-.nav-btn:hover{background:#6366F1;color:#fff;}
+nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(99,102,241,0.08);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 rgba(99,102,241,0.07),0 4px 20px rgba(99,102,241,0.05);}
+.nav-inner{max-width:1320px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.nav-logo{display:flex;align-items:center;text-decoration:none;}
+.nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
+.nav-links a{font-size:13px;font-weight:500;color:#6B7280;text-decoration:none;padding:7px 12px;border-radius:8px;transition:color .15s,background .15s;white-space:nowrap;}
+.nav-links a:hover,.nav-links a.active{color:#111827;background:#EEF2FF;}
+.nav-actions{display:flex;align-items:center;gap:8px;}
+.nav-back-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;color:#6366F1;background:#EEF2FF;text-decoration:none;transition:0.2s;}
+.nav-back-btn:hover{background:#6366F1;color:#fff;}
+.nav-toggle{display:none;background:none;border:none;font-size:20px;color:#111827;cursor:pointer;padding:4px;}
+@media(max-width:900px){.nav-links{display:none;}}
+@media(max-width:768px){nav{padding:0 16px;}.nav-actions{display:none;}.nav-toggle{display:block;}.nav-links.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid rgba(99,102,241,0.08);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
 
 /* Hero */
 .hero{padding:32px 32px 20px;max-width:1320px;margin:0 auto;}
@@ -167,16 +172,27 @@ header{border-bottom:1px solid rgba(99,102,241,0.1);padding:0 32px;background:rg
 </head>
 <body>
 
-<header>
-  <a class="logo" href="/indas-tools.html">
-    <div class="logo-icon">F</div>
-    <div><div class="logo-name">Finosutra</div><div class="logo-sub">IND AS 116</div></div>
-  </a>
-  <div id="navActions">
-    <a href="/indas116.html" class="nav-btn">Standard Lease</a>
-    <a href="/indas116-model3.html" class="nav-btn">Escalation Lease</a>
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img loading="eager" src="logo.png" alt="Finosutra" style="height:48px;width:auto;display:block;">
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="indas-tools.html" class="active">IND AS</a></li>
+      <li><a href="gst-tools.html">GST</a></li>
+      <li><a href="income-tax-hub.html">Income Tax</a></li>
+      <li><a href="salary-hr.html">Personal Finance</a></li>
+      <li><a href="templates.html">Templates</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="index.html#pricing">Pricing</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions" id="navActions">
+      <a href="indas-tools.html" class="nav-back-btn">&#8592; IND AS Tools</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" onclick="document.getElementById('navLinks').classList.toggle('open')"><i class="fa-solid fa-bars"></i></button>
   </div>
-</header>
+</nav>
 
 <!-- Hidden file input for bulk upload -->
 <input type="file" id="fileUploadInput" accept=".xlsx,.xls,.csv" style="display:none;" onchange="handleFileInputChange(this)"/>
