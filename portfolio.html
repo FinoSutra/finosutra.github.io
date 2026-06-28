@@ -175,7 +175,7 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
 <nav id="mainNav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
-      <img loading="eager" src="logo.png" alt="Finosutra" style="height:48px;width:auto;display:block;">
+      <img loading="eager" src="logo.png" alt="Finosutra" style="height:56px;width:auto;display:block;">
     </a>
     <ul class="nav-links" id="navLinks">
       <li><a href="indas-tools.html" class="active">IND AS</a></li>
@@ -497,11 +497,67 @@ function renderLoginRequired(){
 
 function renderProGate(){
   document.getElementById('contentArea').innerHTML =
-    '<div class="pro-gate">' +
-      '<div class="pro-gate-icon">⚡</div>' +
-      '<div class="pro-gate-title">Multi-Lease Portfolio is a Pro Feature</div>' +
-      '<div class="pro-gate-sub">Upgrade to Finosutra Pro to save unlimited leases, view combined balance sheet figures, and export a consolidated Excel workbook — all for ₹499/month.</div>' +
-      '<button class="btn btn-primary" onclick="fsInitiateProSubscription()">Upgrade to Pro — ₹499/mo</button>' +
+    '<div style="margin-bottom:12px;display:flex;align-items:center;gap:8px;">' +
+      '<span style="font-size:11px;font-weight:700;background:#FEF3C7;color:#92400E;padding:3px 10px;border-radius:20px;font-family:Inter,sans-serif;">SAMPLE DATA</span>' +
+      '<span style="font-size:12px;color:#6B7280;font-family:Inter,sans-serif;">This is what your portfolio looks like — upgrade to save your own leases</span>' +
+    '</div>' +
+    '<div class="lease-grid" style="margin-bottom:16px;">' +
+    // Sample card 1
+    '<div class="lease-card" style="opacity:.82;pointer-events:none;">' +
+      '<div class="lease-card-hd">' +
+        '<div class="lease-name">Mumbai Office — 3rd Floor</div>' +
+        '<span class="lease-model-badge std">Standard</span>' +
+      '</div>' +
+      '<div class="lease-card-body">' +
+        '<div class="lease-meta">' +
+          '<div class="lm-item"><div class="lm-lbl">Entity</div><div class="lm-val">ABC Pvt. Ltd.</div></div>' +
+          '<div class="lm-item"><div class="lm-lbl">IBR</div><div class="lm-val">10.5% p.a.</div></div>' +
+          '<div class="lm-item"><div class="lm-lbl">Commencement</div><div class="lm-val">01 Apr 2024</div></div>' +
+          '<div class="lm-item"><div class="lm-lbl">Lease Term</div><div class="lm-val">36 months</div></div>' +
+        '</div>' +
+        '<div class="lease-kpis">' +
+          '<div class="lk-item"><div class="lk-lbl">ROU NBV</div><div class="lk-val">₹28,92,340</div></div>' +
+          '<div class="lk-item"><div class="lk-lbl">Current Liab.</div><div class="lk-val green">₹8,46,020</div></div>' +
+          '<div class="lk-item"><div class="lk-lbl">FY Depn.</div><div class="lk-val orange">₹2,62,171</div></div>' +
+        '</div>' +
+        '<div class="lease-card-footer">' +
+          '<span class="lease-date">Sample data</span>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+    // Sample card 2
+    '<div class="lease-card" style="opacity:.82;pointer-events:none;">' +
+      '<div class="lease-card-hd">' +
+        '<div class="lease-name">Pune Warehouse — Unit B</div>' +
+        '<span class="lease-model-badge esc">Escalation</span>' +
+      '</div>' +
+      '<div class="lease-card-body">' +
+        '<div class="lease-meta">' +
+          '<div class="lm-item"><div class="lm-lbl">Entity</div><div class="lm-val">ABC Pvt. Ltd.</div></div>' +
+          '<div class="lm-item"><div class="lm-lbl">IBR</div><div class="lm-val">10.0% p.a.</div></div>' +
+          '<div class="lm-item"><div class="lm-lbl">Commencement</div><div class="lm-val">01 Jul 2024</div></div>' +
+          '<div class="lm-item"><div class="lm-lbl">Lease Term</div><div class="lm-val">24 months</div></div>' +
+        '</div>' +
+        '<div class="lease-kpis">' +
+          '<div class="lk-item"><div class="lk-lbl">ROU NBV</div><div class="lk-val">₹11,20,180</div></div>' +
+          '<div class="lk-item"><div class="lk-lbl">Current Liab.</div><div class="lk-val green">₹5,92,400</div></div>' +
+          '<div class="lk-item"><div class="lk-lbl">FY Depn.</div><div class="lk-val orange">₹1,07,017</div></div>' +
+        '</div>' +
+        '<div class="lease-card-footer">' +
+          '<span class="lease-date">Sample data</span>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+    '</div>' +
+    // Upgrade CTA
+    '<div style="margin-top:20px;background:linear-gradient(135deg,#1E1B4B,#312E81);border-radius:16px;padding:28px 28px;text-align:center;">' +
+      '<div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:8px;">Unlock your portfolio — add your own leases</div>' +
+      '<div style="font-size:12px;color:#A5B4FC;margin-bottom:18px;line-height:1.6;">Save unlimited leases · Combined balance sheet · Consolidated Excel workbook · IND AS 116 compliant</div>' +
+      '<div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">' +
+        '<button onclick="fsInitiateProSubscription()" style="padding:12px 28px;background:linear-gradient(135deg,#6366F1,#8B5CF6);border:none;border-radius:10px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;font-family:Inter,sans-serif;box-shadow:0 4px 16px rgba(99,102,241,.5);">⚡ Pro ₹499/mo</button>' +
+        '<button onclick="fsInitiateAnnualSubscription()" style="padding:12px 28px;background:linear-gradient(135deg,#D97706,#B45309);border:none;border-radius:10px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;font-family:Inter,sans-serif;">🏆 Annual ₹3,999/yr — Save 33%</button>' +
+      '</div>' +
+      '<div style="font-size:11px;color:#6B7280;margin-top:12px;">🔒 Secure via Razorpay · Cancel anytime</div>' +
     '</div>';
 }
 

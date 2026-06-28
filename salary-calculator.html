@@ -269,7 +269,7 @@ footer img{height:28px;margin-bottom:8px;opacity:.6}
 <nav id="mainNav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
-      <img loading="eager" src="logo.png" alt="Finosutra" style="height:48px;width:auto;display:block;">
+      <img loading="eager" src="logo.png" alt="Finosutra" style="height:56px;width:auto;display:block;">
     </a>
     <ul class="nav-links" id="navLinks">
       <li><a href="indas-tools.html">IND AS</a></li>
@@ -482,8 +482,8 @@ footer img{height:28px;margin-bottom:8px;opacity:.6}
       <!-- Export info -->
       <div class="exp-info-card">
         <div style="font-size:13px;font-weight:700;color:#4F46E5;margin-bottom:4px;">📊 Get the audit-ready Excel — drop it straight into your workpapers</div>
-        <div style="font-size:11px;color:#6B7280;margin-bottom:10px;">One-time ₹99 · Instant download · CA-grade format</div>
-        <div class="exp-info-title">📊 What's inside the Salary Report — ₹99</div>
+        <div style="font-size:11px;color:#6B7280;margin-bottom:10px;">One-time ₹199 · Instant download · CA-grade format</div>
+        <div class="exp-info-title">📊 What's inside the Salary Report — ₹199</div>
         <div class="exp-info-grid">
           <div class="exp-info-item">Monthly & Annual salary breakup</div>
           <div class="exp-info-item">CTC to In-Hand computation</div>
@@ -498,8 +498,8 @@ footer img{height:28px;margin-bottom:8px;opacity:.6}
       </div>
       <div class="exp-row">
         <span class="exp-note" id="expNote">Complete salary slip with all workings</span>
-        <button class="btn-exp" id="btnExp" onclick="initiatePayment()">
-          <i class="fa-solid fa-file-excel"></i> Download Salary Report &nbsp;<span style="font-size:10px;opacity:.8">₹99</span>
+        <button class="btn-exp" id="btnExp" onclick="tryFreeExport()">
+          <i class="fa-solid fa-file-excel"></i> Download Salary Report &nbsp;<span style="font-size:10px;opacity:.8">₹199</span>
         </button>
       </div>
 
@@ -817,6 +817,38 @@ function renderResult({nr, or, ctc}){
     'CTC: ' + inr(ctc) + ' · In-Hand: ' + inr(r.net_monthly) + '/month';
 }
 
+// ─── FREE MONTHLY EXPORT ───
+function tryFreeExport(){
+  if(!lastResult){ alert('Please calculate your salary first.'); return; }
+  if(window.isProUser){ generateExcel('PRO_'+Date.now()); return; }
+  var monthKey = 'fs_free_exp_' + new Date().toISOString().slice(0,7);
+  try {
+    if(!localStorage.getItem(monthKey)){
+      localStorage.setItem(monthKey,'1');
+      if(window.showToast) showToast('🎁 Your 1 free export for this month — enjoy!','#059669');
+      generateExcel('FREE_'+Date.now());
+      showUpsellBanner();
+      return;
+    }
+  } catch(e){}
+  initiatePayment();
+}
+
+function showUpsellBanner(){
+  if(document.getElementById('fsUpsellBanner')) return;
+  var b = document.createElement('div');
+  b.id = 'fsUpsellBanner';
+  b.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:#1E1B4B;color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:99999;font-family:Inter,sans-serif;box-shadow:0 -4px 20px rgba(0,0,0,.25);animation:fsBannerUp .35s ease;flex-wrap:wrap;';
+  b.innerHTML =
+    '<style>@keyframes fsBannerUp{from{transform:translateY(100%)}to{transform:translateY(0)}}</style>' +
+    '<span style="font-size:14px;">⭐ Liked the report? Get <strong>unlimited exports</strong> + all Pro tools</span>' +
+    '<div style="display:flex;gap:10px;align-items:center;flex-shrink:0;">' +
+      '<a href="#" onclick="if(window.fsInitiateProSubscription)fsInitiateProSubscription(\'upsell_banner\');else if(window.initiateProSubscription)initiateProSubscription(\'Salary Calculator\');return false;" style="background:#4F46E5;color:#fff;padding:9px 18px;border-radius:8px;font-weight:700;text-decoration:none;font-size:13px;white-space:nowrap;">Go Pro ₹499/mo →</a>' +
+      '<button onclick="document.getElementById(\'fsUpsellBanner\').remove()" style="background:none;border:none;color:#9CA3AF;cursor:pointer;font-size:22px;line-height:1;padding:0 4px;" title="Dismiss">&times;</button>' +
+    '</div>';
+  document.body.appendChild(b);
+}
+
 // ─── RAZORPAY ───
 function initiatePayment(){
   if(!lastResult){ alert('Please calculate your salary first.'); return; }
@@ -831,20 +863,20 @@ function initiatePayment(){
   btn.disabled = true;
   const options = {
     key: 'rzp_live_Sty2e9lT4uXzJJ',
-    amount: 9900,
+    amount: 19900,
     currency: 'INR',
     name: 'Finosutra',
     description: 'Salary Report — FY 2026-27',
     image: 'logo.png',
     theme: { color: '#6366F1' },
     handler: function(response){
-      btn.innerHTML = '<i class="fa-solid fa-file-excel"></i> Download Salary Report &nbsp;<span style="font-size:10px;opacity:.8">₹99</span>';
+      btn.innerHTML = '<i class="fa-solid fa-file-excel"></i> Download Salary Report &nbsp;<span style="font-size:10px;opacity:.8">₹199</span>';
       btn.disabled = false;
       generateExcel(response.razorpay_payment_id);
       try{localStorage.removeItem('fino_sal_state');}catch(e){}
     },
     modal: { ondismiss: function(){
-      btn.innerHTML = '<i class="fa-solid fa-file-excel"></i> Download Salary Report &nbsp;<span style="font-size:10px;opacity:.8">₹99</span>';
+      btn.innerHTML = '<i class="fa-solid fa-file-excel"></i> Download Salary Report &nbsp;<span style="font-size:10px;opacity:.8">₹199</span>';
       btn.disabled = false;
     }}
   };
@@ -1102,10 +1134,10 @@ function generateExcel(paymentId){
 <div id="sticky-export-bar">
   <div style="flex:1;">
     <div class="sticky-text">Your salary breakdown is ready</div>
-    <div class="sticky-sub">Download the formatted salary report · ₹99 one-time or ₹499/mo unlimited</div>
+    <div class="sticky-sub">Download the formatted salary report · ₹199 one-time or ₹499/mo unlimited</div>
   </div>
   <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-    <button class="sticky-btn" onclick="initiatePayment()">⬇ Export ₹99</button>
+    <button class="sticky-btn" onclick="tryFreeExport()">⬇ Export ₹199</button>
     <button onclick="initiateProSubscription('Salary Calculator')"
       style="display:inline-flex;align-items:center;gap:6px;padding:11px 18px;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:13px;font-weight:700;border:none;border-radius:10px;cursor:pointer;white-space:nowrap;">
       🚀 Pro ₹499/mo — Unlimited

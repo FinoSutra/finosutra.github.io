@@ -279,7 +279,7 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
 <nav id="mainNav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
-      <img loading="eager" src="logo.png" alt="Finosutra" style="height:48px;width:auto;display:block;">
+      <img loading="eager" src="logo.png" alt="Finosutra" style="height:56px;width:auto;display:block;">
     </a>
     <ul class="nav-links" id="navLinks">
       <li><a href="indas-tools.html">IND AS</a></li>
@@ -429,8 +429,8 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
       <!-- EXPORT INFO CARD -->
       <div class="exp-info-card" id="expInfoCard" style="display:none">
         <div style="font-size:13px;font-weight:700;color:#4F46E5;margin-bottom:4px;">📊 Get the audit-ready Excel — drop it straight into your workpapers</div>
-        <div style="font-size:11px;color:#6B7280;margin-bottom:10px;">One-time ₹99 · Instant download · CA &amp; audit-ready format</div>
-        <div class="exp-info-title">📊 What's inside the Excel Report — ₹99</div>
+        <div style="font-size:11px;color:#6B7280;margin-bottom:10px;">One-time ₹199 · Instant download · CA &amp; audit-ready format</div>
+        <div class="exp-info-title">📊 What's inside the Excel Report — ₹199</div>
         <div class="exp-info-grid">
           <div class="exp-info-item">Fair Value computation (PV workings)</div>
           <div class="exp-info-item">Day 1 journal entry (Dr / Cr)</div>
@@ -448,7 +448,7 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
       <div class="exp-row" id="expRow" style="display:none">
         <span class="exp-note" id="expNote"></span>
         <button class="btn-exp" id="btnExp" onclick="handleExportClick()">
-          <i class="fa-solid fa-file-excel"></i> Download Excel Report &nbsp;<span style="font-size:10px;opacity:.8">₹99</span>
+          <i class="fa-solid fa-file-excel"></i> Download Excel Report &nbsp;<span style="font-size:10px;opacity:.8">₹199</span>
         </button>
       </div>
     </div>
@@ -736,7 +736,7 @@ function buildJE(title, lines){
   return '<div class="je-wrap"><div class="je-head">'+title+'</div><table class="je-table"><thead><tr><th>Account</th><th>Dr Amount</th><th>Cr Amount</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
 
-/* ── EXPORT CLICK HANDLER (Pro = free, Free = ₹99) ── */
+/* ── EXPORT CLICK HANDLER (Pro = free, Free = ₹199) ── */
 function handleExportClick(){
   if(window.isProUser){ exportXL(); return; }
   initiatePayment();
@@ -760,7 +760,7 @@ function initiatePayment(){
 
   var options = {
     key: 'rzp_live_Sty2e9lT4uXzJJ',
-    amount: 9900,
+    amount: 19900,
     currency: 'INR',
     name: 'Finosutra',
     description: 'Security Deposit Report — Excel Export',
@@ -1053,10 +1053,10 @@ window.onload = function(){ calculate(); };
 <div id="sticky-export-bar">
   <div style="flex:1;">
     <div class="sticky-text">✅ Your schedule is ready — get the audit-ready Excel report</div>
-    <div class="sticky-sub">Fair value workings · EIR schedule · Journal entries · BS &amp; P&amp;L impact · ₹99 one-time or ₹499/mo unlimited</div>
+    <div class="sticky-sub">Fair value workings · EIR schedule · Journal entries · BS &amp; P&amp;L impact · ₹199 one-time or ₹499/mo unlimited</div>
   </div>
   <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap;">
-    <button class="sticky-btn" onclick="handleExportClick()">⬇ Export ₹99</button>
+    <button class="sticky-btn" onclick="handleExportClick()">⬇ Export ₹199</button>
     <button onclick="initiateProSubscription('IND AS 109 Security Deposit')"
       style="display:inline-flex;align-items:center;gap:6px;padding:11px 18px;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:13px;font-weight:700;border:none;border-radius:10px;cursor:pointer;white-space:nowrap;">
       🚀 Pro ₹499/mo — Unlimited

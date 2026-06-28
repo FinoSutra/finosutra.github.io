@@ -83,7 +83,35 @@
       '.fs-pro-cta-note{font-size:10px;color:#9CA3AF;text-align:right;font-family:Inter,sans-serif;}',
       '.fs-pro-free-tag{display:inline-block;background:#D1FAE5;color:#065F46;font-size:11px;font-weight:700;padding:1px 8px;border-radius:20px;margin-left:8px;vertical-align:middle;}',
       '#fsProActivated{display:none;margin-top:12px;padding:14px 18px;background:linear-gradient(135deg,#DCFCE7,#D1FAE5);border:1.5px solid #22C55E;border-radius:10px;text-align:center;}',
-      '@media(max-width:540px){.fs-pro-cta{align-items:flex-start;}.fs-pro-cta-note{text-align:left;}}'
+      '@media(max-width:540px){.fs-pro-cta{align-items:flex-start;}.fs-pro-cta-note{text-align:left;}}',
+      /* UPGRADE MODAL */
+      '#fsUpgradeOverlay{display:none;position:fixed;inset:0;background:rgba(15,15,30,.6);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(4px);padding:16px;}',
+      '#fsUpgradeOverlay.show{display:flex!important;}',
+      '#fsUpgradeBox{background:#fff;border-radius:20px;padding:32px 28px 24px;width:520px;max-width:96vw;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.24);animation:fsSlideIn .22s ease;}',
+      '.fs-um-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:24px;color:#D1D5DB;cursor:pointer;line-height:1;padding:0;}',
+      '.fs-um-close:hover{color:#6B7280;}',
+      '.fs-um-header{text-align:center;margin-bottom:16px;}',
+      '.fs-um-icon{font-size:36px;line-height:1;margin-bottom:8px;}',
+      '.fs-um-title{font-size:19px;font-weight:800;color:#111827;margin:0 0 5px;font-family:Inter,sans-serif;}',
+      '.fs-um-sub{font-size:12px;color:#6B7280;margin:0;font-family:Inter,sans-serif;}',
+      '.fs-um-chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:14px;}',
+      '.fs-um-chip{font-size:11px;font-weight:600;color:#4F46E5;background:#EEF2FF;padding:3px 10px;border-radius:20px;font-family:Inter,sans-serif;}',
+      '.fs-um-roi{background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:10px 14px;font-size:12px;color:#92400E;margin-bottom:18px;text-align:center;font-family:Inter,sans-serif;line-height:1.5;}',
+      '.fs-um-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}',
+      '.fs-um-card{border:1.5px solid #E5E7EB;border-radius:14px;padding:18px 16px;text-align:center;cursor:pointer;transition:border-color .15s,box-shadow .15s;position:relative;}',
+      '.fs-um-card:hover{border-color:#6366F1;box-shadow:0 4px 16px rgba(99,102,241,.12);}',
+      '.fs-um-card-featured{border-color:#6366F1;background:linear-gradient(135deg,#F5F3FF,#EEF2FF);}',
+      '.fs-um-card-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-size:10px;font-weight:800;padding:2px 12px;border-radius:20px;white-space:nowrap;letter-spacing:.04em;font-family:Inter,sans-serif;}',
+      '.fs-um-card-price{font-size:26px;font-weight:800;color:#111827;font-family:Inter,sans-serif;line-height:1.1;}',
+      '.fs-um-card-price span{font-size:13px;font-weight:500;color:#6B7280;}',
+      '.fs-um-card-name{font-size:13px;font-weight:700;color:#1E1B4B;margin:4px 0;font-family:Inter,sans-serif;}',
+      '.fs-um-card-desc{font-size:11px;color:#6B7280;line-height:1.5;margin-bottom:12px;font-family:Inter,sans-serif;}',
+      '.fs-um-btn{width:100%;padding:9px 0;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:Inter,sans-serif;transition:opacity .15s;}',
+      '.fs-um-btn:hover{opacity:.88;}',
+      '.fs-um-btn-outline{background:#fff;border:1.5px solid #6366F1!important;color:#6366F1;}',
+      '.fs-um-btn-primary{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;}',
+      '.fs-um-footer{text-align:center;font-size:11px;color:#9CA3AF;font-family:Inter,sans-serif;}',
+      '@media(max-width:460px){.fs-um-cards{grid-template-columns:1fr;}.fs-um-card-featured{margin-top:14px;}}'
     ].join('');
     var el = document.createElement('style');
     el.textContent = css;
@@ -174,6 +202,68 @@
     }
   }
 
+  // ── Upgrade modal HTML ────────────────────────────────────────────────────────
+  function injectUpgradeModal() {
+    var html =
+      '<div id="fsUpgradeOverlay" onclick="if(event.target===this)fsCloseUpgradeModal()">' +
+        '<div id="fsUpgradeBox">' +
+          '<button class="fs-um-close" onclick="fsCloseUpgradeModal()">&#215;</button>' +
+          '<div class="fs-um-header">' +
+            '<div class="fs-um-icon">&#128202;</div>' +
+            '<h2 class="fs-um-title">Your report is ready to download</h2>' +
+            '<p class="fs-um-sub">CA-grade Excel &middot; Multi-sheet workbook &middot; Drop straight into audit workpapers</p>' +
+          '</div>' +
+          '<div class="fs-um-chips">' +
+            '<span class="fs-um-chip">&#10003; Amortization schedule</span>' +
+            '<span class="fs-um-chip">&#10003; Journal entries</span>' +
+            '<span class="fs-um-chip">&#10003; Annual rollforward</span>' +
+            '<span class="fs-um-chip">&#10003; Balance sheet impact</span>' +
+          '</div>' +
+          '<div class="fs-um-roi">&#128161; <strong>Pro tip:</strong> At just 3 exports/month, Pro (&#8377;499) costs less than pay-per-report (&#8377;199 &times; 3 = &#8377;597)</div>' +
+          '<div class="fs-um-cards">' +
+            '<div class="fs-um-card" onclick="fsCloseUpgradeModal();fsDoOneTimeExport()">' +
+              '<div class="fs-um-card-price">&#8377;199</div>' +
+              '<div class="fs-um-card-name">One-time export</div>' +
+              '<div class="fs-um-card-desc">This report only<br>Instant download</div>' +
+              '<button class="fs-um-btn fs-um-btn-outline">Download now &#8594;</button>' +
+            '</div>' +
+            '<div class="fs-um-card fs-um-card-featured" onclick="fsCloseUpgradeModal();fsInitiateProSubscription()">' +
+              '<div class="fs-um-card-badge">BEST VALUE</div>' +
+              '<div class="fs-um-card-price">&#8377;499<span>/mo</span></div>' +
+              '<div class="fs-um-card-name">Pro &mdash; Unlimited</div>' +
+              '<div class="fs-um-card-desc">All 5 tools &middot; Cancel anytime</div>' +
+              '<button class="fs-um-btn fs-um-btn-primary">Upgrade to Pro &#8594;</button>' +
+            '</div>' +
+          '</div>' +
+          '<div style="text-align:center;margin-bottom:12px;">' +
+            '<a href="#" onclick="event.preventDefault();fsCloseUpgradeModal();fsInitiateAnnualSubscription();" style="font-size:12px;color:#4F46E5;font-weight:700;text-decoration:none;font-family:Inter,sans-serif;">' +
+              '&#127381; Save 33% — Annual Pro &#8377;3,999/year (&#8377;333/mo) &rarr;' +
+            '</a>' +
+          '</div>' +
+          '<div class="fs-um-footer">&#128274; Secure payment via Razorpay &middot; No hidden charges &middot; Cancel Pro anytime</div>' +
+        '</div>' +
+      '</div>';
+    var wrap = document.createElement('div');
+    wrap.innerHTML = html;
+    document.body.insertBefore(wrap.firstChild, document.body.firstChild);
+  }
+
+  global.fsShowUpgradeModal = function () {
+    var o = document.getElementById('fsUpgradeOverlay');
+    if (o) o.classList.add('show');
+  };
+
+  global.fsCloseUpgradeModal = function () {
+    var o = document.getElementById('fsUpgradeOverlay');
+    if (o) o.classList.remove('show');
+  };
+
+  global.fsDoOneTimeExport = function () {
+    if (typeof global._fsOriginalExportFn === 'function') {
+      global._fsOriginalExportFn.call(document.getElementById('btnExp'));
+    }
+  };
+
   // ── Wrap the export button to intercept Pro users ────────────────────────────
   function wrapExportButton() {
     var btnExp = document.getElementById('btnExp');
@@ -181,15 +271,26 @@
 
     var originalOnclick = btnExp.onclick;
 
+    // Store original so fsDoOneTimeExport() can call it from the upgrade modal
+    global._fsOriginalExportFn = originalOnclick;
+
     btnExp.onclick = function (e) {
       if (global.isProUser) {
         fsCallToolExport();
         return;
       }
-      // Not Pro — call original payment flow
-      if (typeof originalOnclick === 'function') {
-        originalOnclick.call(this, e);
-      }
+      // 1 free export per calendar month (tracked in localStorage)
+      var monthKey = 'fs_free_exp_' + new Date().toISOString().slice(0, 7); // e.g. "fs_free_exp_2026-06"
+      try {
+        if (!localStorage.getItem(monthKey)) {
+          localStorage.setItem(monthKey, '1');
+          global.showToast('🎁 Your 1 free export for this month — enjoy!', '#059669');
+          if (typeof originalOnclick === 'function') originalOnclick.call(this, e);
+          return;
+        }
+      } catch (err) { /* localStorage blocked — fall through to modal */ }
+      // Already used free export this month — show upgrade modal
+      global.fsShowUpgradeModal();
     };
   }
 
@@ -219,13 +320,13 @@
     if (btn) {
       btn.innerHTML = isPro
         ? '&#8659;&nbsp; Download Excel Report <span class="fs-pro-free-tag">FREE</span>'
-        : '&#8659;&nbsp; Download Excel Report &nbsp;<strong>&#8377;99</strong>';
+        : '&#8659;&nbsp; Download Excel Report &nbsp;<strong>&#8377;199</strong>';
     }
     var sticky = document.querySelector('#sticky-export-bar .sticky-btn');
     if (sticky) {
       sticky.innerHTML = isPro
         ? '&#8659; Download Excel Report &nbsp;<span class="fs-pro-free-tag">PRO FREE</span>'
-        : '&#8659; Download Excel Report &nbsp;&#8377;99';
+        : '&#8659; Download Excel Report &nbsp;&#8377;199';
     }
   }
 
@@ -445,6 +546,59 @@
     if (el) { el.textContent = msg; el.style.display = 'block'; }
   }
 
+  // ── Annual subscription payment (₹3,999/year) ────────────────────────────────
+  global.fsInitiateAnnualSubscription = function () {
+    if (global.isProUser) {
+      global.showToast('✅ You are already on Finosutra Pro!', '#5EC98A');
+      return;
+    }
+    if (!global.currentUser) {
+      global.fsShowAuthModal('signup');
+      global.showToast('Create an account first, then subscribe to Annual Pro.', '#6366F1');
+      return;
+    }
+    if (!global.supaClient) { global.showToast('Connection error. Please refresh.', '#EF4444'); return; }
+
+    if (typeof Razorpay === 'undefined') {
+      global.showToast('Loading payment…', '#6366F1');
+      var rzpScript = document.createElement('script');
+      rzpScript.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      rzpScript.onload = function () { global.fsInitiateAnnualSubscription(); };
+      rzpScript.onerror = function () { global.showToast('Could not load payment. Check connection.', '#EF4444'); };
+      document.head.appendChild(rzpScript);
+      return;
+    }
+
+    var options = {
+      key:         RZP_KEY,
+      amount:      399900, // ₹3,999 in paise
+      currency:    'INR',
+      name:        'Finosutra',
+      description: 'Annual Pro Plan — Unlimited Exports for 12 Months',
+      image:       '',
+      theme:       { color: '#6366F1' },
+      modal:       { ondismiss: function () { global.showToast('Upgrade cancelled. No charges made.', '#9CA3AF'); } },
+      prefill:     { email: global.currentUser.email, name: '', contact: '' },
+      notes:       { user_id: global.currentUser.id, plan: 'pro_annual' },
+      handler:     async function (response) {
+        var payId = response.razorpay_payment_id;
+        global.showToast('Payment received! Activating Annual Pro…', '#6366F1');
+        await fsActivatePro(payId);
+      }
+    };
+
+    try {
+      var rzp = new Razorpay(options);
+      rzp.on('payment.failed', function (resp) {
+        global.showToast('Payment failed: ' + (resp.error && resp.error.description || 'Unknown error'), '#FF8A80');
+      });
+      rzp.open();
+    } catch (e) {
+      alert('Could not open payment window. Please check your connection and try again.');
+      console.error(e);
+    }
+  };
+
   // ── Pro subscription payment ──────────────────────────────────────────────────
   global.fsInitiateProSubscription = function () {
     // Already Pro? Never open payment again
@@ -559,8 +713,10 @@
   // ── Keyboard shortcuts ────────────────────────────────────────────────────────
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
-      var overlay = document.getElementById('fsAuthOverlay');
-      if (overlay && overlay.style.display === 'flex') global.fsCloseAuthModal();
+      var authOverlay = document.getElementById('fsAuthOverlay');
+      if (authOverlay && authOverlay.style.display === 'flex') global.fsCloseAuthModal();
+      var upgradeOverlay = document.getElementById('fsUpgradeOverlay');
+      if (upgradeOverlay && upgradeOverlay.classList.contains('show')) global.fsCloseUpgradeModal();
     }
   });
 
@@ -568,6 +724,7 @@
   document.addEventListener('DOMContentLoaded', function () {
     injectCSS();
     injectAuthModal();
+    injectUpgradeModal();
     injectProBanner();
     wrapExportButton();
 

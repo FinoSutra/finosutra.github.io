@@ -225,7 +225,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
   "@type": "WebApplication",
   "name": "Income Tax Calculator FY 2026-27 | AY 2027-28",
   "url": "https://www.finosutra.com/india-tax-calculator.html",
-  "description": "Professional income tax calculator for FY 2026-27. New vs Old Regime comparison, 87A rebate, HRA, 80C deductions, capital gains and surcharge. Download CA-ready Excel for ₹99.",
+  "description": "Professional income tax calculator for FY 2026-27. New vs Old Regime comparison, 87A rebate, HRA, 80C deductions, capital gains and surcharge. Download CA-ready Excel for ₹199.",
   "applicationCategory": "FinanceApplication",
   "operatingSystem": "Web Browser",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
@@ -255,7 +255,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
     {
       "@type": "Question",
       "name": "Is this income tax calculator free?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Yes, the full income tax calculation — including New vs Old Regime comparison, HRA exemption, 80C/80D deductions, capital gains and surcharge — is completely free. A 5-sheet CA-ready Excel report is available for ₹99." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, the full income tax calculation — including New vs Old Regime comparison, HRA exemption, 80C/80D deductions, capital gains and surcharge — is completely free. A 5-sheet CA-ready Excel report is available for ₹199." }
     },
     {
       "@type": "Question",
@@ -281,7 +281,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 <nav id="mainNav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
-      <img loading="eager" src="logo.png" alt="Finosutra" style="height:48px;width:auto;display:block;">
+      <img loading="eager" src="logo.png" alt="Finosutra" style="height:56px;width:auto;display:block;">
     </a>
     <ul class="nav-links" id="navLinks">
       <li><a href="indas-tools.html">IND AS</a></li>
@@ -849,8 +849,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
     <div class="notif notif-info">ℹ️ Click "🧮 Calculate Tax" to compute your tax liability.</div>
   </div>
   <div class="btn-row" id="result-actions" style="display:none">
-    <button class="btn btn-primary btn-lg" id="btnExp" onclick="initiateExcelPayment()">
-      ⬇ Download Excel Report — ₹99
+    <button class="btn btn-primary btn-lg" id="btnExp" onclick="tryFreeExport()">
+      ⬇ Download Excel Report — ₹199
     </button>
     <button onclick="initiateProSubscription('Income Tax Calculator')"
       style="display:inline-flex;align-items:center;gap:6px;padding:12px 22px;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:14px;font-weight:700;border:none;border-radius:10px;cursor:pointer;white-space:nowrap;">
@@ -862,7 +862,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
   <!-- Excel Export Info Card -->
   <div id="excel-info-card" style="display:none;margin-top:16px;background:#EEF2FF;border:1px solid rgba(99,102,241,0.25);border-radius:12px;padding:18px 20px">
     <div style="font-size:13px;font-weight:700;color:#4F46E5;margin-bottom:4px;">📊 Get the audit-ready Excel — drop it straight into your workpapers</div>
-    <div style="font-size:11px;color:#6B7280;margin-bottom:10px;">One-time ₹99 · Instant download · CA-grade format</div>
+    <div style="font-size:11px;color:#6B7280;margin-bottom:10px;">One-time ₹199 · Instant download · CA-grade format</div>
     <div style="font-weight:600;color:#4F46E5;font-size:12px;margin-bottom:8px;">What's inside:</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px;color:#4B5563">
       <div>✓ Sheet 1 — Cover & Tax Summary</div>
@@ -1711,7 +1711,39 @@ function updatePropLTCGMethod(){
 }
 
 // ===================================================================
-// RAZORPAY PAYMENT — ₹99 Excel Export
+// ─── FREE MONTHLY EXPORT ───
+function tryFreeExport(){
+  if(!lastResults){ alert('Please calculate your tax first before downloading.'); return; }
+  if(window.isProUser){ generateAndDownloadExcel('PRO_'+Date.now()); return; }
+  var monthKey = 'fs_free_exp_' + new Date().toISOString().slice(0,7);
+  try {
+    if(!localStorage.getItem(monthKey)){
+      localStorage.setItem(monthKey,'1');
+      if(window.showToast) showToast('🎁 Your 1 free export for this month — enjoy!','#059669');
+      generateAndDownloadExcel('FREE_'+Date.now());
+      showUpsellBanner();
+      return;
+    }
+  } catch(e){}
+  initiateExcelPayment();
+}
+
+function showUpsellBanner(){
+  if(document.getElementById('fsUpsellBanner')) return;
+  var b = document.createElement('div');
+  b.id = 'fsUpsellBanner';
+  b.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:#1E1B4B;color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:99999;font-family:Inter,sans-serif;box-shadow:0 -4px 20px rgba(0,0,0,.25);animation:fsBannerUp .35s ease;flex-wrap:wrap;';
+  b.innerHTML =
+    '<style>@keyframes fsBannerUp{from{transform:translateY(100%)}to{transform:translateY(0)}}</style>' +
+    '<span style="font-size:14px;">⭐ Liked the report? Get <strong>unlimited exports</strong> + all Pro tools</span>' +
+    '<div style="display:flex;gap:10px;align-items:center;flex-shrink:0;">' +
+      '<a href="#" onclick="if(window.fsInitiateProSubscription)fsInitiateProSubscription(\'upsell_banner\');else if(window.initiateProSubscription)initiateProSubscription(\'Income Tax Calculator\');return false;" style="background:#4F46E5;color:#fff;padding:9px 18px;border-radius:8px;font-weight:700;text-decoration:none;font-size:13px;white-space:nowrap;">Go Pro ₹499/mo →</a>' +
+      '<button onclick="document.getElementById(\'fsUpsellBanner\').remove()" style="background:none;border:none;color:#9CA3AF;cursor:pointer;font-size:22px;line-height:1;padding:0 4px;" title="Dismiss">&times;</button>' +
+    '</div>';
+  document.body.appendChild(b);
+}
+
+// RAZORPAY PAYMENT — ₹199 Excel Export
 // ===================================================================
 function initiateExcelPayment(){
   if(!lastResults){
@@ -1745,7 +1777,7 @@ function initiateExcelPayment(){
   const name = document.getElementById('name').value || 'Taxpayer';
   const options = {
     key: 'rzp_live_Sty2e9lT4uXzJJ',
-    amount: 9900, // ₹99 in paise
+    amount: 19900, // ₹199 in paise
     currency: 'INR',
     name: 'Finosutra',
     description: 'Income Tax Computation Report — FY 2026-27',
@@ -1754,14 +1786,14 @@ function initiateExcelPayment(){
     notes: { product: 'Tax Calculator Excel Export' },
     theme: { color: '#6366F1' },
     handler: function(response){
-      btn.innerHTML = '⬇ Download Excel Report — ₹99';
+      btn.innerHTML = '⬇ Download Excel Report — ₹199';
       btn.disabled = false;
       generateAndDownloadExcel(response.razorpay_payment_id);
       try{localStorage.removeItem('fino_tax_state');}catch(e){}
     },
     modal: {
       ondismiss: function(){
-        btn.innerHTML = '⬇ Download Excel Report — ₹99';
+        btn.innerHTML = '⬇ Download Excel Report — ₹199';
         btn.disabled = false;
       }
     }

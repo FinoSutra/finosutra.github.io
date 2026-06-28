@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Capital Gains Tax Calculator FY 2026-27 | India | Finosutra</title>
+<meta name="description" content="Free Capital Gains Tax Calculator India FY 2026-27. LTCG &amp; STCG on equity, mutual funds, property and gold. Grandfathering, indexation, 12.5% LTCG rate. Instant, accurate."/>
+<meta name="keywords" content="capital gains tax calculator India, LTCG calculator 2026-27, STCG calculator, equity capital gains tax, property capital gains India, grandfathering 31 Jan 2018"/>
+<link rel="canonical" href="https://www.finosutra.com/capital-gains-calculator.html"/>
+<meta property="og:title" content="Capital Gains Tax Calculator FY 2026-27 | Finosutra"/>
+<meta property="og:description" content="Calculate LTCG &amp; STCG tax on equity, MF, property and gold. Finance Act 2024 rates. Grandfathering built-in."/>
+<meta property="og:url" content="https://www.finosutra.com/capital-gains-calculator.html"/>
+<meta property="og:image" content="https://www.finosutra.com/og-image.png"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-Z2G710PHNQ");</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+:root{
+  --brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;
+  --green:#059669;--green-bg:#ECFDF5;
+  --orange:#D97706;--orange-bg:#FFFBEB;
+  --red:#DC2626;--red-bg:#FEF2F2;
+  --text:#111827;--muted:#6B7280;--muted2:#9CA3AF;
+  --border:#E5E7EB;--card:#FFFFFF;--bg:#F8FAFC;
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(99,102,241,.07);
+  --radius:12px;--radius-sm:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Inter",sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* ── NAV ── */
+#mainNav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(99,102,241,0.08);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 rgba(99,102,241,0.08),0 4px 20px rgba(99,102,241,0.05);}
+#mainNav .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+#mainNav .nav-logo{display:flex;align-items:center;text-decoration:none;}
+#mainNav .nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
+#mainNav .nav-links a{font-size:13px;font-weight:500;color:#6B7280;text-decoration:none;padding:7px 11px;border-radius:8px;transition:color .15s,background .15s;white-space:nowrap;}
+#mainNav .nav-links a:hover,#mainNav .nav-links a.active{color:#111827;background:#EEF2FF;}
+#mainNav .nav-back-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;font-family:"Inter",sans-serif;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;box-shadow:0 3px 12px rgba(99,102,241,0.3);transition:all .15s;white-space:nowrap;}
+#mainNav .nav-back-btn:hover{opacity:.9;transform:translateY(-1px);}
+#mainNav .nav-toggle{display:none;background:none;border:none;font-size:20px;color:#111827;cursor:pointer;padding:4px;}
+@media(max-width:900px){#mainNav .nav-links{display:none;}}
+@media(max-width:768px){#mainNav{padding:0 16px;}#mainNav .nav-actions{display:none;}#mainNav .nav-toggle{display:block;}#mainNav .nav-links.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid rgba(99,102,241,0.08);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,#1E1B4B 0%,#312E81 100%);padding:40px 24px 36px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(99,102,241,.15) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,.15) 1px,transparent 1px);background-size:48px 48px}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(99,102,241,.3);border:1px solid rgba(165,180,252,.3);color:#A5B4FC;padding:4px 14px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:.5px;margin-bottom:14px;position:relative}
+.hero h1{font-size:32px;font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:8px;position:relative}
+.hero h1 span{background:linear-gradient(120deg,#818CF8,#C4B5FD);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:14px;color:rgba(255,255,255,.65);max-width:520px;margin:0 auto;position:relative}
+
+/* ── LAYOUT ── */
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.layout{display:grid;grid-template-columns:390px 1fr;gap:24px;padding:28px 0 40px}
+
+/* ── INPUT CARD ── */
+.input-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;height:fit-content;position:sticky;top:80px}
+.card-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.card-title i{color:var(--brand)}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.input-wrap{position:relative}
+.input-wrap .pfx{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;pointer-events:none}
+.input-wrap input,.input-wrap select{width:100%;padding:9px 12px 9px 26px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:"Inter",sans-serif;font-size:13px;color:var(--text);background:#fff;outline:none;transition:border .15s}
+.input-wrap select,.no-prefix{padding-left:12px}
+.input-wrap input:focus,.input-wrap select:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(99,102,241,.1)}
+.hint{font-size:11px;color:var(--muted2);margin-top:3px}
+.divider{height:1px;background:var(--border);margin:18px 0}
+.section-label{font-size:10px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.calc-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--brand),#8B5CF6);border:none;border-radius:var(--radius-sm);color:#fff;font-family:"Inter",sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;box-shadow:0 4px 12px rgba(99,102,241,.3)}
+.calc-btn:hover{opacity:.93;transform:translateY(-1px)}
+.hidden{display:none!important}
+
+/* ── RESULT CARD ── */
+.result-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.empty-state{padding:60px 24px;text-align:center;color:var(--muted)}
+.empty-state .emo{font-size:48px;margin-bottom:12px}
+
+/* ── KPI STRIP ── */
+.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border)}
+.kpi{background:var(--card);padding:18px 16px}
+.kpi-label{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.kpi-val{font-size:20px;font-weight:800;letter-spacing:-0.5px}
+.kpi-val.green{color:var(--green)}
+.kpi-val.brand{color:var(--brand)}
+.kpi-val.red{color:var(--red)}
+.kpi-val.orange{color:var(--orange)}
+.kpi-sub{font-size:10px;color:var(--muted2);margin-top:2px}
+
+/* ── WORKINGS ── */
+.workings{padding:20px}
+.workings-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.workings-title i{color:var(--brand)}
+.step-list{display:flex;flex-direction:column;gap:8px}
+.step{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#FAFAFA}
+.step.highlight{border-color:var(--brand);background:var(--brand-light)}
+.step.green{border-color:var(--green);background:var(--green-bg)}
+.step.orange{border-color:rgba(217,119,6,.25);background:var(--orange-bg)}
+.step-num{min-width:22px;height:22px;border-radius:50%;background:var(--brand);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.step-body{}
+.step-lbl{font-size:12px;font-weight:600;color:var(--text)}
+.step-val{font-size:13px;font-weight:700;color:var(--brand);margin-top:2px}
+.step-note{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* ── TAX BREAKDOWN BOX ── */
+.tax-box{margin:0 20px 20px;background:var(--red-bg);border:1px solid rgba(220,38,38,.18);border-radius:var(--radius-sm);padding:16px}
+.tax-box.ltcg{background:var(--brand-light);border-color:rgba(99,102,241,.2)}
+.tax-box-title{font-size:12px;font-weight:700;color:var(--text);margin-bottom:10px}
+table.tbl{width:100%;border-collapse:collapse;font-size:13px}
+table.tbl tr{border-bottom:1px solid rgba(0,0,0,.06)}
+table.tbl tr:last-child{border-bottom:none;font-weight:700}
+table.tbl td{padding:7px 4px}
+table.tbl td:last-child{text-align:right;font-weight:600}
+
+/* ── ALERT BOXES ── */
+.info-box{margin:20px;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:var(--radius-sm);padding:14px;font-size:12px;color:#1E40AF;line-height:1.6}
+.info-box strong{font-weight:700}
+.warn-box{margin:20px;background:var(--orange-bg);border:1px solid rgba(217,119,6,.25);border-radius:var(--radius-sm);padding:14px;font-size:12px;color:#92400E;line-height:1.6}
+
+/* ── EXPORT BTN ── */
+.export-wrap{padding:0 20px 20px}
+.exp-btn{width:100%;padding:12px;background:#fff;border:2px solid var(--brand);border-radius:var(--radius-sm);color:var(--brand);font-family:"Inter",sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.exp-btn:hover{background:var(--brand);color:#fff}
+
+/* ── FOOTER ── */
+.site-footer{background:#1E1B4B;color:rgba(255,255,255,0.7);padding:28px 32px;text-align:center;font-size:12px;line-height:1.8;margin-top:40px;}
+.site-footer .footer-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:14px;}
+.site-footer .footer-badge{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:4px 13px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);display:inline-flex;align-items:center;gap:5px;}
+.site-footer .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-top:10px;}
+.site-footer .footer-links a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:11px;}
+.site-footer .footer-links a:hover{color:rgba(255,255,255,0.85);}
+.site-footer .footer-tagline{margin-top:12px;font-size:11px;color:rgba(255,255,255,0.35);}
+
+@media(max-width:768px){
+  .layout{grid-template-columns:1fr}
+  .input-card{position:static}
+  .kpi-strip{grid-template-columns:1fr 1fr}
+  .hero h1{font-size:24px}
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+</head>
+<body>
+
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img loading="eager" src="logo.png" alt="Finosutra" style="height:56px;width:auto;display:block;">
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="indas-tools.html">IND AS</a></li>
+      <li><a href="gst-tools.html">GST</a></li>
+      <li><a href="income-tax-hub.html">Income Tax</a></li>
+      <li><a href="income-tax-hub.html" class="active">Income Tax</a></li>
+      <li><a href="templates.html">Templates</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="index.html#pricing">Pricing</a></li>
+    </ul>
+    <div class="nav-actions" id="navActions">
+      <a href="income-tax-hub.html" class="nav-back-btn">&#8592; Income Tax</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-badge"><i class="fa-solid fa-circle" style="font-size:6px"></i> Finance Act 2024 Rates &nbsp;·&nbsp; FY 2026-27 / AY 2027-28</div>
+    <h1>Capital Gains <span>Tax Calculator</span></h1>
+    <p>LTCG &amp; STCG on equity, mutual funds, property and gold. Grandfathering, indexation, and exact tax with surcharge and cess — all in one place.</p>
+  </div>
+</div>
+
+<div class="wrap">
+<div class="layout">
+
+<!-- ═══ INPUTS ═══ -->
+<div class="input-card">
+  <div class="card-title"><i class="fa-solid fa-chart-line"></i> Asset Details</div>
+
+  <div class="field">
+    <label>Asset Type</label>
+    <div class="input-wrap">
+      <select id="assetType" class="no-prefix" onchange="onAssetChange()">
+        <option value="equity">Equity / Equity MF (STT paid)</option>
+        <option value="debt">Debt MF / Bonds</option>
+        <option value="property">Real Estate (Land / Building)</option>
+        <option value="gold">Gold / Jewelry / Sovereign Gold Bond</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="field">
+    <label>Purchase Date</label>
+    <div class="input-wrap">
+      <input type="date" id="purchaseDate" oninput="onDateChange()" class="no-prefix"/>
+    </div>
+  </div>
+
+  <div class="field">
+    <label>Sale Date</label>
+    <div class="input-wrap">
+      <input type="date" id="saleDate" oninput="calculate()" class="no-prefix"/>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="section-label">Cost &amp; Sale</div>
+
+  <div class="field">
+    <label>Purchase Price (₹)</label>
+    <div class="input-wrap"><span class="pfx">₹</span>
+      <input type="number" id="purchasePrice" placeholder="e.g. 500000" oninput="calculate()"/>
+    </div>
+    <div class="hint">Total cost including brokerage / stamp duty</div>
+  </div>
+
+  <div class="field">
+    <label>Sale Price (₹)</label>
+    <div class="input-wrap"><span class="pfx">₹</span>
+      <input type="number" id="salePrice" placeholder="e.g. 900000" oninput="calculate()"/>
+    </div>
+    <div class="hint">Net sale proceeds after brokerage / transfer charges</div>
+  </div>
+
+  <!-- EQUITY-ONLY: Grandfathering & STT -->
+  <div id="equityFields">
+    <div class="field" id="fmvField" style="display:none">
+      <label>FMV on 31 Jan 2018 (₹) <span style="color:var(--orange);font-size:10px">GRANDFATHERING</span></label>
+      <div class="input-wrap"><span class="pfx">₹</span>
+        <input type="number" id="fmv2018" placeholder="e.g. 600000" oninput="calculate()"/>
+      </div>
+      <div class="hint">NAV / closing price of equity or MF on 31 Jan 2018. Leave blank if unknown (uses purchase price).</div>
+    </div>
+
+    <div class="field">
+      <label>LTCG from equity already used this FY (₹)</label>
+      <div class="input-wrap"><span class="pfx">₹</span>
+        <input type="number" id="ltcgUsed" placeholder="0" oninput="calculate()"/>
+      </div>
+      <div class="hint">₹1,25,000 annual exemption under Sec 112A is shared across all equity LTCG in the FY</div>
+    </div>
+  </div>
+
+  <!-- PROPERTY-ONLY: Indexation -->
+  <div id="propertyFields" class="hidden">
+    <div class="field">
+      <label>Cost of Improvement (₹)</label>
+      <div class="input-wrap"><span class="pfx">₹</span>
+        <input type="number" id="costImprovement" placeholder="0" oninput="calculate()"/>
+      </div>
+      <div class="hint">Renovation / construction cost added to property</div>
+    </div>
+    <div class="field">
+      <label>Acquired before 23 Jul 2024?</label>
+      <div class="input-wrap">
+        <select id="preJul24" class="no-prefix" onchange="calculate()">
+          <option value="yes">Yes — can choose 20% with indexation OR 12.5% without</option>
+          <option value="no">No — 12.5% without indexation only</option>
+        </select>
+      </div>
+      <div class="hint">Finance Act 2024 allows taxpayers who acquired property before 23 Jul 2024 to choose the better of the two rates</div>
+    </div>
+    <div class="field" id="ciiFields">
+      <label>Cost Inflation Index — Purchase Year</label>
+      <div class="input-wrap">
+        <input type="number" id="ciiPurchase" placeholder="e.g. 301" oninput="calculate()" class="no-prefix"/>
+      </div>
+      <div class="hint">CII for the FY of purchase (e.g. FY 2017-18 = 272, FY 2020-21 = 301)</div>
+    </div>
+    <div class="field" id="ciiSaleField">
+      <label>Cost Inflation Index — Sale Year</label>
+      <div class="input-wrap">
+        <input type="number" id="ciiSale" placeholder="e.g. 363" oninput="calculate()" class="no-prefix"/>
+      </div>
+      <div class="hint">CII for the FY of sale (FY 2026-27 = 363)</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="section-label">Taxpayer Details (for STCG slab rate)</div>
+
+  <div class="field">
+    <label>Total Annual Income (incl. this gain) — for slab</label>
+    <div class="input-wrap">
+      <select id="incomeSlab" class="no-prefix" onchange="calculate()">
+        <option value="0">Below ₹3 Lakh (Nil slab)</option>
+        <option value="5">₹3L – ₹7L (5% slab)</option>
+        <option value="10">₹7L – ₹10L (10% slab)</option>
+        <option value="15" selected>₹10L – ₹12L (15% slab)</option>
+        <option value="20">₹12L – ₹15L (20% slab)</option>
+        <option value="30">Above ₹15L (30% slab)</option>
+      </select>
+    </div>
+    <div class="hint">Used only when gains are taxed at slab rate (STCG on debt/property/gold, or debt MF)</div>
+  </div>
+
+  <button class="calc-btn" onclick="calculate()"><i class="fa-solid fa-calculator"></i> &nbsp;Calculate Tax</button>
+</div>
+
+<!-- ═══ RESULTS ═══ -->
+<div>
+  <div class="result-card" id="resultCard">
+    <div class="empty-state" id="emptyState">
+      <div class="emo">📊</div>
+      <p>Enter asset details and click <strong>Calculate Tax</strong> to see your capital gains tax liability with full working.</p>
+    </div>
+
+    <!-- KPI strip -->
+    <div id="kpiStrip" class="kpi-strip hidden">
+      <div class="kpi">
+        <div class="kpi-label">Holding Period</div>
+        <div class="kpi-val brand" id="kHolding">—</div>
+        <div class="kpi-sub" id="kGainType">—</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Gross Gain / (Loss)</div>
+        <div class="kpi-val" id="kGrossGain">—</div>
+        <div class="kpi-sub">Before adjustments</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Taxable Gains</div>
+        <div class="kpi-val" id="kTaxableGain">—</div>
+        <div class="kpi-sub" id="kExemptNote">—</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Total Tax Liability</div>
+        <div class="kpi-val red" id="kTaxLiab">—</div>
+        <div class="kpi-sub" id="kEffRate">—</div>
+      </div>
+    </div>
+
+    <!-- Workings -->
+    <div id="workingsSection" class="workings hidden">
+      <div class="workings-title"><i class="fa-solid fa-list-check"></i> Full Working — Step by Step</div>
+      <div class="step-list" id="stepList"></div>
+    </div>
+
+    <!-- Tax breakdown box -->
+    <div id="taxBoxWrap" class="hidden"></div>
+
+    <!-- Info / Notes -->
+    <div id="notesSection"></div>
+
+    <!-- Export -->
+    <div class="export-wrap hidden" id="exportWrap">
+      <button class="exp-btn" id="btnExp"><i class="fa-solid fa-file-excel"></i> Export Capital Gains Working (Excel)</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- /layout -->
+</div><!-- /wrap -->
+
+<footer class="site-footer">
+  <div class="footer-badges">
+    <span class="footer-badge">✓ Finance Act 2024 Rates</span>
+    <span class="footer-badge">✓ Grandfathering &amp; Indexation</span>
+    <span class="footer-badge">✓ Section 112A / 111A</span>
+    <span class="footer-badge">🇮🇳 Made for Indian Taxpayers</span>
+  </div>
+  <div class="footer-links">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Use</a>
+    <a href="mailto:fino.sutra07@gmail.com">Contact</a>
+    <a href="blog.html">Blog</a>
+  </div>
+  <div class="footer-tagline">© 2026 Finosutra · Calculations are indicative. Verify with your CA before filing.</div>
+</footer>
+
+<script>
+// ─── CII table (CBDT notified) ───
+const CII = {
+  '2001-02':100,'2002-03':105,'2003-04':109,'2004-05':113,'2005-06':117,
+  '2006-07':122,'2007-08':129,'2008-09':137,'2009-10':148,'2010-11':167,
+  '2011-12':184,'2012-13':200,'2013-14':220,'2014-15':240,'2015-16':254,
+  '2016-17':264,'2017-18':272,'2018-19':280,'2019-20':289,'2020-21':301,
+  '2021-22':317,'2022-23':331,'2023-24':348,'2024-25':363,'2025-26':371,'2026-27':380
+};
+
+function fmt(n){
+  if(n===null||n===undefined) return '—';
+  const sign = n < 0 ? '-' : '';
+  return sign + '₹' + Math.abs(Math.round(n)).toLocaleString('en-IN');
+}
+function fmtPct(n){ return n.toFixed(2) + '%'; }
+
+function onAssetChange(){
+  var t = document.getElementById('assetType').value;
+  document.getElementById('equityFields').classList.toggle('hidden', t !== 'equity');
+  document.getElementById('propertyFields').classList.toggle('hidden', t !== 'property');
+  calculate();
+}
+
+function onDateChange(){
+  var t = document.getElementById('assetType').value;
+  if(t !== 'equity') { calculate(); return; }
+  var pd = document.getElementById('purchaseDate').value;
+  var showGF = pd && pd < '2018-01-31';
+  document.getElementById('fmvField').style.display = showGF ? '' : 'none';
+  calculate();
+}
+
+function holdingMonths(buyDate, sellDate){
+  if(!buyDate || !sellDate) return 0;
+  var b = new Date(buyDate), s = new Date(sellDate);
+  return (s.getFullYear() - b.getFullYear()) * 12 + (s.getMonth() - b.getMonth()) + (s.getDate() >= b.getDate() ? 0 : -1);
+}
+
+function slabRate(){ return parseInt(document.getElementById('incomeSlab').value) || 0; }
+
+function calculate(){
+  var assetType    = document.getElementById('assetType').value;
+  var purchaseDate = document.getElementById('purchaseDate').value;
+  var saleDate     = document.getElementById('saleDate').value;
+  var purchasePrice= parseFloat(document.getElementById('purchasePrice').value)||0;
+  var salePrice    = parseFloat(document.getElementById('salePrice').value)||0;
+
+  if(!purchaseDate || !saleDate || !purchasePrice || !salePrice){
+    showEmpty(); return;
+  }
+  if(new Date(saleDate) <= new Date(purchaseDate)){
+    showEmpty('Sale date must be after purchase date.'); return;
+  }
+
+  var months = holdingMonths(purchaseDate, saleDate);
+  var steps  = [];
+  var taxLiab = 0, taxable = 0, rate = 0, gainType = '', exemptNote = '';
+
+  // ── Step 1: holding period ──
+  var yrs = Math.floor(months/12), mo = months % 12;
+  steps.push({num:1, lbl:'Holding Period', val: (yrs>0?yrs+' yr ':'')+mo+' months', note:'From '+purchaseDate+' to '+saleDate, cls:''});
+
+  if(assetType === 'equity'){
+    var fmvRaw = parseFloat(document.getElementById('fmv2018').value)||0;
+    var ltcgUsed = parseFloat(document.getElementById('ltcgUsed').value)||0;
+    var isLTCG = months > 12;
+
+    gainType = isLTCG ? 'LTCG — Section 112A' : 'STCG — Section 111A';
+
+    // Step 2: Grandfathering (only for LTCG and pre-2018 purchases)
+    var effectiveCost = purchasePrice;
+    if(isLTCG && purchaseDate < '2018-01-31'){
+      var fmv = fmvRaw || purchasePrice;
+      // Deemed cost = min(FMV, Sale Price) if FMV > actual cost, else actual cost
+      effectiveCost = Math.min(Math.max(purchasePrice, fmv), salePrice);
+      steps.push({num:2, lbl:'Grandfathering (Sec 112A proviso)', val:fmt(effectiveCost),
+        note:'Deemed cost = max(actual cost ₹'+purchasePrice.toLocaleString('en-IN')+', FMV ₹'+fmv.toLocaleString('en-IN')+') capped at sale price', cls:'orange'});
+    } else if(isLTCG){
+      steps.push({num:2, lbl:'Cost of Acquisition', val:fmt(purchasePrice), note:'Purchased after 31 Jan 2018 — no grandfathering', cls:''});
+    } else {
+      steps.push({num:2, lbl:'Cost of Acquisition', val:fmt(purchasePrice), note:'STCG — no grandfathering applies', cls:''});
+    }
+
+    var grossGain = salePrice - effectiveCost;
+    steps.push({num:3, lbl:'Gross Gain / (Loss)', val:fmt(grossGain), note:'Sale price − Effective cost', cls: grossGain >= 0 ? 'green' : ''});
+
+    if(isLTCG){
+      var exemptAvail = Math.max(0, 125000 - ltcgUsed);
+      var exempt = Math.max(0, Math.min(grossGain, exemptAvail));
+      taxable = Math.max(0, grossGain - exempt);
+      exemptNote = 'Exemption ₹'+exempt.toLocaleString('en-IN')+' (Sec 112A)';
+      rate = 12.5;
+      if(exempt > 0) steps.push({num:4, lbl:'LTCG Exemption (Sec 112A)', val:'−'+fmt(exempt), note:'₹1,25,000 annual exemption, ₹'+ltcgUsed.toLocaleString('en-IN')+' already used this FY', cls:'green'});
+      steps.push({num:exempt>0?5:4, lbl:'Taxable LTCG', val:fmt(taxable), note:'Taxed at flat 12.5% (Finance Act 2024)', cls:'highlight'});
+      var basicTax = taxable * 0.125;
+      // Surcharge: for equity LTCG (112A), surcharge is capped at 15%
+      var surcharge = 0;
+      // Surcharge kicks in above certain income thresholds; we show advisory note
+      var cess = basicTax * 0.04;
+      taxLiab = basicTax + cess;
+      steps.push({num:99, lbl:'Tax @ 12.5% + 4% cess', val:fmt(taxLiab), note:'Basic tax '+fmt(basicTax)+' + Cess '+fmt(cess)+' | Surcharge if income > ₹50L (max 15% on 112A)', cls:'highlight'});
+    } else {
+      taxable = Math.max(0, grossGain);
+      exemptNote = 'No STCG exemption (Sec 111A)';
+      rate = 20;
+      steps.push({num:4, lbl:'Taxable STCG', val:fmt(taxable), note:'Taxed at flat 20% (Finance Act 2024)', cls:'highlight'});
+      var basicTax = taxable * 0.20;
+      var cess = basicTax * 0.04;
+      taxLiab = basicTax + cess;
+      steps.push({num:5, lbl:'Tax @ 20% + 4% cess', val:fmt(taxLiab), note:'Basic tax '+fmt(basicTax)+' + Cess '+fmt(cess), cls:'highlight'});
+    }
+
+    renderResults(months, grossGain, taxable, taxLiab, gainType, exemptNote, steps, salePrice, purchasePrice, isLTCG, rate, assetType);
+
+  } else if(assetType === 'debt'){
+    // Debt MF / Bonds — all at slab rate post Apr 2023 (Finance Act 2023 change)
+    gainType = months > 36 ? 'LTCG (slab rate — Sec 50AA)' : 'STCG (slab rate)';
+    var grossGain = salePrice - purchasePrice;
+    taxable = Math.max(0, grossGain);
+    rate = slabRate();
+
+    steps.push({num:2, lbl:'Cost of Acquisition', val:fmt(purchasePrice), cls:''});
+    steps.push({num:3, lbl:'Gross Gain', val:fmt(grossGain), note:'No LTCG / indexation benefit for debt MF acquired after 31 Mar 2023 (Finance Act 2023)', cls: grossGain>=0?'green':''});
+    steps.push({num:4, lbl:'Taxable Gains', val:fmt(taxable), note:'Taxed at your income slab rate ('+rate+'%)', cls:'highlight'});
+    var basicTax = taxable * rate/100;
+    var cess = basicTax * 0.04;
+    taxLiab = basicTax + cess;
+    exemptNote = 'Slab rate — ' + rate + '%';
+    steps.push({num:5, lbl:'Tax @ '+rate+'% slab + 4% cess', val:fmt(taxLiab), note:'Basic tax '+fmt(basicTax)+' + Cess '+fmt(cess), cls:'highlight'});
+
+    renderResults(months, grossGain, taxable, taxLiab, gainType, exemptNote, steps, salePrice, purchasePrice, false, rate, assetType);
+
+  } else if(assetType === 'property'){
+    var isLTCG = months >= 24;
+    gainType = isLTCG ? 'LTCG — Section 112' : 'STCG — Slab Rate';
+    var costImp = parseFloat(document.getElementById('costImprovement').value)||0;
+    var preJul24 = document.getElementById('preJul24').value === 'yes';
+    var totalCost = purchasePrice + costImp;
+
+    steps.push({num:2, lbl:'Cost of Acquisition + Improvement', val:fmt(totalCost), note:'Purchase ₹'+purchasePrice.toLocaleString('en-IN')+' + Improvement ₹'+costImp.toLocaleString('en-IN'), cls:''});
+
+    var grossGain = salePrice - totalCost;
+
+    if(isLTCG){
+      // Option A: 12.5% without indexation
+      var taxableA = Math.max(0, salePrice - totalCost);
+      var taxA = taxableA * 0.125 * 1.04;
+
+      // Option B: 20% with indexation (only if preJul24)
+      var taxB = null, taxableB = null, indexedCost = null;
+      if(preJul24){
+        var ciiP = parseFloat(document.getElementById('ciiPurchase').value)||272;
+        var ciiS = parseFloat(document.getElementById('ciiSale').value)||363;
+        indexedCost = totalCost * (ciiS / ciiP);
+        taxableB = Math.max(0, salePrice - indexedCost);
+        taxB = taxableB * 0.20 * 1.04;
+      }
+
+      // Choose better (lower tax for taxpayer)
+      var useIndexation = preJul24 && taxB !== null && taxB < taxA;
+      if(preJul24 && indexedCost){
+        steps.push({num:3, lbl:'Indexed Cost (for Option B)', val:fmt(indexedCost),
+          note:'Cost × (CII Sale / CII Purchase) = '+fmt(totalCost)+' × ('+document.getElementById('ciiSale').value+'/'+document.getElementById('ciiPurchase').value+')', cls:'orange'});
+      }
+      steps.push({num:4, lbl:'Gross Gain (without indexation)', val:fmt(taxableA), cls: taxableA>=0?'green':''});
+
+      if(useIndexation){
+        taxable = taxableB; taxLiab = taxB; rate = 20;
+        grossGain = taxableB;
+        steps.push({num:5, lbl:'Taxable LTCG (with indexation — lower tax)', val:fmt(taxableB), note:'Taxed @ 20% with indexation — better for taxpayer', cls:'highlight'});
+        var bt = taxableB*0.20, cess = bt*0.04;
+        steps.push({num:6, lbl:'Tax @ 20% + 4% cess', val:fmt(taxB), note:fmt(bt)+' + cess '+fmt(cess), cls:'highlight'});
+        exemptNote = '20% with indexation (lower tax)';
+      } else {
+        taxable = taxableA; taxLiab = taxA; rate = 12.5;
+        steps.push({num:5, lbl:'Taxable LTCG (12.5% without indexation)', val:fmt(taxableA), cls:'highlight'});
+        var bt = taxableA*0.125, cess = bt*0.04;
+        steps.push({num:6, lbl:'Tax @ 12.5% + 4% cess', val:fmt(taxA), note:fmt(bt)+' + cess '+fmt(cess), cls:'highlight'});
+        exemptNote = '12.5% without indexation';
+      }
+    } else {
+      taxable = Math.max(0, grossGain);
+      rate = slabRate();
+      steps.push({num:3, lbl:'Gross Gain (STCG)', val:fmt(grossGain), cls: grossGain>=0?'green':''});
+      steps.push({num:4, lbl:'Taxable STCG', val:fmt(taxable), note:'Taxed at slab rate ('+rate+'%)', cls:'highlight'});
+      var bt = taxable*rate/100, cess = bt*0.04;
+      taxLiab = bt + cess;
+      exemptNote = 'Slab rate — '+rate+'%';
+      steps.push({num:5, lbl:'Tax @ '+rate+'% + 4% cess', val:fmt(taxLiab), note:fmt(bt)+' + cess '+fmt(cess), cls:'highlight'});
+    }
+
+    renderResults(months, grossGain, taxable, taxLiab, gainType, exemptNote, steps, salePrice, purchasePrice, isLTCG, rate, assetType);
+
+  } else if(assetType === 'gold'){
+    var isLTCG = months >= 24; // Finance Act 2024: gold LTCG holding reduced to 24 months
+    gainType = isLTCG ? 'LTCG — Section 112 (12.5%)' : 'STCG — Slab Rate';
+    var grossGain = salePrice - purchasePrice;
+    steps.push({num:2, lbl:'Cost of Acquisition', val:fmt(purchasePrice), cls:''});
+    steps.push({num:3, lbl:'Gross Gain', val:fmt(grossGain), note:'Holding > 24 months = LTCG (Finance Act 2024 reduced from 36 months)', cls: grossGain>=0?'green':''});
+
+    if(isLTCG){
+      taxable = Math.max(0, grossGain);
+      rate = 12.5;
+      steps.push({num:4, lbl:'Taxable LTCG', val:fmt(taxable), note:'12.5% without indexation (Finance Act 2024)', cls:'highlight'});
+      var bt = taxable*0.125, cess = bt*0.04;
+      taxLiab = bt + cess;
+      exemptNote = '12.5% LTCG';
+      steps.push({num:5, lbl:'Tax @ 12.5% + 4% cess', val:fmt(taxLiab), note:fmt(bt)+' + cess '+fmt(cess), cls:'highlight'});
+    } else {
+      taxable = Math.max(0, grossGain);
+      rate = slabRate();
+      steps.push({num:4, lbl:'Taxable STCG', val:fmt(taxable), note:'Slab rate ('+rate+'%)', cls:'highlight'});
+      var bt = taxable*rate/100, cess = bt*0.04;
+      taxLiab = bt + cess;
+      exemptNote = 'Slab rate — '+rate+'%';
+      steps.push({num:5, lbl:'Tax @ '+rate+'% + 4% cess', val:fmt(taxLiab), note:fmt(bt)+' + cess '+fmt(cess), cls:'highlight'});
+    }
+
+    renderResults(months, grossGain, taxable, taxLiab, gainType, exemptNote, steps, salePrice, purchasePrice, isLTCG, rate, assetType);
+  }
+}
+
+function renderResults(months, grossGain, taxable, taxLiab, gainType, exemptNote, steps, salePrice, purchasePrice, isLTCG, rate, assetType){
+  document.getElementById('emptyState').classList.add('hidden');
+  document.getElementById('kpiStrip').classList.remove('hidden');
+  document.getElementById('workingsSection').classList.remove('hidden');
+  document.getElementById('exportWrap').classList.remove('hidden');
+
+  var yrs = Math.floor(months/12), mo = months % 12;
+  document.getElementById('kHolding').textContent = (yrs>0?yrs+' yr ':'')+mo+' mo';
+  document.getElementById('kGainType').textContent = gainType;
+
+  var kGross = document.getElementById('kGrossGain');
+  kGross.textContent = fmt(grossGain);
+  kGross.className = 'kpi-val ' + (grossGain >= 0 ? 'green' : 'red');
+
+  document.getElementById('kTaxableGain').textContent = fmt(taxable);
+  document.getElementById('kExemptNote').textContent = exemptNote;
+
+  document.getElementById('kTaxLiab').textContent = fmt(taxLiab);
+  var effRate = salePrice > purchasePrice ? ((taxLiab / (salePrice - purchasePrice)) * 100).toFixed(1) + '% effective rate' : '—';
+  document.getElementById('kEffRate').textContent = effRate;
+
+  // Steps
+  var sl = document.getElementById('stepList');
+  sl.innerHTML = '';
+  steps.forEach(function(s){
+    var d = document.createElement('div');
+    d.className = 'step' + (s.cls ? ' '+s.cls : '');
+    d.innerHTML = '<div class="step-num">'+s.num+'</div><div class="step-body"><div class="step-lbl">'+s.lbl+'</div><div class="step-val">'+s.val+'</div>'+(s.note?'<div class="step-note">'+s.note+'</div>':'')+'</div>';
+    sl.appendChild(d);
+  });
+
+  // Notes
+  var notes = document.getElementById('notesSection');
+  notes.innerHTML = '';
+  if(assetType === 'property' && isLTCG){
+    notes.innerHTML = '<div class="info-box" style="margin:0 20px 20px"><strong>Sec 54 / 54F Exemption:</strong> If you re-invest sale proceeds in a residential property within 2 years (purchase) or 3 years (construction), you may claim exemption under Section 54/54F. This tool does not compute 54/54F — consult your CA.</div>';
+  }
+  if(assetType === 'equity' && isLTCG && taxLiab > 0){
+    notes.innerHTML += '<div class="info-box" style="margin:0 20px 20px"><strong>Surcharge note:</strong> If your total income exceeds ₹50 lakh, surcharge applies. For equity LTCG under Section 112A, surcharge is capped at 15% (not 25% or 37%). Include this computation while filing ITR.</div>';
+  }
+
+  document.getElementById('taxBoxWrap').classList.remove('hidden');
+
+  // Setup export
+  document.getElementById('exportWrap').classList.remove('hidden');
+  window._cgData = {months,grossGain,taxable,taxLiab,gainType,exemptNote,rate,assetType,steps,
+    purchaseDate:document.getElementById('purchaseDate').value,
+    saleDate:document.getElementById('saleDate').value,
+    purchasePrice: parseFloat(document.getElementById('purchasePrice').value)||0,
+    salePrice: parseFloat(document.getElementById('salePrice').value)||0
+  };
+}
+
+function showEmpty(msg){
+  document.getElementById('emptyState').classList.remove('hidden');
+  document.getElementById('emptyState').innerHTML = '<div class="emo">📊</div><p>'+(msg||'Enter asset details and click <strong>Calculate Tax</strong> to see your capital gains tax liability with full working.')+'</p>';
+  ['kpiStrip','workingsSection','exportWrap'].forEach(function(id){ document.getElementById(id).classList.add('hidden'); });
+  document.getElementById('taxBoxWrap').classList.add('hidden');
+  document.getElementById('notesSection').innerHTML = '';
+}
+
+// ── EXPORT ──
+function doExport(){
+  var d = window._cgData;
+  if(!d){ showToast && showToast('Calculate first.','#DC2626'); return; }
+  var rows = [['Capital Gains Tax Working — Finosutra'],[''],
+    ['Asset Type', document.getElementById('assetType').options[document.getElementById('assetType').selectedIndex].text],
+    ['Purchase Date', d.purchaseDate], ['Sale Date', d.saleDate],
+    ['Purchase Price (₹)', d.purchasePrice], ['Sale Price (₹)', d.salePrice],
+    ['Holding Period', Math.floor(d.months/12)+'yr '+(d.months%12)+'mo'],
+    ['Gain Type', d.gainType], [''],
+    ['COMPUTATION',''],
+  ];
+  d.steps.forEach(function(s){ rows.push(['Step '+s.num+': '+s.lbl, s.val+(s.note?' ('+s.note+')':'')]); });
+  rows.push([''],['Gross Gain / (Loss)', '₹'+Math.round(d.grossGain).toLocaleString('en-IN')]);
+  rows.push(['Taxable Gains', '₹'+Math.round(d.taxable).toLocaleString('en-IN')]);
+  rows.push(['Total Tax Liability', '₹'+Math.round(d.taxLiab).toLocaleString('en-IN')]);
+  rows.push([''],['Note','This computation is indicative. Verify with your CA before filing ITR.'],['Generated by','Finosutra (www.finosutra.com)']);
+
+  var csv = rows.map(function(r){ return r.map(function(c){ return '"'+String(c).replace(/"/g,'""')+'"'; }).join(','); }).join('\n');
+  var blob = new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'CapitalGains_Finosutra.csv';
+  a.click();
+  if(window.showToast) showToast('Downloaded!','#059669');
+  if(!window.isProUser) showUpsellBanner();
+}
+
+function showUpsellBanner(){
+  if(document.getElementById('fsUpsellBanner')) return;
+  var b = document.createElement('div');
+  b.id = 'fsUpsellBanner';
+  b.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:#1E1B4B;color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:99999;font-family:Inter,sans-serif;box-shadow:0 -4px 20px rgba(0,0,0,.25);animation:fsBannerUp .35s ease;flex-wrap:wrap;';
+  b.innerHTML =
+    '<style>@keyframes fsBannerUp{from{transform:translateY(100%)}to{transform:translateY(0)}}</style>' +
+    '<span style="font-size:14px;">⭐ Liked the report? Get <strong>unlimited exports</strong> + all Pro tools</span>' +
+    '<div style="display:flex;gap:10px;align-items:center;flex-shrink:0;">' +
+      '<a href="#" onclick="if(window.fsInitiateProSubscription)fsInitiateProSubscription(\'upsell_banner\');else if(window.fsShowUpgradeModal)fsShowUpgradeModal();return false;" style="background:#4F46E5;color:#fff;padding:9px 18px;border-radius:8px;font-weight:700;text-decoration:none;font-size:13px;white-space:nowrap;">Go Pro ₹499/mo →</a>' +
+      '<button onclick="document.getElementById(\'fsUpsellBanner\').remove()" style="background:none;border:none;color:#9CA3AF;cursor:pointer;font-size:22px;line-height:1;padding:0 4px;" title="Dismiss">&times;</button>' +
+    '</div>';
+  document.body.appendChild(b);
+}
+
+// Expose for auth.js fsCallToolExport() (Pro) and fsDoOneTimeExport() (₹199)
+window.downloadExcel = doExport;
+
+// Set SYNCHRONOUSLY — auth.js DOMContentLoaded fires first and reads this as _fsOriginalExportFn
+document.getElementById('btnExp').onclick = doExport;
+
+document.addEventListener('DOMContentLoaded', function(){
+  var tog = document.getElementById('navToggle');
+  var nl = document.getElementById('navLinks');
+  if(tog) tog.addEventListener('click', function(){ nl.classList.toggle('open'); });
+  document.getElementById('saleDate').value = new Date().toISOString().split('T')[0];
+});
+</script>
+</body>
+</html>
