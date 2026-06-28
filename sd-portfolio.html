@@ -90,15 +90,27 @@ nav{background:rgba(255,255,255,.97);backdrop-filter:blur(20px);border-bottom:1p
 .dep-kpi{background:var(--bg);border-radius:8px;padding:10px 12px}
 .dep-kpi-lbl{font-size:10px;color:var(--muted2);margin-bottom:3px}
 .dep-kpi-val{font-size:14px;font-weight:700;color:var(--text)}
+.dep-kpi-val.c-nominal{color:#111827}
+.dep-kpi-val.c-pv{color:#4F46E5}
+.dep-kpi-val.c-discount{color:#D97706}
+.dep-kpi-val.c-unwind{color:#059669}
 .dep-foot{display:flex;justify-content:flex-end}
 .btn-remove{background:none;border:1.5px solid #FCA5A5;color:#DC2626;padding:5px 12px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
 .btn-remove:hover{background:#FEF2F2}
 
 /* ── EMPTY STATE ── */
-.empty-state{text-align:center;padding:80px 24px;color:var(--muted)}
+.empty-state{text-align:center;padding:60px 24px 20px;color:var(--muted)}
 .empty-icon{font-size:48px;margin-bottom:16px;opacity:.3}
 .empty-title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px}
-.empty-sub{font-size:14px;color:var(--muted);margin-bottom:24px;max-width:400px;margin-left:auto;margin-right:auto}
+.empty-sub{font-size:14px;color:var(--muted);margin-bottom:20px;max-width:400px;margin-left:auto;margin-right:auto}
+
+/* ── SAMPLE CARDS ── */
+.sample-strip{max-width:1200px;margin:0 auto 8px;padding:0 24px}
+.sample-label{font-size:11px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sample-badge{background:#F3F4F6;color:var(--muted);border-radius:20px;padding:2px 10px;font-size:10px;font-weight:600}
+.sample-upsell{background:linear-gradient(135deg,#EEF2FF,#F5F3FF);border:1.5px dashed #A5B4FC;border-radius:12px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 24px 20px;max-width:1200px;margin-left:auto;margin-right:auto}
+.sample-upsell-text{font-size:13px;color:#4338CA;font-weight:600}
+.sample-upsell-sub{font-size:12px;color:var(--muted);margin-top:2px}
 
 /* ── EXPORT ROW ── */
 .export-row{max-width:1200px;margin:0 auto 32px;padding:0 24px;display:none}
@@ -179,39 +191,85 @@ input[type=file]{display:none}
 
 <!-- KPI STRIP -->
 <div class="kpi-strip">
-  <div class="kpi-card">
+  <div class="kpi-card" style="border-left:4px solid #6366F1">
     <div class="kpi-lbl">Total Deposits (Nominal)</div>
-    <div class="kpi-val" id="kpiNominal">₹0</div>
+    <div class="kpi-val" id="kpiNominal" style="color:#111827">₹0</div>
     <div class="kpi-sub" id="kpiCount">0 deposits</div>
   </div>
-  <div class="kpi-card">
+  <div class="kpi-card" style="border-left:4px solid #4F46E5">
     <div class="kpi-lbl">Total PV Recognised</div>
-    <div class="kpi-val" id="kpiPV">₹0</div>
+    <div class="kpi-val" id="kpiPV" style="color:#4F46E5">₹0</div>
     <div class="kpi-sub">Day 1 fair value</div>
   </div>
-  <div class="kpi-card">
+  <div class="kpi-card" style="border-left:4px solid #D97706">
     <div class="kpi-lbl">Total Day 1 Discount</div>
-    <div class="kpi-val" id="kpiDiscount">₹0</div>
+    <div class="kpi-val" id="kpiDiscount" style="color:#D97706">₹0</div>
     <div class="kpi-sub">Prepaid Rent / Deferred Income</div>
   </div>
-  <div class="kpi-card">
+  <div class="kpi-card" style="border-left:4px solid #059669">
     <div class="kpi-lbl">Unwinding Income / Cost (FY)</div>
-    <div class="kpi-val" id="kpiFY">₹0</div>
+    <div class="kpi-val" id="kpiFY" style="color:#059669">₹0</div>
     <div class="kpi-sub">Current year finance charge</div>
   </div>
 </div>
 
+<!-- SAMPLE CARDS (shown when no real deposits) -->
+<div class="sample-strip" id="sampleStrip">
+  <div class="sample-label">Sample preview <span class="sample-badge">DEMO DATA</span></div>
+  <div class="dep-grid">
+    <div class="dep-card" style="opacity:.75;pointer-events:none">
+      <div class="dep-card-head">
+        <div class="dep-name">Mumbai Office Deposit</div>
+        <span class="dep-type type-given">Given</span>
+      </div>
+      <div class="dep-meta">
+        <span class="dep-meta-item"><i class="fa-solid fa-building"></i> ABC Pvt. Ltd.</span>
+        <span class="dep-meta-item">EIR 10.00%</span>
+        <span class="dep-meta-item">3 yrs</span>
+        <span class="dep-meta-item">Ind AS 109</span>
+      </div>
+      <div class="dep-kpis">
+        <div class="dep-kpi"><div class="dep-kpi-lbl">Nominal Deposit</div><div class="dep-kpi-val c-nominal">₹5,00,000</div></div>
+        <div class="dep-kpi"><div class="dep-kpi-lbl">Fair Value (PV)</div><div class="dep-kpi-val c-pv">₹3,75,657</div></div>
+        <div class="dep-kpi"><div class="dep-kpi-lbl">Day 1 Discount</div><div class="dep-kpi-val c-discount">₹1,24,343</div></div>
+        <div class="dep-kpi"><div class="dep-kpi-lbl">Yr 1 Unwinding</div><div class="dep-kpi-val c-unwind">₹37,566</div></div>
+      </div>
+    </div>
+    <div class="dep-card" style="opacity:.75;pointer-events:none">
+      <div class="dep-card-head">
+        <div class="dep-name">Pune Warehouse Deposit</div>
+        <span class="dep-type type-received">Received</span>
+      </div>
+      <div class="dep-meta">
+        <span class="dep-meta-item"><i class="fa-solid fa-building"></i> XYZ Corp</span>
+        <span class="dep-meta-item">EIR 9.00%</span>
+        <span class="dep-meta-item">5 yrs</span>
+        <span class="dep-meta-item">Ind AS 109</span>
+      </div>
+      <div class="dep-kpis">
+        <div class="dep-kpi"><div class="dep-kpi-lbl">Nominal Deposit</div><div class="dep-kpi-val c-nominal">₹3,00,000</div></div>
+        <div class="dep-kpi"><div class="dep-kpi-lbl">Fair Value (PV)</div><div class="dep-kpi-val c-pv">₹1,94,985</div></div>
+        <div class="dep-kpi"><div class="dep-kpi-lbl">Day 1 Discount</div><div class="dep-kpi-val c-discount">₹1,05,015</div></div>
+        <div class="dep-kpi"><div class="dep-kpi-lbl">Yr 1 Unwinding</div><div class="dep-kpi-val c-unwind">₹17,549</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="sample-upsell" id="sampleUpsell">
+  <div>
+    <div class="sample-upsell-text">📋 Upload your deposits to replace this sample data</div>
+    <div class="sample-upsell-sub">Download the template → fill your deposits → upload to get your real IND AS 109 consolidated report</div>
+  </div>
+  <button class="btn btn-green" onclick="document.getElementById('fileInput').click()"><i class="fa-solid fa-upload"></i> Upload Deposits</button>
+</div>
+
 <!-- DEPOSIT GRID -->
 <div class="grid-wrap">
-  <div class="dep-grid" id="depGrid">
-    <div class="empty-state" id="emptyState" style="grid-column:1/-1">
+  <div class="dep-grid" id="depGrid" style="display:none">
+    <div class="empty-state" id="emptyState" style="grid-column:1/-1;display:none">
       <div class="empty-icon"><i class="fa-solid fa-layer-group"></i></div>
       <div class="empty-title">No deposits yet</div>
       <div class="empty-sub">Download the Excel template, fill in your security deposits, then upload to get your consolidated IND AS 109 schedule.</div>
-      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-        <button class="btn btn-outline" onclick="downloadTemplate()"><i class="fa-solid fa-download"></i> Download Template</button>
-        <button class="btn btn-green" onclick="document.getElementById('fileInput').click()"><i class="fa-solid fa-upload"></i> Upload Deposits</button>
-      </div>
     </div>
   </div>
 </div>
@@ -450,19 +508,22 @@ function confirmUpload(){
 // ── Render ──────────────────────────────────────────────────────────────────
 function renderGrid(){
   var grid = document.getElementById('depGrid');
-  var empty = document.getElementById('emptyState');
   var exportRow = document.getElementById('exportRow');
+  var sampleStrip = document.getElementById('sampleStrip');
+  var sampleUpsell = document.getElementById('sampleUpsell');
 
   if(deposits.length === 0){
-    empty.style.display = 'block';
+    sampleStrip.style.display = 'block';
+    sampleUpsell.style.display = 'flex';
     exportRow.style.display = 'none';
-    grid.innerHTML = '';
-    grid.appendChild(empty);
+    grid.style.display = 'none';
     return;
   }
 
-  empty.style.display = 'none';
+  sampleStrip.style.display = 'none';
+  sampleUpsell.style.display = 'none';
   exportRow.style.display = 'block';
+  grid.style.display = 'grid';
 
   grid.innerHTML = deposits.map(function(d, idx){
     var fyInt = d.summary.sched.length > 0 ? d.summary.sched[0].interest : 0;
@@ -478,10 +539,10 @@ function renderGrid(){
         '<span class="dep-meta-item">' + d.inputs.std1 + '</span>' +
       '</div>' +
       '<div class="dep-kpis">' +
-        '<div class="dep-kpi"><div class="dep-kpi-lbl">Nominal Deposit</div><div class="dep-kpi-val">' + INR(d.inputs.deposit) + '</div></div>' +
-        '<div class="dep-kpi"><div class="dep-kpi-lbl">Fair Value (PV)</div><div class="dep-kpi-val">' + INR(d.summary.pv) + '</div></div>' +
-        '<div class="dep-kpi"><div class="dep-kpi-lbl">Day 1 Discount</div><div class="dep-kpi-val">' + INR(d.summary.discount) + '</div></div>' +
-        '<div class="dep-kpi"><div class="dep-kpi-lbl">Yr 1 Unwinding</div><div class="dep-kpi-val">' + INR(fyInt) + '</div></div>' +
+        '<div class="dep-kpi"><div class="dep-kpi-lbl">Nominal Deposit</div><div class="dep-kpi-val c-nominal">' + INR(d.inputs.deposit) + '</div></div>' +
+        '<div class="dep-kpi"><div class="dep-kpi-lbl">Fair Value (PV)</div><div class="dep-kpi-val c-pv">' + INR(d.summary.pv) + '</div></div>' +
+        '<div class="dep-kpi"><div class="dep-kpi-lbl">Day 1 Discount</div><div class="dep-kpi-val c-discount">' + INR(d.summary.discount) + '</div></div>' +
+        '<div class="dep-kpi"><div class="dep-kpi-lbl">Yr 1 Unwinding</div><div class="dep-kpi-val c-unwind">' + INR(fyInt) + '</div></div>' +
       '</div>' +
       '<div class="dep-foot">' +
         '<button class="btn-remove" onclick="removeDeposit(' + idx + ')"><i class="fa-solid fa-trash-can"></i> Remove</button>' +
@@ -743,6 +804,8 @@ function showUpsellBanner(){
 }
 
 // ── Export button wiring (synchronous — auth.js timing) ────────────────────
+// auth.js Pro path tries exportXL → generateAndDownloadExcel → generateExcel → downloadExcel in order
+window.exportXL = doExport;
 window.downloadExcel = doExport;
 document.getElementById('btnExp').onclick = doExport;
 
