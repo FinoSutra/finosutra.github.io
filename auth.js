@@ -469,6 +469,10 @@
     btn.disabled = true; btn.textContent = 'Signing in…';
     errEl.style.display = 'none';
     try {
+      if (!global.supaClient && typeof global.supabase !== 'undefined') {
+        global.supaClient = global.supabase.createClient(SUPA_URL, SUPA_KEY);
+      }
+      if (!global.supaClient) throw new Error('Authentication service unavailable. Please refresh the page and try again.');
       var res = await global.supaClient.auth.signInWithPassword({ email: email, password: password });
       if (res.error) throw res.error;
       global.currentUser = res.data.user;
@@ -496,6 +500,10 @@
     btn.disabled = true; btn.textContent = 'Creating account…';
     document.getElementById('fsSignupError').style.display = 'none';
     try {
+      if (!global.supaClient && typeof global.supabase !== 'undefined') {
+        global.supaClient = global.supabase.createClient(SUPA_URL, SUPA_KEY);
+      }
+      if (!global.supaClient) throw new Error('Authentication service unavailable. Please refresh the page and try again.');
       var res = await global.supaClient.auth.signUp({ email: email, password: password });
       if (res.error) throw res.error;
       if (typeof global.gtag === 'function') {
