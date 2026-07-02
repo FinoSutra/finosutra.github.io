@@ -263,6 +263,10 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
       </table>
     </div>
     <div class="preview-summary-row" id="previewSummary"></div>
+    <div style="margin-top:14px;padding:12px 16px;background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:10px;display:flex;align-items:center;gap:10px;">
+      <input type="checkbox" id="chkReplaceAll" style="width:16px;height:16px;accent-color:#D97706;cursor:pointer;">
+      <label for="chkReplaceAll" style="font-size:13px;font-weight:600;color:#92400E;cursor:pointer;">Replace entire portfolio with this upload (deletes all existing leases first)</label>
+    </div>
     <div class="modal-actions" style="margin-top:16px;">
       <button class="btn btn-outline" onclick="closeUploadPreview()">Cancel</button>
       <button class="btn btn-primary" id="btnConfirmUpload" onclick="confirmUpload()">Confirm &amp; Add to Portfolio</button>
@@ -311,6 +315,7 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
     <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
       <button class="btn btn-amber" onclick="downloadTemplate()" title="Download Excel template — fill one row per lease, then upload">&#8659; Download Template</button>
       <button class="btn btn-teal" onclick="document.getElementById('fileUploadInput').click()" title="Upload completed template to bulk-import leases">&#8657; Upload Leases</button>
+      <button class="btn btn-outline" onclick="clearAllLeases()" title="Delete all leases from portfolio" style="color:#EF4444;border-color:#FCA5A5;">&#128465; Clear All</button>
       <label style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#6B7280;">
         Reporting Date:
         <input type="date" id="fReportDate" style="padding:7px 10px;border:1.5px solid #E5E7EB;border-radius:8px;font-size:13px;font-family:inherit;color:#111827;background:#fff;outline:none;" title="Used for disclosure note and FY-scoped sheets">
@@ -1238,22 +1243,42 @@ function closeUploadPreview(){
   _pendingUploadLeases = [];
 }
 
+async function clearAllLeases(){
+  if(!window.isProUser || !window.currentUser){ toast('Log in as Pro to manage leases.','#EF4444'); return; }
+  if(!confirm('Delete ALL '+leases.length+' leases from your portfolio? This cannot be undone.')) return;
+  try{
+    var res = await window.supaClient.from('leases').delete().eq('user_id', window.currentUser.id);
+    if(res.error) throw res.error;
+    leases = [];
+    renderAll();
+    toast('✓ All leases cleared.','#6B7280');
+  }catch(e){ toast('Error: '+e.message,'#EF4444'); }
+}
+
 async function confirmUpload(){
   if(!_pendingUploadLeases.length) return;
   var btn = document.getElementById('btnConfirmUpload');
+  var replaceAll = document.getElementById('chkReplaceAll') && document.getElementById('chkReplaceAll').checked;
   btn.disabled = true; btn.textContent = 'Saving…';
 
   if(window.isProUser && window.currentUser){
-    var rows = _pendingUploadLeases.map(function(l){
-      var inp = Object.assign({}, l.inputs, { entity: l.entity||'', model: l.model||'standard' });
-      return {user_id:window.currentUser.id, name:l.name, inputs:inp, summary:l.summary};
-    });
     try{
+      // If "Replace" checked — delete all existing leases first
+      if(replaceAll){
+        btn.textContent = 'Clearing old leases…';
+        var delRes = await window.supaClient.from('leases').delete().eq('user_id', window.currentUser.id);
+        if(delRes.error) throw delRes.error;
+      }
+      btn.textContent = 'Saving…';
+      var rows = _pendingUploadLeases.map(function(l){
+        var inp = Object.assign({}, l.inputs, { entity: l.entity||'', model: l.model||'standard' });
+        return {user_id:window.currentUser.id, name:l.name, inputs:inp, summary:l.summary};
+      });
       var res = await window.supaClient.from('leases').upsert(rows,{onConflict:'user_id,name'});
       if(res.error) throw res.error;
       var count = _pendingUploadLeases.length;
       closeUploadPreview();
-      toast('✓ '+count+' lease(s) saved to portfolio!','#059669');
+      toast('✓ '+count+' lease(s) '+(replaceAll?'replaced portfolio':'saved to portfolio')+'!','#059669');
       await loadLeases();
     }catch(e){
       toast('Save failed: '+e.message,'#EF4444');
