@@ -7,7 +7,7 @@
 <meta name="description" content="Manage multiple IND AS 109 security deposits in one place. Bulk upload via Excel, consolidated amortisation schedule, journal entries and disclosure note."/>
 <meta property="og:title" content="Multi-Security Deposit Portfolio — IND AS 109 | Finosutra"/>
 <meta property="og:description" content="Bulk upload security deposits via Excel. Consolidated IND AS 109 schedule, journal entries and disclosure note."/>
-<meta property="og:image" content="https://www.finosutra.com/og-image.png"/>
+<meta property="og:image" content="https://www.finosutra.com/og-image.jpg"/>
 <link rel="canonical" href="https://www.finosutra.com/sd-portfolio.html"/>
 <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -159,7 +159,6 @@ input[type=file]{display:none}
       <li><a href="indas-tools.html" class="active">IND AS</a></li>
       <li><a href="gst-tools.html">GST</a></li>
       <li><a href="income-tax-hub.html">Income Tax</a></li>
-      <li><a href="salary-hr.html">Personal Finance</a></li>
       <li><a href="templates.html">Templates</a></li>
       <li><a href="blog.html">Blog</a></li>
       <li><a href="index.html#pricing">Pricing</a></li>
@@ -351,7 +350,7 @@ function fsCopyLink(btn){
     <a href="mailto:fino.sutra07@gmail.com">Contact</a>
     <a href="blog.html">Blog</a>
   </div>
-  <div>© 2025 Finosutra. Built for Chartered Accountants and Finance Teams across India.</div>
+  <div>© 2026 Finosutra. Built for Chartered Accountants and Finance Teams across India.</div>
 </footer>
 
 <script>
@@ -392,7 +391,9 @@ function calcSDEngine(raw){
   for(var y = 1; y <= Math.ceil(tenure); y++){
     var isLast   = y === Math.ceil(tenure);
     var partial  = (tenure % 1 !== 0 && isLast) ? tenure % 1 : 1;
-    var interest = cv * rate * partial;
+    // Plug the last period's interest back to the nominal deposit so totalInterest
+    // always ties out to the Day-1 discount, even for fractional-year tenures.
+    var interest = isLast ? (deposit - cv) : cv * rate * partial;
     var cvClose  = isLast ? deposit : cv + interest;
     sched.push({ year: y, cvOpen: cv, interest: interest, cvClose: cvClose, isLast: isLast });
     cv = cvClose;

@@ -194,13 +194,6 @@ footer a{color:#9CA3AF;text-decoration:none;}
           </div>
         </div>
         <div class="tool-row">
-          <span class="tool-name">Salary Calculator</span>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="tool-status-free" id="st-salary">₹199/export</span>
-            <a href="salary-calculator.html" class="tool-link">Open →</a>
-          </div>
-        </div>
-        <div class="tool-row">
           <span class="tool-name">Security Deposit Calculator</span>
           <div style="display:flex;align-items:center;gap:8px;">
             <span class="tool-status-free" id="st-sd">₹199/export</span>
@@ -246,7 +239,10 @@ function daysLeft(isoStr){
 
 async function loadProfile(){
   showLoading();
-  var client = supabase.createClient(SUPA_URL, SUPA_KEY);
+  // Reuse auth.js's shared client instead of creating a second GoTrueClient
+  // instance against the same storage key.
+  if(!window.supaClient) window.supaClient = supabase.createClient(SUPA_URL, SUPA_KEY);
+  var client = window.supaClient;
   var sd = await client.auth.getSession();
   var session = sd.data.session;
 

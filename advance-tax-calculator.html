@@ -10,7 +10,7 @@
 <meta property="og:title" content="Advance Tax Calculator FY 2026-27 | Finosutra"/>
 <meta property="og:description" content="Quarterly advance tax instalment calculator with 234B and 234C interest. New Regime slabs FY 2026-27."/>
 <meta property="og:url" content="https://www.finosutra.com/advance-tax-calculator.html"/>
-<meta property="og:image" content="https://www.finosutra.com/og-image.png"/>
+<meta property="og:image" content="https://www.finosutra.com/og-image.jpg"/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-Z2G710PHNQ");</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -323,7 +323,7 @@ table.inst tbody td:not(:first-child){text-align:right}
 
     <!-- Tax computation -->
     <div id="taxCompSection" class="section-card hidden">
-      <div class="section-title"><i class="fa-solid fa-receipt"></i> Tax Computation (New Regime FY 2026-27)</div>
+      <div class="section-title"><i class="fa-solid fa-receipt"></i> Tax Computation (New Regime <span class="js-fy-label">FY 2026-27</span>)</div>
       <table class="comp" id="compTable"></table>
     </div>
 
@@ -406,7 +406,7 @@ function fsCopyLink(btn){
 <footer class="site-footer">
   <div class="footer-badges">
     <span class="footer-badge">✓ Section 234B &amp; 234C</span>
-    <span class="footer-badge">✓ New Regime FY 2026-27</span>
+    <span class="footer-badge">✓ New Regime <span class="js-fy-label">FY 2026-27</span></span>
     <span class="footer-badge">✓ CA Working Paper Format</span>
     <span class="footer-badge">🇮🇳 Made for Indian CAs</span>
   </div>
@@ -423,9 +423,27 @@ function fsCopyLink(btn){
 function fmt(n){ return '₹' + Math.round(Math.abs(n)).toLocaleString('en-IN'); }
 function fmtN(n){ return Math.round(n).toLocaleString('en-IN'); }
 
-// New Regime slabs FY 2026-27 (Finance Act 2025)
-function computeSlabTax(income){
-  var slabs = [[300000,0],[400000,0.05],[300000,0.10],[200000,0.15],[300000,0.20],[Infinity,0.30]];
+// New Regime slabs — vary by financial year
+function getFYConfig(fy){
+  if(fy === '2024-25'){
+    // Pre-Budget-2025 New Regime (Finance Act 2024)
+    return {
+      slabs: [[300000,0],[400000,0.05],[300000,0.10],[200000,0.15],[300000,0.20],[Infinity,0.30]],
+      rebateLimit: 700000,
+      rebateCap: 25000,
+      label: 'FY 2024-25'
+    };
+  }
+  // FY 2025-26 and FY 2026-27 — Finance Act 2025 New Regime slabs (carried forward pending Budget 2027)
+  return {
+    slabs: [[400000,0],[400000,0.05],[400000,0.10],[400000,0.15],[400000,0.20],[400000,0.25],[Infinity,0.30]],
+    rebateLimit: 1200000,
+    rebateCap: 60000,
+    label: fy === '2025-26' ? 'FY 2025-26' : 'FY 2026-27'
+  };
+}
+
+function computeSlabTax(income, slabs){
   var tax = 0, remaining = Math.max(0, income);
   for(var i=0; i<slabs.length; i++){
     var band = slabs[i][0], rate = slabs[i][1];
@@ -466,13 +484,14 @@ function calculate(){
 
   if(totalIncome === 0){ showEmpty(); return; }
 
-  // Tax computation
-  var basicTax = computeSlabTax(taxableIncome);
-  // 87A rebate: up to ₹25,000 if taxable income ≤ ₹12L (New Regime FY 2026-27)
+  // Tax computation — slabs and 87A rebate both depend on the selected FY
+  var fyConfig = getFYConfig(fy);
+  var basicTax = computeSlabTax(taxableIncome, fyConfig.slabs);
   var rebate87A = 0;
-  if(taxableIncome <= 1200000){
-    rebate87A = Math.min(basicTax, 25000);
+  if(taxableIncome <= fyConfig.rebateLimit){
+    rebate87A = Math.min(basicTax, fyConfig.rebateCap);
   }
+  document.querySelectorAll('.js-fy-label').forEach(function(el){ el.textContent = fyConfig.label; });
   var taxAfterRebate = Math.max(0, basicTax - rebate87A);
   var cess = taxAfterRebate * 0.04;
   var grossTax = taxAfterRebate + cess;
@@ -539,7 +558,7 @@ function calculate(){
     ['Taxable Income', taxableIncome, '', true],
     ['',null,''],
     ['Income Tax (New Regime slabs)', basicTax, ''],
-    ['Less: Rebate u/s 87A', -rebate87A, rebate87A>0?'(Income ≤ ₹12L, max ₹25,000)':'NA'],
+    ['Less: Rebate u/s 87A', -rebate87A, rebate87A>0?('(Income ≤ ₹'+(fyConfig.rebateLimit/100000)+'L, max ₹'+fyConfig.rebateCap.toLocaleString('en-IN')+')'):'NA'],
     ['Tax after Rebate', taxAfterRebate, '', true],
     ['Add: Health & Education Cess @ 4%', cess, ''],
     ['Gross Tax Liability', grossTax, '', true],

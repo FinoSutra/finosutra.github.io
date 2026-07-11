@@ -8,10 +8,14 @@
   var EDGE_FN = 'https://uymuivmktvtxmodblxie.supabase.co/functions/v1/create-razorpay-sub';
 
   function getClient() {
-    if (!window._fsSupabase && window.supabase) {
-      window._fsSupabase = window.supabase.createClient(SB_URL, SB_ANON);
+    // Reuse the single shared client auth.js creates (window.supaClient) so we
+    // never spin up a second GoTrueClient against the same storage key — that
+    // was causing Supabase's "Multiple GoTrueClient instances" warning and the
+    // undefined-auth-behaviour risk that comes with it.
+    if (!window.supaClient && window.supabase) {
+      window.supaClient = window.supabase.createClient(SB_URL, SB_ANON);
     }
-    return window._fsSupabase;
+    return window.supaClient;
   }
 
   // ── Public: check Pro status ─────────────────────────────────────────────

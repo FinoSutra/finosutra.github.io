@@ -9,6 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="auth.js"></script>
@@ -181,7 +183,6 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
       <li><a href="indas-tools.html" class="active">IND AS</a></li>
       <li><a href="gst-tools.html">GST</a></li>
       <li><a href="income-tax-hub.html">Income Tax</a></li>
-      <li><a href="salary-hr.html">Personal Finance</a></li>
       <li><a href="templates.html">Templates</a></li>
       <li><a href="blog.html">Blog</a></li>
       <li><a href="index.html#pricing">Pricing</a></li>
@@ -378,7 +379,7 @@ function fsCopyLink(btn){
     <a href="mailto:fino.sutra07@gmail.com">Contact</a>
     <a href="/blog.html">Blog</a>
   </div>
-  <div class="footer-tagline">© 2025 Finosutra. Built for Chartered Accountants and Finance Teams across India.</div>
+  <div class="footer-tagline">© 2026 Finosutra. Built for Chartered Accountants and Finance Teams across India.</div>
 </footer>
 
 <script>
@@ -446,6 +447,16 @@ async function deleteLease(id){
 function renderAll(){
   updateKPIs();
   renderLeaseGrid();
+}
+
+// Source calculators don't save a top-level interestTotal — derive it from the
+// saved per-period schedule instead, so it can never drift from what the
+// calculator actually displayed on-screen.
+function leaseInterestTotal(l){
+  var s = l.summary || {};
+  if(s.interestTotal) return s.interestTotal;
+  if(!Array.isArray(s.schedule)) return 0;
+  return s.schedule.reduce(function(sum,row){ return sum + (row.interest||0); }, 0);
 }
 
 function updateKPIs(){
@@ -730,7 +741,7 @@ function exportPortfolioXL(){
     [],
     [xlCell('PROFIT & LOSS (FY)',S.hdr),xlCell('₹',S.hdr)],
     [xlCell('Depreciation — ROU Assets',S.label), xlNum(totDepn, S.valNum)],
-    [xlCell('Interest — Lease Liabilities',S.label), xlNum(leases.reduce(function(a,l){ var s=l.summary||{}; return a+(s.interestTotal||0); },0), S.valNum)],
+    [xlCell('Interest — Lease Liabilities',S.label), xlNum(leases.reduce(function(a,l){ return a+leaseInterestTotal(l); },0), S.valNum)],
     [],
     [xlCell('Number of leases in portfolio',S.label), xlCell(leases.length,S.val)],
   ];
@@ -946,8 +957,8 @@ function exportPortfolioXL(){
     [],
     [xlCell('4. AMOUNTS RECOGNISED IN PROFIT & LOSS',S.hdr),xlCell('₹',S.hdr)],
     [xlCell('Depreciation on right-of-use assets',S.lbl),xlNum(totDepn,S.valNum)],
-    [xlCell('Finance cost — interest on lease liabilities',S.lbl),xlNum(leases.reduce(function(a,l){return a+((l.summary||{}).interestTotal||0);},0),S.valNum)],
-    [xlCell('Total P&L charge for leases',makeS({font:{name:'Calibri',sz:10,bold:true},numFmt:INR})),xlNum(totDepn+leases.reduce(function(a,l){return a+((l.summary||{}).interestTotal||0);},0),S.total)],
+    [xlCell('Finance cost — interest on lease liabilities',S.lbl),xlNum(leases.reduce(function(a,l){return a+leaseInterestTotal(l);},0),S.valNum)],
+    [xlCell('Total P&L charge for leases',makeS({font:{name:'Calibri',sz:10,bold:true},numFmt:INR})),xlNum(totDepn+leases.reduce(function(a,l){return a+leaseInterestTotal(l);},0),S.total)],
     [],
     [xlCell('5. OTHER DISCLOSURES',S.hdr),xlCell('₹',S.hdr)],
     [xlCell('Number of leases in portfolio',S.lbl),xlCell(leases.length,S.val)],

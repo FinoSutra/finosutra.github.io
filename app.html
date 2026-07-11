@@ -1,0 +1,2057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Lease App — IND AS 116 | Finosutra</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="IND AS 116 Lease Workspace — manage all leases, calculate ROU assets, generate journal entries, and export audit-ready working papers. Built for CAs and CFOs."/>
+<meta name="robots" content="index,follow"/>
+<link rel="canonical" href="https://www.finosutra.com/app.html"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Lease Workspace — IND AS 116 | Finosutra"/>
+<meta property="og:description" content="Manage all leases, calculate ROU assets, run modifications, and export Big-4 quality working papers. IND AS 116 compliant."/>
+<meta property="og:url" content="https://www.finosutra.com/app.html"/>
+<meta property="og:image" content="https://www.finosutra.com/og-image.jpg"/>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="leaseEngine.js?v=2"></script>
+<script src="premiumExport.js?v=2"></script>
+<script src="auth.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;color:#111827;-webkit-font-smoothing:antialiased;background:#F0F1FF;overflow-x:hidden;}
+
+/* ── App shell ── */
+.app-wrap{display:flex;min-height:100vh;}
+
+/* ── Sidebar ── */
+.sidebar{width:240px;flex-shrink:0;background:#1E1B4B;display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:200;overflow-y:auto;transition:transform .25s ease;}
+.sb-brand{padding:20px 18px 16px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.sb-logo{font-size:17px;font-weight:800;color:#fff;letter-spacing:-.3px;}
+.sb-sub{font-size:11px;color:rgba(255,255,255,0.4);margin-top:3px;line-height:1.4;}
+.sb-section{padding:16px 18px 4px;font-size:10px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1px;font-weight:700;}
+.sb-item{display:flex;align-items:center;gap:10px;padding:10px 14px;margin:1px 8px;border-radius:8px;cursor:pointer;font-size:13px;color:rgba(255,255,255,0.6);transition:background .15s,color .15s;text-decoration:none;}
+.sb-item:hover{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.9);}
+.sb-item.active{background:rgba(99,102,241,0.35);color:#fff;}
+.sb-item i{font-size:15px;width:18px;text-align:center;opacity:.85;flex-shrink:0;}
+.sb-item.active i{opacity:1;}
+.sb-badge{margin-left:auto;font-size:10px;font-weight:700;background:rgba(99,102,241,0.4);color:#C4B5FD;padding:2px 7px;border-radius:20px;}
+.sb-footer{margin-top:auto;padding:14px 16px;border-top:1px solid rgba(255,255,255,0.07);}
+.sb-user{display:flex;align-items:center;gap:10px;}
+.sb-avatar{width:32px;height:32px;border-radius:50%;background:rgba(99,102,241,0.5);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;}
+.sb-uinfo{min-width:0;}
+.sb-uname{font-size:12px;color:rgba(255,255,255,0.85);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.sb-upro{font-size:10px;color:#FCD34D;font-weight:600;margin-top:1px;}
+.sb-signout{margin-left:auto;background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:13px;padding:4px;border-radius:4px;flex-shrink:0;}
+.sb-signout:hover{color:rgba(255,255,255,0.7);}
+.sb-login-btn{display:block;margin:8px;padding:10px;background:rgba(99,102,241,0.4);border:1px solid rgba(99,102,241,0.6);border-radius:8px;color:#C4B5FD;font-size:13px;font-weight:600;text-align:center;cursor:pointer;transition:.15s;}
+.sb-login-btn:hover{background:rgba(99,102,241,0.6);color:#fff;}
+
+/* Sidebar overlay (mobile) */
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:199;}
+.sidebar-overlay.show{display:block;}
+
+/* ── Main content ── */
+.app-main{margin-left:240px;flex:1;display:flex;flex-direction:column;min-height:100vh;}
+
+/* Mobile topbar */
+.mobile-topbar{display:none;align-items:center;gap:12px;padding:12px 16px;background:#1E1B4B;position:sticky;top:0;z-index:100;}
+.mobile-topbar .mob-hamburger{background:none;border:none;color:#fff;font-size:20px;cursor:pointer;padding:2px;}
+.mobile-topbar .mob-logo{font-size:15px;font-weight:800;color:#fff;}
+
+/* Page topbar */
+.page-topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;background:#fff;border-bottom:1px solid #E5E7EB;position:sticky;top:0;z-index:50;}
+.page-topbar-title{font-size:16px;font-weight:700;color:#111827;}
+.page-topbar-right{display:flex;align-items:center;gap:8px;}
+
+/* Page body */
+.page-body{padding:24px 28px;flex:1;}
+
+/* Pages */
+.page{display:none;}
+.page.active{display:block;}
+#pg-lease-detail.active{display:flex;}
+
+/* ── KPI strip ── */
+.kpi-strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:24px;}
+.kpi-card{background:#fff;border:1px solid rgba(99,102,241,0.1);border-left:4px solid #E5E7EB;border-radius:14px;padding:18px 20px;box-shadow:0 1px 3px rgba(0,0,0,0.04);}
+.kpi-card.blue{border-left-color:#4F46E5;}
+.kpi-card.green{border-left-color:#059669;}
+.kpi-card.orange{border-left-color:#D97706;}
+.kpi-card.purple{border-left-color:#7C3AED;}
+.kpi-lbl{font-size:11px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;}
+.kpi-val{font-size:22px;font-weight:800;color:#111827;letter-spacing:-.5px;}
+.kpi-card.blue .kpi-val{color:#4F46E5;}
+.kpi-card.green .kpi-val{color:#059669;}
+.kpi-card.orange .kpi-val{color:#D97706;}
+.kpi-card.purple .kpi-val{color:#7C3AED;}
+.kpi-sub{font-size:11px;color:#9CA3AF;margin-top:3px;}
+
+/* ── Alert strip ── */
+.alert-strip{background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.alert-strip i{color:#F59E0B;font-size:14px;flex-shrink:0;}
+.alert-strip-text{font-size:13px;color:#92400E;line-height:1.5;}
+
+/* ── Section header ── */
+.section-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.section-hd h3{font-size:14px;font-weight:700;color:#111827;}
+.section-hd a,.section-hd button{font-size:12px;color:#4F46E5;background:none;border:none;cursor:pointer;font-family:inherit;font-weight:600;}
+
+/* ── Buttons ── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:'Inter',sans-serif;transition:all .15s;text-decoration:none;white-space:nowrap;}
+.btn-primary{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;box-shadow:0 2px 8px rgba(99,102,241,0.3);}
+.btn-primary:hover{opacity:.9;transform:translateY(-1px);}
+.btn-outline{background:#fff;border:1.5px solid #E5E7EB;color:#374151;}
+.btn-outline:hover{border-color:#6366F1;color:#6366F1;}
+.btn-green{background:linear-gradient(135deg,#059669,#10B981);color:#fff;}
+.btn-amber{background:#fff;border:1.5px solid #FCD34D;color:#92400E;}
+.btn-amber:hover{background:#FFFBEB;}
+.btn-teal{background:#fff;border:1.5px solid #99F6E4;color:#0F766E;}
+.btn-teal:hover{background:#F0FDFA;}
+.btn-danger{background:#fff;border:1.5px solid #FECACA;color:#EF4444;}
+.btn-danger:hover{background:#FEF2F2;}
+.btn-sm{padding:6px 11px;font-size:12px;}
+
+/* ── Table (dashboard recent leases) ── */
+.data-table{width:100%;border-collapse:collapse;font-size:13px;}
+.data-table th{font-size:11px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:.6px;padding:10px 14px;text-align:left;background:#F8F9FF;border-bottom:1px solid #E5E7EB;}
+.data-table td{padding:12px 14px;border-bottom:1px solid #F3F4F6;color:#374151;}
+.data-table tr:last-child td{border-bottom:none;}
+.data-table tr:hover td{background:#FAFBFF;}
+.table-wrap{background:#fff;border:1px solid #E5E7EB;border-radius:12px;overflow:hidden;}
+
+/* ── Badges ── */
+.badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;}
+.badge-active{background:#D1FAE5;color:#065F46;}
+.badge-expiring{background:#FEF3C7;color:#92400E;}
+.badge-expired{background:#FEE2E2;color:#991B1B;}
+.badge-pro{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;}
+.co-tag{display:inline-block;background:#EEF2FF;color:#4F46E5;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;}
+
+/* ── Lease grid ── */
+.lease-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;}
+.lease-card{background:#fff;border:1px solid rgba(99,102,241,0.12);border-radius:16px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:box-shadow .2s,transform .15s;}
+.lease-card:hover{box-shadow:0 4px 20px rgba(99,102,241,0.15);transform:translateY(-2px);}
+.lease-card-hd{padding:14px 18px;background:#FAFAFF;border-bottom:1px solid rgba(99,102,241,0.1);display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.lease-name{font-size:14px;font-weight:700;color:#111827;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.lease-model-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+.lease-model-badge.std{background:#EEF2FF;color:#4F46E5;}
+.lease-model-badge.esc{background:#FFF7ED;color:#C2410C;}
+.lease-card-body{padding:16px 18px;}
+.lease-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-bottom:14px;}
+.lm-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#9CA3AF;margin-bottom:2px;}
+.lm-val{font-size:13px;font-weight:600;color:#374151;}
+.lease-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:14px;}
+.lk-item{background:#F8F9FF;border-radius:8px;padding:8px 10px;}
+.lk-lbl{font-size:10px;font-weight:600;color:#9CA3AF;margin-bottom:2px;}
+.lk-val{font-size:13px;font-weight:700;color:#4F46E5;}
+.lk-val.green{color:#059669;}
+.lk-val.orange{color:#D97706;}
+.lease-card-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.lease-date{font-size:11px;color:#9CA3AF;}
+
+/* ── Toolbar ── */
+.toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;}
+.toolbar-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.toolbar-count{font-size:12px;color:#9CA3AF;background:#F3F4F6;padding:3px 10px;border-radius:20px;}
+.search-input{padding:8px 14px;border:1.5px solid #E5E7EB;border-radius:9px;font-size:13px;font-family:'Inter',sans-serif;color:#111827;outline:none;width:220px;transition:border-color .15s;}
+.search-input:focus{border-color:#6366F1;box-shadow:0 0 0 3px rgba(99,102,241,.08);}
+.filter-select{padding:8px 12px;border:1.5px solid #E5E7EB;border-radius:9px;font-size:13px;font-family:'Inter',sans-serif;color:#374151;outline:none;background:#fff;cursor:pointer;}
+.filter-select:focus{border-color:#6366F1;}
+
+/* ── Empty / Pro gate / Loading ── */
+.empty-state{text-align:center;padding:60px 32px;background:#fff;border-radius:18px;border:2px dashed rgba(99,102,241,0.2);}
+.empty-icon{font-size:48px;margin-bottom:16px;}
+.empty-title{font-size:18px;font-weight:700;color:#374151;margin-bottom:8px;}
+.empty-sub{font-size:14px;color:#9CA3AF;margin-bottom:24px;line-height:1.6;}
+.pro-gate{text-align:center;padding:60px 32px;background:linear-gradient(135deg,#EEF2FF,#F5F3FF);border:1.5px solid #C7D2FE;border-radius:18px;}
+.pro-gate-icon{font-size:52px;margin-bottom:16px;}
+.pro-gate-title{font-size:20px;font-weight:800;color:#111827;margin-bottom:8px;}
+.pro-gate-sub{font-size:14px;color:#6B7280;margin-bottom:24px;line-height:1.6;max-width:440px;margin-left:auto;margin-right:auto;}
+.spinner{width:32px;height:32px;border:3px solid #E5E7EB;border-top-color:#6366F1;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 16px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loading-state{text-align:center;padding:48px;}
+
+/* ── Companies page ── */
+.company-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.company-card{background:#fff;border:1px solid #E5E7EB;border-radius:14px;padding:18px 20px;box-shadow:0 1px 3px rgba(0,0,0,0.04);}
+.company-card-name{font-size:15px;font-weight:700;color:#111827;margin-bottom:6px;}
+.company-card-meta{font-size:12px;color:#6B7280;line-height:1.8;}
+.company-card-actions{display:flex;gap:8px;margin-top:14px;}
+
+/* ── Modals ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,15,30,.55);z-index:9000;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.modal-overlay.show{display:flex!important;}
+.modal{background:#fff;border-radius:20px;padding:32px;width:480px;max-width:95vw;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.22);}
+.modal-title{font-size:18px;font-weight:800;color:#111827;margin-bottom:20px;}
+.modal-close{position:absolute;top:14px;right:18px;background:none;border:none;font-size:22px;color:#9CA3AF;cursor:pointer;line-height:1;}
+.modal-close:hover{color:#374151;}
+.m-field{margin-bottom:14px;}
+.m-field label{display:block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#6B7280;margin-bottom:5px;}
+.m-field input,.m-field select{width:100%;background:#F8F9FF;border:1.5px solid rgba(99,102,241,0.25);border-radius:8px;padding:10px 13px;font-size:14px;color:#111827;outline:none;font-family:'Inter',sans-serif;transition:border-color .2s;}
+.m-field input:focus,.m-field select:focus{border-color:#6366F1;box-shadow:0 0 0 3px rgba(99,102,241,.1);}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:22px;}
+.m-note{font-size:12px;color:#9CA3AF;line-height:1.6;margin-top:4px;}
+
+/* ── Upload preview ── */
+.preview-modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,15,30,.6);z-index:9100;align-items:flex-start;justify-content:center;backdrop-filter:blur(4px);overflow-y:auto;padding:24px 12px;}
+.preview-modal-overlay.show{display:flex!important;}
+.preview-modal{background:#fff;border-radius:20px;padding:32px;width:960px;max-width:98vw;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.22);margin:auto;}
+.preview-table-wrap{overflow-x:auto;margin-top:16px;border-radius:10px;border:1px solid #E5E7EB;max-height:400px;overflow-y:auto;}
+.preview-table{width:100%;border-collapse:collapse;font-size:12px;}
+.preview-table th{background:#1E1B4B;color:#fff;padding:9px 12px;text-align:left;font-weight:700;white-space:nowrap;position:sticky;top:0;}
+.preview-table td{padding:8px 12px;border-bottom:1px solid #F3F4F6;color:#374151;white-space:nowrap;}
+.preview-table tr:nth-child(even) td{background:#F8F9FF;}
+.preview-table tr.err-row td{background:#FFF5F5!important;}
+.preview-table tr:last-child td{border-bottom:none;}
+.status-ok{display:inline-flex;align-items:center;gap:4px;background:#ECFDF5;color:#065F46;font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;}
+.status-err{display:inline-flex;align-items:center;gap:4px;background:#FEF2F2;color:#991B1B;font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;}
+
+/* ── Toast ── */
+#appToast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;color:#fff;z-index:99999;opacity:0;transition:opacity .3s;pointer-events:none;background:#6366F1;max-width:90vw;text-align:center;}
+
+/* ── Lease detail form ── */
+.detail-wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+.form-card{background:#fff;border:1px solid #E5E7EB;border-radius:14px;overflow:hidden;}
+.form-section{padding:18px 22px;border-bottom:1px solid #F3F4F6;}
+.form-section:last-child{border-bottom:none;}
+.form-section-title{font-size:12px;font-weight:700;color:#4F46E5;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;display:flex;align-items:center;gap:6px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.form-row.full{grid-template-columns:1fr;}
+.form-row.trio{grid-template-columns:1fr 1fr 1fr;}
+.field{}
+.field label{display:block;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#6B7280;margin-bottom:5px;}
+.field input,.field select,.field textarea{width:100%;padding:9px 12px;border:1.5px solid #E5E7EB;border-radius:8px;font-size:13px;color:#111827;font-family:'Inter',sans-serif;outline:none;transition:border-color .15s;background:#fff;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:#6366F1;box-shadow:0 0 0 3px rgba(99,102,241,.08);}
+.field textarea{resize:vertical;min-height:72px;}
+.field-hint{font-size:11px;color:#9CA3AF;margin-top:4px;line-height:1.4;}
+.field-err{font-size:11px;color:#EF4444;margin-top:4px;}
+.flag-row{display:flex;align-items:flex-start;gap:10px;padding:10px 0;}
+.flag-row input[type=checkbox]{width:16px;height:16px;accent-color:#6366F1;cursor:pointer;flex-shrink:0;margin-top:1px;}
+.flag-row label{font-size:13px;color:#374151;cursor:pointer;line-height:1.4;}
+.flag-row .flag-sub{font-size:11px;color:#9CA3AF;margin-top:2px;}
+.ibr-warning{padding:8px 12px;background:#FEF3C7;border:1px solid #FDE68A;border-radius:7px;font-size:12px;color:#92400E;margin-top:6px;display:none;}
+.ibr-range{font-size:11px;color:#9CA3AF;margin-top:4px;}
+.ibr-tooltip-trigger{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#EEF2FF;color:#4F46E5;font-size:10px;font-weight:800;cursor:pointer;position:relative;flex-shrink:0;border:1px solid #C7D2FE;}
+.ibr-tooltip-trigger:hover .ibr-tooltip-box,.ibr-tooltip-trigger:focus .ibr-tooltip-box{display:block;}
+.ibr-tooltip-box{display:none;position:absolute;left:24px;top:-8px;width:260px;background:#1E1B4B;color:#fff;font-size:12px;font-weight:400;line-height:1.6;padding:12px 14px;border-radius:10px;z-index:999;box-shadow:0 8px 24px rgba(0,0,0,.2);}
+.ibr-tooltip-box strong{color:#A5B4FC;}
+.ibr-tooltip-box::before{content:'';position:absolute;left:-6px;top:14px;width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent;border-right:6px solid #1E1B4B;}
+
+/* Results panel (right column) */
+.result-panel{display:flex;flex-direction:column;gap:14px;position:sticky;top:80px;}
+.result-kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.result-kpi{background:#fff;border:1px solid #E5E7EB;border-left:3px solid #E5E7EB;border-radius:10px;padding:12px 16px;}
+.result-kpi.blue{border-left-color:#4F46E5;}
+.result-kpi.green{border-left-color:#059669;}
+.result-kpi.orange{border-left-color:#D97706;}
+.result-kpi.purple{border-left-color:#7C3AED;}
+.result-kpi .lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#9CA3AF;margin-bottom:4px;}
+.result-kpi .val{font-size:18px;font-weight:800;color:#111827;}
+.result-kpi.blue .val{color:#4F46E5;}
+.result-kpi.green .val{color:#059669;}
+.result-kpi.orange .val{color:#D97706;}
+.result-kpi.purple .val{color:#7C3AED;}
+.result-kpi .sub{font-size:10px;color:#9CA3AF;margin-top:2px;}
+.result-actions{display:flex;gap:8px;}
+.calc-placeholder{background:#fff;border:2px dashed #E5E7EB;border-radius:14px;padding:40px 24px;text-align:center;color:#9CA3AF;font-size:13px;}
+.calc-placeholder i{font-size:32px;display:block;margin-bottom:10px;color:#C7D2FE;}
+
+/* Schedule table */
+.sched-card{background:#fff;border:1px solid #E5E7EB;border-radius:14px;overflow:hidden;margin-top:24px;}
+.sched-header{padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #F3F4F6;}
+.sched-header h3{font-size:14px;font-weight:700;color:#111827;}
+.sched-tabs{display:flex;gap:4px;background:#F3F4F6;border-radius:7px;padding:3px;}
+.sched-tab{padding:5px 12px;border-radius:5px;font-size:12px;font-weight:600;cursor:pointer;color:#6B7280;border:none;background:none;font-family:'Inter',sans-serif;}
+.sched-tab.active{background:#fff;color:#111827;}
+.sched-wrap{overflow-x:auto;max-height:380px;overflow-y:auto;}
+.sched-table{width:100%;border-collapse:collapse;font-size:12px;}
+.sched-table th{background:#1E1B4B;color:#fff;padding:9px 12px;text-align:right;font-size:11px;font-weight:700;white-space:nowrap;position:sticky;top:0;z-index:1;}
+.sched-table th:first-child{text-align:left;}
+.sched-table td{padding:8px 12px;border-bottom:1px solid #F3F4F6;text-align:right;color:#374151;white-space:nowrap;font-variant-numeric:tabular-nums;}
+.sched-table td:first-child{text-align:left;color:#111827;font-weight:600;}
+.sched-table tr:nth-child(even) td{background:#F8F9FF;}
+.sched-table tr:last-child td{border-bottom:none;}
+.sched-table .total-row td{background:#EEF2FF!important;font-weight:700;color:#1E1B4B;border-top:2px solid #C7D2FE;}
+.exemption-box{padding:32px;text-align:center;color:#6B7280;font-size:13px;}
+.exemption-box i{font-size:36px;color:#FCD34D;display:block;margin-bottom:12px;}
+
+@media(max-width:960px){.detail-wrap{grid-template-columns:1fr;}.result-panel{position:static;}}
+@media(max-width:600px){.form-row{grid-template-columns:1fr;}.form-row.trio{grid-template-columns:1fr 1fr;}}
+
+/* ── Placeholder pages ── */
+.coming-soon{text-align:center;padding:80px 32px;}
+.coming-soon i{font-size:52px;color:#C4B5FD;margin-bottom:20px;display:block;}
+.coming-soon h2{font-size:20px;font-weight:700;color:#374151;margin-bottom:8px;}
+.coming-soon p{font-size:14px;color:#9CA3AF;line-height:1.7;max-width:420px;margin:0 auto 24px;}
+.coming-soon .phase-badge{display:inline-block;background:#EEF2FF;color:#4F46E5;font-size:11px;font-weight:700;padding:3px 12px;border-radius:20px;margin-bottom:14px;}
+
+/* ── Journal Entries ── */
+.je-info-bar{background:#EEF2FF;border:1px solid #C7D2FE;border-radius:10px;padding:10px 16px;font-size:12px;color:#4338CA;margin-bottom:16px;display:flex;gap:20px;flex-wrap:wrap;}
+.je-info-bar span{font-weight:700;}
+.je-table-wrap{overflow-x:auto;border-radius:10px;border:1px solid #E5E7EB;}
+.je-table{width:100%;border-collapse:collapse;font-size:12px;}
+.je-table thead tr{background:#F8F9FF;}
+.je-table th{padding:10px 14px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6B7280;border-bottom:1px solid #E5E7EB;white-space:nowrap;}
+.je-table td{padding:9px 14px;border-bottom:1px solid #F3F4F6;vertical-align:top;color:#374151;}
+.je-table tr:last-child td{border-bottom:none;}
+.je-table tr:hover td{background:#F9FAFB;}
+.je-table .dr{color:#059669;font-weight:600;}
+.je-table .cr{color:#6B7280;}
+.je-table .amt{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.je-table .total-row td{font-weight:700;background:#F3F4F6;border-top:2px solid #E5E7EB;}
+.je-type-badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;}
+.je-type-badge.day1{background:#EDE9FE;color:#7C3AED;}
+.je-type-badge.interest{background:#FEF3C7;color:#D97706;}
+.je-type-badge.payment{background:#D1FAE5;color:#059669;}
+.je-type-badge.depn{background:#DBEAFE;color:#1D4ED8;}
+.je-group-header{background:#F3F4F6;}
+.je-group-header td{font-size:11px;font-weight:700;color:#6B7280;padding:6px 14px;letter-spacing:.3px;}
+
+/* ── Reports & Disclosures ── */
+.rpt-section{background:#fff;border:1px solid #E5E7EB;border-radius:12px;margin-bottom:20px;overflow:hidden;}
+.rpt-section-header{padding:14px 20px;background:#F8F9FF;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;justify-content:space-between;}
+.rpt-section-title{font-size:13px;font-weight:700;color:#1E1B4B;letter-spacing:.3px;}
+.rpt-section-sub{font-size:11px;color:#9CA3AF;margin-top:2px;}
+.rpt-table-wrap{overflow-x:auto;}
+.rpt-table{width:100%;border-collapse:collapse;font-size:12px;}
+.rpt-table th{padding:9px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6B7280;border-bottom:1px solid #E5E7EB;white-space:nowrap;background:#F8F9FF;}
+.rpt-table td{padding:9px 16px;border-bottom:1px solid #F3F4F6;color:#374151;font-size:12px;}
+.rpt-table tr:last-child td{border-bottom:none;}
+.rpt-table .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.rpt-table .total-row td{font-weight:700;background:#F3F4F6;border-top:2px solid #D1D5DB;}
+.rpt-table .indent{padding-left:32px;color:#6B7280;}
+.disc-kpi-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;padding:16px 20px;}
+.disc-kpi{background:#F8F9FF;border-radius:8px;padding:12px 16px;border-left:3px solid #C7D2FE;}
+.disc-kpi.green{border-left-color:#6EE7B7;}
+.disc-kpi.amber{border-left-color:#FCD34D;}
+.disc-kpi.red{border-left-color:#FCA5A5;}
+.disc-kpi .lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9CA3AF;margin-bottom:4px;}
+.disc-kpi .val{font-size:16px;font-weight:800;color:#1E1B4B;}
+.rpt-expiry-badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;}
+
+/* ── Explanation Panel ── */
+.explain-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#EEF2FF;border:1px solid #C7D2FE;border-radius:8px;cursor:pointer;font-size:12px;font-weight:700;color:#4338CA;}
+.explain-header:hover{background:#E0E7FF;}
+.explain-body{background:#F8F9FF;border:1px solid #C7D2FE;border-top:none;border-radius:0 0 8px 8px;padding:14px;font-size:12px;color:#374151;line-height:1.8;}
+.explain-body table{width:100%;border-collapse:collapse;margin-top:8px;}
+.explain-body td{padding:4px 8px;border-bottom:1px solid #E5E7EB;vertical-align:top;}
+.explain-body td:first-child{color:#6B7280;width:55%;font-size:11px;}
+.explain-body td:last-child{font-weight:700;color:#111827;text-align:right;}
+.explain-formula{background:#1E1B4B;color:#C7D2FE;font-family:monospace;font-size:11px;padding:10px 12px;border-radius:6px;margin-top:10px;line-height:1.9;}
+
+/* ── Audit Trail ── */
+.audit-header{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#6B7280;padding:10px 0 6px;border-top:1px solid #E5E7EB;margin-top:4px;}
+.audit-body{max-height:220px;overflow-y:auto;}
+.audit-row{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid #F3F4F6;align-items:flex-start;}
+.audit-row:last-child{border-bottom:none;}
+.audit-icon{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;margin-top:1px;}
+.audit-icon.create{background:#D1FAE5;color:#059669;}
+.audit-icon.update{background:#FEF3C7;color:#D97706;}
+.audit-icon.delete{background:#FEE2E2;color:#DC2626;}
+.audit-meta{flex:1;min-width:0;}
+.audit-action{font-size:11px;font-weight:700;color:#374151;}
+.audit-time{font-size:10px;color:#9CA3AF;margin-top:1px;}
+.audit-empty{font-size:11px;color:#9CA3AF;padding:10px 0;text-align:center;}
+
+/* ── Responsive ── */
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .app-main{margin-left:0;}
+  .mobile-topbar{display:flex;}
+  .page-topbar{top:48px;}
+  .kpi-strip{grid-template-columns:1fr 1fr;}
+  .page-body{padding:16px;}
+  .page-topbar{padding:12px 16px;}
+}
+@media(max-width:600px){
+  .kpi-strip{grid-template-columns:1fr 1fr;}
+  .kpi-val{font-size:18px;}
+  .lease-grid{grid-template-columns:1fr;}
+  .search-input{width:100%;}
+}
+
+/* Hidden navActions for auth.js compat */
+#navActions{display:none;}
+
+/* ═══════════════════════════════════════════════════════
+   LEASE WORKSPACE — lw-* prefix
+   ═══════════════════════════════════════════════════════ */
+
+/* Header */
+.lw-header{background:#fff;border-bottom:1px solid #E5E7EB;padding:0 24px;display:flex;flex-direction:column;gap:0;}
+.lw-header-top{display:flex;align-items:center;gap:14px;padding:14px 0 10px;}
+.lw-back-btn{background:none;border:1px solid #E5E7EB;color:#374151;font-size:12px;font-weight:600;padding:5px 12px;border-radius:7px;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;transition:background .15s;}
+.lw-back-btn:hover{background:#F3F4F6;}
+.lw-lease-title{font-size:16px;font-weight:800;color:#111827;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.lw-status-pill{padding:3px 12px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.3px;white-space:nowrap;cursor:default;border:none;transition:.15s;display:inline-block;}
+.lw-status-pill.draft{background:#F3F4F6;color:#6B7280;}
+.lw-status-pill.in-review{background:#FEF3C7;color:#92400E;}
+.lw-status-pill.reviewed{background:#DBEAFE;color:#1D4ED8;}
+.lw-status-pill.approved{background:#D1FAE5;color:#065F46;}
+.lw-status-pill.modified{background:#EDE9FE;color:#5B21B6;}
+.lw-status-pill.closed{background:#F3F4F6;color:#374151;}
+
+/* Action bar */
+.lw-action-bar{display:flex;align-items:center;gap:6px;padding-bottom:0;flex-wrap:wrap;}
+.lw-action-bar .lw-btn{font-size:11px;font-weight:600;padding:6px 13px;border-radius:7px;cursor:pointer;border:none;display:flex;align-items:center;gap:5px;transition:.15s;white-space:nowrap;}
+.lw-btn-ghost{background:#F3F4F6;color:#374151;border:1px solid #E5E7EB!important;}
+.lw-btn-ghost:hover{background:#E5E7EB;}
+.lw-btn-primary{background:#4F46E5;color:#fff;}
+.lw-btn-primary:hover{background:#4338CA;}
+.lw-btn-amber{background:#D97706;color:#fff;}
+.lw-btn-amber:hover{background:#B45309;}
+.lw-btn-navy{background:#1E1B4B;color:#fff;}
+.lw-btn-navy:hover{background:#13103A;}
+.lw-btn-green{background:#059669;color:#fff;}
+.lw-btn-green:hover{background:#047857;}
+.lw-btn-review{background:#7C3AED;color:#fff;}
+.lw-btn-review:hover{background:#6D28D9;}
+.lw-btn-sep{width:1px;height:22px;background:#E5E7EB;margin:0 3px;}
+
+/* Tab bar */
+.lw-tabs{display:flex;gap:0;border-bottom:2px solid #E5E7EB;background:#fff;padding:0 24px;overflow-x:auto;}
+.lw-tabs::-webkit-scrollbar{display:none;}
+.lw-tab{background:none;border:none;padding:10px 16px;font-size:12px;font-weight:600;color:#9CA3AF;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:.15s;display:flex;align-items:center;gap:5px;}
+.lw-tab:hover{color:#374151;}
+.lw-tab.active{color:#4F46E5;border-bottom-color:#4F46E5;}
+.lw-tab .lw-tab-badge{background:#EF4444;color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:10px;line-height:1.4;}
+.lw-tab .lw-tab-badge.warn{background:#F59E0B;}
+.lw-tab .lw-tab-badge.ok{background:#10B981;}
+
+/* Tab panes */
+.lw-body{flex:1;overflow-y:auto;}
+.lw-pane{display:none;padding:24px;}
+.lw-pane.active{display:block;}
+
+/* Overview tab */
+.lw-overview-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px;}
+.lw-meta-card{background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:18px 20px;}
+.lw-meta-card h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#9CA3AF;margin-bottom:12px;}
+.lw-meta-row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:1px solid #F3F4F6;font-size:12px;}
+.lw-meta-row:last-child{border-bottom:none;}
+.lw-meta-label{color:#6B7280;}
+.lw-meta-value{font-weight:600;color:#111827;text-align:right;max-width:60%;}
+.lw-result-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+.lw-result-kpi{background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:16px 18px;border-top:3px solid #E5E7EB;}
+.lw-result-kpi.blue{border-top-color:#4F46E5;}
+.lw-result-kpi.green{border-top-color:#059669;}
+.lw-result-kpi.orange{border-top-color:#D97706;}
+.lw-result-kpi.purple{border-top-color:#7C3AED;}
+.lw-result-kpi .lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#9CA3AF;margin-bottom:6px;}
+.lw-result-kpi .val{font-size:20px;font-weight:800;color:#111827;}
+.lw-result-kpi.blue .val{color:#4F46E5;}
+.lw-result-kpi.green .val{color:#059669;}
+.lw-result-kpi.orange .val{color:#D97706;}
+.lw-result-kpi.purple .val{color:#7C3AED;}
+.lw-result-kpi .sub{font-size:10px;color:#9CA3AF;margin-top:3px;}
+.lw-calc-prompt{background:#F8F9FF;border:1.5px dashed #C7D2FE;border-radius:12px;padding:28px;text-align:center;color:#9CA3AF;font-size:13px;margin-bottom:20px;}
+.lw-calc-prompt i{font-size:28px;color:#C4B5FD;display:block;margin-bottom:10px;}
+
+/* Validation summary card */
+.lw-val-summary{background:#fff;border:1px solid #E5E7EB;border-radius:12px;overflow:hidden;margin-bottom:20px;}
+.lw-val-summary-hdr{padding:12px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #F3F4F6;}
+.lw-val-summary-hdr h4{font-size:12px;font-weight:700;color:#374151;}
+.lw-val-item{display:flex;align-items:flex-start;gap:10px;padding:10px 18px;border-bottom:1px solid #F3F4F6;font-size:12px;}
+.lw-val-item:last-child{border-bottom:none;}
+.lw-val-sev{padding:2px 9px;border-radius:20px;font-size:10px;font-weight:700;white-space:nowrap;flex-shrink:0;}
+.lw-val-sev.error{background:#FEE2E2;color:#DC2626;}
+.lw-val-sev.warning{background:#FEF3C7;color:#D97706;}
+.lw-val-sev.info{background:#DBEAFE;color:#2563EB;}
+.lw-val-msg{color:#374151;line-height:1.5;}
+.lw-val-empty{padding:16px 18px;font-size:12px;color:#9CA3AF;text-align:center;}
+
+/* Inputs tab */
+.lw-inputs-wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+.lw-inputs-left{}
+.lw-inputs-right{position:sticky;top:16px;}
+.lw-section-divider{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#9CA3AF;padding:8px 0 4px;margin-top:4px;}
+
+/* Status & Workflow select in form */
+.lw-workflow-bar{background:#F8F9FF;border:1px solid #E5E7EB;border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap;}
+.lw-workflow-bar label{font-size:11px;font-weight:700;color:#6B7280;white-space:nowrap;}
+.lw-workflow-select{border:1px solid #D1D5DB;border-radius:7px;padding:5px 10px;font-size:12px;font-weight:600;color:#374151;background:#fff;}
+
+/* Documents tab */
+.lw-doc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
+.lw-doc-slot{background:#fff;border:1.5px dashed #D1D5DB;border-radius:12px;padding:20px;text-align:center;transition:.15s;cursor:pointer;}
+.lw-doc-slot:hover{border-color:#4F46E5;background:#F5F3FF;}
+.lw-doc-slot.filled{border-style:solid;border-color:#E5E7EB;text-align:left;}
+.lw-doc-slot i{font-size:28px;color:#C4B5FD;display:block;margin-bottom:10px;}
+.lw-doc-slot.filled i{font-size:20px;color:#4F46E5;margin-bottom:6px;}
+.lw-doc-slot h5{font-size:13px;font-weight:700;color:#374151;margin-bottom:4px;}
+.lw-doc-slot p{font-size:11px;color:#9CA3AF;line-height:1.5;}
+.lw-doc-slot .lw-doc-name{font-size:12px;font-weight:600;color:#111827;margin-bottom:3px;word-break:break-all;}
+.lw-doc-slot .lw-doc-meta{font-size:10px;color:#9CA3AF;}
+.lw-doc-actions{display:flex;gap:6px;margin-top:10px;}
+.lw-doc-btn{font-size:10px;font-weight:600;padding:4px 10px;border-radius:6px;border:1px solid #E5E7EB;background:#F3F4F6;color:#374151;cursor:pointer;}
+.lw-doc-btn.danger{border-color:#FCA5A5;color:#DC2626;background:#FFF5F5;}
+.lw-doc-note{background:#FFFBEB;border:1px solid #FCD34D;border-radius:8px;padding:10px 14px;font-size:11px;color:#92400E;margin-top:20px;}
+
+/* Audit & Review tab */
+.lw-audit-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.lw-review-signoff{background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:20px;}
+.lw-review-signoff h4{font-size:12px;font-weight:700;color:#374151;margin-bottom:16px;text-transform:uppercase;letter-spacing:.6px;}
+.lw-signoff-row{display:grid;grid-template-columns:100px 1fr 90px 90px;gap:8px;align-items:center;margin-bottom:12px;font-size:12px;}
+.lw-signoff-row label{color:#6B7280;font-weight:600;}
+.lw-signoff-input{border:1px solid #E5E7EB;border-radius:6px;padding:6px 10px;font-size:12px;width:100%;}
+.lw-notes-area{width:100%;border:1px solid #E5E7EB;border-radius:8px;padding:10px;font-size:12px;color:#374151;resize:vertical;min-height:80px;margin-top:6px;}
+
+/* Lease card status badge */
+.lease-status-badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;margin-left:6px;}
+.lease-status-badge.draft{background:#F3F4F6;color:#6B7280;}
+.lease-status-badge.in-review{background:#FEF3C7;color:#92400E;}
+.lease-status-badge.reviewed{background:#DBEAFE;color:#1D4ED8;}
+.lease-status-badge.approved{background:#D1FAE5;color:#065F46;}
+.lease-status-badge.modified{background:#EDE9FE;color:#5B21B6;}
+.lease-status-badge.closed{background:#F3F4F6;color:#374151;}
+
+/* Disclosure sub-tab in lease workspace */
+.lw-disc-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+.lw-disc-kpi{background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:16px;border-left:4px solid #E5E7EB;}
+.lw-disc-kpi.blue{border-left-color:#4F46E5;}
+.lw-disc-kpi.green{border-left-color:#059669;}
+.lw-disc-kpi.amber{border-left-color:#D97706;}
+.lw-disc-kpi.purple{border-left-color:#7C3AED;}
+.lw-disc-kpi .lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9CA3AF;margin-bottom:4px;}
+.lw-disc-kpi .val{font-size:18px;font-weight:800;color:#111827;}
+
+@media(max-width:960px){
+  .lw-overview-grid{grid-template-columns:1fr 1fr;}
+  .lw-result-strip{grid-template-columns:1fr 1fr;}
+  .lw-inputs-wrap{grid-template-columns:1fr;}
+  .lw-inputs-right{position:static;}
+  .lw-audit-grid{grid-template-columns:1fr;}
+  .lw-disc-grid{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  .lw-overview-grid{grid-template-columns:1fr;}
+  .lw-result-strip{grid-template-columns:1fr 1fr;}
+  .lw-header-top{flex-wrap:wrap;}
+  .lw-pane{padding:16px;}
+  .lw-tabs{padding:0 8px;-webkit-mask-image:linear-gradient(to right,transparent 0%,#000 8px,#000 calc(100% - 28px),transparent 100%);mask-image:linear-gradient(to right,transparent 0%,#000 8px,#000 calc(100% - 28px),transparent 100%);}
+  .lw-tab{padding:10px 12px;font-size:11px;}
+  .lw-tab i{display:none;}
+  /* Mod panel — stack form rows on mobile */
+  #modSection .form-row{grid-template-columns:1fr;}
+  #modPara46aNote .field{margin-top:8px;}
+  #addModBtn button{font-size:12px;padding:10px;}
+}
+
+/* ── Sprint 3: Company Workspace ──────────────────────────────────── */
+#pg-company-detail.active{display:flex;}
+#pg-company-detail{flex-direction:column;padding:0;background:#F0F1FF;}
+.cw-header{background:#fff;border-bottom:1px solid #E5E7EB;padding:0 24px;}
+.cw-header-top{display:flex;align-items:center;gap:12px;padding:14px 0 10px;}
+.cw-back-btn{background:none;border:1px solid #E5E7EB;border-radius:8px;padding:6px 12px;font-size:13px;cursor:pointer;color:#374151;}
+.cw-company-name{font-size:18px;font-weight:700;color:#111827;flex:1;}
+.cw-tabs{display:flex;border-bottom:2px solid #E5E7EB;padding:0;overflow-x:auto;}
+.cw-tab{padding:10px 20px;font-size:13px;font-weight:500;color:#6B7280;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;}
+.cw-tab.active{color:#4F46E5;border-bottom-color:#4F46E5;font-weight:600;}
+.cw-body{flex:1;overflow:auto;padding:24px;}
+.cw-pane{display:none;}.cw-pane.active{display:block;}
+.cw-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
+.cw-kpi-card{background:#fff;border:1px solid #E5E7EB;border-radius:10px;padding:14px 16px;}
+.cw-kpi-card .lbl{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#9CA3AF;margin-bottom:4px;}
+.cw-kpi-card .val{font-size:18px;font-weight:700;color:#111827;}
+.cw-kpi-card .sub{font-size:11px;color:#9CA3AF;margin-top:2px;}
+.cw-kpi-card.blue .val{color:#4F46E5;}.cw-kpi-card.green .val{color:#059669;}.cw-kpi-card.orange .val{color:#D97706;}.cw-kpi-card.red .val{color:#DC2626;}.cw-kpi-card.purple .val{color:#7C3AED;}
+.cw-table{width:100%;border-collapse:collapse;font-size:13px;background:#fff;border-radius:10px;overflow:hidden;border:1px solid #E5E7EB;}
+.cw-table th{background:#F9FAFB;padding:10px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#6B7280;border-bottom:1px solid #E5E7EB;}
+.cw-table td{padding:10px 12px;border-bottom:1px solid #F3F4F6;vertical-align:middle;}
+.cw-table tr:last-child td{border-bottom:none;}
+.cw-val-row{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-bottom:1px solid #F3F4F6;background:#fff;}
+.cw-val-row:last-child{border-bottom:none;}
+.cw-section-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.cw-section-hd h3{font-size:14px;font-weight:600;color:#111827;margin:0;}
+
+/* ── Sprint 3: Action Center ──────────────────────────────────────── */
+.ac-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0;}
+.ac-card{background:#fff;border:1px solid #E5E7EB;border-radius:10px;padding:14px 16px;cursor:pointer;transition:box-shadow .15s;}
+.ac-card:hover{box-shadow:0 4px 12px rgba(79,70,229,.1);border-color:#C7D2FE;}
+.ac-card .ac-count{font-size:24px;font-weight:800;color:#4F46E5;line-height:1;}
+.ac-card .ac-label{font-size:12px;font-weight:500;color:#374151;margin-top:4px;}
+.ac-card .ac-names{font-size:11px;color:#9CA3AF;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ac-card.danger .ac-count{color:#DC2626;}.ac-card.warn .ac-count{color:#D97706;}.ac-card.ok .ac-count{color:#059669;}
+.ac-card.zero{opacity:.5;cursor:default;}.ac-card.zero:hover{box-shadow:none;border-color:#E5E7EB;}
+
+/* ── Sprint 3: Export Center ──────────────────────────────────────── */
+.ec-modal{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.45);}
+.ec-modal.show{display:flex;align-items:center;justify-content:center;}
+.ec-panel{background:#fff;border-radius:16px;width:min(720px,95vw);max-height:88vh;overflow:hidden;display:flex;flex-direction:column;}
+.ec-panel-hd{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid #E5E7EB;}
+.ec-panel-hd h2{font-size:16px;font-weight:700;color:#111827;margin:0;}
+.ec-close{background:none;border:none;font-size:20px;cursor:pointer;color:#6B7280;padding:0;}
+.ec-tabs{display:flex;border-bottom:1px solid #E5E7EB;padding:0 24px;}
+.ec-tab{padding:10px 18px;font-size:13px;font-weight:500;color:#6B7280;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;}
+.ec-tab.active{color:#4F46E5;border-bottom-color:#4F46E5;font-weight:600;}
+.ec-body{flex:1;overflow:auto;padding:20px 24px;}
+.ec-pane{display:none;}.ec-pane.active{display:block;}
+.ec-item{display:flex;align-items:center;gap:14px;padding:12px 14px;border:1px solid #E5E7EB;border-radius:10px;margin-bottom:8px;cursor:pointer;transition:border-color .15s;}
+.ec-item:hover{border-color:#A5B4FC;background:#F5F3FF;}
+.ec-item-icon{width:36px;height:36px;border-radius:8px;background:#EEF2FF;display:flex;align-items:center;justify-content:center;color:#4F46E5;font-size:16px;flex-shrink:0;}
+.ec-item-body{flex:1;}
+.ec-item-title{font-size:13px;font-weight:600;color:#111827;}
+.ec-item-desc{font-size:11px;color:#6B7280;margin-top:1px;}
+.ec-item-meta{font-size:11px;color:#9CA3AF;}
+.ec-fmt-badge{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;background:#D1FAE5;color:#065F46;}
+.ec-fmt-badge.pdf{background:#FEE2E2;color:#991B1B;}
+.ec-filters{background:#F9FAFB;border:1px solid #E5E7EB;border-radius:10px;padding:14px;margin-bottom:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.ec-filters label{font-size:11px;color:#6B7280;display:flex;flex-direction:column;gap:4px;font-weight:500;}
+
+/* ── Sprint 3: Workflow Gate ──────────────────────────────────────── */
+.wf-gate-modal{display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.45);}
+.wf-gate-modal.show{display:flex;align-items:center;justify-content:center;}
+.wf-gate-panel{background:#fff;border-radius:14px;width:min(480px,92vw);padding:24px;}
+.wf-gate-title{font-size:16px;font-weight:700;color:#111827;margin-bottom:6px;}
+.wf-gate-sub{font-size:13px;color:#6B7280;margin-bottom:16px;}
+.wf-gate-items{list-style:none;padding:0;margin:0 0 20px;}
+.wf-gate-items li{padding:8px 12px;background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;margin-bottom:6px;font-size:13px;color:#991B1B;display:flex;gap:8px;align-items:flex-start;}
+.wf-gate-items li.warn{background:#FFFBEB;border-color:#FCD34D;color:#92400E;}
+.wf-gate-items li i{margin-top:1px;flex-shrink:0;}
+.wf-gate-actions{display:flex;gap:10px;justify-content:flex-end;}
+
+/* ── Sprint 3: Sign-off health ────────────────────────────────────── */
+.sf-health{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;}
+.sf-health.ok{background:#D1FAE5;color:#065F46;}
+.sf-health.partial{background:#FEF3C7;color:#92400E;}
+.sf-health.none{background:#F3F4F6;color:#6B7280;}
+.sf-health.recheck{background:#FEE2E2;color:#991B1B;}
+.company-card-actions{display:flex;gap:8px;}
+
+@media(max-width:768px){.cw-kpi-grid{grid-template-columns:1fr 1fr;}.ac-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:500px){.cw-kpi-grid{grid-template-columns:1fr;}.ac-grid{grid-template-columns:1fr;}.ec-filters{grid-template-columns:1fr;}}
+
+/* ── Help Center ──────────────────────────────────────────────────── */
+.help-body{max-width:780px;margin:0 auto;padding:24px;}
+.help-hero{background:linear-gradient(135deg,#1E1B4B 0%,#4F46E5 100%);border-radius:16px;padding:32px;color:#fff;margin-bottom:28px;}
+.help-hero h1{font-size:22px;font-weight:800;margin:0 0 6px;}
+.help-hero p{font-size:14px;opacity:.85;margin:0;}
+.help-toc{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:28px;}
+.help-toc-item{background:#fff;border:1px solid #E5E7EB;border-radius:10px;padding:14px;cursor:pointer;text-align:center;transition:border-color .15s;}
+.help-toc-item:hover{border-color:#A5B4FC;background:#F5F3FF;}
+.help-toc-item .ht-icon{font-size:20px;margin-bottom:6px;}
+.help-toc-item .ht-label{font-size:12px;font-weight:600;color:#374151;}
+.help-section{background:#fff;border:1px solid #E5E7EB;border-radius:12px;margin-bottom:16px;overflow:hidden;}
+.help-section-hd{display:flex;align-items:center;gap:10px;padding:16px 20px;cursor:pointer;user-select:none;}
+.help-section-hd:hover{background:#F9FAFB;}
+.help-section-hd .hs-icon{width:32px;height:32px;border-radius:8px;background:#EEF2FF;display:flex;align-items:center;justify-content:center;color:#4F46E5;font-size:14px;flex-shrink:0;}
+.help-section-hd h2{font-size:14px;font-weight:700;color:#111827;margin:0;flex:1;}
+.help-section-hd .hs-toggle{color:#9CA3AF;font-size:12px;transition:transform .2s;}
+.help-section-hd.open .hs-toggle{transform:rotate(180deg);}
+.help-section-body{display:none;padding:0 20px 20px;}
+.help-section-body.open{display:block;}
+.help-step{display:flex;gap:14px;margin-bottom:14px;}
+.help-step-num{width:24px;height:24px;border-radius:50%;background:#4F46E5;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.help-step-body{flex:1;}
+.help-step-body strong{font-size:13px;color:#111827;display:block;margin-bottom:2px;}
+.help-step-body p{font-size:12px;color:#6B7280;margin:0;line-height:1.5;}
+.help-tip{background:#EEF2FF;border-left:3px solid #4F46E5;border-radius:0 8px 8px 0;padding:10px 14px;margin:12px 0;font-size:12px;color:#374151;}
+.help-tip strong{color:#4F46E5;}
+.help-warn{background:#FFFBEB;border-left:3px solid #D97706;border-radius:0 8px 8px 0;padding:10px 14px;margin:12px 0;font-size:12px;color:#374151;}
+/* Workflow flow diagram */
+.wf-flow{display:flex;align-items:center;gap:0;margin:16px 0;overflow-x:auto;padding-bottom:4px;}
+.wf-node{text-align:center;flex-shrink:0;}
+.wf-node .wf-badge{display:inline-block;padding:6px 14px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap;}
+.wf-node .wf-desc{font-size:10px;color:#9CA3AF;margin-top:4px;max-width:80px;}
+.wf-arrow{color:#D1D5DB;font-size:18px;padding:0 6px;flex-shrink:0;margin-top:-12px;}
+.wf-badge.draft{background:#F3F4F6;color:#6B7280;}
+.wf-badge.in-review{background:#FEF3C7;color:#92400E;}
+.wf-badge.reviewed{background:#DBEAFE;color:#1E40AF;}
+.wf-badge.approved{background:#D1FAE5;color:#065F46;}
+.wf-badge.modified{background:#FEE2E2;color:#991B1B;}
+.wf-badge.closed{background:#F3F4F6;color:#374151;}
+.help-table{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;}
+.help-table th{background:#F9FAFB;padding:8px 12px;text-align:left;color:#6B7280;font-size:11px;text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid #E5E7EB;}
+.help-table td{padding:8px 12px;border-bottom:1px solid #F3F4F6;vertical-align:top;color:#374151;}
+.help-table tr:last-child td{border-bottom:none;}
+@media(max-width:600px){.help-toc{grid-template-columns:1fr 1fr;}.wf-flow{flex-wrap:wrap;gap:8px;}.wf-arrow{display:none;}}
+
+/* ── Onboarding Checklist ─────────────────────────────────────────── */
+.ob-wrap{max-width:620px;margin:0 auto;padding:32px 16px;}
+.ob-welcome{text-align:center;margin-bottom:28px;}
+.ob-welcome h2{font-size:22px;font-weight:800;color:#111827;margin:0 0 6px;}
+.ob-welcome p{font-size:14px;color:#6B7280;margin:0;}
+.ob-steps{display:flex;flex-direction:column;gap:12px;}
+.ob-step{display:flex;align-items:center;gap:16px;background:#fff;border:1.5px solid #E5E7EB;border-radius:14px;padding:18px 20px;cursor:pointer;transition:border-color .15s,box-shadow .15s;}
+.ob-step:hover{border-color:#A5B4FC;box-shadow:0 4px 16px rgba(79,70,229,.1);}
+.ob-step.done{border-color:#6EE7B7;background:#F0FDF4;}
+.ob-step-num{width:36px;height:36px;border-radius:50%;background:#EEF2FF;color:#4F46E5;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ob-step.done .ob-step-num{background:#D1FAE5;color:#059669;}
+.ob-step-body{flex:1;}
+.ob-step-title{font-size:14px;font-weight:700;color:#111827;}
+.ob-step-desc{font-size:12px;color:#6B7280;margin-top:2px;}
+.ob-step-action{font-size:12px;font-weight:600;color:#4F46E5;white-space:nowrap;}
+.ob-step.done .ob-step-action{color:#059669;}
+.ob-skip{text-align:center;margin-top:20px;font-size:12px;color:#9CA3AF;}
+.ob-skip a{color:#4F46E5;cursor:pointer;text-decoration:none;}
+</style>
+</head>
+<body>
+
+<!-- Mobile topbar -->
+<div class="mobile-topbar">
+  <button class="mob-hamburger" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+  <span class="mob-logo">Finosutra — Lease App</span>
+</div>
+
+<!-- Sidebar overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<div class="app-wrap">
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sb-brand">
+      <div class="sb-logo">Finosutra</div>
+      <div class="sb-sub">IND AS 116 — Lease Accounting</div>
+    </div>
+
+    <div class="sb-section">Main</div>
+    <a class="sb-item active" id="nav-dashboard" onclick="navigate('dashboard')">
+      <i class="fa-solid fa-chart-pie"></i> Dashboard
+    </a>
+    <a class="sb-item" id="nav-leases" onclick="navigate('leases')">
+      <i class="fa-solid fa-file-contract"></i> Leases
+      <span class="sb-badge" id="sbLeaseCount" style="display:none"></span>
+    </a>
+    <a class="sb-item" id="nav-journal" onclick="navigate('journal')">
+      <i class="fa-solid fa-receipt"></i> Journal Entries
+    </a>
+    <a class="sb-item" id="nav-reports" onclick="navigate('reports')">
+      <i class="fa-solid fa-chart-bar"></i> Reports &amp; Disclosures
+    </a>
+
+    <div class="sb-section">Setup</div>
+    <a class="sb-item" id="nav-companies" onclick="navigate('companies')">
+      <i class="fa-solid fa-building"></i> Companies
+    </a>
+    <a class="sb-item" id="nav-help" onclick="navigate('help')" style="margin-top:4px;">
+      <i class="fa-solid fa-circle-question"></i> Help &amp; Guide
+    </a>
+    <a href="indas-tools.html" style="display:flex;align-items:center;gap:8px;padding:6px 16px;font-size:11px;color:#9CA3AF;text-decoration:none;margin-top:8px;border-top:1px solid rgba(255,255,255,0.07);padding-top:12px;" onmouseover="this.style.color='#C7D2FE'" onmouseout="this.style.color='#9CA3AF'">
+      <i class="fa-solid fa-arrow-left" style="font-size:10px;"></i> Back to Tools
+    </a>
+
+    <div class="sb-footer">
+      <div class="sb-user" id="sbUser">
+        <div class="sb-avatar" id="sbAvatar">?</div>
+        <div class="sb-uinfo">
+          <div class="sb-uname" id="sbUname">Not signed in</div>
+          <div class="sb-upro" id="sbUpro" style="display:none">⭐ Pro</div>
+        </div>
+        <button class="sb-signout" id="sbSignout" onclick="fsHandleLogout()" title="Sign out" style="display:none"><i class="fa-solid fa-right-from-bracket"></i></button>
+      </div>
+      <button class="sb-login-btn" id="sbLoginBtn" onclick="fsShowAuthModal('login')" style="display:none">Log In / Sign Up</button>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <div class="app-main">
+
+    <!-- ── Dashboard ── -->
+    <div class="page active" id="pg-dashboard">
+      <div class="page-topbar">
+        <div class="page-topbar-title">Dashboard</div>
+        <div class="page-topbar-right">
+          <button class="btn btn-primary" onclick="navigate('leases');setTimeout(openAddModal,50)">
+            <i class="fa-solid fa-plus"></i> Add Lease
+          </button>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="kpi-strip">
+          <div class="kpi-card blue"><div class="kpi-lbl">🏢 ROU Asset (NBV)</div><div class="kpi-val" id="kpiROU">—</div><div class="kpi-sub">Across all active leases</div></div>
+          <div class="kpi-card green"><div class="kpi-lbl">💰 Current Liability</div><div class="kpi-val" id="kpiCurr">—</div><div class="kpi-sub">Due within 12 months</div></div>
+          <div class="kpi-card orange"><div class="kpi-lbl">📅 Non-Current Liability</div><div class="kpi-val" id="kpiNCurr">—</div><div class="kpi-sub">Due after 12 months</div></div>
+          <div class="kpi-card purple"><div class="kpi-lbl">📉 FY Depreciation</div><div class="kpi-val" id="kpiDepn">—</div><div class="kpi-sub">ROU depreciation this year</div></div>
+        </div>
+        <div id="dashAlerts"></div>
+        <div class="section-hd" style="margin-top:8px;">
+          <h3>⚡ Action Center</h3>
+          <button onclick="renderActionCenter()" style="font-size:12px;color:#6B7280;background:none;border:none;cursor:pointer;">Refresh</button>
+        </div>
+        <div id="dashActionCenter" class="ac-grid"></div>
+        <div class="section-hd">
+          <h3>Recent Leases</h3>
+          <button onclick="navigate('leases')">View all →</button>
+        </div>
+        <div class="table-wrap" id="dashRecentTable">
+          <div class="loading-state"><div class="spinner"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Leases ── -->
+    <div class="page" id="pg-leases">
+      <div class="page-topbar">
+        <div class="page-topbar-title">Leases</div>
+        <div class="page-topbar-right">
+          <button class="btn btn-amber btn-sm" onclick="downloadTemplate()"><i class="fa-solid fa-download"></i> Template</button>
+          <button class="btn btn-teal btn-sm" onclick="document.getElementById('fileUploadInput').click()"><i class="fa-solid fa-upload"></i> Upload</button>
+          <button class="btn btn-outline btn-sm" id="btnExp" onclick="exportPortfolioXL()"><i class="fa-solid fa-file-excel"></i> Export</button>
+          <button class="btn btn-primary btn-sm" onclick="openAddModal()"><i class="fa-solid fa-plus"></i> Add Lease</button>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="toolbar">
+          <div class="toolbar-left">
+            <input type="text" class="search-input" id="leaseSearch" placeholder="Search leases…" oninput="filterLeases()">
+            <select class="filter-select" id="leaseStatusFilter" onchange="filterLeases()">
+              <option value="">All status</option>
+              <option value="active">Active</option>
+              <option value="expiring">Expiring (90 days)</option>
+              <option value="expired">Expired</option>
+            </select>
+            <select class="filter-select" id="leaseCompanyFilter" onchange="filterLeases()">
+              <option value="">All companies</option>
+            </select>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="toolbar-count" id="leaseCount">0 leases</span>
+          </div>
+        </div>
+        <div id="leaseContentArea">
+          <div class="loading-state"><div class="spinner"></div><div style="font-size:14px;color:#9CA3AF;">Loading your leases…</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Journal Entries ── -->
+    <div class="page" id="pg-journal">
+      <div class="page-topbar">
+        <div class="page-topbar-title">Journal Entries</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+          <select id="jeFyFilter" class="filter-select" onchange="renderJournalPage()" style="min-width:130px;">
+            <option value="">All FYs</option>
+          </select>
+          <select id="jeLeaseFilter" class="filter-select" onchange="renderJournalPage()" style="min-width:160px;">
+            <option value="">All Leases</option>
+          </select>
+          <select id="jeTypeFilter" class="filter-select" onchange="renderJournalPage()">
+            <option value="">All Types</option>
+            <option value="day1">Day 1 Recognition</option>
+            <option value="interest">Interest Accrual</option>
+            <option value="payment">Lease Payment</option>
+            <option value="depn">Depreciation</option>
+          </select>
+          <button class="btn btn-amber btn-sm" onclick="exportJEXL()"><i class="fa-solid fa-file-excel"></i> Export GL</button>
+        </div>
+      </div>
+      <div class="page-body">
+        <div id="jeInfoBar" class="je-info-bar" style="display:none;"></div>
+        <div id="jeContent">
+          <div class="coming-soon" style="padding:60px 20px;">
+            <i class="fa-solid fa-receipt"></i>
+            <h2>No leases found</h2>
+            <p>Sign in and add leases to generate journal entries.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Reports ── -->
+    <div class="page" id="pg-reports">
+      <div class="page-topbar">
+        <div class="page-topbar-title">Reports &amp; Disclosures</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+          <select id="rptFyFilter" class="filter-select" onchange="renderReportsPage()" style="min-width:130px;">
+            <option value="">All FYs</option>
+          </select>
+          <button class="btn btn-amber btn-sm" onclick="exportReportsXL()"><i class="fa-solid fa-file-excel"></i> Export Reports</button>
+          <button class="btn btn-amber btn-sm" onclick="exportPremiumPortfolio()" style="background:#1E1B4B;"><i class="fa-solid fa-crown"></i> Premium Export</button>
+        </div>
+      </div>
+      <!-- inner tabs -->
+      <div style="display:flex;gap:0;border-bottom:1px solid #E5E7EB;background:#fff;padding:0 20px;">
+        <button class="rpt-inner-tab active" id="ritab-reports" onclick="switchRptTab('reports')" style="padding:10px 18px;font-size:13px;font-weight:600;border:none;border-bottom:2px solid #4F46E5;color:#4F46E5;background:none;cursor:pointer;margin-bottom:-1px;">📊 Reports</button>
+        <button class="rpt-inner-tab" id="ritab-disclosures" onclick="switchRptTab('disclosures')" style="padding:10px 18px;font-size:13px;font-weight:600;border:none;border-bottom:2px solid transparent;color:#6B7280;background:none;cursor:pointer;margin-bottom:-1px;">📋 Disclosures (Para 52)</button>
+      </div>
+      <div class="page-body" id="reportsContent" style="display:block;">
+        <div class="coming-soon" style="padding:60px 20px;">
+          <i class="fa-solid fa-chart-bar"></i>
+          <h2>No leases found</h2>
+          <p>Add leases to generate reports.</p>
+        </div>
+      </div>
+      <div class="page-body" id="disclosuresContent" style="display:none;">
+        <div style="padding:16px 20px 8px;display:flex;gap:8px;align-items:center;">
+          <select id="discFyFilter" class="filter-select" onchange="renderDisclosuresPage()" style="min-width:130px;">
+            <option value="">Select FY</option>
+          </select>
+          <button class="btn btn-amber btn-sm" onclick="exportDisclosureXL()"><i class="fa-solid fa-file-excel"></i> Export Note</button>
+        </div>
+        <div id="disclosuresInner">
+          <div class="coming-soon" style="padding:40px 20px;">
+            <i class="fa-solid fa-file-lines"></i>
+            <h2>Select a Financial Year</h2>
+            <p>Choose a FY above to generate the IND AS 116 Para 52 disclosure note.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- pg-disclosures kept as alias redirect -->
+    <div class="page" id="pg-disclosures" style="display:none;"></div>
+
+    <!-- ── Help & Guide ── -->
+    <div class="page" id="pg-help">
+      <div class="page-topbar">
+        <div class="page-topbar-title"><i class="fa-solid fa-circle-question" style="color:#4F46E5;margin-right:8px;"></i>Help &amp; User Guide</div>
+      </div>
+      <div class="page-body" style="overflow:auto;">
+        <div class="help-body">
+
+          <!-- Hero -->
+          <div class="help-hero">
+            <h1>FinoSutra — IND AS 116 Lease Accounting</h1>
+            <p>Complete guide to managing leases, workflows, disclosures, and exports for CA firms and finance teams.</p>
+          </div>
+
+          <!-- Table of Contents -->
+          <div class="help-toc">
+            <div class="help-toc-item" onclick="helpJump('gs')"><div class="ht-icon">🚀</div><div class="ht-label">Getting Started</div></div>
+            <div class="help-toc-item" onclick="helpJump('wf')"><div class="ht-icon">🔄</div><div class="ht-label">Workflow Status</div></div>
+            <div class="help-toc-item" onclick="helpJump('lease')"><div class="ht-icon">📄</div><div class="ht-label">Lease Workspace</div></div>
+            <div class="help-toc-item" onclick="helpJump('co')"><div class="ht-icon">🏢</div><div class="ht-label">Company Workspace</div></div>
+            <div class="help-toc-item" onclick="helpJump('exp')"><div class="ht-icon">📤</div><div class="ht-label">Export Center</div></div>
+            <div class="help-toc-item" onclick="helpJump('faq')"><div class="ht-icon">❓</div><div class="ht-label">FAQ</div></div>
+          </div>
+
+          <!-- Section 1: Getting Started -->
+          <div class="help-section" id="help-gs">
+            <div class="help-section-hd open" onclick="helpToggle(this)">
+              <div class="hs-icon"><i class="fa-solid fa-rocket"></i></div>
+              <h2>Getting Started</h2>
+              <span class="hs-toggle">▼</span>
+            </div>
+            <div class="help-section-body open">
+              <div class="help-step">
+                <div class="help-step-num">1</div>
+                <div class="help-step-body">
+                  <strong>Add a Company</strong>
+                  <p>Go to <b>Companies</b> in the sidebar → click <b>+ Add Company</b>. Enter your client's legal name, GSTIN, FY start month (April for Indian entities), and reporting standard (IND AS). Each company acts as a reporting container for its leases.</p>
+                </div>
+              </div>
+              <div class="help-step">
+                <div class="help-step-num">2</div>
+                <div class="help-step-body">
+                  <strong>Add Leases</strong>
+                  <p>Go to <b>Leases</b> → click <b>+ Add Lease</b>. Fill the Inputs tab: lease name, lessor, asset class, commencement date, term, rent per period, IBR (discount rate), and link to the company you created. Then click <b>Calculate</b>.</p>
+                </div>
+              </div>
+              <div class="help-step">
+                <div class="help-step-num">3</div>
+                <div class="help-step-body">
+                  <strong>Review the Results</strong>
+                  <p>After calculating, check the <b>Schedules</b> tab for the amortization table, <b>Journal Entries</b> for Day 1 and periodic JEs, and <b>Disclosures</b> for the Para 52 note. The <b>Overview</b> tab shows key figures at a glance.</p>
+                </div>
+              </div>
+              <div class="help-step">
+                <div class="help-step-num">4</div>
+                <div class="help-step-body">
+                  <strong>Move through Workflow</strong>
+                  <p>Once you're satisfied, move the lease from <b>Draft → Ready for Review → Reviewed → Approved</b> using the status pill in the top-right of the lease workspace. The system checks conditions at each step.</p>
+                </div>
+              </div>
+              <div class="help-step">
+                <div class="help-step-num">5</div>
+                <div class="help-step-body">
+                  <strong>Export</strong>
+                  <p>Click the <b>Export Pack</b> button (top-right of lease or company workspace) to open the Export Center. Choose Lease Pack, Company Pack, or Portfolio Pack depending on what you need.</p>
+                </div>
+              </div>
+              <div class="help-tip"><strong>Tip:</strong> Use <b>Upload Template</b> on the Leases page to bulk-add multiple leases at once via Excel — much faster for clients with 5+ leases.</div>
+            </div>
+          </div>
+
+          <!-- Section 2: Workflow Status -->
+          <div class="help-section" id="help-wf">
+            <div class="help-section-hd open" onclick="helpToggle(this)">
+              <div class="hs-icon"><i class="fa-solid fa-rotate"></i></div>
+              <h2>Workflow Status — How It Works</h2>
+              <span class="hs-toggle">▼</span>
+            </div>
+            <div class="help-section-body open">
+              <p style="font-size:13px;color:#374151;margin:0 0 14px;">Every lease has a <b>workflow status</b> that tracks where it is in your review and approval process. Think of it like a document going from a CA's desk to a partner's sign-off.</p>
+
+              <!-- Flow diagram -->
+              <div class="wf-flow">
+                <div class="wf-node"><div class="wf-badge draft">Draft</div><div class="wf-desc">Being prepared</div></div>
+                <div class="wf-arrow">→</div>
+                <div class="wf-node"><div class="wf-badge in-review">Ready for Review</div><div class="wf-desc">Sent to reviewer</div></div>
+                <div class="wf-arrow">→</div>
+                <div class="wf-node"><div class="wf-badge reviewed">Reviewed</div><div class="wf-desc">Reviewer signed off</div></div>
+                <div class="wf-arrow">→</div>
+                <div class="wf-node"><div class="wf-badge approved">Approved</div><div class="wf-desc">Partner approved</div></div>
+                <div class="wf-arrow">→</div>
+                <div class="wf-node"><div class="wf-badge closed">Closed</div><div class="wf-desc">Lease terminated</div></div>
+              </div>
+              <div style="margin-top:6px;margin-bottom:16px;font-size:11px;color:#9CA3AF;text-align:center;">If a lease is modified after approval, it moves to <span class="wf-badge modified" style="font-size:10px;padding:2px 8px;">Modified</span> and requires fresh review.</div>
+
+              <table class="help-table">
+                <thead><tr><th>Status</th><th>What it means</th><th>Conditions to enter</th><th>Who sets it</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><span class="wf-badge draft">Draft</span></td>
+                    <td>Lease is being prepared or filled in. All fields are editable.</td>
+                    <td>Default for any new lease. No conditions.</td>
+                    <td>Preparer (CA / staff)</td>
+                  </tr>
+                  <tr>
+                    <td><span class="wf-badge in-review">Ready for Review</span></td>
+                    <td>Lease inputs are complete and sent to the reviewer.</td>
+                    <td>✅ No validation errors &nbsp;✅ Lease name &amp; lessor filled &nbsp;✅ At least one calculation run &nbsp;✅ Company linked</td>
+                    <td>Preparer</td>
+                  </tr>
+                  <tr>
+                    <td><span class="wf-badge reviewed">Reviewed</span></td>
+                    <td>Reviewer has checked the lease and signed off.</td>
+                    <td>✅ Reviewer name entered &nbsp;✅ Review date captured (Audit &amp; Review tab → Sign-Off)</td>
+                    <td>Reviewer (senior CA)</td>
+                  </tr>
+                  <tr>
+                    <td><span class="wf-badge approved">Approved</span></td>
+                    <td>Partner / approver has approved. Lease is final.</td>
+                    <td>✅ Lease must be Reviewed first &nbsp;✅ Approver name entered &nbsp;✅ Approval date captured</td>
+                    <td>Approver (partner / CFO)</td>
+                  </tr>
+                  <tr>
+                    <td><span class="wf-badge modified">Modified</span></td>
+                    <td>Lease terms changed after approval — needs fresh review.</td>
+                    <td>Can be set from any status. Signals that recalculation and re-review are needed.</td>
+                    <td>Anyone</td>
+                  </tr>
+                  <tr>
+                    <td><span class="wf-badge closed">Closed</span></td>
+                    <td>Lease has ended or been terminated.</td>
+                    <td>Can be set from Approved or Draft. Lease becomes inactive.</td>
+                    <td>Anyone</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="help-tip"><strong>How to change status:</strong> Open any lease → look at the top-right pill (e.g. <b>Draft</b>). Click it to cycle, or use the action bar buttons like <b>Mark for Review</b>. If a condition isn't met, a red gate will appear telling you exactly what's missing.</div>
+
+              <div class="help-warn"><strong>Sign-Off fields</strong> are in the <b>Audit &amp; Review</b> tab of each lease → scroll down to the Sign-Off section. Fill in Reviewer Name + Date before moving to Reviewed, and Approver Name + Date before moving to Approved. Click <b>Save Sign-Off</b> then <b>Save</b>.</div>
+
+              <div class="help-step" style="margin-top:16px;">
+                <div class="help-step-num">?</div>
+                <div class="help-step-body">
+                  <strong>Why is my status change blocked?</strong>
+                  <p>When you click a status button and see a red gate modal — read the list. Each item tells you exactly what's missing. Fix those items, then try again. If you only see yellow warnings (not red errors), an <b>Override</b> button will appear to force the change.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Lease Workspace -->
+          <div class="help-section" id="help-lease">
+            <div class="help-section-hd" onclick="helpToggle(this)">
+              <div class="hs-icon"><i class="fa-solid fa-file-contract"></i></div>
+              <h2>Lease Workspace — 7 Tabs Explained</h2>
+              <span class="hs-toggle">▼</span>
+            </div>
+            <div class="help-section-body">
+              <table class="help-table">
+                <thead><tr><th>Tab</th><th>What you'll find</th><th>When to use it</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Overview</b></td><td>Key figures (ROU, liability, depreciation), workflow status, validation summary, sign-off health badge</td><td>Quick sanity check after calculating</td></tr>
+                  <tr><td><b>Inputs</b></td><td>All lease parameters — dates, rent, IBR, escalation, exemptions, company link</td><td>Filling in or editing the lease</td></tr>
+                  <tr><td><b>Schedules</b></td><td>Period-by-period amortization table + Annual FY rollforward (switch with Period / Annual toggle)</td><td>Verifying amortization numbers, cross-checking with GL</td></tr>
+                  <tr><td><b>Journal Entries</b></td><td>Day 1 recognition JE + periodic interest accrual, payment, depreciation entries</td><td>Posting to accounting system, audit support</td></tr>
+                  <tr><td><b>Disclosures</b></td><td>Para 52 maturity analysis, liability movement, ROU movement, P&amp;L disclosures</td><td>Preparing notes to financial statements</td></tr>
+                  <tr><td><b>Documents</b></td><td>Upload slots for Lease Agreement, Amendment, Termination Letter, Memo, Disclosure Note</td><td>Attaching source documents for audit trail</td></tr>
+                  <tr><td><b>Audit &amp; Review</b></td><td>Validation issues, explanation panel ("how was this calculated"), audit trail log, Sign-Off fields</td><td>Review process, audit queries, sign-off</td></tr>
+                </tbody>
+              </table>
+              <div class="help-tip"><strong>Always click Calculate</strong> after changing any input. The Schedules, JEs, and Disclosures tabs refresh automatically after calculation. The overview KPI strip also updates.</div>
+            </div>
+          </div>
+
+          <!-- Section 4: Company Workspace -->
+          <div class="help-section" id="help-co">
+            <div class="help-section-hd" onclick="helpToggle(this)">
+              <div class="hs-icon"><i class="fa-solid fa-building"></i></div>
+              <h2>Company Workspace</h2>
+              <span class="hs-toggle">▼</span>
+            </div>
+            <div class="help-section-body">
+              <p style="font-size:13px;color:#374151;margin:0 0 12px;">The Company Workspace aggregates all leases under one entity into a single view — useful for preparing consolidated disclosures for a client.</p>
+              <div class="help-step">
+                <div class="help-step-num">1</div>
+                <div class="help-step-body"><strong>Open a Company</strong><p>Go to <b>Companies</b> in the sidebar → click <b>Open →</b> on any company card.</p></div>
+              </div>
+              <div class="help-step">
+                <div class="help-step-num">2</div>
+                <div class="help-step-body"><strong>Overview tab</strong><p>See 15 KPIs across all leases: total liability, ROU asset, depreciation, workflow counts (how many Draft / Pending / Approved), alerts (missing docs, expiring leases, validation errors).</p></div>
+              </div>
+              <div class="help-step">
+                <div class="help-step-num">3</div>
+                <div class="help-step-body"><strong>Leases tab</strong><p>Filter by workflow status or lease status. Click any lease row to jump straight into that lease's workspace.</p></div>
+              </div>
+              <div class="help-step">
+                <div class="help-step-num">4</div>
+                <div class="help-step-body"><strong>Disclosures tab</strong><p>See the consolidated Para 52 maturity analysis across all company leases. Click <b>Export Pack</b> to export a full Excel disclosure pack.</p></div>
+              </div>
+              <div class="help-tip"><strong>Link leases to a company</strong> in the Inputs tab of each lease — look for the <b>Company</b> dropdown. Without this, leases won't appear in the Company Workspace.</div>
+            </div>
+          </div>
+
+          <!-- Section 5: Export Center -->
+          <div class="help-section" id="help-exp">
+            <div class="help-section-hd" onclick="helpToggle(this)">
+              <div class="hs-icon"><i class="fa-solid fa-file-export"></i></div>
+              <h2>Export Center</h2>
+              <span class="hs-toggle">▼</span>
+            </div>
+            <div class="help-section-body">
+              <p style="font-size:13px;color:#374151;margin:0 0 12px;">The Export Center is the single place for all reports. Access it from the <b>Export Pack</b> button on any lease, company, or the Leases page.</p>
+              <table class="help-table">
+                <thead><tr><th>Tab</th><th>Best for</th><th>Key exports</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Lease Pack</b></td><td>Single lease working papers for audit</td><td>Working Paper Pack, Premium 12-sheet Report, Disclosure Note, JE Export</td></tr>
+                  <tr><td><b>Company Pack</b></td><td>Client-level reporting and audit</td><td>Company Disclosure Pack, Lease Register, Validation Report, Company JE Pack</td></tr>
+                  <tr><td><b>Portfolio Pack</b></td><td>All leases across all clients</td><td>Portfolio Summary, All Disclosures, All JEs, Expiry Tracker, Premium Portfolio Pack</td></tr>
+                </tbody>
+              </table>
+              <div class="help-tip"><strong>Filters:</strong> Use the Reporting Date selector to set the FY. Check "Approved leases only" to exclude drafts from financial reporting exports.</div>
+            </div>
+          </div>
+
+          <!-- Section 6: FAQ -->
+          <div class="help-section" id="help-faq">
+            <div class="help-section-hd" onclick="helpToggle(this)">
+              <div class="hs-icon"><i class="fa-solid fa-circle-question"></i></div>
+              <h2>Frequently Asked Questions</h2>
+              <span class="hs-toggle">▼</span>
+            </div>
+            <div class="help-section-body">
+              <div class="help-step">
+                <div class="help-step-num">Q</div>
+                <div class="help-step-body"><strong>What IBR should I use?</strong><p>IBR (Incremental Borrowing Rate) is the rate the lessee would pay to borrow funds to obtain an asset of similar value over a similar term. For Indian entities, typical range is <b>8–14% p.a.</b> Use SBI MCLR + spread as a benchmark. Document your IBR basis in the Remarks field — this is an audit-sensitive judgment.</p></div>
+              </div>
+              <div class="help-step">
+                <div class="help-step-num">Q</div>
+                <div class="help-step-body"><strong>What is the difference between Monthly, Quarterly, Half-Yearly, Annual frequency?</strong><p>This is how often the lessee makes rent payments. Select the frequency that matches your lease agreement. The engine calculates the periodic discount rate accordingly (annual IBR ÷ 12 for monthly, ÷ 4 for quarterly, etc.).</p></div>
+              </div>
+              <div class="help-step">
+                <div class="help-step-num">Q</div>
+                <div class="help-step-body"><strong>What is Payment Timing — Beginning vs. End?</strong><p><b>Beginning (Advance)</b> means rent is paid at the start of each period (common for office leases in India — first cheque on day 1). <b>End (Arrears)</b> means rent is paid at the end. This affects the PV calculation — advance payments give a slightly lower liability.</p></div>
+              </div>
+              <div class="help-step">
+                <div class="help-step-num">Q</div>
+                <div class="help-step-body"><strong>When should I use the Short-Term or Low-Value exemption?</strong><p><b>Short-Term</b>: Lease term (including renewal options) is 12 months or less. <b>Low-Value</b>: Underlying asset value when new is below ~₹5 lakh (approx. USD 5,000 per IFRS 16 guidance). When checked, the tool skips ROU/liability recognition and treats rent as straight-line P&amp;L expense.</p></div>
+              </div>
+              <div class="help-step">
+                <div class="help-step-num">Q</div>
+                <div class="help-step-body"><strong>My status change is blocked — what do I do?</strong><p>Read the red gate modal carefully. Each blocker tells you exactly what's missing. Common fixes: (1) Run Calculate at least once before marking Ready for Review. (2) Fill Reviewer Name + Date in the Audit &amp; Review tab before marking Reviewed. (3) A lease must be Reviewed before it can be Approved.</p></div>
+              </div>
+              <div class="help-step">
+                <div class="help-step-num">Q</div>
+                <div class="help-step-body"><strong>How do I handle a lease modification (rent change, term extension)?</strong><p>Open the lease → change the inputs (revised rent, revised term, revised IBR) → click <b>Calculate</b>. Set the workflow status to <b>Modified</b> and note the modification date and reason in the Remarks field. Then re-run the full review workflow: Modified → Ready for Review → Reviewed → Approved.</p></div>
+              </div>
+              <div class="help-step">
+                <div class="help-step-num">Q</div>
+                <div class="help-step-body"><strong>What is ROU Asset and Lease Liability?</strong><p><b>ROU (Right-of-Use) Asset</b>: The asset recognised on Day 1 = Present value of future lease payments + Initial Direct Costs − Lease Incentives. It is depreciated on a straight-line basis over the lease term. <b>Lease Liability</b>: The present value of all future lease payments, unwound using the IBR. It reduces with each payment and increases with interest accrual.</p></div>
+              </div>
+              <div class="help-step">
+                <div class="help-step-num">Q</div>
+                <div class="help-step-body"><strong>How do I export for audit?</strong><p>Open the lease → click <b>Export Pack</b> button → select <b>Working Paper Pack</b> for a 5-sheet Excel workpaper (lease assessment, amortization, rollforward, JEs, IBR working). For a full Big-4 style 12-sheet pack, select <b>Premium Report Pack</b>.</p></div>
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align:center;padding:20px 0;font-size:12px;color:#9CA3AF;">
+            FinoSutra — IND AS 116 / IFRS 16 Lease Accounting Platform &nbsp;·&nbsp; Compliant with IND AS 116 Para 5–28, 52
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Companies ── -->
+    <div class="page" id="pg-companies">
+      <div class="page-topbar">
+        <div class="page-topbar-title">Companies</div>
+        <div class="page-topbar-right">
+          <button class="btn btn-primary btn-sm" onclick="openCompanyModal()"><i class="fa-solid fa-plus"></i> Add Company</button>
+        </div>
+      </div>
+      <div class="page-body">
+        <div id="companiesArea">
+          <div class="loading-state"><div class="spinner"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Company Detail Workspace ── -->
+    <div class="page" id="pg-company-detail">
+      <div class="cw-header">
+        <div class="cw-header-top">
+          <button class="cw-back-btn" onclick="navigate('companies')"><i class="fa-solid fa-arrow-left"></i> Companies</button>
+          <div class="cw-company-name" id="cwCompanyName">Company</div>
+          <button class="btn btn-outline btn-sm" onclick="openExportCenter('company',null,_viewingCompanyId)"><i class="fa-solid fa-file-export"></i> Export Pack</button>
+          <button class="btn btn-primary btn-sm" onclick="openCompanyModal()"><i class="fa-solid fa-pen"></i> Edit</button>
+        </div>
+        <div class="cw-tabs">
+          <button class="cw-tab active" id="cwtab-overview" onclick="switchCompanyTab('overview')"><i class="fa-solid fa-chart-pie"></i> Overview</button>
+          <button class="cw-tab" id="cwtab-leases" onclick="switchCompanyTab('leases')"><i class="fa-solid fa-file-contract"></i> Leases</button>
+          <button class="cw-tab" id="cwtab-disclosures" onclick="switchCompanyTab('disclosures')"><i class="fa-solid fa-file-lines"></i> Disclosures</button>
+          <button class="cw-tab" id="cwtab-je" onclick="switchCompanyTab('je')"><i class="fa-solid fa-receipt"></i> Journal Entries</button>
+          <button class="cw-tab" id="cwtab-validation" onclick="switchCompanyTab('validation')"><i class="fa-solid fa-triangle-exclamation"></i> Validation &amp; Review</button>
+          <button class="cw-tab" id="cwtab-audit" onclick="switchCompanyTab('audit')"><i class="fa-solid fa-folder-open"></i> Documents &amp; Audit</button>
+        </div>
+      </div>
+      <div class="cw-body">
+        <!-- Overview tab -->
+        <div class="cw-pane active" id="cwt-overview">
+          <div id="cwOverviewKPIs" class="cw-kpi-grid"></div>
+          <div id="cwOverviewInfo"></div>
+        </div>
+        <!-- Leases tab -->
+        <div class="cw-pane" id="cwt-leases">
+          <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
+            <input type="text" class="search-input" id="cwLeaseSearch" placeholder="Search leases…" oninput="renderCoLeases()" style="max-width:220px;">
+            <select class="filter-select" id="cwWorkflowFilter" onchange="renderCoLeases()">
+              <option value="">All workflow</option>
+              <option value="draft">Draft</option>
+              <option value="in-review">Ready for Review</option>
+              <option value="reviewed">Reviewed</option>
+              <option value="approved">Approved</option>
+              <option value="modified">Modified</option>
+              <option value="closed">Closed</option>
+            </select>
+            <select class="filter-select" id="cwLeaseStatusFilter" onchange="renderCoLeases()">
+              <option value="">All status</option>
+              <option value="active">Active</option>
+              <option value="expiring">Expiring</option>
+              <option value="expired">Expired</option>
+            </select>
+          </div>
+          <div id="cwLeasesTable"></div>
+        </div>
+        <!-- Disclosures tab -->
+        <div class="cw-pane" id="cwt-disclosures">
+          <div class="cw-section-hd"><h3>Company-Level Disclosures — IND AS 116 Para 52</h3>
+            <button class="btn btn-amber btn-sm" onclick="openExportCenter('company',null,_viewingCompanyId)"><i class="fa-solid fa-file-excel"></i> Export Pack</button>
+          </div>
+          <div id="cwDiscContent"></div>
+        </div>
+        <!-- JE tab -->
+        <div class="cw-pane" id="cwt-je">
+          <div class="cw-section-hd"><h3>Company Journal Entries</h3>
+            <button class="btn btn-amber btn-sm" onclick="exportJEXL()"><i class="fa-solid fa-file-excel"></i> Export GL</button>
+          </div>
+          <div id="cwJEContent"></div>
+        </div>
+        <!-- Validation & Review tab -->
+        <div class="cw-pane" id="cwt-validation">
+          <div class="cw-section-hd"><h3>Validation &amp; Review Status</h3></div>
+          <div id="cwValidationContent"></div>
+        </div>
+        <!-- Documents & Audit tab -->
+        <div class="cw-pane" id="cwt-audit">
+          <div class="cw-section-hd"><h3>Documents &amp; Audit Summary</h3></div>
+          <div id="cwAuditContent"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Export Center Modal ── -->
+    <div class="ec-modal" id="exportCenterModal">
+      <div class="ec-panel">
+        <div class="ec-panel-hd">
+          <h2><i class="fa-solid fa-file-export" style="color:#4F46E5;margin-right:8px;"></i> Export Center</h2>
+          <button class="ec-close" onclick="closeExportCenter()">✕</button>
+        </div>
+        <div class="ec-tabs">
+          <button class="ec-tab active" id="ectab-lease" onclick="switchEcTab('lease')">Lease Pack</button>
+          <button class="ec-tab" id="ectab-company" onclick="switchEcTab('company')">Company Pack</button>
+          <button class="ec-tab" id="ectab-portfolio" onclick="switchEcTab('portfolio')">Portfolio Pack</button>
+        </div>
+        <div class="ec-body">
+          <div class="ec-filters">
+            <label>Reporting Date<select id="ecFyFilter" class="filter-select" style="margin-top:4px;"><option value="">Current FY</option></select></label>
+            <label style="flex-direction:row;align-items:center;gap:8px;padding-top:18px;"><input type="checkbox" id="ecApprovedOnly"> Approved leases only</label>
+            <label style="flex-direction:row;align-items:center;gap:8px;"><input type="checkbox" id="ecIncludeDraft" checked> Include draft leases</label>
+            <label style="flex-direction:row;align-items:center;gap:8px;"><input type="checkbox" id="ecIncludeAudit" checked> Include audit notes</label>
+          </div>
+          <!-- Lease tab -->
+          <div class="ec-pane active" id="ecp-lease">
+            <div class="ec-item" onclick="runExportCenter('wp')"><div class="ec-item-icon"><i class="fa-solid fa-file-lines"></i></div><div class="ec-item-body"><div class="ec-item-title">Working Paper Pack</div><div class="ec-item-desc">Lease assessment, amortization schedule, IBR working, audit notes</div></div><span class="ec-fmt-badge">Excel</span></div>
+            <div class="ec-item" onclick="runExportCenter('premium')"><div class="ec-item-icon"><i class="fa-solid fa-crown"></i></div><div class="ec-item-body"><div class="ec-item-title">Premium Report Pack</div><div class="ec-item-desc">12-sheet Big-4 style pack — Cover, JEs, Disclosure, Audit WP, Change Log</div></div><span class="ec-fmt-badge">Excel</span></div>
+            <div class="ec-item" onclick="runExportCenter('disc-lease')"><div class="ec-item-icon"><i class="fa-solid fa-file-contract"></i></div><div class="ec-item-body"><div class="ec-item-title">Lease Disclosure Pack</div><div class="ec-item-desc">Para 52 maturity analysis, liability rollforward, P&L impact</div></div><span class="ec-fmt-badge">Excel</span></div>
+            <div class="ec-item" onclick="runExportCenter('je-lease')"><div class="ec-item-icon"><i class="fa-solid fa-receipt"></i></div><div class="ec-item-body"><div class="ec-item-title">Journal Entry Export</div><div class="ec-item-desc">GL-ready journal entries — Day 1, interest, payment, depreciation</div></div><span class="ec-fmt-badge">Excel</span></div>
+          </div>
+          <!-- Company tab -->
+          <div class="ec-pane" id="ecp-company">
+            <div class="ec-item" onclick="runExportCenter('co-disc')"><div class="ec-item-icon"><i class="fa-solid fa-building"></i></div><div class="ec-item-body"><div class="ec-item-title">Company Disclosure Pack</div><div class="ec-item-desc">Consolidated Para 52 note — all leases under this company</div></div><span class="ec-fmt-badge">Excel</span></div>
+            <div class="ec-item" onclick="runExportCenter('co-je')"><div class="ec-item-icon"><i class="fa-solid fa-receipt"></i></div><div class="ec-item-body"><div class="ec-item-title">Company Journal Entry Pack</div><div class="ec-item-desc">Combined GL entries for all company leases</div></div><span class="ec-fmt-badge">Excel</span></div>
+            <div class="ec-item" onclick="runExportCenter('co-register')"><div class="ec-item-icon"><i class="fa-solid fa-list"></i></div><div class="ec-item-body"><div class="ec-item-title">Lease Register</div><div class="ec-item-desc">All leases — key terms, IBR, status, current/non-current split</div></div><span class="ec-fmt-badge">Excel</span></div>
+            <div class="ec-item" onclick="runExportCenter('co-validation')"><div class="ec-item-icon"><i class="fa-solid fa-triangle-exclamation"></i></div><div class="ec-item-body"><div class="ec-item-title">Validation Report</div><div class="ec-item-desc">All leases with open errors, warnings, missing fields</div></div><span class="ec-fmt-badge">Excel</span></div>
+            <div class="ec-item" onclick="runExportCenter('co-premium')"><div class="ec-item-icon"><i class="fa-solid fa-crown"></i></div><div class="ec-item-body"><div class="ec-item-title">Company Audit Working Pack</div><div class="ec-item-desc">Full 12-sheet premium pack for all company leases</div></div><span class="ec-fmt-badge">Excel</span></div>
+          </div>
+          <!-- Portfolio tab -->
+          <div class="ec-pane" id="ecp-portfolio">
+            <div class="ec-item" onclick="runExportCenter('port-summary')"><div class="ec-item-icon"><i class="fa-solid fa-layer-group"></i></div><div class="ec-item-body"><div class="ec-item-title">Portfolio Summary</div><div class="ec-item-desc">All leases — one row per lease with key figures and status</div></div><span class="ec-fmt-badge">Excel</span></div>
+            <div class="ec-item" onclick="runExportCenter('port-disc')"><div class="ec-item-icon"><i class="fa-solid fa-file-lines"></i></div><div class="ec-item-body"><div class="ec-item-title">All Disclosures</div><div class="ec-item-desc">Consolidated IND AS 116 Para 52 note for all entities</div></div><span class="ec-fmt-badge">Excel</span></div>
+            <div class="ec-item" onclick="runExportCenter('port-je')"><div class="ec-item-icon"><i class="fa-solid fa-receipt"></i></div><div class="ec-item-body"><div class="ec-item-title">All Journal Entries</div><div class="ec-item-desc">Combined GL posting file for all leases</div></div><span class="ec-fmt-badge">Excel</span></div>
+            <div class="ec-item" onclick="runExportCenter('port-expiry')"><div class="ec-item-icon"><i class="fa-solid fa-calendar-xmark"></i></div><div class="ec-item-body"><div class="ec-item-title">Expiry Tracker</div><div class="ec-item-desc">Leases expiring in 30 / 60 / 90 / 180 days</div></div><span class="ec-fmt-badge">Excel</span></div>
+            <div class="ec-item" onclick="runExportCenter('port-premium')"><div class="ec-item-icon"><i class="fa-solid fa-crown"></i></div><div class="ec-item-body"><div class="ec-item-title">Premium Portfolio Pack</div><div class="ec-item-desc">Full 12-sheet Big-4 pack for all leases</div></div><span class="ec-fmt-badge">Excel</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Workflow Gate Modal ── -->
+    <div class="wf-gate-modal" id="wfGateModal">
+      <div class="wf-gate-panel">
+        <div class="wf-gate-title" id="wfGateTitle">Cannot change status</div>
+        <div class="wf-gate-sub" id="wfGateSub">The following conditions must be met before this status change:</div>
+        <ul class="wf-gate-items" id="wfGateItems"></ul>
+        <div class="wf-gate-actions">
+          <button class="btn btn-outline" onclick="closeWfGate()">Close</button>
+          <button class="btn btn-primary" id="wfGateForceBtn" onclick="wfForceTransition()" style="display:none;">Override &amp; Set Anyway</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Lease Detail / New Lease ── -->
+    <div class="page" id="pg-lease-detail" style="flex-direction:column;padding:0;background:#F0F1FF;">
+
+      <!-- ── Workspace Header ── -->
+      <div class="lw-header">
+        <div class="lw-header-top">
+          <button class="lw-back-btn" onclick="navigate('leases')"><i class="fa-solid fa-arrow-left"></i> Leases</button>
+          <div class="lw-lease-title" id="detailPageTitle">New Lease</div>
+          <span class="lw-status-pill draft" id="lwStatusPill" title="Workflow status — use Mark for Review or the status dropdown to change">Draft</span>
+          <input type="hidden" id="fWorkflowStatus" value="draft"/>
+        </div>
+        <div class="lw-action-bar" style="padding-bottom:10px;">
+          <button class="lw-btn lw-btn-ghost" onclick="saveDraft()"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+          <button class="lw-btn lw-btn-ghost" onclick="runLeaseValidationUI()"><i class="fa-solid fa-shield-check"></i> Validate</button>
+          <div class="lw-btn-sep"></div>
+          <button class="lw-btn lw-btn-primary" onclick="calcLease()"><i class="fa-solid fa-calculator"></i> Calculate</button>
+          <button class="lw-btn lw-btn-green" onclick="markLeaseStatus('in-review')"><i class="fa-solid fa-paper-plane"></i> Mark for Review</button>
+          <div class="lw-btn-sep"></div>
+          <button class="lw-btn lw-btn-ghost" onclick="exportWorkingPaper()"><i class="fa-solid fa-file-excel"></i> Working Paper</button>
+          <button class="lw-btn lw-btn-navy" onclick="exportPremiumSingleLease()"><i class="fa-solid fa-crown"></i> Premium Pack</button>
+        </div>
+      </div>
+
+      <!-- ── Tab Bar ── -->
+      <div class="lw-tabs">
+        <button class="lw-tab active" id="lwtab-overview" onclick="switchLeaseTab('overview')"><i class="fa-solid fa-house-chimney"></i> Overview</button>
+        <button class="lw-tab" id="lwtab-inputs" onclick="switchLeaseTab('inputs')"><i class="fa-solid fa-pen-to-square"></i> Inputs</button>
+        <button class="lw-tab" id="lwtab-schedules" onclick="switchLeaseTab('schedules')"><i class="fa-solid fa-table"></i> Schedules</button>
+        <button class="lw-tab" id="lwtab-je" onclick="switchLeaseTab('je')"><i class="fa-solid fa-book"></i> Journal Entries</button>
+        <button class="lw-tab" id="lwtab-disclosures" onclick="switchLeaseTab('disclosures')"><i class="fa-solid fa-file-contract"></i> Disclosures</button>
+        <button class="lw-tab" id="lwtab-documents" onclick="switchLeaseTab('documents')"><i class="fa-solid fa-link"></i> Doc Links</button>
+        <button class="lw-tab" id="lwtab-audit" onclick="switchLeaseTab('audit')"><i class="fa-solid fa-magnifying-glass-chart"></i> Audit &amp; Review</button>
+      </div>
+
+      <!-- ── Tab Panes ── -->
+      <div class="lw-body">
+
+        <!-- ───────────────────────────────────────────
+             TAB 1: OVERVIEW
+        ─────────────────────────────────────────── -->
+        <div class="lw-pane active" id="lwt-overview">
+
+          <!-- KPI Strip — shown after calculate -->
+          <div id="lwOverviewKpis">
+            <div class="lw-calc-prompt">
+              <i class="fa-solid fa-calculator"></i>
+              Fill inputs on the <strong>Inputs</strong> tab, then click <strong>Calculate</strong> to see results here.
+            </div>
+          </div>
+
+          <!-- Lease Metadata Grid -->
+          <div class="lw-overview-grid" id="lwOverviewMeta">
+            <div class="lw-meta-card">
+              <h4><i class="fa-solid fa-tag" style="margin-right:5px;"></i> Lease Identity</h4>
+              <div class="lw-meta-row"><span class="lw-meta-label">Lease Name</span><span class="lw-meta-value" id="ov-name">—</span></div>
+              <div class="lw-meta-row"><span class="lw-meta-label">Lease ID</span><span class="lw-meta-value" id="ov-id" style="font-size:10px;font-family:monospace;">—</span></div>
+              <div class="lw-meta-row"><span class="lw-meta-label">Lessor</span><span class="lw-meta-value" id="ov-lessor">—</span></div>
+              <div class="lw-meta-row"><span class="lw-meta-label">Asset Category</span><span class="lw-meta-value" id="ov-cat">—</span></div>
+              <div class="lw-meta-row"><span class="lw-meta-label">Company</span><span class="lw-meta-value" id="ov-company">—</span></div>
+              <div class="lw-meta-row"><span class="lw-meta-label">Entity / Lessee</span><span class="lw-meta-value" id="ov-entity">—</span></div>
+            </div>
+            <div class="lw-meta-card">
+              <h4><i class="fa-solid fa-calendar" style="margin-right:5px;"></i> Lease Terms</h4>
+              <div class="lw-meta-row"><span class="lw-meta-label">Commencement</span><span class="lw-meta-value" id="ov-start">—</span></div>
+              <div class="lw-meta-row"><span class="lw-meta-label">End Date</span><span class="lw-meta-value" id="ov-end">—</span></div>
+              <div class="lw-meta-row"><span class="lw-meta-label">Term</span><span class="lw-meta-value" id="ov-term">—</span></div>
+              <div class="lw-meta-row"><span class="lw-meta-label">Rent / Period</span><span class="lw-meta-value" id="ov-pmt">—</span></div>
+              <div class="lw-meta-row"><span class="lw-meta-label">Frequency</span><span class="lw-meta-value" id="ov-freq">—</span></div>
+              <div class="lw-meta-row"><span class="lw-meta-label">IBR</span><span class="lw-meta-value" id="ov-ibr">—</span></div>
+            </div>
+            <div class="lw-meta-card">
+              <h4><i class="fa-solid fa-clock-rotate-left" style="margin-right:5px;"></i> Workflow &amp; Status</h4>
+              <div class="lw-meta-row"><span class="lw-meta-label">Status</span><span class="lw-meta-value" id="ov-status">Draft</span></div>
+              <div class="lw-meta-row"><span class="lw-meta-label">Escalation</span><span class="lw-meta-value" id="ov-esc">—</span></div>
+              <div class="lw-meta-row"><span class="lw-meta-label">Exemption</span><span class="lw-meta-value" id="ov-exempt">None</span></div>
+              <div class="lw-meta-row"><span class="lw-meta-label">Extension Option</span><span class="lw-meta-value" id="ov-ext">—</span></div>
+              <div class="lw-meta-row"><span class="lw-meta-label">Last Calculated</span><span class="lw-meta-value" id="ov-calc-ts">—</span></div>
+              <div class="lw-meta-row"><span class="lw-meta-label">Last Updated</span><span class="lw-meta-value" id="ov-updated">—</span></div>
+            </div>
+          </div>
+
+          <!-- Validation Summary -->
+          <div class="lw-val-summary" id="lwOverviewValidation" style="display:none;">
+            <div class="lw-val-summary-hdr">
+              <h4><i class="fa-solid fa-triangle-exclamation" style="margin-right:6px;color:#D97706;"></i> Validation Issues</h4>
+              <button class="lw-btn lw-btn-ghost" style="font-size:10px;padding:3px 10px;" onclick="switchLeaseTab('audit')">View all →</button>
+            </div>
+            <div id="lwOverviewValItems"></div>
+          </div>
+
+        </div><!-- /lwt-overview -->
+
+        <!-- ───────────────────────────────────────────
+             TAB 2: INPUTS
+        ─────────────────────────────────────────── -->
+        <div class="lw-pane" id="lwt-inputs">
+          <div class="lw-inputs-wrap">
+
+            <!-- LEFT: Form -->
+            <div class="lw-inputs-left">
+
+              <!-- Workflow Status Bar -->
+              <div class="lw-workflow-bar">
+                <label>Workflow Status</label>
+                <select class="lw-workflow-select" onchange="applyStatusFromSelect(this.value)">
+                  <option value="draft">Draft</option>
+                  <option value="in-review">Ready for Review</option>
+                  <option value="reviewed">Reviewed</option>
+                  <option value="approved">Approved</option>
+                  <option value="modified">Modified</option>
+                  <option value="closed">Closed</option>
+                </select>
+                <span style="font-size:11px;color:#9CA3AF;margin-left:auto;">Changes auto-update the badge above</span>
+              </div>
+
+              <!-- Card A: Lease Identity -->
+              <div class="form-card" style="margin-bottom:16px;">
+                <div class="form-section">
+                  <div class="form-section-title"><i class="fa-solid fa-tag"></i> Lease Identity</div>
+                  <div class="form-row">
+                    <div class="field">
+                      <label>Lease Name *</label>
+                      <input type="text" id="fName" placeholder="e.g. Mumbai Office — Floor 4" oninput="clearFieldErr('fName');lwSyncOverview()"/>
+                      <div class="field-err" id="err-fName"></div>
+                    </div>
+                    <div class="field">
+                      <label>Lessor Name</label>
+                      <input type="text" id="fLessor" placeholder="e.g. XYZ Properties Pvt. Ltd." oninput="lwSyncOverview()"/>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="field">
+                      <label>Asset Category</label>
+                      <select id="fCategory" onchange="lwSyncOverview()">
+                        <option value="">— Select —</option>
+                        <option>Office</option>
+                        <option>Retail</option>
+                        <option>Warehouse</option>
+                        <option>Vehicle</option>
+                        <option>Plant &amp; Machinery</option>
+                        <option>IT Equipment</option>
+                        <option>Other</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <label>Company</label>
+                      <select id="fCompany" onchange="lwSyncOverview()"><option value="">— None —</option></select>
+                    </div>
+                  </div>
+                  <div class="form-row full">
+                    <div class="field">
+                      <label>Entity / Lessee</label>
+                      <input type="text" id="fEntity" placeholder="e.g. ABC Pvt. Ltd." oninput="lwSyncOverview()"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card B: Dates & Term -->
+              <div class="form-card" style="margin-bottom:16px;">
+                <div class="form-section">
+                  <div class="form-section-title"><i class="fa-solid fa-calendar"></i> Dates &amp; Term</div>
+                  <div class="form-row trio">
+                    <div class="field">
+                      <label>Commencement Date *</label>
+                      <input type="date" id="fStart" onchange="autoEndDate();lwSyncOverview()" oninput="clearFieldErr('fStart')"/>
+                      <div class="field-err" id="err-fStart"></div>
+                    </div>
+                    <div class="field">
+                      <label>Term (months) *</label>
+                      <input type="number" id="fTerm" min="1" max="600" placeholder="e.g. 36" onchange="autoEndDate();lwSyncOverview()" oninput="clearFieldErr('fTerm')"/>
+                      <div class="field-err" id="err-fTerm"></div>
+                    </div>
+                    <div class="field">
+                      <label>End Date</label>
+                      <input type="date" id="fEnd" onchange="autoTerm();lwSyncOverview()"/>
+                      <div class="field-hint">Auto-fills from start + term</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card C: Payment Terms -->
+              <div class="form-card" style="margin-bottom:16px;">
+                <div class="form-section">
+                  <div class="form-section-title"><i class="fa-solid fa-indian-rupee-sign"></i> Payment Terms</div>
+                  <div class="form-row trio">
+                    <div class="field">
+                      <label>Rent per Period (₹) *</label>
+                      <input type="number" id="fPmt" min="0" placeholder="e.g. 50000" oninput="clearFieldErr('fPmt');lwSyncOverview()"/>
+                      <div class="field-err" id="err-fPmt"></div>
+                    </div>
+                    <div class="field">
+                      <label>Frequency</label>
+                      <select id="fFreq" onchange="lwSyncOverview()">
+                        <option value="12">Monthly</option>
+                        <option value="4">Quarterly</option>
+                        <option value="2">Half-Yearly</option>
+                        <option value="1">Annual</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <label>Payment Timing</label>
+                      <select id="fTiming">
+                        <option value="end">End of Period (Arrears)</option>
+                        <option value="beg">Beginning of Period (Advance)</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card D: Accounting Assumptions -->
+              <div class="form-card" style="margin-bottom:16px;">
+                <div class="form-section">
+                  <div class="form-section-title"><i class="fa-solid fa-percent"></i> Accounting Assumptions</div>
+                  <div class="form-row">
+                    <div class="field">
+                      <label style="display:flex;align-items:center;gap:6px;">
+                        IBR / Discount Rate (% p.a.) *
+                        <span class="ibr-tooltip-trigger" tabindex="0" aria-label="What is IBR?">?
+                          <div class="ibr-tooltip-box">
+                            <strong>What is IBR?</strong><br>
+                            Incremental Borrowing Rate — the annual interest rate the lessee would pay to borrow funds over a similar term for a similar asset.<br><br>
+                            <strong>Typical Indian range: 8–14% p.a.</strong><br>
+                            Use SBI MCLR + spread as a benchmark. Example: MCLR 8.5% + 1.5% spread = <strong>10%</strong>.<br><br>
+                            Enter as a percentage — e.g. type <strong>10</strong> for 10%, not 0.10.
+                          </div>
+                        </span>
+                      </label>
+                      <input type="number" id="fIbr" min="0" max="100" step="0.01" placeholder="e.g. 10 for 10% p.a." oninput="checkIBR();lwSyncOverview()"/>
+                      <div class="ibr-warning" id="ibrWarning"></div>
+                      <div class="ibr-range" style="color:#4F46E5;font-weight:500;">💡 Typical Indian IBR: 8–14% p.a. &nbsp;·&nbsp; Enter as % (e.g. 10 = 10%)</div>
+                      <div class="field-err" id="err-fIbr"></div>
+                    </div>
+                    <div class="field" style="background:#F8F9FF;border-radius:8px;padding:12px;font-size:12px;color:#6B7280;line-height:1.7;border:1px solid #E5E7EB;">
+                      <strong style="color:#374151;display:block;margin-bottom:4px;">IBR Reference Rates (FY 2025-26)</strong>
+                      SBI MCLR (1yr): ~8.75%<br>HDFC MCLR (1yr): ~9.05%<br>Listed cos: 8–10% p.a.<br>MSMEs: 10–14% p.a.<br>
+                      <a href="https://www.rbi.org.in/Scripts/PublicationsView.aspx?id=22450" target="_blank" style="color:#4F46E5;font-size:11px;">RBI Base Rate →</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card E: Escalation / Rent-free / Deposits -->
+              <div class="form-card" style="margin-bottom:16px;">
+                <div class="form-section">
+                  <div class="form-section-title"><i class="fa-solid fa-arrow-trend-up"></i> Escalation</div>
+                  <div class="form-row">
+                    <div class="field">
+                      <label>Escalation Type</label>
+                      <select id="fEscType" onchange="toggleEscFields();lwSyncOverview()">
+                        <option value="none">None (Fixed rent throughout)</option>
+                        <option value="pct">% per annum (compound)</option>
+                        <option value="amt">Fixed ₹ increase per step</option>
+                        <option value="cpi">CPI / Index-linked (use expected %)</option>
+                      </select>
+                    </div>
+                    <div class="field" id="escIntervalField" style="display:none;">
+                      <label>Escalation Interval (years)</label>
+                      <input type="number" id="fEscYears" min="1" max="10" value="3" placeholder="3"/>
+                      <div class="field-hint">Every N years the rent steps up</div>
+                    </div>
+                  </div>
+                  <div class="form-row" id="escValueRow" style="display:none;">
+                    <div class="field" id="escPctField">
+                      <label id="escValueLabel">Escalation % p.a.</label>
+                      <input type="number" id="fEscPct" min="0" max="100" step="0.01" placeholder="e.g. 5"/>
+                    </div>
+                    <div class="field" id="escAmtField" style="display:none;">
+                      <label>Escalation Amount (₹ per step)</label>
+                      <input type="number" id="fEscAmt" min="0" placeholder="e.g. 5000"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-section">
+                  <div class="form-section-title"><i class="fa-solid fa-sliders"></i> Adjustments &amp; Rent-free</div>
+                  <div class="form-row">
+                    <div class="field">
+                      <label>Initial Direct Costs — IDC (₹)</label>
+                      <input type="number" id="fIdc" min="0" placeholder="0"/>
+                      <div class="field-hint">Added to ROU asset (Para 24)</div>
+                    </div>
+                    <div class="field">
+                      <label>Lease Incentives Received (₹)</label>
+                      <input type="number" id="fIncentive" min="0" placeholder="0"/>
+                      <div class="field-hint">Deducted from ROU asset (Para 24)</div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="field">
+                      <label>Rent-Free Months</label>
+                      <input type="number" id="fRfMonths" min="0" placeholder="0"/>
+                      <div class="field-hint">Zero-payment periods at commencement</div>
+                    </div>
+                    <div class="field">
+                      <label>Restoration / Reinstatement Cost (₹)</label>
+                      <input type="number" id="fRestoration" min="0" placeholder="0"/>
+                      <div class="field-hint">Added to ROU asset as provision (Para 24c)</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card F: Options & Judgements -->
+              <div class="form-card" style="margin-bottom:16px;">
+                <div class="form-section">
+                  <div class="form-section-title"><i class="fa-solid fa-flag"></i> Options &amp; Judgements</div>
+                  <div class="flag-row">
+                    <input type="checkbox" id="fShortTerm"/>
+                    <div>
+                      <label for="fShortTerm">Short-term lease (Para 5(a))</label>
+                      <div class="flag-sub">Lease term ≤ 12 months at commencement — exempt from recognition</div>
+                    </div>
+                  </div>
+                  <div class="flag-row">
+                    <input type="checkbox" id="fLowValue"/>
+                    <div>
+                      <label for="fLowValue">Low-value asset (Para 5(b))</label>
+                      <div class="flag-sub">Underlying asset value ≤ USD 5,000 when new — exempt from recognition</div>
+                    </div>
+                  </div>
+                  <div class="flag-row">
+                    <input type="checkbox" id="fExtOption"/>
+                    <div>
+                      <label for="fExtOption">Extension option available</label>
+                      <div class="flag-sub">If reasonably certain to exercise, include extension term in lease term (Para 19)</div>
+                    </div>
+                  </div>
+                  <div class="flag-row">
+                    <input type="checkbox" id="fTermOption"/>
+                    <div>
+                      <label for="fTermOption">Termination option available</label>
+                      <div class="flag-sub">If reasonably certain NOT to exercise, include in lease term (Para 19)</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-section">
+                  <div class="form-section-title"><i class="fa-solid fa-note-sticky"></i> Notes &amp; Remarks</div>
+                  <div class="field">
+                    <textarea id="fRemarks" placeholder="IBR basis, renewal intent, modification history, assessor notes…" style="min-height:80px;"></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card G: Lease Modification (only shown for saved leases) -->
+              <div class="form-card mod-section" id="modSection" style="display:none;margin-bottom:16px;border:1.5px solid #FDE68A;">
+                <div class="form-section">
+                  <div class="form-section-title" style="color:#92400E;display:flex;align-items:center;justify-content:space-between;">
+                    <span><i class="fa-solid fa-pen-ruler"></i> Lease Modification
+                    <span style="font-size:10px;font-weight:400;color:#B45309;margin-left:8px;background:#FEF3C7;padding:2px 8px;border-radius:10px;">IND AS 116 Para 45</span></span>
+                    <button onclick="removeModSection()" title="Remove modification" style="background:none;border:none;cursor:pointer;color:#9CA3AF;font-size:13px;padding:2px 6px;border-radius:4px;line-height:1;" onmouseover="this.style.color='#EF4444';this.style.background='#FEE2E2'" onmouseout="this.style.color='#9CA3AF';this.style.background='none'">
+                      <i class="fa-solid fa-xmark"></i> Remove
+                    </button>
+                  </div>
+                  <div style="font-size:12px;color:#92400E;background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:10px 12px;margin-bottom:14px;line-height:1.6;">
+                    Use this section <strong>only if the lease terms changed after commencement</strong> — e.g. rent revised, term extended, or IBR changed. The app will recalculate from the modification date and generate a Para 45 adjustment journal entry.
+                  </div>
+
+                  <div class="form-row">
+                    <div class="field">
+                      <label>Modification Effective Date *</label>
+                      <input type="date" id="fModDate"/>
+                      <div class="field-hint">Date on which the modified terms take effect</div>
+                    </div>
+                    <div class="field">
+                      <label>Modification Type</label>
+                      <select id="fModType" onchange="toggleModType()">
+                        <option value="para45">Para 45 — Change in payments / term (no scope change)</option>
+                        <option value="para46a">Para 46a — Partial scope reduction (terminate part of asset)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div id="modPara46aNote" style="display:none;font-size:12px;color:#1D4ED8;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:10px 12px;margin-bottom:12px;">
+                    <strong>Para 46a — Scope Reduction:</strong> Enter the % of the asset being given up below. The app will derecognise that proportion of the ROU asset and lease liability, and recognise a gain/loss on partial termination.
+                    <div class="field" style="margin-top:10px;">
+                      <label>% of Asset Retained after Modification</label>
+                      <input type="number" id="fModRetainPct" min="1" max="99" step="1" placeholder="e.g. 60 means you retain 60% of the leased asset"/>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="field">
+                      <label>Revised Rent per Period (₹) *</label>
+                      <input type="number" id="fModPmt" min="0" placeholder="e.g. 55000"/>
+                      <div class="field-hint">New rent from the modification date onwards</div>
+                    </div>
+                    <div class="field">
+                      <label>Revised Remaining Term (months) *</label>
+                      <input type="number" id="fModTerm" min="1" placeholder="e.g. 24"/>
+                      <div class="field-hint">Remaining term after modification (not total term)</div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="field">
+                      <label>Revised IBR at Modification Date (% p.a.) *</label>
+                      <input type="number" id="fModIbr" min="0" max="100" step="0.01" placeholder="e.g. 11"/>
+                      <div class="field-hint">The rate the lessee would borrow at on the modification date</div>
+                    </div>
+                    <div class="field">
+                      <label>Revised Payment Frequency</label>
+                      <select id="fModFreq">
+                        <option value="12">Monthly</option>
+                        <option value="4">Quarterly</option>
+                        <option value="2">Half-Yearly</option>
+                        <option value="1">Annual</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Add Modification toggle button (shown for saved leases without mod) -->
+              <div id="addModBtn" style="display:none;margin-bottom:16px;">
+                <button class="lw-btn lw-btn-ghost" style="width:100%;border:1.5px dashed #D97706;color:#92400E;background:#FFFBEB;padding:12px;" onclick="toggleModSection()">
+                  <i class="fa-solid fa-pen-ruler"></i> &nbsp;Add Lease Modification (Para 45 / 46a)
+                </button>
+              </div>
+
+            </div><!-- /lw-inputs-left -->
+
+            <!-- RIGHT: Results panel -->
+            <div class="lw-inputs-right">
+              <div class="result-panel">
+                <div id="resultArea">
+                  <div class="calc-placeholder">
+                    <i class="fa-solid fa-calculator"></i>
+                    Fill in the form and click <strong>Calculate</strong> to see results
+                  </div>
+                </div>
+                <!-- Working Paper Export (shown after calc) -->
+                <div id="wpExportArea" style="display:none;margin-top:12px;">
+                  <button class="btn btn-outline btn-sm" style="width:100%;margin-bottom:6px;" onclick="exportWorkingPaper()">
+                    <i class="fa-solid fa-file-excel"></i> Export Working Paper (Excel)
+                  </button>
+                  <button class="btn btn-amber btn-sm" style="width:100%;" onclick="exportPremiumSingleLease()">
+                    <i class="fa-solid fa-crown"></i> Export Premium Report Pack
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /lw-inputs-wrap -->
+        </div><!-- /lwt-inputs -->
+
+        <!-- ───────────────────────────────────────────
+             TAB 3: SCHEDULES
+        ─────────────────────────────────────────── -->
+        <div class="lw-pane" id="lwt-schedules">
+          <div id="schedArea">
+            <div class="lw-calc-prompt">
+              <i class="fa-solid fa-table"></i>
+              Run <strong>Calculate</strong> from the action bar to generate the amortization schedule.
+            </div>
+          </div>
+        </div><!-- /lwt-schedules -->
+
+        <!-- ───────────────────────────────────────────
+             TAB 4: JOURNAL ENTRIES
+        ─────────────────────────────────────────── -->
+        <div class="lw-pane" id="lwt-je">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+            <div>
+              <div style="font-size:14px;font-weight:700;color:#111827;">Lease Journal Entries</div>
+              <div style="font-size:12px;color:#9CA3AF;margin-top:2px;">IND AS 116 — Day 1, interest accrual, payments &amp; depreciation</div>
+            </div>
+            <div style="display:flex;gap:8px;">
+              <button class="lw-btn lw-btn-ghost" onclick="renderLeaseJEsTab()"><i class="fa-solid fa-rotate"></i> Refresh</button>
+              <button class="lw-btn lw-btn-amber" onclick="exportJEForCurrentLease()"><i class="fa-solid fa-file-excel"></i> Export GL</button>
+            </div>
+          </div>
+          <div id="lwJEContent">
+            <div class="lw-calc-prompt">
+              <i class="fa-solid fa-book"></i>
+              Save this lease first, then journal entries will appear here.
+            </div>
+          </div>
+        </div><!-- /lwt-je -->
+
+        <!-- ───────────────────────────────────────────
+             TAB 5: DISCLOSURES
+        ─────────────────────────────────────────── -->
+        <div class="lw-pane" id="lwt-disclosures">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+            <div>
+              <div style="font-size:14px;font-weight:700;color:#111827;">Lease-Level Disclosure</div>
+              <div style="font-size:12px;color:#9CA3AF;margin-top:2px;">IND AS 116 Para 52 — computed after Calculate</div>
+            </div>
+            <button class="lw-btn lw-btn-amber" onclick="exportPremiumSingleLease()"><i class="fa-solid fa-file-export"></i> Export Disclosure Pack</button>
+          </div>
+          <div id="lwDiscContent">
+            <div class="lw-calc-prompt">
+              <i class="fa-solid fa-file-contract"></i>
+              Run <strong>Calculate</strong> to generate disclosure outputs for this lease.
+            </div>
+          </div>
+        </div><!-- /lwt-disclosures -->
+
+        <!-- ───────────────────────────────────────────
+             TAB 6: DOCUMENTS
+        ─────────────────────────────────────────── -->
+        <div class="lw-pane" id="lwt-documents">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+            <div>
+              <div style="font-size:14px;font-weight:700;color:#111827;">Document Links</div>
+              <div style="font-size:12px;color:#9CA3AF;margin-top:2px;">Save links or names to lease documents — no file upload, just references stored with the lease</div>
+            </div>
+          </div>
+          <div class="lw-doc-grid" id="lwDocGrid">
+            <!-- Slots rendered by renderDocumentsTab() -->
+          </div>
+          <div class="lw-doc-note">
+            <i class="fa-solid fa-circle-info" style="margin-right:6px;"></i>
+            Paste a Google Drive / SharePoint link, or type a file name. Links open in a new tab. This is a reference only — files are not uploaded or stored here.
+          </div>
+        </div><!-- /lwt-documents -->
+
+        <!-- ───────────────────────────────────────────
+             TAB 7: AUDIT & REVIEW
+        ─────────────────────────────────────────── -->
+        <div class="lw-pane" id="lwt-audit">
+          <div class="lw-audit-grid">
+
+            <!-- LEFT col: Validation + Explanation -->
+            <div>
+              <!-- Validation Panel -->
+              <div class="lw-val-summary" style="margin-bottom:20px;">
+                <div class="lw-val-summary-hdr">
+                  <h4><i class="fa-solid fa-shield-check" style="margin-right:6px;color:#4F46E5;"></i> Validation Issues</h4>
+                  <button class="lw-btn lw-btn-ghost" style="font-size:10px;padding:3px 10px;" onclick="runLeaseValidationUI()"><i class="fa-solid fa-rotate"></i> Re-run</button>
+                </div>
+                <div id="lwValidationItems">
+                  <div class="lw-val-empty">Run validation to check this lease for issues.</div>
+                </div>
+              </div>
+
+              <!-- Explanation Panel -->
+              <div id="explanationPanel" style="display:none;">
+                <div class="explain-header" onclick="toggleExplainPanel()">
+                  <span><i class="fa-solid fa-circle-info"></i> How was this calculated?</span>
+                  <i class="fa-solid fa-chevron-down" id="explainChevron"></i>
+                </div>
+                <div id="explanationBody" class="explain-body" style="display:none;"></div>
+              </div>
+            </div>
+
+            <!-- RIGHT col: Audit Trail + Sign-off -->
+            <div>
+              <!-- Audit Trail -->
+              <div id="auditTrailPanel" style="display:none;margin-bottom:20px;">
+                <div class="audit-header"><i class="fa-solid fa-clock-rotate-left"></i> Audit Trail</div>
+                <div id="auditTrailBody" class="audit-body"></div>
+              </div>
+
+              <!-- Review Sign-off -->
+              <div class="lw-review-signoff">
+                <h4><i class="fa-solid fa-pen-nib" style="margin-right:6px;color:#4F46E5;"></i> Review Sign-off</h4>
+                <div class="lw-signoff-row">
+                  <label>Prepared by</label>
+                  <input class="lw-signoff-input" id="sfPreparedBy" placeholder="Name"/>
+                  <input class="lw-signoff-input" id="sfPreparedDate" type="date" title="Date prepared"/>
+                  <span></span>
+                </div>
+                <div class="lw-signoff-row">
+                  <label>Reviewed by</label>
+                  <input class="lw-signoff-input" id="sfReviewedBy" placeholder="Name"/>
+                  <input class="lw-signoff-input" id="sfReviewedDate" type="date" title="Date reviewed"/>
+                  <span></span>
+                </div>
+                <div class="lw-signoff-row">
+                  <label>Approved by</label>
+                  <input class="lw-signoff-input" id="sfApprovedBy" placeholder="Name"/>
+                  <input class="lw-signoff-input" id="sfApprovedDate" type="date" title="Date approved"/>
+                  <span></span>
+                </div>
+                <div style="margin-top:14px;">
+                  <div style="font-size:11px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Review Notes</div>
+                  <textarea class="lw-notes-area" id="sfReviewNotes" placeholder="Reviewer comments, IBR basis, issues noted…"></textarea>
+                </div>
+                <div style="margin-top:10px;display:flex;gap:8px;">
+                  <button class="lw-btn lw-btn-green" onclick="saveSignoff()"><i class="fa-solid fa-check"></i> Save Sign-off</button>
+                  <button class="lw-btn lw-btn-ghost" onclick="markLeaseStatus('approved')"><i class="fa-solid fa-stamp"></i> Mark Approved</button>
+                </div>
+              </div>
+
+            </div><!-- /right col -->
+          </div><!-- /lw-audit-grid -->
+        </div><!-- /lwt-audit -->
+
+      </div><!-- /lw-body -->
+
+      <!-- Hidden schedule card (needed by renderSchedTable — content rendered into it) -->
+      <div style="display:none;" id="lwSchedCardTpl">
+        <div class="sched-card">
+          <div class="sched-header">
+            <h3 id="schedTitle">Amortization Schedule</h3>
+            <div class="sched-tabs">
+              <button class="sched-tab active" onclick="showSchedTab('period',this)">Period</button>
+              <button class="sched-tab" onclick="showSchedTab('annual',this)">Annual</button>
+            </div>
+          </div>
+          <div class="sched-wrap" id="schedWrap"></div>
+        </div>
+      </div>
+
+    </div><!-- /pg-lease-detail -->
+
+  </div><!-- /app-main -->
+</div><!-- /app-wrap -->
+
+<!-- Hidden for auth.js compat -->
+<div id="navActions" style="display:none"></div>
+
+<!-- File input -->
+<input type="file" id="fileUploadInput" accept=".xlsx,.xls,.csv" style="display:none;" onchange="handleFileInputChange(this)"/>
+
+<!-- Toast -->
+<div id="appToast"></div>
+
+<!-- Add Lease Modal -->
+<div class="modal-overlay" id="addLeaseModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAddModal()">&#215;</button>
+    <div class="modal-title">Add Lease to Portfolio</div>
+    <div class="m-field">
+      <label>Lease Name / Description</label>
+      <input type="text" id="mlName" placeholder="e.g. Mumbai Office — 3rd Floor"/>
+    </div>
+    <div class="m-field">
+      <label>Lessee / Entity Name</label>
+      <input type="text" id="mlEntity" placeholder="e.g. ABC Pvt. Ltd."/>
+    </div>
+    <div class="m-field">
+      <label>Company</label>
+      <select id="mlCompany"><option value="">— Select company (optional) —</option></select>
+    </div>
+    <div class="m-field">
+      <label>Lease Type</label>
+      <select id="mlModel">
+        <option value="standard">Standard (Fixed Rent) — Model 1</option>
+        <option value="escalation">Escalation / Variable Rent — Model 3</option>
+      </select>
+    </div>
+    <p class="m-note">You'll be taken to the calculator. After computing, click <strong>"Save to Portfolio"</strong> in the results to save it here.</p>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeAddModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="goToCalculator()">Open Calculator →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal" style="max-width:400px;">
+    <button class="modal-close" onclick="closeDeleteModal()">&#215;</button>
+    <div class="modal-title" style="font-size:16px;">Remove this lease?</div>
+    <p style="font-size:14px;color:#6B7280;line-height:1.6;">This will permanently remove <strong id="deleteLeaseName"></strong> from your portfolio.</p>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeDeleteModal()">Cancel</button>
+      <button class="btn btn-danger" onclick="confirmDelete()">Yes, Remove</button>
+    </div>
+  </div>
+</div>
+
+<!-- Company Modal -->
+<div class="modal-overlay" id="companyModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeCompanyModal()">&#215;</button>
+    <div class="modal-title" id="companyModalTitle">Add Company</div>
+    <div class="m-field">
+      <label>Company Name</label>
+      <input type="text" id="coName" placeholder="e.g. ABC Pvt. Ltd."/>
+    </div>
+    <div class="m-field">
+      <label>GSTIN (optional)</label>
+      <input type="text" id="coGstin" placeholder="27AABCU9603R1ZX" maxlength="15"/>
+    </div>
+    <div class="m-field">
+      <label>Financial Year Start Month</label>
+      <select id="coFyStart">
+        <option value="4" selected>April (standard Indian FY)</option>
+        <option value="1">January</option>
+        <option value="7">July</option>
+        <option value="10">October</option>
+      </select>
+    </div>
+    <div class="m-field">
+      <label>Reporting Standard</label>
+      <select id="coStandard">
+        <option value="IND AS">IND AS 116</option>
+        <option value="IFRS">IFRS 16</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeCompanyModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveCompany()">Save Company</button>
+    </div>
+  </div>
+</div>
+
+<!-- Upload Preview Modal -->
+<div class="preview-modal-overlay" id="uploadPreviewModal">
+  <div class="preview-modal">
+    <button class="modal-close" onclick="closeUploadPreview()" style="position:absolute;top:14px;right:18px;">&#215;</button>
+    <div class="modal-title" style="margin-bottom:6px;">Review Uploaded Leases</div>
+    <p style="font-size:13px;color:#6B7280;line-height:1.6;">Check below. Rows with errors will be skipped.</p>
+    <div class="preview-table-wrap">
+      <table class="preview-table" id="previewTable">
+        <thead>
+          <tr>
+            <th>Row</th><th>Lease Name</th><th>Entity</th><th>Term</th><th>IBR</th>
+            <th>Initial Liability (₹)</th><th>ROU Asset (₹)</th><th>FY Depn (₹)</th><th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="previewTableBody"></tbody>
+      </table>
+    </div>
+    <div style="font-size:13px;color:#6B7280;margin-top:12px;" id="previewSummary"></div>
+    <div style="margin-top:12px;padding:12px 16px;background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:10px;display:flex;align-items:center;gap:10px;">
+      <input type="checkbox" id="chkReplaceAll" style="width:16px;height:16px;accent-color:#D97706;cursor:pointer;">
+      <label for="chkReplaceAll" style="font-size:13px;font-weight:600;color:#92400E;cursor:pointer;">Replace entire portfolio with this upload</label>
+    </div>
+    <div class="modal-actions" style="margin-top:14px;">
+      <button class="btn btn-outline" onclick="closeUploadPreview()">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmUpload()">Confirm &amp; Save</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js?v=3"></script>
+</body>
+</html>

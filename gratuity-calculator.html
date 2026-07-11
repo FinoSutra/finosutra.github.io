@@ -10,7 +10,7 @@
 <meta property="og:title" content="Gratuity Calculator India 2026 | Finosutra"/>
 <meta property="og:description" content="Calculate exact gratuity amount + Section 10(10) tax exemption. Free, instant, for all employee types."/>
 <meta property="og:url" content="https://www.finosutra.com/gratuity-calculator.html"/>
-<meta property="og:image" content="https://www.finosutra.com/og-image.png"/>
+<meta property="og:image" content="https://www.finosutra.com/og-image.jpg"/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-Z2G710PHNQ");</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -225,7 +225,6 @@ footer img{height:28px;margin-bottom:8px;opacity:.6}
       <li><a href="indas-tools.html">IND AS</a></li>
       <li><a href="gst-tools.html">GST</a></li>
       <li><a href="income-tax-hub.html">Income Tax</a></li>
-      <li><a href="salary-hr.html">Personal Finance</a></li>
       <li><a href="templates.html">Templates</a></li>
       <li><a href="blog.html">Blog</a></li>
       <li><a href="index.html#pricing">Pricing</a></li>
@@ -295,7 +294,7 @@ footer img{height:28px;margin-bottom:8px;opacity:.6}
     <div class="input-wrap"><span class="pfx" style="left:8px">#</span>
       <input type="number" id="months" placeholder="0-11" min="0" max="11" oninput="calculate()"/>
     </div>
-    <div class="hint">Months are rounded up to next year if ≥ 6 months</div>
+    <div class="hint" id="monthsHint">Months are rounded up to next year if ≥ 6 months</div>
   </div>
 
   <div class="divider"></div>
@@ -464,7 +463,7 @@ footer img{height:28px;margin-bottom:8px;opacity:.6}
     <a href="mailto:fino.sutra07@gmail.com">Contact</a>
     <a href="blog.html">Blog</a>
   </div>
-  <div class="footer-tagline">© 2025 Finosutra. Built for Chartered Accountants and Finance Teams across India.</div>
+  <div class="footer-tagline">© 2026 Finosutra. Built for Chartered Accountants and Finance Teams across India.</div>
 </footer>
 
 <script>
@@ -493,6 +492,10 @@ function calculate(){
   let eff_years = years_c;
   if(empType === "covered" && months_c >= 6) eff_years = years_c + 1;
   else if(empType !== "covered") eff_years = years_c; // no rounding for others (use exact)
+
+  document.getElementById("monthsHint").textContent = empType === "covered"
+    ? "Months are rounded up to next year if ≥ 6 months"
+    : "Not used for this employee type — only completed years count";
 
   // Eligibility check
   const min_years = 5;
@@ -559,14 +562,15 @@ function calculate(){
       { label: "Maximum Limit", val: "No Limit", note: "Section 10(10)(i) — Govt employees", na: true },
     ];
   } else {
-    // Private: least of 3
-    const formula_exempt = Math.round((salary * 15 * eff_years) / 26); // always 15/26 for exemption calc
+    // Private: least of 3 — use the same divisor as the employee's own formula (26 for covered, 30 for non-covered)
+    const exempt_divisor = empType === "noncovered" ? 30 : 26;
+    const formula_exempt = Math.round((salary * 15 * eff_years) / exempt_divisor);
     const limit_20L = MAX_EXEMPT;
     exempt = Math.min(gratuity, formula_exempt, limit_20L);
     const min_all = Math.min(gratuity, formula_exempt, limit_20L);
     exemptItems = [
       { label: "Actual Gratuity Received", val: gratuity, note: "Condition 1", winner: gratuity === min_all },
-      { label: "15/26 × Basic+DA × Years (formula)", val: formula_exempt, note: "Condition 2 · Statutory formula", winner: formula_exempt === min_all },
+      { label: `15/${exempt_divisor} × Basic+DA × Years (formula)`, val: formula_exempt, note: "Condition 2 · Statutory formula", winner: formula_exempt === min_all },
       { label: "Maximum Exempt Limit", val: limit_20L, note: "Condition 3 · Section 10(10)(ii)/(iii) cap", winner: limit_20L === min_all },
     ];
   }

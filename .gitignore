@@ -1,0 +1,8 @@
+# Windows shortcuts
+*.lnk
+
+# Local scratch / generated reports
+reports/
+
+# Claude Code internal
+.claude/
