@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>IND AS vs IFRS: Key Differences Explained | Finosutra</title>
+<meta name="description" content="Detailed comparison of IND AS and IFRS — carve-outs, deferrals, and India-specific modifications across IND AS 116, 109, 101, 103 and more. Essential reading for CAs and CFOs."/>
+<meta name="keywords" content="IND AS vs IFRS differences, IND AS IFRS carve-outs, India IFRS convergence, IND AS 116 vs IFRS 16, IND AS 109 vs IFRS 9, IND AS modifications, IFRS vs Indian accounting standards"/>
+<meta name="author" content="Finosutra"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://www.finosutra.com/blog/ind-as-vs-ifrs-key-differences.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Finosutra"/>
+<meta property="og:title" content="IND AS vs IFRS: Key Differences Explained"/>
+<meta property="og:description" content="Detailed comparison of IND AS and IFRS — carve-outs, deferrals, and India-specific modifications across all major standards. For CAs and CFOs."/>
+<meta property="og:url" content="https://www.finosutra.com/blog/ind-as-vs-ifrs-key-differences.html"/>
+<meta property="og:image" content="https://www.finosutra.com/og-image.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="IND AS vs IFRS: Key Differences Explained"/>
+<meta name="twitter:description" content="Detailed comparison of IND AS and IFRS — carve-outs, deferrals, and India-specific modifications. Essential reading for CAs and CFOs."/>
+<meta name="twitter:image" content="https://www.finosutra.com/og-image.jpg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "IND AS vs IFRS: Key Differences Explained",
+  "description": "Detailed comparison of IND AS and IFRS — carve-outs, deferrals, and India-specific modifications across all major standards.",
+  "author": {"@type": "Organization", "name": "Finosutra"},
+  "publisher": {"@type": "Organization", "name": "Finosutra", "url": "https://www.finosutra.com"},
+  "datePublished": "2026-07-12",
+  "dateModified": "2026-07-12",
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.finosutra.com/blog/ind-as-vs-ifrs-key-differences.html"}
+}
+</script>
+<style>
+:root{
+  --brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;--brand-mid:#C7D2FE;
+  --bg:#F9FAFB;--card:#FFFFFF;--border:rgba(99,102,241,0.18);--border-light:rgba(99,102,241,0.08);
+  --text:#111827;--muted:#6B7280;--muted2:#9CA3AF;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+/* NAV */
+nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-light);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 var(--border-light),0 4px 20px rgba(99,102,241,0.05)}
+.nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.nav-logo img{height:40px;width:auto;}
+.nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
+.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;padding:7px 12px;border-radius:8px;transition:color .15s,background .15s;}
+.nav-links a:hover{color:var(--text);background:var(--brand-light);}
+.nav-toggle{display:none;background:none;border:none;font-size:20px;color:var(--text);cursor:pointer;padding:8px;}
+@media(max-width:900px){.nav-links{display:none;}.nav-toggle{display:block;}.nav-links.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid var(--border-light);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;max-height:80vh;overflow-y:auto;}}
+@media(max-width:768px){nav{padding:0 16px;}}
+
+/* ARTICLE LAYOUT */
+.article-wrap{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+
+/* BREADCRUMB */
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted2);margin-bottom:24px;flex-wrap:wrap;}
+.breadcrumb a{color:var(--muted2);text-decoration:none;transition:color .15s;}
+.breadcrumb a:hover{color:var(--brand);}
+.breadcrumb span{color:var(--muted2);}
+
+/* ARTICLE HEADER */
+.article-tag{display:inline-block;background:var(--brand-light);color:var(--brand);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.4px;margin-bottom:16px;}
+.article-title{font-size:clamp(24px,4vw,36px);font-weight:800;line-height:1.2;letter-spacing:-0.5px;color:var(--text);margin-bottom:16px;}
+.article-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--muted);margin-bottom:32px;flex-wrap:wrap;}
+.article-meta span{display:flex;align-items:center;gap:5px;}
+.article-divider{height:1px;background:var(--border-light);margin-bottom:36px;}
+
+/* TOC */
+.toc{background:var(--brand-light);border:1px solid var(--brand-mid);border-radius:14px;padding:22px 26px;margin-bottom:40px;}
+.toc h3{font-size:13px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;}
+.toc ol{padding-left:18px;}
+.toc ol li{margin-bottom:6px;}
+.toc ol li a{font-size:14px;color:var(--brand-dark);text-decoration:none;font-weight:500;}
+.toc ol li a:hover{text-decoration:underline;}
+
+/* PROSE */
+.article-body h2{font-size:22px;font-weight:800;color:var(--text);margin:40px 0 14px;letter-spacing:-0.3px;}
+.article-body h3{font-size:17px;font-weight:700;color:var(--text);margin:28px 0 10px;}
+.article-body p{margin-bottom:16px;color:#1F2937;}
+.article-body ul,.article-body ol{padding-left:22px;margin-bottom:16px;}
+.article-body ul li,.article-body ol li{margin-bottom:8px;color:#1F2937;}
+.article-body strong{font-weight:700;color:var(--text);}
+
+/* CALLOUT BOX */
+.callout{background:var(--brand-light);border-left:4px solid var(--brand);border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0;}
+.callout p{margin:0;font-size:14px;color:var(--brand-dark);}
+.callout strong{color:var(--brand-dark);}
+.callout-green{background:#ECFDF5;border-left-color:#10B981;}
+.callout-green p{color:#065F46;}
+.callout-amber{background:#FFFBEB;border-left-color:#F59E0B;}
+.callout-amber p{color:#92400E;}
+.callout-red{background:#FEF2F2;border-left-color:#EF4444;}
+.callout-red p{color:#991B1B;}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:24px 0;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+table th{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-weight:700;padding:10px 14px;text-align:left;}
+table td{padding:9px 14px;border-bottom:1px solid #F3F4F6;color:#1F2937;vertical-align:top;}
+table tr:nth-child(even) td{background:#F9FAFB;}
+table tr:last-child td{border-bottom:none;}
+.diff-yes{color:#059669;font-weight:700;}
+.diff-no{color:#DC2626;font-weight:700;}
+.diff-partial{color:#D97706;font-weight:700;}
+
+/* CTA INLINE */
+.cta-box{background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:16px;padding:28px 30px;margin:40px 0;text-align:center;}
+.cta-box h3{font-size:18px;font-weight:800;color:#fff;margin-bottom:8px;}
+.cta-box p{font-size:14px;color:rgba(255,255,255,.85);margin-bottom:18px;}
+.cta-box a{display:inline-block;background:#fff;color:var(--brand);font-size:14px;font-weight:700;padding:12px 26px;border-radius:10px;text-decoration:none;transition:transform .15s;}
+.cta-box a:hover{transform:translateY(-1px);}
+
+/* STANDARD BADGE */
+.std-badge{display:inline-block;background:#1E1B4B;color:#fff;font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px;letter-spacing:.4px;margin-right:4px;vertical-align:middle;}
+.std-badge.ifrs{background:#0F766E;}
+
+/* FOOTER */
+footer{background:#111827;padding:36px 32px 24px;color:#9CA3AF;}
+.footer-bottom-simple{max-width:1160px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px;}
+
+@media(max-width:600px){.article-wrap{padding:32px 16px 60px;}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../auth.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo"><img src="../logo.png" alt="Finosutra"></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../indas-tools.html">IND AS</a></li>
+      <li><a href="../gst-tools.html">GST</a></li>
+      <li><a href="../income-tax-hub.html">Income Tax</a></li>
+      <li><a href="../templates.html">Templates</a></li>
+      <li><a href="../blog.html">Blog</a></li>
+      <li><a href="../index.html#pricing">Pricing</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <a href="../blog.html" style="font-size:13px;font-weight:600;color:var(--brand);text-decoration:none;">← All Articles</a>
+      <button class="nav-toggle" id="navToggle"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
+
+<div class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span>›</span>
+    <a href="../blog.html">Blog</a>
+    <span>›</span>
+    <span>IND AS vs IFRS: Key Differences</span>
+  </nav>
+
+  <div class="article-tag">IND AS vs IFRS</div>
+  <h1 class="article-title">IND AS vs IFRS: Key Differences Every CA and CFO Must Know</h1>
+  <div class="article-meta">
+    <span><i class="fa-regular fa-calendar"></i> July 2026</span>
+    <span><i class="fa-regular fa-clock"></i> 16 min read</span>
+    <span><i class="fa-solid fa-user"></i> Finosutra Team</span>
+  </div>
+  <div class="article-divider"></div>
+
+  <div class="toc">
+    <h3>In This Article</h3>
+    <ol>
+      <li><a href="#overview">What is IND AS and How Does It Relate to IFRS?</a></li>
+      <li><a href="#why-differences">Why Are There Differences at All?</a></li>
+      <li><a href="#types">Three Types of Differences: Carve-outs, Deferrals & Additional Guidance</a></li>
+      <li><a href="#standard-by-standard">Standard-by-Standard Comparison</a></li>
+      <li><a href="#ind-as-101">IND AS 101 vs IFRS 1 — First-time Adoption</a></li>
+      <li><a href="#ind-as-103">IND AS 103 vs IFRS 3 — Business Combinations</a></li>
+      <li><a href="#ind-as-109">IND AS 109 vs IFRS 9 — Financial Instruments</a></li>
+      <li><a href="#ind-as-110">IND AS 110 vs IFRS 10 — Consolidated Financial Statements</a></li>
+      <li><a href="#ind-as-116">IND AS 116 vs IFRS 16 — Leases</a></li>
+      <li><a href="#ind-as-19">IND AS 19 vs IAS 19 — Employee Benefits</a></li>
+      <li><a href="#ind-as-12">IND AS 12 vs IAS 12 — Income Taxes</a></li>
+      <li><a href="#presentation">Presentation and Disclosure Differences</a></li>
+      <li><a href="#applicability">Who Must Follow IND AS in India?</a></li>
+      <li><a href="#summary-table">Master Comparison Table</a></li>
+      <li><a href="#conclusion">Bottom Line for Practitioners</a></li>
+    </ol>
+  </div>
+
+  <div class="article-body">
+
+    <!-- 1. OVERVIEW -->
+    <h2 id="overview">1. What is IND AS and How Does It Relate to IFRS?</h2>
+    <p><strong>IND AS (Indian Accounting Standards)</strong> is India's IFRS-converged accounting framework, issued by the Institute of Chartered Accountants of India (ICAI) and notified by the Ministry of Corporate Affairs (MCA). IND AS is largely based on IFRS as issued by the IASB, but with certain modifications to reflect India's legal, regulatory, and economic context.</p>
+    <p>The relationship is best described as <strong>"IFRS-converged, not IFRS-adopted."</strong> India chose convergence over full adoption — meaning each IND AS is derived from its IFRS equivalent, but Indian standard-setters have made deliberate changes where IFRS requirements conflicted with Indian law (Companies Act 2013, SEBI regulations, RBI guidelines) or were considered inappropriate for Indian market conditions.</p>
+
+    <div class="callout">
+      <p><strong>Key distinction:</strong> An Indian company reporting under IND AS is NOT automatically IFRS-compliant. A company wishing to list on international stock exchanges or raise foreign capital may still need to prepare a separate IFRS set of financial statements or reconcile IND AS to IFRS.</p>
+    </div>
+
+    <p>As of 2026, IND AS applies to all listed companies and large unlisted companies in India. Phase-wise adoption began in 2016–17 for listed companies with net worth above ₹500 crore, and has since expanded to cover most significant entities.</p>
+
+
+    <!-- 2. WHY DIFFERENCES -->
+    <h2 id="why-differences">2. Why Are There Differences at All?</h2>
+    <p>The differences between IND AS and IFRS arise from several practical considerations:</p>
+    <ul>
+      <li><strong>Legal conflicts:</strong> Certain IFRS requirements conflicted with the Companies Act 2013 — for example, IFRS allows more flexibility in presenting components of equity, which conflicted with Schedule III requirements.</li>
+      <li><strong>Regulatory requirements:</strong> RBI regulations for banks and NBFCs, SEBI requirements for listed entities, and IRDAI guidelines for insurers sometimes override or supplement what IFRS requires.</li>
+      <li><strong>Market maturity:</strong> Some IFRS requirements assume deep, liquid markets (e.g., observable market inputs for fair values). Indian markets for certain asset classes are less liquid, making full IFRS application impractical.</li>
+      <li><strong>Policy considerations:</strong> Standard-setters made conscious choices to defer certain requirements (e.g., IND AS 117 on insurance contracts) to give Indian preparers more time to build capacity.</li>
+      <li><strong>Additional guidance:</strong> In some areas, India has added requirements that IFRS leaves silent — for example, guidance on real estate revenue recognition specific to Indian construction practices.</li>
+    </ul>
+
+    <div class="callout-amber">
+      <p><strong>Exam tip for CAs:</strong> In CA Final SFM and Advanced Accounting, differences between IND AS and IFRS are a recurring exam area. The ICAI study material lists "carve-outs" explicitly — know them cold.</p>
+    </div>
+
+
+    <!-- 3. TYPES OF DIFFERENCES -->
+    <h2 id="types">3. Three Types of Differences</h2>
+    <p>IND AS differences from IFRS fall into three categories:</p>
+
+    <h3>A. Carve-outs (India removes or changes an IFRS requirement)</h3>
+    <p>These are the most significant differences. India has either removed a requirement entirely or replaced it with a different treatment. Examples:</p>
+    <ul>
+      <li>Hedge accounting using the IAS 39 model (older) instead of IFRS 9's model (IND AS 109 carve-out)</li>
+      <li>Remeasurement of defined benefit obligations going to Other Comprehensive Income (OCI) with an option to transfer to retained earnings — IFRS requires it to stay in OCI permanently</li>
+      <li>No option to use the fair value model for investment property for companies other than those following Ind AS for the first time</li>
+    </ul>
+
+    <h3>B. Deferrals (India delays adoption of new IFRS standards)</h3>
+    <p>India has often taken 2–4 years longer than the IASB's effective date to adopt new standards. Examples:</p>
+    <ul>
+      <li>IFRS 9 (Financial Instruments) became effective globally from 1 January 2018; IND AS 109 was effective from 1 April 2018 for most entities</li>
+      <li>IFRS 17 (Insurance Contracts) was effective globally from 1 January 2023; IND AS 117 is still being finalised for India as of 2026</li>
+      <li>IFRS 16 (Leases) was effective 1 January 2019; IND AS 116 was effective 1 April 2019</li>
+    </ul>
+
+    <h3>C. Additional guidance (India adds requirements IFRS leaves silent)</h3>
+    <p>Where IFRS is principles-based and silent on specific matters, IND AS sometimes provides prescriptive guidance. Examples:</p>
+    <ul>
+      <li>IND AS 115 provides specific guidance on revenue recognition for real estate developers (project completion method considerations)</li>
+      <li>ICAI guidance notes on specific industry accounting sit alongside IND AS standards</li>
+    </ul>
+
+
+    <!-- 4. STANDARD BY STANDARD -->
+    <h2 id="standard-by-standard">4. Standard-by-Standard Comparison</h2>
+    <p>The following sections cover the most important standards where differences are material and commonly tested in practice or examinations.</p>
+
+
+    <!-- IND AS 101 -->
+    <h2 id="ind-as-101">5. IND AS 101 vs IFRS 1 — First-time Adoption</h2>
+    <p>IND AS 101 governs how an entity transitions from previous Indian GAAP (AS) to IND AS. IFRS 1 governs transition from any previous GAAP to IFRS. The structure is similar but the exemptions differ.</p>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Aspect</th><th>IND AS 101</th><th>IFRS 1</th></tr>
+        <tr><td>Deemed cost option for PPE</td><td>Allowed — entity can use fair value or previous GAAP carrying amount as deemed cost on transition date</td><td>Also allowed, but IND AS adds an additional option: use the revalued amount under previous GAAP as deemed cost</td></tr>
+        <tr><td>Long-term foreign currency monetary items</td><td>Entities can continue amortising FCTR (Foreign Currency Translation Reserve) over the life of the instrument — a carve-out specific to India</td><td>Not applicable — IFRS requires immediate P&amp;L recognition on transition</td></tr>
+        <tr><td>Government grants related to assets</td><td>Entities can elect to measure the related asset at carrying amount under previous GAAP without deducting the grant</td><td>Similar exemption available under IFRS 1</td></tr>
+        <tr><td>Business combinations before transition</td><td>Prior business combinations before the transition date need not be restated (same as IFRS 1)</td><td>Same optional exemption available</td></tr>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><strong>Important carve-out:</strong> The long-term FCTR amortisation option in IND AS 101 has no equivalent in IFRS 1. This was introduced because many Indian companies had significant long-term ECB (External Commercial Borrowings) and would have faced large P&amp;L hits on transition without this relief.</p>
+    </div>
+
+
+    <!-- IND AS 103 -->
+    <h2 id="ind-as-103">6. IND AS 103 vs IFRS 3 — Business Combinations</h2>
+    <p>Business combinations accounting is an area of significant difference between IND AS and IFRS, particularly for common control transactions.</p>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Aspect</th><th>IND AS 103</th><th>IFRS 3</th></tr>
+        <tr><td>Common control transactions</td><td>Scoped OUT of IND AS 103. Accounted under <strong>Appendix C</strong> of IND AS 103 — using pooling of interests method (book value, no goodwill, no fair value step-up)</td><td>Scoped OUT of IFRS 3. No specific IFRS guidance — entities apply judgement; IASB has a project underway but no standard yet</td></tr>
+        <tr><td>Goodwill amortisation</td><td><strong>Goodwill IS amortised</strong> over its useful life (max 10 years if life cannot be estimated) — this is a major carve-out</td><td>Goodwill is NOT amortised — only tested for impairment annually</td></tr>
+        <tr><td>Bargain purchase (negative goodwill)</td><td>Recognised in OCI and then transferred to capital reserve — cannot go to P&amp;L</td><td>Recognised immediately in profit or loss after reassessment</td></tr>
+        <tr><td>Non-controlling interests</td><td>Measured at proportionate share of net identifiable assets (only one option)</td><td>Choice: proportionate share OR full fair value (full goodwill method)</td></tr>
+        <tr><td>Acquisition-related costs</td><td>Expensed in P&amp;L (same as IFRS 3)</td><td>Expensed in P&amp;L</td></tr>
+      </table>
+    </div>
+
+    <div class="callout-red">
+      <p><strong>Critical difference — Goodwill:</strong> This is the single most impactful difference for Indian companies. Under IND AS 103, goodwill is amortised — typically over 10 years — which reduces reported profits. Under IFRS 3, goodwill sits on the balance sheet indefinitely (subject to impairment). A company with large goodwill will show significantly different net income under the two frameworks.</p>
+    </div>
+
+
+    <!-- IND AS 109 -->
+    <h2 id="ind-as-109">7. IND AS 109 vs IFRS 9 — Financial Instruments</h2>
+    <p>IND AS 109 corresponds to IFRS 9 and covers classification, measurement, impairment, and hedge accounting of financial instruments. The differences here are significant, particularly for banks and NBFCs.</p>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Aspect</th><th>IND AS 109</th><th>IFRS 9</th></tr>
+        <tr><td>Hedge accounting model</td><td><strong>Carve-out:</strong> Entities may apply either the IND AS 109 hedge accounting model OR continue to apply the older IAS 39 hedge accounting requirements</td><td>Only the IFRS 9 hedge accounting model applies (IAS 39 hedge accounting was withdrawn)</td></tr>
+        <tr><td>ECL (Expected Credit Losses)</td><td>Same 3-stage ECL model as IFRS 9 — 12-month ECL (Stage 1), lifetime ECL (Stage 2 &amp; 3)</td><td>Same 3-stage model</td></tr>
+        <tr><td>Banks and NBFCs</td><td>RBI has issued separate ECL guidelines for banks. Regulatory ECL provisioning may differ from IND AS 109 ECL — entities maintain both</td><td>Banks follow IFRS 9 ECL without a parallel regulatory override</td></tr>
+        <tr><td>Classification categories</td><td>Same as IFRS 9: Amortised Cost, FVOCI, FVTPL</td><td>Same: Amortised Cost, FVOCI, FVTPL</td></tr>
+        <tr><td>Day 1 gain/loss on financial instruments</td><td>Recognised in P&amp;L only if fair value is evidenced by a quoted price in an active market — otherwise deferred</td><td>Same principle, but IFRS 9 has more prescriptive guidance on what constitutes observable inputs</td></tr>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><strong>Practical impact of the hedge accounting carve-out:</strong> Many Indian companies, particularly those with foreign currency exposures, continue to use IAS 39 hedge accounting under IND AS 109. This is because IAS 39 hedge accounting was more familiar and its 80–125% effectiveness test was well-understood. The IFRS 9 model is more principles-based and requires more documentation upfront.</p>
+    </div>
+
+    <h3>Security Deposits — an IND AS 109 specific application</h3>
+    <p>One area where IND AS 109 has well-developed practical application in India is security deposit accounting. When a company pays a large refundable security deposit at a below-market rate (common in Indian commercial leases), IND AS 109 requires the deposit to be fair-valued at inception. The difference between nominal value and fair value (the "Day 1 discount") is treated as a prepaid asset — effectively additional rent — and amortised over the lease period. Under IFRS 9, the same treatment applies, but Indian practitioners have developed detailed guidance through ICAI implementation guides specific to Indian commercial property transactions.</p>
+
+
+    <!-- IND AS 110 -->
+    <h2 id="ind-as-110">8. IND AS 110 vs IFRS 10 — Consolidated Financial Statements</h2>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Aspect</th><th>IND AS 110</th><th>IFRS 10</th></tr>
+        <tr><td>Control definition</td><td>Same as IFRS 10 — power + exposure to variable returns + ability to use power to affect returns</td><td>Same three-element control model</td></tr>
+        <tr><td>Investment entities exception</td><td>Investment entity exemption from consolidation is available, but with modifications — an investment entity that is a subsidiary of a non-investment entity may not apply the exemption</td><td>Investment entities are exempt from consolidating subsidiaries; measure them at FVTPL instead</td></tr>
+        <tr><td>Uniform accounting policies</td><td>Required — subsidiaries must adopt parent's IND AS policies for consolidation</td><td>Same requirement under IFRS 10</td></tr>
+        <tr><td>Non-coterminous year ends</td><td>Subsidiary year ends must be within 3 months of parent — same as IFRS 10</td><td>Same 3-month rule</td></tr>
+        <tr><td>Potential voting rights</td><td>Considered when assessing control — same as IFRS 10</td><td>Same</td></tr>
+      </table>
+    </div>
+
+
+    <!-- IND AS 116 -->
+    <h2 id="ind-as-116">9. IND AS 116 vs IFRS 16 — Leases</h2>
+    <p>IND AS 116 (effective 1 April 2019) corresponds to IFRS 16 (effective 1 January 2019). The two standards are substantially aligned. Both require lessees to recognise a right-of-use (ROU) asset and lease liability for almost all leases on the balance sheet.</p>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Aspect</th><th>IND AS 116</th><th>IFRS 16</th></tr>
+        <tr><td>Lessee model</td><td>Single model — all leases on balance sheet except short-term (&lt;12 months) and low-value asset leases</td><td>Identical — same single lessee model</td></tr>
+        <tr><td>Lessor model</td><td>Operating vs finance lease distinction retained for lessors — same as IFRS 16</td><td>Same — operating vs finance lease for lessors</td></tr>
+        <tr><td>Short-term lease exemption</td><td>Lease term ≤ 12 months — entity can elect to expense payments directly to P&amp;L</td><td>Identical</td></tr>
+        <tr><td>Low-value asset exemption</td><td>Available — IND AS 116 does not specify a threshold (IFRS 16 guidance note suggests ~USD 5,000 / ~₹4 lakh when new)</td><td>Available — IASB guidance note suggests USD 5,000 when new as a practical threshold</td></tr>
+        <tr><td>Discount rate</td><td>IBR (Incremental Borrowing Rate) used when the rate implicit in the lease cannot be determined — same as IFRS 16</td><td>Same</td></tr>
+        <tr><td>Lease modifications</td><td>Para 44–46 treatment identical — remeasurement at revised IBR for scope/payment changes</td><td>Same Para 44–46 approach</td></tr>
+        <tr><td>Variable lease payments</td><td>Payments linked to index or rate are included in initial measurement; pure variable payments (e.g., % of sales) excluded — same as IFRS 16</td><td>Identical</td></tr>
+        <tr><td>Sale and leaseback</td><td>Appendix B — same accounting as IFRS 16 for true sales; seller-lessee retains asset if control not transferred</td><td>Identical</td></tr>
+        <tr><td>Currency</td><td>Amounts typically in Indian Rupees; IBR references RBI MCLR/repo rate benchmarks</td><td>Any currency; IBR references local market rates</td></tr>
+      </table>
+    </div>
+
+    <div class="callout-green">
+      <p><strong>Good news for IND AS 116 practitioners:</strong> IND AS 116 and IFRS 16 are among the most aligned standards. If your IND AS 116 workings are correct, they will be substantively correct under IFRS 16 as well — the main difference is just currency and the specific IBR benchmark used.</p>
+    </div>
+
+    <div class="cta-box">
+      <h3>Try Our Free IND AS 116 Calculator</h3>
+      <p>Calculate ROU asset, lease liability, amortisation schedule and journal entries — audit-ready Excel export available.</p>
+      <a href="../indas116.html">Open Calculator →</a>
+    </div>
+
+
+    <!-- IND AS 19 -->
+    <h2 id="ind-as-19">10. IND AS 19 vs IAS 19 — Employee Benefits</h2>
+    <p>IND AS 19 covers short-term employee benefits, post-employment benefits (gratuity, provident fund), other long-term benefits, and termination benefits. This is an area with notable carve-outs.</p>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Aspect</th><th>IND AS 19</th><th>IAS 19</th></tr>
+        <tr><td>Remeasurement of defined benefit obligation (actuarial gains/losses)</td><td>Recognised in OCI — <strong>but can be transferred to retained earnings</strong> (recycled out of OCI). This is a significant carve-out.</td><td>Recognised in OCI permanently — cannot be recycled to P&amp;L or retained earnings ever</td></tr>
+        <tr><td>Discount rate for defined benefit obligations</td><td>Government bond yield — <strong>carve-out:</strong> IND AS 19 requires use of government bond yields when there is no deep market for high-quality corporate bonds (which is the case in India)</td><td>High-quality corporate bond yield; government bond yield only if there is no deep market for such bonds</td></tr>
+        <tr><td>Provident Fund — actuarial risk</td><td>Employer-managed PF trusts that guarantee returns may create a defined benefit obligation — ICAI has issued specific guidance on this</td><td>No specific IFRS guidance on India-specific PF structures</td></tr>
+        <tr><td>Gratuity</td><td>Defined benefit obligation — actuarially valued, typically using Projected Unit Credit (PUC) method</td><td>Same PUC method required</td></tr>
+        <tr><td>Short-term compensated absences</td><td>Accumulating absences — accrue based on expected unused leave; same as IAS 19</td><td>Same</td></tr>
+      </table>
+    </div>
+
+    <div class="callout-amber">
+      <p><strong>The discount rate carve-out matters:</strong> India lacks a deep market for AAA corporate bonds. Using government bond yields (which are lower than corporate bond yields) results in a <em>higher</em> defined benefit obligation under IND AS 19 compared to if a corporate bond rate could be used. This means Indian companies show larger gratuity liabilities than IFRS peers in countries with deep corporate bond markets.</p>
+    </div>
+
+
+    <!-- IND AS 12 -->
+    <h2 id="ind-as-12">11. IND AS 12 vs IAS 12 — Income Taxes</h2>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Aspect</th><th>IND AS 12</th><th>IAS 12</th></tr>
+        <tr><td>Deferred tax on undistributed profits of subsidiaries</td><td>Recognise DTA/DTL unless parent controls timing and it is probable that difference will not reverse in the foreseeable future — same as IAS 12</td><td>Same</td></tr>
+        <tr><td>Deferred tax on revaluation of non-depreciable assets</td><td>Calculated at capital gains tax rate if the asset would be recovered through sale — same as IAS 12 after 2010 amendment</td><td>Same</td></tr>
+        <tr><td>MAT (Minimum Alternate Tax) credit</td><td>MAT credit entitlement recognised as a deferred tax asset — specific guidance added by ICAI since IND AS 12 does not explicitly address MAT</td><td>No equivalent — MAT is India-specific</td></tr>
+        <tr><td>Current tax rate used</td><td>Enacted or substantively enacted tax rate — same as IAS 12</td><td>Same</td></tr>
+        <tr><td>Recognition threshold for DTA</td><td>Recognised only if it is probable that sufficient future taxable profit will be available — same as IAS 12</td><td>Same</td></tr>
+      </table>
+    </div>
+
+
+    <!-- PRESENTATION -->
+    <h2 id="presentation">12. Presentation and Disclosure Differences</h2>
+    <p>Beyond individual standards, there are structural differences in how financial statements are presented in India vs under full IFRS.</p>
+
+    <h3>Schedule III vs IAS 1</h3>
+    <p>Indian companies must present their balance sheet and income statement in the format prescribed by <strong>Schedule III of the Companies Act 2013</strong>. IFRS (IAS 1) gives companies more flexibility in choosing their presentation format — they can present expenses by nature or by function, and the line items are not prescribed as rigidly.</p>
+    <p>Schedule III requires, for example:</p>
+    <ul>
+      <li>Balance sheet in a specific vertical format with current/non-current classification</li>
+      <li>Statement of profit and loss with specific line items (revenue from operations, other income, cost of materials consumed, etc.)</li>
+      <li>Notes in a specific sequence with minimum disclosure requirements</li>
+    </ul>
+    <p>Under full IFRS (IAS 1), the entity has more latitude — a UK-listed company's financial statements may look very different structurally from an Indian IND AS set even though both are converged with IFRS.</p>
+
+    <h3>Statement of Changes in Equity</h3>
+    <p>IND AS requires a Statement of Changes in Equity — same as IFRS. However, the components of equity under Schedule III must be presented under specific heads (share capital, other equity, retained earnings) which may constrain some IFRS-style presentations.</p>
+
+    <h3>Functional currency</h3>
+    <p>IND AS 21 (foreign currency transactions) requires the entity to determine its functional currency — same as IAS 21. In practice, most Indian entities use INR as their functional currency, and there is specific guidance on entities operating in hyperinflationary economies (not currently relevant for India).</p>
+
+
+    <!-- APPLICABILITY -->
+    <h2 id="applicability">13. Who Must Follow IND AS in India?</h2>
+    <p>IND AS applicability is determined by the MCA notification dated 16 February 2015 and subsequent amendments:</p>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Category</th><th>Mandatory IND AS from</th><th>Net Worth / Other Criteria</th></tr>
+        <tr><td>Listed companies (Phase 1)</td><td>1 April 2016</td><td>Net worth ≥ ₹500 crore</td></tr>
+        <tr><td>Listed companies (Phase 2)</td><td>1 April 2017</td><td>All other listed companies</td></tr>
+        <tr><td>Unlisted companies (Phase 1)</td><td>1 April 2017</td><td>Net worth ≥ ₹500 crore</td></tr>
+        <tr><td>Unlisted companies (Phase 2)</td><td>1 April 2018</td><td>Net worth ₹250–500 crore</td></tr>
+        <tr><td>Banks</td><td>Deferred — RBI to notify</td><td>Pending RBI roadmap</td></tr>
+        <tr><td>NBFCs (Phase 1)</td><td>1 April 2018</td><td>Net worth ≥ ₹500 crore or listed</td></tr>
+        <tr><td>NBFCs (Phase 2)</td><td>1 April 2019</td><td>Net worth ₹250–500 crore</td></tr>
+        <tr><td>Insurance companies</td><td>1 April 2023 (proposed)</td><td>IRDAI to notify; IND AS 117 pending</td></tr>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><strong>Voluntary adoption:</strong> Any company that does not meet the mandatory threshold may voluntarily adopt IND AS. Once adopted, IND AS cannot be reverted to previous GAAP (AS).</p>
+    </div>
+
+
+    <!-- MASTER TABLE -->
+    <h2 id="summary-table">14. Master Comparison Table — IND AS vs IFRS at a Glance</h2>
+
+    <div class="table-wrap">
+      <table>
+        <tr>
+          <th>Standard</th>
+          <th>Topic</th>
+          <th>Substantially Same?</th>
+          <th>Key IND AS Difference</th>
+        </tr>
+        <tr>
+          <td><strong>IND AS 101 / IFRS 1</strong></td>
+          <td>First-time adoption</td>
+          <td class="diff-partial">Mostly</td>
+          <td>FCTR amortisation option; additional deemed cost option</td>
+        </tr>
+        <tr>
+          <td><strong>IND AS 103 / IFRS 3</strong></td>
+          <td>Business combinations</td>
+          <td class="diff-no">No</td>
+          <td>Goodwill amortised (not just impaired); bargain purchase to capital reserve; NCI at proportionate share only</td>
+        </tr>
+        <tr>
+          <td><strong>IND AS 109 / IFRS 9</strong></td>
+          <td>Financial instruments</td>
+          <td class="diff-partial">Mostly</td>
+          <td>IAS 39 hedge accounting option retained; RBI ECL overrides for banks</td>
+        </tr>
+        <tr>
+          <td><strong>IND AS 110 / IFRS 10</strong></td>
+          <td>Consolidation</td>
+          <td class="diff-yes">Largely</td>
+          <td>Investment entity exemption modified</td>
+        </tr>
+        <tr>
+          <td><strong>IND AS 112 / IFRS 12</strong></td>
+          <td>Disclosure of interests in other entities</td>
+          <td class="diff-yes">Largely</td>
+          <td>Minor wording differences</td>
+        </tr>
+        <tr>
+          <td><strong>IND AS 115 / IFRS 15</strong></td>
+          <td>Revenue from contracts</td>
+          <td class="diff-partial">Mostly</td>
+          <td>Additional guidance on real estate developer accounting; specific Schedule III presentation</td>
+        </tr>
+        <tr>
+          <td><strong>IND AS 116 / IFRS 16</strong></td>
+          <td>Leases</td>
+          <td class="diff-yes">Yes</td>
+          <td>Effective date 1 day later (1 Apr 2019 vs 1 Jan 2019); IBR uses Indian benchmarks</td>
+        </tr>
+        <tr>
+          <td><strong>IND AS 19 / IAS 19</strong></td>
+          <td>Employee benefits</td>
+          <td class="diff-partial">Mostly</td>
+          <td>OCI remeasurements can be transferred to retained earnings; government bond discount rate</td>
+        </tr>
+        <tr>
+          <td><strong>IND AS 12 / IAS 12</strong></td>
+          <td>Income taxes</td>
+          <td class="diff-yes">Largely</td>
+          <td>MAT credit as DTA — India-specific</td>
+        </tr>
+        <tr>
+          <td><strong>IND AS 16 / IAS 16</strong></td>
+          <td>Property, plant &amp; equipment</td>
+          <td class="diff-yes">Largely</td>
+          <td>Minor — Schedule III presentation differences</td>
+        </tr>
+        <tr>
+          <td><strong>IND AS 36 / IAS 36</strong></td>
+          <td>Impairment of assets</td>
+          <td class="diff-yes">Largely</td>
+          <td>Minor differences in disclosures</td>
+        </tr>
+        <tr>
+          <td><strong>IND AS 38 / IAS 38</strong></td>
+          <td>Intangible assets</td>
+          <td class="diff-yes">Largely</td>
+          <td>Minor wording; goodwill amortisation covered in IND AS 103</td>
+        </tr>
+        <tr>
+          <td><strong>IND AS 117 / IFRS 17</strong></td>
+          <td>Insurance contracts</td>
+          <td class="diff-no">Pending</td>
+          <td>IND AS 117 not yet finalised/effective; India uses IND AS 104 (insurance) still</td>
+        </tr>
+        <tr>
+          <td><strong>Presentation</strong></td>
+          <td>Financial statement format</td>
+          <td class="diff-no">No</td>
+          <td>Schedule III mandates specific line items and format — IFRS (IAS 1) gives more flexibility</td>
+        </tr>
+      </table>
+    </div>
+
+
+    <!-- CONCLUSION -->
+    <h2 id="conclusion">15. Bottom Line for Practitioners</h2>
+    <p>For a CA or CFO working with Indian companies, here are the practical takeaways:</p>
+
+    <ul>
+      <li><strong>IND AS ≠ IFRS certificate:</strong> An audit opinion on IND AS financial statements does not mean those statements are IFRS-compliant. If a company needs IFRS statements (for foreign listing, cross-border M&amp;A, or multinational parent consolidation), a separate IFRS reconciliation or restatement is needed.</li>
+      <li><strong>Watch goodwill closely:</strong> The IND AS 103 vs IFRS 3 difference on goodwill amortisation has the largest P&amp;L impact for acquisition-heavy companies. Under IND AS, goodwill amortisation reduces EBITDA-to-PAT conversion; under IFRS, goodwill stays on the balance sheet and only reduces profits on impairment.</li>
+      <li><strong>Hedge accounting — check which model:</strong> If your company uses hedge accounting, confirm whether it is applying IND AS 109 or the IAS 39 option. The two models have different documentation and effectiveness testing requirements.</li>
+      <li><strong>Gratuity discount rate:</strong> The government bond rate (lower) vs corporate bond rate (higher) difference means Indian companies may show a larger defined benefit obligation than comparable IFRS peers — even with identical actuarial assumptions on everything else.</li>
+      <li><strong>IND AS 116 and IFRS 16 — minimal difference:</strong> For lease accounting specifically, the two standards are so closely aligned that your IND AS 116 workings are substantively valid under IFRS 16. This is good news for companies with both Indian and international reporting obligations.</li>
+      <li><strong>Keep watching for convergence updates:</strong> ICAI and MCA continue to update IND AS as IFRS evolves. IND AS 117 (insurance) and further updates to IND AS 109 (IFRS 9 Phase 2 amendments) are expected in coming years.</li>
+    </ul>
+
+    <div class="callout-green">
+      <p><strong>For CA Final students:</strong> In the SFM and Advanced Accounting papers, always specify whether a question requires IND AS or IFRS treatment. When both are asked, cover the carve-outs explicitly — goodwill amortisation, hedge accounting option, OCI recycling for defined benefit, and the government bond discount rate are the highest-frequency difference questions.</p>
+    </div>
+
+    <div class="cta-box">
+      <h3>IND AS 116 Lease Accounting Tools</h3>
+      <p>Free calculators for standard leases, modifications, and escalation rents — with audit-ready Excel export.</p>
+      <a href="../indas-tools.html">Explore IND AS Tools →</a>
+    </div>
+
+    <h3>Related Articles</h3>
+    <ul>
+      <li><a href="ind-as-116-lease-accounting-guide.html" style="color:var(--brand);font-weight:600;">IND AS 116 / IFRS 16 Lease Accounting: Complete Guide with Journal Entries →</a></li>
+      <li><a href="ind-as-109-security-deposit-accounting.html" style="color:var(--brand);font-weight:600;">IND AS 109 Security Deposit: Fair Value, Day 1 Discount &amp; Journal Entries →</a></li>
+      <li><a href="ind-as-117-insurance-contracts.html" style="color:var(--brand);font-weight:600;">IND AS 117 / IFRS 17: Insurance Contracts Explained with Examples →</a></li>
+    </ul>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom-simple">
+    <p>© 2026 Finosutra. Built for Chartered Accountants and Finance Teams across India.</p>
+    <p><a href="../index.html" style="color:#9CA3AF;text-decoration:none;margin:0 8px;">Home</a> <a href="../blog.html" style="color:#9CA3AF;text-decoration:none;margin:0 8px;">Blog</a> <a href="../index.html#contact" style="color:#9CA3AF;text-decoration:none;margin:0 8px;">Contact</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var btn = document.getElementById('navToggle');
+  var links = document.querySelector('.nav-links');
+  if(!btn) return;
+  btn.addEventListener('click', function(){ links && links.classList.toggle('open'); });
+  document.addEventListener('click', function(e){
+    if(!btn.contains(e.target) && links && !links.contains(e.target)) links.classList.remove('open');
+  });
+})();
+</script>
+</body>
+</html>
