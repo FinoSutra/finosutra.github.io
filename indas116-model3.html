@@ -26,28 +26,28 @@ body{
   color:#1A1A2E
 }
 
-#mainNav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(99,102,241,0.08);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 rgba(99,102,241,0.08),0 4px 20px rgba(99,102,241,0.05);}
+#mainNav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,82,204,0.08);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 rgba(0,82,204,0.08),0 4px 20px rgba(0,82,204,0.05);}
 .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
 .nav-logo{display:flex;align-items:center;text-decoration:none;}
 .nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
 .nav-links a{font-size:13px;font-weight:500;color:#6B7280;text-decoration:none;padding:7px 12px;border-radius:8px;transition:color .15s,background .15s;white-space:nowrap;}
-.nav-links a:hover,.nav-links a.active{color:#111827;background:#EEF2FF;}
+.nav-links a:hover,.nav-links a.active{color:#111827;background:#E8F0FF;}
 .nav-actions{display:flex;align-items:center;gap:8px;}
-.nav-back-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;font-family:'Inter',sans-serif;transition:all .15s;background:#fff;color:#111827;border:1.5px solid rgba(99,102,241,0.2);}
-.nav-back-btn:hover{border-color:#6366F1;color:#6366F1;}
+.nav-back-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;font-family:'Inter',sans-serif;transition:all .15s;background:#fff;color:#111827;border:1.5px solid rgba(0,82,204,0.2);}
+.nav-back-btn:hover{border-color:#0052CC;color:#0052CC;}
 .nav-toggle{display:none;background:none;border:none;font-size:20px;color:#111827;cursor:pointer;padding:4px;}
-#sticky-export-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#1E293B,#0F172A);padding:14px 24px;z-index:1000;align-items:center;justify-content:space-between;gap:16px;box-shadow:0 -4px 24px rgba(0,0,0,.25);border-top:2px solid #6366F1;font-family:'Inter',sans-serif;}
+#sticky-export-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#1E293B,#0F172A);padding:14px 24px;z-index:1000;align-items:center;justify-content:space-between;gap:16px;box-shadow:0 -4px 24px rgba(0,0,0,.25);border-top:2px solid #0052CC;font-family:'Inter',sans-serif;}
 #sticky-export-bar .sticky-text{color:#fff;font-size:14px;font-weight:600;line-height:1.4}
 #sticky-export-bar .sticky-sub{color:#94A3B8;font-size:12px}
-#sticky-export-bar .sticky-btn{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'Inter',sans-serif;}
+#sticky-export-bar .sticky-btn{background:linear-gradient(135deg,#0052CC,#002244);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'Inter',sans-serif;}
 #sticky-export-bar .sticky-close{background:none;border:none;color:#64748B;font-size:20px;cursor:pointer;padding:4px 8px;}
 #shortTermWarning{display:none;margin:10px 0 0;padding:12px 14px;background:linear-gradient(135deg,#FEF3C7,#FFFBEB);border:1px solid rgba(245,158,11,0.4);border-radius:10px;font-size:12px;color:#92400E;line-height:1.6;}
 .gst-note{font-size:10px;color:#DC2626;font-weight:600;margin-top:3px;}
 @media(max-width:900px){.nav-links{display:none;}}
-@media(max-width:768px){#mainNav{padding:0 16px;}.nav-actions{display:none;}.nav-toggle{display:block;}.nav-links.open,.nav-actions.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid rgba(99,102,241,0.08);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}#sticky-export-bar{flex-direction:column;align-items:flex-start;padding:14px 16px;}#sticky-export-bar .sticky-btn{width:100%;text-align:center;}}
+@media(max-width:768px){#mainNav{padding:0 16px;}.nav-actions{display:none;}.nav-toggle{display:block;}.nav-links.open,.nav-actions.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid rgba(0,82,204,0.08);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}#sticky-export-bar{flex-direction:column;align-items:flex-start;padding:14px 16px;}#sticky-export-bar .sticky-btn{width:100%;text-align:center;}}
 
 .hero{padding:40px 32px 24px;max-width:1200px;margin:0 auto}
-.eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#6366F1;margin-bottom:10px}
+.eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#0052CC;margin-bottom:10px}
 h1{font-size:30px;font-weight:bold;margin-bottom:8px;line-height:1.2;color:#1A1A2E}
 .hero p{font-size:14px;color:#6B7280;max-width:560px;line-height:1.6}
 
@@ -57,18 +57,18 @@ h1{font-size:30px;font-weight:bold;margin-bottom:8px;line-height:1.2;color:#1A1A
 }
 
 .card{
-  background:#FFFFFF;border:1px solid rgba(99,102,241,0.15);
-  border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(99,102,241,0.08)
+  background:#FFFFFF;border:1px solid rgba(0,82,204,0.15);
+  border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,82,204,0.08)
 }
 
 .card-hd{
-  padding:16px 22px;border-bottom:1px solid rgba(99,102,241,0.12);
+  padding:16px 22px;border-bottom:1px solid rgba(0,82,204,0.12);
   display:flex;align-items:center;gap:10px;font-size:13px;
   font-weight:bold;color:#1A1A2E;background:#FAFAFF
 }
 
 .hd-icon{
-  width:30px;height:30px;background:rgba(99,102,241,0.1);
+  width:30px;height:30px;background:rgba(0,82,204,0.1);
   border-radius:7px;display:flex;align-items:center;justify-content:center
 }
 
@@ -81,29 +81,29 @@ label{
 }
 
 input,select{
-  width:100%;background:#F8F9FF;border:1px solid rgba(99,102,241,0.3);
+  width:100%;background:#F8F9FF;border:1px solid rgba(0,82,204,0.3);
   border-radius:8px;padding:10px 13px;font-size:14px;color:#1A1A2E;
   outline:none;font-family:'Inter',sans-serif;transition:border-color .2s
 }
 select{cursor:pointer}
-input:focus,select:focus{border-color:#6366F1;box-shadow:0 0 0 3px rgba(99,102,241,0.1)}
+input:focus,select:focus{border-color:#0052CC;box-shadow:0 0 0 3px rgba(0,82,204,0.1)}
 
 .hint{font-size:11px;color:#9CA3AF;margin-top:4px}
 .err{border-color:#EF4444 !important}
 .err-msg{font-size:11px;color:#EF4444;margin-top:4px;display:none}
 
-.divider{height:1px;background:rgba(99,102,241,0.12);margin:16px 0}
+.divider{height:1px;background:rgba(0,82,204,0.12);margin:16px 0}
 
 /* ── MODULE SECTION HEADERS ── */
 .mod-hd{
   font-size:10px;font-weight:bold;letter-spacing:2px;
-  text-transform:uppercase;color:#8B5CF6;
+  text-transform:uppercase;color:#002244;
   padding:10px 0 6px;border-top:1px dashed rgba(139,92,246,0.3);
   margin-top:14px;display:flex;align-items:center;gap:6px
 }
 .mod-hd:first-child{border-top:none;margin-top:0;padding-top:0}
 .mod-badge{
-  background:rgba(139,92,246,0.1);color:#8B5CF6;
+  background:rgba(139,92,246,0.1);color:#002244;
   font-size:9px;padding:2px 7px;border-radius:20px;font-weight:bold
 }
 
@@ -111,41 +111,41 @@ input:focus,select:focus{border-color:#6366F1;box-shadow:0 0 0 3px rgba(99,102,2
 
 .btn-calc{
   width:100%;padding:13px;
-  background:linear-gradient(135deg,#6366F1,#8B5CF6);
+  background:linear-gradient(135deg,#0052CC,#002244);
   border:none;border-radius:10px;font-size:14px;font-weight:bold;
   color:#fff;cursor:pointer;font-family:'Inter',sans-serif;
-  letter-spacing:0.3px;box-shadow:0 4px 14px rgba(99,102,241,0.35)
+  letter-spacing:0.3px;box-shadow:0 4px 14px rgba(0,82,204,0.35)
 }
 .btn-calc:hover{opacity:.92;transform:translateY(-1px)}
 
 .btn-reset{
   width:100%;padding:9px;background:transparent;
-  border:1px solid rgba(99,102,241,0.3);border-radius:10px;
+  border:1px solid rgba(0,82,204,0.3);border-radius:10px;
   font-size:12px;color:#9CA3AF;cursor:pointer;font-family:'Inter',sans-serif;
   margin-top:9px;display:none
 }
-.btn-reset:hover{color:#6366F1;border-color:#6366F1}
+.btn-reset:hover{color:#0052CC;border-color:#0052CC}
 
 /* ── KPI CARDS ── */
 .kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px 22px 0}
 .kpi{
-  background:linear-gradient(145deg,#F8F6FF,#EEF2FF);
-  border:1px solid rgba(99,102,241,0.12);
-  border-left:4px solid #6366F1;
+  background:linear-gradient(145deg,#F8F6FF,#E8F0FF);
+  border:1px solid rgba(0,82,204,0.12);
+  border-left:4px solid #0052CC;
   border-radius:12px;padding:14px 16px;
-  box-shadow:0 2px 8px rgba(99,102,241,0.06);
+  box-shadow:0 2px 8px rgba(0,82,204,0.06);
   transition:transform .15s,box-shadow .15s;
 }
 .kpi.kpi-teal{border-left-color:#0F766E;background:linear-gradient(145deg,#F0FDFA,#CCFBF1)}
 .kpi.kpi-amber{border-left-color:#D97706;background:linear-gradient(145deg,#FFFBEB,#FEF3C7)}
 .kpi.kpi-purple{border-left-color:#7C3AED;background:linear-gradient(145deg,#F5F3FF,#EDE9FE)}
-.kpi:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(99,102,241,0.12)}
+.kpi:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,82,204,0.12)}
 .kpi-lbl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#6B7280;margin-bottom:6px;font-weight:700}
-.kpi-val{font-size:22px;font-weight:700;color:#6366F1;letter-spacing:-0.5px}
+.kpi-val{font-size:22px;font-weight:700;color:#0052CC;letter-spacing:-0.5px}
 .kpi.kpi-teal .kpi-val{color:#0F766E}
 .kpi.kpi-amber .kpi-val{color:#D97706}
 .kpi.kpi-purple .kpi-val{color:#7C3AED}
-.kpi-val2{font-size:16px;font-weight:700;color:#8B5CF6}
+.kpi-val2{font-size:16px;font-weight:700;color:#002244}
 .kpi.kpi-amber .kpi-val2{color:#D97706}
 .kpi.kpi-purple .kpi-val2{color:#7C3AED}
 .kpi-note{font-size:10px;color:#9CA3AF;margin-top:3px}
@@ -160,15 +160,15 @@ input:focus,select:focus{border-color:#6366F1;box-shadow:0 0 0 3px rgba(99,102,2
 #validationBanner button{float:right;background:none;border:none;color:#991B1B;font-size:16px;cursor:pointer;padding:0 2px;line-height:1;}
 
 /* ── MOBILE TAB DROPDOWN ── */
-.tabs-mobile-select{display:none;padding:10px 22px;background:#FAFAFF;border-bottom:1px solid rgba(99,102,241,0.1);}
-.tabs-mobile-select select{width:100%;padding:9px 12px;border:1.5px solid rgba(99,102,241,0.3);border-radius:8px;font-size:13px;font-weight:600;color:#6366F1;background:#fff;outline:none;font-family:'Inter',sans-serif;cursor:pointer;}
+.tabs-mobile-select{display:none;padding:10px 22px;background:#FAFAFF;border-bottom:1px solid rgba(0,82,204,0.1);}
+.tabs-mobile-select select{width:100%;padding:9px 12px;border:1.5px solid rgba(0,82,204,0.3);border-radius:8px;font-size:13px;font-weight:600;color:#0052CC;background:#fff;outline:none;font-family:'Inter',sans-serif;cursor:pointer;}
 @media(max-width:768px){.tabs{display:none !important;}.tabs-mobile-select{display:block;}}
 
 /* ── ACTIVE TAB PILL ── */
-.tab.on{color:#fff !important;background:#6366F1;border-bottom-color:transparent !important;border-radius:6px 6px 0 0;font-weight:700;}
+.tab.on{color:#fff !important;background:#0052CC;border-bottom-color:transparent !important;border-radius:6px 6px 0 0;font-weight:700;}
 
 /* ── SITE FOOTER ── */
-.site-footer{background:#1E1B4B;color:rgba(255,255,255,0.7);padding:28px 32px;text-align:center;font-size:12px;line-height:1.8;margin-top:40px;}
+.site-footer{background:#002244;color:rgba(255,255,255,0.7);padding:28px 32px;text-align:center;font-size:12px;line-height:1.8;margin-top:40px;}
 .site-footer .footer-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:14px;}
 .site-footer .footer-badge{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:4px 13px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);display:inline-flex;align-items:center;gap:5px;}
 .site-footer .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-top:10px;}
@@ -206,7 +206,7 @@ input:focus,select:focus{border-color:#6366F1;box-shadow:0 0 0 3px rgba(99,102,2
 }
 
 .tabs{
-  display:flex;border-bottom:1px solid rgba(99,102,241,0.15);
+  display:flex;border-bottom:1px solid rgba(0,82,204,0.15);
   padding:0 22px;margin-top:14px;background:#FAFAFF;
   overflow-x:auto;white-space:nowrap
 }
@@ -217,7 +217,7 @@ input:focus,select:focus{border-color:#6366F1;box-shadow:0 0 0 3px rgba(99,102,2
   color:#9CA3AF;border-bottom:2px solid transparent;
   margin-bottom:-1px;transition:color .2s;flex-shrink:0
 }
-.tab.on{color:#6366F1;border-bottom-color:#6366F1}
+.tab.on{color:#0052CC;border-bottom-color:#0052CC}
 
 .pane{display:none}
 .pane.on{display:block}
@@ -227,28 +227,28 @@ input:focus,select:focus{border-color:#6366F1;box-shadow:0 0 0 3px rgba(99,102,2
 table{width:100%;border-collapse:collapse;font-size:12px;font-family:'Inter',sans-serif}
 th{
   padding:9px 13px;text-align:right;font-size:10px;letter-spacing:1px;
-  text-transform:uppercase;color:#6366F1;background:rgba(99,102,241,0.06);
-  border-bottom:1px solid rgba(99,102,241,0.15);white-space:nowrap;
+  text-transform:uppercase;color:#0052CC;background:rgba(0,82,204,0.06);
+  border-bottom:1px solid rgba(0,82,204,0.15);white-space:nowrap;
   position:sticky;top:0
 }
 th.L{text-align:left}
-td{padding:8px 13px;text-align:right;color:#374151;border-bottom:1px solid rgba(99,102,241,0.06);white-space:nowrap}
+td{padding:8px 13px;text-align:right;color:#374151;border-bottom:1px solid rgba(0,82,204,0.06);white-space:nowrap}
 td.L{text-align:left;color:#6B7280}
 td.B{font-weight:bold;color:#111827}
-tr:nth-child(even){background:rgba(99,102,241,0.025)}
-.tot-row{background:rgba(99,102,241,0.08)!important;font-weight:bold}
+tr:nth-child(even){background:rgba(0,82,204,0.025)}
+.tot-row{background:rgba(0,82,204,0.08)!important;font-weight:bold}
 
 .exp-row{
-  padding:13px 22px;border-top:1px solid rgba(99,102,241,0.12);
+  padding:13px 22px;border-top:1px solid rgba(0,82,204,0.12);
   display:flex;align-items:center;justify-content:flex-end;gap:12px;background:#FAFAFF
 }
 .exp-note{font-size:11px;color:#9CA3AF}
 
 .btn-exp{
   display:flex;align-items:center;gap:7px;padding:9px 18px;
-  background:linear-gradient(135deg,#6366F1,#8B5CF6);border:none;
+  background:linear-gradient(135deg,#0052CC,#002244);border:none;
   border-radius:8px;font-size:12px;font-weight:bold;color:#fff;
-  cursor:pointer;font-family:'Inter',sans-serif;box-shadow:0 3px 10px rgba(99,102,241,0.3)
+  cursor:pointer;font-family:'Inter',sans-serif;box-shadow:0 3px 10px rgba(0,82,204,0.3)
 }
 .btn-exp:hover{opacity:.9;transform:translateY(-1px)}
 
@@ -258,32 +258,32 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
 .empty p{font-size:13px;color:#9CA3AF;line-height:1.6}
 
 .je-hd{
-  font-size:12px;font-weight:bold;color:#6366F1;
-  padding:10px 22px;background:rgba(99,102,241,0.05);
-  border-bottom:1px solid rgba(99,102,241,0.1)
+  font-size:12px;font-weight:bold;color:#0052CC;
+  padding:10px 22px;background:rgba(0,82,204,0.05);
+  border-bottom:1px solid rgba(0,82,204,0.1)
 }
 .je-sub{font-weight:normal;color:#9CA3AF;margin-left:8px;font-size:11px}
 .je-wrap{max-height:450px;overflow-y:auto}
 
 .sum-pad{padding:16px 22px;max-height:450px;overflow-y:auto}
 .sum-sec{
-  font-size:11px;font-weight:bold;color:#6366F1;letter-spacing:1px;
+  font-size:11px;font-weight:bold;color:#0052CC;letter-spacing:1px;
   text-transform:uppercase;margin:14px 0 7px
 }
-.irow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(99,102,241,0.08);font-size:13px}
+.irow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(0,82,204,0.08);font-size:13px}
 .il{color:#6B7280}
 .iv{font-weight:bold;color:#111827}
 
 .bs-note{
   margin-top:13px;padding:13px;background:#F5F3FF;border-radius:8px;
-  border-left:3px solid #6366F1;font-size:12px;color:#4B5563;line-height:1.7
+  border-left:3px solid #0052CC;font-size:12px;color:#4B5563;line-height:1.7
 }
 
 .std-note{
-  margin-top:12px;padding:13px 15px;background:#EEF2FF;
-  border:1px solid rgba(99,102,241,0.2);border-radius:10px;font-size:11px;color:#6B7280;line-height:1.6
+  margin-top:12px;padding:13px 15px;background:#E8F0FF;
+  border:1px solid rgba(0,82,204,0.2);border-radius:10px;font-size:11px;color:#6B7280;line-height:1.6
 }
-.std-note strong{color:#6366F1}
+.std-note strong{color:#0052CC}
 
 /* Annual rollforward table */
 .annual-pad{padding:16px 22px;max-height:450px;overflow-y:auto}
@@ -291,11 +291,11 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
 /* ── PRINT / PDF WORKPAPER ── */
 .btn-pdf{
   display:flex;align-items:center;gap:7px;padding:9px 16px;
-  background:#fff;border:1.5px solid rgba(99,102,241,0.35);
-  border-radius:8px;font-size:12px;font-weight:700;color:#6366F1;
+  background:#fff;border:1.5px solid rgba(0,82,204,0.35);
+  border-radius:8px;font-size:12px;font-weight:700;color:#0052CC;
   cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s;
 }
-.btn-pdf:hover{background:#EEF2FF;border-color:#6366F1}
+.btn-pdf:hover{background:#E8F0FF;border-color:#0052CC}
 #printHeader{display:none}
 
 @media print{
@@ -322,15 +322,15 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
 
   .tbl-wrap,.je-wrap,.sum-pad,.annual-pad{ max-height:none !important; overflow:visible !important; }
   table{ font-size:10px !important; }
-  th{ font-size:8.5px !important; background:#EEF2FF !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  th{ font-size:8.5px !important; background:#E8F0FF !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
 
   #printHeader{
     display:block !important;
     padding:16px 0 12px;
-    border-bottom:2px solid #6366F1;
+    border-bottom:2px solid #0052CC;
     margin-bottom:20px;
   }
-  #printHeader .ph-logo{ font-size:18px; font-weight:800; color:#6366F1; }
+  #printHeader .ph-logo{ font-size:18px; font-weight:800; color:#0052CC; }
   #printHeader .ph-title{ font-size:13px; font-weight:700; color:#1A1A2E; margin-top:4px; }
   #printHeader .ph-meta{ font-size:10px; color:#6B7280; margin-top:3px; }
   #printHeader .ph-right{ float:right; text-align:right; }
@@ -351,16 +351,16 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
 .rent-radio-lbl{
   display:flex;align-items:center;gap:8px;
   padding:9px 12px;border-radius:8px;
-  border:1.5px solid rgba(99,102,241,0.2);
+  border:1.5px solid rgba(0,82,204,0.2);
   background:#F8F9FF;cursor:pointer;
   font-size:12px;font-weight:600;color:#374151;
   transition:border-color .15s,background .15s;
 }
 .rent-radio-lbl:has(input:checked){
-  border-color:#6366F1;background:#EEF2FF;color:#4F46E5;
+  border-color:#0052CC;background:#E8F0FF;color:#0052CC;
 }
 .rent-radio-lbl input[type=radio]{
-  accent-color:#6366F1;width:14px;height:14px;flex-shrink:0;
+  accent-color:#0052CC;width:14px;height:14px;flex-shrink:0;
   /* reset global input styles */
   padding:0;border:none;background:transparent;box-shadow:none;width:auto
 }
@@ -434,7 +434,6 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
       <li><a href="indas-tools.html" class="active">IND AS</a></li>
       <li><a href="gst-tools.html">GST</a></li>
       <li><a href="income-tax-hub.html">Income Tax</a></li>
-      <li><a href="salary-hr.html">Personal Finance</a></li>
       <li><a href="templates.html">Templates</a></li>
       <li><a href="blog.html">Blog</a></li>
       <li><a href="index.html#pricing">Pricing</a></li>
@@ -456,7 +455,7 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
     Escalation clauses (% or ₹), rent-free periods, extension options — full amortization, journal entries, balance sheet snapshot and audit-ready Excel export.
   </p>
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">
-    <span style="font-size:11px;font-weight:600;color:#4F46E5;background:#EEF2FF;padding:3px 10px;border-radius:20px;border:1px solid #C7D2FE;">IND AS 116 para 26</span>
+    <span style="font-size:11px;font-weight:600;color:#0052CC;background:#E8F0FF;padding:3px 10px;border-radius:20px;border:1px solid #BAD0F8;">IND AS 116 para 26</span>
     <span style="font-size:11px;font-weight:600;color:#059669;background:#DCFCE7;padding:3px 10px;border-radius:20px;border:1px solid #BBF7D0;">IFRS 16 aligned</span>
     <span style="font-size:11px;font-weight:600;color:#7C3AED;background:#F5F3FF;padding:3px 10px;border-radius:20px;border:1px solid #DDD6FE;">Model 3</span>
   </div>
@@ -664,7 +663,7 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
           </div>
           <div id="customRentRows"></div>
           <div style="display:flex;gap:8px;margin-top:8px">
-            <button type="button" onclick="addCustomRentRow()" style="flex:1;padding:8px;background:#EEF2FF;border:1px solid rgba(99,102,241,0.3);border-radius:8px;font-size:12px;font-weight:bold;color:#6366F1;cursor:pointer;font-family:'Inter',sans-serif">+ Add Row</button>
+            <button type="button" onclick="addCustomRentRow()" style="flex:1;padding:8px;background:#E8F0FF;border:1px solid rgba(0,82,204,0.3);border-radius:8px;font-size:12px;font-weight:bold;color:#0052CC;cursor:pointer;font-family:'Inter',sans-serif">+ Add Row</button>
             <button type="button" onclick="deleteLastCustomRentRow()" style="padding:8px 14px;background:#FFF1F2;border:1px solid rgba(239,68,68,0.3);border-radius:8px;font-size:12px;font-weight:bold;color:#DC2626;cursor:pointer;font-family:'Inter',sans-serif">− Delete</button>
           </div>
           <div class="hint" style="margin-top:6px">Minimum 2 rows required (commencement + at least one rent step)</div>
@@ -760,14 +759,18 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
             <input type="number" id="fExtPmt" placeholder="Leave blank to carry forward last rent" min="1" oninput="updateExtPreview()">
             <div class="hint">If blank, last period's contractual rent is applied to extension periods (most common in practice).</div>
           </div>
-          <div id="extPreview" style="display:none;margin:8px 0;padding:10px 12px;background:linear-gradient(135deg,#EEF2FF,#F5F3FF);border:1px solid rgba(99,102,241,0.25);border-radius:8px;font-size:12px;color:#4338CA;">
+          <div id="extPreview" style="display:none;margin:8px 0;padding:10px 12px;background:linear-gradient(135deg,#E8F0FF,#F5F3FF);border:1px solid rgba(0,82,204,0.25);border-radius:8px;font-size:12px;color:#4338CA;">
             <strong>📅 Extension included:</strong> <span id="extPreviewText"></span>
           </div>
         </div>
 
         <div id="shortTermWarning">
           <strong>⚠️ Short-Term Lease Exemption Available (IND AS 116 para 5(a)):</strong><br>
-          This lease term is 12 months or less. You may elect to expense lease payments directly to P&amp;L without recognising a ROU asset or lease liability. Continuing this calculation assumes you have NOT elected the short-term exemption. Disclose your election in the notes to financial statements.
+          This lease term is 12 months or less. You may elect to expense lease payments directly to P&amp;L without recognising a ROU asset or lease liability.<br><br>
+          <label style="display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-weight:600;">
+            <input type="checkbox" id="fElectShortTerm" style="width:15px;height:15px;accent-color:#D97706;">
+            I elect the short-term exemption — expense payments directly to P&amp;L (no ROU / liability)
+          </label>
         </div>
 
         <!-- ── MODULE 2: IDC & INCENTIVES ── -->
@@ -815,7 +818,7 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
       <strong>Version 1 — Escalation Rents:</strong> Contractual escalations (fixed % or ₹) known at commencement are included in initial PV per <strong>para 26(a)</strong>. Not a modification.<br>
       <strong>Version 2 — Rent-Free Period:</strong> Zero-payment periods are part of the lease term. Interest accrues during rent-free periods. Not a remeasurement.<br>
       <strong>Version 3 — Extension Option:</strong> If exercise is reasonably certain at commencement, extension periods are included in lease term per <strong>para 19</strong>. Not a modification.<br><br>
-      <i class="fa-solid fa-circle-info" style="color:#6366F1;margin-right:4px;"></i>Enter all payments <strong>excluding GST</strong>. Lease term should not include unexercised extension options unless reasonably certain.
+      <i class="fa-solid fa-circle-info" style="color:#0052CC;margin-right:4px;"></i>Enter all payments <strong>excluding GST</strong>. Lease term should not include unexercised extension options unless reasonably certain.
     </div>
   </div>
 
@@ -825,7 +828,7 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
     <div class="empty" id="emptyDiv">
       <div class="empty-icon">📊</div>
       <div class="empty-title">Enter lease details to calculate</div>
-      <p>Fill in the parameters and click <strong style="color:#6366F1">Calculate Lease Schedule</strong></p>
+      <p>Fill in the parameters and click <strong style="color:#0052CC">Calculate Lease Schedule</strong></p>
     </div>
 
     <div id="resDiv" style="display:none">
@@ -858,7 +861,7 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
       </div>
 
       <!-- Extension Option banner -->
-      <div id="extBanner" style="display:none;margin:6px 22px 0;padding:10px 14px;background:linear-gradient(135deg,#EEF2FF,#F5F3FF);border:1px solid rgba(99,102,241,0.25);border-radius:8px;font-size:12px;color:#4338CA"></div>
+      <div id="extBanner" style="display:none;margin:6px 22px 0;padding:10px 14px;background:linear-gradient(135deg,#E8F0FF,#F5F3FF);border:1px solid rgba(0,82,204,0.25);border-radius:8px;font-size:12px;color:#4338CA"></div>
 
       <!-- CPI Sensitivity Analysis (shown when CPI rent type selected) -->
       <div id="cpiSensDiv" style="display:none"></div>
@@ -939,7 +942,7 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
       <!-- Comparative Period -->
       <div class="pane" id="p-comparative">
         <div style="padding:16px 22px">
-          <div style="background:#EEF2FF;border:1px solid #C7D2FE;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:12px;color:#4338CA">
+          <div style="background:#E8F0FF;border:1px solid #BAD0F8;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:12px;color:#4338CA">
             Enter both reporting dates to compare balance sheet positions across two periods.
           </div>
           <div class="two-col" style="margin-bottom:14px">
@@ -991,14 +994,18 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
         <button class="btn-exp" id="btnExp">⬇ Export to Excel &nbsp;<span style="font-size:10px;opacity:.8;">₹199</span></button>
         <button id="btnSavePortfolio" onclick="saveToPortfolio()" style="display:none;align-items:center;gap:6px;padding:10px 16px;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;border:1.5px solid #059669;background:#ECFDF5;color:#065F46;font-family:Inter,sans-serif;transition:all .15s;" title="Save this lease to your portfolio (Pro)">📂 Save to Portfolio</button>
       </div>
+      <div style="margin:0 22px 12px;padding:12px 16px;background:#E8F0FF;border:1px solid #BAD0F8;border-radius:8px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div style="font-size:12px;color:#002244;line-height:1.5;"><strong>Managing multiple leases?</strong> The Lease Workspace has all your leases in one place — portfolio view, modification calculator, and premium working paper exports.</div>
+        <a href="app.html" style="flex-shrink:0;padding:8px 16px;background:#002244;color:#fff;border-radius:7px;font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap;">Try Lease Workspace &rarr;</a>
+      </div>
 
       <!-- FREE LEAD CAPTURE — added 2026-06-25, fixed to use Web3Forms (no longer relies on mailto) 2026-06-25 -->
       <div id="leadCaptureBanner" style="margin:0 22px 18px;border:1.5px dashed #A5A0F5;border-radius:12px;padding:16px 18px;background:#F5F3FF;">
         <div style="font-size:13px;font-weight:bold;color:#1E293B;margin-bottom:4px;">📧 Not ready to pay? Get this schedule emailed to you — free</div>
         <div style="font-size:12px;color:#64748B;margin-bottom:12px;">A one-page summary, no charge, no signup.</div>
         <div id="leadCaptureForm" style="display:flex;gap:8px;flex-wrap:wrap;">
-          <input type="email" id="leadEmail" placeholder="yourname@example.com" style="flex:1;min-width:180px;padding:10px 13px;border:1.5px solid #C7D2FE;border-radius:8px;font-size:13px;font-family:'Inter',sans-serif;color:#1E293B;outline:none;">
-          <button id="leadSubmitBtn" onclick="submitLeadCapture()" style="padding:10px 18px;background:linear-gradient(135deg,#6366F1,#8B5CF6);border:none;border-radius:8px;font-size:13px;font-weight:bold;color:#fff;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;">Email me →</button>
+          <input type="email" id="leadEmail" placeholder="yourname@example.com" style="flex:1;min-width:180px;padding:10px 13px;border:1.5px solid #BAD0F8;border-radius:8px;font-size:13px;font-family:'Inter',sans-serif;color:#1E293B;outline:none;">
+          <button id="leadSubmitBtn" onclick="submitLeadCapture()" style="padding:10px 18px;background:linear-gradient(135deg,#0052CC,#002244);border:none;border-radius:8px;font-size:13px;font-weight:bold;color:#fff;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;">Email me →</button>
         </div>
         <div id="leadEmailError" style="display:none;font-size:11px;color:#DC2626;margin-top:6px;">Please enter a valid email address.</div>
         <div id="leadCaptureFailMsg" style="display:none;font-size:11px;color:#DC2626;margin-top:6px;">Something went wrong sending this. Please email us directly at fino.sutra07@gmail.com and we'll send it manually.</div>
@@ -1006,10 +1013,10 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
       </div>
 
       <!-- PRO UPSELL — added 2026-06-25 -->
-      <div style="margin:0 22px 18px;border-radius:12px;padding:18px 20px;background:linear-gradient(135deg,#6366F1,#8B5CF6);">
+      <div style="margin:0 22px 18px;border-radius:12px;padding:18px 20px;background:linear-gradient(135deg,#0052CC,#002244);">
         <div style="font-size:14px;font-weight:bold;color:#fff;margin-bottom:6px;">Managing more than one lease?</div>
         <div style="font-size:12px;color:rgba(255,255,255,0.9);line-height:1.6;margin-bottom:14px;max-width:460px;">Pro gives you unlimited calculations, saved schedules and Excel exports for ₹499/month — less than the cost of 5 one-off downloads.</div>
-        <a href="index.html#pricing" style="display:inline-flex;align-items:center;gap:6px;padding:10px 18px;background:#fff;border-radius:8px;font-size:13px;font-weight:bold;color:#6366F1;font-family:'Inter',sans-serif;text-decoration:none;">See Pro plans →</a>
+        <a href="index.html#pricing" style="display:inline-flex;align-items:center;gap:6px;padding:10px 18px;background:#fff;border-radius:8px;font-size:13px;font-weight:bold;color:#0052CC;font-family:'Inter',sans-serif;text-decoration:none;">See Pro plans →</a>
       </div>
 
       <script>
@@ -1098,7 +1105,7 @@ tr:nth-child(even){background:rgba(99,102,241,0.025)}
 
   <details style="border:1px solid #E2E8F0;border-radius:10px;margin-bottom:10px;background:#fff;">
     <summary style="padding:16px 20px;font-weight:600;font-size:14px;color:#1E293B;cursor:pointer;font-family:Inter,sans-serif;list-style:none;">How do I cancel my Finosutra Pro subscription?</summary>
-    <div style="padding:0 20px 16px;font-size:14px;color:#475569;line-height:1.7;font-family:Inter,sans-serif;">To cancel your Pro subscription, simply email us at <a href="mailto:fino.sutra07@gmail.com" style="color:#6366F1;font-weight:600;">fino.sutra07@gmail.com</a> with your registered email address and the subject line "Cancel Subscription". We process all cancellation requests within 24 hours. You will continue to have full Pro access until the end of your current billing period — no charges are made after cancellation.</div>
+    <div style="padding:0 20px 16px;font-size:14px;color:#475569;line-height:1.7;font-family:Inter,sans-serif;">To cancel your Pro subscription, simply email us at <a href="mailto:fino.sutra07@gmail.com" style="color:#0052CC;font-weight:600;">fino.sutra07@gmail.com</a> with your registered email address and the subject line "Cancel Subscription". We process all cancellation requests within 24 hours. You will continue to have full Pro access until the end of your current billing period — no charges are made after cancellation.</div>
   </details>
 </div>
 
@@ -1160,8 +1167,8 @@ function periodLabel(startDate, periodIndex, freq){
   // Returns period end date in DD/MM/YYYY
   const monthsPerPeriod = 12 / freq;
   const d = new Date(startDate);
-  d.setMonth(d.getMonth() + (periodIndex + 1) * monthsPerPeriod);
-  d.setDate(d.getDate() - 1);
+  const endMonth = d.getMonth() + (periodIndex + 1) * monthsPerPeriod;
+  d.setMonth(endMonth + 1, 0); // last day of period-end month
   const dd = String(d.getDate()).padStart(2,'0');
   const mm = String(d.getMonth()+1).padStart(2,'0');
   const yyyy = d.getFullYear();
@@ -1172,8 +1179,8 @@ function periodLabel(startDate, periodIndex, freq){
 function periodEndDate(startDate, periodIndex, freq){
   const monthsPerPeriod = 12/freq;
   const d = new Date(startDate);
-  d.setMonth(d.getMonth() + (periodIndex+1)*monthsPerPeriod);
-  d.setDate(d.getDate()-1);
+  const endMonth = d.getMonth() + (periodIndex+1)*monthsPerPeriod;
+  d.setMonth(endMonth + 1, 0); // last day of period-end month
   return d;
 }
 
@@ -1780,9 +1787,16 @@ document.getElementById('btnCalc').onclick = function(){
 
   const n = totalN;
 
-  // Short-term lease warning (para 5a) — after we know the full term
+  // Short-term lease warning + election (para 5a) — after we know the full term
   const stWarn = document.getElementById('shortTermWarning');
   if(stWarn){ stWarn.style.display = totalTermMonths <= 12 ? 'block' : 'none'; }
+  const stElected = totalTermMonths <= 12 && document.getElementById('fElectShortTerm') && document.getElementById('fElectShortTerm').checked;
+  if(stElected){
+    // Para 5(a) election: show simple expense summary, skip full schedule
+    const totalPmts = pmt * totalN;
+    alert('Short-term exemption elected.\nTotal lease expense over term: ₹' + totalPmts.toLocaleString('en-IN') + '\nExpense each period: ₹' + pmt.toLocaleString('en-IN') + '\nNo ROU asset or lease liability recognised per IND AS 116 para 5(a).');
+    return;
+  }
 
   // Read CPI inputs
   const cpiRate  = parseFloat(document.getElementById('fCpiRate').value)||0;
@@ -2080,7 +2094,7 @@ function render(){
 
 // ── Save to Portfolio (Pro) ───────────────────────────────────────────────────
 async function saveToPortfolio(){
-  if(!window.isProUser){ showToast('Portfolio requires Pro.','#6366F1'); return; }
+  if(!window.isProUser){ showToast('Portfolio requires Pro.','#0052CC'); return; }
   if(!window.currentUser){ fsShowAuthModal('login'); return; }
   if(!R){ showToast('Please calculate first.','#9CA3AF'); return; }
 
@@ -2360,7 +2374,7 @@ function renderSummary(){
     + ir('Total Depreciation (ROU)',f(R.totDep))
     + ir('Total P&L Charge',f(R.totInt+R.totDep))
     + `<div class="bs-note">
-        <strong style="color:#8B5CF6">Balance Sheet Impact</strong><br><br>
+        <strong style="color:#002244">Balance Sheet Impact</strong><br><br>
         • ROU Asset recognized at ${f(R.rouInitial)}<br>
         • Current lease liability: ${f(R.currentLiab)}<br>
         • Non-current lease liability: ${f(R.nonCurrentLiab)}<br><br>
@@ -2437,9 +2451,9 @@ function renderDisclosure(){
 
   document.getElementById('discDiv').innerHTML=`
     <div style="padding:0">
-      <div style="background:#EEF2FF;border:1px solid #C7D2FE;border-radius:10px;padding:11px 16px;margin-bottom:18px;font-size:12px;color:#4338CA;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px">
+      <div style="background:#E8F0FF;border:1px solid #BAD0F8;border-radius:10px;padding:11px 16px;margin-bottom:18px;font-size:12px;color:#4338CA;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px">
         <strong>IND AS 116 — Note on Leases (Escalation Lease)</strong>
-        <span style="font-size:10px;color:#6366F1;background:#fff;border:1px solid #C7D2FE;padding:2px 10px;border-radius:12px;">As at ${refLabel} &nbsp;|&nbsp; Para 52–60</span>
+        <span style="font-size:10px;color:#0052CC;background:#fff;border:1px solid #BAD0F8;padding:2px 10px;border-radius:12px;">As at ${refLabel} &nbsp;|&nbsp; Para 52–60</span>
       </div>
 
       <div class="disc-sec">A. Maturity Analysis of Lease Payments (Undiscounted)</div>
@@ -2450,7 +2464,7 @@ function renderDisclosure(){
           ${matRows}
           <tr class="tot-row"><td class="L B">Total Undiscounted Lease Payments</td><td class="B">${fn(totalUndiscount)}</td></tr>
           <tr><td class="L" style="color:#9CA3AF;font-style:italic">Less: Finance Charges (unearned interest)</td><td style="color:#DC2626">(${fn(financeCharges)})</td></tr>
-          <tr class="tot-row"><td class="L B">Present Value of Lease Liability</td><td class="B" style="color:#6366F1">${fn(liabilityAtRef)}</td></tr>
+          <tr class="tot-row"><td class="L B">Present Value of Lease Liability</td><td class="B" style="color:#0052CC">${fn(liabilityAtRef)}</td></tr>
         </tbody>
       </table>
 
@@ -2585,7 +2599,7 @@ const fy = fyLabel(pEnd);
       </table>
     </div>
     <div class="bs-note" style="margin-top:14px">
-      <strong style="color:#8B5CF6">P&L Impact by Year</strong><br><br>
+      <strong style="color:#002244">P&L Impact by Year</strong><br><br>
       ${fyRows.map(row=>`• ${row.fy}: Interest ${f(row.interest)} + Depreciation ${f(row.depreciation)} = <strong>${f(row.interest+row.depreciation)}</strong>`).join('<br>')}
     </div>`;
 }
@@ -2651,9 +2665,9 @@ function renderIBRSensitivity(){
     const totInt = INP.pmtArray.reduce((s,x)=>s+x,0) - pv;
     const annDep = rou / (termMo / 12);
     const isBase = delta === 0;
-    return `<tr${isBase?' style="background:rgba(99,102,241,0.07);font-weight:700"':''}>
+    return `<tr${isBase?' style="background:rgba(0,82,204,0.07);font-weight:700"':''}>
       <td class="L">${isBase?'★ ':''}${ibrPct.toFixed(2)}%${isBase?' (base)':''}</td>
-      <td class="B" style="color:#6366F1">${f(pv)}</td>
+      <td class="B" style="color:#0052CC">${f(pv)}</td>
       <td>${f(rou)}</td>
       <td style="color:#B45309">${f(Math.max(0,totInt))}</td>
       <td style="color:#0F766E">${f(annDep)}</td>
@@ -2728,14 +2742,14 @@ function renderComparative(){
     <div style="overflow-x:auto"><table>
       <thead><tr><th class="L">Balance Sheet Item</th><th>${lbl1}</th><th>${lbl2} · Change</th></tr></thead>
       <tbody>
-        <tr><td colspan="3" class="L" style="font-weight:700;color:#6366F1;padding:8px 14px;background:rgba(99,102,241,0.05)">NON-CURRENT ASSETS</td></tr>
+        <tr><td colspan="3" class="L" style="font-weight:700;color:#0052CC;padding:8px 14px;background:rgba(0,82,204,0.05)">NON-CURRENT ASSETS</td></tr>
         ${row('Right-of-Use Asset (NBV)', s1?s1.rouNBV:null, s2?s2.rouNBV:null)}
-        <tr><td colspan="3" class="L" style="font-weight:700;color:#6366F1;padding:8px 14px;background:rgba(99,102,241,0.05)">CURRENT LIABILITIES</td></tr>
+        <tr><td colspan="3" class="L" style="font-weight:700;color:#0052CC;padding:8px 14px;background:rgba(0,82,204,0.05)">CURRENT LIABILITIES</td></tr>
         ${row('Lease Liability — Current Portion', s1?s1.curLiab:null, s2?s2.curLiab:null)}
-        <tr><td colspan="3" class="L" style="font-weight:700;color:#6366F1;padding:8px 14px;background:rgba(99,102,241,0.05)">NON-CURRENT LIABILITIES</td></tr>
+        <tr><td colspan="3" class="L" style="font-weight:700;color:#0052CC;padding:8px 14px;background:rgba(0,82,204,0.05)">NON-CURRENT LIABILITIES</td></tr>
         ${row('Lease Liability — Non-Current Portion', s1?s1.ncLiab:null, s2?s2.ncLiab:null)}
         <tr class="tot-row"><td class="L B">Total Lease Liability</td><td class="B">${s1?f(s1.totLiab):'—'}</td><td class="B">${s2?f(s2.totLiab):'—'}</td></tr>
-        <tr><td colspan="3" class="L" style="font-weight:700;color:#6366F1;padding:8px 14px;background:rgba(99,102,241,0.05)">ACCUMULATED DEPRECIATION</td></tr>
+        <tr><td colspan="3" class="L" style="font-weight:700;color:#0052CC;padding:8px 14px;background:rgba(0,82,204,0.05)">ACCUMULATED DEPRECIATION</td></tr>
         ${row('Accum. Dep. on ROU Asset', s1?s1.cumDep:null, s2?s2.cumDep:null)}
       </tbody>
     </table></div>
@@ -2801,7 +2815,7 @@ function renderTermination(){
         ${penalty>0?`<div style="font-size:10px;color:#9CA3AF;margin-top:2px">After termination penalty of ${f(penalty)}</div>`:''}
       </div>
     </div>
-    <div style="font-size:11px;font-weight:700;color:#6366F1;padding:6px 0 5px;letter-spacing:1px;text-transform:uppercase">
+    <div style="font-size:11px;font-weight:700;color:#0052CC;padding:6px 0 5px;letter-spacing:1px;text-transform:uppercase">
       Derecognition Journal Entry — ${termLabel} &nbsp;<span style="font-size:10px;font-weight:normal;color:#9CA3AF">Para 46(b)</span>
     </div>
     <table>
@@ -2892,9 +2906,9 @@ function renderCPISensitivity(){
     const diffStr = (diff >= 0 ? '+' : '−') + f(Math.abs(diff));
     const diffColor = diff > 0 ? '#DC2626' : diff < 0 ? '#16A34A' : '#6B7280';
     const isBase = delta === 0;
-    return `<tr${isBase ? ' style="background:rgba(99,102,241,0.07);font-weight:700"' : ''}>
+    return `<tr${isBase ? ' style="background:rgba(0,82,204,0.07);font-weight:700"' : ''}>
       <td class="L">${isBase ? '★ ' : ''}${altCpi.toFixed(1)}% p.a.${isBase ? ' (base)' : ''}</td>
-      <td class="B" style="color:#6366F1">${f(altPV)}</td>
+      <td class="B" style="color:#0052CC">${f(altPV)}</td>
       <td style="color:${diffColor}">${delta === 0 ? '—' : diffStr}</td>
       <td>${f(altPV * INP.ibr / 100)}</td>
     </tr>`;
@@ -3045,7 +3059,7 @@ function calcModification_REMOVED(){
   }
 
   document.getElementById('modJE').innerHTML = `
-    <div style="font-size:11px;font-weight:700;color:#6366F1;padding:8px 0 6px;letter-spacing:1px;text-transform:uppercase">
+    <div style="font-size:11px;font-weight:700;color:#0052CC;padding:8px 0 6px;letter-spacing:1px;text-transform:uppercase">
       Modification Journal Entry — ${modLabel} &nbsp;<span style="font-size:10px;font-weight:normal;color:#9CA3AF">Para 45 / 46</span>
     </div>
     <table>
@@ -3202,7 +3216,7 @@ function initiatePayment(){
   // Dynamically load Razorpay if not yet available (ad-blocker/firewall may
   // have blocked the checkout.js <script> tag from loading on page load)
   if(typeof Razorpay === 'undefined'){
-    showToast('Loading payment…','#6366F1');
+    showToast('Loading payment…','#0052CC');
     var s = document.createElement('script');
     s.src = 'https://checkout.razorpay.com/v1/checkout.js';
     s.onload = function(){ initiatePayment(); };
@@ -3221,12 +3235,12 @@ function initiatePayment(){
     name:'Finosutra',
     description:'Ind AS 116 Lease Report — Excel Export',
     image:'',
-    theme:{color:'#6366F1'},
+    theme:{color:'#0052CC'},
     modal:{
       ondismiss:function(){
         // Clean up pending flag if payment was dismissed without completing
         try{ localStorage.removeItem('fs_paid'); } catch(e){}
-        showToast('Payment cancelled. No charges made.','#8B5CF6');
+        showToast('Payment cancelled. No charges made.','#002244');
       }
     },
     handler:function(response){
@@ -3294,9 +3308,9 @@ function exportXL(){
   const wb = XLSX.utils.book_new();
 
   // ── Colour palette ───────────────────────────────────────────────────────
-  const C_BRAND='4F46E5',C_NAVY='1E1B4B',C_ACCENT='D97706',C_LIGHT='EEF2FF';
-  const C_STRIPE='F8F9FF',C_GREEN='065F46',C_RED='991B1B',C_WHITE='FFFFFF';
-  const C_BORDER='C7D2FE',C_MUTED='6B7280',C_ORANGE='92400E',C_ORANGEBG='FFF7ED';
+  const C_BRAND='0052CC',C_NAVY='002244',C_ACCENT='D97706',C_LIGHT='E8F0FF';
+  const C_STRIPE='F0F5FF',C_GREEN='065F46',C_RED='991B1B',C_WHITE='FFFFFF';
+  const C_BORDER='BAD0F8',C_MUTED='6B7280',C_ORANGE='92400E',C_ORANGEBG='FFF7ED';
 
   const border={top:{style:'thin',color:{rgb:C_BORDER}},bottom:{style:'thin',color:{rgb:C_BORDER}},left:{style:'thin',color:{rgb:C_BORDER}},right:{style:'thin',color:{rgb:C_BORDER}}};
   const borderMed={top:{style:'medium',color:{rgb:C_BRAND}},bottom:{style:'medium',color:{rgb:C_BRAND}},left:{style:'medium',color:{rgb:C_BRAND}},right:{style:'medium',color:{rgb:C_BRAND}}};
@@ -3815,16 +3829,16 @@ function exportXL(){
     document.getElementById('pfFields').style.display = '';
     if(n) document.getElementById('fLeaseName').value = n;
     if(e) document.getElementById('fEntity').value = e;
-    if(s) showToast('Fill inputs → Calculate → then click Save to Portfolio.', '#6366F1');
+    if(s) showToast('Fill inputs → Calculate → then click Save to Portfolio.', '#0052CC');
   }
 })();
 </script>
 
 <style>
-.fs-share-bar{display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 24px;flex-wrap:wrap;border-top:1.5px solid rgba(99,102,241,0.13);background:#F5F6FF}
+.fs-share-bar{display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 24px;flex-wrap:wrap;border-top:1.5px solid rgba(0,82,204,0.13);background:#F5F6FF}
 .fs-share-lbl{font-size:13px;font-weight:600;color:#6B7280;margin-right:4px;flex-shrink:0}
 .fs-share-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;transition:all .15s;border:1.5px solid #E5E7EB;background:#fff;color:#374151;line-height:1}
-.fs-share-btn:hover{border-color:#6366F1;color:#4F46E5;background:#EEF2FF}
+.fs-share-btn:hover{border-color:#0052CC;color:#0052CC;background:#E8F0FF}
 .fs-wa-btn{border-color:#25D366;color:#128C7E;background:#F0FDF4}
 .fs-wa-btn:hover{background:#25D366;color:#fff;border-color:#25D366}
 .fs-li-btn{border-color:#0A66C2;color:#0A66C2;background:#EFF6FF}
@@ -3862,7 +3876,7 @@ function fsCopyLink(btn){
     <a href="mailto:fino.sutra07@gmail.com">Contact</a>
     <a href="/blog.html">Blog</a>
   </div>
-  <div class="footer-tagline">© 2025 Finosutra · GSTIN: 27ACWPW1076G1ZX · Mumbai, Maharashtra, India</div>
+  <div class="footer-tagline">© 2026 Finosutra · GSTIN: 27ACWPW1076G1ZX · Mumbai, Maharashtra, India</div>
 </footer>
 
 
