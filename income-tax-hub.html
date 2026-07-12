@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -33,7 +33,7 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
 .nav-btn:hover{border-color:var(--brand);color:var(--brand);}
 .nav-toggle{display:none;background:none;border:none;font-size:20px;color:var(--text);cursor:pointer;padding:4px;}
 @media(max-width:900px){.nav-links{display:none;}}
-@media(max-width:768px){nav{padding:0 16px;}.nav-actions{display:none;}.nav-toggle{display:block;}.nav-links.open,.nav-actions.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid var(--border-light);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
+@media(max-width:900px){nav{padding:0 16px;}.nav-actions{display:none;}.nav-toggle{display:block;}.nav-links.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid var(--border-light);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
 .page-hero{padding:48px 32px 40px;border-bottom:1px solid var(--border-light);}
 .page-hero-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;gap:20px;}
 .page-hero-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
@@ -161,7 +161,7 @@ footer{background:#111827;padding:32px;color:#9CA3AF;}
   </div>
 </div>
 <script>
-(function(){var t=document.getElementById('navToggle');if(!t)return;t.onclick=function(){var l=document.getElementById('navLinks'),a=document.getElementById('navActions');if(l)l.classList.toggle('open');if(a)a.classList.toggle('open');var i=this.querySelector('i');if(i)i.className=l&&l.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-bars';};})();
+(function(){var t=document.getElementById('navToggle');if(!t)return;t.onclick=function(){var l=document.getElementById('navLinks');if(l)l.classList.toggle('open');var i=this.querySelector('i');if(i)i.className=l&&l.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-bars';};})();
 function gaEvent(n,p){if(typeof gtag==='function')gtag('event',n,p||{});}
 function notifyMe(product){document.getElementById('notifyProduct').value=product;document.getElementById('notifyProductName').textContent="We'll email you as soon as "+product+" is ready.";document.getElementById('notifyModal').style.display='flex';gaEvent('waitlist_open',{product_name:product});}
 function closeNotify(){document.getElementById('notifyModal').style.display='none';document.getElementById('notifySuccess').style.display='none';}
