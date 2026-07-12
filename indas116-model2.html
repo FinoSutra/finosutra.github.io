@@ -161,8 +161,8 @@ tr:hover td{background:#F8F9FF}
 #mainNav .nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
 #mainNav .nav-links a{font-size:13px;font-weight:500;color:#6B7280;text-decoration:none;padding:7px 11px;border-radius:8px;transition:color .15s,background .15s;white-space:nowrap;}
 #mainNav .nav-links a:hover{color:#111827;background:#E8F0FF;}
-#mainNav .nav-back-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;font-family:'Inter',sans-serif;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;box-shadow:0 3px 12px rgba(99,102,241,0.3);transition:all .15s;white-space:nowrap;}
-#mainNav .nav-back-btn:hover{background:linear-gradient(135deg,#4F46E5,#7C3AED);transform:translateY(-1px);}
+#mainNav .nav-back-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;font-family:'Inter',sans-serif;background:linear-gradient(135deg,#0052CC,#002244);color:#fff;box-shadow:0 3px 12px rgba(0,82,204,0.3);transition:all .15s;white-space:nowrap;}
+#mainNav .nav-back-btn:hover{background:linear-gradient(135deg,#0041A3,#001A3D);transform:translateY(-1px);}
 #mainNav .nav-toggle{display:none;background:none;border:none;font-size:20px;color:#111827;cursor:pointer;padding:4px;}
 @media(max-width:900px){#mainNav .nav-links{display:none;}}
 @media(max-width:900px){#mainNav{padding:0 16px;}#mainNav .nav-actions{display:none;}#mainNav .nav-toggle{display:block;}#mainNav .nav-links.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid rgba(99,102,241,0.08);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
@@ -362,7 +362,7 @@ tr:hover td{background:#F8F9FF}
 
     <!-- Export -->
     <div style="padding:0 20px 20px">
-      <button class="btn-export" onclick="exportXL()">⬇ Export to Excel &nbsp;<span style="font-size:10px;opacity:.8;">Pro</span></button>
+      <button class="btn-export" id="btnExp">⬇ Export to Excel &nbsp;<span style="font-size:10px;opacity:.8;">₹199</span></button>
     </div>
   </div>
 
@@ -946,7 +946,6 @@ function renderResults(res){
 /* ── Excel Export ────────────────────────────────────────────────────────── */
 function exportXL(){
   if(!_lastResult){ alert('Please calculate first.'); return; }
-  if(!window.isProUser){ if(typeof fsShowAuthModal==='function') fsShowAuthModal('login'); alert('Excel export requires Pro.'); return; }
 
   const { origPV, origROU, origDep, n0, freq, timing, startDate, origSched, modResults, idc, inc, pmt, ibr, term } = _lastResult;
   const wb  = XLSX.utils.book_new();
@@ -1122,6 +1121,22 @@ function resetAll(){
   // Add back a fresh modification block 1
   addModBlock();
 }
+
+/* ── Export button wiring ─────────────────────────────────────────────────── */
+document.getElementById('btnExp').onclick = function(){
+  if(!_lastResult){ alert('Please calculate first.'); return; }
+  if(window.isProUser){
+    if(typeof showToast==='function') showToast('✓ Downloading your Pro report…','#5EC98A');
+    setTimeout(function(){ try{ exportXL(); }catch(e){ console.error(e); } }, 300);
+    return;
+  }
+  if(!window.currentUser){
+    if(typeof toast==='function') toast('Sign in to export.','#6366F1');
+    if(typeof fsShowAuthModal==='function') fsShowAuthModal('login');
+    return;
+  }
+  if(typeof fsInitiateProSubscription==='function') fsInitiateProSubscription('model2_export');
+};
 
 /* ── Init ────────────────────────────────────────────────────────────────── */
 addModBlock();
