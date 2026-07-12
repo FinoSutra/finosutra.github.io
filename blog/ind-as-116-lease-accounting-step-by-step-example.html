@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Lease Accounting as per IND AS 116 — Step by Step with Example | Finosutra</title>
+<meta name="description" content="Step-by-step lease accounting under IND AS 116 with a full worked example. Calculate ROU asset, lease liability, amortization schedule and journal entries — explained simply for CAs."/>
+<meta name="keywords" content="lease accounting as per ind as 116 with example, ind as 116 step by step, lease liability calculation example, ROU asset journal entry example, ind as 116 worked example, lease accounting india"/>
+<meta name="author" content="Finosutra"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://www.finosutra.com/blog/ind-as-116-lease-accounting-step-by-step-example.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Finosutra"/>
+<meta property="og:title" content="Lease Accounting as per IND AS 116 — Step by Step with Example"/>
+<meta property="og:description" content="Full worked example of IND AS 116 lease accounting — ROU asset, lease liability, amortization schedule and all journal entries explained step by step."/>
+<meta property="og:url" content="https://www.finosutra.com/blog/ind-as-116-lease-accounting-step-by-step-example.html"/>
+<meta property="og:image" content="https://www.finosutra.com/og-image.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Lease Accounting as per IND AS 116 — Step by Step with Example"/>
+<meta name="twitter:description" content="Full worked example of IND AS 116 lease accounting with ROU asset, lease liability and journal entries."/>
+<meta name="twitter:image" content="https://www.finosutra.com/og-image.jpg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Lease Accounting as per IND AS 116 — Step by Step with Example",
+  "description": "Step-by-step lease accounting under IND AS 116 with full worked example, amortization schedule and journal entries.",
+  "author": {"@type": "Organization", "name": "Finosutra"},
+  "publisher": {"@type": "Organization", "name": "Finosutra", "url": "https://www.finosutra.com"},
+  "datePublished": "2026-07-12",
+  "dateModified": "2026-07-12",
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.finosutra.com/blog/ind-as-116-lease-accounting-step-by-step-example.html"}
+}
+</script>
+<style>
+:root{
+  --brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;--brand-mid:#C7D2FE;
+  --bg:#F9FAFB;--card:#FFFFFF;--border:rgba(99,102,241,0.18);--border-light:rgba(99,102,241,0.08);
+  --text:#111827;--muted:#6B7280;--muted2:#9CA3AF;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-light);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 var(--border-light),0 4px 20px rgba(99,102,241,0.05)}
+.nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.nav-logo img{height:40px;width:auto;}
+.nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
+.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;padding:7px 12px;border-radius:8px;transition:color .15s,background .15s;}
+.nav-links a:hover{color:var(--text);background:var(--brand-light);}
+.nav-toggle{display:none;background:none;border:none;font-size:20px;color:var(--text);cursor:pointer;padding:8px;}
+@media(max-width:900px){.nav-links{display:none;}}
+@media(max-width:768px){nav{padding:0 16px;}.nav-toggle{display:block;}.nav-links.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid var(--border-light);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
+.article-wrap{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted2);margin-bottom:24px;flex-wrap:wrap;}
+.breadcrumb a{color:var(--muted2);text-decoration:none;transition:color .15s;}
+.breadcrumb a:hover{color:var(--brand);}
+.article-tag{display:inline-block;background:var(--brand-light);color:var(--brand);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.4px;margin-bottom:16px;}
+.article-title{font-size:clamp(24px,4vw,36px);font-weight:800;line-height:1.2;letter-spacing:-0.5px;color:var(--text);margin-bottom:16px;}
+.article-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--muted);margin-bottom:32px;flex-wrap:wrap;}
+.article-meta span{display:flex;align-items:center;gap:5px;}
+.article-divider{height:1px;background:var(--border-light);margin-bottom:36px;}
+.toc{background:var(--brand-light);border:1px solid var(--brand-mid);border-radius:14px;padding:22px 26px;margin-bottom:40px;}
+.toc h3{font-size:13px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;}
+.toc ol{padding-left:18px;}
+.toc ol li{margin-bottom:6px;}
+.toc ol li a{font-size:14px;color:var(--brand-dark);text-decoration:none;font-weight:500;}
+.toc ol li a:hover{text-decoration:underline;}
+.article-body h2{font-size:22px;font-weight:800;color:var(--text);margin:40px 0 14px;letter-spacing:-0.3px;}
+.article-body h3{font-size:17px;font-weight:700;color:var(--text);margin:28px 0 10px;}
+.article-body p{margin-bottom:16px;color:#1F2937;}
+.article-body ul,.article-body ol{padding-left:22px;margin-bottom:16px;}
+.article-body ul li,.article-body ol li{margin-bottom:8px;color:#1F2937;}
+.article-body strong{font-weight:700;color:var(--text);}
+.callout{background:var(--brand-light);border-left:4px solid var(--brand);border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0;}
+.callout p{margin:0;font-size:14px;color:var(--brand-dark);}
+.callout strong{color:var(--brand-dark);}
+.callout-green{background:#ECFDF5;border-left-color:#10B981;}
+.callout-green p{color:#065F46;}
+.callout-amber{background:#FFFBEB;border-left-color:#F59E0B;}
+.callout-amber p{color:#92400E;}
+.table-wrap{overflow-x:auto;margin:24px 0;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+table th{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-weight:700;padding:10px 14px;text-align:left;}
+table td{padding:9px 14px;border-bottom:1px solid #F3F4F6;color:#1F2937;}
+table tr:nth-child(even) td{background:#F9FAFB;}
+table tr:last-child td{border-bottom:none;}
+.je-block{background:#F9FAFB;border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:20px 0;}
+.je-title{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px;}
+.je-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #F3F4F6;}
+.je-row:last-child{border-bottom:none;}
+.je-account{font-size:14px;font-weight:600;color:var(--text);}
+.je-account.cr{padding-left:24px;font-weight:500;color:var(--muted);}
+.je-amounts{display:flex;gap:32px;}
+.je-dr{font-size:14px;font-weight:700;color:#10B981;min-width:80px;text-align:right;}
+.je-cr{font-size:14px;font-weight:700;color:#6366F1;min-width:80px;text-align:right;}
+.step-box{background:#F8F9FF;border:1.5px solid var(--brand-mid);border-radius:14px;padding:22px 24px;margin:24px 0;}
+.step-label{font-size:11px;font-weight:800;color:var(--brand);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;}
+.step-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:10px;}
+.formula{background:#1E1B4B;color:#A5B4FC;font-family:monospace;font-size:13px;padding:14px 18px;border-radius:10px;margin:12px 0;overflow-x:auto;}
+.cta-box{background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:16px;padding:28px 30px;margin:40px 0;text-align:center;}
+.cta-box h3{font-size:18px;font-weight:800;color:#fff;margin-bottom:8px;}
+.cta-box p{font-size:14px;color:rgba(255,255,255,.85);margin-bottom:18px;}
+.cta-box a{display:inline-block;background:#fff;color:var(--brand);font-size:14px;font-weight:700;padding:12px 26px;border-radius:10px;text-decoration:none;transition:transform .15s;}
+.cta-box a:hover{transform:translateY(-1px);}
+.related{margin-top:56px;padding-top:32px;border-top:1px solid var(--border-light);}
+.related h3{font-size:16px;font-weight:700;margin-bottom:16px;}
+.related-links{display:flex;flex-direction:column;gap:10px;}
+.related-links a{font-size:14px;color:var(--brand);text-decoration:none;font-weight:500;}
+.related-links a:hover{text-decoration:underline;}
+footer{background:#111827;padding:36px 32px 24px;color:#9CA3AF;}
+.footer-bottom-simple{max-width:1160px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px;}
+@media(max-width:600px){.article-wrap{padding:32px 16px 60px;}.je-amounts{gap:16px;}.formula{font-size:12px;}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../auth.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo"><img src="../logo.png" alt="Finosutra"></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../indas-tools.html">IND AS</a></li>
+      <li><a href="../gst-tools.html">GST</a></li>
+      <li><a href="../income-tax-hub.html">Income Tax</a></li>
+      <li><a href="../templates.html">Templates</a></li>
+      <li><a href="../blog.html">Blog</a></li>
+      <li><a href="../index.html#pricing">Pricing</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <a href="../blog.html" style="font-size:13px;font-weight:600;color:var(--brand);text-decoration:none;">← All Articles</a>
+      <button class="nav-toggle" id="navToggle"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
+
+<div class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span>›</span>
+    <a href="../blog.html">Blog</a>
+    <span>›</span>
+    <span>IND AS 116 Step by Step Example</span>
+  </nav>
+
+  <div class="article-tag">IND AS 116 / IFRS 16</div>
+  <h1 class="article-title">Lease Accounting as per IND AS 116 — Step by Step with Example</h1>
+  <div class="article-meta">
+    <span><i class="fa-regular fa-calendar"></i> July 2026</span>
+    <span><i class="fa-regular fa-clock"></i> 12 min read</span>
+    <span><i class="fa-solid fa-user"></i> Finosutra Team</span>
+  </div>
+  <div class="article-divider"></div>
+
+  <div class="toc">
+    <h3>In This Article</h3>
+    <ol>
+      <li><a href="#overview">Quick Overview of IND AS 116</a></li>
+      <li><a href="#example-facts">Example: Office Lease — Facts &amp; Figures</a></li>
+      <li><a href="#step1">Step 1 — Identify the Lease</a></li>
+      <li><a href="#step2">Step 2 — Determine the Lease Term</a></li>
+      <li><a href="#step3">Step 3 — Calculate the Lease Liability (PV of Payments)</a></li>
+      <li><a href="#step4">Step 4 — Calculate the ROU Asset</a></li>
+      <li><a href="#step5">Step 5 — Build the Amortization Schedule</a></li>
+      <li><a href="#step6">Step 6 — Journal Entries (Day 1 + Ongoing)</a></li>
+      <li><a href="#step7">Step 7 — Balance Sheet &amp; P&amp;L Impact</a></li>
+      <li><a href="#faq">Common Questions</a></li>
+    </ol>
+  </div>
+
+  <div class="article-body">
+
+    <h2 id="overview">1. Quick Overview of IND AS 116</h2>
+    <p>IND AS 116 (effective 1 April 2019) replaced IND AS 17 and introduced a single on-balance-sheet model for lessees. Under the old standard, operating leases were off-balance-sheet — just a rent expense. Under IND AS 116, almost every lease now creates:</p>
+    <ul>
+      <li>A <strong>Right-of-Use (ROU) Asset</strong> — representing the right to use the leased asset</li>
+      <li>A <strong>Lease Liability</strong> — representing the obligation to make future lease payments</li>
+    </ul>
+    <div class="callout">
+      <p><strong>Exemptions:</strong> Short-term leases (term ≤ 12 months) and low-value asset leases (underlying asset value ≤ USD 5,000 when new) can be kept off-balance-sheet as a policy choice.</p>
+    </div>
+    <p>The standard applies to all companies following IND AS — listed companies, large unlisted companies, banks, NBFCs and insurance companies. It does not apply to companies still on IGAAP (AS).</p>
+
+    <h2 id="example-facts">2. Example: Office Lease — Facts &amp; Figures</h2>
+    <p>We will use the same example throughout all 7 steps so you can follow the numbers from start to finish.</p>
+
+    <div class="step-box">
+      <div class="step-label">Example Facts</div>
+      <div class="step-title">ABC Pvt. Ltd. — Mumbai Office Lease</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Item</th><th>Details</th></tr>
+          <tr><td>Lease commencement date</td><td>1 April 2024</td></tr>
+          <tr><td>Lease term</td><td>3 years (36 months)</td></tr>
+          <tr><td>Monthly rent</td><td>₹1,00,000 per month</td></tr>
+          <tr><td>Payment timing</td><td>End of each month (arrears)</td></tr>
+          <tr><td>Incremental Borrowing Rate (IBR)</td><td>10% per annum</td></tr>
+          <tr><td>Initial Direct Costs (IDC)</td><td>₹50,000 (brokerage paid)</td></tr>
+          <tr><td>Lease incentive received</td><td>Nil</td></tr>
+          <tr><td>Restoration cost</td><td>Nil</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <h2 id="step1">3. Step 1 — Identify the Lease</h2>
+    <p>Before doing any calculation, confirm the contract is a lease under IND AS 116. A contract is a lease if it conveys the right to <strong>control the use of an identified asset</strong> for a period of time in exchange for consideration.</p>
+    <p>Three questions to ask:</p>
+    <ol>
+      <li>Is there an <strong>identified asset</strong>? (specific floor/office, specific vehicle, specific machine — yes)</li>
+      <li>Does the lessee have the right to obtain <strong>substantially all the economic benefits</strong> from use? (yes — exclusive use of the office)</li>
+      <li>Does the lessee have the right to <strong>direct how and for what purpose</strong> the asset is used? (yes — free to use the office as they wish)</li>
+    </ol>
+    <div class="callout-green">
+      <p><strong>Conclusion:</strong> All three conditions are met. This is a lease under IND AS 116 and must be recognised on balance sheet.</p>
+    </div>
+
+    <h2 id="step2">4. Step 2 — Determine the Lease Term</h2>
+    <p>The lease term under IND AS 116 is the <strong>non-cancellable period</strong> plus:</p>
+    <ul>
+      <li>Optional extension periods — if the lessee is <strong>reasonably certain</strong> to exercise the extension</li>
+      <li>Optional termination periods — if the lessee is <strong>reasonably certain NOT</strong> to terminate early</li>
+    </ul>
+    <p>In our example, the lease is a fixed 3-year term with no extension or termination options. Lease term = <strong>36 months</strong>.</p>
+    <div class="callout-amber">
+      <p><strong>Practical tip:</strong> "Reasonably certain" is a high threshold — higher than "more likely than not." Include extension periods only if there is a significant economic incentive to extend (e.g., leasehold improvements, location criticality, relocation costs).</p>
+    </div>
+
+    <h2 id="step3">5. Step 3 — Calculate the Lease Liability</h2>
+    <p>The lease liability is the <strong>present value of all future lease payments</strong>, discounted at the Incremental Borrowing Rate (IBR) or the interest rate implicit in the lease (if determinable).</p>
+
+    <div class="step-box">
+      <div class="step-label">Formula</div>
+      <div class="formula">Lease Liability = Σ [ Payment / (1 + r)^n ]
+
+Where:
+  r = monthly IBR = 10% ÷ 12 = 0.8333% per month
+  n = payment period number (1 to 36)
+  Payment = ₹1,00,000 per month</div>
+    </div>
+
+    <p>Using the PV of annuity formula for payments in arrears:</p>
+    <div class="formula">PV = PMT × [1 − (1 + r)^−n] ÷ r
+   = 1,00,000 × [1 − (1.008333)^−36] ÷ 0.008333
+   = 1,00,000 × 31.336
+   = ₹31,33,600</div>
+
+    <div class="callout-green">
+      <p><strong>Lease Liability on Day 1 = ₹31,33,600</strong></p>
+    </div>
+
+    <p>This is the amount recognised as a financial liability on the balance sheet on 1 April 2024. Total undiscounted payments = ₹36,00,000. The difference (₹4,66,400) represents the total interest cost that will be accrued over 3 years.</p>
+
+    <h2 id="step4">6. Step 4 — Calculate the ROU Asset</h2>
+    <p>The ROU asset is measured at cost on Day 1 and comprises:</p>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Component</th><th>Amount (₹)</th></tr>
+        <tr><td>Initial lease liability</td><td>31,33,600</td></tr>
+        <tr><td>Add: Initial Direct Costs (IDC)</td><td>50,000</td></tr>
+        <tr><td>Add: Lease payments made on/before commencement date</td><td>—</td></tr>
+        <tr><td>Add: Estimated restoration costs (if any)</td><td>—</td></tr>
+        <tr><td>Less: Lease incentives received</td><td>—</td></tr>
+        <tr><td><strong>ROU Asset — Day 1</strong></td><td><strong>31,83,600</strong></td></tr>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><strong>Note:</strong> The ROU asset is depreciated on a straight-line basis over the lease term (36 months) unless ownership transfers or there is a purchase option expected to be exercised, in which case depreciate over the useful life of the asset.</p>
+    </div>
+
+    <p>Monthly depreciation = ₹31,83,600 ÷ 36 = <strong>₹88,433 per month</strong></p>
+
+    <h2 id="step5">7. Step 5 — Amortization Schedule (First 6 Months)</h2>
+    <p>The lease liability reduces using the effective interest method. Each month: interest accrues on the opening balance, then the cash payment reduces the liability.</p>
+
+    <div class="table-wrap">
+      <table>
+        <tr>
+          <th>Month</th>
+          <th>Opening Liability (₹)</th>
+          <th>Interest @ 0.8333% (₹)</th>
+          <th>Payment (₹)</th>
+          <th>Closing Liability (₹)</th>
+          <th>ROU Depreciation (₹)</th>
+        </tr>
+        <tr><td>Apr 2024</td><td>31,33,600</td><td>26,113</td><td>1,00,000</td><td>30,59,713</td><td>88,433</td></tr>
+        <tr><td>May 2024</td><td>30,59,713</td><td>25,498</td><td>1,00,000</td><td>29,85,211</td><td>88,433</td></tr>
+        <tr><td>Jun 2024</td><td>29,85,211</td><td>24,877</td><td>1,00,000</td><td>29,10,088</td><td>88,433</td></tr>
+        <tr><td>Jul 2024</td><td>29,10,088</td><td>24,251</td><td>1,00,000</td><td>28,34,339</td><td>88,433</td></tr>
+        <tr><td>Aug 2024</td><td>28,34,339</td><td>23,619</td><td>1,00,000</td><td>27,57,958</td><td>88,433</td></tr>
+        <tr><td>Sep 2024</td><td>27,57,958</td><td>22,983</td><td>1,00,000</td><td>26,80,941</td><td>88,433</td></tr>
+        <tr><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+        <tr><td>Mar 2027</td><td>99,170</td><td>830</td><td>1,00,000</td><td>0</td><td>88,433</td></tr>
+      </table>
+    </div>
+
+    <p><strong>FY 2024-25 totals (12 months, Apr 2024 – Mar 2025):</strong></p>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Item</th><th>Amount (₹)</th></tr>
+        <tr><td>Total interest expense (finance cost)</td><td>2,61,744</td></tr>
+        <tr><td>Total principal repaid</td><td>9,38,256</td></tr>
+        <tr><td>Total cash paid (rent)</td><td>12,00,000</td></tr>
+        <tr><td>ROU depreciation for the year</td><td>10,61,196</td></tr>
+        <tr><td>Closing lease liability (31 Mar 2025)</td><td>21,95,344</td></tr>
+      </table>
+    </div>
+
+    <div class="cta-box">
+      <h3>Calculate Your Lease in Seconds</h3>
+      <p>Skip the manual schedule — our free IND AS 116 calculator gives you the full amortization table, all journal entries and Excel export instantly.</p>
+      <a href="../indas116.html">Try the Free Calculator →</a>
+    </div>
+
+    <h2 id="step6">8. Step 6 — Journal Entries</h2>
+
+    <h3>Day 1 — 1 April 2024 (Initial Recognition)</h3>
+
+    <div class="je-block">
+      <div class="je-title">JE 1 — Recognise ROU Asset and Lease Liability</div>
+      <div class="je-row">
+        <span class="je-account">Right-of-Use Asset (ROU Asset)</span>
+        <div class="je-amounts"><span class="je-dr">31,33,600</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Lease Liability</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">31,33,600</span></div>
+      </div>
+    </div>
+
+    <div class="je-block">
+      <div class="je-title">JE 2 — Capitalise Initial Direct Costs into ROU Asset</div>
+      <div class="je-row">
+        <span class="je-account">Right-of-Use Asset (ROU Asset)</span>
+        <div class="je-amounts"><span class="je-dr">50,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Bank / Creditor (Broker fees paid)</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">50,000</span></div>
+      </div>
+    </div>
+
+    <p><em>After JE 1 and JE 2: ROU Asset = ₹31,83,600 | Lease Liability = ₹31,33,600</em></p>
+
+    <h3>Month-End — 30 April 2024 (Recurring)</h3>
+
+    <div class="je-block">
+      <div class="je-title">JE 3 — Accrue Interest on Lease Liability</div>
+      <div class="je-row">
+        <span class="je-account">Finance Cost (Interest on Lease)</span>
+        <div class="je-amounts"><span class="je-dr">26,113</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Lease Liability (Interest accrued)</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">26,113</span></div>
+      </div>
+    </div>
+
+    <div class="je-block">
+      <div class="je-title">JE 4 — Pay Rent (Reduce Lease Liability)</div>
+      <div class="je-row">
+        <span class="je-account">Lease Liability</span>
+        <div class="je-amounts"><span class="je-dr">1,00,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Bank</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">1,00,000</span></div>
+      </div>
+    </div>
+
+    <div class="je-block">
+      <div class="je-title">JE 5 — Charge ROU Asset Depreciation</div>
+      <div class="je-row">
+        <span class="je-account">Depreciation (ROU Asset)</span>
+        <div class="je-amounts"><span class="je-dr">88,433</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Accumulated Depreciation — ROU Asset</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">88,433</span></div>
+      </div>
+    </div>
+
+    <div class="callout-amber">
+      <p><strong>Important:</strong> Under IND AS 116, there is NO rent expense. The ₹1,00,000 monthly payment splits into two P&amp;L charges — <strong>depreciation</strong> (on ROU asset) and <strong>finance cost</strong> (interest on liability). This is a key difference from old IND AS 17 operating lease accounting.</p>
+    </div>
+
+    <h2 id="step7">9. Step 7 — Balance Sheet &amp; P&amp;L Impact</h2>
+
+    <h3>Balance Sheet as at 31 March 2025 (end of Year 1)</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Item</th><th>Amount (₹)</th><th>Classification</th></tr>
+        <tr><td>ROU Asset (gross)</td><td>31,83,600</td><td>Non-current assets</td></tr>
+        <tr><td>Less: Accumulated depreciation</td><td>(10,61,196)</td><td></td></tr>
+        <tr><td><strong>ROU Asset (net)</strong></td><td><strong>21,22,404</strong></td><td>Non-current assets</td></tr>
+        <tr><td>Lease liability — current portion</td><td>9,97,682</td><td>Current liabilities</td></tr>
+        <tr><td>Lease liability — non-current portion</td><td>11,97,662</td><td>Non-current liabilities</td></tr>
+        <tr><td><strong>Total lease liability</strong></td><td><strong>21,95,344</strong></td><td></td></tr>
+      </table>
+    </div>
+
+    <h3>P&amp;L for FY 2024-25 (Year 1)</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Item</th><th>Amount (₹)</th><th>Line in P&amp;L</th></tr>
+        <tr><td>Depreciation — ROU Asset</td><td>10,61,196</td><td>Operating expenses (EBITDA impact)</td></tr>
+        <tr><td>Finance cost — Interest on lease</td><td>2,61,744</td><td>Finance costs (below EBIT)</td></tr>
+        <tr><td><strong>Total P&amp;L charge (Year 1)</strong></td><td><strong>13,22,940</strong></td><td></td></tr>
+        <tr><td><em>vs. Old IND AS 17 rent expense</em></td><td><em>12,00,000</em><td><em>(operating expenses)</em></td></tr>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><strong>EBITDA impact:</strong> Under IND AS 116, rent expense disappears from EBITDA — replaced by depreciation (which is added back). This improves EBITDA but increases finance costs and depreciation separately. Companies with many leases (retail, airlines, logistics) see EBITDA jump significantly after adopting IND AS 116.</p>
+    </div>
+
+    <h2 id="faq">10. Common Questions</h2>
+
+    <h3>What IBR should I use?</h3>
+    <p>The Incremental Borrowing Rate is the rate at which the lessee could borrow funds to purchase a similar asset over a similar term. In practice, most Indian companies use SBI MCLR + a spread based on their credit profile. Typical range: 8%–14% p.a. for FY 2024-25. The IBR must be assessed at commencement date and reassessed on modification or lease term reassessment.</p>
+
+    <h3>How do I split current vs. non-current lease liability?</h3>
+    <p>The current portion is the principal repayment expected in the next 12 months (sum of principal components from the amortization schedule for months 1–12 of the next year). The remaining balance is non-current.</p>
+
+    <h3>What happens if rent changes (escalation)?</h3>
+    <p>If the rent escalation is fixed (e.g., 5% every year), include all escalated payments in the PV calculation from Day 1. If it is index-linked (CPI/WPI), use current payments at commencement and remeasure when the index changes. Our <a href="../indas116-model3.html" style="color:var(--brand);">escalation calculator</a> handles this automatically.</p>
+
+    <h3>Is rent-free period included in the lease term?</h3>
+    <p>Yes. Rent-free months are part of the non-cancellable lease term. During rent-free months, payment = ₹0, so the PV calculation simply has zero cash flow for those periods. The ROU asset still depreciates throughout.</p>
+
+    <h3>What is the disclosure requirement?</h3>
+    <p>IND AS 116 Para 52 requires disclosures in annual reports including: maturity analysis of lease liabilities, movement in lease liability for the year, ROU asset rollforward, depreciation and finance cost amounts, and total cash outflow for leases. Our Lease App generates this disclosure note automatically.</p>
+
+    <div class="cta-box">
+      <h3>Ready to Calculate Your Lease?</h3>
+      <p>Use our free IND AS 116 calculator — enter your lease details and get the full schedule, journal entries and Excel export in seconds.</p>
+      <a href="../indas116.html">Open Free Calculator →</a>
+    </div>
+
+    <div class="related">
+      <h3>Related Articles</h3>
+      <div class="related-links">
+        <a href="ind-as-116-lease-accounting-guide.html">→ IND AS 116 Complete Guide with Journal Entries</a>
+        <a href="ind-as-116-lease-modification.html">→ Lease Modification under IND AS 116 — Para 45 and 46 Explained</a>
+        <a href="ind-as-109-security-deposit-accounting.html">→ IND AS 109 Security Deposit Accounting</a>
+        <a href="ind-as-vs-ifrs-key-differences.html">→ IND AS vs IFRS: Key Differences</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom-simple">
+    <span>© 2026 Finosutra. All rights reserved.</span>
+    <span><a href="../privacy.html" style="color:#9CA3AF;text-decoration:none;">Privacy</a> · <a href="../terms.html" style="color:#9CA3AF;text-decoration:none;">Terms</a></span>
+  </div>
+</footer>
+
+<script>
+const btn = document.getElementById('navToggle');
+const links = document.getElementById('navLinks');
+btn.addEventListener('click', function(){ links && links.classList.toggle('open'); });
+document.addEventListener('click', function(e){ if(!btn.contains(e.target) && links && !links.contains(e.target)) links.classList.remove('open'); });
+</script>
+</body>
+</html>
