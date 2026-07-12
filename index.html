@@ -46,13 +46,13 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
 @media(max-width:768px){nav{padding:0 16px;}}
 
 /* HERO */
-.hero-section{background:linear-gradient(160deg,#EDEEFF 0%,#F7F8FF 70%);border-bottom:1px solid var(--border-light);}
+.hero-section{background:#001A3D;border-bottom:none;}
 .hero{padding:80px 32px 72px;max-width:1160px;margin:0 auto;text-align:center;position:relative;}
 .hero::before{content:'';position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:800px;height:400px;background:radial-gradient(ellipse at 50% 30%,rgba(99,102,241,0.09) 0%,transparent 70%);pointer-events:none;}
 .hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,0.9);border:1px solid var(--brand-mid);color:var(--brand-dark);font-size:12px;font-weight:600;padding:7px 16px;border-radius:100px;margin-bottom:26px;box-shadow:0 2px 8px rgba(99,102,241,0.1);}
-.hero h1{font-size:52px;font-weight:800;line-height:1.1;letter-spacing:-.8px;color:var(--text);max-width:680px;margin:0 auto 20px;}
-.hero h1 em{font-style:normal;background:linear-gradient(135deg,#6366F1,#8B5CF6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.hero p{font-size:17px;color:var(--muted);max-width:520px;margin:0 auto 32px;line-height:1.7;}
+.hero h1{font-size:52px;font-weight:800;line-height:1.1;letter-spacing:-.8px;color:#fff;max-width:720px;margin:0 auto 20px;}
+.hero h1 em{font-style:normal;background:linear-gradient(135deg,#60A5FA,#93C5FD);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero p{font-size:17px;color:#BAD0F8;max-width:520px;margin:0 auto 32px;line-height:1.7;}
 .hero-btns{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;}
 .btn-primary{display:inline-flex;align-items:center;gap:6px;padding:13px 26px;border-radius:var(--radius-sm);font-size:15px;font-weight:700;cursor:pointer;text-decoration:none;font-family:'Inter',sans-serif;transition:all .15s;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;border:none;box-shadow:0 4px 14px rgba(99,102,241,0.35);}
 .btn-primary:hover{background:linear-gradient(135deg,#4F46E5,#7C3AED);transform:translateY(-2px);box-shadow:0 8px 24px rgba(99,102,241,0.45);}
@@ -130,11 +130,11 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
 <body>
 
 <!-- ANNOUNCEMENT BAR -->
-<div id="announcementBar" style="background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;text-align:center;padding:9px 48px;font-size:13px;font-weight:500;position:relative;z-index:1001;">
-  <i class="fa-solid fa-rocket" style="margin-right:6px;"></i>
-  <strong>New:</strong>&nbsp; IND AS 116 Model 3 (Escalation Rents) is now live &mdash;
-  <a href="indas116-model3.html" style="color:#fff;font-weight:700;text-decoration:underline;text-underline-offset:3px;margin:0 6px;">Try it free &rarr;</a>
-  <button onclick="document.getElementById('announcementBar').style.display='none'" aria-label="Dismiss" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.2);border:none;color:#fff;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;">&times;</button>
+<div id="announcementBar" style="background:#002244;color:#BAD0F8;text-align:center;padding:9px 48px;font-size:13px;font-weight:500;position:relative;z-index:1001;">
+  <i class="fa-solid fa-layer-group" style="margin-right:6px;color:#60A5FA;"></i>
+  IND AS 116 Lease Workspace &mdash; manage all leases, exports and working papers in one place.&nbsp;
+  <a href="app.html" style="color:#fff;font-weight:700;text-decoration:underline;text-underline-offset:3px;margin:0 4px;">Open free &rarr;</a>
+  <button onclick="document.getElementById('announcementBar').style.display='none'" aria-label="Dismiss" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.1);border:none;color:#BAD0F8;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;">&times;</button>
 </div>
 
 <nav>
@@ -161,12 +161,33 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
 <!-- HERO -->
 <div class="hero-section">
   <div class="hero">
-    <div class="hero-badge"><i class="fa-solid fa-shield-halved"></i> Built for Indian Finance Standards &nbsp;&middot;&nbsp; IND AS &nbsp;&middot;&nbsp; IFRS</div>
-    <h1>Finance tools built for<br><em>modern India</em></h1>
-    <p>Lease accounting, income tax, GST, salary tools — designed for CAs, CFOs and finance teams who mean business.</p>
+    <div class="hero-badge" style="background:rgba(255,255,255,0.08);border:1px solid rgba(186,208,248,0.25);color:#BAD0F8;"><i class="fa-solid fa-shield-halved" style="color:#60A5FA;"></i> Built for Indian CAs &nbsp;&middot;&nbsp; IND AS 116 compliant &nbsp;&middot;&nbsp; Free to start</div>
+    <h1>The lease accounting tool<br><em>Indian CAs actually use</em></h1>
+    <p>Calculate, journal, export and disclose — IND AS 116 lease accounting from Day 1 to disclosure note, in minutes.</p>
     <div class="hero-btns">
-      <a href="app.html" class="btn-primary"><i class="fa-solid fa-rocket"></i>&nbsp; Launch Lease App</a>
-      <a href="#tools" class="btn-ghost">Explore all tools &darr;</a>
+      <a href="app.html" class="btn-primary" style="background:linear-gradient(135deg,#0052CC,#0065FF);box-shadow:0 4px 14px rgba(0,82,204,0.45);"><i class="fa-solid fa-calculator"></i>&nbsp; Open Lease Calculator — free</a>
+      <a href="#tools" class="btn-ghost" style="background:rgba(255,255,255,0.07);border-color:rgba(186,208,248,0.25);color:#BAD0F8;">Explore all tools &darr;</a>
+    </div>
+  </div>
+</div>
+
+<!-- TRUST STRIP -->
+<div style="background:#002244;border-top:1px solid rgba(186,208,248,0.12);padding:18px 32px;">
+  <div style="max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:9px;color:#BAD0F8;font-size:13px;font-weight:600;font-family:'Inter',sans-serif;">
+      <i class="fa-solid fa-file-circle-check" style="color:#60A5FA;font-size:16px;"></i> 500+ leases calculated
+    </div>
+    <div style="width:1px;height:18px;background:rgba(186,208,248,0.2);"></div>
+    <div style="display:flex;align-items:center;gap:9px;color:#BAD0F8;font-size:13px;font-weight:600;font-family:'Inter',sans-serif;">
+      <i class="fa-solid fa-table" style="color:#60A5FA;font-size:16px;"></i> 200+ Excel exports
+    </div>
+    <div style="width:1px;height:18px;background:rgba(186,208,248,0.2);"></div>
+    <div style="display:flex;align-items:center;gap:9px;color:#BAD0F8;font-size:13px;font-weight:600;font-family:'Inter',sans-serif;">
+      <i class="fa-solid fa-shield-halved" style="color:#60A5FA;font-size:16px;"></i> IND AS 116 compliant
+    </div>
+    <div style="width:1px;height:18px;background:rgba(186,208,248,0.2);"></div>
+    <div style="display:flex;align-items:center;gap:9px;color:#BAD0F8;font-size:13px;font-weight:600;font-family:'Inter',sans-serif;">
+      <i class="fa-solid fa-users" style="color:#60A5FA;font-size:16px;"></i> Used by CAs across India
     </div>
   </div>
 </div>
@@ -354,7 +375,7 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
         <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
           <li style="font-size:13px;color:#374151;display:flex;gap:8px;font-family:'Inter',sans-serif;"><span style="color:#22C55E;font-weight:700;flex-shrink:0;">✓</span> All 9 calculators</li>
           <li style="font-size:13px;color:#374151;display:flex;gap:8px;font-family:'Inter',sans-serif;"><span style="color:#22C55E;font-weight:700;flex-shrink:0;">✓</span> Full results on screen</li>
-          <li style="font-size:13px;color:#374151;display:flex;gap:8px;font-family:'Inter',sans-serif;"><span style="color:#22C55E;font-weight:700;flex-shrink:0;">✓</span> 1 free Excel export/month</li>
+          <li style="font-size:13px;color:#374151;display:flex;gap:8px;font-family:'Inter',sans-serif;"><span style="color:#22C55E;font-weight:700;flex-shrink:0;">✓</span> Up to 3 leases free</li>
           <li style="font-size:13px;color:#9CA3AF;display:flex;gap:8px;font-family:'Inter',sans-serif;"><span style="flex-shrink:0;">✗</span> Multi-lease portfolio</li>
           <li style="font-size:13px;color:#9CA3AF;display:flex;gap:8px;font-family:'Inter',sans-serif;"><span style="flex-shrink:0;">✗</span> Unlimited exports</li>
         </ul>
