@@ -203,9 +203,10 @@ async function initApp(){
 }
 
 // ── Data loading ──────────────────────────────────────────────────────────────
+var FREE_LEASE_LIMIT = 3;
+
 async function loadLeases(){
   if(!window.supaClient || !window.currentUser){ leases = []; return; }
-  if(!window.isProUser){ leases = []; return; }
   try{
     var res = await window.supaClient.from('leases').select('*')
       .eq('user_id',window.currentUser.id)
@@ -237,7 +238,13 @@ function updateLeaseCountBadge(){
     badge.style.display = 'none';
   }
   var countEl = document.getElementById('leaseCount');
-  if(countEl) countEl.textContent = leases.length + (leases.length===1?' lease':' leases');
+  if(countEl){
+    if(!window.isProUser){
+      countEl.textContent = leases.length + ' / ' + FREE_LEASE_LIMIT + ' leases (Free)';
+    } else {
+      countEl.textContent = leases.length + (leases.length===1?' lease':' leases');
+    }
+  }
 }
 
 function populateCompanyDropdowns(){
@@ -391,8 +398,8 @@ function renderDashRecentTable(){
     el.innerHTML = '<div style="padding:28px;text-align:center;font-size:14px;color:#9CA3AF;">Sign in to see your leases. <button onclick="fsShowAuthModal(\'login\')" style="color:#4F46E5;background:none;border:none;cursor:pointer;font-weight:600;font-family:inherit;font-size:14px;">Log In</button></div>';
     return;
   }
-  if(!window.isProUser){
-    el.innerHTML = '<div style="padding:28px;text-align:center;font-size:14px;color:#9CA3AF;">Portfolio requires Pro. <button onclick="fsInitiateProSubscription()" style="color:#4F46E5;background:none;border:none;cursor:pointer;font-weight:600;font-family:inherit;font-size:14px;">Upgrade ↗</button></div>';
+  if(!window.isProUser && leases.length === 0){
+    el.innerHTML = '<div style="padding:28px;text-align:center;font-size:14px;color:#9CA3AF;">Add up to '+FREE_LEASE_LIMIT+' leases free. <button onclick="fsInitiateProSubscription()" style="color:#4F46E5;background:none;border:none;cursor:pointer;font-weight:600;font-family:inherit;font-size:14px;">Upgrade for unlimited ↗</button></div>';
     return;
   }
   if(!leases.length){
@@ -429,10 +436,6 @@ function renderLeases(){
   if(!window.currentUser){
     document.getElementById('leaseContentArea').innerHTML =
       '<div class="pro-gate"><div class="pro-gate-icon">🔒</div><div class="pro-gate-title">Sign in to view your leases</div><div class="pro-gate-sub">Your leases are saved securely to your Finosutra account.</div><button class="btn btn-primary" onclick="fsShowAuthModal(\'login\')">Log In / Sign Up</button></div>';
-    return;
-  }
-  if(!window.isProUser){
-    renderProGate();
     return;
   }
   filterLeases();
@@ -1829,7 +1832,11 @@ function fmt(n){ return (n===null||n===undefined||isNaN(+n))? '—' : Number(n).
 
 async function saveLease(){
   if(!window.currentUser){ fsShowAuthModal('login'); return; }
-  if(!window.isProUser){ toast('Portfolio requires Pro.','#6366F1'); fsInitiateProSubscription(); return; }
+  if(!window.isProUser && !_editingLeaseId && leases.length >= FREE_LEASE_LIMIT){
+    toast('Free plan: max '+FREE_LEASE_LIMIT+' leases. Upgrade to Pro for unlimited.','#6366F1');
+    fsInitiateProSubscription();
+    return;
+  }
   if(!_lastCalcResult){ toast('Calculate first before saving.','#EF4444'); return; }
 
   var inp = _lastCalcResult.inp;
@@ -2113,6 +2120,7 @@ function renderJournalPage(){
 }
 
 function exportJEXL(){
+  if(!window.currentUser){ toast('Sign in to export journal entries.','#6366F1'); fsShowAuthModal('login'); return; }
   if(!window.XLSX){ toast('Excel library not loaded.','#EF4444'); return; }
   buildAllJEs();
 
@@ -2602,6 +2610,7 @@ function _makeBrandedCoverSheet(title, subtitle, metaLine){
 }
 
 function exportDisclosureXL(){
+  if(!window.currentUser){ toast('Sign in to export.','#6366F1'); fsShowAuthModal('login'); return; }
   if(!window.XLSX){ toast('Excel library not loaded.','#EF4444'); return; }
   var fyF = document.getElementById('discFyFilter').value;
   if(!fyF){ toast('Please select a Financial Year first.','#EF4444'); return; }
@@ -2639,6 +2648,7 @@ function exportDisclosureXL(){
 }
 
 function exportReportsXL(){
+  if(!window.currentUser){ toast('Sign in to export reports.','#6366F1'); fsShowAuthModal('login'); return; }
   if(!window.XLSX){ toast('Excel library not loaded.','#EF4444'); return; }
   renderReportsPage();
   var wb = XLSX.utils.book_new();
@@ -2782,6 +2792,8 @@ function renderExplanationPanel(inp, res){
 
 // ── Premium single-lease report pack (called from lease detail) ──────────────
 function exportPremiumSingleLease(){
+  if(!window.currentUser){ toast('Sign in to export.','#6366F1'); fsShowAuthModal('login'); return; }
+  if(!window.isProUser){ toast('Premium exports require Pro.','#6366F1'); fsInitiateProSubscription(); return; }
   if(!window.XLSX || !window.premiumExport){ toast('Export libraries not loaded.','#EF4444'); return; }
   if(!_lastCalcResult){ toast('Calculate first.','#EF4444'); return; }
   var inp = _lastCalcResult.inp;
@@ -2810,6 +2822,8 @@ function exportPremiumSingleLease(){
 
 // ── Premium portfolio export (all leases) ────────────────────────────────────
 function exportPremiumPortfolio(){
+  if(!window.currentUser){ toast('Sign in to export.','#6366F1'); fsShowAuthModal('login'); return; }
+  if(!window.isProUser){ toast('Premium exports require Pro.','#6366F1'); fsInitiateProSubscription(); return; }
   if(!window.XLSX || !window.premiumExport){ toast('Export libraries not loaded.','#EF4444'); return; }
   if(!leases.length){ toast('No leases to export.','#9CA3AF'); return; }
   toast('Building premium report pack…','#6366F1');
@@ -2897,6 +2911,8 @@ function getCurrentFY(){
 var _lastAuditRows = [];
 
 function exportWorkingPaper(){
+  if(!window.currentUser){ toast('Sign in to export.','#6366F1'); fsShowAuthModal('login'); return; }
+  if(!window.isProUser){ toast('Working paper export requires Pro.','#6366F1'); fsInitiateProSubscription(); return; }
   if(!window.XLSX){ toast('Excel library not loaded.','#EF4444'); return; }
   if(!_lastCalcResult){ toast('Calculate first.','#EF4444'); return; }
 
@@ -3396,6 +3412,7 @@ function renderLeaseJEsTab() {
 }
 
 function exportJEForCurrentLease(){
+  if(!window.currentUser){ toast('Sign in to export.','#6366F1'); fsShowAuthModal('login'); return; }
   var leaseId = _editingLeaseId;
   var l = leaseId ? leases.find(function(x){ return x.id===leaseId; }) : null;
   var inp = _lastCalcResult ? _lastCalcResult.inp : (l ? Object.assign({},l.inputs||{},{name:l.name,entity:l.entity||''}) : null);
@@ -4205,6 +4222,7 @@ function runExportCenter(type) {
 }
 
 function exportValidationReport() {
+  if(!window.currentUser){ toast('Sign in to export.','#6366F1'); fsShowAuthModal('login'); return; }
   if(!window.XLSX){ toast('XLSX library not loaded','#EF4444'); return; }
   var wb = XLSX.utils.book_new();
   var N='002244',N2='002E5C',A='0052CC',AL='E8F0FF',WH='FFFFFF',GR='059669',RD='B91C1C',AM='D97706',CA='F0F5FF';
@@ -4248,6 +4266,7 @@ function exportValidationReport() {
 }
 
 function exportExpiryTracker() {
+  if(!window.currentUser){ toast('Sign in to export.','#6366F1'); fsShowAuthModal('login'); return; }
   if(!window.XLSX){ toast('XLSX library not loaded','#EF4444'); return; }
   var wb = XLSX.utils.book_new();
   var now = new Date();
