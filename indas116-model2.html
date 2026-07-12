@@ -58,12 +58,22 @@ a{color:inherit;text-decoration:none}
 .field input,.field select{width:100%;background:#F8F9FF;border:1px solid rgba(99,102,241,0.25);border-radius:8px;padding:9px 12px;font-size:13px;color:#1A1A2E;outline:none;font-family:'Inter',sans-serif;transition:border .15s}
 .field input:focus,.field select:focus{border-color:#6366F1;box-shadow:0 0 0 3px rgba(99,102,241,0.1)}
 .field-note{font-size:11px;color:#9CA3AF;margin-top:4px}
-.field-ibr-wrap{position:relative}
-.field-ibr-wrap input{padding-right:32px}
-.ibr-tip{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:18px;height:18px;background:#E8F0FF;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#4F46E5;cursor:pointer;border:none;font-family:inherit}
-.ibr-tip:hover+.ibr-tooltip,.ibr-tooltip:hover{display:block}
-.ibr-tooltip{display:none;position:absolute;right:0;top:calc(100% + 6px);background:#002244;color:#fff;font-size:11px;line-height:1.6;padding:10px 14px;border-radius:8px;width:260px;z-index:10;pointer-events:none}
-.ibr-tip-row:hover .ibr-tooltip{display:block}
+.ibr-help-btn{background:rgba(0,82,204,0.08);border:1px solid rgba(0,82,204,0.25);color:#0052CC;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:0.3px;display:inline-flex;align-items:center;gap:4px;transition:all .15s;}
+.ibr-help-btn:hover{background:#0052CC;color:#fff;border-color:#0052CC}
+.ibr-panel{background:#fff;border:1.5px solid rgba(0,82,204,0.2);border-radius:12px;margin-top:10px;overflow:hidden;box-shadow:0 4px 20px rgba(0,82,204,0.12);}
+.ibr-panel-hd{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#E8F0FF;border-bottom:1px solid rgba(0,82,204,0.15);font-size:12px;font-weight:700;color:#4338CA;}
+.ibr-panel-body{padding:12px 14px}
+.ibr-ref-hd{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#0052CC;margin-bottom:6px}
+.ibr-tbl{width:100%;border-collapse:collapse;font-size:11px}
+.ibr-tbl th{text-align:left;padding:5px 8px;background:rgba(0,82,204,0.06);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#0052CC;border-bottom:1px solid rgba(0,82,204,0.12)}
+.ibr-tbl td{padding:5px 8px;border-bottom:1px solid rgba(0,82,204,0.06);color:#374151}
+.ibr-tbl tr:last-child td{border-bottom:none}
+.ibr-bench-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+.ibr-bench-item{background:#F8F9FF;border:1px solid rgba(0,82,204,0.12);border-radius:7px;padding:6px 10px;display:flex;justify-content:space-between;align-items:center}
+.ibr-bench-lbl{font-size:10px;color:#6B7280}
+.ibr-bench-val{font-size:12px;font-weight:700;color:#0052CC}
+.ibr-guide-tip{font-size:10px;color:#6B7280;line-height:1.6;padding:8px 10px;background:#FFFBEB;border:1px solid #FDE68A;border-radius:7px;margin-top:6px}
+.ibr-warn{font-size:11px;font-weight:600;padding:7px 10px;border-radius:7px;margin-top:6px}
 
 /* SEC DIVIDER */
 .sec-div{padding:10px 20px;background:#F8F9FF;border-top:1px solid rgba(99,102,241,0.08);border-bottom:1px solid rgba(99,102,241,0.08);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#0F766E}
@@ -268,14 +278,48 @@ tr:hover td{background:#F8F9FF}
           <input type="number" id="fPmt" placeholder="e.g. 100000" min="0" step="1">
         </div>
         <div class="field">
-          <label>Original IBR (% p.a.)</label>
-          <div class="field-ibr-wrap ibr-tip-row" style="position:relative">
-            <input type="number" id="fIbr" placeholder="e.g. 10.5" min="0.1" max="50" step="0.01">
-            <button class="ibr-tip" tabindex="-1">ℹ</button>
-            <div class="ibr-tooltip">IBR = rate at which the lessee could borrow with similar security and term. Use SBI MCLR + spread or RBI lending rates as a benchmark. Typical range for Indian entities: 8%–15% p.a.</div>
+          <label style="display:flex;align-items:center;justify-content:space-between">
+            Original IBR (% p.a.)
+            <button type="button" class="ibr-help-btn" onclick="toggleIBRHelper()" title="IBR guidance">
+              <i class="fa-solid fa-circle-question"></i> What rate?
+            </button>
+          </label>
+          <input type="number" id="fIbr" placeholder="e.g. 10.5" min="0.1" max="50" step="0.01">
+          <div id="ibrWarnBox" class="ibr-warn" style="display:none"></div>
+        </div>
+      </div>
+
+      <!-- IBR Helper Panel -->
+      <div id="ibrHelperPanel" class="ibr-panel" style="display:none">
+        <div class="ibr-panel-hd">
+          <span><i class="fa-solid fa-circle-question" style="color:#0052CC"></i> &nbsp;How to determine your IBR</span>
+          <button type="button" onclick="toggleIBRHelper()" style="background:none;border:none;cursor:pointer;font-size:16px;color:#9CA3AF">×</button>
+        </div>
+        <div class="ibr-panel-body">
+          <div class="ibr-ref-hd">Typical IBR ranges — Indian entities (FY 2019–2026)</div>
+          <table class="ibr-tbl">
+            <thead><tr><th>Entity Type</th><th>Typical IBR Range</th><th>Reference Rate</th></tr></thead>
+            <tbody>
+              <tr><td>Listed / Large Companies</td><td>7% – 10%</td><td>SBI MCLR 1-yr</td></tr>
+              <tr><td>Mid-size Companies</td><td>9% – 13%</td><td>MCLR + spread</td></tr>
+              <tr><td>MSMEs</td><td>11% – 16%</td><td>Bank base rate + risk</td></tr>
+              <tr><td>Start-ups / Early Stage</td><td>14% – 20%</td><td>NBFC / venture debt rate</td></tr>
+              <tr><td>Government / PSU entities</td><td>6% – 8%</td><td>G-sec yield / Repo rate</td></tr>
+            </tbody>
+          </table>
+          <div class="ibr-ref-hd" style="margin-top:12px">Current benchmark rates (approx. FY 2025-26)</div>
+          <div class="ibr-bench-grid">
+            <div class="ibr-bench-item"><span class="ibr-bench-lbl">RBI Repo Rate</span><span class="ibr-bench-val">6.00%</span></div>
+            <div class="ibr-bench-item"><span class="ibr-bench-lbl">SBI MCLR (1-yr)</span><span class="ibr-bench-val">8.85%</span></div>
+            <div class="ibr-bench-item"><span class="ibr-bench-lbl">SBI RLLR</span><span class="ibr-bench-val">8.75%</span></div>
+            <div class="ibr-bench-item"><span class="ibr-bench-lbl">10-yr G-Sec Yield</span><span class="ibr-bench-val">6.70%</span></div>
+          </div>
+          <div class="ibr-guide-tip">
+            <strong>How to pick your IBR:</strong> Use the rate at which your entity could borrow, on similar terms (tenure, currency, collateral), at the lease commencement date. If in doubt, use SBI's MCLR for the closest tenor + a credit spread for your risk profile. Consult your statutory auditor for entities preparing audited financials.
           </div>
         </div>
       </div>
+
       <div class="two-col">
         <div class="field">
           <label>Payment Frequency</label>
@@ -1140,6 +1184,25 @@ document.getElementById('btnExp').onclick = function(){
 
 /* ── Init ────────────────────────────────────────────────────────────────── */
 addModBlock();
+
+/* ── IBR Helper ──────────────────────────────────────────────────────────── */
+function toggleIBRHelper(){
+  var p = document.getElementById('ibrHelperPanel');
+  p.style.display = p.style.display==='none' ? 'block' : 'none';
+}
+document.getElementById('fIbr').addEventListener('input', function(){
+  var v = parseFloat(this.value);
+  var wb = document.getElementById('ibrWarnBox');
+  if(v>0 && v<5){
+    wb.style.cssText='display:block;background:#FEF3C7;border:1px solid #FDE68A;color:#92400E;font-size:11px;font-weight:600;padding:7px 10px;border-radius:7px;margin-top:6px';
+    wb.textContent='⚠ IBR below 5% is unusually low for Indian entities. Most entities use 7%–16%. Please verify with your auditor.';
+  } else if(v>20){
+    wb.style.cssText='display:block;background:#FEE2E2;border:1px solid #FECACA;color:#991B1B;font-size:11px;font-weight:600;padding:7px 10px;border-radius:7px;margin-top:6px';
+    wb.textContent='⚠ IBR above 20% is unusually high and may significantly reduce the lease liability. Verify with your auditor.';
+  } else {
+    wb.style.display='none';
+  }
+});
 
 /* ── Hamburger toggle ────────────────────────────────────────────────────── */
 (function(){
