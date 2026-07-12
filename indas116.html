@@ -2462,7 +2462,7 @@ function initiatePayment(){
     return;
   }
 
-  gaEvent('payment_initiated', { tool_name: 'IND AS 116', amount: 99, currency: 'INR' });
+  gaEvent('payment_initiated', { tool_name: 'IND AS 116', amount: 199, currency: 'INR' });
 
   // ── CRITICAL: Save state BEFORE opening payment window ──
   saveStateToStorage();
@@ -2484,9 +2484,9 @@ function initiatePayment(){
       // GA4 standard ecommerce purchase event (shows revenue in reports)
       gtag('event', 'purchase', {
         transaction_id: payId,
-        value: 99,
+        value: 199,
         currency: 'INR',
-        items: [{ item_id: 'indas116_excel', item_name: 'IND AS 116 Excel Report', price: 99, quantity: 1 }]
+        items: [{ item_id: 'indas116_excel', item_name: 'IND AS 116 Excel Report', price: 199, quantity: 1 }]
       });
       gaEvent('excel_downloaded', { tool_name: 'IND AS 116', trigger: 'post_payment' });
       markPaidInStorage(payId);
