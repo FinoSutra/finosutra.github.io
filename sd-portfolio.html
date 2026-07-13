@@ -184,7 +184,10 @@ input[type=file]{display:none}
 <!-- TOOLBAR -->
 <div class="toolbar">
   <div class="toolbar-left" id="toolbarTitle">Security Deposit Portfolio</div>
-  <div class="toolbar-right">
+  <div class="toolbar-right" style="align-items:center">
+    <label style="font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap">FY End Date
+      <input type="date" id="fyEndDate" style="margin-left:6px;padding:6px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;font-family:inherit;color:var(--text);background:#fff">
+    </label>
     <button class="btn btn-outline" onclick="downloadTemplate()"><i class="fa-solid fa-download"></i> Download Template</button>
     <button class="btn btn-green" onclick="document.getElementById('fileInput').click()"><i class="fa-solid fa-upload"></i> Upload Deposits</button>
     <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" onchange="handleFileUpload(this)">
@@ -279,7 +282,7 @@ input[type=file]{display:none}
 <!-- EXPORT ROW -->
 <div class="export-row" id="exportRow">
   <div class="export-notice">🎁 First export free — no signup needed. Click to download.</div>
-  <button class="exp-btn" id="btnExp"><i class="fa-solid fa-file-excel"></i> Export Consolidated Report (Excel) &nbsp;<strong>₹199</strong></button>
+  <button class="exp-btn" id="btnExp"><i class="fa-solid fa-file-excel"></i> Export Consolidated Report (Excel)</button>
 </div>
 
 <!-- PREVIEW MODAL -->
@@ -366,13 +369,14 @@ function gaEvent(n,p){ if(typeof gtag==='function') gtag('event',n,p||{}); }
 
 // ── Core Calculation Engine (mirrors security-deposit.html calculate()) ───
 function calcSDEngine(raw){
-  var name    = (raw['Deposit Name'] || raw['A'] || '').toString().trim();
-  var entity  = (raw['Entity / Lessee'] || raw['B'] || '').toString().trim();
-  var deposit = parseFloat(raw['Deposit Amount (₹)'] || raw['C'] || 0);
-  var rate    = parseFloat(raw['Market Rate (% p.a.)'] || raw['D'] || 0) / 100;
-  var tenure  = parseFloat(raw['Tenure (Years)'] || raw['E'] || 0);
-  var typeRaw = (raw['Deposit Type'] || raw['F'] || 'given').toString().toLowerCase();
-  var stdRaw  = (raw['Reporting Standard'] || raw['G'] || 'IND AS').toString().toUpperCase();
+  var name      = (raw['Deposit Name'] || raw['A'] || '').toString().trim();
+  var entity    = (raw['Entity / Lessee'] || raw['B'] || '').toString().trim();
+  var deposit   = parseFloat(raw['Deposit Amount (₹)'] || raw['C'] || 0);
+  var rate      = parseFloat(raw['Market Rate (% p.a.)'] || raw['D'] || 0) / 100;
+  var tenure    = parseFloat(raw['Tenure (Years)'] || raw['E'] || 0);
+  var typeRaw   = (raw['Deposit Type'] || raw['F'] || 'given').toString().toLowerCase();
+  var stdRaw    = (raw['Reporting Standard'] || raw['G'] || 'IND AS').toString().toUpperCase();
+  var commDateV = (raw['Commencement Date'] || raw['H'] || '').toString().trim();
 
   if(!name)    return { error: 'Deposit Name is required' };
   if(!deposit) return { error: 'Deposit Amount is required' };
@@ -384,6 +388,13 @@ function calcSDEngine(raw){
   var std1    = isIndAS ? 'Ind AS 109' : 'IFRS 9';
   var std2    = isIndAS ? 'Ind AS 116' : 'IFRS 16';
 
+  // Parse commencement date from various possible formats
+  var commDate = null;
+  if(commDateV && commDateV !== 'undefined'){
+    var d = new Date(commDateV);
+    if(!isNaN(d.getTime())) commDate = d;
+  }
+
   var pv       = deposit / Math.pow(1 + rate, tenure);
   var discount = deposit - pv;
   var rentPY   = discount / tenure;
@@ -391,21 +402,31 @@ function calcSDEngine(raw){
   var sched = [];
   var cv = pv;
   for(var y = 1; y <= Math.ceil(tenure); y++){
-    var isLast   = y === Math.ceil(tenure);
-    var partial  = (tenure % 1 !== 0 && isLast) ? tenure % 1 : 1;
-    // Plug the last period's interest back to the nominal deposit so totalInterest
-    // always ties out to the Day-1 discount, even for fractional-year tenures.
-    var interest = isLast ? (deposit - cv) : cv * rate * partial;
-    var cvClose  = isLast ? deposit : cv + interest;
-    sched.push({ year: y, cvOpen: cv, interest: interest, cvClose: cvClose, isLast: isLast });
+    var isLast     = y === Math.ceil(tenure);
+    var partial    = (tenure % 1 !== 0 && isLast) ? tenure % 1 : 1;
+    var interest   = isLast ? (deposit - cv) : cv * rate * partial;
+    var cvClose    = isLast ? deposit : cv + interest;
+    var rentPeriod = rentPY * partial;
+    sched.push({ year: y, cvOpen: cv, interest: interest, cvClose: cvClose, isLast: isLast, rentPeriod: rentPeriod });
     cv = cvClose;
   }
   var totalInterest = sched.reduce(function(s, r){ return s + r.interest; }, 0);
 
+  // Compute fyYearIdx based on commDate + global fyEndDate
+  var fyYearIdx = 0;
+  var fyEndDateEl = document.getElementById('fyEndDate');
+  var fyEndDateV  = fyEndDateEl ? fyEndDateEl.value : '';
+  if(commDate && fyEndDateV){
+    var fyEnd     = new Date(fyEndDateV);
+    var elapsedYrs = (fyEnd - commDate) / (365.25*24*3600*1000);
+    if(elapsedYrs < 0) fyYearIdx = 0;
+    else fyYearIdx = Math.min(Math.floor(elapsedYrs), sched.length - 1);
+  }
+
   return {
-    name: name, entity: entity,
+    name: name, entity: entity, commDate: commDate,
     inputs: { deposit: deposit, rate: rate, tenure: tenure, isGiven: isGiven, isIndAS: isIndAS, std1: std1, std2: std2 },
-    summary: { pv: pv, discount: discount, rentPY: rentPY, totalInterest: totalInterest, sched: sched }
+    summary: { pv: pv, discount: discount, rentPY: rentPY, totalInterest: totalInterest, sched: sched, fyYearIdx: fyYearIdx }
   };
 }
 
@@ -416,10 +437,10 @@ function downloadTemplate(){
   // SD Register sheet
   var headers = [
     'Deposit Name','Entity / Lessee','Deposit Amount (₹)',
-    'Market Rate (% p.a.)','Tenure (Years)','Deposit Type','Reporting Standard'
+    'Market Rate (% p.a.)','Tenure (Years)','Deposit Type','Reporting Standard','Commencement Date'
   ];
-  var sample1 = ['Mumbai Office Deposit','ABC Pvt. Ltd.',500000,10,3,'Given','IND AS'];
-  var sample2 = ['Pune Warehouse Deposit','ABC Pvt. Ltd.',300000,9,5,'Received','IND AS'];
+  var sample1 = ['Mumbai Office Deposit','ABC Pvt. Ltd.',500000,10,3,'Given','IND AS','2023-04-01'];
+  var sample2 = ['Pune Warehouse Deposit','ABC Pvt. Ltd.',300000,9,5,'Received','IND AS','2022-07-01'];
 
   var C_BRAND = '4F46E5'; var C_WHITE = 'FFFFFF'; var C_LIGHT = 'EEF2FF'; var C_NAVY = '1E1B4B';
   function hdrCell(v){ return {t:'s',v:v,s:{font:{name:'Calibri',bold:true,sz:10,color:{rgb:C_WHITE}},fill:{fgColor:{rgb:C_BRAND}},alignment:{horizontal:'center',wrapText:true},border:{bottom:{style:'medium',color:{rgb:C_BRAND}}}}}; }
@@ -432,7 +453,7 @@ function downloadTemplate(){
   ];
 
   var ws = XLSX.utils.aoa_to_sheet(rows);
-  ws['!cols'] = [{wch:28},{wch:22},{wch:20},{wch:18},{wch:14},{wch:14},{wch:18}];
+  ws['!cols'] = [{wch:28},{wch:22},{wch:20},{wch:18},{wch:14},{wch:14},{wch:18},{wch:18}];
   ws['!rows'] = [{hpt:22},{hpt:18},{hpt:18}];
   XLSX.utils.book_append_sheet(wb, ws, 'SD Register');
 
@@ -455,7 +476,8 @@ function downloadTemplate(){
     [{t:'s',v:'D - Market Rate (% p.a.): EIR / market interest rate as a percentage'}],
     [{t:'s',v:'E - Tenure (Years): Duration of deposit in years (can be decimal, e.g. 3.5)'}],
     [{t:'s',v:'F - Deposit Type: "Given" or "Received"'}],
-    [{t:'s',v:'G - Reporting Standard: "IND AS" or "IFRS" (optional, default IND AS)'}]
+    [{t:'s',v:'G - Reporting Standard: "IND AS" or "IFRS" (optional, default IND AS)'}],
+    [{t:'s',v:'H - Commencement Date: Date deposit was paid / received (YYYY-MM-DD, optional). Enables FY-specific unwinding in the portfolio KPIs.'}]
   ];
   var wsInst = XLSX.utils.aoa_to_sheet(inst);
   wsInst['!cols'] = [{wch:70}];
@@ -560,7 +582,8 @@ function renderGrid(){
   grid.style.display = 'grid';
 
   grid.innerHTML = deposits.map(function(d, idx){
-    var fyInt = d.summary.sched.length > 0 ? d.summary.sched[0].interest : 0;
+    var fyIdx = d.summary.fyYearIdx || 0;
+    var fyInt = d.summary.sched.length > fyIdx ? d.summary.sched[fyIdx].interest : 0;
     return '<div class="dep-card">' +
       '<div class="dep-card-head">' +
         '<div class="dep-name">' + d.name + '</div>' +
@@ -595,7 +618,7 @@ function updateKPIs(){
   var totalNominal  = deposits.reduce(function(s,d){ return s + d.inputs.deposit; }, 0);
   var totalPV       = deposits.reduce(function(s,d){ return s + d.summary.pv; }, 0);
   var totalDiscount = deposits.reduce(function(s,d){ return s + d.summary.discount; }, 0);
-  var totalFYInt    = deposits.reduce(function(s,d){ return s + (d.summary.sched.length > 0 ? d.summary.sched[0].interest : 0); }, 0);
+  var totalFYInt    = deposits.reduce(function(s,d){ var i=d.summary.fyYearIdx||0; return s + (d.summary.sched.length > i ? d.summary.sched[i].interest : 0); }, 0);
 
   document.getElementById('kpiNominal').textContent  = INR(totalNominal);
   document.getElementById('kpiPV').textContent       = INR(totalPV);
@@ -853,6 +876,15 @@ document.addEventListener('DOMContentLoaded',function(){
   document.getElementById('previewModal').addEventListener('click',function(e){
     if(e.target===this) closeModal();
   });
+  // Default FY End Date to 31-Mar of current Indian FY
+  var fyEl = document.getElementById('fyEndDate');
+  if(fyEl && !fyEl.value){
+    var today = new Date();
+    var fyEnd = today.getMonth() >= 3
+      ? new Date(today.getFullYear()+1, 2, 31)
+      : new Date(today.getFullYear(), 2, 31);
+    fyEl.value = fyEnd.toISOString().slice(0,10);
+  }
 });
 </script>
 </body>
