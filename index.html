@@ -46,7 +46,7 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
 @media(max-width:768px){nav{padding:0 16px;}}
 
 /* HERO */
-.hero-section{background:#001A3D;border-bottom:none;}
+.hero-section{background:#001A3D;border-bottom:none;overflow:hidden;}
 .hero{padding:80px 32px 72px;max-width:1160px;margin:0 auto;text-align:center;position:relative;}
 .hero::before{content:'';position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:800px;height:400px;background:radial-gradient(ellipse at 50% 30%,rgba(99,102,241,0.09) 0%,transparent 70%);pointer-events:none;}
 .hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,0.9);border:1px solid var(--brand-mid);color:var(--brand-dark);font-size:12px;font-weight:600;padding:7px 16px;border-radius:100px;margin-bottom:26px;box-shadow:0 2px 8px rgba(99,102,241,0.1);}
@@ -516,7 +516,7 @@ function toggleBilling(){
   <div style="max-width:1160px;margin:0 auto;">
     <div class="footer-cols-grid">
       <div>
-        <img loading="lazy" src="logo.png" alt="Finosutra" style="height:32px;width:auto;display:block;margin-bottom:12px;">
+        <div style="font-size:22px;font-weight:800;background:linear-gradient(135deg,#818CF8,#A78BFA);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;font-family:Inter,sans-serif;letter-spacing:-.3px;">Finosutra</div>
         <p style="font-size:13px;line-height:1.7;max-width:220px;">Finance on autopilot — smart tools built for CAs, CFOs and finance teams across India.</p>
         <div style="display:flex;gap:8px;margin-top:16px;">
           <a href="mailto:fino.sutra07@gmail.com" style="width:32px;height:32px;background:rgba(255,255,255,0.08);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#9CA3AF;text-decoration:none;font-size:13px;transition:background .15s;" title="Email"><i class="fa-solid fa-envelope"></i></a>
@@ -528,7 +528,8 @@ function toggleBilling(){
         <h5 style="font-size:11px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;">IND AS Tools</h5>
         <a href="indas-tools.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">All IND AS Tools</a>
         <a href="indas116.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">IND AS 116 Calculator</a>
-        <a href="indas116-model2.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">IND AS 116 Model 2</a>
+        <a href="indas116-model2.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">Lease Modification Calculator</a>
+        <a href="indas116-model3.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">Escalating Rent Calculator</a>
         <a href="security-deposit.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">Security Deposit (IND AS 109)</a>
         <a href="sd-portfolio.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">SD Portfolio (Multi-Deposit)</a>
       </div>

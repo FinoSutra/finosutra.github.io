@@ -382,6 +382,7 @@
         global.currentUser = session.user;
         global.isProUser   = await fsCheckSubscription(session.user.id);
         fsUpdateNavUI(session.user, global.isProUser);
+        fsCheckRenewalAlert();
       } else {
         fsUpdateNavUI(null, false);
       }
@@ -391,6 +392,7 @@
           global.currentUser = session.user;
           global.isProUser   = await fsCheckSubscription(session.user.id);
           fsUpdateNavUI(session.user, global.isProUser);
+          fsCheckRenewalAlert();
         } else {
           global.currentUser = null;
           global.isProUser   = false;
@@ -408,16 +410,52 @@
       var now = new Date().toISOString();
       var res = await global.supaClient
         .from('subscriptions')
-        .select('id')
+        .select('id, current_period_end')
         .eq('user_id', userId)
         .eq('status', 'active')
         .gt('current_period_end', now)
         .order('created_at', { ascending: false })
         .limit(1)
         .maybeSingle();
-      return !res.error && res.data !== null;
+      if (!res.error && res.data !== null) {
+        global.fsSubPeriodEnd = res.data.current_period_end;
+        return true;
+      }
+      return false;
     } catch (e) { return false; }
   }
+
+  function fsCheckRenewalAlert() {
+    if (!global.isProUser || !global.fsSubPeriodEnd) return;
+    var daysLeft = Math.ceil((new Date(global.fsSubPeriodEnd) - new Date()) / (1000 * 60 * 60 * 24));
+    if (daysLeft > 7) return;
+    try { if (sessionStorage.getItem('fs_renewal_dismissed')) return; } catch (e) {}
+    fsShowRenewalBanner(daysLeft);
+  }
+
+  function fsShowRenewalBanner(daysLeft) {
+    if (document.getElementById('fsRenewalBanner')) return;
+    var label = daysLeft <= 0 ? 'expires today' : daysLeft === 1 ? 'expires tomorrow' : 'expires in ' + daysLeft + ' days';
+    var banner = document.createElement('div');
+    banner.id = 'fsRenewalBanner';
+    banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99998;background:linear-gradient(90deg,#92400E,#B45309);color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:center;gap:12px;font-family:Inter,sans-serif;font-size:13px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.2);';
+    banner.innerHTML =
+      '<span>&#9888; Your Finosutra Pro <strong>' + label + '</strong>. Renew to keep unlimited exports.</span>' +
+      '<button onclick="fsCloseRenewalBanner();fsInitiateProSubscription();" style="background:#fff;color:#92400E;border:none;border-radius:6px;padding:5px 14px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:Inter,sans-serif;">Renew Pro &rarr;</button>' +
+      '<button onclick="fsCloseRenewalBanner()" style="background:none;border:none;color:rgba(255,255,255,.7);font-size:18px;cursor:pointer;line-height:1;padding:0 4px;margin-left:4px;" title="Dismiss">&times;</button>';
+    document.body.insertBefore(banner, document.body.firstChild);
+    // Push page content down
+    document.body.style.paddingTop = (parseInt(document.body.style.paddingTop || '0') + 44) + 'px';
+  }
+
+  global.fsCloseRenewalBanner = function () {
+    var b = document.getElementById('fsRenewalBanner');
+    if (b) {
+      document.body.style.paddingTop = Math.max(0, parseInt(document.body.style.paddingTop || '0') - 44) + 'px';
+      b.remove();
+    }
+    try { sessionStorage.setItem('fs_renewal_dismissed', '1'); } catch (e) {}
+  };
 
   // ── Auth modal controls ───────────────────────────────────────────────────────
   global.fsShowAuthModal = function (tab) {
