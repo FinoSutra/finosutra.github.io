@@ -354,6 +354,20 @@
       }
     }
 
+    // Mobile nav auth item (inside hamburger dropdown)
+    var navAuthMobile = document.getElementById('navAuthMobile');
+    if (navAuthMobile) {
+      if (!user) {
+        navAuthMobile.innerHTML = '<a onclick="fsShowAuthModal(\'login\')" style="cursor:pointer;display:block;padding:9px 13px;border-radius:8px;background:#EEF2FF;color:#4F46E5;font-size:13px;font-weight:700;text-align:center;margin-top:6px;border:1.5px solid #C7D2FE">Log In</a>';
+      } else {
+        var mShort = user.email.length > 30 ? user.email.slice(0,28)+'…' : user.email;
+        var mPro = isPro ? '<span style="background:#FEF3C7;color:#92400E;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:6px">PRO</span>' : '';
+        navAuthMobile.innerHTML =
+          '<div style="padding:8px 13px 4px;font-size:12px;color:#6B7280;border-top:1px solid #E5E7EB;margin-top:6px;display:flex;align-items:center;gap:4px">' + mShort + mPro + '</div>' +
+          '<button onclick="fsHandleLogout()" style="width:100%;padding:7px 13px;background:none;border:none;color:#EF4444;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;text-align:left">Sign Out</button>';
+      }
+    }
+
     // Show/hide Pro upgrade banner
     var banner = document.getElementById('fsProBanner');
     if (banner) banner.style.display = (user && !isPro) ? 'block' : 'none';

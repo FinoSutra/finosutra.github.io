@@ -252,7 +252,7 @@ body{background:linear-gradient(160deg,#EDEEFF 0%,#EAF0FF 40%,#F2EEFF 100%);colo
 #mainNav .nav-back-btn:hover{background:linear-gradient(135deg,#4338CA,#6D28D9);transform:translateY(-1px);}
 #mainNav .nav-toggle{display:none;background:none;border:none;font-size:20px;color:#111827;cursor:pointer;padding:4px;}
 @media(max-width:900px){#mainNav .nav-links{display:none;}}
-@media(max-width:900px){#mainNav{padding:0 16px;}#mainNav .nav-toggle{display:block;}#mainNav .nav-actions .nav-back-btn{display:none;}#mainNav .nav-links.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid rgba(0,82,204,0.08);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
+@media(max-width:900px){#mainNav{padding:0 16px;}#mainNav .nav-actions{display:none;}#mainNav .nav-toggle{display:block;}#mainNav .nav-links.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid rgba(0,82,204,0.08);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
 .site-footer{background:#002244;color:rgba(255,255,255,0.7);padding:28px 32px;text-align:center;font-size:12px;line-height:1.8;margin-top:40px;}
 .site-footer .footer-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:14px;}
 .site-footer .footer-badge{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:4px 13px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);display:inline-flex;align-items:center;gap:5px;}
@@ -290,6 +290,7 @@ body{background:linear-gradient(160deg,#EDEEFF 0%,#EAF0FF 40%,#F2EEFF 100%);colo
       <li><a href="blog.html">Blog</a></li>
       <li><a href="index.html#pricing">Pricing</a></li>
       <li><a href="index.html#contact">Contact</a></li>
+      <li id="navAuthMobile"></li>
     </ul>
     <div class="nav-actions" id="navActions">
       <a href="index.html" class="nav-back-btn">&#8592; All Tools</a>
