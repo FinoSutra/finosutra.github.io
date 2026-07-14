@@ -108,6 +108,11 @@ nav{background:rgba(255,255,255,.97);backdrop-filter:blur(20px);border-bottom:1p
 .empty-title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px}
 .empty-sub{font-size:14px;color:var(--muted);margin-bottom:20px;max-width:400px;margin-left:auto;margin-right:auto}
 
+/* ── STATUS BADGES ── */
+.badge-active{background:#D1FAE5;color:#065F46;font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px;display:inline-block}
+.badge-expiring{background:#FEF3C7;color:#92400E;font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px;display:inline-block}
+.badge-matured{background:#FEE2E2;color:#991B1B;font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px;display:inline-block}
+
 /* ── SAMPLE CARDS ── */
 .sample-strip{max-width:1200px;margin:0 auto 8px;padding:0 24px}
 .sample-label{font-size:11px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
@@ -189,9 +194,10 @@ input[type=file]{display:none}
   <div class="toolbar-left" id="toolbarTitle">Security Deposit Portfolio</div>
   <div class="toolbar-right" style="align-items:center">
     <label style="font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap">FY End Date
-      <input type="date" id="fyEndDate" style="margin-left:6px;padding:6px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;font-family:inherit;color:var(--text);background:#fff">
+      <input type="date" id="fyEndDate" onchange="recomputeAllFYIdx();renderGrid();updateKPIs();" style="margin-left:6px;padding:6px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;font-family:inherit;color:var(--text);background:#fff">
     </label>
     <button class="btn btn-outline" onclick="downloadTemplate()"><i class="fa-solid fa-download"></i> Download Template</button>
+    <a href="security-deposit.html?pf_save=1" class="btn btn-outline"><i class="fa-solid fa-plus"></i> Add Single</a>
     <button class="btn btn-outline" id="btnSaveAll" onclick="saveAllToSupabase()" style="display:none"><i class="fa-solid fa-floppy-disk"></i> Save All</button>
     <button class="btn btn-green" onclick="document.getElementById('fileInput').click()"><i class="fa-solid fa-upload"></i> Upload Deposits</button>
     <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" onchange="handleFileUpload(this)">
@@ -285,7 +291,7 @@ input[type=file]{display:none}
 
 <!-- EXPORT ROW -->
 <div class="export-row" id="exportRow">
-  <div class="export-notice">🎁 First export free — no signup needed. Click to download.</div>
+  <div class="export-notice">📊 Export includes Portfolio Summary · Per-deposit Amortisation · Journal Entries · Consolidated Schedule · IND AS 109 Disclosure Note</div>
   <button class="exp-btn" id="btnExp"><i class="fa-solid fa-file-excel"></i> Export Consolidated Report (Excel)</button>
 </div>
 
@@ -566,6 +572,30 @@ function confirmUpload(){
   gaEvent('deposits_confirmed', { tool_name: 'SD Portfolio', count: valid.length });
 }
 
+// ── Status badge helper ─────────────────────────────────────────────────────
+function getDepStatus(d){
+  if(!d.commDate) return null;
+  var mat = new Date(d.commDate);
+  mat.setFullYear(mat.getFullYear() + Math.ceil(d.inputs.tenure));
+  var days = (mat - new Date()) / (24*3600*1000);
+  if(days < 0)  return '<span class="badge-matured">Matured</span>';
+  if(days < 90) return '<span class="badge-expiring">Expiring</span>';
+  return '<span class="badge-active">Active</span>';
+}
+
+// ── Recompute FY year index for all deposits ────────────────────────────────
+function recomputeAllFYIdx(){
+  var fyEndDateV = (document.getElementById('fyEndDate')||{}).value || '';
+  deposits.forEach(function(d){
+    var idx = 0;
+    if(d.commDate && fyEndDateV){
+      var elapsed = (new Date(fyEndDateV) - d.commDate) / (365.25*24*3600*1000);
+      if(elapsed >= 0) idx = Math.min(Math.floor(elapsed), d.summary.sched.length - 1);
+    }
+    d.summary.fyYearIdx = idx;
+  });
+}
+
 // ── Render ──────────────────────────────────────────────────────────────────
 function renderGrid(){
   var grid = document.getElementById('depGrid');
@@ -589,6 +619,8 @@ function renderGrid(){
   grid.innerHTML = deposits.map(function(d, idx){
     var fyIdx = d.summary.fyYearIdx || 0;
     var fyInt = d.summary.sched.length > fyIdx ? d.summary.sched[fyIdx].interest : 0;
+    var statusBadge = getDepStatus(d) || '';
+    var commStr = d.commDate ? d.commDate.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}) : '';
     return '<div class="dep-card">' +
       '<div class="dep-card-head">' +
         '<div class="dep-name">' + d.name + '</div>' +
@@ -599,12 +631,14 @@ function renderGrid(){
         '<span class="dep-meta-item">EIR ' + (d.inputs.rate * 100).toFixed(2) + '%</span>' +
         '<span class="dep-meta-item">' + d.inputs.tenure + ' yrs</span>' +
         '<span class="dep-meta-item">' + d.inputs.std1 + '</span>' +
+        (commStr ? '<span class="dep-meta-item"><i class="fa-solid fa-calendar"></i> ' + commStr + '</span>' : '') +
       '</div>' +
+      (statusBadge ? '<div style="margin-bottom:10px">' + statusBadge + '</div>' : '') +
       '<div class="dep-kpis">' +
         '<div class="dep-kpi"><div class="dep-kpi-lbl">Nominal Deposit</div><div class="dep-kpi-val c-nominal">' + INR(d.inputs.deposit) + '</div></div>' +
         '<div class="dep-kpi"><div class="dep-kpi-lbl">Fair Value (PV)</div><div class="dep-kpi-val c-pv">' + INR(d.summary.pv) + '</div></div>' +
         '<div class="dep-kpi"><div class="dep-kpi-lbl">Day 1 Discount</div><div class="dep-kpi-val c-discount">' + INR(d.summary.discount) + '</div></div>' +
-        '<div class="dep-kpi"><div class="dep-kpi-lbl">Yr 1 Unwinding</div><div class="dep-kpi-val c-unwind">' + INR(fyInt) + '</div></div>' +
+        '<div class="dep-kpi"><div class="dep-kpi-lbl">FY Unwinding</div><div class="dep-kpi-val c-unwind">' + INR(fyInt) + '</div></div>' +
       '</div>' +
       '<div class="dep-foot">' +
         (d._savedId
@@ -616,10 +650,16 @@ function renderGrid(){
   }).join('');
 }
 
-function removeDeposit(idx){
+async function removeDeposit(idx){
+  var d = deposits[idx];
+  if(d && d._savedId && window.currentUser){
+    var client = getPFClient();
+    if(client) await client.from('security_deposits').delete().eq('id', d._savedId);
+  }
   deposits.splice(idx, 1);
   renderGrid();
   updateKPIs();
+  checkSaveAllBtn();
 }
 
 function updateKPIs(){
@@ -718,12 +758,14 @@ function doExport(){
       var hdrRow=[cs('Year',S.hdr),cs('Opening CV (₹)',S.hdr),cs('Interest/Unwinding (₹)',S.hdr),cs('Closing CV (₹)',S.hdr),cs('Rent '+(SD.isGiven?'Exp':'Inc')+' (₹)',S.hdr),cs('Net P&L (₹)',S.hdr)];
       var rows=[hdrRow];
       SD.sched.forEach(function(r,i){
-        var net=SD.isGiven?r.interest-SD.rentPY:SD.rentPY-r.interest;
+        var rp=r.rentPeriod!=null?r.rentPeriod:SD.rentPY;
+        var net=SD.isGiven?r.interest-rp:rp-r.interest;
         var even=i%2===0;
-        rows.push([cs('Year '+r.year,even?S.lbl:S.lblS),cn(r.cvOpen,even?S.num:S.numS),cn(r.interest,even?S.num:S.numS),cn(r.cvClose,even?S.num:S.numS),cn(SD.rentPY,even?S.num:S.numS),cn(net,even?S.num:S.numS)]);
+        rows.push([cs('Year '+r.year,even?S.lbl:S.lblS),cn(r.cvOpen,even?S.num:S.numS),cn(r.interest,even?S.num:S.numS),cn(r.cvClose,even?S.num:S.numS),cn(rp,even?S.num:S.numS),cn(net,even?S.num:S.numS)]);
       });
       var totInt=SD.sched.reduce(function(a,r){return a+r.interest;},0);
-      rows.push([cs('TOTAL',S.totL),cb(),cn(totInt,S.tot),cb(),cn(SD.rentPY*SD.sched.length,S.tot),cn(SD.isGiven?totInt-SD.rentPY*SD.sched.length:SD.rentPY*SD.sched.length-totInt,S.tot)]);
+      var totRent=SD.sched.reduce(function(a,r){return a+(r.rentPeriod!=null?r.rentPeriod:SD.rentPY);},0);
+      rows.push([cs('TOTAL',S.totL),cb(),cn(totInt,S.tot),cb(),cn(totRent,S.tot),cn(SD.isGiven?totInt-totRent:totRent-totInt,S.tot)]);
       var ws=XLSX.utils.aoa_to_sheet(rows);
       ws['!cols']=[{wch:10},{wch:18},{wch:20},{wch:18},{wch:18},{wch:16}];
       setRows(ws,[[0,20]]);
@@ -750,17 +792,18 @@ function doExport(){
         addJE('Day 1','Deferred Rental Income','',SD.discount,false);
       }
       SD.sched.forEach(function(r){
-        addSec('YEAR '+r.year+' — EIR UNWINDING & RENT');
+        var rp = r.rentPeriod != null ? r.rentPeriod : SD.rentPY;
+        addSec('YEAR '+r.year+' — EIR UNWINDING & RENT'+(r.isLast && SD.tenure%1!==0 ? ' (partial year)' : ''));
         if(SD.isGiven){
           addJE('Year '+r.year+' Unwinding','Security Deposit — Financial Asset',r.interest,'',false);
           addJE('Year '+r.year+' Unwinding','Finance Income (P&L)','',r.interest,true);
-          addJE('Year '+r.year+' Rent','Rent Expense (P&L)',SD.rentPY,'',false);
-          addJE('Year '+r.year+' Rent','Prepaid Rent','',SD.rentPY,true);
+          addJE('Year '+r.year+' Rent','Rent Expense (P&L)',rp,'',false);
+          addJE('Year '+r.year+' Rent','Prepaid Rent','',rp,true);
         } else {
           addJE('Year '+r.year+' Unwinding','Finance Cost (P&L)',r.interest,'',false);
           addJE('Year '+r.year+' Unwinding','Security Deposit — Fin. Liability','',r.interest,true);
-          addJE('Year '+r.year+' Income','Deferred Rental Income',SD.rentPY,'',false);
-          addJE('Year '+r.year+' Income','Rental Income (P&L)','',SD.rentPY,true);
+          addJE('Year '+r.year+' Income','Deferred Rental Income',rp,'',false);
+          addJE('Year '+r.year+' Income','Rental Income (P&L)','',rp,true);
         }
       });
       var ws=XLSX.utils.aoa_to_sheet(rows);
@@ -807,8 +850,8 @@ function doExport(){
     var recDeps   = deposits.filter(function(d){return !d.inputs.isGiven;});
     var openGiven = givenDeps.reduce(function(s,d){return s+d.summary.pv;},0);
     var openRec   = recDeps.reduce(function(s,d){return s+d.summary.pv;},0);
-    var intGiven  = givenDeps.reduce(function(s,d){return s+(d.summary.sched.length>0?d.summary.sched[0].interest:0);},0);
-    var intRec    = recDeps.reduce(function(s,d){return s+(d.summary.sched.length>0?d.summary.sched[0].interest:0);},0);
+    var intGiven  = givenDeps.reduce(function(s,d){var i=d.summary.fyYearIdx||0;return s+(d.summary.sched.length>i?d.summary.sched[i].interest:0);},0);
+    var intRec    = recDeps.reduce(function(s,d){var i=d.summary.fyYearIdx||0;return s+(d.summary.sched.length>i?d.summary.sched[i].interest:0);},0);
     addRow(['Opening Balance (Fair Value)',openGiven,openRec],false);
     addRow(['Add: Unwinding of Discount (Finance Income/Cost)',intGiven,intRec],true);
     addTot(['Closing Balance',openGiven+intGiven,openRec+intRec]);
@@ -879,9 +922,9 @@ var PF_SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIs
 var pfClient = null;
 
 function getPFClient(){
+  if(window.supaClient) return window.supaClient;
   if(pfClient) return pfClient;
   if(typeof supabase !== 'undefined') pfClient = supabase.createClient(PF_SUPA_URL, PF_SUPA_KEY);
-  else if(window.supaClient) pfClient = window.supaClient;
   return pfClient;
 }
 
@@ -939,7 +982,7 @@ async function loadDepositsFromSupabase(){
       summary  : {
         pv:sum.pv||0, discount:sum.discount||0,
         rentPY:sum.rentPY||0, totalInterest:sum.totalInterest||0,
-        sched:sched, fyYearIdx:0
+        sched:sched, fyYearIdx:0  // recomputed below
       }
     });
     existing.push(row.name);
@@ -947,6 +990,7 @@ async function loadDepositsFromSupabase(){
   });
 
   if(added > 0){
+    recomputeAllFYIdx();
     renderGrid();
     updateKPIs();
     showToast('Loaded '+added+' saved deposit'+(added!==1?'s':'')+' from your register.','#4F46E5');

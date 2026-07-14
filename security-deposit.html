@@ -1376,6 +1376,16 @@ document.addEventListener('DOMContentLoaded', function(){
   var rd = document.getElementById('repDate');
   if(rd && !rd.value) rd.value = fyEnd.toISOString().slice(0,10);
 
+  // Portfolio referral banner
+  var _p = new URLSearchParams(location.search);
+  if(_p.get('pf_save') === '1'){
+    var pfBanner = document.createElement('div');
+    pfBanner.style.cssText = 'background:#EEF2FF;border:1.5px solid #C7D2FE;border-radius:10px;padding:10px 16px;margin:12px 20px 0;font-size:13px;color:#4338CA;font-weight:600;display:flex;align-items:center;gap:8px;';
+    pfBanner.innerHTML = '<i class="fa-solid fa-layer-group"></i> Fill in the deposit details → Calculate → then click <strong>Save to My Deposits</strong> to add it to your portfolio. &nbsp;<a href="sd-portfolio.html" style="color:#4F46E5;margin-left:auto;font-size:12px;white-space:nowrap">← Back to Portfolio</a>';
+    var inputCard = document.querySelector('.card');
+    if(inputCard) inputCard.parentNode.insertBefore(pfBanner, inputCard);
+  }
+
   // Load saved deposits once auth is ready
   var authWait = setInterval(function(){
     if(window.currentUser !== undefined){
