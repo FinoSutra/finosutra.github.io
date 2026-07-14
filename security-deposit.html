@@ -30,6 +30,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root {
   --brand:#4F46E5; --brand-dark:#1E1B4B; --brand-light:#EEF2FF; --brand-mid:#C7D2FE;
@@ -61,6 +62,16 @@ body{background:linear-gradient(160deg,#EDEEFF 0%,#EAF0FF 40%,#F2EEFF 100%);colo
 .card-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;background:var(--brand-light);flex-shrink:0}
 .card-header h3{font-size:13px;font-weight:700;color:var(--text)}
 .card-body{padding:20px}
+
+/* ── MY DEPOSITS PANEL ── */
+.dep-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border:1px solid var(--border-light);margin-bottom:8px;cursor:pointer;transition:all .15s;background:#fff}
+.dep-row:hover{border-color:var(--brand);background:var(--brand-light)}
+.dep-row-info{flex:1;min-width:0}
+.dep-row-name{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dep-row-meta{font-size:11px;color:var(--muted);margin-top:2px}
+.dep-row-del{background:none;border:none;cursor:pointer;color:var(--muted2);font-size:14px;padding:4px 6px;border-radius:6px;transition:all .15s;flex-shrink:0}
+.dep-row-del:hover{color:#EF4444;background:#FEF2F2}
+.dep-empty{text-align:center;padding:24px 12px;color:var(--muted);font-size:12px}
 
 /* ── FORM ── */
 .field{margin-bottom:16px}
@@ -314,6 +325,20 @@ body{background:linear-gradient(160deg,#EDEEFF 0%,#EAF0FF 40%,#F2EEFF 100%);colo
       </div>
       <div class="card-body">
 
+        <div class="mod-hd">Deposit Identity <span class="req-tag" style="background:#F0FDF4;color:#065F46;border:1px solid #A7F3D0">Optional — for saving</span></div>
+
+        <div class="field">
+          <label class="field-label">Deposit Name</label>
+          <input type="text" id="depName" placeholder="e.g. Mumbai Office — Floor 3"/>
+          <div class="hint">Name this deposit to save it to your register</div>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Entity / Client</label>
+          <input type="text" id="depEntity" placeholder="e.g. ABC Pvt. Ltd."/>
+        </div>
+
+        <hr class="divider"/>
         <div class="mod-hd">Core Details <span class="req-tag">Required</span></div>
 
         <div class="field">
@@ -379,7 +404,27 @@ body{background:linear-gradient(160deg,#EDEEFF 0%,#EAF0FF 40%,#F2EEFF 100%);colo
         </div>
 
         <button class="calc-btn" onclick="calculate()">&#x26A1; Calculate Deposit Schedule</button>
+
+        <!-- SAVE BUTTON — shown after calculation, Pro only -->
+        <div id="saveDepositWrap" style="display:none;padding:12px 20px 0">
+          <button id="btnSaveDeposit" onclick="saveDeposit()" style="width:100%;padding:10px;background:#fff;border:1.5px solid var(--brand);color:var(--brand);border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:7px">
+            <i class="fa-solid fa-floppy-disk"></i> Save to My Deposits
+          </button>
+          <div id="saveDepMsg" style="font-size:11px;text-align:center;margin-top:6px;color:var(--muted)"></div>
+        </div>
       </div>
+    </div>
+
+    <!-- MY DEPOSITS PANEL -->
+    <div class="card" id="myDepositsCard" style="display:none;margin-top:16px">
+      <div class="card-header" style="justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="card-icon">📂</div>
+          <h3>My Deposits</h3>
+        </div>
+        <span id="myDepCount" style="font-size:11px;font-weight:700;color:var(--brand);background:var(--brand-light);padding:3px 10px;border-radius:20px">0 saved</span>
+      </div>
+      <div id="myDepList" style="padding:12px 16px;max-height:340px;overflow-y:auto"></div>
     </div>
 
     <div class="std-note">
@@ -843,6 +888,7 @@ function calculate(){
   var sdCl = document.getElementById('sdCrossLink'); if(sdCl) sdCl.style.display = 'flex';
   document.getElementById('expNote').textContent = tenure+' year schedule · '+(isIndAS?'Ind AS 109':'IFRS 9')+' compliant';
   showTab('summary');
+  showSaveButton();
 }
 
 /* ── HELPERS ── */
@@ -1163,6 +1209,165 @@ function exportXL(){
   XLSX.writeFile(wb,'Finosutra_SecurityDeposit_Report.xlsx');
 }
 
+// ── Supabase Save / Load ───────────────────────────────────────────────────
+var SD_SUPA_URL = 'https://uymuivmktvtxmodblxie.supabase.co';
+var SD_SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5bXVpdm1rdHZ0eG1vZGJseGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzMjk5NTYsImV4cCI6MjA5NjkwNTk1Nn0.7dsdrDmYR8R891_Cc68K75tUlmwi49KExGGQbBq3qmg';
+var sdSupaClient = null;
+
+function getSDClient(){
+  if(sdSupaClient) return sdSupaClient;
+  if(typeof supabase !== 'undefined'){
+    sdSupaClient = supabase.createClient(SD_SUPA_URL, SD_SUPA_KEY);
+  } else if(window.supaClient){
+    sdSupaClient = window.supaClient;
+  }
+  return sdSupaClient;
+}
+
+function getCurrentUser(){
+  return window.currentUser || null;
+}
+
+async function saveDeposit(){
+  var user = getCurrentUser();
+  if(!user){ showToast('Please log in to save deposits.','#D97706'); return; }
+
+  var name   = (document.getElementById('depName').value||'').trim();
+  var entity = (document.getElementById('depEntity').value||'').trim();
+  if(!name){ document.getElementById('depName').focus(); document.getElementById('depName').placeholder='Enter a name first'; return; }
+  if(!SD){ showToast('Calculate first, then save.','#D97706'); return; }
+
+  var btn = document.getElementById('btnSaveDeposit');
+  var msg = document.getElementById('saveDepMsg');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving…';
+
+  var client = getSDClient();
+  if(!client){ showToast('Save unavailable — please refresh.','#EF4444'); btn.disabled=false; btn.innerHTML='<i class="fa-solid fa-floppy-disk"></i> Save to My Deposits'; return; }
+
+  var payload = {
+    user_id : user.id,
+    name    : name,
+    entity  : entity || null,
+    inputs  : {
+      deposit   : SD.deposit,
+      rate      : SD.rate,
+      tenure    : SD.tenure,
+      isGiven   : SD.isGiven,
+      isIndAS   : SD.isIndAS,
+      commDate  : document.getElementById('commDate').value || null,
+      repDate   : document.getElementById('repDate').value  || null
+    },
+    summary : {
+      pv            : SD.pv,
+      discount      : SD.discount,
+      rentPY        : SD.rentPY,
+      totalInterest : SD.totalInterest,
+      sched         : SD.sched
+    },
+    updated_at: new Date().toISOString()
+  };
+
+  var { error } = await client.from('security_deposits').upsert(payload, { onConflict: 'user_id,name' });
+
+  btn.disabled = false;
+  if(error){
+    btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save to My Deposits';
+    msg.style.color = '#EF4444';
+    msg.textContent = 'Save failed: ' + error.message;
+  } else {
+    btn.innerHTML = '<i class="fa-solid fa-check"></i> Saved!';
+    btn.style.background = '#ECFDF5';
+    btn.style.borderColor = '#10B981';
+    btn.style.color = '#065F46';
+    msg.style.color = '#059669';
+    msg.textContent = '"'+name+'" saved to your deposit register.';
+    setTimeout(function(){
+      btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save to My Deposits';
+      btn.style.background = '#fff';
+      btn.style.borderColor = 'var(--brand)';
+      btn.style.color = 'var(--brand)';
+    }, 3000);
+    loadMyDeposits();
+  }
+}
+
+async function loadMyDeposits(){
+  var user = getCurrentUser();
+  var card = document.getElementById('myDepositsCard');
+  if(!user){ card.style.display='none'; return; }
+
+  var client = getSDClient();
+  if(!client){ return; }
+
+  var { data, error } = await client
+    .from('security_deposits')
+    .select('id,name,entity,inputs,summary,updated_at')
+    .eq('user_id', user.id)
+    .order('updated_at', { ascending: false })
+    .limit(50);
+
+  if(error || !data){ return; }
+
+  card.style.display = 'block';
+  document.getElementById('myDepCount').textContent = data.length + ' saved';
+
+  var list = document.getElementById('myDepList');
+  if(data.length === 0){
+    list.innerHTML = '<div class="dep-empty"><i class="fa-solid fa-inbox" style="font-size:24px;display:block;margin-bottom:8px;opacity:.4"></i>No saved deposits yet.<br>Calculate a deposit and click Save.</div>';
+    return;
+  }
+
+  list.innerHTML = data.map(function(d){
+    var inp = d.inputs || {};
+    var sum = d.summary || {};
+    var pv  = sum.pv ? '₹'+Math.round(sum.pv).toLocaleString('en-IN') : '';
+    var tenure = inp.tenure ? inp.tenure+'yr' : '';
+    var rate   = inp.rate   ? (inp.rate*100).toFixed(1)+'%' : '';
+    return '<div class="dep-row" onclick="loadDeposit('+JSON.stringify(JSON.stringify(d))+')">' +
+      '<div style="width:32px;height:32px;border-radius:8px;background:var(--brand-light);color:var(--brand);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">🧾</div>' +
+      '<div class="dep-row-info">' +
+        '<div class="dep-row-name">'+(d.name||'Unnamed')+'</div>' +
+        '<div class="dep-row-meta">'+(d.entity?d.entity+' · ':'')+tenure+' · '+rate+(pv?' · PV '+pv:'')+'</div>' +
+      '</div>' +
+      '<button class="dep-row-del" onclick="event.stopPropagation();deleteDeposit(\''+d.id+'\',\''+d.name.replace(/'/g,"\\'")+'\')" title="Delete"><i class="fa-solid fa-trash-can"></i></button>' +
+    '</div>';
+  }).join('');
+}
+
+function loadDeposit(jsonStr){
+  var d = JSON.parse(jsonStr);
+  var inp = d.inputs || {};
+  document.getElementById('depName').value    = d.name  || '';
+  document.getElementById('depEntity').value  = d.entity || '';
+  document.getElementById('depositAmt').value = inp.deposit || '';
+  document.getElementById('marketRate').value = inp.rate ? (inp.rate*100).toFixed(2) : '';
+  document.getElementById('tenure').value     = inp.tenure || '';
+  if(inp.commDate) document.getElementById('commDate').value = inp.commDate;
+  if(inp.repDate)  document.getElementById('repDate').value  = inp.repDate;
+  if(inp.isGiven !== undefined){ setType(inp.isGiven ? 'given' : 'received'); }
+  if(inp.isIndAS !== undefined){ setStd(inp.isIndAS ? 'indas' : 'ifrs'); }
+  calculate();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  showToast('Loaded: '+(d.name||'deposit'), '#4F46E5');
+}
+
+async function deleteDeposit(id, name){
+  if(!confirm('Delete "'+name+'" from your register?')) return;
+  var client = getSDClient();
+  if(!client) return;
+  var user = getCurrentUser();
+  if(!user) return;
+  await client.from('security_deposits').delete().eq('id', id).eq('user_id', user.id);
+  loadMyDeposits();
+  showToast('"'+name+'" deleted.', '#6B7280');
+}
+
+function showSaveButton(){
+  var wrap = document.getElementById('saveDepositWrap');
+  if(wrap) wrap.style.display = 'block'; // always visible after calculate — drives sign-up for non-logged-in users
+}
+
 document.addEventListener('DOMContentLoaded', function(){
   // Default reporting date to 31-Mar of current Indian FY
   var today = new Date();
@@ -1171,6 +1376,14 @@ document.addEventListener('DOMContentLoaded', function(){
     : new Date(today.getFullYear(), 2, 31);
   var rd = document.getElementById('repDate');
   if(rd && !rd.value) rd.value = fyEnd.toISOString().slice(0,10);
+
+  // Load saved deposits once auth is ready
+  var authWait = setInterval(function(){
+    if(window.currentUser !== undefined){
+      clearInterval(authWait);
+      if(window.currentUser) loadMyDeposits();
+    }
+  }, 500);
 });
 </script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>

@@ -95,9 +95,11 @@ nav{background:rgba(255,255,255,.97);backdrop-filter:blur(20px);border-bottom:1p
 .dep-kpi-val.c-pv{color:#4F46E5}
 .dep-kpi-val.c-discount{color:#D97706}
 .dep-kpi-val.c-unwind{color:#059669}
-.dep-foot{display:flex;justify-content:flex-end}
+.dep-foot{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .btn-remove{background:none;border:1.5px solid #FCA5A5;color:#DC2626;padding:5px 12px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
 .btn-remove:hover{background:#FEF2F2}
+.btn-save-dep{background:none;border:1.5px solid var(--brand-mid);color:var(--brand);padding:5px 12px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;align-items:center;gap:5px}
+.btn-save-dep:hover{background:var(--brand-light)}
 
 /* ── EMPTY STATE ── */
 .empty-state{text-align:center;padding:60px 24px 20px;color:var(--muted)}
@@ -189,6 +191,7 @@ input[type=file]{display:none}
       <input type="date" id="fyEndDate" style="margin-left:6px;padding:6px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;font-family:inherit;color:var(--text);background:#fff">
     </label>
     <button class="btn btn-outline" onclick="downloadTemplate()"><i class="fa-solid fa-download"></i> Download Template</button>
+    <button class="btn btn-outline" id="btnSaveAll" onclick="saveAllToSupabase()" style="display:none"><i class="fa-solid fa-floppy-disk"></i> Save All</button>
     <button class="btn btn-green" onclick="document.getElementById('fileInput').click()"><i class="fa-solid fa-upload"></i> Upload Deposits</button>
     <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" onchange="handleFileUpload(this)">
   </div>
@@ -558,6 +561,7 @@ function confirmUpload(){
   closeModal();
   renderGrid();
   updateKPIs();
+  checkSaveAllBtn();
   gaEvent('deposits_confirmed', { tool_name: 'SD Portfolio', count: valid.length });
 }
 
@@ -602,6 +606,9 @@ function renderGrid(){
         '<div class="dep-kpi"><div class="dep-kpi-lbl">Yr 1 Unwinding</div><div class="dep-kpi-val c-unwind">' + INR(fyInt) + '</div></div>' +
       '</div>' +
       '<div class="dep-foot">' +
+        (d._savedId
+          ? '<span style="font-size:11px;color:#059669;font-weight:700;display:flex;align-items:center;gap:4px"><i class="fa-solid fa-check-circle"></i> Saved</span>'
+          : '<button class="btn-save-dep" onclick="event.stopPropagation();saveOneDeposit('+idx+')"><i class="fa-solid fa-floppy-disk"></i> Save</button>') +
         '<button class="btn-remove" onclick="removeDeposit(' + idx + ')"><i class="fa-solid fa-trash-can"></i> Remove</button>' +
       '</div>' +
     '</div>';
@@ -861,18 +868,160 @@ function showUpsellBanner(){
 }
 
 // ── Export button wiring (synchronous — auth.js timing) ────────────────────
-// auth.js Pro path tries exportXL → generateAndDownloadExcel → generateExcel → downloadExcel in order
 window.exportXL = doExport;
 window.downloadExcel = doExport;
 document.getElementById('btnExp').onclick = doExport;
+
+// ── Supabase Save / Load ───────────────────────────────────────────────────
+var PF_SUPA_URL = 'https://uymuivmktvtxmodblxie.supabase.co';
+var PF_SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5bXVpdm1rdHZ0eG1vZGJseGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzMjk5NTYsImV4cCI6MjA5NjkwNTk1Nn0.7dsdrDmYR8R891_Cc68K75tUlmwi49KExGGQbBq3qmg';
+var pfClient = null;
+
+function getPFClient(){
+  if(pfClient) return pfClient;
+  if(typeof supabase !== 'undefined') pfClient = supabase.createClient(PF_SUPA_URL, PF_SUPA_KEY);
+  else if(window.supaClient) pfClient = window.supaClient;
+  return pfClient;
+}
+
+async function loadDepositsFromSupabase(){
+  var user = window.currentUser;
+  if(!user) return;
+  var client = getPFClient();
+  if(!client) return;
+
+  var { data, error } = await client
+    .from('security_deposits')
+    .select('id,name,entity,inputs,summary,updated_at')
+    .eq('user_id', user.id)
+    .order('updated_at', { ascending: false })
+    .limit(100);
+
+  if(error || !data || data.length === 0) return;
+
+  // Merge: add records not already in deposits[] (by name)
+  var existing = deposits.map(function(d){ return d.name; });
+  var added = 0;
+  data.forEach(function(row){
+    if(existing.indexOf(row.name) !== -1) return;
+    var inp = row.inputs || {};
+    var sum = row.summary || {};
+    // Rebuild sched if missing
+    var sched = sum.sched;
+    if(!sched || !sched.length){
+      sched = [];
+      var deposit = inp.deposit || 0;
+      var rate    = inp.rate    || 0;
+      var tenure  = inp.tenure  || 0;
+      var cv = deposit / Math.pow(1+rate, tenure);
+      for(var y=1;y<=Math.ceil(tenure);y++){
+        var isLast   = y===Math.ceil(tenure);
+        var partial  = (tenure%1!==0&&isLast)?tenure%1:1;
+        var interest = isLast?(deposit-cv):cv*rate*partial;
+        var cvClose  = isLast?deposit:cv+interest;
+        var rentPeriod = (sum.rentPY||0)*partial;
+        sched.push({year:y,cvOpen:cv,interest:interest,cvClose:cvClose,isLast:isLast,rentPeriod:rentPeriod});
+        cv=cvClose;
+      }
+    }
+    deposits.push({
+      name     : row.name,
+      entity   : row.entity || '',
+      commDate : inp.commDate ? new Date(inp.commDate) : null,
+      _savedId : row.id,
+      inputs   : {
+        deposit : inp.deposit||0, rate:inp.rate||0, tenure:inp.tenure||0,
+        isGiven : inp.isGiven!==false, isIndAS:inp.isIndAS!==false,
+        std1    : inp.isIndAS!==false?'Ind AS 109':'IFRS 9',
+        std2    : inp.isIndAS!==false?'Ind AS 116':'IFRS 16'
+      },
+      summary  : {
+        pv:sum.pv||0, discount:sum.discount||0,
+        rentPY:sum.rentPY||0, totalInterest:sum.totalInterest||0,
+        sched:sched, fyYearIdx:0
+      }
+    });
+    existing.push(row.name);
+    added++;
+  });
+
+  if(added > 0){
+    renderGrid();
+    updateKPIs();
+    showToast('Loaded '+added+' saved deposit'+(added!==1?'s':'')+' from your register.','#4F46E5');
+    // Show Save All button only if there are un-saved deposits
+    checkSaveAllBtn();
+  }
+}
+
+async function saveOneDeposit(idx){
+  var user = window.currentUser;
+  if(!user){ showToast('Log in to save deposits.','#D97706'); return; }
+  var client = getPFClient();
+  if(!client){ showToast('Save unavailable — refresh page.','#EF4444'); return; }
+  var d = deposits[idx];
+  if(!d) return;
+
+  var payload = {
+    user_id    : user.id,
+    name       : d.name,
+    entity     : d.entity || null,
+    inputs     : Object.assign({}, d.inputs, { commDate: d.commDate ? d.commDate.toISOString().slice(0,10) : null }),
+    summary    : { pv:d.summary.pv, discount:d.summary.discount, rentPY:d.summary.rentPY, totalInterest:d.summary.totalInterest, sched:d.summary.sched },
+    updated_at : new Date().toISOString()
+  };
+
+  var { data, error } = await getPFClient()
+    .from('security_deposits')
+    .upsert(payload, { onConflict:'user_id,name' })
+    .select('id')
+    .single();
+
+  if(error){
+    showToast('Save failed: '+error.message,'#EF4444');
+  } else {
+    deposits[idx]._savedId = data ? data.id : true;
+    renderGrid();
+    showToast('"'+d.name+'" saved!','#059669');
+    checkSaveAllBtn();
+  }
+}
+
+async function saveAllToSupabase(){
+  var user = window.currentUser;
+  if(!user){ showToast('Log in to save deposits.','#D97706'); return; }
+  var unsaved = deposits.filter(function(d){ return !d._savedId; });
+  if(unsaved.length === 0){ showToast('All deposits already saved.','#059669'); return; }
+  var btn = document.getElementById('btnSaveAll');
+  btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving…';
+  for(var i=0;i<deposits.length;i++){
+    if(!deposits[i]._savedId) await saveOneDeposit(i);
+  }
+  btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save All';
+  checkSaveAllBtn();
+}
+
+function checkSaveAllBtn(){
+  var btn = document.getElementById('btnSaveAll');
+  if(!btn) return;
+  var user = window.currentUser;
+  var unsaved = deposits.filter(function(d){ return !d._savedId; });
+  btn.style.display = (user && deposits.length > 0 && unsaved.length > 0) ? 'inline-flex' : 'none';
+}
+
+function showToast(msg, color){
+  var t = document.createElement('div');
+  t.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:'+(color||'#111827')+';color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;z-index:99999;font-family:Inter,sans-serif;box-shadow:0 4px 20px rgba(0,0,0,.2);animation:fsToastIn .25s ease;pointer-events:none';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(function(){ t.remove(); }, 3000);
+}
 
 // ── Nav toggle & init ───────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded',function(){
   var tog=document.getElementById('navToggle');
   var nl=document.getElementById('navLinks');
-  if(tog) tog.addEventListener('click',function(){
-    nl.classList.toggle('open');
-  });
+  if(tog) tog.addEventListener('click',function(){ nl.classList.toggle('open'); });
   document.getElementById('previewModal').addEventListener('click',function(e){
     if(e.target===this) closeModal();
   });
@@ -885,6 +1034,13 @@ document.addEventListener('DOMContentLoaded',function(){
       : new Date(today.getFullYear(), 2, 31);
     fyEl.value = fyEnd.toISOString().slice(0,10);
   }
+  // Auto-load saved deposits when auth resolves
+  var authWait = setInterval(function(){
+    if(window.currentUser !== undefined){
+      clearInterval(authWait);
+      if(window.currentUser) loadDepositsFromSupabase();
+    }
+  }, 500);
 });
 </script>
 </body>
