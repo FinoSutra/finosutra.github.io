@@ -87,14 +87,14 @@ footer a:hover{color:#fff;}
   <div class="page-hero-inner">
     <div class="eyebrow">Legal</div>
     <h1>Privacy Policy</h1>
-    <p>Last updated: 28 May 2026 &nbsp;·&nbsp; Effective immediately</p>
+    <p>Last updated: 15 July 2026 &nbsp;·&nbsp; Effective immediately</p>
   </div>
 </div>
 
 <div class="content">
 
   <div class="highlight-box">
-    <strong>Summary:</strong> Finosutra does not store your financial calculation data. All calculations run entirely in your browser. We only collect information you voluntarily provide via our contact and waitlist forms, and payment data is processed exclusively by Razorpay — we never see your card details.
+    <strong>Summary:</strong> For guest users, all calculations run entirely in your browser — we store nothing. For registered (logged-in) users, lease and security deposit data you choose to save is stored securely in our database so you can access it across sessions. Payment data is processed exclusively by Razorpay — we never see your card details.
   </div>
 
   <div class="section-block">
@@ -105,19 +105,22 @@ footer a:hover{color:#fff;}
 
   <div class="section-block">
     <h2>2. Information We Collect</h2>
-    <p><strong>a) Contact & Waitlist Forms</strong><br>When you fill out our contact or waitlist forms, we collect your name, email address, and role (e.g., CA, CFO). This is used solely to respond to your enquiry or notify you of product launches.</p>
-    <p><strong>b) Payment Information</strong><br>Payments for premium features (e.g., Excel export at ₹199) are processed by Razorpay. We do not collect, store or have access to your card number, UPI ID, or any financial payment credentials. Razorpay's own privacy policy governs payment data.</p>
-    <p><strong>c) Calculator Inputs</strong><br>All calculation inputs you enter in our tools (lease terms, payment amounts, IBR, dates, etc.) are processed entirely within your browser. We do not transmit, store, or retain any of this data on our servers.</p>
-    <p><strong>d) Usage Data</strong><br>We may collect anonymous, aggregated usage data (e.g., page views, browser type) through standard web analytics tools to improve our products. This data cannot be used to identify you personally.</p>
+    <p><strong>a) Account &amp; Authentication Data</strong><br>When you create an account or log in, we collect your email address and encrypted password via Supabase Auth (our authentication provider). We also store your subscription status (free or Pro) and the date your subscription was created or renewed.</p>
+    <p><strong>b) Saved Tool Data (Registered Users Only)</strong><br>If you are logged in and choose to save your work — such as lease schedules in the Lease Portfolio or security deposit records in the Deposit Register — that data (inputs and computed outputs) is stored in our database linked to your account. This data is protected by row-level security: only you can read or modify it. Guest users who do not log in have no data stored on our servers.</p>
+    <p><strong>c) Contact &amp; Enquiry Forms</strong><br>When you fill out our contact form, we collect your name, email address, and message. This is used solely to respond to your enquiry.</p>
+    <p><strong>d) Payment Information</strong><br>Payments for Pro subscriptions (₹499/month or ₹3,999/year) or one-time exports are processed by Razorpay. We do not collect, store or have access to your card number, UPI ID, or any payment credentials. Razorpay's own privacy policy governs payment data.</p>
+    <p><strong>e) Usage &amp; Analytics Data</strong><br>We use Google Analytics 4 (GA4) to collect anonymous, aggregated usage data — page views, session duration, and feature interactions. GA4 data is anonymised and cannot identify you personally. You can opt out via the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" style="color:var(--brand)">Google Analytics Opt-out Browser Add-on</a>.</p>
   </div>
 
   <div class="section-block">
     <h2>3. How We Use Your Information</h2>
     <ul>
-      <li>To respond to your contact form enquiries or demo requests</li>
-      <li>To notify you when new products or features you signed up for become available</li>
-      <li>To process payments via Razorpay and deliver purchased reports or resources</li>
-      <li>To improve our tools and user experience based on aggregated, anonymous usage patterns</li>
+      <li>To authenticate your account and maintain your session</li>
+      <li>To store and retrieve your saved leases, security deposits, and other tool data across sessions</li>
+      <li>To manage your Pro subscription status and grant access to premium features</li>
+      <li>To process payments via Razorpay and issue receipts or confirmations</li>
+      <li>To respond to contact form enquiries</li>
+      <li>To improve our tools and user experience based on aggregated, anonymous analytics</li>
       <li>To comply with applicable Indian laws and regulations</li>
     </ul>
     <p>We do not sell, rent or share your personal information with third parties for marketing purposes.</p>
@@ -127,52 +130,69 @@ footer a:hover{color:#fff;}
     <h2>4. Third-Party Services</h2>
     <p>We use the following third-party services whose privacy policies govern their respective data handling:</p>
     <ul>
+      <li><strong>Supabase</strong> — authentication and database (stores account data and saved tool records). Data is hosted on AWS infrastructure in the US East (N. Virginia) region. See <a href="https://supabase.com/privacy" target="_blank" style="color:var(--brand)">supabase.com/privacy</a></li>
       <li><strong>Razorpay</strong> — payment processing. See <a href="https://razorpay.com/privacy/" target="_blank" style="color:var(--brand)">razorpay.com/privacy</a></li>
-      <li><strong>Netlify</strong> — website hosting and form submission. See <a href="https://www.netlify.com/privacy/" target="_blank" style="color:var(--brand)">netlify.com/privacy</a></li>
-      <li><strong>Google Fonts</strong> — font delivery. Google may log the request IP. See <a href="https://policies.google.com/privacy" target="_blank" style="color:var(--brand)">policies.google.com/privacy</a></li>
+      <li><strong>GitHub Pages</strong> — website hosting. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" style="color:var(--brand)">GitHub Privacy Statement</a></li>
+      <li><strong>Google Analytics 4</strong> — anonymous usage analytics. See <a href="https://policies.google.com/privacy" target="_blank" style="color:var(--brand)">policies.google.com/privacy</a></li>
+      <li><strong>Google Fonts</strong> — font delivery via CDN. Google may log the request IP. See <a href="https://policies.google.com/privacy" target="_blank" style="color:var(--brand)">policies.google.com/privacy</a></li>
     </ul>
   </div>
 
   <div class="section-block">
     <h2>5. Data Retention</h2>
-    <p>Contact and waitlist form data submitted via Netlify forms is retained for a maximum of 12 months or until you request deletion. Payment records are retained by Razorpay as required by applicable law.</p>
-    <p>Since we do not store calculation data, there is no calculation data to retain or delete.</p>
+    <p><strong>Account data</strong> (email, subscription status) is retained for as long as your account is active. If you request account deletion, we will delete your account and all associated saved records within 30 days.</p>
+    <p><strong>Saved tool data</strong> (leases, security deposits) is retained until you delete it from within the tool, or until you request account deletion.</p>
+    <p><strong>Payment records</strong> are retained by Razorpay as required by applicable law. We retain subscription transaction references (not payment credentials) for a minimum of 7 years as required under Indian accounting standards.</p>
+    <p><strong>Analytics data</strong> (GA4) is retained for 14 months per Google's default retention policy.</p>
+    <p>Guest users who do not create an account have no personal data stored on our servers beyond what GA4 anonymously collects.</p>
   </div>
 
   <div class="section-block">
-    <h2>6. Your Rights</h2>
-    <p>You have the right to:</p>
+    <h2>6. Data Transfers</h2>
+    <p>Our database infrastructure (Supabase) is hosted on servers located in the United States. By creating an account and saving data, you consent to your data being transferred to and processed in the United States. Supabase complies with applicable data protection standards including SOC 2 Type II certification.</p>
+  </div>
+
+  <div class="section-block">
+    <h2>7. Your Rights</h2>
+    <p>Under the Digital Personal Data Protection Act, 2023 (DPDP Act) and applicable Indian law, you have the right to:</p>
     <ul>
-      <li>Request access to personal data we hold about you</li>
-      <li>Request correction of inaccurate personal data</li>
-      <li>Request deletion of your personal data from our records</li>
-      <li>Withdraw consent for communications at any time</li>
+      <li>Access personal data we hold about you</li>
+      <li>Correct inaccurate or incomplete personal data</li>
+      <li>Erase your personal data (right to be forgotten) — we will delete your account and all saved records within 30 days of a verified request</li>
+      <li>Nominate another individual to exercise these rights on your behalf in the event of your death or incapacity</li>
+      <li>Withdraw consent for communications at any time by unsubscribing or emailing us</li>
     </ul>
     <p>To exercise any of these rights, email us at <a href="mailto:fino.sutra07@gmail.com" style="color:var(--brand)">fino.sutra07@gmail.com</a>. We will respond within 15 business days.</p>
   </div>
 
   <div class="section-block">
-    <h2>7. Cookies</h2>
-    <p>Our website does not use tracking cookies. We use browser-session memory only for in-tool calculations, which is cleared when you close your tab. Third-party services (Razorpay, Google Fonts) may set their own cookies subject to their respective policies.</p>
+    <h2>8. Cookies &amp; Local Storage</h2>
+    <p>We use browser <strong>localStorage</strong> to track free export usage per month (a count only — no personal data). Supabase Auth uses browser cookies to maintain your login session. We do not use third-party tracking or advertising cookies. Google Analytics and Google Fonts may set their own cookies subject to Google's privacy policy.</p>
   </div>
 
   <div class="section-block">
-    <h2>8. Security</h2>
-    <p>We take reasonable technical and organisational measures to protect the limited personal data we hold. Our website is served over HTTPS. Payment processing is handled exclusively by Razorpay's PCI-DSS compliant infrastructure.</p>
+    <h2>9. Security</h2>
+    <p>We take reasonable technical and organisational measures to protect personal data:</p>
+    <ul>
+      <li>All data in transit is encrypted via HTTPS/TLS</li>
+      <li>Database records are protected by row-level security (RLS) — each user can only access their own data</li>
+      <li>Authentication is handled by Supabase Auth using industry-standard bcrypt password hashing</li>
+      <li>Payment processing is handled exclusively by Razorpay's PCI-DSS compliant infrastructure</li>
+    </ul>
   </div>
 
   <div class="section-block">
-    <h2>9. Children's Privacy</h2>
-    <p>Our services are intended for finance professionals and are not directed at persons under the age of 18. We do not knowingly collect data from minors.</p>
+    <h2>10. Children's Privacy</h2>
+    <p>Our services are intended for finance professionals and are not directed at persons under the age of 18. We do not knowingly collect data from minors. If you believe a minor has created an account, please contact us and we will delete it promptly.</p>
   </div>
 
   <div class="section-block">
-    <h2>10. Governing Law</h2>
-    <p>This Privacy Policy is governed by the laws of India, including the Information Technology Act, 2000 and the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011. Any disputes shall be subject to the exclusive jurisdiction of courts in Mumbai, Maharashtra.</p>
+    <h2>11. Governing Law</h2>
+    <p>This Privacy Policy is governed by the laws of India, including the Digital Personal Data Protection Act, 2023 (DPDP Act), the Information Technology Act, 2000, and the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011. Any disputes shall be subject to the exclusive jurisdiction of courts in Mumbai, Maharashtra.</p>
   </div>
 
   <div class="section-block">
-    <p>We may update this Privacy Policy from time to time. The "Last updated" date at the top of this page reflects the most recent revision. Continued use of our services after any changes constitutes acceptance of the updated policy. We recommend checking this page periodically.</p>
+    <p>We may update this Privacy Policy from time to time. The "Last updated" date at the top of this page reflects the most recent revision. For material changes, we will notify registered users by email. Continued use of our services after any changes constitutes acceptance of the updated policy.</p>
   </div>
 
 </body>

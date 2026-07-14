@@ -42,9 +42,10 @@ nav{background:rgba(255,255,255,.97);backdrop-filter:blur(20px);border-bottom:1p
 .nav-back-btn:hover{opacity:.9;transform:translateY(-1px)}
 .nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px;color:var(--muted);font-size:18px}
 @media(max-width:900px){
-  .nav-actions{display:none}.nav-links{display:none}
+  .nav-links{display:none}
   .nav-links.open{display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:#fff;padding:16px;border-bottom:1px solid var(--border);z-index:999}
   .nav-toggle{display:block}
+  .nav-actions .nav-back-btn{display:none}
 }
 
 /* ── HERO ── */
