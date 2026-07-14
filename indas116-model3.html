@@ -3951,7 +3951,18 @@ function fsCopyLink(btn){
   <div class="footer-tagline">© 2026 Finosutra · GSTIN: 27ACWPW1076G1ZX · Mumbai, Maharashtra, India</div>
 </footer>
 
-
+<script>
+(function(){
+  var t=document.getElementById('navToggle');
+  if(!t) return;
+  t.onclick=function(){
+    var l=document.getElementById('navLinks');
+    if(l) l.classList.toggle('open');
+    var i=t.querySelector('i');
+    if(i) i.className=l&&l.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-bars';
+  };
+})();
+</script>
 </body>
 </html>
 

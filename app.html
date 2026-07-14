@@ -370,6 +370,10 @@ body{font-family:'Inter',sans-serif;color:#111827;-webkit-font-smoothing:antiali
   .kpi-strip{grid-template-columns:1fr 1fr;}
   .page-body{padding:16px;}
   .page-topbar{padding:12px 16px;}
+  /* Lease workspace — collapse 2-col form to 1-col when sidebar hides */
+  .lw-inputs-wrap{grid-template-columns:1fr;}
+  .lw-inputs-right{position:static;}
+  .lw-header-top{flex-wrap:wrap;gap:8px;}
 }
 @media(max-width:600px){
   .kpi-strip{grid-template-columns:1fr 1fr;}
@@ -379,7 +383,7 @@ body{font-family:'Inter',sans-serif;color:#111827;-webkit-font-smoothing:antiali
   .lease-meta{grid-template-columns:1fr;}
   .search-input{width:100%;}
   /* Prevent iOS auto-zoom on input focus */
-  .field input,.field select,.field textarea,.m-field input,.m-field select,.form-row input,.form-row select{font-size:16px;}
+  .field input,.field select,.field textarea,.m-field input,.m-field select,.form-row input,.form-row select,.lw-workflow-select,select,input[type="text"],input[type="number"],input[type="date"],input[type="email"]{font-size:16px;}
 }
 
 /* Hidden navActions for auth.js compat */
@@ -431,8 +435,8 @@ body{font-family:'Inter',sans-serif;color:#111827;-webkit-font-smoothing:antiali
 .lw-tab .lw-tab-badge.ok{background:#10B981;}
 
 /* Tab panes */
-.lw-body{flex:1;overflow-y:auto;}
-.lw-pane{display:none;padding:24px;}
+.lw-body{flex:1;overflow-y:auto;overflow-x:hidden;}
+.lw-pane{display:none;padding:24px;max-width:100%;overflow-x:hidden;}
 .lw-pane.active{display:block;}
 
 /* Overview tab */
