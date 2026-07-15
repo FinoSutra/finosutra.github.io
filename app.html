@@ -542,15 +542,29 @@ body{font-family:'Inter',sans-serif;color:#111827;-webkit-font-smoothing:antiali
 @media(max-width:600px){
   .lw-overview-grid{grid-template-columns:1fr;}
   .lw-result-strip{grid-template-columns:1fr 1fr;}
-  .lw-header-top{flex-wrap:wrap;}
-  .lw-pane{padding:16px;}
+  .lw-header-top{flex-wrap:wrap;gap:6px;padding:10px 0 8px;}
+  .lw-header{padding:0 12px;}
+  .lw-pane{padding:12px;}
+  /* Action bar: scroll horizontally so buttons don't wrap into multiple rows */
+  .lw-action-bar{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px !important;gap:4px;}
+  .lw-action-bar::-webkit-scrollbar{display:none;}
+  .lw-btn-sep{display:none;}
+  .lw-action-bar .lw-btn{font-size:10px;padding:5px 9px;flex-shrink:0;}
+  /* Tab bar */
   .lw-tabs{padding:0 8px;-webkit-mask-image:linear-gradient(to right,transparent 0%,#000 8px,#000 calc(100% - 28px),transparent 100%);mask-image:linear-gradient(to right,transparent 0%,#000 8px,#000 calc(100% - 28px),transparent 100%);}
   .lw-tab{padding:10px 12px;font-size:11px;}
   .lw-tab i{display:none;}
-  /* Mod panel — stack form rows on mobile */
+  /* Form rows — always 1 column */
+  .form-row,.form-row.trio{grid-template-columns:1fr;}
+  /* Mod panel */
   #modSection .form-row{grid-template-columns:1fr;}
   #modPara46aNote .field{margin-top:8px;}
   #addModBtn button{font-size:12px;padding:10px;}
+  /* Workflow bar — stack label + select */
+  .lw-workflow-bar{flex-direction:column;align-items:flex-start;gap:6px;}
+  .lw-workflow-bar span{display:none;}
+  /* Result strip in overview: full width cards */
+  .lw-result-strip{grid-template-columns:1fr;}
 }
 
 /* ── Sprint 3: Company Workspace ──────────────────────────────────── */
