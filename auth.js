@@ -111,7 +111,9 @@
       '.fs-um-btn-outline{background:#fff;border:1.5px solid #6366F1!important;color:#6366F1;}',
       '.fs-um-btn-primary{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;}',
       '.fs-um-footer{text-align:center;font-size:11px;color:#9CA3AF;font-family:Inter,sans-serif;}',
-      '@media(max-width:460px){.fs-um-cards{grid-template-columns:1fr;}.fs-um-card-featured{margin-top:14px;}}'
+      '@media(max-width:460px){.fs-um-cards{grid-template-columns:1fr;}.fs-um-card-featured{margin-top:14px;}}',
+      /* MOBILE AUTH MODAL — prevent iOS zoom on input focus */
+      '@media(max-width:600px){#fsAuthModal{width:calc(100vw - 24px);max-width:calc(100vw - 24px);padding:28px 20px 22px;border-radius:16px;}.fs-auth-field input{font-size:16px;padding:11px 12px;}}'
     ].join('');
     var el = document.createElement('style');
     el.textContent = css;
