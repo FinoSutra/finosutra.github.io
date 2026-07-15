@@ -364,8 +364,10 @@ body{font-family:'Inter',sans-serif;color:#111827;-webkit-font-smoothing:antiali
 @media(max-width:900px){
   .sidebar{transform:translateX(-100%);}
   .sidebar.open{transform:translateX(0);}
-  .app-main{margin-left:0;}
-  .mobile-topbar{display:flex;}
+  /* Switch app-wrap to block so sidebar (position:fixed) doesn't consume flex width */
+  .app-wrap{display:block;}
+  .app-main{margin-left:0;width:100%;min-width:0;}
+  .mobile-topbar{display:flex;width:100%;}
   .page-topbar{top:48px;}
   .kpi-strip{grid-template-columns:1fr 1fr;}
   .page-body{padding:16px;}
