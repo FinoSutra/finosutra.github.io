@@ -78,91 +78,88 @@ nav{
 .section-desc{font-size:14px;color:var(--text-secondary);line-height:1.7;max-width:560px;}
 .section-hd{margin-bottom:40px;}
 
-/* ── TEMPLATES GRID ── */
-.templates-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:24px;
+/* ── FILTER TABS ── */
+.filter-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;}
+.filter-tab{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 16px;border-radius:20px;font-size:13px;font-weight:500;
+  cursor:pointer;border:1.5px solid var(--border);
+  background:var(--bg-white);color:var(--text-secondary);
+  transition:all .15s;
 }
-.tmpl-card{
-  background:var(--bg-white);
+.filter-tab:hover{border-color:var(--brand);color:var(--brand);background:var(--brand-light);}
+.filter-tab.active{background:var(--brand);color:#fff;border-color:var(--brand);}
+.filter-tab i{font-size:12px;}
+
+/* ── TEMPLATE LIST ── */
+.tmpl-list{display:flex;flex-direction:column;gap:0;}
+.tmpl-row{
+  display:flex;align-items:center;gap:16px;
+  padding:14px 20px;
   border:1px solid var(--border-light);
-  border-radius:var(--radius);
-  padding:28px;
-  display:flex;flex-direction:column;
-  transition:all .2s;
-  position:relative;
-  overflow:hidden;
+  border-bottom:none;
+  background:var(--bg-white);
+  transition:background .15s,box-shadow .15s;
 }
-.tmpl-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,#6366F1,#8B5CF6);
-  opacity:0;transition:opacity .2s;
-}
-.tmpl-card:hover{
-  border-color:var(--border);
-  box-shadow:0 8px 32px rgba(99,102,241,0.12);
-  transform:translateY(-2px);
-}
-.tmpl-card:hover::before{opacity:1}
-.tmpl-card.live::before{opacity:1}
-.tmpl-card.soon{opacity:0.7;}
-.tmpl-card.soon:hover{transform:none;box-shadow:none;}
+.tmpl-row:first-child{border-radius:var(--radius) var(--radius) 0 0;}
+.tmpl-row:last-child{border-bottom:1px solid var(--border-light);border-radius:0 0 var(--radius) var(--radius);}
+.tmpl-row:only-child{border-radius:var(--radius);border-bottom:1px solid var(--border-light);}
+.tmpl-row:hover{background:var(--brand-light);box-shadow:inset 3px 0 0 var(--brand);}
+.tmpl-row.soon{opacity:0.65;}
+.tmpl-row.soon:hover{background:var(--bg-white);box-shadow:none;cursor:default;}
 
-.tmpl-icon{
-  width:48px;height:48px;
-  background:var(--brand-light);border-radius:12px;
+.tmpl-row-icon{
+  width:38px;height:38px;flex-shrink:0;
+  border-radius:9px;background:var(--brand-light);
   display:flex;align-items:center;justify-content:center;
-  font-size:20px;color:var(--brand);margin-bottom:16px;
+  font-size:16px;color:var(--brand);
 }
-.tmpl-badge{
-  display:inline-flex;align-items:center;gap:5px;
-  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;
-  padding:3px 10px;border-radius:20px;margin-bottom:12px;width:fit-content;
-}
-.badge-live{background:#ECFDF5;color:#065F46;}
-.badge-soon{background:#FEF3C7;color:#92400E;}
-.tmpl-card h3{font-size:16px;font-weight:700;margin-bottom:8px;letter-spacing:-0.2px;}
-.tmpl-card p{font-size:13px;color:var(--text-secondary);line-height:1.65;flex:1;margin-bottom:18px;}
+.tmpl-row-body{flex:1;min-width:0;}
+.tmpl-row-title{font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tmpl-row-desc{font-size:12px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tmpl-row-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
 
-.tmpl-features{list-style:none;margin-bottom:20px;}
-.tmpl-features li{
-  font-size:12px;color:var(--text-secondary);
-  padding:5px 0;
-  display:flex;align-items:center;gap:8px;
-  border-bottom:1px solid var(--border-light);
+.type-pill{
+  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
+  padding:3px 9px;border-radius:12px;
 }
-.tmpl-features li:last-child{border-bottom:none;}
-.tmpl-features li i{color:var(--brand);font-size:10px;flex-shrink:0;}
+.pill-excel{background:#ECFDF5;color:#065F46;}
+.pill-ppt{background:#EDE9FE;color:#5B21B6;}
+.pill-pdf{background:#FEF3C7;color:#92400E;}
 
-.tmpl-footer{margin-top:auto;}
-.tmpl-price{
-  display:flex;align-items:baseline;gap:4px;margin-bottom:14px;
-}
-.tmpl-price .amount{font-size:28px;font-weight:800;color:var(--text-primary);letter-spacing:-0.5px;}
-.tmpl-price .period{font-size:12px;color:var(--text-muted);}
-.tmpl-price .currency{font-size:16px;font-weight:700;color:var(--text-secondary);}
+.badge-live{display:inline-flex;align-items:center;gap:4px;background:#ECFDF5;color:#065F46;font-size:10px;font-weight:700;padding:3px 9px;border-radius:12px;}
+.badge-soon{display:inline-flex;align-items:center;gap:4px;background:#FEF3C7;color:#92400E;font-size:10px;font-weight:700;padding:3px 9px;border-radius:12px;}
 
-.btn-buy{
-  width:100%;padding:11px;border-radius:var(--radius-sm);
-  font-size:13px;font-weight:700;cursor:pointer;
-  border:none;transition:all .15s;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-}
-.btn-buy.primary{
+.row-price{font-size:13px;font-weight:600;color:var(--text-primary);min-width:36px;text-align:right;}
+
+.btn-dl{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 16px;border-radius:var(--radius-sm);
+  font-size:12px;font-weight:700;cursor:pointer;border:none;
   background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;
-  box-shadow:0 2px 12px rgba(99,102,241,0.3);
+  white-space:nowrap;transition:all .15s;
 }
-.btn-buy.primary:hover{
-  background:linear-gradient(135deg,#4F46E5,#7C3AED);
-  box-shadow:0 4px 20px rgba(99,102,241,0.4);
-  transform:translateY(-1px);
-}
-.btn-buy.secondary{
+.btn-dl:hover{background:linear-gradient(135deg,#4F46E5,#7C3AED);transform:translateY(-1px);}
+.btn-dl-soon{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 16px;border-radius:var(--radius-sm);
+  font-size:12px;font-weight:600;cursor:pointer;
   background:var(--bg);color:var(--text-secondary);
-  border:1.5px solid var(--border);
+  border:1.5px solid var(--border);white-space:nowrap;transition:all .15s;
 }
-.btn-buy.secondary:disabled{cursor:not-allowed;opacity:0.6;}
+.btn-dl-soon:hover{border-color:var(--brand);color:var(--brand);}
+
+/* keep old badge classes used elsewhere */
+.tmpl-badge{display:none;}
+.btn-buy{display:none;}
+
+@media(max-width:600px){
+  .tmpl-row{padding:12px 14px;gap:10px;}
+  .tmpl-row-desc{display:none;}
+  .row-price{display:none;}
+  .filter-tab span{display:none;}
+  .filter-tab{padding:7px 12px;}
+}
 
 /* ── WHAT YOU GET ── */
 .what-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:32px;}
@@ -299,186 +296,134 @@ footer{background:#111827;padding:40px 32px 28px;}
       <p class="section-desc">Built by CAs for CAs. Every template follows Indian accounting standards and is ready to present to clients or auditors.</p>
     </div>
 
-    <div class="templates-grid">
+    <!-- ── FILTER TABS ── -->
+    <div class="filter-tabs" id="filterTabs">
+      <button class="filter-tab active" onclick="filterTemplates('all',this)"><i class="fa-solid fa-border-all"></i> <span>All</span></button>
+      <button class="filter-tab" onclick="filterTemplates('excel',this)"><i class="fa-solid fa-file-excel"></i> <span>Excel</span></button>
+      <button class="filter-tab" onclick="filterTemplates('presentation',this)"><i class="fa-solid fa-person-chalkboard"></i> <span>Presentations</span></button>
+      <button class="filter-tab" onclick="filterTemplates('soon',this)"><i class="fa-solid fa-clock"></i> <span>Coming Soon</span></button>
+    </div>
 
-      <!-- ── FIXED ASSET REGISTER ── LIVE ── -->
-      <div class="tmpl-card live">
-        <div class="tmpl-icon"><i class="fa-solid fa-building"></i></div>
-        <span class="tmpl-badge badge-live"><i class="fa-solid fa-circle" style="font-size:8px"></i> Available Now</span>
-        <h3>Fixed Asset Register</h3>
-        <p>Complete fixed asset tracking workbook with SLM and WDV depreciation schedules, disposal tracking and audit-ready summary — built for Indian Companies Act compliance.</p>
-        <ul class="tmpl-features">
-          <li><i class="fa-solid fa-check"></i> Asset Master with 20+ columns</li>
-          <li><i class="fa-solid fa-check"></i> SLM depreciation auto-calculated</li>
-          <li><i class="fa-solid fa-check"></i> WDV depreciation schedule</li>
-          <li><i class="fa-solid fa-check"></i> Disposal & impairment tracking</li>
-          <li><i class="fa-solid fa-check"></i> FY summary by asset category</li>
-          <li><i class="fa-solid fa-check"></i> Sample data + instructions sheet</li>
-        </ul>
-        <div class="tmpl-footer">
-          <div class="tmpl-price">
-            <span class="amount" style="font-size:22px">Free</span>
-            <span class="period">no account needed · always free</span>
-          </div>
-          <button class="btn-buy primary" onclick="generateFAR()">
-            <i class="fa-solid fa-download"></i> Download Free
-          </button>
+    <!-- ── TEMPLATE LIST ── -->
+    <div class="tmpl-list" id="tmplList">
+
+      <!-- Fixed Asset Register -->
+      <div class="tmpl-row" data-cat="excel">
+        <div class="tmpl-row-icon"><i class="fa-solid fa-building"></i></div>
+        <div class="tmpl-row-body">
+          <div class="tmpl-row-title">Fixed Asset Register</div>
+          <div class="tmpl-row-desc">SLM &amp; WDV depreciation · disposal tracking · audit-ready · Companies Act 2013</div>
+        </div>
+        <div class="tmpl-row-right">
+          <span class="type-pill pill-excel">Excel</span>
+          <span class="badge-live"><i class="fa-solid fa-circle" style="font-size:7px"></i> Live</span>
+          <span class="row-price">Free</span>
+          <button class="btn-dl" onclick="generateFAR()"><i class="fa-solid fa-download"></i> Download</button>
         </div>
       </div>
 
-
-      <!-- ── IND AS 116 LEASE SCHEDULE ── LIVE ── -->
-      <div class="tmpl-card live">
-        <div class="tmpl-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-        <span class="tmpl-badge badge-live"><i class="fa-solid fa-circle" style="font-size:8px"></i> Available Now</span>
-        <h3>IND AS 116 Lease Schedule</h3>
-        <p>Ready-to-use monthly amortisation table for a single lease under IND AS 116 / IFRS 16. Enter 3 inputs — everything else calculates automatically. Includes all journal entries.</p>
-        <ul class="tmpl-features">
-          <li><i class="fa-solid fa-check"></i> 60-month amortisation schedule</li>
-          <li><i class="fa-solid fa-check"></i> Discount factor &amp; PV of payments</li>
-          <li><i class="fa-solid fa-check"></i> Interest &amp; closing liability columns</li>
-          <li><i class="fa-solid fa-check"></i> All 4 journal entries included</li>
-          <li><i class="fa-solid fa-check"></i> IFRS 16 USD example (bonus sheet)</li>
-          <li><i class="fa-solid fa-check"></i> User guide with formulas explained</li>
-        </ul>
-        <div class="tmpl-footer">
-          <div class="tmpl-price">
-            <span class="amount" style="font-size:22px">Free</span>
-            <span class="period">no account needed &middot; always free</span>
-          </div>
-          <button class="btn-buy primary" onclick="downloadIndAS116Lease()">
-            <i class="fa-solid fa-download"></i> Download Free
-          </button>
+      <!-- IND AS 116 Lease Schedule -->
+      <div class="tmpl-row" data-cat="excel">
+        <div class="tmpl-row-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+        <div class="tmpl-row-body">
+          <div class="tmpl-row-title">IND AS 116 Lease Schedule</div>
+          <div class="tmpl-row-desc">60-month amortisation · journal entries · IFRS 16 bonus sheet · formulas explained</div>
+        </div>
+        <div class="tmpl-row-right">
+          <span class="type-pill pill-excel">Excel</span>
+          <span class="badge-live"><i class="fa-solid fa-circle" style="font-size:7px"></i> Live</span>
+          <span class="row-price">Free</span>
+          <button class="btn-dl" onclick="downloadIndAS116Lease()"><i class="fa-solid fa-download"></i> Download</button>
         </div>
       </div>
 
-      <!-- ── MIS DASHBOARD ── SOON ── -->
-      <div class="tmpl-card soon">
-        <div class="tmpl-icon"><i class="fa-solid fa-chart-line"></i></div>
-        <span class="tmpl-badge badge-soon"><i class="fa-solid fa-clock" style="font-size:9px"></i> Coming Soon</span>
-        <h3>MIS Report Dashboard</h3>
-        <p>Monthly management information system template with P&amp;L, cash flow, variance analysis and executive KPI dashboard — plug your numbers in and present.</p>
-        <ul class="tmpl-features">
-          <li><i class="fa-solid fa-check"></i> Monthly P&amp;L with budget vs actual</li>
-          <li><i class="fa-solid fa-check"></i> Variance analysis with % flags</li>
-          <li><i class="fa-solid fa-check"></i> 12-month trend charts</li>
-          <li><i class="fa-solid fa-check"></i> Executive KPI summary sheet</li>
-          <li><i class="fa-solid fa-check"></i> Cash flow summary</li>
-          <li><i class="fa-solid fa-check"></i> Fully customisable layout</li>
-        </ul>
-        <div class="tmpl-footer">
-          <div class="tmpl-price">
-            <span class="currency">₹</span>
-            <span class="amount">299</span>
-            <span class="period">one-time · launching soon</span>
-          </div>
-          <button class="btn-buy secondary" onclick="notifyTemplate('MIS Report Dashboard')" >
-            <i class="fa-solid fa-bell"></i> Notify me when live
-          </button>
+      <!-- IND AS 117 / IFRS 17 Presentation -->
+      <div class="tmpl-row" data-cat="presentation">
+        <div class="tmpl-row-icon" style="background:#F3F0FF;color:#7C3AED"><i class="fa-solid fa-person-chalkboard"></i></div>
+        <div class="tmpl-row-body">
+          <div class="tmpl-row-title">IND AS 117 / IFRS 17 — Insurance Contracts</div>
+          <div class="tmpl-row-desc">19 slides · GMM, PAA &amp; VFA models · worked examples · CA Krishna Wadekar</div>
+        </div>
+        <div class="tmpl-row-right">
+          <span class="type-pill pill-ppt">Presentation</span>
+          <span class="badge-live"><i class="fa-solid fa-circle" style="font-size:7px"></i> Live</span>
+          <span class="row-price">Free</span>
+          <a class="btn-dl" href="indas117-ifrs17-presentation.pptx" download><i class="fa-solid fa-download"></i> Download</a>
         </div>
       </div>
 
-      <!-- ── LOAN AMORTIZATION ── SOON ── -->
-      <div class="tmpl-card soon">
-        <div class="tmpl-icon"><i class="fa-solid fa-percent"></i></div>
-        <span class="tmpl-badge badge-soon"><i class="fa-solid fa-clock" style="font-size:9px"></i> Coming Soon</span>
-        <h3>Loan Amortization Schedule</h3>
-        <p>Professional EMI calculator with full amortization table, prepayment scenarios, interest vs principal split and annual summary — covers all loan types.</p>
-        <ul class="tmpl-features">
-          <li><i class="fa-solid fa-check"></i> EMI calculator (reducing balance)</li>
-          <li><i class="fa-solid fa-check"></i> Full period-wise schedule</li>
-          <li><i class="fa-solid fa-check"></i> Prepayment impact scenario</li>
-          <li><i class="fa-solid fa-check"></i> Annual interest &amp; principal split</li>
-          <li><i class="fa-solid fa-check"></i> Balance sheet classification</li>
-          <li><i class="fa-solid fa-check"></i> Multiple loans on one sheet</li>
-        </ul>
-        <div class="tmpl-footer">
-          <div class="tmpl-price">
-            <span class="currency">₹</span>
-            <span class="amount">199</span>
-            <span class="period">one-time · launching soon</span>
-          </div>
-          <button class="btn-buy secondary" onclick="notifyTemplate('Loan Amortization Schedule')">
-            <i class="fa-solid fa-bell"></i> Notify me when live
-          </button>
+      <!-- MIS Dashboard -->
+      <div class="tmpl-row soon" data-cat="soon">
+        <div class="tmpl-row-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <div class="tmpl-row-body">
+          <div class="tmpl-row-title">MIS Report Dashboard</div>
+          <div class="tmpl-row-desc">Monthly P&amp;L · budget vs actual · variance flags · 12-month trend charts</div>
+        </div>
+        <div class="tmpl-row-right">
+          <span class="type-pill pill-excel">Excel</span>
+          <span class="badge-soon"><i class="fa-solid fa-clock" style="font-size:7px"></i> Soon</span>
+          <span class="row-price">₹299</span>
+          <button class="btn-dl-soon" onclick="notifyTemplate('MIS Report Dashboard')"><i class="fa-solid fa-bell"></i> Notify me</button>
         </div>
       </div>
 
-      <!-- ── BUDGET TRACKER ── SOON ── -->
-      <div class="tmpl-card soon">
-        <div class="tmpl-icon"><i class="fa-solid fa-wallet"></i></div>
-        <span class="tmpl-badge badge-soon"><i class="fa-solid fa-clock" style="font-size:9px"></i> Coming Soon</span>
-        <h3>Budget vs Actuals Tracker</h3>
-        <p>Annual budget planning and monthly tracking template. Set your budget, enter actuals each month, and get automatic variance alerts and visual dashboards.</p>
-        <ul class="tmpl-features">
-          <li><i class="fa-solid fa-check"></i> Annual budget entry by department</li>
-          <li><i class="fa-solid fa-check"></i> Monthly actuals tracking</li>
-          <li><i class="fa-solid fa-check"></i> Red/green variance flags (>10%)</li>
-          <li><i class="fa-solid fa-check"></i> YTD vs full-year forecast</li>
-          <li><i class="fa-solid fa-check"></i> Department-wise drill-down</li>
-          <li><i class="fa-solid fa-check"></i> Waterfall chart included</li>
-        </ul>
-        <div class="tmpl-footer">
-          <div class="tmpl-price">
-            <span class="currency">₹</span>
-            <span class="amount">299</span>
-            <span class="period">one-time · launching soon</span>
-          </div>
-          <button class="btn-buy secondary" onclick="notifyTemplate('Budget vs Actuals Tracker')">
-            <i class="fa-solid fa-bell"></i> Notify me when live
-          </button>
+      <!-- Loan Amortization -->
+      <div class="tmpl-row soon" data-cat="soon">
+        <div class="tmpl-row-icon"><i class="fa-solid fa-percent"></i></div>
+        <div class="tmpl-row-body">
+          <div class="tmpl-row-title">Loan Amortization Schedule</div>
+          <div class="tmpl-row-desc">EMI calculator · full period schedule · prepayment scenarios · balance sheet split</div>
+        </div>
+        <div class="tmpl-row-right">
+          <span class="type-pill pill-excel">Excel</span>
+          <span class="badge-soon"><i class="fa-solid fa-clock" style="font-size:7px"></i> Soon</span>
+          <span class="row-price">₹199</span>
+          <button class="btn-dl-soon" onclick="notifyTemplate('Loan Amortization Schedule')"><i class="fa-solid fa-bell"></i> Notify me</button>
         </div>
       </div>
 
-      <!-- ── GST RECONCILIATION ── SOON ── -->
-      <div class="tmpl-card soon">
-        <div class="tmpl-icon"><i class="fa-solid fa-receipt"></i></div>
-        <span class="tmpl-badge badge-soon"><i class="fa-solid fa-clock" style="font-size:9px"></i> Coming Soon</span>
-        <h3>GST Reconciliation Template</h3>
-        <p>GSTR-2A vs books reconciliation workbook. Paste your GSTR-2A data and book entries — get instant mismatch report sorted by vendor and invoice.</p>
-        <ul class="tmpl-features">
-          <li><i class="fa-solid fa-check"></i> GSTR-2A vs books matching</li>
-          <li><i class="fa-solid fa-check"></i> Vendor-wise mismatch report</li>
-          <li><i class="fa-solid fa-check"></i> ITC eligibility classification</li>
-          <li><i class="fa-solid fa-check"></i> Monthly reconciliation tracker</li>
-          <li><i class="fa-solid fa-check"></i> Reversal &amp; reclaim tracking</li>
-          <li><i class="fa-solid fa-check"></i> Audit trail maintained</li>
-        </ul>
-        <div class="tmpl-footer">
-          <div class="tmpl-price">
-            <span class="currency">₹</span>
-            <span class="amount">399</span>
-            <span class="period">one-time · launching soon</span>
-          </div>
-          <button class="btn-buy secondary" onclick="notifyTemplate('GST Reconciliation Template')">
-            <i class="fa-solid fa-bell"></i> Notify me when live
-          </button>
+      <!-- Budget vs Actuals -->
+      <div class="tmpl-row soon" data-cat="soon">
+        <div class="tmpl-row-icon"><i class="fa-solid fa-wallet"></i></div>
+        <div class="tmpl-row-body">
+          <div class="tmpl-row-title">Budget vs Actuals Tracker</div>
+          <div class="tmpl-row-desc">Annual budget · monthly tracking · red/green variance flags · waterfall chart</div>
+        </div>
+        <div class="tmpl-row-right">
+          <span class="type-pill pill-excel">Excel</span>
+          <span class="badge-soon"><i class="fa-solid fa-clock" style="font-size:7px"></i> Soon</span>
+          <span class="row-price">₹299</span>
+          <button class="btn-dl-soon" onclick="notifyTemplate('Budget vs Actuals Tracker')"><i class="fa-solid fa-bell"></i> Notify me</button>
         </div>
       </div>
 
-      <!-- ── AUDIT WORKPAPERS ── SOON ── -->
-      <div class="tmpl-card soon">
-        <div class="tmpl-icon"><i class="fa-solid fa-file-shield"></i></div>
-        <span class="tmpl-badge badge-soon"><i class="fa-solid fa-clock" style="font-size:9px"></i> Coming Soon</span>
-        <h3>Audit Workpapers Pack</h3>
-        <p>Complete set of audit workpaper templates — lead schedules, bank reconciliations, debtors ageing, creditors ageing, stock verification and more.</p>
-        <ul class="tmpl-features">
-          <li><i class="fa-solid fa-check"></i> 8 ready-to-use workpaper sheets</li>
-          <li><i class="fa-solid fa-check"></i> Bank reconciliation statement</li>
-          <li><i class="fa-solid fa-check"></i> Debtors &amp; creditors ageing</li>
-          <li><i class="fa-solid fa-check"></i> Stock verification checklist</li>
-          <li><i class="fa-solid fa-check"></i> Lead schedule with cross-refs</li>
-          <li><i class="fa-solid fa-check"></i> ICAI standards compliant</li>
-        </ul>
-        <div class="tmpl-footer">
-          <div class="tmpl-price">
-            <span class="currency">₹</span>
-            <span class="amount">499</span>
-            <span class="period">one-time · launching soon</span>
-          </div>
-          <button class="btn-buy secondary" onclick="notifyTemplate('Audit Workpapers Pack')">
-            <i class="fa-solid fa-bell"></i> Notify me when live
-          </button>
+      <!-- GST Reconciliation -->
+      <div class="tmpl-row soon" data-cat="soon">
+        <div class="tmpl-row-icon"><i class="fa-solid fa-receipt"></i></div>
+        <div class="tmpl-row-body">
+          <div class="tmpl-row-title">GST Reconciliation Template</div>
+          <div class="tmpl-row-desc">GSTR-2A vs books matching · vendor-wise mismatch report · ITC classification</div>
+        </div>
+        <div class="tmpl-row-right">
+          <span class="type-pill pill-excel">Excel</span>
+          <span class="badge-soon"><i class="fa-solid fa-clock" style="font-size:7px"></i> Soon</span>
+          <span class="row-price">₹399</span>
+          <button class="btn-dl-soon" onclick="notifyTemplate('GST Reconciliation Template')"><i class="fa-solid fa-bell"></i> Notify me</button>
+        </div>
+      </div>
+
+      <!-- Audit Workpapers -->
+      <div class="tmpl-row soon" data-cat="soon">
+        <div class="tmpl-row-icon"><i class="fa-solid fa-file-shield"></i></div>
+        <div class="tmpl-row-body">
+          <div class="tmpl-row-title">Audit Workpapers Pack</div>
+          <div class="tmpl-row-desc">8 workpaper sheets · bank recon · debtors ageing · stock verification · ICAI standards</div>
+        </div>
+        <div class="tmpl-row-right">
+          <span class="type-pill pill-excel">Excel</span>
+          <span class="badge-soon"><i class="fa-solid fa-clock" style="font-size:7px"></i> Soon</span>
+          <span class="row-price">₹499</span>
+          <button class="btn-dl-soon" onclick="notifyTemplate('Audit Workpapers Pack')"><i class="fa-solid fa-bell"></i> Notify me</button>
         </div>
       </div>
 
@@ -599,6 +544,36 @@ footer{background:#111827;padding:40px 32px 28px;}
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
+
+/* ══════════════════════════════════════════
+   FILTER TABS
+══════════════════════════════════════════ */
+function filterTemplates(cat, btn){
+  document.querySelectorAll('.filter-tab').forEach(function(t){ t.classList.remove('active'); });
+  btn.classList.add('active');
+  document.querySelectorAll('.tmpl-row').forEach(function(row){
+    if(cat === 'all' || row.dataset.cat === cat){
+      row.style.display = 'flex';
+    } else {
+      row.style.display = 'none';
+    }
+  });
+  // fix border-radius on visible rows
+  var visible = Array.from(document.querySelectorAll('.tmpl-row')).filter(function(r){ return r.style.display !== 'none'; });
+  visible.forEach(function(r,i){
+    r.style.borderRadius = '';
+    r.style.borderBottom = '';
+    if(visible.length === 1){
+      r.style.borderRadius = 'var(--radius)';
+      r.style.borderBottom = '1px solid var(--border-light)';
+    } else if(i === 0){
+      r.style.borderRadius = 'var(--radius) var(--radius) 0 0';
+    } else if(i === visible.length - 1){
+      r.style.borderRadius = '0 0 var(--radius) var(--radius)';
+      r.style.borderBottom = '1px solid var(--border-light)';
+    }
+  });
+}
 
 /* ══════════════════════════════════════════
    NOTIFY MODAL
