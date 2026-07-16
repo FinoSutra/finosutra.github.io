@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>ECL Calculator — IND AS 109 Expected Credit Loss Provision Matrix | Finosutra</title>
+<meta name="description" content="Free IND AS 109 ECL calculator for CAs. Build a provision matrix for trade receivables — ageing buckets, loss rates, P&L charge, movement schedule and journal entries. Instant results."/>
+<meta name="keywords" content="ECL calculator IND AS 109, expected credit loss provision matrix, IND AS 109 provision for doubtful debts, ECL trade receivables India, simplified approach IND AS 109, provision matrix IFRS 9"/>
+<meta name="author" content="Finosutra"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://www.finosutra.com/ecl-calculator.html"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Finosutra"/>
+<meta property="og:title" content="ECL Calculator — IND AS 109 Expected Credit Loss Provision Matrix"/>
+<meta property="og:description" content="Free IND AS 109 ECL provision matrix calculator. Ageing buckets, loss rates, P&L charge and journal entries — instant results for CAs."/>
+<meta property="og:url" content="https://www.finosutra.com/ecl-calculator.html"/>
+<meta property="og:image" content="https://www.finosutra.com/og-image.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="ECL Calculator — IND AS 109 Expected Credit Loss Provision Matrix"/>
+<meta name="twitter:description" content="Free IND AS 109 ECL provision matrix calculator for CAs. Ageing buckets, loss rates, P&L charge and journal entries."/>
+<meta name="twitter:image" content="https://www.finosutra.com/og-image.jpg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ECL Calculator — IND AS 109 Expected Credit Loss Provision Matrix",
+  "url": "https://www.finosutra.com/ecl-calculator.html",
+  "description": "Free IND AS 109 / IFRS 9 ECL provision matrix calculator for CAs. Compute expected credit loss for trade receivables using the simplified approach — ageing buckets, loss rates, P&L charge and journal entries.",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web Browser",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "creator": { "@type": "Organization", "name": "Finosutra", "url": "https://www.finosutra.com" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is ECL (Expected Credit Loss) under IND AS 109?",
+      "acceptedAnswer": { "@type": "Answer", "text": "ECL is a forward-looking estimate of credit losses on financial assets. Under IND AS 109, companies must recognise a loss allowance equal to the expected credit losses on trade receivables, loans and other financial assets. For trade receivables without a significant financing component, the simplified approach (provision matrix) is used." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the provision matrix under IND AS 109?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The provision matrix is a practical expedient under IND AS 109 Para 5.5.17 for computing ECL on trade receivables. Receivables are grouped by days-past-due ageing buckets and a loss rate (historical default rate, adjusted for forward-looking factors) is applied to each bucket. ECL = Gross receivable × Loss rate × LGD." }
+    },
+    {
+      "@type": "Question",
+      "name": "What loss rates should I use in the provision matrix?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Loss rates should be derived from the company's own historical credit loss experience, adjusted for forward-looking information (e.g., economic outlook, customer sector conditions). Industry norms for manufacturing are roughly 2–5% for current receivables rising to 50–80% for over-180-day receivables. The rates used must be documented and reviewed annually." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the journal entry for ECL provision under IND AS 109?",
+      "acceptedAnswer": { "@type": "Answer", "text": "When the ECL provision increases: Dr Bad Debt Expense / ECL Provision Expense (P&L), Cr Provision for Doubtful Debts (Balance Sheet). When it decreases: Dr Provision for Doubtful Debts (BS), Cr ECL Writeback (P&L). The provision is presented as a contra asset (deduction from trade receivables) on the balance sheet." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the ECL provision mandatory for all companies?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, for all companies following IND AS. The simplified approach for trade receivables without a significant financing component is mandatory (Para 5.5.15). Companies may also use it for contract assets and lease receivables. Companies under AS (IGAAP) continue to use the incurred-loss model under AS 26." }
+    }
+  ]
+}
+</script>
+<style>
+:root{
+  --brand:#4F46E5;--brand-dark:#1E1B4B;--brand-light:#EEF2FF;--brand-mid:#C7D2FE;
+  --bg:#F9FAFB;--card:#FFFFFF;
+  --border:rgba(79,70,229,0.18);--border-light:rgba(79,70,229,0.08);
+  --text:#111827;--muted:#6B7280;--muted2:#9CA3AF;
+  --green:#10B981;--green-light:#ECFDF5;
+  --orange:#F97316;--orange-light:#FFF7ED;
+  --red:#EF4444;--red-light:#FEF2F2;
+  --blue:#3B82F6;--blue-light:#EFF6FF;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:linear-gradient(160deg,#EDEEFF 0%,#EAF0FF 40%,#F2EEFF 100%);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;min-height:100vh;-webkit-font-smoothing:antialiased;}
+
+/* NAV */
+#mainNav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-light);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 var(--border-light),0 4px 20px rgba(79,70,229,0.05)}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px;}
+.nav-logo img{height:36px;width:auto;}
+.nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
+.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:7px;transition:color .15s,background .15s;}
+.nav-links a:hover{color:var(--text);background:var(--brand-light);}
+.nav-toggle{display:none;background:none;border:none;font-size:20px;color:var(--text);cursor:pointer;padding:8px;}
+.nav-auth{display:flex;align-items:center;gap:10px;}
+@media(max-width:900px){.nav-links{display:none;}}
+@media(max-width:768px){#mainNav{padding:0 16px;}.nav-toggle{display:block;}.nav-links.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:60px;left:0;right:0;background:#fff;border-bottom:1px solid var(--border-light);padding:12px 16px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#1E1B4B 0%,#312E81 50%,#1E1B4B 100%);padding:36px 32px 30px;border-bottom:1px solid rgba(255,255,255,0.06);}
+.hero-inner{max-width:1200px;margin:0 auto;}
+.eyebrow{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(199,210,254,0.8);margin-bottom:10px;}
+.hero h1{font-size:clamp(22px,3.5vw,30px);font-weight:800;color:#fff;line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:14px;color:rgba(199,210,254,0.8);max-width:580px;line-height:1.7;margin-bottom:14px;}
+.hero-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+.hb{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid;}
+.hb-indigo{color:#C7D2FE;border-color:rgba(199,210,254,0.4);background:rgba(99,102,241,0.25);}
+.hb-green{color:#6EE7B7;border-color:rgba(110,231,183,0.4);background:rgba(16,185,129,0.2);}
+.hb-amber{color:#FCD34D;border-color:rgba(252,211,77,0.4);background:rgba(217,119,6,0.2);}
+.blog-link{font-size:13px;color:rgba(199,210,254,0.75);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:5px;}
+.blog-link:hover{color:#C7D2FE;}
+
+/* LAYOUT */
+.main{max-width:1200px;margin:0 auto;padding:24px 32px 60px;display:grid;grid-template-columns:380px 1fr;gap:22px;align-items:start;}
+
+/* CARD */
+.card{background:var(--card);border:1px solid rgba(79,70,229,0.10);border-radius:16px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04),0 6px 24px rgba(79,70,229,0.07);}
+.card+.card{margin-top:16px;}
+.card-hd{padding:13px 18px;border-bottom:1px solid var(--border-light);display:flex;align-items:center;gap:9px;background:#FAFAFF;}
+.card-hd h3{font-size:13px;font-weight:700;color:var(--text);}
+.card-icon{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;background:var(--brand-light);flex-shrink:0;}
+.card-body{padding:18px;}
+
+/* FIELD */
+.field{margin-bottom:14px;}
+.field-label{display:block;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.field input,.field select{width:100%;background:#F8F9FF;border:1.5px solid rgba(79,70,229,0.2);border-radius:8px;padding:9px 12px;color:var(--text);font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:border-color .15s;}
+.field input:focus,.field select:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(79,70,229,0.1);background:#fff;}
+.hint{font-size:11px;color:var(--muted2);margin-top:4px;}
+
+/* BUCKET TABLE */
+.bucket-grid{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:6px;}
+.bucket-grid th{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:4px 6px 8px;text-align:left;border-bottom:1px solid var(--border-light);}
+.bucket-grid th:nth-child(2),.bucket-grid th:nth-child(3){text-align:right;}
+.bucket-grid td{padding:5px 6px;vertical-align:middle;}
+.bucket-grid td:nth-child(2),.bucket-grid td:nth-child(3){text-align:right;}
+.bucket-grid input{width:100%;background:#F8F9FF;border:1.5px solid rgba(79,70,229,0.15);border-radius:7px;padding:7px 9px;font-family:'Inter',sans-serif;font-size:13px;color:var(--text);outline:none;transition:border-color .15s;}
+.bucket-grid input:focus{border-color:var(--brand);background:#fff;}
+.bucket-grid input.rate-in{width:72px;}
+.bucket-lbl{font-size:12px;color:var(--text);font-weight:500;white-space:nowrap;}
+
+/* CALC BTN */
+.calc-btn{width:100%;padding:13px;background:linear-gradient(135deg,#4F46E5,#7C3AED);color:#fff;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;border:none;border-radius:10px;cursor:pointer;transition:all .15s;box-shadow:0 4px 14px rgba(79,70,229,0.35);}
+.calc-btn:hover{opacity:.92;transform:translateY(-1px);}
+
+/* DIVIDER */
+hr.div{border:none;border-top:1px solid var(--border-light);margin:14px 0;}
+
+/* SECTION HEAD */
+.sec-hd{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--brand);margin:18px 0 10px;display:flex;align-items:center;gap:8px;}
+.sec-hd::after{content:'';flex:1;height:1px;background:var(--border-light);}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:20px;}
+.kpi{background:linear-gradient(145deg,#F8F6FF,#E8F0FF);border:1px solid rgba(79,70,229,0.12);border-radius:12px;padding:14px 15px;}
+.kpi-label{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.kpi-value{font-size:20px;font-weight:700;letter-spacing:-0.3px;}
+.kpi-sub{font-size:11px;color:var(--muted2);margin-top:2px;}
+.c-purple{color:var(--brand);} .c-green{color:var(--green);} .c-orange{color:var(--orange);} .c-red{color:var(--red);}
+
+/* RESULT CARD */
+.result-card{background:var(--card);border:1px solid var(--border-light);border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(79,70,229,0.06);}
+.tabs-bar{display:flex;border-bottom:1px solid var(--border-light);background:#FAFAFF;overflow-x:auto;padding:0 4px;}
+.tab-btn{padding:11px 15px;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:'Inter',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap;margin-bottom:-1px;}
+.tab-btn.active{color:var(--brand);border-bottom-color:var(--brand);}
+.tab-pane{display:none;padding:20px;}
+.tab-pane.active{display:block;}
+
+/* MATRIX TABLE */
+.tbl-wrap{overflow-x:auto;margin-bottom:14px;}
+.mat-table{width:100%;border-collapse:collapse;font-size:13px;min-width:480px;}
+.mat-table thead th{padding:9px 12px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--brand);border-bottom:2px solid var(--border-light);text-align:right;background:#FAFAFF;white-space:nowrap;}
+.mat-table thead th:first-child{text-align:left;}
+.mat-table td{padding:9px 12px;text-align:right;border-bottom:1px solid rgba(79,70,229,0.05);}
+.mat-table td:first-child{text-align:left;color:var(--muted);}
+.mat-table tr:hover td{background:rgba(79,70,229,0.02);}
+.mat-table tfoot td{background:#FAFAFF;font-weight:700;border-top:2px solid var(--border-light);color:var(--text);}
+.mat-table tfoot td:first-child{color:var(--text);}
+.pct-badge{display:inline-block;background:var(--brand-light);color:var(--brand);font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;}
+.high-risk{color:var(--red);font-weight:600;}
+.med-risk{color:var(--orange);font-weight:600;}
+
+/* JE */
+.je-wrap{margin-bottom:12px;border:1px solid var(--border-light);border-radius:10px;overflow:hidden;}
+.je-head{padding:8px 14px;background:var(--brand-light);border-bottom:1px solid var(--border-light);font-size:11px;font-weight:700;color:var(--brand-dark);letter-spacing:0.4px;}
+.je-table{width:100%;border-collapse:collapse;}
+.je-table th{padding:7px 12px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border-light);text-align:left;background:#FAFAFF;}
+.je-table th:nth-child(2),.je-table th:nth-child(3){text-align:right;}
+.je-table td{padding:8px 12px;font-size:13px;border-bottom:1px solid rgba(79,70,229,0.04);}
+.je-table tr:last-child td{border-bottom:none;}
+.je-table td:nth-child(2),.je-table td:nth-child(3){text-align:right;font-weight:600;}
+.cr-acct{color:var(--muted);padding-left:18px;}
+.amt-dr{color:var(--blue);}
+.amt-cr{color:var(--green);}
+.tag-dr{display:inline-block;background:var(--blue-light);color:var(--blue);font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;margin-right:5px;vertical-align:middle;}
+.tag-cr{display:inline-block;background:var(--green-light);color:var(--green);font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;margin-right:5px;vertical-align:middle;}
+
+/* MOVEMENT TABLE */
+.mov-table{width:100%;border-collapse:collapse;font-size:13px;}
+.mov-table td{padding:9px 14px;border-bottom:1px solid rgba(79,70,229,0.05);}
+.mov-table tr:last-child td{border-bottom:none;}
+.mov-table .total-row td{font-weight:700;background:#FAFAFF;border-top:2px solid var(--border-light);}
+.mov-table td:last-child{text-align:right;font-weight:600;}
+.mov-table td:first-child{color:var(--muted);}
+.mov-table .total-row td{color:var(--text) !important;}
+
+/* NOTE */
+.note-bar{background:#F8F9FF;border-left:3px solid var(--brand);border-radius:0 8px 8px 0;padding:9px 14px;font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:14px;}
+
+/* EXPORT */
+.exp-row{padding:12px 20px;border-top:1px solid var(--border-light);display:flex;align-items:center;justify-content:flex-end;gap:12px;background:#FAFAFF;}
+.exp-note{font-size:11px;color:var(--muted2);}
+.btn-exp{display:flex;align-items:center;gap:7px;padding:9px 18px;background:linear-gradient(135deg,#4F46E5,#7C3AED);border:none;border-radius:8px;font-size:12px;font-weight:700;color:#fff;cursor:pointer;font-family:'Inter',sans-serif;box-shadow:0 3px 10px rgba(79,70,229,0.3);transition:all .15s;}
+.btn-exp:hover{opacity:.9;transform:translateY(-1px);}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:60px 24px;color:var(--muted2);}
+.empty-icon{font-size:40px;color:var(--brand-mid);margin-bottom:14px;}
+.empty-state p{font-size:13px;color:var(--muted);}
+.empty-state p+p{margin-top:4px;font-size:12px;color:var(--muted2);}
+
+/* CONCEPT CARD */
+.concept{background:#F8F9FF;border:1px solid var(--border-light);border-radius:10px;padding:14px 16px;margin-bottom:12px;}
+.concept h4{font-size:11px;font-weight:700;color:var(--text);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;}
+.concept p{font-size:12px;color:var(--muted);line-height:1.7;}
+.concept p strong{color:var(--text);}
+
+/* RESPONSIVE */
+@media(max-width:900px){.main{grid-template-columns:1fr;padding:16px 16px 60px;}.hero{padding:24px 16px;}}
+@media(max-width:600px){.kpi-grid{grid-template-columns:1fr 1fr;}.bucket-grid input.rate-in{width:56px;}.tab-btn{padding:9px 10px;font-size:11px;}}
+@media print{#mainNav,.hero,.calc-btn,.exp-row{display:none!important;}.main{grid-template-columns:1fr;}.result-card{box-shadow:none;border:1px solid #ddd;}}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0;}
+</style>
+<script src="auth.js"></script>
+</head>
+<body>
+
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="logo.png" alt="Finosutra"></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="indas-tools.html">IND AS</a></li>
+      <li><a href="gst-tools.html">GST</a></li>
+      <li><a href="income-tax-hub.html">Income Tax</a></li>
+      <li><a href="templates.html">Templates</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="index.html#pricing">Pricing</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-auth">
+      <div id="navAuth"></div>
+      <button class="nav-toggle" id="navToggle"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">IND AS 109 / IFRS 9 · Para 5.5.15</div>
+    <h1>ECL Provision Matrix Calculator</h1>
+    <p class="hero-sub">Expected Credit Loss for trade receivables — simplified approach. Ageing buckets, industry loss rates, P&amp;L movement and journal entries in seconds.</p>
+    <div class="hero-badges">
+      <span class="hb hb-indigo">IND AS 109 Para 5.5.17</span>
+      <span class="hb hb-green">Simplified approach</span>
+      <span class="hb hb-amber">Forward-looking adjustable</span>
+      <span class="hb hb-indigo">Free</span>
+    </div>
+    <a href="blog/ind-as-109-security-deposit-accounting.html" class="blog-link"><i class="fa-solid fa-book-open"></i> New to IND AS 109? Read our complete guide →</a>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ═══ LEFT — INPUTS ═══ -->
+  <div>
+
+    <div class="card">
+      <div class="card-hd">
+        <div class="card-icon"><i class="fa-solid fa-sliders" style="color:var(--brand);font-size:13px;"></i></div>
+        <h3>Section A — Industry &amp; Settings</h3>
+      </div>
+      <div class="card-body">
+
+        <div class="field">
+          <label class="field-label">Industry preset <span style="font-size:9px;color:var(--muted2);">(pre-fills loss rates)</span></label>
+          <select id="preset" onchange="applyPreset()">
+            <option value="mfg">Manufacturing / Industrial</option>
+            <option value="retail">Retail / FMCG</option>
+            <option value="realty">Real estate / Construction</option>
+            <option value="infra">Infrastructure / EPC</option>
+            <option value="custom">Custom (enter your own rates)</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Reporting date</label>
+          <input type="date" id="repDate">
+        </div>
+
+        <div class="field">
+          <label class="field-label">Opening provision — prior year (₹)</label>
+          <input type="number" id="opening" value="0" min="0" placeholder="0">
+          <div class="hint">Leave 0 if first-year adoption or no opening balance.</div>
+        </div>
+
+        <div class="field">
+          <label class="field-label">LGD — Loss Given Default (%)</label>
+          <input type="number" id="lgd" value="100" min="0" max="100" step="1">
+          <div class="hint">100% for unsecured trade receivables. Reduce if collateral or partial recovery expected.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hd">
+        <div class="card-icon"><i class="fa-solid fa-table" style="color:var(--brand);font-size:12px;"></i></div>
+        <h3>Section B — Ageing Buckets &amp; Loss Rates</h3>
+      </div>
+      <div class="card-body">
+        <div class="note-bar" style="margin-bottom:14px;">Loss rates should be based on <strong>historical write-off experience</strong> + forward-looking adjustments (economic outlook, sector conditions). Document your basis per IND AS 109 Para 5.5.17.</div>
+        <table class="bucket-grid" id="bucketTable">
+          <thead>
+            <tr>
+              <th>Ageing bucket</th>
+              <th>Gross receivable (₹)</th>
+              <th>Loss rate %</th>
+            </tr>
+          </thead>
+          <tbody id="bucketBody">
+          </tbody>
+        </table>
+        <div style="margin-top:10px;">
+          <button onclick="addBucket()" style="background:var(--brand-light);border:1.5px solid var(--brand-mid);color:var(--brand);font-family:'Inter',sans-serif;font-size:12px;font-weight:700;padding:7px 14px;border-radius:8px;cursor:pointer;">+ Add bucket</button>
+          <button onclick="resetBuckets()" style="background:#fff;border:1.5px solid var(--border);color:var(--muted);font-family:'Inter',sans-serif;font-size:12px;padding:7px 14px;border-radius:8px;cursor:pointer;margin-left:8px;">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="calc-btn" onclick="calculate()"><i class="fa-solid fa-calculator" style="margin-right:8px;"></i>Calculate ECL Provision</button>
+
+  </div>
+
+  <!-- ═══ RIGHT — RESULTS ═══ -->
+  <div>
+    <div class="result-card" id="resultCard">
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon"><i class="fa-solid fa-chart-pie"></i></div>
+        <p>Enter your receivable balances and click <strong>Calculate ECL Provision</strong></p>
+        <p>Results — provision matrix, movement schedule and journal entries — appear here.</p>
+      </div>
+
+      <div id="resultsArea" style="display:none;">
+        <div class="tabs-bar">
+          <button class="tab-btn active" onclick="switchTab('summary',this)">Summary</button>
+          <button class="tab-btn" onclick="switchTab('matrix',this)">Provision Matrix</button>
+          <button class="tab-btn" onclick="switchTab('movement',this)">Movement</button>
+          <button class="tab-btn" onclick="switchTab('entries',this)">Journal Entries</button>
+          <button class="tab-btn" onclick="switchTab('standards',this)">Standards</button>
+        </div>
+
+        <!-- SUMMARY -->
+        <div class="tab-pane active" id="tab-summary">
+          <div class="kpi-grid">
+            <div class="kpi">
+              <div class="kpi-label">Total gross receivables</div>
+              <div class="kpi-value c-purple" id="kGross">—</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">ECL provision required</div>
+              <div class="kpi-value c-red" id="kEcl">—</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">Net receivables (after ECL)</div>
+              <div class="kpi-value c-green" id="kNet">—</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">Provision %</div>
+              <div class="kpi-value c-orange" id="kPct">—</div>
+              <div class="kpi-sub" id="kPctSub"></div>
+            </div>
+          </div>
+
+          <div class="kpi-grid" style="grid-template-columns:1fr 1fr;margin-bottom:20px;">
+            <div class="kpi">
+              <div class="kpi-label">P&L charge / (writeback)</div>
+              <div class="kpi-value" id="kMovement">—</div>
+              <div class="kpi-sub" id="kMoveSub"></div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">Weighted avg loss rate</div>
+              <div class="kpi-value c-orange" id="kWtd">—</div>
+            </div>
+          </div>
+
+          <div class="sec-hd">Balance sheet presentation</div>
+          <div style="background:#F8F9FF;border:1px solid var(--border-light);border-radius:10px;padding:16px 18px;font-size:13px;line-height:2;">
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);">Trade receivables (gross)</span><span id="bsGross" style="font-weight:600;"></span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--red);">Less: Provision for ECL</span><span id="bsEcl" style="font-weight:600;color:var(--red);"></span></div>
+            <div style="display:flex;justify-content:space-between;border-top:1px solid var(--border-light);padding-top:6px;margin-top:4px;"><span style="font-weight:700;">Net trade receivables</span><span id="bsNet" style="font-weight:700;color:var(--green);"></span></div>
+          </div>
+        </div>
+
+        <!-- PROVISION MATRIX -->
+        <div class="tab-pane" id="tab-matrix">
+          <div class="note-bar">Provision matrix per IND AS 109 Para 5.5.17 — Simplified approach for trade receivables without significant financing component.</div>
+          <div class="tbl-wrap">
+            <table class="mat-table" id="matrixTable">
+              <thead>
+                <tr>
+                  <th style="text-align:left;">Ageing bucket</th>
+                  <th>Gross receivable (₹)</th>
+                  <th>Loss rate %</th>
+                  <th>LGD %</th>
+                  <th>ECL provision (₹)</th>
+                  <th>% of bucket</th>
+                </tr>
+              </thead>
+              <tbody id="matrixBody"></tbody>
+              <tfoot id="matrixFoot"></tfoot>
+            </table>
+          </div>
+        </div>
+
+        <!-- MOVEMENT SCHEDULE -->
+        <div class="tab-pane" id="tab-movement">
+          <div class="note-bar">Movement in provision for ECL — IND AS 109 Para 5.5.1. Disclose this rollforward in the notes to financial statements.</div>
+          <div style="border:1px solid var(--border-light);border-radius:10px;overflow:hidden;">
+            <table class="mov-table" id="movTable">
+              <tbody>
+                <tr><td>Opening provision (prior year)</td><td id="mvOpen">—</td></tr>
+                <tr><td id="mvAddLbl">Add: Provision for the year (P&L charge)</td><td id="mvAdd" style="color:var(--red);">—</td></tr>
+                <tr><td>Less: Bad debts written off during the year</td><td>₹0</td></tr>
+                <tr><td>Add: Recoveries of amounts previously written off</td><td>₹0</td></tr>
+                <tr class="total-row"><td><strong>Closing ECL provision</strong></td><td id="mvClose">—</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="note-bar" style="margin-top:14px;">Note: Bad debts written off and recoveries should be entered manually based on the company's actual write-off register. These fields are shown for reference; adjust before using in financial statements.</div>
+        </div>
+
+        <!-- JOURNAL ENTRIES -->
+        <div class="tab-pane" id="tab-entries">
+          <div id="jeCharge" class="je-wrap">
+            <div class="je-head" id="jeChargeTitle">Entry 1 — ECL Provision Charge (P&L)</div>
+            <table class="je-table">
+              <thead><tr><th style="width:55%">Particulars</th><th>Dr (₹)</th><th>Cr (₹)</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><span class="tag-dr">Dr</span><span id="jeDrAcct">Bad debt expense / ECL provision expense</span></td>
+                  <td class="amt-dr" id="jeDrAmt">—</td>
+                  <td>—</td>
+                </tr>
+                <tr>
+                  <td><span class="tag-cr">Cr</span><span class="cr-acct" id="jeCrAcct">Provision for doubtful debts</span></td>
+                  <td>—</td>
+                  <td class="amt-cr" id="jeCrAmt">—</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="note-bar" id="jeNote"></div>
+
+          <div class="je-wrap">
+            <div class="je-head">Entry 2 — Bad Debt Write-off (when irrecoverable)</div>
+            <table class="je-table">
+              <thead><tr><th style="width:55%">Particulars</th><th>Dr (₹)</th><th>Cr (₹)</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><span class="tag-dr">Dr</span>Provision for doubtful debts</td>
+                  <td class="amt-dr">XXX</td>
+                  <td>—</td>
+                </tr>
+                <tr>
+                  <td><span class="tag-cr">Cr</span><span class="cr-acct">Trade receivables</span></td>
+                  <td>—</td>
+                  <td class="amt-cr">XXX</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="je-wrap">
+            <div class="je-head">Entry 3 — Recovery of amount previously written off</div>
+            <table class="je-table">
+              <thead><tr><th style="width:55%">Particulars</th><th>Dr (₹)</th><th>Cr (₹)</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><span class="tag-dr">Dr</span>Bank / Cash</td>
+                  <td class="amt-dr">XXX</td>
+                  <td>—</td>
+                </tr>
+                <tr>
+                  <td><span class="tag-cr">Cr</span><span class="cr-acct">Provision for doubtful debts / Bad debt recovery (P&L)</span></td>
+                  <td>—</td>
+                  <td class="amt-cr">XXX</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- STANDARDS -->
+        <div class="tab-pane" id="tab-standards">
+          <div class="concept">
+            <h4>IND AS 109 Para 5.5.15 — Simplified approach</h4>
+            <p>An entity shall always measure the loss allowance at an amount equal to <strong>lifetime expected credit losses</strong> for trade receivables or contract assets that do not contain a significant financing component. This is mandatory — not an option.</p>
+          </div>
+          <div class="concept">
+            <h4>IND AS 109 Para 5.5.17 — Provision matrix</h4>
+            <p>An entity may use a practical expedient such as a <strong>provision matrix</strong> when measuring expected credit losses for trade receivables. A provision matrix specifies fixed provision rates depending on the number of days the trade receivable has been outstanding.</p>
+          </div>
+          <div class="concept">
+            <h4>Forward-looking information (Para B5.5.51)</h4>
+            <p>Historical default rates must be adjusted for <strong>forward-looking information</strong> — macroeconomic conditions, customer sector outlook, debtor-specific credit changes. Pure historical rates are not sufficient under IND AS 109 without a forward-looking overlay.</p>
+          </div>
+          <div class="concept">
+            <h4>Disclosure — IND AS 107</h4>
+            <p>Disclose: movement in the loss allowance account, maximum credit exposure, concentration of credit risk, and the basis for determining loss rates. The provision matrix itself should be disclosed as a key estimate in the significant accounting policies note.</p>
+          </div>
+          <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;">
+            <a href="security-deposit.html" style="display:inline-flex;align-items:center;gap:6px;padding:9px 14px;background:var(--brand-light);border:1px solid var(--brand-mid);border-radius:9px;font-size:12px;font-weight:700;color:var(--brand);text-decoration:none;"><i class="fa-solid fa-calculator"></i> IND AS 109 Security Deposit Calculator</a>
+            <a href="blog/ind-as-109-security-deposit-accounting.html" style="display:inline-flex;align-items:center;gap:6px;padding:9px 14px;background:#F9FAFB;border:1px solid var(--border);border-radius:9px;font-size:12px;font-weight:700;color:var(--text);text-decoration:none;"><i class="fa-solid fa-book-open"></i> IND AS 109 Guide</a>
+          </div>
+        </div>
+
+        <div class="exp-row">
+          <span class="exp-note">4 sheets: Inputs · Provision Matrix · Movement Schedule · Journal Entries</span>
+          <button class="btn-exp" id="btnExp"><i class="fa-solid fa-file-excel"></i> Export to Excel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FAQ -->
+<section style="max-width:1200px;margin:0 auto;padding:0 32px 60px;">
+  <h2 style="font-size:18px;font-weight:700;color:var(--text);margin-bottom:20px;">Frequently asked questions — ECL &amp; IND AS 109</h2>
+  <div class="faq-wrap">
+    <div class="faq-item" style="border:1px solid var(--border-light);border-radius:12px;margin-bottom:10px;overflow:hidden;">
+      <button class="faq-q" style="width:100%;text-align:left;background:#FAFAFF;border:none;padding:14px 18px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;" onclick="toggleFaq(this)">What is ECL and why is it mandatory? <i class="fa-solid fa-chevron-down" style="color:var(--muted);font-size:12px;transition:transform .2s;"></i></button>
+      <div class="faq-a" style="display:none;padding:14px 18px 16px;font-size:13px;color:var(--muted);line-height:1.75;border-top:1px solid var(--border-light);">Under IND AS 109, companies must recognise a loss allowance for expected credit losses on all financial assets (trade receivables, loans, contract assets, lease receivables). Unlike the old incurred-loss model under AS 26, ECL is <strong style="color:var(--text);">forward-looking</strong> — you provision for losses expected to happen, not just those already incurred. For trade receivables without a significant financing component, the <strong style="color:var(--text);">simplified approach using a provision matrix</strong> is mandatory.</div>
+    </div>
+    <div class="faq-item" style="border:1px solid var(--border-light);border-radius:12px;margin-bottom:10px;overflow:hidden;">
+      <button class="faq-q" style="width:100%;text-align:left;background:#FAFAFF;border:none;padding:14px 18px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;" onclick="toggleFaq(this)">How do I derive the loss rates for the provision matrix? <i class="fa-solid fa-chevron-down" style="color:var(--muted);font-size:12px;transition:transform .2s;"></i></button>
+      <div class="faq-a" style="display:none;padding:14px 18px 16px;font-size:13px;color:var(--muted);line-height:1.75;border-top:1px solid var(--border-light);">Start with <strong style="color:var(--text);">historical write-off data</strong> — for each ageing bucket, compute the % of receivables that were eventually written off over the past 3–5 years. Then adjust upward or downward for <strong style="color:var(--text);">forward-looking factors</strong>: economic conditions, the specific debtor's industry outlook, customer credit ratings, and management's assessment of recoverability. Document the basis thoroughly — this is a key accounting estimate and auditors will scrutinise it.</div>
+    </div>
+    <div class="faq-item" style="border:1px solid var(--border-light);border-radius:12px;margin-bottom:10px;overflow:hidden;">
+      <button class="faq-q" style="width:100%;text-align:left;background:#FAFAFF;border:none;padding:14px 18px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;" onclick="toggleFaq(this)">Is the provision matrix different from the old AS 26 / IGAAP provision? <i class="fa-solid fa-chevron-down" style="color:var(--muted);font-size:12px;transition:transform .2s;"></i></button>
+      <div class="faq-a" style="display:none;padding:14px 18px 16px;font-size:13px;color:var(--muted);line-height:1.75;border-top:1px solid var(--border-light);">Yes — significantly. Under AS 26 (IGAAP), provision was made only for losses that had <em>already</em> occurred (incurred-loss model). Under IND AS 109, you must provision for losses <em>expected</em> to occur even if there is no specific evidence of default yet. The provision matrix applies a loss rate to <strong style="color:var(--text);">all</strong> receivables in each bucket — including current, not-yet-due receivables — not just those showing signs of impairment.</div>
+    </div>
+    <div class="faq-item" style="border:1px solid var(--border-light);border-radius:12px;margin-bottom:10px;overflow:hidden;">
+      <button class="faq-q" style="width:100%;text-align:left;background:#FAFAFF;border:none;padding:14px 18px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;" onclick="toggleFaq(this)">How often do I need to update the provision matrix? <i class="fa-solid fa-chevron-down" style="color:var(--muted);font-size:12px;transition:transform .2s;"></i></button>
+      <div class="faq-a" style="display:none;padding:14px 18px 16px;font-size:13px;color:var(--muted);line-height:1.75;border-top:1px solid var(--border-light);">At minimum, at each <strong style="color:var(--text);">reporting date</strong> (year-end and interim periods). The loss rates must be reviewed for changes in historical experience and updated for changes in forward-looking information. For example, if the economic outlook has deteriorated or a major customer sector is under stress, the rates should be revised upward even if historical data does not yet reflect it.</div>
+    </div>
+  </div>
+</section>
+
+<footer style="background:#111827;padding:28px 32px;color:#9CA3AF;">
+  <div style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px;">
+    <p>© 2026 Finosutra. All rights reserved. Compliant with IND AS 109 / IFRS 9.</p>
+    <p><a href="privacy.html" style="color:#6B7280;text-decoration:none;">Privacy</a> &nbsp;·&nbsp; <a href="terms.html" style="color:#6B7280;text-decoration:none;">Terms</a> &nbsp;·&nbsp; <a href="mailto:fino.sutra07@gmail.com" style="color:#6B7280;text-decoration:none;">fino.sutra07@gmail.com</a></p>
+  </div>
+</footer>
+
+<script>
+var BUCKETS = [
+  {label:'Current (not yet due)', amt:0, rate:2},
+  {label:'1–30 days overdue',     amt:0, rate:5},
+  {label:'31–60 days overdue',    amt:0, rate:15},
+  {label:'61–90 days overdue',    amt:0, rate:30},
+  {label:'91–180 days overdue',   amt:0, rate:50},
+  {label:'>180 days overdue',     amt:0, rate:80}
+];
+
+var PRESETS = {
+  mfg:   [2,5,15,30,50,80],
+  retail:[1,3,10,25,45,75],
+  realty:[3,8,20,40,65,90],
+  infra: [2,6,18,35,55,85],
+  custom:[0,0,0,0,0,0]
+};
+
+function fmt(n){return '₹'+Math.round(n).toLocaleString('en-IN');}
+function fmtN(n){return Math.round(n).toLocaleString('en-IN');}
+
+function renderBuckets(){
+  var tbody=document.getElementById('bucketBody');
+  tbody.innerHTML='';
+  BUCKETS.forEach(function(b,i){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td><span class="bucket-lbl">'+b.label+'</span></td>'+
+      '<td><input type="number" id="amt'+i+'" value="'+(b.amt||'')+'" min="0" placeholder="0" oninput="syncBucket('+i+')" /></td>'+
+      '<td><input type="number" class="rate-in" id="rate'+i+'" value="'+b.rate+'" min="0" max="100" step="0.1" oninput="syncBucket('+i+')" /></td>';
+    tbody.appendChild(tr);
+  });
+}
+
+function syncBucket(i){
+  BUCKETS[i].amt=parseFloat(document.getElementById('amt'+i).value)||0;
+  BUCKETS[i].rate=parseFloat(document.getElementById('rate'+i).value)||0;
+}
+
+function addBucket(){
+  BUCKETS.push({label:'Bucket '+(BUCKETS.length+1), amt:0, rate:0});
+  renderBuckets();
+}
+
+function resetBuckets(){
+  BUCKETS=[
+    {label:'Current (not yet due)', amt:0, rate:2},
+    {label:'1–30 days overdue',     amt:0, rate:5},
+    {label:'31–60 days overdue',    amt:0, rate:15},
+    {label:'61–90 days overdue',    amt:0, rate:30},
+    {label:'91–180 days overdue',   amt:0, rate:50},
+    {label:'>180 days overdue',     amt:0, rate:80}
+  ];
+  renderBuckets();
+}
+
+function applyPreset(){
+  var p=document.getElementById('preset').value;
+  var rates=PRESETS[p];
+  if(!rates)return;
+  for(var i=0;i<Math.min(rates.length,BUCKETS.length);i++){
+    BUCKETS[i].rate=rates[i];
+    var el=document.getElementById('rate'+i);
+    if(el)el.value=rates[i];
+  }
+}
+
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  document.querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active');});
+  btn.classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+}
+
+function calculate(){
+  for(var i=0;i<BUCKETS.length;i++) syncBucket(i);
+
+  var lgd=(parseFloat(document.getElementById('lgd').value)||100)/100;
+  var opening=parseFloat(document.getElementById('opening').value)||0;
+
+  var totalGross=0,totalEcl=0;
+  var rows=[];
+  BUCKETS.forEach(function(b){
+    var ecl=b.amt*(b.rate/100)*lgd;
+    totalGross+=b.amt;
+    totalEcl+=ecl;
+    rows.push({label:b.label,amt:b.amt,rate:b.rate,ecl:ecl,pct:b.amt>0?ecl/b.amt*100:0});
+  });
+
+  var netRecv=totalGross-totalEcl;
+  var movement=totalEcl-opening;
+  var wtd=totalGross>0?totalEcl/totalGross*100:0;
+
+  document.getElementById('emptyState').style.display='none';
+  document.getElementById('resultsArea').style.display='block';
+
+  document.getElementById('kGross').textContent=fmt(totalGross);
+  document.getElementById('kEcl').textContent=fmt(totalEcl);
+  document.getElementById('kNet').textContent=fmt(netRecv);
+  document.getElementById('kPct').textContent=wtd.toFixed(2)+'%';
+  document.getElementById('kWtd').textContent=wtd.toFixed(2)+'%';
+
+  var mvEl=document.getElementById('kMovement');
+  if(movement>=0){
+    mvEl.textContent=fmt(movement);
+    mvEl.style.color='var(--red)';
+    document.getElementById('kMoveSub').textContent='P&L charge this year';
+  } else {
+    mvEl.textContent='('+fmt(Math.abs(movement))+')';
+    mvEl.style.color='var(--green)';
+    document.getElementById('kMoveSub').textContent='Writeback to P&L';
+  }
+
+  document.getElementById('bsGross').textContent=fmt(totalGross);
+  document.getElementById('bsEcl').textContent='('+fmt(totalEcl)+')';
+  document.getElementById('bsNet').textContent=fmt(netRecv);
+
+  var matBody=document.getElementById('matrixBody');
+  matBody.innerHTML='';
+  rows.forEach(function(r){
+    var tr=document.createElement('tr');
+    var rateClass=r.rate>=50?'high-risk':r.rate>=20?'med-risk':'';
+    tr.innerHTML='<td>'+r.label+'</td>'+
+      '<td>'+fmt(r.amt)+'</td>'+
+      '<td class="'+rateClass+'">'+r.rate.toFixed(1)+'%</td>'+
+      '<td>'+(lgd*100).toFixed(0)+'%</td>'+
+      '<td>'+fmt(r.ecl)+'</td>'+
+      '<td><span class="pct-badge">'+r.pct.toFixed(1)+'%</span></td>';
+    matBody.appendChild(tr);
+  });
+  var matFoot=document.getElementById('matrixFoot');
+  matFoot.innerHTML='<tr><td><strong>Total</strong></td><td>'+fmt(totalGross)+'</td><td>'+wtd.toFixed(2)+'%</td><td>'+(lgd*100).toFixed(0)+'%</td><td>'+fmt(totalEcl)+'</td><td><span class="pct-badge">'+wtd.toFixed(2)+'%</span></td></tr>';
+
+  document.getElementById('mvOpen').textContent=fmt(opening);
+  var mvAddEl=document.getElementById('mvAdd');
+  var mvAddLbl=document.getElementById('mvAddLbl');
+  if(movement>=0){
+    mvAddEl.textContent=fmt(movement);
+    mvAddEl.style.color='var(--red)';
+    mvAddLbl.textContent='Add: Provision for the year (P&L charge)';
+  } else {
+    mvAddEl.textContent='('+fmt(Math.abs(movement))+')';
+    mvAddEl.style.color='var(--green)';
+    mvAddLbl.textContent='Less: Writeback to P&L';
+  }
+  document.getElementById('mvClose').textContent=fmt(totalEcl);
+
+  var jeCrAcct=document.getElementById('jeCrAcct');
+  var jeDrAcct=document.getElementById('jeDrAcct');
+  var jeDrAmt=document.getElementById('jeDrAmt');
+  var jeCrAmt=document.getElementById('jeCrAmt');
+  var jeTitle=document.getElementById('jeChargeTitle');
+  var jeNote=document.getElementById('jeNote');
+  var absMove=Math.abs(movement);
+
+  if(movement>=0){
+    jeTitle.textContent='Entry 1 — ECL Provision Charge (P&L)';
+    jeDrAcct.textContent='Bad debt expense / ECL provision expense (P&L)';
+    jeCrAcct.textContent='Provision for doubtful debts (Balance Sheet)';
+    jeDrAmt.textContent=fmt(absMove);
+    jeCrAmt.textContent=fmt(absMove);
+    jeNote.textContent='Being recognition of ECL provision — movement from ₹'+fmtN(opening)+' (opening) to ₹'+fmtN(totalEcl)+' (closing). Charged to P&L per IND AS 109 Para 5.5.15. Net debit to P&L: '+fmt(absMove)+'.';
+  } else {
+    jeTitle.textContent='Entry 1 — ECL Provision Writeback (P&L)';
+    jeDrAcct.textContent='Provision for doubtful debts (Balance Sheet)';
+    jeCrAcct.textContent='ECL writeback income (P&L)';
+    jeDrAmt.textContent=fmt(absMove);
+    jeCrAmt.textContent=fmt(absMove);
+    jeNote.textContent='Being writeback of excess ECL provision — closing provision ('+fmt(totalEcl)+') is lower than opening ('+fmt(opening)+'). Writeback credited to P&L per IND AS 109 Para 5.5.8.';
+  }
+
+  window._eclData={rows:rows,totalGross:totalGross,totalEcl:totalEcl,netRecv:netRecv,movement:movement,wtd:wtd,lgd:lgd,opening:opening};
+}
+
+function exportXL(){
+  var d=window._eclData;
+  if(!d){alert('Please calculate first.');return;}
+  var wb=XLSX.utils.book_new();
+  var hdr={font:{bold:true,color:{rgb:'FFFFFF'}},fill:{fgColor:{rgb:'4F46E5'}},alignment:{horizontal:'center'},border:{bottom:{style:'thin',color:{rgb:'C7D2FE'}}}};
+  var tot={font:{bold:true},fill:{fgColor:{rgb:'EEF2FF'}}};
+  var num={numFmt:'#,##0'};
+  var pct={numFmt:'0.00%'};
+
+  var ws1Data=[
+    [{v:'ECL Provision Matrix — IND AS 109',s:{font:{bold:true,sz:13}}}],[],
+    [{v:'Reporting date',s:{font:{bold:true}}},{v:document.getElementById('repDate').value||''}],
+    [{v:'LGD %',s:{font:{bold:true}}},{v:(d.lgd*100).toFixed(0)+'%'}],
+    [{v:'Opening provision',s:{font:{bold:true}}},{v:d.opening,s:num}],[],
+    [{v:'Ageing Bucket',s:hdr},{v:'Gross Receivable (₹)',s:hdr},{v:'Loss Rate %',s:hdr},{v:'LGD %',s:hdr},{v:'ECL Provision (₹)',s:hdr},{v:'% of Bucket',s:hdr}]
+  ];
+  d.rows.forEach(function(r){
+    ws1Data.push([
+      {v:r.label},{v:r.amt,s:num},{v:r.rate/100,s:pct},{v:d.lgd,s:pct},{v:Math.round(r.ecl),s:num},{v:r.pct/100,s:pct}
+    ]);
+  });
+  ws1Data.push([{v:'Total',s:tot},{v:Math.round(d.totalGross),s:Object.assign({},num,tot)},{v:d.wtd/100,s:Object.assign({},pct,tot)},{v:d.lgd,s:Object.assign({},pct,tot)},{v:Math.round(d.totalEcl),s:Object.assign({},num,tot)},{v:d.wtd/100,s:Object.assign({},pct,tot)}]);
+  var ws1=XLSX.utils.aoa_to_sheet(ws1Data);
+  ws1['!cols']=[{wch:26},{wch:22},{wch:14},{wch:10},{wch:22},{wch:14}];
+  XLSX.utils.book_append_sheet(wb,ws1,'Provision Matrix');
+
+  var ws2Data=[
+    [{v:'Movement in ECL Provision',s:{font:{bold:true,sz:13}}}],[],
+    [{v:'Particulars',s:hdr},{v:'Amount (₹)',s:hdr}],
+    [{v:'Opening provision (prior year)'},{v:Math.round(d.opening),s:num}],
+    [{v:d.movement>=0?'Add: Provision for the year (P&L charge)':'Less: Writeback to P&L'},{v:Math.round(Math.abs(d.movement)),s:num}],
+    [{v:'Less: Bad debts written off'},{v:0,s:num}],
+    [{v:'Add: Recoveries'},{v:0,s:num}],
+    [{v:'Closing ECL Provision',s:tot},{v:Math.round(d.totalEcl),s:Object.assign({},num,tot)}]
+  ];
+  var ws2=XLSX.utils.aoa_to_sheet(ws2Data);
+  ws2['!cols']=[{wch:38},{wch:20}];
+  XLSX.utils.book_append_sheet(wb,ws2,'Movement Schedule');
+
+  var ws3Data=[
+    [{v:'Journal Entries — ECL',s:{font:{bold:true,sz:13}}}],[],
+    [{v:'Entry 1 — '+(d.movement>=0?'Provision Charge':'Writeback'),s:hdr},{v:'Dr (₹)',s:hdr},{v:'Cr (₹)',s:hdr}],
+    [{v:d.movement>=0?'Bad debt expense / ECL provision expense (P&L)':'Provision for doubtful debts (BS)'},{v:Math.round(Math.abs(d.movement)),s:num},{}],
+    [{v:d.movement>=0?'  Provision for doubtful debts (BS)':'  ECL writeback income (P&L)'},{},{v:Math.round(Math.abs(d.movement)),s:num}],[],
+    [{v:'Entry 2 — Bad Debt Write-off (for reference)',s:hdr},{v:'Dr (₹)',s:hdr},{v:'Cr (₹)',s:hdr}],
+    [{v:'Provision for doubtful debts (BS)'},{v:'XXX'},{}],
+    [{v:'  Trade Receivables'},{},{v:'XXX'}]
+  ];
+  var ws3=XLSX.utils.aoa_to_sheet(ws3Data);
+  ws3['!cols']=[{wch:46},{wch:16},{wch:16}];
+  XLSX.utils.book_append_sheet(wb,ws3,'Journal Entries');
+
+  var ws4Data=[
+    [{v:'Balance Sheet Summary',s:{font:{bold:true,sz:13}}}],[],
+    [{v:'Trade receivables (gross)'},{v:Math.round(d.totalGross),s:num}],
+    [{v:'Less: Provision for ECL'},{v:-Math.round(d.totalEcl),s:num}],
+    [{v:'Net trade receivables',s:tot},{v:Math.round(d.netRecv),s:Object.assign({},num,tot)}]
+  ];
+  var ws4=XLSX.utils.aoa_to_sheet(ws4Data);
+  ws4['!cols']=[{wch:32},{wch:20}];
+  XLSX.utils.book_append_sheet(wb,ws4,'Balance Sheet');
+
+  XLSX.writeFile(wb,'Finosutra_ECL_Provision_'+new Date().toISOString().slice(0,10)+'.xlsx');
+}
+
+function toggleFaq(btn){
+  var ans=btn.nextElementSibling;
+  var icon=btn.querySelector('i');
+  var open=ans.style.display!=='none';
+  ans.style.display=open?'none':'block';
+  icon.style.transform=open?'':'rotate(180deg)';
+}
+
+(function(){
+  var t=document.getElementById('navToggle');
+  if(t) t.onclick=function(){
+    var l=document.getElementById('navLinks');
+    if(l)l.classList.toggle('open');
+    var i=this.querySelector('i');
+    if(i)i.className=l&&l.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-bars';
+  };
+  var d=new Date();
+  var dd=('0'+d.getDate()).slice(-2);
+  var mm=('0'+(d.getMonth()+1)).slice(-2);
+  document.getElementById('repDate').value=d.getFullYear()+'-'+mm+'-'+dd;
+  renderBuckets();
+  if(typeof window.wrapExportButton==='function'){
+    window.wrapExportButton(document.getElementById('btnExp'),exportXL);
+  } else {
+    window.downloadExcel=exportXL;
+    document.getElementById('btnExp').onclick=exportXL;
+  }
+})();
+</script>
+</body>
+</html>
