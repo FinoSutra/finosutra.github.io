@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>ECL Provision Matrix under IND AS 109 — Step-by-Step with Worked Example | Finosutra</title>
+<meta name="description" content="Complete guide to Expected Credit Loss (ECL) provision matrix under IND AS 109. Simplified approach, ageing buckets, loss rates, worked example with journal entries. Free calculator included."/>
+<meta name="keywords" content="ECL provision matrix IND AS 109, expected credit loss trade receivables India, IND AS 109 simplified approach, provision for doubtful debts IND AS, ECL journal entries, ageing bucket loss rates, IFRS 9 ECL India, IND AS 109 Para 5.5.15"/>
+<meta name="author" content="Finosutra"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://www.finosutra.com/blog/ecl-provision-matrix-ind-as-109.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Finosutra"/>
+<meta property="og:title" content="ECL Provision Matrix under IND AS 109 — Step-by-Step with Worked Example"/>
+<meta property="og:description" content="How to build an ECL provision matrix for trade receivables under IND AS 109 — ageing buckets, loss rates, forward-looking adjustments and journal entries."/>
+<meta property="og:url" content="https://www.finosutra.com/blog/ecl-provision-matrix-ind-as-109.html"/>
+<meta property="og:image" content="https://www.finosutra.com/og-image.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="ECL Provision Matrix under IND AS 109 — Step-by-Step Guide"/>
+<meta name="twitter:description" content="How to build an ECL provision matrix for trade receivables under IND AS 109 with worked example and journal entries."/>
+<meta name="twitter:image" content="https://www.finosutra.com/og-image.jpg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "ECL Provision Matrix under IND AS 109 — Step-by-Step with Worked Example",
+  "description": "Complete guide to Expected Credit Loss provision matrix for trade receivables under IND AS 109 simplified approach — ageing buckets, loss rates, journal entries.",
+  "author": {"@type": "Organization", "name": "Finosutra"},
+  "publisher": {"@type": "Organization", "name": "Finosutra", "url": "https://www.finosutra.com"},
+  "datePublished": "2026-07-17",
+  "dateModified": "2026-07-17",
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.finosutra.com/blog/ecl-provision-matrix-ind-as-109.html"}
+}
+</script>
+<style>
+:root{
+  --brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;--brand-mid:#C7D2FE;
+  --bg:#F9FAFB;--card:#FFFFFF;--border:rgba(99,102,241,0.18);--border-light:rgba(99,102,241,0.08);
+  --text:#111827;--muted:#6B7280;--muted2:#9CA3AF;
+  --green:#059669;--green-light:#ECFDF5;
+  --red:#DC2626;--red-light:#FEF2F2;
+  --orange:#D97706;--orange-light:#FFFBEB;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+/* NAV */
+nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-light);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 var(--border-light),0 4px 20px rgba(99,102,241,0.05)}
+.nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.nav-logo img{height:40px;width:auto;}
+.nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
+.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;padding:7px 12px;border-radius:8px;transition:color .15s,background .15s;}
+.nav-links a:hover{color:var(--text);background:var(--brand-light);}
+.nav-toggle{display:none;background:none;border:none;font-size:20px;color:var(--text);cursor:pointer;padding:8px;}
+@media(max-width:900px){.nav-links{display:none;}}
+@media(max-width:768px){nav{padding:0 16px;}.nav-toggle{display:block;}.nav-links.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid var(--border-light);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
+
+/* ARTICLE LAYOUT */
+.article-wrap{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+
+/* BREADCRUMB */
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted2);margin-bottom:24px;flex-wrap:wrap;}
+.breadcrumb a{color:var(--muted2);text-decoration:none;transition:color .15s;}
+.breadcrumb a:hover{color:var(--brand);}
+
+/* ARTICLE HEADER */
+.article-tag{display:inline-block;background:var(--brand-light);color:var(--brand);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.4px;margin-bottom:16px;}
+.article-title{font-size:clamp(24px,4vw,36px);font-weight:800;line-height:1.2;letter-spacing:-0.5px;color:var(--text);margin-bottom:16px;}
+.article-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--muted);margin-bottom:32px;flex-wrap:wrap;}
+.article-meta span{display:flex;align-items:center;gap:5px;}
+.article-divider{height:1px;background:var(--border-light);margin-bottom:36px;}
+
+/* TOC */
+.toc{background:var(--brand-light);border:1px solid var(--brand-mid);border-radius:14px;padding:22px 26px;margin-bottom:40px;}
+.toc h3{font-size:13px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;}
+.toc ol{padding-left:18px;}
+.toc ol li{margin-bottom:6px;}
+.toc ol li a{font-size:14px;color:var(--brand-dark);text-decoration:none;font-weight:500;}
+.toc ol li a:hover{text-decoration:underline;}
+
+/* PROSE */
+.article-body h2{font-size:22px;font-weight:800;color:var(--text);margin:40px 0 14px;letter-spacing:-0.3px;}
+.article-body h3{font-size:17px;font-weight:700;color:var(--text);margin:28px 0 10px;}
+.article-body p{margin-bottom:16px;color:#1F2937;}
+.article-body ul,.article-body ol{padding-left:22px;margin-bottom:16px;}
+.article-body ul li,.article-body ol li{margin-bottom:8px;color:#1F2937;}
+.article-body strong{font-weight:700;color:var(--text);}
+
+/* CALLOUT */
+.callout{background:var(--brand-light);border-left:4px solid var(--brand);border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0;}
+.callout p{margin:0;font-size:14px;color:var(--brand-dark);}
+.callout strong{color:var(--brand-dark);}
+.callout-green{background:var(--green-light);border-left-color:var(--green);}
+.callout-green p{color:#065F46;}
+.callout-orange{background:var(--orange-light);border-left-color:var(--orange);}
+.callout-orange p{color:#92400E;}
+.callout-red{background:var(--red-light);border-left-color:var(--red);}
+.callout-red p{color:#991B1B;}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:24px 0;}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:360px;}
+table th{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-weight:700;padding:10px 14px;text-align:left;}
+table th.r{text-align:right;}
+table td{padding:9px 14px;border-bottom:1px solid #F3F4F6;color:#1F2937;}
+table td.r{text-align:right;}
+table tr:nth-child(even) td{background:#F9FAFB;}
+table tr:last-child td{border-bottom:none;}
+table tfoot td{background:#EEF2FF;font-weight:700;border-top:2px solid var(--brand-mid);}
+.hi-red{color:var(--red);font-weight:700;}
+.hi-orange{color:var(--orange);font-weight:700;}
+
+/* JE BLOCK */
+.je-block{background:#F9FAFB;border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:20px 0;}
+.je-title{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px;}
+.je-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #F3F4F6;}
+.je-row:last-child{border-bottom:none;}
+.je-account{font-size:14px;font-weight:600;color:var(--text);}
+.je-account.cr{padding-left:24px;font-weight:500;color:var(--muted);}
+.je-amounts{display:flex;gap:32px;}
+.je-dr{font-size:14px;font-weight:700;color:#10B981;min-width:90px;text-align:right;}
+.je-cr{font-size:14px;font-weight:700;color:#6366F1;min-width:90px;text-align:right;}
+
+/* FORMULA */
+.formula-box{background:#1E1B4B;border-radius:10px;padding:18px 22px;margin:20px 0;font-family:'Courier New',monospace;font-size:15px;color:#C7D2FE;line-height:1.7;}
+.formula-box .formula-label{font-family:'Inter',sans-serif;font-size:10px;font-weight:700;color:#6366F1;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
+
+/* STEP CARD */
+.step-card{border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:16px 0;position:relative;padding-left:60px;}
+.step-num{position:absolute;left:18px;top:18px;width:28px;height:28px;background:var(--brand);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;}
+.step-card h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.step-card p{font-size:14px;color:var(--muted);margin:0;}
+
+/* CTA */
+.cta-box{background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:16px;padding:28px 30px;margin:40px 0;text-align:center;}
+.cta-box h3{font-size:18px;font-weight:800;color:#fff;margin-bottom:8px;}
+.cta-box p{font-size:14px;color:rgba(255,255,255,.85);margin-bottom:18px;}
+.cta-box a{display:inline-block;background:#fff;color:var(--brand);font-size:14px;font-weight:700;padding:12px 26px;border-radius:10px;text-decoration:none;transition:transform .15s;}
+.cta-box a:hover{transform:translateY(-1px);}
+
+/* RELATED */
+.related-links{border:1px solid var(--border-light);border-radius:12px;padding:20px 24px;margin-top:40px;}
+.related-links h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;}
+.related-links a{display:block;font-size:14px;color:var(--brand);text-decoration:none;padding:6px 0;border-bottom:1px solid var(--border-light);font-weight:500;}
+.related-links a:last-child{border-bottom:none;}
+.related-links a:hover{text-decoration:underline;}
+
+/* FOOTER */
+footer{background:#111827;padding:36px 32px 24px;color:#9CA3AF;}
+.footer-bottom-simple{max-width:1160px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px;}
+
+@media(max-width:600px){.article-wrap{padding:32px 16px 60px;}.je-amounts{gap:16px;}.step-card{padding-left:50px;}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../auth.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo"><img src="../logo.png" alt="Finosutra"></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../indas-tools.html">IND AS</a></li>
+      <li><a href="../gst-tools.html">GST</a></li>
+      <li><a href="../income-tax-hub.html">Income Tax</a></li>
+      <li><a href="../templates.html">Templates</a></li>
+      <li><a href="../blog.html">Blog</a></li>
+      <li><a href="../index.html#pricing">Pricing</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+      <li id="navAuthMobile"></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <a href="../blog.html" style="font-size:13px;font-weight:600;color:var(--brand);text-decoration:none;">← All Articles</a>
+      <button class="nav-toggle" id="navToggle"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
+
+<div class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span>›</span>
+    <a href="../blog.html">Blog</a>
+    <span>›</span>
+    <span>ECL Provision Matrix — IND AS 109</span>
+  </nav>
+
+  <div class="article-tag">IND AS 109 / IFRS 9</div>
+  <h1 class="article-title">ECL Provision Matrix under IND AS 109 — Step-by-Step Guide with Worked Example</h1>
+  <div class="article-meta">
+    <span><i class="fa-regular fa-calendar"></i> July 2026</span>
+    <span><i class="fa-regular fa-clock"></i> 12 min read</span>
+    <span><i class="fa-solid fa-user"></i> Finosutra Team</span>
+  </div>
+  <div class="article-divider"></div>
+
+  <div class="toc">
+    <h3>In This Article</h3>
+    <ol>
+      <li><a href="#what-is-ecl">What is ECL and why does it matter?</a></li>
+      <li><a href="#simplified-approach">The Simplified Approach — Para 5.5.15</a></li>
+      <li><a href="#provision-matrix">Building the Provision Matrix</a></li>
+      <li><a href="#loss-rates">Determining Loss Rates</a></li>
+      <li><a href="#worked-example">Worked Example — Textile Manufacturer</a></li>
+      <li><a href="#journal-entries">Journal Entries</a></li>
+      <li><a href="#movement-schedule">Movement Schedule (Notes Disclosure)</a></li>
+      <li><a href="#vs-igaap">ECL vs Old AS 26 — Key Differences</a></li>
+      <li><a href="#common-errors">5 Common Errors CAs Make</a></li>
+    </ol>
+  </div>
+
+  <div class="article-body">
+
+    <h2 id="what-is-ecl">1. What is ECL and Why Does It Matter?</h2>
+    <p>Expected Credit Loss (ECL) is a forward-looking estimate of the credit losses a company expects to incur on its financial assets — trade receivables, loans, advances, contract assets. IND AS 109, effective for most Indian companies since FY 2018-19, mandates that companies replace the old "incurred-loss" model with this forward-looking ECL model.</p>
+    <p>Under the old IGAAP (AS 26), a company only provisioned for bad debts once there was clear evidence that a customer had defaulted. IND AS 109 flips this: you must provision for expected future losses <strong>even before any default actually occurs</strong>.</p>
+
+    <div class="callout">
+      <p><strong>The core shift:</strong> Under AS 26, provision = losses that have already happened. Under IND AS 109, provision = losses expected to happen. This typically results in a <strong>higher provision</strong> and a more conservative balance sheet.</p>
+    </div>
+
+    <p>For most manufacturing, retail, and services companies, trade receivables are the biggest financial asset on the balance sheet. Getting the ECL right is therefore not a minor note disclosure — it directly affects reported profits, net assets, and tax-deductible provisions.</p>
+
+    <h2 id="simplified-approach">2. The Simplified Approach — IND AS 109 Para 5.5.15</h2>
+    <p>IND AS 109 offers two broad approaches for computing ECL:</p>
+    <ul>
+      <li><strong>General approach</strong> — 3-stage model (Stage 1: 12-month ECL; Stage 2 & 3: lifetime ECL). Used for loans, bonds, and financial assets where credit risk needs to be tracked over time.</li>
+      <li><strong>Simplified approach</strong> — Lifetime ECL always. Used for trade receivables and contract assets without a significant financing component.</li>
+    </ul>
+
+    <div class="callout callout-green">
+      <p><strong>Para 5.5.15 makes the simplified approach mandatory</strong> for trade receivables without a significant financing component. You cannot choose the general approach for these — the simplified approach must be applied regardless of whether credit risk has increased.</p>
+    </div>
+
+    <p>The practical tool for implementing the simplified approach is the <strong>provision matrix</strong> — described in Para 5.5.17 as an allowed practical expedient. It is by far the most common method used by Indian companies.</p>
+
+    <h2 id="provision-matrix">3. Building the Provision Matrix</h2>
+    <p>A provision matrix groups trade receivables into <strong>ageing buckets</strong> based on how long they are overdue, then applies a <strong>loss rate</strong> to each bucket. The ECL for each bucket is:</p>
+
+    <div class="formula-box">
+      <div class="formula-label">ECL Formula</div>
+      ECL = Gross Receivable × Loss Rate × LGD
+    </div>
+
+    <p>Where:</p>
+    <ul>
+      <li><strong>Gross Receivable</strong> — the outstanding balance before any provision, in each ageing bucket</li>
+      <li><strong>Loss Rate (PD)</strong> — the Probability of Default for that bucket, derived from historical write-off experience + forward-looking adjustment</li>
+      <li><strong>LGD</strong> — Loss Given Default. For unsecured trade receivables with no collateral, this is typically 100%. If you hold a lien, guarantee or security, it reduces accordingly.</li>
+    </ul>
+
+    <p>Standard ageing buckets used in Indian practice:</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Bucket</th><th class="r">Typical loss rate range</th><th>Risk level</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Current (not yet due)</td><td class="r">0.5% – 3%</td><td>Low</td></tr>
+          <tr><td>1–30 days overdue</td><td class="r">2% – 8%</td><td>Low–Medium</td></tr>
+          <tr><td>31–60 days overdue</td><td class="r">8% – 20%</td><td>Medium</td></tr>
+          <tr><td>61–90 days overdue</td><td class="r">20% – 40%</td><td>High</td></tr>
+          <tr><td>91–180 days overdue</td><td class="r">40% – 65%</td><td>High</td></tr>
+          <tr><td>&gt;180 days overdue</td><td class="r">65% – 100%</td><td>Very High</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:13px;color:var(--muted2);">These are illustrative ranges for manufacturing companies. Your actual rates must be derived from your own historical data.</p>
+
+    <h2 id="loss-rates">4. Determining Loss Rates</h2>
+    <p>The loss rates in your provision matrix cannot be arbitrary or copied from a template. IND AS 109 Para B5.5.51 requires that they be based on <strong>observable historical data</strong> adjusted for <strong>forward-looking information</strong>.</p>
+
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <h3>Gather historical write-off data</h3>
+      <p>Pull 3–5 years of trade receivable balances and actual write-offs from your accounting records. For each ageing bucket, compute: what % of receivables that reached this bucket were eventually written off?</p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <h3>Adjust for current forward-looking conditions</h3>
+      <p>Historical rates alone are insufficient. Ask: has anything changed that makes the future different from the past? Economic downturn, sector stress, a specific large debtor at risk, higher inflation affecting customer cash flows — all these warrant an upward adjustment.</p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <h3>Group by customer segment if needed</h3>
+      <p>If your receivables portfolio is heterogeneous (e.g., government customers vs. private retail), consider building separate matrices for each segment. Government receivables may warrant lower loss rates; small unorganised retail customers may warrant higher ones.</p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <h3>Document the basis</h3>
+      <p>The loss rates and forward-looking adjustments are a key accounting estimate under IND AS 108. They must be disclosed in the significant accounting policies and critical estimates note. Your auditor will ask for documentation — prepare it before year-end.</p>
+    </div>
+
+    <div class="callout callout-orange">
+      <p><strong>Warning:</strong> Using industry-average rates without any reference to your own historical data is not acceptable under IND AS 109. You must start from your own experience and then make adjustments. Industry rates can be used as a sanity check or as a proxy where internal data is insufficient for a specific bucket — but document why.</p>
+    </div>
+
+    <h2 id="worked-example">5. Worked Example — Textile Manufacturer</h2>
+
+    <p><strong>Company:</strong> Ravi Textiles Pvt. Ltd., Surat<br>
+    <strong>Reporting date:</strong> 31 March 2025<br>
+    <strong>Business:</strong> B2B fabric manufacturer selling to garment exporters<br>
+    <strong>Credit terms:</strong> Net 60 days<br>
+    <strong>LGD:</strong> 100% (no collateral)<br>
+    <strong>Opening provision (31 March 2024):</strong> ₹8,20,000</p>
+
+    <p>The company's trade receivable ageing as at 31 March 2025, and the loss rates derived from 4 years of write-off history with a modest forward-looking uplift for a softening export market:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Ageing bucket</th>
+            <th class="r">Gross receivable (₹)</th>
+            <th class="r">Loss rate</th>
+            <th class="r">ECL provision (₹)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Current (not yet due)</td><td class="r">1,20,00,000</td><td class="r">2%</td><td class="r">2,40,000</td></tr>
+          <tr><td>1–30 days overdue</td><td class="r">35,00,000</td><td class="r">5%</td><td class="r">1,75,000</td></tr>
+          <tr><td>31–60 days overdue</td><td class="r">18,00,000</td><td class="r">15%</td><td class="r">2,70,000</td></tr>
+          <tr><td>61–90 days overdue</td><td class="r">9,50,000</td><td class="r">35%</td><td class="r">3,32,500</td></tr>
+          <tr><td>91–180 days overdue</td><td class="r">4,20,000</td><td class="r">60%</td><td class="r">2,52,000</td></tr>
+          <tr><td class="hi-red">&gt;180 days overdue</td><td class="r hi-red">2,80,000</td><td class="r hi-red">85%</td><td class="r hi-red">2,38,000</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><td><strong>Total</strong></td><td class="r"><strong>1,89,50,000</strong></td><td class="r"><strong>8.98%</strong></td><td class="r"><strong>15,07,500</strong></td></tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <p><strong>Summary:</strong></p>
+    <ul>
+      <li>Gross trade receivables: ₹1,89,50,000</li>
+      <li>Closing ECL provision required: ₹15,07,500</li>
+      <li>Opening provision: ₹8,20,000</li>
+      <li><strong>P&amp;L charge for FY 2024-25: ₹6,87,500</strong> (additional provision needed)</li>
+      <li>Net receivables (after ECL): ₹1,74,42,500</li>
+    </ul>
+
+    <div class="callout callout-green">
+      <p><strong>Balance Sheet presentation:</strong> Trade receivables are shown net of ECL provision as a contra asset. So the balance sheet shows ₹1,74,42,500 as "Trade receivables" with the provision disclosed in the notes.</p>
+    </div>
+
+    <h2 id="journal-entries">6. Journal Entries</h2>
+
+    <h3>Entry 1 — ECL Provision Charge (year-end, FY 2024-25)</h3>
+    <div class="je-block">
+      <div class="je-title">31 March 2025 — ECL Provision</div>
+      <div class="je-row">
+        <span class="je-account">Bad Debt Expense / ECL Provision Expense (P&amp;L)</span>
+        <span class="je-amounts"><span class="je-dr">6,87,500</span><span class="je-cr">—</span></span>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Provision for Doubtful Debts (Balance Sheet)</span>
+        <span class="je-amounts"><span class="je-dr">—</span><span class="je-cr">6,87,500</span></span>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--muted);">Being increase in ECL provision from ₹8,20,000 (opening) to ₹15,07,500 (closing) — charged to P&amp;L per IND AS 109 Para 5.5.15.</p>
+
+    <h3>Entry 2 — If provision had decreased (writeback scenario)</h3>
+    <p>If the closing ECL required were <em>lower</em> than the opening provision — say closing ₹7,00,000 vs opening ₹8,20,000 — the excess provision is written back to P&amp;L:</p>
+    <div class="je-block">
+      <div class="je-title">31 March 2025 — ECL Writeback</div>
+      <div class="je-row">
+        <span class="je-account">Provision for Doubtful Debts (Balance Sheet)</span>
+        <span class="je-amounts"><span class="je-dr">1,20,000</span><span class="je-cr">—</span></span>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">ECL Writeback Income (P&amp;L)</span>
+        <span class="je-amounts"><span class="je-dr">—</span><span class="je-cr">1,20,000</span></span>
+      </div>
+    </div>
+
+    <h3>Entry 3 — Writing off an irrecoverable debt</h3>
+    <p>When a specific debtor becomes clearly irrecoverable (e.g., they go insolvent), the receivable is derecognised. The provision absorbs the write-off:</p>
+    <div class="je-block">
+      <div class="je-title">Write-off of Irrecoverable Debt</div>
+      <div class="je-row">
+        <span class="je-account">Provision for Doubtful Debts (Balance Sheet)</span>
+        <span class="je-amounts"><span class="je-dr">XXX</span><span class="je-cr">—</span></span>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Trade Receivables (Balance Sheet)</span>
+        <span class="je-amounts"><span class="je-dr">—</span><span class="je-cr">XXX</span></span>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--muted);">Note: Writing off a debt does not create a new P&amp;L charge — that was already recognised when the provision was created. The write-off simply removes both the receivable and the provision from the books simultaneously.</p>
+
+    <h3>Entry 4 — Recovery of previously written-off amount</h3>
+    <div class="je-block">
+      <div class="je-title">Recovery of Written-off Debt</div>
+      <div class="je-row">
+        <span class="je-account">Bank / Cash</span>
+        <span class="je-amounts"><span class="je-dr">XXX</span><span class="je-cr">—</span></span>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Bad Debt Recovery / ECL Writeback (P&amp;L)</span>
+        <span class="je-amounts"><span class="je-dr">—</span><span class="je-cr">XXX</span></span>
+      </div>
+    </div>
+
+    <h2 id="movement-schedule">7. Movement Schedule — Notes Disclosure</h2>
+    <p>IND AS 107 (Financial Instruments: Disclosures) requires a rollforward of the loss allowance in the notes to financial statements. For Ravi Textiles:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Movement in ECL Provision</th><th class="r">₹</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Opening balance (1 April 2024)</td><td class="r">8,20,000</td></tr>
+          <tr><td>Add: Provision for the year (P&amp;L charge)</td><td class="r">6,87,500</td></tr>
+          <tr><td>Less: Bad debts written off during the year</td><td class="r">(—)</td></tr>
+          <tr><td>Add: Recoveries of amounts previously written off</td><td class="r">—</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><td><strong>Closing balance (31 March 2025)</strong></td><td class="r"><strong>15,07,500</strong></td></tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <p>This schedule should appear in the Notes to Financial Statements under "Financial Risk Management" or "Credit Risk." It confirms that the closing provision on the balance sheet ties to the movement disclosed in the notes.</p>
+
+    <div class="cta-box">
+      <h3>Build your provision matrix in seconds</h3>
+      <p>Use Finosutra's free ECL calculator — enter your ageing bucket balances, pick an industry preset, and get the provision, movement schedule and journal entries instantly.</p>
+      <a href="../ecl-calculator.html">Open ECL Calculator →</a>
+    </div>
+
+    <h2 id="vs-igaap">8. ECL vs Old AS 26 — Key Differences</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Aspect</th><th>AS 26 / IGAAP</th><th>IND AS 109 (ECL)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Trigger for provision</td><td>Loss must have occurred</td><td>Loss need only be expected</td></tr>
+          <tr><td>Scope</td><td>Only "doubtful" debts</td><td>All trade receivables incl. current (not-yet-due)</td></tr>
+          <tr><td>Forward-looking</td><td>No — purely historical</td><td>Yes — mandatory forward-looking adjustment</td></tr>
+          <tr><td>Provision on current receivables</td><td>Typically nil</td><td>Yes — even current receivables get a small loss rate</td></tr>
+          <tr><td>P&amp;L impact</td><td>Generally lower provision</td><td>Generally higher provision</td></tr>
+          <tr><td>Balance sheet</td><td>Lower provision = higher net receivables</td><td>More conservative net receivable figure</td></tr>
+          <tr><td>Disclosure</td><td>Minimal</td><td>Full rollforward + credit risk disclosures required</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="common-errors">9. Five Common Errors CAs Make</h2>
+
+    <div class="callout callout-red">
+      <p><strong>Error 1 — Copying industry rates without own historical data.</strong> Using a template provision matrix with fixed % rates (e.g., 2/5/15/30/50/80) is only the starting point. You must ground these in your client's actual write-off history. Applying a universal template to every client is not defensible.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 2 — Ignoring current receivables.</strong> The most common shortcut is to apply ECL only to overdue buckets. But Para 5.5.15 requires lifetime ECL on <em>all</em> trade receivables — including those not yet due. Even a 1–2% rate on the current bucket is required.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 3 — No forward-looking adjustment.</strong> Simply rolling forward last year's rates with no adjustment is a para B5.5.51 violation if economic conditions have changed. Document at least a qualitative assessment — "rates maintained as sector outlook is stable" or "rates increased 5% due to export slowdown."</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 4 — Treating write-offs as additional P&amp;L charges.</strong> When a debt is written off, the P&amp;L charge was already recognised when the provision was created. The write-off entry (Dr Provision, Cr Receivables) is purely a balance sheet derecognition — it does not create a new charge. Booking an additional P&amp;L debit on write-off is a double-count.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 5 — No movement rollforward in notes.</strong> Many companies compute and book the provision correctly but forget to include the movement schedule in the notes. IND AS 107 Para 35H requires disclosure of the loss allowance by class of financial asset with a reconciliation from opening to closing.</p>
+    </div>
+
+  </div>
+
+  <div class="related-links">
+    <h3>Related tools &amp; articles</h3>
+    <a href="../ecl-calculator.html">→ ECL Provision Matrix Calculator (free, instant results)</a>
+    <a href="../security-deposit.html">→ IND AS 109 Security Deposit Calculator</a>
+    <a href="ind-as-109-security-deposit-accounting.html">→ IND AS 109 Security Deposit Accounting — Full Guide</a>
+    <a href="ind-as-116-lease-accounting-guide.html">→ IND AS 116 Lease Accounting — Complete Guide</a>
+    <a href="lease-accounting-ind-as-116-with-example.html">→ IND AS 116 Full Worked Example with Journal Entries</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-bottom-simple">
+    <p>© 2026 Finosutra. All rights reserved. Content is for educational purposes; consult a qualified CA for specific situations.</p>
+    <p><a href="../privacy.html" style="color:#6B7280;text-decoration:none;">Privacy</a> &nbsp;·&nbsp; <a href="../terms.html" style="color:#6B7280;text-decoration:none;">Terms</a></p>
+  </div>
+</footer>
+
+<script>
+var t=document.getElementById('navToggle');
+if(t)t.onclick=function(){
+  var l=document.getElementById('navLinks');
+  if(l)l.classList.toggle('open');
+  var i=this.querySelector('i');
+  if(i)i.className=l&&l.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-bars';
+};
+</script>
+</body>
+</html>
