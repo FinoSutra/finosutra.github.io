@@ -317,7 +317,7 @@ table.tbl td:last-child{text-align:right;font-weight:600}
       <div class="input-wrap">
         <input type="number" id="ciiSale" placeholder="e.g. 363" oninput="calculate()" class="no-prefix"/>
       </div>
-      <div class="hint">CII for the FY of sale (FY 2026-27 = 363)</div>
+      <div class="hint">CII for the FY of sale — FY 2025-26 = 371 · FY 2024-25 = 363 · FY 2023-24 = 348</div>
     </div>
   </div>
 
@@ -328,12 +328,13 @@ table.tbl td:last-child{text-align:right;font-weight:600}
     <label>Total Annual Income (incl. this gain) — for slab</label>
     <div class="input-wrap">
       <select id="incomeSlab" class="no-prefix" onchange="calculate()">
-        <option value="0">Below ₹3 Lakh (Nil slab)</option>
-        <option value="5">₹3L – ₹7L (5% slab)</option>
-        <option value="10">₹7L – ₹10L (10% slab)</option>
-        <option value="15" selected>₹10L – ₹12L (15% slab)</option>
-        <option value="20">₹12L – ₹15L (20% slab)</option>
-        <option value="30">Above ₹15L (30% slab)</option>
+        <option value="0">Below ₹4 Lakh (Nil slab)</option>
+        <option value="5">₹4L – ₹8L (5% slab)</option>
+        <option value="10">₹8L – ₹12L (10% slab)</option>
+        <option value="15">₹12L – ₹16L (15% slab)</option>
+        <option value="20">₹16L – ₹20L (20% slab)</option>
+        <option value="25">₹20L – ₹24L (25% slab)</option>
+        <option value="30" selected>Above ₹24L (30% slab)</option>
       </select>
     </div>
     <div class="hint">Used only when gains are taxed at slab rate (STCG on debt/property/gold, or debt MF)</div>
@@ -516,7 +517,7 @@ function onDateChange(){
   var t = document.getElementById('assetType').value;
   if(t !== 'equity') { calculate(); return; }
   var pd = document.getElementById('purchaseDate').value;
-  var showGF = pd && pd < '2018-01-31';
+  var showGF = pd && pd <= '2018-01-31';
   document.getElementById('fmvField').style.display = showGF ? '' : 'none';
   calculate();
 }
@@ -560,7 +561,7 @@ function calculate(){
 
     // Step 2: Grandfathering (only for LTCG and pre-2018 purchases)
     var effectiveCost = purchasePrice;
-    if(isLTCG && purchaseDate < '2018-01-31'){
+    if(isLTCG && purchaseDate <= '2018-01-31'){
       var fmv = fmvRaw || purchasePrice;
       // Deemed cost = min(FMV, Sale Price) if FMV > actual cost, else actual cost
       effectiveCost = Math.min(Math.max(purchasePrice, fmv), salePrice);
