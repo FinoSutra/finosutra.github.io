@@ -34,8 +34,21 @@
   "author": {"@type": "Organization", "name": "Finosutra"},
   "publisher": {"@type": "Organization", "name": "Finosutra", "url": "https://www.finosutra.com"},
   "datePublished": "2026-06-14",
-  "dateModified": "2026-06-14",
+  "dateModified": "2026-07-19",
   "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.finosutra.com/blog/ind-as-116-lease-accounting-guide.html"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What is the Incremental Borrowing Rate (IBR) under IND AS 116?", "acceptedAnswer": {"@type": "Answer", "text": "The IBR is the rate at which the lessee could borrow funds with similar security, currency, and term to purchase an asset of similar value. For Indian companies, IBR is typically 8%–14% p.a. Use the company's latest term loan rate or WACOD as a starting point."}},
+    {"@type": "Question", "name": "Does IND AS 116 apply to all Indian companies?", "acceptedAnswer": {"@type": "Answer", "text": "IND AS 116 is mandatory for companies following IND AS — primarily listed companies, their subsidiaries, and unlisted companies with net worth above ₹250 crore. Companies under IGAAP (AS) follow AS 19."}},
+    {"@type": "Question", "name": "How are lease modifications accounted for under IND AS 116?", "acceptedAnswer": {"@type": "Answer", "text": "A lease modification is accounted for as a separate lease if it adds new scope at market price. Otherwise, remeasure the lease liability at a revised IBR and adjust the ROU asset. Scope reductions require proportional derecognition of the ROU asset and lease liability."}},
+    {"@type": "Question", "name": "Can you use a single IBR for all leases of a company?", "acceptedAnswer": {"@type": "Answer", "text": "Yes — IND AS 116 permits a portfolio approach with one IBR for a group of leases with similar characteristics. Most companies use 2–3 IBR bands: short-term (up to 3 years), medium-term (3–7 years), and long-term (7+ years)."}},
+    {"@type": "Question", "name": "Is a refundable security deposit included in the lease liability?", "acceptedAnswer": {"@type": "Answer", "text": "No. A refundable security deposit is a financial asset under IND AS 109, not a lease payment. It is recognised at amortised cost using the EIR method, separate from the lease liability."}}
+  ]
 }
 </script>
 <style>
@@ -169,7 +182,7 @@ footer{background:#111827;padding:36px 32px 24px;color:#9CA3AF;}
   <h1 class="article-title">IND AS 116 / IFRS 16 Lease Accounting: Complete Guide with Journal Entries</h1>
   <div class="article-meta">
     <span><i class="fa-regular fa-calendar"></i> June 2026</span>
-    <span><i class="fa-regular fa-clock"></i> 10 min read</span>
+    <span><i class="fa-regular fa-clock"></i> 18 min read</span>
     <span><i class="fa-solid fa-user"></i> Finosutra Team</span>
   </div>
   <div class="article-divider"></div>
@@ -183,7 +196,13 @@ footer{background:#111827;padding:36px 32px 24px;color:#9CA3AF;}
       <li><a href="#measurement">Subsequent Measurement</a></li>
       <li><a href="#journal-entries">Journal Entries — Full Set</a></li>
       <li><a href="#example">Worked Example with Schedule</a></li>
+      <li><a href="#ibr">How to Determine IBR in Practice</a></li>
+      <li><a href="#rent-free">Rent-Free Periods &amp; Lease Incentives</a></li>
+      <li><a href="#modifications">Lease Modifications Overview</a></li>
       <li><a href="#impact">Impact on Financial Statements</a></li>
+      <li><a href="#vs-as17">IND AS 116 vs Old AS 17</a></li>
+      <li><a href="#disclosures">Disclosure Requirements (Para 52)</a></li>
+      <li><a href="#mistakes">Common Mistakes to Avoid</a></li>
       <li><a href="#faq">FAQs</a></li>
     </ol>
   </div>
@@ -327,13 +346,63 @@ footer{background:#111827;padding:36px 32px 24px;color:#9CA3AF;}
     <p>Annual depreciation = ₹31,08,145 ÷ 3 years = <strong>₹10,36,048 per year</strong></p>
     <p>Monthly depreciation = ₹10,36,048 ÷ 12 = <strong>₹86,337 per month</strong></p>
 
+    <h3>Step 5: Balance Sheet Classification at Commencement</h3>
+    <p>The lease liability of ₹31,08,145 is split between current and non-current on the balance sheet. The <strong>current portion</strong> is the principal repayments due in the next 12 months — approximately ₹8,96,000 in Year 1 (total payments of ₹12,00,000 less finance cost of roughly ₹3,04,000). The <strong>non-current portion</strong> is the remainder, approximately ₹22,12,145. This split must be recalculated at each reporting date.</p>
+
     <div class="cta-box">
       <h3>Calculate your own lease automatically</h3>
       <p>Enter your lease details and get the full amortisation schedule, journal entries and audit-ready Excel report in under 60 seconds.</p>
       <a href="../indas116.html">Open Free IND AS 116 Calculator →</a>
     </div>
 
-    <h2 id="impact">7. Impact on Financial Statements</h2>
+    <h2 id="ibr">7. How to Determine IBR in Practice (India)</h2>
+    <p>The Incremental Borrowing Rate (IBR) is arguably the most judgemental input in IND AS 116. There is no single prescribed method, and getting it wrong can materially misstate the lease liability. Here is how most Indian CAs approach it:</p>
+
+    <h3>Starting Points for IBR</h3>
+    <ul>
+      <li><strong>Actual borrowing rate:</strong> If the company has recently taken a secured term loan for a similar tenor, use that rate. This is the most defensible approach for auditors.</li>
+      <li><strong>SBI MCLR + spread:</strong> SBI MCLR (1-year) plus a credit spread based on the company's risk profile is widely used. As of mid-2026, SBI 1-year MCLR is approximately 9.00%. A low-risk listed company might add 50–100 bps; an unlisted SME might add 200–400 bps.</li>
+      <li><strong>WACOD:</strong> Weighted Average Cost of Debt using existing loan rates is a practical proxy. It already reflects the company's credit quality and market conditions.</li>
+      <li><strong>Government securities + spread:</strong> For very long-term leases (10+ years), use the G-sec yield for the matching tenor plus an appropriate credit spread.</li>
+    </ul>
+
+    <div class="callout">
+      <p><strong>Typical IBR range in India (FY 2025-26):</strong> Listed/investment-grade companies: 8%–10.5% · Mid-sized unlisted companies: 10%–13% · SMEs/startups: 12%–16%. If your IBR is below 7% or above 18%, document the rationale carefully — auditors will question it.</p>
+    </div>
+
+    <p>The IBR should be <strong>currency-matched</strong> (use INR rates for INR-denominated leases), <strong>tenor-matched</strong> (use a 3-year rate for a 3-year lease), and <strong>collateral-matched</strong> (secured borrowing rate, since the lease itself provides implicit collateral — the right to use the asset). Revisit the IBR at each lease modification or when reassessing lease term.</p>
+
+    <p>Our <a href="../indas116.html" style="color:var(--brand);font-weight:600;">IND AS 116 Calculator</a> lets you enter any IBR and instantly see the impact on opening lease liability — useful for sensitivity testing.</p>
+
+    <h2 id="rent-free">8. Rent-Free Periods &amp; Lease Incentives</h2>
+    <p>Many commercial leases include a rent-free period at the start — say, 3 months free on a 36-month lease — or a fit-out contribution from the lessor. Both affect the Day 1 measurement of the lease liability and ROU asset.</p>
+
+    <h3>Rent-Free Period Accounting</h3>
+    <p>A rent-free period simply means lease payments of ₹0 for those months. The PV calculation includes all 36 months, but the first 3 cashflows are ₹0 — so the PV is slightly lower than a lease with payments from Month 1. The ROU asset still covers the full 36-month term and is depreciated over all 36 months. The result is that rent expense (as depreciation + interest) is spread evenly across the full term, even though no cash is paid in the early months.</p>
+
+    <h3>Lessor Fit-Out Contributions (Lease Incentives)</h3>
+    <p>If the lessor pays ₹5,00,000 towards fit-out costs, this is a lease incentive. It <strong>reduces the initial ROU asset</strong>:</p>
+    <div class="callout-green callout">
+      <p>ROU Asset = Lease Liability + IDCs − Lease Incentives Received = ₹31,08,145 + ₹50,000 − ₹5,00,000 = <strong>₹26,58,145</strong></p>
+    </div>
+    <p>The lessor contribution is not recognised as income at commencement — it is deducted from the ROU asset and spreads its benefit over the lease term through lower depreciation charges.</p>
+
+    <h2 id="modifications">9. Lease Modifications — When &amp; How</h2>
+    <p>A <strong>lease modification</strong> is a change in scope or consideration that was not part of the original terms — for example, extending the lease term, adding a floor to the leased area, or renegotiating the rent downward after COVID. IND AS 116 Para 44–46 sets out the accounting:</p>
+
+    <ul>
+      <li><strong>Para 45 — Treat as a separate lease:</strong> When the modification adds scope (e.g., a new floor at market rent). Account as if a brand-new lease from the modification date. No adjustment to existing lease.</li>
+      <li><strong>Para 46(a) — Scope reduction:</strong> Derecognise a proportional part of the ROU asset and lease liability. Any difference is a gain or loss in P&amp;L.</li>
+      <li><strong>Para 46(b) — All other modifications:</strong> Remeasure the lease liability using a revised IBR at the modification date. Adjust the ROU asset by the same amount.</li>
+    </ul>
+
+    <div class="callout">
+      <p><strong>Modification journal entry (Para 46b):</strong> Debit or Credit <em>Right-of-Use Asset</em> for the remeasurement difference; the offsetting entry is to <em>Lease Liability</em>. No P&amp;L impact for simple term/payment changes.</p>
+    </div>
+
+    <p>For complex modifications — especially scope reductions — use the <a href="../indas116-model2.html" style="color:var(--brand);font-weight:600;">IND AS 116 Lease Modification Calculator</a> which handles proportional derecognition and revised amortisation schedules automatically.</p>
+
+    <h2 id="impact">10. Impact on Financial Statements</h2>
     <h3>Balance Sheet</h3>
     <p>IND AS 116 brings previously off-balance-sheet operating leases onto the balance sheet. This <strong>increases both assets and liabilities</strong> — the ROU asset appears under non-current assets and the lease liability is split between current (due within 12 months) and non-current.</p>
 
@@ -347,7 +416,59 @@ footer{background:#111827;padding:36px 32px 24px;color:#9CA3AF;}
     <h3>Cash Flow Statement</h3>
     <p>The principal repayment portion of lease payments moves from operating cash outflows to <strong>financing cash outflows</strong>. Only the interest portion may remain in operating activities (per accounting policy). This improves reported operating cash flow.</p>
 
-    <h2 id="faq">8. Frequently Asked Questions</h2>
+    <h2 id="vs-as17">11. IND AS 116 vs Old AS 17 — Key Differences</h2>
+    <p>Companies that transitioned from IGAAP (AS 17) to IND AS experienced significant changes in how leases are reported. Here is a comparison:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Aspect</th><th>Old AS 17</th><th>IND AS 116</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Lessee model</td><td>Operating / Finance distinction</td><td>Single on-balance-sheet model for all leases</td></tr>
+          <tr><td>Operating leases</td><td>Expense rent as incurred (off-balance-sheet)</td><td>Recognise ROU asset + lease liability</td></tr>
+          <tr><td>Finance leases</td><td>Capitalise at lower of FV or PV of MLP</td><td>Capitalise at PV of lease payments (IBR)</td></tr>
+          <tr><td>P&amp;L charge</td><td>Rent expense (single line)</td><td>Depreciation + Finance cost (two lines)</td></tr>
+          <tr><td>EBITDA</td><td>Reduced by full rent</td><td>Improved (depreciation + interest below EBIT)</td></tr>
+          <tr><td>Cash flow — operating</td><td>Full rent in operating outflows</td><td>Only interest in operating; principal in financing</td></tr>
+          <tr><td>Short-term / low-value</td><td>No specific exemption</td><td>Practical expedients permitted</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>For companies with large lease portfolios — retailers, restaurant chains, airlines — the transition to IND AS 116 inflated total assets and total liabilities by tens of crores. EBITDA improved but net profit remained similar (since total cost is unchanged).</p>
+
+    <h2 id="disclosures">12. Disclosure Requirements — IND AS 116 Para 52</h2>
+    <p>Para 52 of IND AS 116 requires lessees to disclose information that gives users a basis to assess the effect of leases on the financial statements. The key disclosures are:</p>
+
+    <ul>
+      <li><strong>ROU asset rollforward:</strong> Opening NBV, additions, depreciation, modifications, closing NBV — by class of asset (property, vehicles, plant, etc.)</li>
+      <li><strong>Maturity analysis of lease liabilities (Para 58):</strong> Undiscounted future payments bucketed into: not later than 1 year; 1–5 years; later than 5 years. Plus a reconciliation to the PV (i.e., deduct unearned finance charges).</li>
+      <li><strong>Amounts recognised in P&amp;L:</strong> Depreciation on ROU assets; interest expense on lease liabilities; short-term lease expense; low-value asset lease expense; variable lease payments not included in liability.</li>
+      <li><strong>Total cash outflows for leases</strong> in the period (principal + interest).</li>
+      <li><strong>Weighted average IBR</strong> at the balance sheet date.</li>
+      <li><strong>Additions to ROU assets</strong> during the period.</li>
+    </ul>
+
+    <p>Most of these disclosures require a complete amortisation schedule and rollforward — exactly what the Finosutra <a href="../indas116.html" style="color:var(--brand);font-weight:600;">IND AS 116 Calculator</a> generates in the Excel export, including a dedicated Disclosure Note sheet.</p>
+
+    <h2 id="mistakes">13. Common Mistakes CAs Make Under IND AS 116</h2>
+    <p>After reviewing hundreds of lease workpapers, these are the errors we see most often:</p>
+
+    <ul>
+      <li><strong>Wrong IBR currency/tenor:</strong> Using a short-term overdraft rate for a 5-year lease, or using a USD rate for a INR lease. The IBR must match the currency and tenor of the lease.</li>
+      <li><strong>Ignoring renewal options:</strong> If the lessee is "reasonably certain" to exercise a renewal option, the additional term must be included in the lease term. "Reasonably certain" is a high threshold — significant economic incentive required.</li>
+      <li><strong>Forgetting IDCs:</strong> Stamp duty, broker fees and legal costs paid to obtain the lease are capitalised into the ROU asset, not expensed. Many CAs expense these as they are incurred.</li>
+      <li><strong>Not splitting current/non-current:</strong> The entire lease liability is sometimes placed under non-current liabilities. The 12-month current portion must be separately disclosed — it affects working capital ratios.</li>
+      <li><strong>Missing modification accounting:</strong> Rent revisions agreed mid-term (e.g., after a rent review clause triggers) must be accounted for as a modification with a fresh PV calculation at the revised IBR.</li>
+      <li><strong>Applying short-term exemption incorrectly:</strong> The 12-month test is applied at commencement, not retrospectively. A 3-year lease with 10 months remaining does not qualify as short-term.</li>
+    </ul>
+
+    <div class="callout">
+      <p><strong>Audit tip:</strong> Auditors routinely check (a) IBR basis documentation, (b) lease register completeness, and (c) current/non-current split. Prepare a one-page IBR workpaper for every significant lease at the start of each audit cycle.</p>
+    </div>
+
+    <h2 id="faq">14. Frequently Asked Questions</h2>
 
     <h3>What is the Incremental Borrowing Rate (IBR)?</h3>
     <p>The IBR is the rate at which the lessee could borrow funds — with similar security, currency, and term — to purchase an asset of similar value. For most Indian SMEs and mid-sized companies, IBR is typically between 8% and 14% p.a. Use the company's latest term loan rate or WACOD as a starting point.</p>
@@ -360,6 +481,18 @@ footer{background:#111827;padding:36px 32px 24px;color:#9CA3AF;}
 
     <h3>What happens when a lease is terminated early?</h3>
     <p>Derecognise both the ROU asset and remaining lease liability. Any difference is recognised as a gain or loss in the income statement. Document the termination and obtain board approval before updating your books.</p>
+
+    <h3>How do you account for advance lease payments (beginning of period)?</h3>
+    <p>When payments are made at the beginning of each period rather than the end, you use an annuity-due formula: PV = PMT × [(1 − (1+r)⁻ⁿ) / r] × (1 + r). The opening lease liability is slightly higher than an arrears lease because you've paid one month less of principal before the first interest period begins. Our calculator handles both beginning-of-period and end-of-period payment timing automatically.</p>
+
+    <h3>Can you use a single IBR for all leases of a company?</h3>
+    <p>IND AS 116 permits using a <strong>portfolio approach</strong> — one IBR applied to a group of leases with similar characteristics (similar asset class, similar term, similar commencement date). ICAI has confirmed this is acceptable if the results would not differ materially from individual lease IBRs. In practice, most companies use 2–3 IBR bands: short-term (up to 3 years), medium-term (3–7 years), and long-term (7+ years).</p>
+
+    <h3>Is the security deposit paid under a lease included in the lease liability?</h3>
+    <p>No — a refundable security deposit is a <strong>financial asset</strong> under IND AS 109, not a lease payment under IND AS 116. It is recognised at amortised cost using the EIR method, with the Day 1 fair value difference recognised as a prepaid rent or additional ROU asset cost. See our <a href="ind-as-109-security-deposit-accounting.html" style="color:var(--brand);font-weight:600;">IND AS 109 Security Deposit Guide</a> for a worked example.</p>
+
+    <h3>When should the lease liability be remeasured after commencement?</h3>
+    <p>The lease liability must be remeasured when: (a) there is a lease modification; (b) the lessee's assessment of whether it will exercise a purchase, extension, or termination option changes; or (c) the lease payments change because of a change in an index or rate (e.g., CPI-linked rent is reassessed). The remeasurement uses a revised IBR at the date of reassessment and any resulting adjustment is made to the carrying amount of the ROU asset.</p>
 
   </div><!-- end article-body -->
 
