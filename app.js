@@ -434,8 +434,7 @@ function renderDashRecentTable(){
 function renderLeases(){
   updateLeaseCountBadge();
   if(!window.currentUser){
-    document.getElementById('leaseContentArea').innerHTML =
-      '<div class="pro-gate"><div class="pro-gate-icon">🔒</div><div class="pro-gate-title">Sign in to view your leases</div><div class="pro-gate-sub">Your leases are saved securely to your Finosutra account.</div><button class="btn btn-primary" onclick="fsShowAuthModal(\'login\')">Log In / Sign Up</button></div>';
+    renderProGate();
     return;
   }
   filterLeases();
