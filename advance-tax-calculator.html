@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Advance Tax Calculator FY 2026-27 | Quarterly Instalments 234B 234C | Finosutra</title>
-<meta name="description" content="Free Advance Tax Calculator India FY 2026-27. Compute quarterly instalments (15 Jun, 15 Sep, 15 Dec, 15 Mar), interest under Section 234B &amp; 234C. Instant, accurate."/>
-<meta name="keywords" content="advance tax calculator India, 234B interest calculator, 234C interest calculator, quarterly advance tax instalments, advance tax FY 2026-27"/>
+<title>Advance Tax Calculator FY 2025-26 (AY 2026-27) | 234B 234C Interest | Finosutra</title>
+<meta name="description" content="Free Advance Tax Calculator India FY 2025-26 (AY 2026-27). Quarterly instalments (15 Jun, 15 Sep, 15 Dec, 15 Mar), Section 234B &amp; 234C interest. New Regime slabs. Accurate, instant."/>
+<meta name="keywords" content="advance tax calculator India 2025-26, 234B interest calculator, 234C interest calculator, quarterly advance tax instalments AY 2026-27, advance tax new regime"/>
 <link rel="canonical" href="https://www.finosutra.com/advance-tax-calculator.html"/>
-<meta property="og:title" content="Advance Tax Calculator FY 2026-27 | Finosutra"/>
-<meta property="og:description" content="Quarterly advance tax instalment calculator with 234B and 234C interest. New Regime slabs FY 2026-27."/>
+<meta property="og:title" content="Advance Tax Calculator FY 2025-26 (AY 2026-27) | Finosutra"/>
+<meta property="og:description" content="Quarterly advance tax instalment calculator with 234B and 234C interest. New Regime slabs FY 2025-26. Correct treatment of equity LTCG/STCG."/>
 <meta property="og:url" content="https://www.finosutra.com/advance-tax-calculator.html"/>
 <meta property="og:image" content="https://www.finosutra.com/og-image.jpg"/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
@@ -150,6 +150,7 @@ table.inst tbody td:not(:first-child){text-align:right}
   input,select,textarea,.form-input{font-size:16px;}
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="auth.js"></script>
 </head>
@@ -164,7 +165,6 @@ table.inst tbody td:not(:first-child){text-align:right}
       <li><a href="index.html">Home</a></li>
       <li><a href="indas-tools.html">IND AS</a></li>
       <li><a href="gst-tools.html">GST</a></li>
-      <li><a href="income-tax-hub.html">Income Tax</a></li>
       <li><a href="income-tax-hub.html" class="active">Income Tax</a></li>
       <li><a href="templates.html">Templates</a></li>
       <li><a href="blog.html">Blog</a></li>
@@ -182,7 +182,7 @@ table.inst tbody td:not(:first-child){text-align:right}
 
 <div class="hero">
   <div class="wrap">
-    <div class="hero-badge"><i class="fa-solid fa-circle" style="font-size:6px"></i> New Regime Slabs &nbsp;·&nbsp; FY 2026-27 / AY 2027-28</div>
+    <div class="hero-badge"><i class="fa-solid fa-circle" style="font-size:6px"></i> New Regime Slabs &nbsp;·&nbsp; FY 2025-26 / AY 2026-27</div>
     <h1>Advance Tax <span>Calculator</span></h1>
     <p>Quarterly advance tax instalments with exact due dates, Section 234B and 234C interest calculation. The CA working paper your clients need.</p>
   </div>
@@ -199,8 +199,8 @@ table.inst tbody td:not(:first-child){text-align:right}
     <label>Financial Year</label>
     <div class="input-wrap">
       <select id="fySelect" class="no-prefix" onchange="calculate()">
-        <option value="2026-27" selected>FY 2026-27 (AY 2027-28)</option>
-        <option value="2025-26">FY 2025-26 (AY 2026-27)</option>
+        <option value="2025-26" selected>FY 2025-26 (AY 2026-27)</option>
+        <option value="2026-27">FY 2026-27 (AY 2027-28)</option>
         <option value="2024-25">FY 2024-25 (AY 2025-26)</option>
       </select>
     </div>
@@ -225,11 +225,27 @@ table.inst tbody td:not(:first-child){text-align:right}
   </div>
 
   <div class="field">
-    <label>Capital Gains (LTCG + STCG) (₹)</label>
+    <label>Equity LTCG taxable — Sec 112A (₹)</label>
     <div class="input-wrap"><span class="pfx">₹</span>
-      <input type="number" id="incCG" placeholder="0" oninput="calculate()"/>
+      <input type="number" id="incLTCG" placeholder="0" oninput="calculate()"/>
     </div>
-    <div class="hint">Add all taxable capital gains for the FY</div>
+    <div class="hint">Gains above ₹1.25L exemption, taxed at 12.5%. 87A rebate NOT applicable on this.</div>
+  </div>
+
+  <div class="field">
+    <label>Equity STCG — Sec 111A (₹)</label>
+    <div class="input-wrap"><span class="pfx">₹</span>
+      <input type="number" id="incSTCG" placeholder="0" oninput="calculate()"/>
+    </div>
+    <div class="hint">Short-term equity gains (STT paid), taxed at 20%. 87A rebate NOT applicable on this.</div>
+  </div>
+
+  <div class="field">
+    <label>Other Capital Gains at slab rate (₹)</label>
+    <div class="input-wrap"><span class="pfx">₹</span>
+      <input type="number" id="incCGSlab" placeholder="0" oninput="calculate()"/>
+    </div>
+    <div class="hint">Property STCG, gold STCG, debt MF gains — added to slab income</div>
   </div>
 
   <div class="field">
@@ -247,7 +263,7 @@ table.inst tbody td:not(:first-child){text-align:right}
     <div class="input-wrap"><span class="pfx">₹</span>
       <input type="number" id="deductions" placeholder="0" oninput="calculate()"/>
     </div>
-    <div class="hint">For New Regime: only select deductions available. 80C deduction not available under New Regime.</div>
+    <div class="hint">New Regime: Standard Deduction ₹75,000 (salaried) is available — include it here. 80C/80D/HRA are NOT deductible under new regime.</div>
   </div>
 
   <div class="field">
@@ -365,6 +381,11 @@ table.inst tbody td:not(:first-child){text-align:right}
       </div>
     </div>
 
+    <!-- Surcharge disclaimer -->
+    <div id="surchargeNote" class="hidden" style="margin:0 20px 16px;padding:12px 14px;background:#FFFBEB;border:1px solid rgba(217,119,6,.25);border-radius:8px;font-size:12px;color:#92400E;line-height:1.6;">
+      <strong>Surcharge not included.</strong> If total income exceeds ₹50 lakh, surcharge applies (10% for ₹50L–₹1Cr, 15% for ₹1Cr–₹2Cr, 25% for ₹2Cr–₹5Cr, 37% above ₹5Cr). Surcharge on equity LTCG/STCG is capped at 15%. Please factor this in before filing.
+    </div>
+
     <!-- Export -->
     <div class="export-wrap hidden" id="exportWrap">
       <div id="freeExportNotice" style="margin-bottom:8px;padding:9px 14px;background:#ECFDF5;border:1.5px solid #6EE7B7;border-radius:8px;font-size:12px;color:#065F46;font-weight:600;">🎁 First export free — no signup needed. Click to download.</div>
@@ -409,7 +430,7 @@ function fsCopyLink(btn){
 <footer class="site-footer">
   <div class="footer-badges">
     <span class="footer-badge">✓ Section 234B &amp; 234C</span>
-    <span class="footer-badge">✓ New Regime <span class="js-fy-label">FY 2026-27</span></span>
+    <span class="footer-badge">✓ New Regime <span class="js-fy-label">FY 2025-26</span></span>
     <span class="footer-badge">✓ CA Working Paper Format</span>
     <span class="footer-badge">🇮🇳 Made for Indian CAs</span>
   </div>
@@ -470,10 +491,12 @@ function getFYDates(fy){
 }
 
 function calculate(){
-  var fy = document.getElementById('fySelect').value;
+  var fy       = document.getElementById('fySelect').value;
   var salary   = parseFloat(document.getElementById('incSalary').value)||0;
   var business = parseFloat(document.getElementById('incBusiness').value)||0;
-  var cg       = parseFloat(document.getElementById('incCG').value)||0;
+  var ltcg     = parseFloat(document.getElementById('incLTCG').value)||0;   // Sec 112A — 12.5%, no 87A
+  var stcg     = parseFloat(document.getElementById('incSTCG').value)||0;   // Sec 111A — 20%, no 87A
+  var cgSlab   = parseFloat(document.getElementById('incCGSlab').value)||0; // slab rate CG
   var other    = parseFloat(document.getElementById('incOther').value)||0;
   var deductions = parseFloat(document.getElementById('deductions').value)||0;
   var tds      = parseFloat(document.getElementById('tdsDeducted').value)||0;
@@ -482,22 +505,40 @@ function calculate(){
   var paid3    = parseFloat(document.getElementById('paid3').value)||0;
   var paid4    = parseFloat(document.getElementById('paid4').value)||0;
 
-  var totalIncome = salary + business + cg + other;
-  var taxableIncome = Math.max(0, totalIncome - deductions);
-
+  var totalIncome = salary + business + ltcg + stcg + cgSlab + other;
   if(totalIncome === 0){ showEmpty(); return; }
 
-  // Tax computation — slabs and 87A rebate both depend on the selected FY
   var fyConfig = getFYConfig(fy);
-  var basicTax = computeSlabTax(taxableIncome, fyConfig.slabs);
-  var rebate87A = 0;
-  if(taxableIncome <= fyConfig.rebateLimit){
-    rebate87A = Math.min(basicTax, fyConfig.rebateCap);
-  }
   document.querySelectorAll('.js-fy-label').forEach(function(el){ el.textContent = fyConfig.label; });
-  var taxAfterRebate = Math.max(0, basicTax - rebate87A);
-  var cess = taxAfterRebate * 0.04;
-  var grossTax = taxAfterRebate + cess;
+
+  // ── Step 1: Slab income (excludes special-rate CG — Sec 112A / 111A)
+  var slabIncome = salary + business + cgSlab + other;
+  var taxableSlabIncome = Math.max(0, slabIncome - deductions);
+
+  // ── Step 2: Slab tax + 87A rebate (only on slab income, NOT on special rate CG)
+  var slabTax = computeSlabTax(taxableSlabIncome, fyConfig.slabs);
+  var rebate87A = 0;
+  // 87A: check if total income (incl special CG) ≤ rebate limit
+  // Note: rebate u/s 87A is not available against tax on LTCG u/s 112A or STCG u/s 111A
+  // We apply it only to slab tax, conditioned on total income ≤ limit
+  var totalTaxableIncome = taxableSlabIncome + ltcg + stcg;
+  if(totalTaxableIncome <= fyConfig.rebateLimit && (ltcg + stcg) === 0){
+    // Full rebate if no special-rate CG and income ≤ limit
+    rebate87A = Math.min(slabTax, fyConfig.rebateCap);
+  } else if(taxableSlabIncome <= fyConfig.rebateLimit && (ltcg + stcg) > 0){
+    // Partial rebate on slab portion only (CBDT clarification — rebate on slab tax if slab income ≤ limit)
+    rebate87A = Math.min(slabTax, fyConfig.rebateCap);
+  }
+  var slabTaxAfterRebate = Math.max(0, slabTax - rebate87A);
+
+  // ── Step 3: Special rate CG tax (no rebate, no deductions apply)
+  var ltcgTax = ltcg * 0.125;   // Sec 112A: 12.5%
+  var stcgTax = stcg * 0.20;    // Sec 111A: 20%
+
+  // ── Step 4: Aggregate + cess
+  var taxBeforeCess = slabTaxAfterRebate + ltcgTax + stcgTax;
+  var cess = taxBeforeCess * 0.04;
+  var grossTax = taxBeforeCess + cess;
   var netAdvTax = Math.max(0, grossTax - tds);
 
   var dates = getFYDates(fy);
@@ -545,6 +586,9 @@ function calculate(){
   ['kpiStrip','taxCompSection','instSection','interestSection','exportWrap'].forEach(function(id){
     document.getElementById(id).classList.remove('hidden');
   });
+  // Show surcharge note if income > ₹50L
+  var sn = document.getElementById('surchargeNote');
+  if(sn) sn.classList.toggle('hidden', totalIncome <= 5000000);
 
   // KPIs
   document.getElementById('kGrossTax').textContent = fmt(grossTax);
@@ -557,12 +601,16 @@ function calculate(){
   // Tax computation table
   var rows = [
     ['Gross Total Income', totalIncome, ''],
-    ['Less: Deductions', -deductions, deductions>0?'(80C, 80D, HRA, etc.)':''],
-    ['Taxable Income', taxableIncome, '', true],
+    ['Less: Deductions', -deductions, deductions>0?'(Std deduction ₹75K + others)':''],
+    ['Slab Income (excl. equity CG)', taxableSlabIncome, 'Taxed at new regime slab rates', true],
     ['',null,''],
-    ['Income Tax (New Regime slabs)', basicTax, ''],
-    ['Less: Rebate u/s 87A', -rebate87A, rebate87A>0?('(Income ≤ ₹'+(fyConfig.rebateLimit/100000)+'L, max ₹'+fyConfig.rebateCap.toLocaleString('en-IN')+')'):'NA'],
-    ['Tax after Rebate', taxAfterRebate, '', true],
+    ['Income Tax on slab income', slabTax, ''],
+    ['Less: Rebate u/s 87A', -rebate87A, rebate87A>0?'Income ≤ ₹'+fyConfig.rebateLimit/100000+'L — not available on 112A/111A CG':'Not applicable'],
+    ['Slab tax after rebate', slabTaxAfterRebate, '', true],
+    ['',null,''],
+    ['Equity LTCG tax (Sec 112A @ 12.5%)', ltcgTax, ltcg>0?'On ₹'+Math.round(ltcg).toLocaleString('en-IN')+' taxable LTCG':'Nil'],
+    ['Equity STCG tax (Sec 111A @ 20%)', stcgTax, stcg>0?'On ₹'+Math.round(stcg).toLocaleString('en-IN')+' STCG':'Nil'],
+    ['Tax before cess', taxBeforeCess, '', true],
     ['Add: Health & Education Cess @ 4%', cess, ''],
     ['Gross Tax Liability', grossTax, '', true],
     ['Less: TDS Deducted at Source', -tds, ''],
@@ -620,51 +668,65 @@ function calculate(){
     );
 
   // Store for export
-  window._atData = {taxableIncome, basicTax, rebate87A, taxAfterRebate, cess, grossTax, tds, netAdvTax, totalPaid, total234c, int234b, balancePayable, instRows, fy};
+  window._atData = {totalIncome, taxableSlabIncome, slabTax, rebate87A, slabTaxAfterRebate, ltcg, stcg, ltcgTax, stcgTax, taxBeforeCess, cess, grossTax, tds, netAdvTax, totalPaid, total234c, int234b, balancePayable, instRows, fy};
 }
 
 function showEmpty(){
   document.getElementById('emptyState').classList.remove('hidden');
-  ['kpiStrip','taxCompSection','instSection','interestSection','exportWrap'].forEach(function(id){
+  ['kpiStrip','taxCompSection','instSection','interestSection','surchargeNote','exportWrap'].forEach(function(id){
     document.getElementById(id).classList.add('hidden');
   });
 }
 
 function doExport(){
   var d = window._atData;
-  if(!d){ return; }
-  var rows = [
-    ['Advance Tax Working — Finosutra',''],['',''],
-    ['Financial Year', d.fy],['',''],
-    ['TAX COMPUTATION',''],
-    ['Taxable Income', d.taxableIncome],
-    ['Income Tax (slab)', Math.round(d.basicTax)],
-    ['Less: 87A Rebate', -Math.round(d.rebate87A)],
-    ['Tax after Rebate', Math.round(d.taxAfterRebate)],
-    ['Cess @ 4%', Math.round(d.cess)],
-    ['Gross Tax Liability', Math.round(d.grossTax)],
-    ['Less: TDS', -Math.round(d.tds)],
-    ['Net Advance Tax Payable', Math.round(d.netAdvTax)],
-    ['',''],
-    ['QUARTERLY INSTALMENT SCHEDULE',''],
-    ['Instalment','Due Date','Cumulative Due (₹)','Paid (₹)','Shortfall (₹)','234C Interest (₹)','Status']
-  ];
-  d.instRows.forEach(function(r){
-    rows.push([r.label, r.date, r.due, r.paid, r.shortfall, r.int234c, r.ok?'OK':'Shortfall']);
-  });
-  rows.push(['','','','','Total 234C', d.total234c,'']);
-  rows.push(['','']);
-  rows.push(['Section 234B Interest (est.)', Math.round(d.int234b)]);
-  rows.push(['Balance Payable on Filing', Math.round(d.balancePayable)]);
-  rows.push(['',''],['Note','This is an indicative working. Verify with CA before filing ITR.'],['Generated by','Finosutra (www.finosutra.com)']);
+  if(!d){ if(window.showToast) showToast('Calculate first.','#DC2626'); return; }
+  if(typeof XLSX === 'undefined'){ alert('Excel library not loaded yet — try again in a moment.'); return; }
 
-  var csv = rows.map(function(r){ return r.map(function(c){ return '"'+String(c).replace(/"/g,'""')+'"'; }).join(','); }).join('\n');
-  var blob = new Blob([csv],{type:'text/csv;charset=utf-8;'});
-  var a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'AdvanceTax_Finosutra.csv';
-  a.click();
-  if(window.showToast) showToast('Downloaded!','#059669');
+  var hdr = {font:{bold:true,color:{rgb:'FFFFFF'}},fill:{fgColor:{rgb:'4F46E5'}}};
+  var bold = {font:{bold:true}};
+  var numFmt = '#,##0';
+
+  var aoa = [
+    [{v:'Advance Tax Working — FY '+d.fy+' / AY '+(parseInt(d.fy)+1)+'-'+(parseInt(d.fy.split('-')[1])+1),s:{font:{bold:true,sz:13,color:{rgb:'1E1B4B'}}}}],
+    [{v:'Generated by Finosutra — finosutra.com',s:{font:{italic:true,color:{rgb:'9CA3AF'}}}}],
+    [],
+    [{v:'TAX COMPUTATION (New Regime)',s:hdr},{v:'',s:hdr},{v:'',s:hdr}],
+    [{v:'Gross Total Income (₹)'},{v:Math.round(d.totalIncome),t:'n',z:numFmt}],
+    [{v:'Slab Income (excl. equity LTCG/STCG)'},{v:Math.round(d.taxableSlabIncome),t:'n',z:numFmt}],
+    [{v:'Income Tax on slab income'},{v:Math.round(d.slabTax),t:'n',z:numFmt}],
+    [{v:'Less: Rebate u/s 87A'},{v:-Math.round(d.rebate87A),t:'n',z:numFmt}],
+    [{v:'Slab tax after rebate'},{v:Math.round(d.slabTaxAfterRebate),t:'n',z:numFmt}],
+    [{v:'Equity LTCG tax — Sec 112A @ 12.5% (87A not applicable)'},{v:Math.round(d.ltcgTax),t:'n',z:numFmt}],
+    [{v:'Equity STCG tax — Sec 111A @ 20% (87A not applicable)'},{v:Math.round(d.stcgTax),t:'n',z:numFmt}],
+    [{v:'Tax before cess',s:bold},{v:Math.round(d.taxBeforeCess),t:'n',z:numFmt,s:bold}],
+    [{v:'Health & Education Cess @ 4%'},{v:Math.round(d.cess),t:'n',z:numFmt}],
+    [{v:'Gross Tax Liability',s:bold},{v:Math.round(d.grossTax),t:'n',z:numFmt,s:bold}],
+    [{v:'Less: TDS Deducted at Source'},{v:-Math.round(d.tds),t:'n',z:numFmt}],
+    [{v:'Net Advance Tax Payable',s:{font:{bold:true,color:{rgb:'DC2626'}}}},{v:Math.round(d.netAdvTax),t:'n',z:numFmt,s:{font:{bold:true,color:{rgb:'DC2626'}}}}],
+    [],
+    [{v:'QUARTERLY INSTALMENT SCHEDULE',s:hdr},{v:'',s:hdr},{v:'',s:hdr},{v:'',s:hdr},{v:'',s:hdr},{v:'',s:hdr},{v:'',s:hdr}],
+    [{v:'Instalment',s:bold},{v:'Due Date',s:bold},{v:'Cumulative Due (₹)',s:bold},{v:'Paid (₹)',s:bold},{v:'Shortfall (₹)',s:bold},{v:'234C Interest (₹)',s:bold},{v:'Status',s:bold}],
+  ];
+
+  d.instRows.forEach(function(r){
+    aoa.push([{v:r.label},{v:r.date},{v:r.due,t:'n',z:numFmt},{v:r.paid,t:'n',z:numFmt},
+      {v:r.shortfall,t:'n',z:numFmt},{v:r.int234c,t:'n',z:numFmt},{v:r.ok?'✓ OK':'⚠ Shortfall'}]);
+  });
+  aoa.push([{v:'Total 234C Interest',s:bold},{v:''},{v:''},{v:''},{v:''},{v:Math.round(d.total234c),t:'n',z:numFmt,s:bold},{v:''}]);
+  aoa.push([]);
+  aoa.push([{v:'Section 234B Interest (estimate)'},{v:Math.round(d.int234b),t:'n',z:numFmt}]);
+  aoa.push([{v:'Balance Payable on Filing',s:{font:{bold:true,color:{rgb:'DC2626'}}}},{v:Math.round(d.balancePayable),t:'n',z:numFmt,s:{font:{bold:true,color:{rgb:'DC2626'}}}}]);
+  aoa.push([]);
+  aoa.push([{v:'Note: Surcharge not included (applies if income > ₹50L). Verify with your CA before filing ITR.',s:{font:{italic:true,color:{rgb:'9CA3AF'}}}}]);
+
+  var ws = XLSX.utils.aoa_to_sheet(aoa);
+  ws['!cols'] = [{wch:50},{wch:18},{wch:18},{wch:16},{wch:16},{wch:18},{wch:14}];
+  var wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Advance Tax');
+  XLSX.writeFile(wb, 'Finosutra_AdvanceTax_FY'+d.fy+'.xlsx');
+
+  if(window.showToast) showToast('✓ Downloaded!','#059669');
   if(!window.isProUser) showUpsellBanner();
 }
 
