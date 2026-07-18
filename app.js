@@ -1825,13 +1825,16 @@ function renderSchedTable(rows, tab){
   var body = rows.map(function(r){
     totInt+=r.interest; totPmt+=r.pmt||r.payments||0; totPrinc+=r.principal; totDep+=r.dep;
     if(isPeriod){
-      return '<tr>'+
+      var fade = (r.hasPmt === false) ? ' style="color:#9CA3AF;font-size:11.5px"' : '';
+      var pmtCell  = r.hasPmt === false ? '—' : fmt(r.pmt);
+      var princCell = r.hasPmt === false ? '—' : fmt(r.principal);
+      return '<tr'+fade+'>'+
         '<td>'+r.period+'</td>'+
         '<td>'+leaseEngine.fDate(r.periodEnd)+'</td>'+
         '<td>'+fmt(r.openL)+'</td>'+
         '<td>'+fmt(r.interest)+'</td>'+
-        '<td>'+fmt(r.pmt)+'</td>'+
-        '<td>'+fmt(r.principal)+'</td>'+
+        '<td>'+pmtCell+'</td>'+
+        '<td>'+princCell+'</td>'+
         '<td>'+fmt(r.closeL)+'</td>'+
         '<td>'+fmt(r.dep)+'</td>'+
         '<td>'+fmt(r.rouC)+'</td>'+

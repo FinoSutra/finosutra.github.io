@@ -1235,7 +1235,7 @@ function periodLabel(startDate, periodIndex, freq){
   const monthsPerPeriod = 12 / freq;
   const d = new Date(startDate);
   const endMonth = d.getMonth() + (periodIndex + 1) * monthsPerPeriod;
-  d.setMonth(endMonth + 1, 0); // day 0 of next month = last day of period-end month
+  d.setMonth(endMonth, 0); // day 0 = last day of previous month
   const dd = String(d.getDate()).padStart(2,'0');
   const mm = String(d.getMonth()+1).padStart(2,'0');
   const yyyy = d.getFullYear();
@@ -1247,7 +1247,7 @@ function periodEndDate(startDate, periodIndex, freq){
   const monthsPerPeriod = 12/freq;
   const d = new Date(startDate);
   const endMonth = d.getMonth() + (periodIndex+1)*monthsPerPeriod;
-  d.setMonth(endMonth + 1, 0); // last day of period-end month
+  d.setMonth(endMonth, 0); // day 0 = last day of previous month
   return d;
 }
 
@@ -1323,44 +1323,60 @@ document.getElementById('btnCalc').onclick = function(){
 
   /* ── MODULE 2: ROU Asset = PV + IDC − Incentives ── */
   const rouInitial = pv + idc - incentive;
-  const dep        = rouInitial / n;  // depreciation per period
+  const dep        = rouInitial / termMonths; // monthly depreciation
 
-  /* ── BUILD SCHEDULE ── */
+  /* ── BUILD MONTHLY SCHEDULE ── */
+  // Interest accrues monthly regardless of payment frequency.
+  // Payment appears only in months when cash actually moves.
+  const dailyRate = ibr/100/365; // actual/365 day-count
   let openL = pv;
   const sched = [];
   const startDate = new Date(d);
+  let prevEnd = new Date(startDate);
 
-  for(let i=1;i<=n;i++){
-    const lbl = periodLabel(startDate, i-1, freq);
+  for(let m=1; m<=termMonths; m++){
+    const lbl     = periodLabel(startDate, m-1, 12);
+    const pEnd    = periodEndDate(startDate, m-1, 12);
+    const days    = (pEnd - prevEnd) / 86400000;
 
-    let payment  = pmt;
-    let interest = 0;
-    let principal= 0;
-    let closeL   = 0;
-
+    // Determine whether cash moves this month
+    let payment = 0, hasPmt = false;
     if(tim==='beg'){
-      principal       = payment;
-      const afterPmt  = openL - payment;
-      interest        = afterPmt * r;
-      closeL          = afterPmt + interest;
+      if((m-1) % monthsPerPeriod === 0){ payment = pmt; hasPmt = true; }
     } else {
-      interest  = openL * r;
-      principal = payment - interest;
-      closeL    = openL + interest - payment;
+      if(m % monthsPerPeriod === 0){ payment = pmt; hasPmt = true; }
     }
 
-    if(i===n || Math.abs(closeL)<0.01) closeL=0;
+    let interest, principal, closeL;
+    if(tim==='beg'){
+      if(hasPmt){
+        principal      = payment;
+        const afterPmt = openL - payment;
+        interest       = afterPmt * dailyRate * days;
+        closeL         = afterPmt + interest;
+      } else {
+        interest  = openL * dailyRate * days;
+        principal = 0;
+        closeL    = openL + interest;
+      }
+    } else {
+      interest  = openL * dailyRate * days;
+      principal = hasPmt ? payment - interest : 0;
+      closeL    = openL + interest - payment;
+    }
+    prevEnd = new Date(pEnd);
 
-    const rouC = Math.max(0, rouInitial - (i*dep));
+    if(m===termMonths || Math.abs(closeL)<0.01) closeL=0;
 
-    sched.push({ i, lbl, oL:openL, int:interest, pmt:payment, principal, cL:closeL, dep, rouC });
+    const rouC = Math.max(0, rouInitial - (m*dep));
+
+    sched.push({ i:m, lbl, oL:openL, int:interest, pmt:payment, principal, cL:closeL, dep, rouC, hasPmt });
     openL = closeL;
   }
 
   /* ── CURRENT / NON-CURRENT SPLIT (next 12 months of principal) ── */
-  const periodsIn12 = freq; // number of periods in next 12 months
   let currentLiab = 0;
-  sched.slice(0, periodsIn12).forEach(x=>{ currentLiab += x.principal; });
+  sched.slice(0, 12).forEach(x=>{ currentLiab += x.principal; });
   const nonCurrentLiab = Math.max(0, pv - currentLiab);
 
   /* ── TOTALS ── */
@@ -1438,22 +1454,26 @@ function render(){
   /* ── MODULE 3: Reporting Date Snapshot ── */
   renderSnapshot();
 
-  /* ── Amortization Schedule ── */
+  /* ── Amortization Schedule (monthly rows; payment months highlighted) ── */
   const rows = [];
   R.sched.forEach(x=>{
-    rows.push(`
-      <tr>
+    const rowStyle = x.hasPmt ? '' : ' style="color:#9CA3AF;font-size:11.5px;"';
+    const pmtCell  = x.hasPmt
+      ? `<td style="color:#DC2626;font-weight:600">${fn(x.pmt)}</td>`
+      : `<td style="color:#D1D5DB">—</td>`;
+    const prinCell = x.hasPmt
+      ? `<td style="color:#15803D;font-weight:600">${fn(x.principal)}</td>`
+      : `<td style="color:#D1D5DB">—</td>`;
+    rows.push(`<tr${rowStyle}>
         <td class="L B">${x.i}</td>
         <td class="L">${x.lbl}</td>
         <td>${fn(x.oL)}</td>
-        <td style="color:#B45309">${fn(x.int)}</td>
-        <td style="color:#DC2626">${fn(x.pmt)}</td>
-        <td style="color:#15803D">${fn(x.principal)}</td>
+        <td style="color:${x.hasPmt?'#B45309':'#9CA3AF'}">${fn(x.int)}</td>
+        ${pmtCell}${prinCell}
         <td class="B">${fn(x.cL)}</td>
         <td style="color:#0F766E">${fn(x.dep)}</td>
         <td style="color:#6B7280">${fn(x.rouC)}</td>
-      </tr>
-    `);
+      </tr>`);
   });
 
   rows.push(`
@@ -1480,7 +1500,7 @@ function render(){
 
   const freqStr = {12:'monthly',4:'quarterly',2:'half-yearly',1:'annual'}[R.freq];
   document.getElementById('expNote').textContent =
-    R.sched.length + ' '+freqStr+' periods · Ind AS 116 compliant';
+    INP.termMonths + ' monthly periods · ' + freqStr + ' payments · IND AS 116 compliant';
 
   // Show "Save to Portfolio" button for Pro users
   const spBtn = document.getElementById('btnSavePortfolio');
@@ -1677,17 +1697,22 @@ function renderJournal(){
     je1Narr += ')';
   }
 
+  // First payment month value for JE 3
+  const pmtForJE = INP.pmt;
+  // First month's interest for JE 2
+  const intForJE = first.int;
+
   document.getElementById('jeDiv').innerHTML =
     je('JE 1 — Initial Recognition', cd, je1Lines, je1Narr)
-    + je('JE 2 — Interest Accrual', freqLabel+' (Recurring)',
-        [{a:'Finance Cost — Lease Interest',dr:first.int,cr:null},{a:'Lease Liability',dr:null,cr:first.int}],
-        'Interest accretion using effective interest method.')
+    + je('JE 2 — Interest Accrual', 'Monthly (Recurring)',
+        [{a:'Finance Cost — Lease Interest',dr:intForJE,cr:null},{a:'Lease Liability',dr:null,cr:intForJE}],
+        'Monthly interest accretion at IBR/12 using effective interest method.')
     + je('JE 3 — Lease Payment', freqLabel+' (Recurring)',
-        [{a:'Lease Liability',dr:first.pmt,cr:null},{a:'Bank / Cash',dr:null,cr:first.pmt}],
-        'Lease payment to lessor.')
-    + je('JE 4 — Depreciation', freqLabel+' (Recurring)',
+        [{a:'Lease Liability',dr:pmtForJE,cr:null},{a:'Bank / Cash',dr:null,cr:pmtForJE}],
+        freqLabel+' cash payment to lessor. Interest already accrued monthly via JE 2.')
+    + je('JE 4 — Depreciation', 'Monthly (Recurring)',
         [{a:'Depreciation — ROU Asset',dr:R.dep,cr:null},{a:'Accumulated Depreciation — ROU Asset',dr:null,cr:R.dep}],
-        'SLM depreciation of ROU asset. '+freqLabel+' charge: '+f(R.dep)+' over '+R.n+' periods.');
+        'SLM depreciation of ROU asset. Monthly charge: '+f(R.dep)+' over '+INP.termMonths+' months.');
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -1735,7 +1760,7 @@ function renderSummary(){
 ═══════════════════════════════════════════════════════ */
 function renderAnnual(){
   const startDate       = new Date(INP.d);
-  const monthsPerPeriod = 12 / R.freq;
+  const monthsPerPeriod = 1; // schedule is monthly
 
   // Group each period into its FY
   const fyMap = {};
@@ -1840,7 +1865,7 @@ const fy = fyLabel(pEnd);
 ═══════════════════════════════════════════════════════ */
 function renderDisclosure(){
   const startDate = new Date(INP.d);
-  const mpp = 12 / R.freq; // months per period
+  const mpp = 1; // schedule is monthly
 
   // Reference date: reporting date if set, else commencement
   const refDate = INP.reportDateVal ? new Date(INP.reportDateVal) : new Date(startDate);

@@ -68,51 +68,63 @@
   }
 
   // ── Amortization schedule builder ────────────────────────────────────
-  function buildSchedule(pmtArray, pv, r, timing, dep, startDate, monthsPerPeriod) {
+  // Monthly schedule — one row per month, actual/365 day-count interest
+  function buildSchedule(pmtArray, pv, ibr, timing, dep, startDate, monthsPerPeriod, termMonths) {
+    var dailyRate = ibr / 100 / 365;
     var openL = pv;
     var sched = [];
     var isBeg = (timing === 'beg' || timing === 'beginning' || timing === 'advance');
-    var rouC  = pv; // ROU carrying value (before IDC/incentive adj — caller adds back)
+    var rouC  = pv;
+    var prevDate = startDate ? new Date(startDate) : null;
 
-    for (var i = 0; i < pmtArray.length; i++) {
-      var pmt      = pmtArray[i];
+    for (var mo = 1; mo <= termMonths; mo++) {
+      var hasPmt = isBeg ? (mo - 1) % monthsPerPeriod === 0 : mo % monthsPerPeriod === 0;
+      var pidx   = isBeg ? Math.round((mo - 1) / monthsPerPeriod) : Math.round(mo / monthsPerPeriod) - 1;
+      var pmtAmt = hasPmt ? (pmtArray[pidx] || 0) : 0;
+
+      // Period end date and actual day count
+      var periodEndDate = null;
+      var days = 30; // fallback if no startDate
+      if (startDate) {
+        var d = new Date(startDate);
+        d.setMonth(d.getMonth() + mo, 0);
+        periodEndDate = d;
+        days = (d - prevDate) / 86400000;
+        prevDate = new Date(d);
+      }
+
       var interest, principal, closeL;
-
       if (isBeg) {
-        // Payment at start of period: principal first, then interest on balance
-        principal = pmt;
-        interest  = Math.round((openL - pmt) * r * 100) / 100;
-        closeL    = Math.round((openL - pmt + interest) * 100) / 100;
+        if (hasPmt) {
+          principal = pmtAmt;
+          interest  = Math.round((openL - pmtAmt) * dailyRate * days * 100) / 100;
+          closeL    = Math.round((openL - pmtAmt + interest) * 100) / 100;
+        } else {
+          interest  = Math.round(openL * dailyRate * days * 100) / 100;
+          principal = 0;
+          closeL    = Math.round((openL + interest) * 100) / 100;
+        }
       } else {
-        // Payment at end of period: interest first, then principal
-        interest  = Math.round(openL * r * 100) / 100;
-        principal = Math.round((pmt - interest) * 100) / 100;
-        closeL    = Math.round((openL + interest - pmt) * 100) / 100;
+        interest  = Math.round(openL * dailyRate * days * 100) / 100;
+        principal = hasPmt ? Math.round((pmtAmt - interest) * 100) / 100 : 0;
+        closeL    = Math.round((openL + interest - pmtAmt) * 100) / 100;
       }
 
       if (closeL < 0) closeL = 0;
+      if (mo === termMonths && Math.abs(closeL) < 1) closeL = 0;
       rouC = Math.max(0, Math.round((rouC - dep) * 100) / 100);
 
-      // Period end date — snap to last day of the period-end month
-      var periodEnd = null;
-      if (startDate) {
-        var d = new Date(startDate);
-        var endMonth = d.getMonth() + (i + 1) * monthsPerPeriod;
-        // Last day of that month: set to day 0 of the following month
-        d.setMonth(endMonth + 1, 0);
-        periodEnd = d.toISOString().slice(0, 10);
-      }
-
       sched.push({
-        period:    i + 1,
-        periodEnd: periodEnd,
+        period:    mo,
+        periodEnd: periodEndDate ? periodEndDate.toISOString().slice(0, 10) : null,
         openL:     Math.round(openL),
         interest:  Math.round(interest),
-        pmt:       Math.round(pmt),
+        pmt:       Math.round(pmtAmt),
         principal: Math.round(principal),
         closeL:    Math.round(closeL),
         dep:       Math.round(dep),
-        rouC:      Math.round(rouC)
+        rouC:      Math.round(rouC),
+        hasPmt:    hasPmt
       });
 
       openL = closeL;
@@ -155,9 +167,9 @@
   }
 
   // ── Current / non-current split ──────────────────────────────────────
-  function currentSplit(sched, freq) {
+  function currentSplit(sched) {
     var currentLiab = 0;
-    sched.slice(0, freq).forEach(function (x) { currentLiab += x.principal; });
+    sched.slice(0, 12).forEach(function (x) { currentLiab += x.principal; });
     return Math.round(currentLiab);
   }
 
@@ -212,29 +224,28 @@
       };
     }
 
-    var pmtArray  = generatePayments(inp, n, monthsPerPeriod);
-    var pv        = Math.round(calcPV(pmtArray, r, timing));
+    var pmtArray   = generatePayments(inp, n, monthsPerPeriod);
+    var pv         = Math.round(calcPV(pmtArray, r, timing));
     var rouInitial = Math.round(pv + idc - incentive);
-    var dep       = rouInitial / n; // per-period straight-line
+    var dep  = rouInitial / termMonths; // monthly straight-line dep
 
-    var sched = buildSchedule(pmtArray, pv, r, timing, dep, inp.start, monthsPerPeriod);
+    var sched = buildSchedule(pmtArray, pv, ibr, timing, dep, inp.start, monthsPerPeriod, termMonths);
 
     // Adjust ROU carrying values if IDC/incentive changed rouInitial vs pv
     if (idc || incentive) {
-      var rouAdj = rouInitial;
-      var depAdj = rouInitial / n;
+      var depAdj = rouInitial / termMonths;
       sched = sched.map(function (row, i) {
-        rouAdj = Math.max(0, Math.round((rouInitial - (i + 1) * depAdj) * 100) / 100);
+        var rouAdj = Math.max(0, Math.round((rouInitial - (i + 1) * depAdj) * 100) / 100);
         return Object.assign({}, row, { dep: Math.round(depAdj), rouC: Math.round(rouAdj) });
       });
     }
 
-    var annual  = buildAnnual(sched, inp.start, monthsPerPeriod);
-    var currL   = currentSplit(sched, freq);
+    var annual  = buildAnnual(sched, inp.start, 1); // schedule is monthly
+    var currL   = currentSplit(sched);
     var ncurrL  = Math.max(0, pv - currL);
     var totInt  = sched.reduce(function (s, x) { return s + x.interest; }, 0);
     var totPmt  = sched.reduce(function (s, x) { return s + x.pmt; }, 0);
-    var depAnnual = Math.round(dep * freq);
+    var depAnnual = Math.round(dep * 12); // monthly dep × 12
 
     return {
       pvInitial:      pv,

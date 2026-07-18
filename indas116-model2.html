@@ -723,18 +723,29 @@ function calculate(){
   const n0   = Math.round(term / mpp0);
   const origPV  = pvCalc(pmt, n0, r0, timing);
   const origROU = origPV + idc - inc;
-  const origDep = origROU / n0;
+  const origDep = origROU / term; // monthly depreciation
 
-  // Build original schedule
+  // Build original schedule — monthly rows, actual/365 day-count interest
   const origSched = [];
+  const dailyRate0 = ibr / 100 / 365;
   let oL = origPV;
-  for(let i = 0; i < n0; i++){
-    const pEnd = periodEnd(startDate, i+1, mpp0);
-    const int  = oL * r0;
-    const prin = Math.min(pmt - int, oL);
-    const cL   = Math.max(0, oL - prin);
-    origSched.push({ cL, pEnd });
+  let prevEnd0 = new Date(startDate);
+  for(let mo = 1; mo <= term; mo++){
+    const pEnd   = periodEnd(startDate, mo, 1);
+    const days   = (pEnd - prevEnd0) / 86400000;
+    const hasPmt = timing === 'beg' ? (mo-1) % mpp0 === 0 : mo % mpp0 === 0;
+    const payment = hasPmt ? pmt : 0;
+    let int, prin, cL;
+    if(timing === 'beg'){
+      if(hasPmt){ prin = payment; const afterPmt = oL - payment; int = afterPmt * dailyRate0 * days; cL = afterPmt + int; }
+      else { int = oL * dailyRate0 * days; prin = 0; cL = oL + int; }
+    } else {
+      int = oL * dailyRate0 * days; prin = hasPmt ? payment - int : 0; cL = Math.max(0, oL + int - payment);
+    }
+    if(mo === term || Math.abs(cL) < 0.01) cL = 0;
+    origSched.push({ mo, pEnd, oL, int, pmt: payment, prin, cL, hasPmt });
     oL = cL;
+    prevEnd0 = new Date(pEnd);
   }
 
   // Validate mod dates are after commencement
@@ -793,13 +804,15 @@ function calculate(){
     }
 
     // Active frequency / IBR for this modification
-    const usedFreq = m.freq || curFreq;
-    const usedMpp  = 12 / usedFreq;
-    const usedIBR  = m.ibr !== null ? m.ibr : curIBR;
-    const usedR    = (usedIBR / 100) / usedFreq;
-    const revisedN = Math.round(m.term / usedMpp);
+    const usedFreq    = m.freq || curFreq;
+    const usedMpp     = 12 / usedFreq;
+    const usedIBR     = m.ibr !== null ? m.ibr : curIBR;
+    const usedRPeriod = (usedIBR / 100) / usedFreq; // periodic rate for PV only
+    const usedRMonth  = usedIBR / 100 / 12;          // monthly rate for schedule
+    const revisedN    = m.term;                       // months remaining
+    const revisedPeriods = Math.round(m.term / usedMpp); // payment count for PV & narration
 
-    if(revisedN < 1){
+    if(revisedPeriods < 1){
       document.getElementById('validationBannerList').textContent = 'Modification ' + m.idx + ': Revised term too short for the selected payment frequency';
       document.getElementById('validationBanner').style.display = 'block';
       return;
@@ -819,25 +832,36 @@ function calculate(){
       workingROUNBV    = workingROUNBV    * retPct;
     }
 
-    // Para 45 remeasurement
-    const newPV      = pvCalc(m.pmt, revisedN, usedR, timing);
+    // Para 45 remeasurement — PV uses periodic rate and payment count
+    const newPV      = pvCalc(m.pmt, revisedPeriods, usedRPeriod, timing);
     const adjustment = newPV - workingCarryLiab;
     const revisedROU = workingROUNBV + adjustment;
     const gainOnMod  = revisedROU < 0 ? Math.abs(revisedROU) : 0;
     const revisedROUFinal = Math.max(0, revisedROU);
-    const newDep     = revisedN > 0 ? revisedROUFinal / revisedN : 0;
+    const newDep     = revisedN > 0 ? revisedROUFinal / revisedN : 0; // monthly dep
 
-    // Build revised schedule from modification date
+    // Build revised schedule — monthly rows, actual/365 day-count interest
     const newSched = [];
+    const dailyRateM = usedIBR / 100 / 365;
     let rL = newPV;
-    for(let i = 0; i < revisedN; i++){
-      const pEnd = periodEnd(modDate, i+1, usedMpp);
-      const int  = rL * usedR;
-      const prin = Math.min(m.pmt - int, rL);
-      const cL   = Math.max(0, rL - prin);
-      const rouC = Math.max(0, revisedROUFinal - (i+1) * newDep);
-      newSched.push({ i:i+1, pEnd, oL:rL, int, pmt:m.pmt, prin, cL, dep:newDep, rouC });
+    let prevEndM = new Date(modDate);
+    for(let i = 1; i <= revisedN; i++){
+      const pEnd   = periodEnd(modDate, i, 1);
+      const days   = (pEnd - prevEndM) / 86400000;
+      const hasPmt = timing === 'beg' ? (i-1) % usedMpp === 0 : i % usedMpp === 0;
+      const payment = hasPmt ? m.pmt : 0;
+      let int, prin, cL;
+      if(timing === 'beg'){
+        if(hasPmt){ prin = payment; const afterPmt = rL - payment; int = afterPmt * dailyRateM * days; cL = afterPmt + int; }
+        else { int = rL * dailyRateM * days; prin = 0; cL = rL + int; }
+      } else {
+        int = rL * dailyRateM * days; prin = hasPmt ? payment - int : 0; cL = Math.max(0, rL + int - payment);
+      }
+      if(i === revisedN || Math.abs(cL) < 0.01) cL = 0;
+      const rouC = Math.max(0, revisedROUFinal - i * newDep);
+      newSched.push({ i, pEnd, oL: rL, int, pmt: payment, prin, cL, dep: newDep, rouC, hasPmt });
       rL = cL;
+      prevEndM = new Date(pEnd);
     }
 
     modResults.push({
@@ -853,7 +877,8 @@ function calculate(){
       revisedROUFinal,
       gainOnMod,
       gainOnDerecog,
-      revisedN,
+      revisedN,       // months
+      revisedPeriods, // payment count (for narration)
       mIbr          : usedIBR / 100,
       mPmt          : m.pmt,
       mFreq         : usedFreq,
@@ -975,7 +1000,7 @@ function renderResults(res){
           ${m.gainOnMod > 0 ? `<tr><td class="L" style="padding-left:42px;font-style:italic">Gain on Lease Modification (P&L)</td><td>—</td><td>${fn(m.gainOnMod)}</td></tr>` : ''}`;
       }
       jeRows += `<tr><td class="L" colspan="3" style="font-style:italic;font-size:11px;color:#6B7280;font-weight:400;white-space:normal">
-        Remeasurement of remaining lease liability at PV of ${m.revisedN} revised payments of ${f(m.mPmt)} at ${(m.mIbr*100).toFixed(2)}% p.a. per IND AS 116 Para 45.
+        Remeasurement of remaining lease liability at PV of ${m.revisedPeriods} revised payments of ${f(m.mPmt)} at ${(m.mIbr*100).toFixed(2)}% p.a. per IND AS 116 Para 45.
       </td></tr>`;
     } else {
       // Pure Para 45
@@ -992,7 +1017,7 @@ function renderResults(res){
           ${m.gainOnMod > 0 ? `<tr><td class="L" style="padding-left:42px;font-style:italic">Gain on Lease Modification (P&L)</td><td>—</td><td>${fn(m.gainOnMod)}</td></tr>` : ''}`;
       }
       jeRows += `<tr><td class="L" colspan="3" style="font-style:italic;font-size:11px;color:#6B7280;font-weight:400;white-space:normal">
-        Remeasurement of lease liability effective ${modLabel}: PV of ${m.revisedN} revised payments of ${f(m.mPmt)} discounted at ${(m.mIbr*100).toFixed(2)}% p.a. per IND AS 116 Para 45.
+        Remeasurement of lease liability effective ${modLabel}: PV of ${m.revisedPeriods} revised payments of ${f(m.mPmt)} discounted at ${(m.mIbr*100).toFixed(2)}% p.a. per IND AS 116 Para 45.
       </td></tr>`;
     }
 
@@ -1008,11 +1033,14 @@ function renderResults(res){
   let totInt = 0, totPmt = 0, totPrin = 0;
   finalSched.forEach(function(x){
     totInt += x.int; totPmt += x.pmt; totPrin += x.prin;
-    rows += `<tr>
+    const fade = !x.hasPmt ? 'color:#9CA3AF' : '';
+    rows += `<tr style="${fade}">
       <td class="L">${x.i}</td>
       <td class="L">${fDate(x.pEnd)}</td>
-      <td>${fn(x.oL)}</td><td>${fn(x.int)}</td><td>${fn(x.pmt)}</td>
-      <td>${fn(x.prin)}</td><td>${fn(x.cL)}</td><td>${fn(x.dep)}</td><td>${fn(x.rouC)}</td>
+      <td>${fn(x.oL)}</td><td>${fn(x.int)}</td>
+      <td>${x.hasPmt ? fn(x.pmt) : '—'}</td>
+      <td>${x.hasPmt ? fn(x.prin) : '—'}</td>
+      <td>${fn(x.cL)}</td><td>${fn(x.dep)}</td><td>${fn(x.rouC)}</td>
     </tr>`;
   });
   if(finalSched.length){
@@ -1120,12 +1148,9 @@ function exportXL(){
   ];
   let totP=0,totI=0,totPr=0;
   origSched.forEach(function(r,i){
-    const oL = i===0 ? origPV : origSched[i-1].cL;
-    const int = oL * r0;
-    const prin = Math.min(pmt-int,oL);
-    totP+=pmt; totI+=int; totPr+=prin;
+    totP+=r.pmt; totI+=r.int; totPr+=r.prin;
     const odd=i%2===0,rT=odd?S.r1t:S.r2t,rN=odd?S.r1:S.r2;
-    oData.push([xlC(fDate(r.pEnd),rT),xlN(oL,rN),xlN(pmt,rN),xlN(int,rN),xlN(prin,rN),xlN(r.cL,rN)]);
+    oData.push([xlC(fDate(r.pEnd),rT),xlN(r.oL,rN),xlN(r.hasPmt?r.pmt:0,rN),xlN(r.int,rN),xlN(r.hasPmt?r.prin:0,rN),xlN(r.cL,rN)]);
   });
   oData.push([xlC('TOTAL',S.tott),xlC('',S.tot),xlN(totP,S.tot),xlN(totI,S.tot),xlN(totPr,S.tot),xlC('',S.tot)]);
   var wsO = addSheet(wb, oData, 'Original Schedule', [14,18,14,14,14,18]);
@@ -1174,7 +1199,7 @@ function exportXL(){
   const finalSched = lastMod.sched||[];
   var rData = [
     [xlC('Revised Amortization Schedule — Post Final Modification',S.title),'','','','','',''],
-    [xlC('IBR: '+(lastMod.mIbr*100).toFixed(2)+'% p.a.  |  Payment: '+f(lastMod.mPmt)+'/period  |  Remaining periods: '+lastMod.revisedN,S.sub),'','','','','',''],
+    [xlC('IBR: '+(lastMod.mIbr*100).toFixed(2)+'% p.a.  |  Payment: '+f(lastMod.mPmt)+'/period  |  Remaining: '+lastMod.revisedN+' months · '+lastMod.revisedPeriods+' payments',S.sub),'','','','','',''],
     [],
     [xlC('#',S.hdr),xlC('Period End',S.hdr),xlC('Opening Liability',S.hdr),xlC('Interest',S.hdr),xlC('Payment',S.hdr),xlC('Principal',S.hdr),xlC('Closing Liability',S.hdr),xlC('ROU Depreciation',S.hdr),xlC('ROU Closing NBV',S.hdr)]
   ];
