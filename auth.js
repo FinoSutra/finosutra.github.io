@@ -291,11 +291,11 @@
               '<div class="fs-um-card-name">Annual Pro</div>' +
               '<ul class="fs-um-card-list">' +
                 '<li>Everything in Pro</li>' +
-                '<li>&#8377;333/mo — save &#8377;2,989/yr</li>' +
+                '<li>&#8377;333/mo — save &#8377;1,989/yr</li>' +
                 '<li>Preferred by CA firms</li>' +
                 '<li>One invoice for the year</li>' +
               '</ul>' +
-              '<button class="fs-um-btn fs-um-btn-green">Save &#8377;2,989 &#8594;</button>' +
+              '<button class="fs-um-btn fs-um-btn-green">Save &#8377;1,989 &#8594;</button>' +
             '</div>' +
           '</div>' +
           '<div class="fs-um-social">Trusted by <strong>CAs, CFOs and finance teams</strong> across India</div>' +
