@@ -344,7 +344,7 @@
         if (!localStorage.getItem(monthKey)) {
           localStorage.setItem(monthKey, '1');
           global.showToast('🎁 Your 1 free export for this month — enjoy!', '#059669');
-          if (typeof originalOnclick === 'function') originalOnclick.call(this, e);
+          fsCallToolExport();
           return;
         }
       } catch (err) { /* localStorage blocked — fall through to modal */ }
