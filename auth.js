@@ -87,7 +87,7 @@
       /* UPGRADE MODAL */
       '#fsUpgradeOverlay{display:none;position:fixed;inset:0;background:rgba(15,15,30,.6);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(4px);padding:16px;}',
       '#fsUpgradeOverlay.show{display:flex!important;}',
-      '#fsUpgradeBox{background:#fff;border-radius:20px;padding:32px 28px 24px;width:520px;max-width:96vw;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.24);animation:fsSlideIn .22s ease;}',
+      '#fsUpgradeBox{background:#fff;border-radius:20px;padding:32px 28px 24px;width:660px;max-width:96vw;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.24);animation:fsSlideIn .22s ease;}',
       '.fs-um-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:24px;color:#D1D5DB;cursor:pointer;line-height:1;padding:0;}',
       '.fs-um-close:hover{color:#6B7280;}',
       '.fs-um-header{text-align:center;margin-bottom:16px;}',
@@ -97,8 +97,14 @@
       '.fs-um-chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:14px;}',
       '.fs-um-chip{font-size:11px;font-weight:600;color:#4F46E5;background:#EEF2FF;padding:3px 10px;border-radius:20px;font-family:Inter,sans-serif;}',
       '.fs-um-roi{background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:10px 14px;font-size:12px;color:#92400E;margin-bottom:18px;text-align:center;font-family:Inter,sans-serif;line-height:1.5;}',
-      '.fs-um-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}',
-      '.fs-um-card{border:1.5px solid #E5E7EB;border-radius:14px;padding:18px 16px;text-align:center;cursor:pointer;transition:border-color .15s,box-shadow .15s;position:relative;}',
+      '.fs-um-preview{display:flex;gap:7px;margin-bottom:16px;}',
+      '.fs-um-sheet{flex:1;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden;min-width:0;}',
+      '.fs-um-sheet-tab{background:#6366F1;color:#fff;font-size:9px;font-weight:700;padding:4px 7px;font-family:Inter,sans-serif;letter-spacing:.3px;}',
+      '.fs-um-sheet-row{display:flex;}',
+      '.fs-um-sheet-cell{flex:1;font-size:8px;padding:3px 5px;color:#374151;font-family:Inter,sans-serif;min-width:0;overflow:hidden;white-space:nowrap;border-bottom:1px solid #F3F4F6;}',
+      '.fs-um-sheet-cell.h{background:#F9FAFB;font-weight:700;color:#6B7280;font-size:7px;}',
+      '.fs-um-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px;}',
+      '.fs-um-card{border:1.5px solid #E5E7EB;border-radius:14px;padding:16px 12px;text-align:center;cursor:pointer;transition:border-color .15s,box-shadow .15s;position:relative;}',
       '.fs-um-card:hover{border-color:#6366F1;box-shadow:0 4px 16px rgba(99,102,241,.12);}',
       '.fs-um-card-featured{border-color:#6366F1;background:linear-gradient(135deg,#F5F3FF,#EEF2FF);}',
       '.fs-um-card-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-size:10px;font-weight:800;padding:2px 12px;border-radius:20px;white-space:nowrap;letter-spacing:.04em;font-family:Inter,sans-serif;}',
@@ -111,7 +117,10 @@
       '.fs-um-btn-outline{background:#fff;border:1.5px solid #6366F1!important;color:#6366F1;}',
       '.fs-um-btn-primary{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;}',
       '.fs-um-footer{text-align:center;font-size:11px;color:#9CA3AF;font-family:Inter,sans-serif;}',
-      '@media(max-width:460px){.fs-um-cards{grid-template-columns:1fr;}.fs-um-card-featured{margin-top:14px;}}',
+      '.fs-um-card-annual{border-color:#059669!important;background:linear-gradient(135deg,#F0FDF4,#ECFDF5);}',
+      '.fs-um-card-badge-green{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#059669,#10B981);color:#fff;font-size:10px;font-weight:800;padding:2px 10px;border-radius:20px;white-space:nowrap;letter-spacing:.04em;font-family:Inter,sans-serif;}',
+      '.fs-um-btn-green{background:linear-gradient(135deg,#059669,#10B981);color:#fff;}',
+      '@media(max-width:560px){.fs-um-cards{grid-template-columns:1fr;}.fs-um-card-featured,.fs-um-card-annual{margin-top:14px;}.fs-um-preview{display:none;}}',
       /* MOBILE AUTH MODAL — prevent iOS zoom on input focus */
       '@media(max-width:600px){#fsAuthModal{width:calc(100vw - 24px);max-width:calc(100vw - 24px);padding:28px 20px 22px;border-radius:16px;}.fs-auth-field input{font-size:16px;padding:11px 12px;}}'
     ].join('');
@@ -222,25 +231,47 @@
             '<span class="fs-um-chip">&#10003; Balance sheet impact</span>' +
           '</div>' +
           '<div class="fs-um-roi">&#128161; <strong>Pro tip:</strong> At just 3 exports/month, Pro (&#8377;499) costs less than pay-per-report (&#8377;199 &times; 3 = &#8377;597)</div>' +
+          '<div class="fs-um-preview">' +
+            '<div class="fs-um-sheet"><div class="fs-um-sheet-tab">Amortisation</div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell h">Period</div><div class="fs-um-sheet-cell h">Opening</div><div class="fs-um-sheet-cell h">Interest</div></div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">Q1 FY25</div><div class="fs-um-sheet-cell">30,77,340</div><div class="fs-um-sheet-cell">76,933</div></div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">Q2 FY25</div><div class="fs-um-sheet-cell">27,54,273</div><div class="fs-um-sheet-cell">68,857</div></div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">Q3 FY25</div><div class="fs-um-sheet-cell">24,23,130</div><div class="fs-um-sheet-cell">60,578</div></div>' +
+            '</div>' +
+            '<div class="fs-um-sheet"><div class="fs-um-sheet-tab">Journal Entries</div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell h">Date</div><div class="fs-um-sheet-cell h">Account</div><div class="fs-um-sheet-cell h">Dr / Cr</div></div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">01-Apr-24</div><div class="fs-um-sheet-cell">ROU Asset</div><div class="fs-um-sheet-cell">Dr 31.3L</div></div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">01-Apr-24</div><div class="fs-um-sheet-cell">Lease Liability</div><div class="fs-um-sheet-cell">Cr 30.8L</div></div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">30-Jun-24</div><div class="fs-um-sheet-cell">Finance Cost</div><div class="fs-um-sheet-cell">Dr 76,933</div></div>' +
+            '</div>' +
+            '<div class="fs-um-sheet"><div class="fs-um-sheet-tab">Annual Rollforward</div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell h">Item</div><div class="fs-um-sheet-cell h">FY 2024-25</div></div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">Opening Liability</div><div class="fs-um-sheet-cell">30,77,340</div></div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">Interest</div><div class="fs-um-sheet-cell">2,83,048</div></div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">Payments</div><div class="fs-um-sheet-cell">(12,00,000)</div></div>' +
+            '</div>' +
+          '</div>' +
           '<div class="fs-um-cards">' +
             '<div class="fs-um-card" onclick="fsCloseUpgradeModal();fsDoOneTimeExport()">' +
               '<div class="fs-um-card-price">&#8377;199</div>' +
-              '<div class="fs-um-card-name">One-time export</div>' +
+              '<div class="fs-um-card-name">One-time</div>' +
               '<div class="fs-um-card-desc">This report only<br>Instant download</div>' +
-              '<button class="fs-um-btn fs-um-btn-outline">Download now &#8594;</button>' +
+              '<button class="fs-um-btn fs-um-btn-outline">Download &#8594;</button>' +
             '</div>' +
             '<div class="fs-um-card fs-um-card-featured" onclick="fsCloseUpgradeModal();fsInitiateProSubscription()">' +
               '<div class="fs-um-card-badge">BEST VALUE</div>' +
               '<div class="fs-um-card-price">&#8377;499<span>/mo</span></div>' +
-              '<div class="fs-um-card-name">Pro &mdash; Unlimited</div>' +
-              '<div class="fs-um-card-desc">All 5 tools &middot; Cancel anytime</div>' +
-              '<button class="fs-um-btn fs-um-btn-primary">Upgrade to Pro &#8594;</button>' +
+              '<div class="fs-um-card-name">Pro Unlimited</div>' +
+              '<div class="fs-um-card-desc">All tools &middot; Cancel anytime</div>' +
+              '<button class="fs-um-btn fs-um-btn-primary">Go Pro &#8594;</button>' +
             '</div>' +
-          '</div>' +
-          '<div style="text-align:center;margin-bottom:12px;">' +
-            '<a href="#" onclick="event.preventDefault();fsCloseUpgradeModal();fsInitiateAnnualSubscription();" style="font-size:12px;color:#4F46E5;font-weight:700;text-decoration:none;font-family:Inter,sans-serif;">' +
-              '&#127381; Save 33% — Annual Pro &#8377;3,999/year (&#8377;333/mo) &rarr;' +
-            '</a>' +
+            '<div class="fs-um-card fs-um-card-annual" onclick="fsCloseUpgradeModal();fsInitiateAnnualSubscription()">' +
+              '<div class="fs-um-card-badge-green">SAVE 33%</div>' +
+              '<div class="fs-um-card-price" style="color:#059669;">&#8377;3,999<span>/yr</span></div>' +
+              '<div class="fs-um-card-name">Annual Pro</div>' +
+              '<div class="fs-um-card-desc">&#8377;333/mo &middot; Best for CAs</div>' +
+              '<button class="fs-um-btn fs-um-btn-green">Save &#8377;2,989 &#8594;</button>' +
+            '</div>' +
           '</div>' +
           '<div class="fs-um-footer">&#128274; Secure payment via Razorpay &middot; No hidden charges &middot; Cancel Pro anytime</div>' +
         '</div>' +

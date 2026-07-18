@@ -3205,15 +3205,10 @@ function swMobile(id){
 /* ═══════════════════════════════════════════════════════
    RAZORPAY PAYMENT
 ═══════════════════════════════════════════════════════ */
-document.getElementById('btnExp').onclick = function(){
-  // Pro subscriber — free download, skip payment
-  if(window.isProUser){
-    if(typeof showToast === 'function') showToast('✓ Downloading your Pro report…','#5EC98A');
-    setTimeout(function(){ try{ exportXL(); } catch(e){ console.error(e); } }, 300);
-    return;
-  }
-  initiatePayment();
-};
+// auth.js wrapExportButton() intercepts this onclick — it handles the free-month quota
+// and upgrade modal. fsDoOneTimeExport() calls _fsOriginalExportFn which resolves to
+// initiatePayment() (₹199 Razorpay) for non-Pro users, or exportXL() directly for Pro.
+document.getElementById('btnExp').onclick = initiatePayment;
 
 /* ── Save full state to localStorage so a page reload cannot lose the download ── */
 function saveStateToStorage(){
