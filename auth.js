@@ -87,25 +87,27 @@
       /* UPGRADE MODAL */
       '#fsUpgradeOverlay{display:none;position:fixed;inset:0;background:rgba(15,15,30,.65);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(6px);padding:16px;}',
       '#fsUpgradeOverlay.show{display:flex!important;}',
-      '#fsUpgradeBox{background:#fff;border-radius:22px;padding:32px 28px 22px;width:680px;max-width:96vw;position:relative;box-shadow:0 40px 100px rgba(0,0,0,.28);animation:fsSlideIn .22s ease;}',
-      '.fs-um-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:24px;color:#D1D5DB;cursor:pointer;line-height:1;padding:0;}',
-      '.fs-um-close:hover{color:#6B7280;}',
-      '.fs-um-header{text-align:center;margin-bottom:14px;}',
-      '.fs-um-icon{font-size:34px;line-height:1;margin-bottom:8px;}',
-      '.fs-um-title{font-size:20px;font-weight:800;color:#111827;margin:0 0 4px;font-family:Inter,sans-serif;}',
-      '.fs-um-sub{font-size:12px;color:#6B7280;margin:0;font-family:Inter,sans-serif;}',
+      '#fsUpgradeBox{background:#fff;border-radius:22px;overflow:hidden;width:680px;max-width:96vw;position:relative;box-shadow:0 40px 100px rgba(0,0,0,.28);animation:fsSlideIn .22s ease;}',
+      '.fs-um-close{position:absolute;top:14px;right:16px;background:rgba(255,255,255,.15);border:none;font-size:18px;color:#fff;cursor:pointer;line-height:1;padding:0;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;}',
+      '.fs-um-close:hover{background:rgba(255,255,255,.25);}',
+      '.fs-um-header{background:#1E1B4B;padding:22px 28px 20px;}',
+      '.fs-um-eyebrow{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#A5B4FC;margin-bottom:4px;font-family:Inter,sans-serif;}',
+      '.fs-um-title{font-size:20px;font-weight:700;color:#fff;margin:0 0 2px;font-family:Inter,sans-serif;}',
+      '.fs-um-sub{font-size:12px;color:#A5B4FC;margin:0;font-family:Inter,sans-serif;}',
+      '.fs-um-body{padding:20px 28px 22px;}',
+      '.fs-um-preview-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#9CA3AF;margin-bottom:10px;font-family:Inter,sans-serif;}',
       '.fs-um-chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:12px;}',
       '.fs-um-chip{font-size:11px;font-weight:600;color:#4F46E5;background:#EEF2FF;padding:3px 10px;border-radius:20px;font-family:Inter,sans-serif;}',
       '.fs-um-roi{background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:9px 14px;font-size:12px;color:#92400E;margin-bottom:14px;text-align:center;font-family:Inter,sans-serif;line-height:1.5;}',
       /* Preview strip — bigger cells so numbers are legible */
       '.fs-um-preview{display:flex;gap:8px;margin-bottom:14px;}',
       '.fs-um-sheet{flex:1;border:1px solid #E5E7EB;border-radius:9px;overflow:hidden;min-width:0;box-shadow:0 2px 8px rgba(0,0,0,.05);}',
-      '.fs-um-sheet-tab{background:#6366F1;color:#fff;font-size:10px;font-weight:700;padding:5px 8px;font-family:Inter,sans-serif;letter-spacing:.3px;}',
+      '.fs-um-sheet-tab{background:#217346;color:#fff;font-size:10px;font-weight:700;padding:5px 8px;font-family:Inter,sans-serif;letter-spacing:.3px;}',
       '.fs-um-sheet-row{display:flex;}',
       '.fs-um-sheet-cell{flex:1;font-size:10px;padding:4px 6px;color:#374151;font-family:Inter,sans-serif;min-width:0;overflow:hidden;white-space:nowrap;border-bottom:1px solid #F3F4F6;font-variant-numeric:tabular-nums;}',
       '.fs-um-sheet-cell.h{background:#F9FAFB;font-weight:700;color:#9CA3AF;font-size:9px;text-transform:uppercase;letter-spacing:.3px;}',
       /* Pricing cards */
-      '.fs-um-cards{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:10px;margin-bottom:14px;align-items:start;}',
+      '.fs-um-cards{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:10px;margin:14px 0;align-items:start;}',
       '.fs-um-card{border:1.5px solid #E5E7EB;border-radius:14px;padding:18px 14px 14px;text-align:center;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s;position:relative;}',
       '.fs-um-card:hover{border-color:#6366F1;box-shadow:0 6px 20px rgba(99,102,241,.14);transform:translateY(-2px);}',
       '.fs-um-card-featured{border-color:#6366F1;background:linear-gradient(160deg,#F5F3FF,#EEF2FF);box-shadow:0 4px 20px rgba(99,102,241,.15);}',
@@ -232,38 +234,40 @@
     var html =
       '<div id="fsUpgradeOverlay" onclick="if(event.target===this)fsCloseUpgradeModal()">' +
         '<div id="fsUpgradeBox">' +
-          '<button class="fs-um-close" onclick="fsCloseUpgradeModal()">&#215;</button>' +
           '<div class="fs-um-header">' +
-            '<div class="fs-um-icon">&#128202;</div>' +
-            '<h2 class="fs-um-title">Your report is ready to download</h2>' +
-            '<p class="fs-um-sub">CA-grade Excel &middot; Multi-sheet workbook &middot; Drop straight into audit workpapers</p>' +
+            '<button class="fs-um-close" onclick="fsCloseUpgradeModal()">&#215;</button>' +
+            '<div class="fs-um-eyebrow">Finosutra Pro</div>' +
+            '<h2 class="fs-um-title">Unlock your Excel workpapers</h2>' +
+            '<p class="fs-um-sub">CA-grade &middot; Multi-sheet workbook &middot; Drop straight into audit workpapers</p>' +
           '</div>' +
+          '<div class="fs-um-body">' +
+          '<div class="fs-um-preview-label">What you get in every export</div>' +
+          '<div class="fs-um-preview">' +
+            '<div class="fs-um-sheet"><div class="fs-um-sheet-tab">Amortisation</div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell h">Month</div><div class="fs-um-sheet-cell h">Interest</div><div class="fs-um-sheet-cell h">Closing</div></div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">Jul 26</div><div class="fs-um-sheet-cell">3,562</div><div class="fs-um-sheet-cell">9,96,438</div></div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">Aug 26</div><div class="fs-um-sheet-cell">7,081</div><div class="fs-um-sheet-cell">9,53,519</div></div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">Sep 26</div><div class="fs-um-sheet-cell">6,851</div><div class="fs-um-sheet-cell">9,10,370</div></div>' +
+            '</div>' +
+            '<div class="fs-um-sheet"><div class="fs-um-sheet-tab">Journal Entries</div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell h">Date</div><div class="fs-um-sheet-cell h">Account</div><div class="fs-um-sheet-cell h">Dr / Cr</div></div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">01-Jul-26</div><div class="fs-um-sheet-cell">ROU Asset</div><div class="fs-um-sheet-cell">Dr 10L</div></div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">01-Jul-26</div><div class="fs-um-sheet-cell">Lease Liab.</div><div class="fs-um-sheet-cell">Cr 10L</div></div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">31-Jul-26</div><div class="fs-um-sheet-cell">Finance Cost</div><div class="fs-um-sheet-cell">Dr 3,562</div></div>' +
+            '</div>' +
+            '<div class="fs-um-sheet"><div class="fs-um-sheet-tab">Annual Rollforward</div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell h">Item</div><div class="fs-um-sheet-cell h">FY 26-27</div></div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">Opening Liab.</div><div class="fs-um-sheet-cell">10,00,000</div></div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">Interest</div><div class="fs-um-sheet-cell">84,219</div></div>' +
+              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">Payments</div><div class="fs-um-sheet-cell">(1,50,000)</div></div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="fs-um-roi">&#128161; <strong>Most CAs export 3–5&times; per month.</strong> Pro (&#8377;499) costs less than pay-per-report (&#8377;199 &times; 3 = &#8377;597)</div>' +
           '<div class="fs-um-chips">' +
             '<span class="fs-um-chip">&#10003; Amortization schedule</span>' +
             '<span class="fs-um-chip">&#10003; Journal entries</span>' +
             '<span class="fs-um-chip">&#10003; Annual rollforward</span>' +
             '<span class="fs-um-chip">&#10003; Balance sheet impact</span>' +
-          '</div>' +
-          '<div class="fs-um-roi">&#128161; <strong>Pro tip:</strong> At just 3 exports/month, Pro (&#8377;499) costs less than pay-per-report (&#8377;199 &times; 3 = &#8377;597)</div>' +
-          '<div class="fs-um-preview">' +
-            '<div class="fs-um-sheet"><div class="fs-um-sheet-tab">Amortisation</div>' +
-              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell h">Period</div><div class="fs-um-sheet-cell h">Opening</div><div class="fs-um-sheet-cell h">Interest</div></div>' +
-              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">Q1 FY25</div><div class="fs-um-sheet-cell">30,77,340</div><div class="fs-um-sheet-cell">76,933</div></div>' +
-              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">Q2 FY25</div><div class="fs-um-sheet-cell">27,54,273</div><div class="fs-um-sheet-cell">68,857</div></div>' +
-              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">Q3 FY25</div><div class="fs-um-sheet-cell">24,23,130</div><div class="fs-um-sheet-cell">60,578</div></div>' +
-            '</div>' +
-            '<div class="fs-um-sheet"><div class="fs-um-sheet-tab">Journal Entries</div>' +
-              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell h">Date</div><div class="fs-um-sheet-cell h">Account</div><div class="fs-um-sheet-cell h">Dr / Cr</div></div>' +
-              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">01-Apr-24</div><div class="fs-um-sheet-cell">ROU Asset</div><div class="fs-um-sheet-cell">Dr 31.3L</div></div>' +
-              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">01-Apr-24</div><div class="fs-um-sheet-cell">Lease Liability</div><div class="fs-um-sheet-cell">Cr 30.8L</div></div>' +
-              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">30-Jun-24</div><div class="fs-um-sheet-cell">Finance Cost</div><div class="fs-um-sheet-cell">Dr 76,933</div></div>' +
-            '</div>' +
-            '<div class="fs-um-sheet"><div class="fs-um-sheet-tab">Annual Rollforward</div>' +
-              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell h">Item</div><div class="fs-um-sheet-cell h">FY 2024-25</div></div>' +
-              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">Opening Liability</div><div class="fs-um-sheet-cell">30,77,340</div></div>' +
-              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">Interest</div><div class="fs-um-sheet-cell">2,83,048</div></div>' +
-              '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">Payments</div><div class="fs-um-sheet-cell">(12,00,000)</div></div>' +
-            '</div>' +
           '</div>' +
           '<div class="fs-um-cards">' +
             '<div class="fs-um-card" onclick="fsCloseUpgradeModal();fsDoOneTimeExport()">' +
@@ -300,6 +304,7 @@
           '</div>' +
           '<div class="fs-um-social">Trusted by <strong>CAs, CFOs and finance teams</strong> across India</div>' +
           '<div class="fs-um-footer">&#128274; Secure payment via Razorpay &middot; No hidden charges &middot; Cancel Pro anytime</div>' +
+          '</div>' +
         '</div>' +
       '</div>';
     var wrap = document.createElement('div');
