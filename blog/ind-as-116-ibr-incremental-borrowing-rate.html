@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Incremental Borrowing Rate (IBR) under IND AS 116 — How to Determine It in India | Finosutra</title>
+<meta name="description" content="How to determine the Incremental Borrowing Rate (IBR) under IND AS 116 in India — Para 26 definition, SBI MCLR methodology, IBR by entity type, worked example, sensitivity table and auditor documentation checklist."/>
+<meta name="keywords" content="incremental borrowing rate IND AS 116, IBR IND AS 116 India, how to determine IBR lease accounting, IBR IFRS 16 India, SBI MCLR IBR, lease discount rate India, IND AS 116 Para 26"/>
+<meta name="author" content="Finosutra"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://www.finosutra.com/blog/ind-as-116-ibr-incremental-borrowing-rate.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Finosutra"/>
+<meta property="og:title" content="Incremental Borrowing Rate (IBR) under IND AS 116 — How to Determine It in India"/>
+<meta property="og:description" content="Step-by-step guide to determining IBR under IND AS 116 — Para 26, SBI MCLR methodology, entity-type ranges, worked example and auditor documentation checklist."/>
+<meta property="og:url" content="https://www.finosutra.com/blog/ind-as-116-ibr-incremental-borrowing-rate.html"/>
+<meta property="og:image" content="https://www.finosutra.com/og-image.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Incremental Borrowing Rate (IBR) under IND AS 116 — India Guide"/>
+<meta name="twitter:description" content="How to determine IBR for lease accounting under IND AS 116 — MCLR methodology, worked example and sensitivity table."/>
+<meta name="twitter:image" content="https://www.finosutra.com/og-image.jpg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Incremental Borrowing Rate (IBR) under IND AS 116 — How to Determine It in India",
+  "description": "Step-by-step guide to determining IBR under IND AS 116 — Para 26 definition, SBI MCLR methodology, entity-type ranges, worked example and auditor documentation checklist.",
+  "author": {"@type": "Organization", "name": "Finosutra"},
+  "publisher": {"@type": "Organization", "name": "Finosutra", "url": "https://www.finosutra.com"},
+  "datePublished": "2026-07-19",
+  "dateModified": "2026-07-19",
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.finosutra.com/blog/ind-as-116-ibr-incremental-borrowing-rate.html"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What is the Incremental Borrowing Rate under IND AS 116?", "acceptedAnswer": {"@type": "Answer", "text": "The IBR is defined in IND AS 116 Para 26 as the rate of interest a lessee would have to pay to borrow — over a similar term, with similar security — the funds necessary to obtain an asset of similar value in a similar economic environment."}},
+    {"@type": "Question", "name": "Can I use my company's WACC as the IBR?", "acceptedAnswer": {"@type": "Answer", "text": "No. WACC blends equity and debt costs and is typically lower than a pure debt rate. IBR must reflect the cost of secured borrowing, not blended capital. Using WACC overstates the lease liability discount and understates the liability."}},
+    {"@type": "Question", "name": "How do I determine IBR using SBI MCLR?", "acceptedAnswer": {"@type": "Answer", "text": "Start with SBI's MCLR for the tenor closest to the lease term (e.g., 1-year MCLR for short leases, or interpolate for 3-5 year leases). Add a credit spread based on the company's credit quality — typically 50-100 bps for investment-grade listed companies and 150-300 bps for mid-sized unlisted companies."}},
+    {"@type": "Question", "name": "Can one IBR be used for all leases in a company?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. IND AS 116 permits a portfolio approach — one IBR for a group of leases with similar characteristics. Most companies use 2-3 IBR bands: short-term (up to 3 years), medium-term (3-7 years), and long-term (over 7 years)."}},
+    {"@type": "Question", "name": "Does the IBR change after commencement?", "acceptedAnswer": {"@type": "Answer", "text": "The IBR at commencement is locked in and used for all subsequent interest calculations on that lease. A new IBR is only required when the lease is modified or when the lessee reassesses the lease term or index-linked payments — and only for the remeasurement, not retrospectively."}}
+  ]
+}
+</script>
+<style>
+:root{
+  --brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;--brand-mid:#C7D2FE;
+  --bg:#F9FAFB;--card:#FFFFFF;--border:rgba(99,102,241,0.18);--border-light:rgba(99,102,241,0.08);
+  --text:#111827;--muted:#6B7280;--muted2:#9CA3AF;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+/* NAV */
+nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-light);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 var(--border-light),0 4px 20px rgba(99,102,241,0.05)}
+.nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.nav-logo img{height:40px;width:auto;}
+.nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
+.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;padding:7px 12px;border-radius:8px;transition:color .15s,background .15s;}
+.nav-links a:hover{color:var(--text);background:var(--brand-light);}
+.nav-toggle{display:none;background:none;border:none;font-size:20px;color:var(--text);cursor:pointer;padding:8px;}
+@media(max-width:900px){.nav-links{display:none;}}
+@media(max-width:768px){nav{padding:0 16px;}.nav-toggle{display:block;}.nav-links.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid var(--border-light);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
+
+/* ARTICLE LAYOUT */
+.article-wrap{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+
+/* BREADCRUMB */
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted2);margin-bottom:24px;flex-wrap:wrap;}
+.breadcrumb a{color:var(--muted2);text-decoration:none;transition:color .15s;}
+.breadcrumb a:hover{color:var(--brand);}
+.breadcrumb span{color:var(--muted2);}
+
+/* ARTICLE HEADER */
+.article-tag{display:inline-block;background:var(--brand-light);color:var(--brand);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.4px;margin-bottom:16px;}
+.article-title{font-size:clamp(24px,4vw,36px);font-weight:800;line-height:1.2;letter-spacing:-0.5px;color:var(--text);margin-bottom:16px;}
+.article-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--muted);margin-bottom:32px;flex-wrap:wrap;}
+.article-meta span{display:flex;align-items:center;gap:5px;}
+.article-divider{height:1px;background:var(--border-light);margin-bottom:36px;}
+
+/* TOC */
+.toc{background:var(--brand-light);border:1px solid var(--brand-mid);border-radius:14px;padding:22px 26px;margin-bottom:40px;}
+.toc h3{font-size:13px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;}
+.toc ol{padding-left:18px;}
+.toc ol li{margin-bottom:6px;}
+.toc ol li a{font-size:14px;color:var(--brand-dark);text-decoration:none;font-weight:500;}
+.toc ol li a:hover{text-decoration:underline;}
+
+/* PROSE */
+.article-body h2{font-size:22px;font-weight:800;color:var(--text);margin:40px 0 14px;letter-spacing:-0.3px;}
+.article-body h3{font-size:17px;font-weight:700;color:var(--text);margin:28px 0 10px;}
+.article-body p{margin-bottom:16px;color:#1F2937;}
+.article-body ul,.article-body ol{padding-left:22px;margin-bottom:16px;}
+.article-body ul li,.article-body ol li{margin-bottom:8px;color:#1F2937;}
+.article-body strong{font-weight:700;color:var(--text);}
+
+/* CALLOUT BOX */
+.callout{background:var(--brand-light);border-left:4px solid var(--brand);border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0;}
+.callout p{margin:0;font-size:14px;color:var(--brand-dark);}
+.callout strong{color:var(--brand-dark);}
+
+.callout-green{background:#ECFDF5;border-left-color:#10B981;}
+.callout-green p{color:#065F46;}
+
+.callout-amber{background:#FFFBEB;border-left-color:#F59E0B;}
+.callout-amber p{color:#78350F;}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:24px 0;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+table th{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-weight:700;padding:10px 14px;text-align:left;}
+table td{padding:9px 14px;border-bottom:1px solid #F3F4F6;color:#1F2937;}
+table tr:nth-child(even) td{background:#F9FAFB;}
+table tr:last-child td{border-bottom:none;}
+.td-highlight{font-weight:700;color:var(--brand-dark);background:#EEF2FF !important;}
+
+/* CTA INLINE */
+.cta-box{background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:16px;padding:28px 30px;margin:40px 0;text-align:center;}
+.cta-box h3{font-size:18px;font-weight:800;color:#fff;margin-bottom:8px;}
+.cta-box p{font-size:14px;color:rgba(255,255,255,.85);margin-bottom:18px;}
+.cta-box a{display:inline-block;background:#fff;color:var(--brand);font-size:14px;font-weight:700;padding:12px 26px;border-radius:10px;text-decoration:none;transition:transform .15s;}
+.cta-box a:hover{transform:translateY(-1px);}
+
+/* STEP BLOCK */
+.step-block{background:#F9FAFB;border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:20px 0;}
+.step-label{font-size:11px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.step-block p{margin:0;font-size:14px;color:#1F2937;}
+
+/* FOOTER */
+footer{background:#111827;padding:36px 32px 24px;color:#9CA3AF;}
+
+@media(max-width:600px){.article-wrap{padding:32px 16px 60px;}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../auth.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo"><img src="../logo.png" alt="Finosutra"></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../indas-tools.html">IND AS</a></li>
+      <li><a href="../gst-tools.html">GST</a></li>
+      <li><a href="../income-tax-hub.html">Income Tax</a></li>
+      <li><a href="../templates.html">Templates</a></li>
+      <li><a href="../blog.html">Blog</a></li>
+      <li><a href="../index.html#pricing">Pricing</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+      <li id="navAuthMobile"></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <a href="../blog.html" style="font-size:13px;font-weight:600;color:var(--brand);text-decoration:none;">← All Articles</a>
+      <button class="nav-toggle" id="navToggle"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
+
+<div class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span>›</span>
+    <a href="../blog.html">Blog</a>
+    <span>›</span>
+    <span>IBR under IND AS 116</span>
+  </nav>
+
+  <div class="article-tag">IND AS 116 / IFRS 16</div>
+  <h1 class="article-title">Incremental Borrowing Rate (IBR) under IND AS 116 — How to Determine It in India</h1>
+  <div class="article-meta">
+    <span><i class="fa-regular fa-calendar"></i> July 2026</span>
+    <span><i class="fa-regular fa-clock"></i> 16 min read</span>
+    <span><i class="fa-solid fa-user"></i> Finosutra Team</span>
+  </div>
+  <div class="article-divider"></div>
+
+  <div class="toc">
+    <h3>In This Article</h3>
+    <ol>
+      <li><a href="#what-is-ibr">What is the Incremental Borrowing Rate?</a></li>
+      <li><a href="#three-requirements">Three Matching Requirements</a></li>
+      <li><a href="#what-ibr-is-not">What IBR Is NOT</a></li>
+      <li><a href="#step-by-step">Step-by-Step: Deriving IBR for Indian Companies</a></li>
+      <li><a href="#reference-rates">Indian Reference Rates — MCLR, G-Sec, Repo</a></li>
+      <li><a href="#by-entity-type">IBR Ranges by Entity Type</a></li>
+      <li><a href="#worked-example">Worked Example — Full IBR Derivation</a></li>
+      <li><a href="#sensitivity">Sensitivity Analysis — Impact of ±1% IBR</a></li>
+      <li><a href="#documentation">Documentation Auditors Expect</a></li>
+      <li><a href="#faq">FAQs</a></li>
+    </ol>
+  </div>
+
+  <div class="article-body">
+
+    <p>The Incremental Borrowing Rate is the single most judgemental input in IND AS 116 lease accounting. Get it wrong by 2% and you can misstate the opening lease liability by lakhs on a typical office lease. Yet most companies either use an ad-hoc number, copy last year's rate without revisiting it, or — worst of all — use their WACC. This guide gives you a defensible, auditor-ready methodology for deriving IBR in the Indian context.</p>
+
+    <h2 id="what-is-ibr">1. What is the Incremental Borrowing Rate?</h2>
+    <p>IND AS 116 <strong>Para 26</strong> defines the IBR as:</p>
+
+    <div class="callout">
+      <p><strong>The rate of interest that a lessee would have to pay to borrow over a similar term, and with a similar security, the funds necessary to obtain an asset of a similar value to the right-of-use asset in a similar economic environment.</strong></p>
+    </div>
+
+    <p>Break that definition down and you get four requirements: the borrowing must have a <strong>similar term</strong> to the lease, offer <strong>similar security</strong> (i.e., secured borrowing), fund an asset of <strong>similar value</strong>, and reflect a <strong>similar economic environment</strong> (same currency, same market conditions at commencement date).</p>
+
+    <p>The IBR is used to discount future lease payments to their present value on the commencement date — producing the opening lease liability. It is locked in at commencement and used for all subsequent interest accruals on that lease, unless the lease is later modified or reassessed.</p>
+
+    <p>IND AS 116 allows using the <strong>rate implicit in the lease</strong> (the lessor's internal rate of return) instead of IBR, but only if it can be readily determined. In practice, lessors rarely disclose it, so IBR is used for the overwhelming majority of Indian leases.</p>
+
+    <h2 id="three-requirements">2. Three Matching Requirements in Practice</h2>
+
+    <h3>Tenor Match</h3>
+    <p>The IBR must match the <strong>remaining lease term</strong> — not the original term, not the company's average loan tenor. For a new 5-year lease, use a 5-year borrowing rate. For a lease with 2 years remaining at a modification date, use a 2-year rate for the remeasurement.</p>
+    <p>This matters because Indian yield curves are not flat — the 5-year MCLR is typically 15–25 bps higher than the 1-year MCLR. Using the wrong tenor understates the IBR for long leases.</p>
+
+    <h3>Currency Match</h3>
+    <p>The IBR must be in the <strong>same currency as the lease payments</strong>. For INR leases (virtually all Indian office, warehouse and retail leases), use an INR borrowing rate. For USD-denominated leases (some port, SEZ or MNC group intercompany arrangements), use a USD borrowing rate — typically SOFR + spread, which will be 2–3% lower than INR rates. Never cross currencies.</p>
+
+    <h3>Collateral/Security Match</h3>
+    <p>The IBR must reflect <strong>secured borrowing</strong> — because the right-of-use asset itself acts as implicit collateral. A company's unsecured NCD rate or commercial paper rate is not an appropriate IBR; those are unsecured instruments and carry a higher spread. Use term loan rates or MCLR-linked rates, which are typically secured.</p>
+
+    <h2 id="what-ibr-is-not">3. What IBR Is NOT</h2>
+
+    <div class="callout-amber callout">
+      <p><strong>Common mistakes:</strong> IBR is NOT the company's WACC · NOT the cost of equity · NOT the overdraft / working capital rate · NOT the rate on an unrelated loan taken years ago · NOT a rate from another group entity in a different country.</p>
+    </div>
+
+    <ul>
+      <li><strong>WACC</strong> blends equity and debt. It is lower than a pure debt rate for most companies. Using WACC overstates the discount applied to future payments and understates the lease liability — a significant misstatement.</li>
+      <li><strong>Overdraft / CC rate</strong> is a short-term, unsecured, revolving facility. It is typically 100–200 bps higher than a term loan and does not match the secured, fixed-term nature of a lease.</li>
+      <li><strong>Group entity rate</strong> from a foreign parent is in a different currency and reflects a different credit environment. Not transferable to an Indian subsidiary's INR lease.</li>
+      <li><strong>A stale rate</strong> — the IBR must reflect market conditions at the <em>commencement date</em> of each lease. Using last year's IBR for a lease commencing today is incorrect unless you can demonstrate rates haven't materially changed.</li>
+    </ul>
+
+    <h2 id="step-by-step">4. Step-by-Step: Deriving IBR for Indian Companies</h2>
+
+    <div class="step-block">
+      <div class="step-label">Step 1 — Identify the lease tenor</div>
+      <p>Use the lease term as defined under IND AS 116 — the non-cancellable period plus any extension periods the lessee is <em>reasonably certain</em> to exercise. A 3-year lease with a likely-to-be-exercised 2-year renewal has a 5-year IBR tenor.</p>
+    </div>
+
+    <div class="step-block">
+      <div class="step-label">Step 2 — Choose a reference rate</div>
+      <p>For most Indian companies: SBI MCLR for the nearest standard tenor (overnight, 1-month, 3-month, 6-month, 1-year, 3-year). SBI MCLR is the RBI-mandated benchmark and represents the minimum lending rate for a prime borrower — it is an appropriate risk-free-ish anchor for IBR derivation. For longer tenors (5+ years), use an interpolation or G-sec yield as the base.</p>
+    </div>
+
+    <div class="step-block">
+      <div class="step-label">Step 3 — Add a credit spread</div>
+      <p>The credit spread captures the company's creditworthiness above the prime benchmark. Estimate it from: (a) the spread on the company's existing term loans above MCLR, (b) the company's credit rating if rated, or (c) industry proxies for similarly-sized companies. Typical ranges are in Section 6 below.</p>
+    </div>
+
+    <div class="step-block">
+      <div class="step-label">Step 4 — Apply tenor adjustment if needed</div>
+      <p>SBI only publishes MCLR up to 3 years. For 5-year or longer leases, interpolate between the 3-year MCLR and the 5-year G-sec yield, or use the company's actual 5-year term loan spread over the G-sec as a proxy.</p>
+    </div>
+
+    <div class="step-block">
+      <div class="step-label">Step 5 — Sanity-check and document</div>
+      <p>Cross-check your IBR against: (a) the rate on any recently-taken loans of similar tenor, (b) the company's banker's latest sanction letter or loan term sheet, (c) industry peers' disclosed lease discount rates in their annual reports. Document all of this in a one-page IBR workpaper before filing.</p>
+    </div>
+
+    <h2 id="reference-rates">5. Indian Reference Rates — MCLR, G-Sec, Repo</h2>
+
+    <p>Three reference rate families are used in Indian IBR derivation:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Rate</th><th>What It Is</th><th>When to Use for IBR</th><th>Approx. Level (Jul 2026)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>SBI MCLR (1-year)</strong></td><td>RBI-mandated minimum lending rate for prime borrowers</td><td>Base rate for leases up to 3 years; most common anchor</td><td>~9.00%</td></tr>
+          <tr><td><strong>SBI MCLR (3-year)</strong></td><td>3-year term MCLR</td><td>Base rate for 3–5 year leases</td><td>~9.05%</td></tr>
+          <tr><td><strong>10-year G-Sec yield</strong></td><td>Indian government bond yield</td><td>Base rate for long-term leases (7–15 years)</td><td>~6.80%</td></tr>
+          <tr><td><strong>5-year G-Sec yield</strong></td><td>Government bond yield, 5-year tenor</td><td>Base rate for 5–7 year leases as alternative to MCLR</td><td>~6.65%</td></tr>
+          <tr><td><strong>RBI Repo Rate</strong></td><td>RBI's policy rate</td><td>Reference for understanding rate environment; not used directly as IBR base</td><td>~6.00%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><strong>Important:</strong> Always use the rate published on or closest to the <em>commencement date</em> of the specific lease, not year-end rates. SBI MCLR is published monthly on the SBI website. G-sec yields are published daily on the RBI website (rbi.org.in → Statistics → G-Sec Yields).</p>
+    </div>
+
+    <h2 id="by-entity-type">6. IBR Ranges by Entity Type (India, FY 2025-26)</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Entity Type</th><th>Credit Profile</th><th>Typical IBR (3–5 yr lease)</th><th>Spread over MCLR</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Large listed company (AAA/AA rated)</td><td>Investment grade, strong cash flows</td><td class="td-highlight">8.0% – 9.5%</td><td>−50 to +50 bps</td></tr>
+          <tr><td>Listed company (A/BBB rated)</td><td>Good credit, moderate leverage</td><td class="td-highlight">9.5% – 11.0%</td><td>+50 to +200 bps</td></tr>
+          <tr><td>Mid-sized unlisted company</td><td>Decent profitability, bank-funded</td><td class="td-highlight">10.5% – 13.0%</td><td>+150 to +400 bps</td></tr>
+          <tr><td>Small company / MSME</td><td>Higher risk, limited credit history</td><td class="td-highlight">12.0% – 15.0%</td><td>+300 to +600 bps</td></tr>
+          <tr><td>Early-stage startup</td><td>Negative EBITDA, VC-funded</td><td class="td-highlight">14.0% – 18.0%</td><td>+500 to +900 bps</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>These are indicative ranges. The actual IBR for any company must be grounded in that company's specific credit profile and available market data at commencement — not read off a table. Use this as a sanity-check range, not a substitute for analysis.</p>
+
+    <h2 id="worked-example">7. Worked Example — Full IBR Derivation</h2>
+
+    <div class="callout">
+      <p><strong>Company:</strong> ABC Pvt. Ltd. — mid-sized unlisted textile manufacturer, Mumbai. <strong>Lease:</strong> Office space, 5-year term, commencement 1 April 2025, monthly payment ₹2,00,000 at month-end. <strong>Task:</strong> Derive IBR and calculate opening lease liability.</p>
+    </div>
+
+    <h3>IBR Derivation Workpaper</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Item</th><th>Value</th><th>Source</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Lease tenor</td><td>5 years (60 months)</td><td>Lease agreement</td></tr>
+          <tr><td>Currency</td><td>INR</td><td>Lease agreement</td></tr>
+          <tr><td>Reference rate — SBI 3-year MCLR (Apr 2025)</td><td>9.05%</td><td>SBI website, April 2025</td></tr>
+          <tr><td>Tenor premium (3yr → 5yr interpolation)</td><td>+0.20%</td><td>G-sec curve interpolation</td></tr>
+          <tr><td>Adjusted base rate (5-year equivalent)</td><td>9.25%</td><td>—</td></tr>
+          <tr><td>Credit spread — ABC's term loan spread over MCLR</td><td>+1.50%</td><td>Sanction letter, Bank of Baroda, Feb 2025</td></tr>
+          <tr><td><strong>IBR (rounded)</strong></td><td><strong>10.75%</strong></td><td><strong>Derived</strong></td></tr>
+          <tr><td>Cross-check: ABC's existing 5-year TL rate</td><td>10.50%</td><td>Loan statement — within 25 bps, acceptable</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Lease Liability Calculation</h3>
+    <p>Monthly IBR = 10.75% ÷ 12 = <strong>0.8958%</strong> &nbsp;|&nbsp; Payments = 60 &nbsp;|&nbsp; PMT = ₹2,00,000</p>
+    <p>PV = ₹2,00,000 × [(1 − (1 + 0.008958)⁻⁶⁰) ÷ 0.008958]</p>
+
+    <div class="callout-green callout">
+      <p><strong>Opening Lease Liability = ₹92,56,800</strong> &nbsp;(= Opening ROU Asset, assuming no IDCs or incentives)</p>
+    </div>
+
+    <p>Annual depreciation on ROU asset = ₹92,56,800 ÷ 5 = <strong>₹18,51,360 per year</strong></p>
+    <p>Month 1 interest = ₹92,56,800 × 0.8958% = <strong>₹82,936</strong></p>
+    <p>Month 1 principal = ₹2,00,000 − ₹82,936 = <strong>₹1,17,064</strong></p>
+
+    <div class="cta-box">
+      <h3>Calculate your lease liability instantly</h3>
+      <p>Enter your IBR, payment and term — get the full amortisation schedule, annual rollforward and audit-ready Excel workbook in under 60 seconds.</p>
+      <a href="../indas116.html">Open Free IND AS 116 Calculator →</a>
+    </div>
+
+    <h2 id="sensitivity">8. Sensitivity Analysis — Impact of ±1% IBR</h2>
+    <p>IBR is an estimate, and auditors test it. Understanding how sensitive your lease liability is to the IBR helps you anticipate audit challenges and choose a defensible point in a reasonable range.</p>
+    <p>Using the same ABC example (₹2,00,000/month, 60 payments):</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>IBR</th><th>Monthly Rate</th><th>Opening Lease Liability</th><th>vs. Base (10.75%)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>8.00%</td><td>0.6667%</td><td>₹98,64,000</td><td>+₹6,07,200 (+6.6%)</td></tr>
+          <tr><td>9.00%</td><td>0.7500%</td><td>₹96,34,000</td><td>+₹3,77,200 (+4.1%)</td></tr>
+          <tr><td>10.00%</td><td>0.8333%</td><td>₹94,06,000</td><td>+₹1,49,200 (+1.6%)</td></tr>
+          <tr class="td-highlight"><td><strong>10.75% (base)</strong></td><td><strong>0.8958%</strong></td><td><strong>₹92,56,800</strong></td><td>—</td></tr>
+          <tr><td>11.75%</td><td>0.9792%</td><td>₹90,71,000</td><td>−₹1,85,800 (−2.0%)</td></tr>
+          <tr><td>12.75%</td><td>1.0625%</td><td>₹88,90,000</td><td>−₹3,66,800 (−4.0%)</td></tr>
+          <tr><td>14.00%</td><td>1.1667%</td><td>₹86,52,000</td><td>−₹6,04,800 (−6.5%)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>A 2% difference in IBR moves the opening lease liability by roughly ₹6–8 lakhs on this example — about 6–8% of the total. For a company with 20 such leases, that is a ₹1.2–1.6 crore difference in total balance sheet liability. This is why getting IBR right — and documenting it — matters.</p>
+
+    <h2 id="documentation">9. Documentation Auditors Expect</h2>
+    <p>Every IBR should be supported by a <strong>one-page IBR workpaper</strong> in the audit file. Auditors from the Big 4 and most regional firms now specifically request this. The workpaper should include:</p>
+
+    <ul>
+      <li><strong>Lease reference:</strong> Name, asset type, commencement date, lease term</li>
+      <li><strong>IBR conclusion:</strong> The rate adopted and the date it was determined</li>
+      <li><strong>Reference rate:</strong> The base rate used (e.g., SBI 1-year MCLR = 9.00% as at 1 Apr 2025), with source URL or screenshot</li>
+      <li><strong>Tenor adjustment:</strong> How the base rate was extended or interpolated to match the lease term</li>
+      <li><strong>Credit spread:</strong> The spread applied and the basis for it (loan sanction letter, credit rating, comparable transactions)</li>
+      <li><strong>Cross-checks:</strong> Comparison to actual borrowing rates; comparison to peer companies' disclosed rates</li>
+      <li><strong>Sensitivity:</strong> Brief note on the ±1% impact on lease liability</li>
+      <li><strong>Preparer + reviewer sign-off</strong></li>
+    </ul>
+
+    <div class="callout-amber callout">
+      <p><strong>Auditor focus areas:</strong> Auditors increasingly scrutinise (a) whether the tenor matches the lease term, (b) whether a stale prior-year rate was rolled forward without checking current MCLR, and (c) whether the same IBR was applied to leases with very different risk profiles. Prepare for these questions before the audit begins.</p>
+    </div>
+
+    <p>For companies with multiple leases, a portfolio IBR approach is acceptable — use 2–3 IBR bands (short / medium / long) with a single documented workpaper per band. Each new lease is slotted into the appropriate band rather than requiring a fresh individual derivation each time.</p>
+
+    <h2 id="faq">10. Frequently Asked Questions</h2>
+
+    <h3>What is the Incremental Borrowing Rate under IND AS 116?</h3>
+    <p>The IBR is defined in IND AS 116 Para 26 as the rate of interest a lessee would have to pay to borrow — over a similar term, with similar security — the funds necessary to obtain an asset of similar value in a similar economic environment. It is used to discount future lease payments to calculate the opening lease liability.</p>
+
+    <h3>Can I use my company's WACC as the IBR?</h3>
+    <p>No. WACC blends equity and debt costs and is typically lower than a pure debt rate, which would understate the lease liability. IBR must reflect the cost of secured borrowing only. Using WACC is a common error that auditors flag — particularly in cases where the WACC is 7–8% but the company's actual borrowing rate is 10–12%.</p>
+
+    <h3>How do I determine IBR using SBI MCLR?</h3>
+    <p>Start with SBI's published MCLR for the tenor closest to the lease term. Add a credit spread based on the company's credit quality — typically 50–100 bps for investment-grade listed companies and 150–300 bps for mid-sized unlisted companies. Verify the result against any recent term loan sanction letters. Document the derivation in a workpaper.</p>
+
+    <h3>Can one IBR be used for all leases in a company?</h3>
+    <p>Yes — IND AS 116 permits a portfolio approach where one IBR is used for a group of leases with similar characteristics (similar asset class, similar commencement date, similar tenor). Most companies use 2–3 IBR bands. The portfolio approach must still be documented and the bands must be reasonable groupings, not an excuse to apply a single low rate to all leases regardless of term.</p>
+
+    <h3>Does the IBR change after the lease commencement date?</h3>
+    <p>The IBR at commencement is locked in and used for all subsequent interest calculations. A new IBR is required only when: (a) the lease is modified (use IBR at modification date for remeasurement), (b) the lessee reassesses the lease term due to a significant event, or (c) index-linked lease payments are reassessed. In those cases the new IBR applies only to the remeasurement — not retrospectively to prior periods.</p>
+
+  </div><!-- end article-body -->
+
+  <div style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border-light);">
+    <p style="font-size:13px;color:var(--muted);margin-bottom:16px;"><strong>Related Tools &amp; Articles</strong></p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;">
+      <a href="../indas116.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 16px;background:var(--brand-light);border:1px solid var(--brand-mid);border-radius:10px;font-size:13px;font-weight:600;color:var(--brand);text-decoration:none;">⚡ IND AS 116 Calculator</a>
+      <a href="ind-as-116-lease-accounting-guide.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 16px;background:#F9FAFB;border:1px solid var(--border);border-radius:10px;font-size:13px;font-weight:600;color:var(--text);text-decoration:none;">→ IND AS 116 Complete Guide</a>
+      <a href="ind-as-116-lease-accounting-step-by-step-example.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 16px;background:#F9FAFB;border:1px solid var(--border);border-radius:10px;font-size:13px;font-weight:600;color:var(--text);text-decoration:none;">→ Step-by-Step Worked Example</a>
+      <a href="ind-as-116-lease-modification.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 16px;background:#F9FAFB;border:1px solid var(--border);border-radius:10px;font-size:13px;font-weight:600;color:var(--text);text-decoration:none;">→ Lease Modification Guide</a>
+      <a href="../blog.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 16px;background:#F9FAFB;border:1px solid var(--border);border-radius:10px;font-size:13px;font-weight:600;color:var(--text);text-decoration:none;">← All Articles</a>
+    </div>
+  </div>
+
+</div><!-- end article-wrap -->
+
+<footer style="background:#111827;padding:28px 32px;color:#9CA3AF;">
+  <div style="max-width:1160px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px;">
+    <p>© 2026 Finosutra. All rights reserved.</p>
+    <p><a href="../privacy.html" style="color:#6B7280;text-decoration:none;">Privacy</a> &nbsp;·&nbsp; <a href="../terms.html" style="color:#6B7280;text-decoration:none;">Terms</a> &nbsp;·&nbsp; <a href="mailto:fino.sutra07@gmail.com" style="color:#6B7280;text-decoration:none;">fino.sutra07@gmail.com</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var t=document.getElementById('navToggle');
+  if(!t)return;
+  t.onclick=function(){
+    var l=document.getElementById('navLinks');
+    if(l)l.classList.toggle('open');
+    var i=this.querySelector('i');
+    if(i)i.className=l&&l.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-bars';
+  };
+})();
+</script>
+<script src="../share.js"></script>
+</body>
+</html>
