@@ -85,42 +85,56 @@
       '#fsProActivated{display:none;margin-top:12px;padding:14px 18px;background:linear-gradient(135deg,#DCFCE7,#D1FAE5);border:1.5px solid #22C55E;border-radius:10px;text-align:center;}',
       '@media(max-width:540px){.fs-pro-cta{align-items:flex-start;}.fs-pro-cta-note{text-align:left;}}',
       /* UPGRADE MODAL */
-      '#fsUpgradeOverlay{display:none;position:fixed;inset:0;background:rgba(15,15,30,.6);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(4px);padding:16px;}',
+      '#fsUpgradeOverlay{display:none;position:fixed;inset:0;background:rgba(15,15,30,.65);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(6px);padding:16px;}',
       '#fsUpgradeOverlay.show{display:flex!important;}',
-      '#fsUpgradeBox{background:#fff;border-radius:20px;padding:32px 28px 24px;width:660px;max-width:96vw;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.24);animation:fsSlideIn .22s ease;}',
+      '#fsUpgradeBox{background:#fff;border-radius:22px;padding:32px 28px 22px;width:680px;max-width:96vw;position:relative;box-shadow:0 40px 100px rgba(0,0,0,.28);animation:fsSlideIn .22s ease;}',
       '.fs-um-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:24px;color:#D1D5DB;cursor:pointer;line-height:1;padding:0;}',
       '.fs-um-close:hover{color:#6B7280;}',
-      '.fs-um-header{text-align:center;margin-bottom:16px;}',
-      '.fs-um-icon{font-size:36px;line-height:1;margin-bottom:8px;}',
-      '.fs-um-title{font-size:19px;font-weight:800;color:#111827;margin:0 0 5px;font-family:Inter,sans-serif;}',
+      '.fs-um-header{text-align:center;margin-bottom:14px;}',
+      '.fs-um-icon{font-size:34px;line-height:1;margin-bottom:8px;}',
+      '.fs-um-title{font-size:20px;font-weight:800;color:#111827;margin:0 0 4px;font-family:Inter,sans-serif;}',
       '.fs-um-sub{font-size:12px;color:#6B7280;margin:0;font-family:Inter,sans-serif;}',
-      '.fs-um-chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:14px;}',
+      '.fs-um-chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:12px;}',
       '.fs-um-chip{font-size:11px;font-weight:600;color:#4F46E5;background:#EEF2FF;padding:3px 10px;border-radius:20px;font-family:Inter,sans-serif;}',
-      '.fs-um-roi{background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:10px 14px;font-size:12px;color:#92400E;margin-bottom:18px;text-align:center;font-family:Inter,sans-serif;line-height:1.5;}',
-      '.fs-um-preview{display:flex;gap:7px;margin-bottom:16px;}',
-      '.fs-um-sheet{flex:1;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden;min-width:0;}',
-      '.fs-um-sheet-tab{background:#6366F1;color:#fff;font-size:9px;font-weight:700;padding:4px 7px;font-family:Inter,sans-serif;letter-spacing:.3px;}',
+      '.fs-um-roi{background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:9px 14px;font-size:12px;color:#92400E;margin-bottom:14px;text-align:center;font-family:Inter,sans-serif;line-height:1.5;}',
+      /* Preview strip — bigger cells so numbers are legible */
+      '.fs-um-preview{display:flex;gap:8px;margin-bottom:14px;}',
+      '.fs-um-sheet{flex:1;border:1px solid #E5E7EB;border-radius:9px;overflow:hidden;min-width:0;box-shadow:0 2px 8px rgba(0,0,0,.05);}',
+      '.fs-um-sheet-tab{background:#6366F1;color:#fff;font-size:10px;font-weight:700;padding:5px 8px;font-family:Inter,sans-serif;letter-spacing:.3px;}',
       '.fs-um-sheet-row{display:flex;}',
-      '.fs-um-sheet-cell{flex:1;font-size:8px;padding:3px 5px;color:#374151;font-family:Inter,sans-serif;min-width:0;overflow:hidden;white-space:nowrap;border-bottom:1px solid #F3F4F6;}',
-      '.fs-um-sheet-cell.h{background:#F9FAFB;font-weight:700;color:#6B7280;font-size:7px;}',
-      '.fs-um-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px;}',
-      '.fs-um-card{border:1.5px solid #E5E7EB;border-radius:14px;padding:16px 12px;text-align:center;cursor:pointer;transition:border-color .15s,box-shadow .15s;position:relative;}',
-      '.fs-um-card:hover{border-color:#6366F1;box-shadow:0 4px 16px rgba(99,102,241,.12);}',
-      '.fs-um-card-featured{border-color:#6366F1;background:linear-gradient(135deg,#F5F3FF,#EEF2FF);}',
-      '.fs-um-card-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-size:10px;font-weight:800;padding:2px 12px;border-radius:20px;white-space:nowrap;letter-spacing:.04em;font-family:Inter,sans-serif;}',
-      '.fs-um-card-price{font-size:26px;font-weight:800;color:#111827;font-family:Inter,sans-serif;line-height:1.1;}',
+      '.fs-um-sheet-cell{flex:1;font-size:10px;padding:4px 6px;color:#374151;font-family:Inter,sans-serif;min-width:0;overflow:hidden;white-space:nowrap;border-bottom:1px solid #F3F4F6;font-variant-numeric:tabular-nums;}',
+      '.fs-um-sheet-cell.h{background:#F9FAFB;font-weight:700;color:#9CA3AF;font-size:9px;text-transform:uppercase;letter-spacing:.3px;}',
+      /* Pricing cards */
+      '.fs-um-cards{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:10px;margin-bottom:14px;align-items:start;}',
+      '.fs-um-card{border:1.5px solid #E5E7EB;border-radius:14px;padding:18px 14px 14px;text-align:center;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s;position:relative;}',
+      '.fs-um-card:hover{border-color:#6366F1;box-shadow:0 6px 20px rgba(99,102,241,.14);transform:translateY(-2px);}',
+      '.fs-um-card-featured{border-color:#6366F1;background:linear-gradient(160deg,#F5F3FF,#EEF2FF);box-shadow:0 4px 20px rgba(99,102,241,.15);}',
+      '.fs-um-card-featured:hover{box-shadow:0 8px 28px rgba(99,102,241,.22);}',
+      '.fs-um-card-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-size:10px;font-weight:800;padding:3px 12px;border-radius:20px;white-space:nowrap;letter-spacing:.04em;font-family:Inter,sans-serif;}',
+      '.fs-um-card-price{font-size:28px;font-weight:800;color:#111827;font-family:Inter,sans-serif;line-height:1.1;margin-top:4px;}',
       '.fs-um-card-price span{font-size:13px;font-weight:500;color:#6B7280;}',
-      '.fs-um-card-name{font-size:13px;font-weight:700;color:#1E1B4B;margin:4px 0;font-family:Inter,sans-serif;}',
-      '.fs-um-card-desc{font-size:11px;color:#6B7280;line-height:1.5;margin-bottom:12px;font-family:Inter,sans-serif;}',
-      '.fs-um-btn{width:100%;padding:9px 0;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:Inter,sans-serif;transition:opacity .15s;}',
+      '.fs-um-card-name{font-size:13px;font-weight:700;color:#1E1B4B;margin:4px 0 2px;font-family:Inter,sans-serif;}',
+      '.fs-um-card-desc{font-size:11px;color:#6B7280;line-height:1.5;margin-bottom:10px;font-family:Inter,sans-serif;}',
+      /* Feature list inside Pro card */
+      '.fs-um-card-list{list-style:none;padding:0;margin:0 0 12px;text-align:left;}',
+      '.fs-um-card-list li{font-size:11px;color:#374151;font-family:Inter,sans-serif;padding:3px 0;display:flex;align-items:center;gap:5px;line-height:1.4;}',
+      '.fs-um-card-list li::before{content:"✓";color:#6366F1;font-weight:700;flex-shrink:0;}',
+      '.fs-um-card-annual .fs-um-card-list li::before{color:#059669;}',
+      /* Buttons */
+      '.fs-um-btn{width:100%;padding:10px 0;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:Inter,sans-serif;transition:opacity .15s;}',
       '.fs-um-btn:hover{opacity:.88;}',
-      '.fs-um-btn-outline{background:#fff;border:1.5px solid #6366F1!important;color:#6366F1;}',
-      '.fs-um-btn-primary{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;}',
-      '.fs-um-footer{text-align:center;font-size:11px;color:#9CA3AF;font-family:Inter,sans-serif;}',
-      '.fs-um-card-annual{border-color:#059669!important;background:linear-gradient(135deg,#F0FDF4,#ECFDF5);}',
-      '.fs-um-card-badge-green{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#059669,#10B981);color:#fff;font-size:10px;font-weight:800;padding:2px 10px;border-radius:20px;white-space:nowrap;letter-spacing:.04em;font-family:Inter,sans-serif;}',
-      '.fs-um-btn-green{background:linear-gradient(135deg,#059669,#10B981);color:#fff;}',
-      '@media(max-width:560px){.fs-um-cards{grid-template-columns:1fr;}.fs-um-card-featured,.fs-um-card-annual{margin-top:14px;}.fs-um-preview{display:none;}}',
+      '.fs-um-btn-muted{background:#F3F4F6;color:#6B7280;border:1.5px solid #E5E7EB!important;}',
+      '.fs-um-btn-primary{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;box-shadow:0 4px 14px rgba(99,102,241,.3);}',
+      /* Social proof + footer */
+      '.fs-um-social{text-align:center;font-size:11px;color:#9CA3AF;margin-bottom:10px;font-family:Inter,sans-serif;}',
+      '.fs-um-social strong{color:#6B7280;}',
+      '.fs-um-footer{text-align:center;font-size:11px;color:#C4C4CC;font-family:Inter,sans-serif;padding-top:10px;border-top:1px solid #F3F4F6;}',
+      /* Annual card */
+      '.fs-um-card-annual{border-color:#059669!important;background:linear-gradient(160deg,#F0FDF4,#ECFDF5);}',
+      '.fs-um-card-annual:hover{box-shadow:0 6px 20px rgba(5,150,105,.14);}',
+      '.fs-um-card-badge-green{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#059669,#10B981);color:#fff;font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;white-space:nowrap;letter-spacing:.04em;font-family:Inter,sans-serif;}',
+      '.fs-um-btn-green{background:linear-gradient(135deg,#059669,#10B981);color:#fff;box-shadow:0 4px 14px rgba(5,150,105,.25);}',
+      '@media(max-width:580px){.fs-um-cards{grid-template-columns:1fr;}.fs-um-card-featured,.fs-um-card-annual{margin-top:14px;}.fs-um-preview{display:none;}.fs-um-card-list{display:none;}}',
       /* MOBILE AUTH MODAL — prevent iOS zoom on input focus */
       '@media(max-width:600px){#fsAuthModal{width:calc(100vw - 24px);max-width:calc(100vw - 24px);padding:28px 20px 22px;border-radius:16px;}.fs-auth-field input{font-size:16px;padding:11px 12px;}}'
     ].join('');
@@ -254,25 +268,37 @@
           '<div class="fs-um-cards">' +
             '<div class="fs-um-card" onclick="fsCloseUpgradeModal();fsDoOneTimeExport()">' +
               '<div class="fs-um-card-price">&#8377;199</div>' +
-              '<div class="fs-um-card-name">One-time</div>' +
-              '<div class="fs-um-card-desc">This report only<br>Instant download</div>' +
-              '<button class="fs-um-btn fs-um-btn-outline">Download &#8594;</button>' +
+              '<div class="fs-um-card-name">This report only</div>' +
+              '<div class="fs-um-card-desc">One-time &middot; No subscription<br>Instant download</div>' +
+              '<button class="fs-um-btn fs-um-btn-muted">Download &#8594;</button>' +
             '</div>' +
             '<div class="fs-um-card fs-um-card-featured" onclick="fsCloseUpgradeModal();fsInitiateProSubscription()">' +
-              '<div class="fs-um-card-badge">BEST VALUE</div>' +
+              '<div class="fs-um-card-badge">MOST POPULAR</div>' +
               '<div class="fs-um-card-price">&#8377;499<span>/mo</span></div>' +
               '<div class="fs-um-card-name">Pro Unlimited</div>' +
-              '<div class="fs-um-card-desc">All tools &middot; Cancel anytime</div>' +
+              '<ul class="fs-um-card-list">' +
+                '<li>Unlimited exports, all tools</li>' +
+                '<li>IND AS 116 &amp; 109 calculators</li>' +
+                '<li>Multi-lease portfolio</li>' +
+                '<li>Capital gains &amp; advance tax</li>' +
+                '<li>Cancel anytime</li>' +
+              '</ul>' +
               '<button class="fs-um-btn fs-um-btn-primary">Go Pro &#8594;</button>' +
             '</div>' +
             '<div class="fs-um-card fs-um-card-annual" onclick="fsCloseUpgradeModal();fsInitiateAnnualSubscription()">' +
-              '<div class="fs-um-card-badge-green">SAVE 33%</div>' +
+              '<div class="fs-um-card-badge-green">2 MONTHS FREE</div>' +
               '<div class="fs-um-card-price" style="color:#059669;">&#8377;3,999<span>/yr</span></div>' +
               '<div class="fs-um-card-name">Annual Pro</div>' +
-              '<div class="fs-um-card-desc">&#8377;333/mo &middot; Best for CAs</div>' +
+              '<ul class="fs-um-card-list">' +
+                '<li>Everything in Pro</li>' +
+                '<li>&#8377;333/mo — save &#8377;2,989/yr</li>' +
+                '<li>Preferred by CA firms</li>' +
+                '<li>One invoice for the year</li>' +
+              '</ul>' +
               '<button class="fs-um-btn fs-um-btn-green">Save &#8377;2,989 &#8594;</button>' +
             '</div>' +
           '</div>' +
+          '<div class="fs-um-social">Trusted by <strong>CAs, CFOs and finance teams</strong> across India</div>' +
           '<div class="fs-um-footer">&#128274; Secure payment via Razorpay &middot; No hidden charges &middot; Cancel Pro anytime</div>' +
         '</div>' +
       '</div>';
