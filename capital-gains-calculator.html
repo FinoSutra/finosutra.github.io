@@ -3,11 +3,47 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Capital Gains Tax Calculator FY 2026-27 | India | Finosutra</title>
-<meta name="description" content="Free Capital Gains Tax Calculator India FY 2026-27. LTCG &amp; STCG on equity, mutual funds, property and gold. Grandfathering, indexation, 12.5% LTCG rate. Instant, accurate."/>
-<meta name="keywords" content="capital gains tax calculator India, LTCG calculator 2026-27, STCG calculator, equity capital gains tax, property capital gains India, grandfathering 31 Jan 2018"/>
+<title>Capital Gains Tax Calculator India FY 2025-26 (AY 2026-27) | Finosutra</title>
+<meta name="description" content="Free Capital Gains Tax Calculator India FY 2025-26 (AY 2026-27). LTCG &amp; STCG on equity, mutual funds, property and gold. Finance Act 2024 rates. Grandfathering, indexation, ITR Schedule CG workpaper."/>
+<meta name="keywords" content="capital gains tax calculator India 2025-26, LTCG calculator AY 2026-27, STCG calculator India, equity capital gains tax, property capital gains India, capital gains grandfathering 31 Jan 2018"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Capital Gains Tax Calculator India FY 2025-26",
+  "url": "https://www.finosutra.com/capital-gains-calculator.html",
+  "description": "Calculate LTCG and STCG tax on equity, mutual funds, property and gold. Finance Act 2024 rates including 12.5% LTCG on equity above ₹1.25L exemption.",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web Browser",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "creator": { "@type": "Organization", "name": "Finosutra", "url": "https://www.finosutra.com" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the LTCG tax rate on equity shares in FY 2025-26?",
+      "acceptedAnswer": { "@type": "Answer", "text": "As per Finance Act 2024, long-term capital gains on listed equity shares and equity mutual funds (STT paid) are taxed at 12.5% on gains exceeding ₹1.25 lakh per financial year under Section 112A." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the STCG rate on equity for FY 2025-26?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Short-term capital gains on listed equity and equity mutual funds (STT paid) are taxed at 20% as per Finance Act 2024, increased from the earlier rate of 15%." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use indexation on property sold after July 23, 2024?",
+      "acceptedAnswer": { "@type": "Answer", "text": "For property acquired before 23 July 2024 and sold after that date, taxpayers can choose between 12.5% without indexation or 20% with indexation — whichever results in lower tax." }
+    }
+  ]
+}
+</script>
 <link rel="canonical" href="https://www.finosutra.com/capital-gains-calculator.html"/>
-<meta property="og:title" content="Capital Gains Tax Calculator FY 2026-27 | Finosutra"/>
+<meta property="og:title" content="Capital Gains Tax Calculator India FY 2025-26 (AY 2026-27) | Finosutra"/>
 <meta property="og:description" content="Calculate LTCG &amp; STCG tax on equity, MF, property and gold. Finance Act 2024 rates. Grandfathering built-in."/>
 <meta property="og:url" content="https://www.finosutra.com/capital-gains-calculator.html"/>
 <meta property="og:image" content="https://www.finosutra.com/og-image.jpg"/>
@@ -141,6 +177,7 @@ table.tbl td:last-child{text-align:right;font-weight:600}
   input,select,textarea,.form-input{font-size:16px;}
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="auth.js"></script>
 </head>
@@ -155,7 +192,6 @@ table.tbl td:last-child{text-align:right;font-weight:600}
       <li><a href="index.html">Home</a></li>
       <li><a href="indas-tools.html">IND AS</a></li>
       <li><a href="gst-tools.html">GST</a></li>
-      <li><a href="income-tax-hub.html">Income Tax</a></li>
       <li><a href="income-tax-hub.html" class="active">Income Tax</a></li>
       <li><a href="templates.html">Templates</a></li>
       <li><a href="blog.html">Blog</a></li>
@@ -173,7 +209,7 @@ table.tbl td:last-child{text-align:right;font-weight:600}
 
 <div class="hero">
   <div class="wrap">
-    <div class="hero-badge"><i class="fa-solid fa-circle" style="font-size:6px"></i> Finance Act 2024 Rates &nbsp;·&nbsp; FY 2026-27 / AY 2027-28</div>
+    <div class="hero-badge"><i class="fa-solid fa-circle" style="font-size:6px"></i> Finance Act 2024 Rates &nbsp;·&nbsp; FY 2025-26 / AY 2026-27</div>
     <h1>Capital Gains <span>Tax Calculator</span></h1>
     <p>LTCG &amp; STCG on equity, mutual funds, property and gold. Grandfathering, indexation, and exact tax with surcharge and cess — all in one place.</p>
   </div>
@@ -391,6 +427,51 @@ function fsCopyLink(btn){
   var li=document.getElementById('fsLiShare'); if(li) li.href='https://www.linkedin.com/sharing/share-offsite/?url='+u;
 })();
 </script>
+<style>
+.faq-section{max-width:1080px;margin:0 auto;padding:16px 20px 40px}
+.faq-title{font-size:20px;font-weight:800;color:var(--text);margin-bottom:16px}
+.faq-item{background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;overflow:hidden}
+.faq-q{padding:14px 18px;font-size:13px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;user-select:none}
+.faq-q:hover{background:#F9FAFB}
+.faq-q .faq-icon{color:var(--brand);font-size:12px;transition:transform .2s;flex-shrink:0}
+.faq-a{display:none;padding:0 18px 14px;font-size:13px;color:var(--muted);line-height:1.7}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .faq-icon{transform:rotate(180deg)}
+</style>
+<div class="faq-section">
+  <div class="faq-title">Frequently Asked Questions</div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">What is the LTCG tax rate on equity shares in FY 2025-26? <i class="fa-solid fa-chevron-down faq-icon"></i></div>
+    <div class="faq-a">Long-term capital gains (LTCG) on listed equity shares and equity mutual funds where STT has been paid are taxed at <strong>12.5%</strong> on gains exceeding ₹1.25 lakh under Section 112A, as per Finance Act 2024. The holding period for LTCG is more than 12 months. Add 4% health and education cess on the basic tax.</div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">What is the STCG rate on equity after Finance Act 2024? <i class="fa-solid fa-chevron-down faq-icon"></i></div>
+    <div class="faq-a">Short-term capital gains (STCG) on listed equity and equity mutual funds (STT paid, held ≤ 12 months) under Section 111A are taxed at <strong>20%</strong> as per Finance Act 2024. This was raised from the earlier rate of 15%. Add 4% cess.</div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">What is the ₹1.25 lakh LTCG exemption on equity? <i class="fa-solid fa-chevron-down faq-icon"></i></div>
+    <div class="faq-a">Under Section 112A, LTCG on listed equity and equity mutual funds up to <strong>₹1.25 lakh per financial year</strong> is exempt. Gains above ₹1.25 lakh are taxed at 12.5%. The exemption was increased from ₹1 lakh in Union Budget 2024. This limit is shared across all equity LTCG in the FY — if you sold multiple scrips, the exemption applies to total LTCG.</div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">How does grandfathering work for equity purchased before 31 Jan 2018? <i class="fa-solid fa-chevron-down faq-icon"></i></div>
+    <div class="faq-a">For equity shares and mutual funds purchased before 31 January 2018, the deemed cost of acquisition is the <strong>higher of: (a) actual purchase price, or (b) FMV (closing price / NAV) on 31 Jan 2018</strong> — subject to the condition that deemed cost cannot exceed the actual sale price. This ensures gains that accrued before LTCG was reintroduced in 2018 are not taxed. You can find the FMV from NSE/BSE historical data or the mutual fund's NAV on 31 Jan 2018.</div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">Can I use indexation on property sold after 23 July 2024? <i class="fa-solid fa-chevron-down faq-icon"></i></div>
+    <div class="faq-a">For property <strong>acquired before 23 July 2024</strong> and sold after that date, you may choose whichever option gives lower tax: (1) 12.5% LTCG without indexation, or (2) 20% LTCG with indexation using the Cost Inflation Index (CII). This calculator automatically picks the lower-tax option when you select "Acquired before 23 Jul 2024". For property acquired on or after 23 July 2024, only 12.5% without indexation applies.</div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">What is the capital gains tax on debt mutual funds? <i class="fa-solid fa-chevron-down faq-icon"></i></div>
+    <div class="faq-a">Under Finance Act 2023, debt mutual funds acquired after 31 March 2023 are <strong>taxed at your income slab rate regardless of holding period</strong> — there is no LTCG/STCG distinction, and no indexation benefit. This applies to all debt MFs, liquid funds, overnight funds, and most hybrid funds with equity &lt; 65%. The gain is added to your total income and taxed at the applicable slab rate.</div>
+  </div>
+</div>
+
 <footer class="site-footer">
   <div class="footer-badges">
     <span class="footer-badge">✓ Finance Act 2024 Rates</span>
@@ -694,28 +775,51 @@ function showEmpty(msg){
 // ── EXPORT ──
 function doExport(){
   var d = window._cgData;
-  if(!d){ showToast && showToast('Calculate first.','#DC2626'); return; }
-  var rows = [['Capital Gains Tax Working — Finosutra'],[''],
-    ['Asset Type', document.getElementById('assetType').options[document.getElementById('assetType').selectedIndex].text],
-    ['Purchase Date', d.purchaseDate], ['Sale Date', d.saleDate],
-    ['Purchase Price (₹)', d.purchasePrice], ['Sale Price (₹)', d.salePrice],
-    ['Holding Period', Math.floor(d.months/12)+'yr '+(d.months%12)+'mo'],
-    ['Gain Type', d.gainType], [''],
-    ['COMPUTATION',''],
-  ];
-  d.steps.forEach(function(s){ rows.push(['Step '+s.num+': '+s.lbl, s.val+(s.note?' ('+s.note+')':'')]); });
-  rows.push([''],['Gross Gain / (Loss)', '₹'+Math.round(d.grossGain).toLocaleString('en-IN')]);
-  rows.push(['Taxable Gains', '₹'+Math.round(d.taxable).toLocaleString('en-IN')]);
-  rows.push(['Total Tax Liability', '₹'+Math.round(d.taxLiab).toLocaleString('en-IN')]);
-  rows.push([''],['Note','This computation is indicative. Verify with your CA before filing ITR.'],['Generated by','Finosutra (www.finosutra.com)']);
+  if(!d){ if(window.showToast) showToast('Calculate first.','#DC2626'); return; }
 
-  var csv = rows.map(function(r){ return r.map(function(c){ return '"'+String(c).replace(/"/g,'""')+'"'; }).join(','); }).join('\n');
-  var blob = new Blob([csv],{type:'text/csv;charset=utf-8;'});
-  var a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'CapitalGains_Finosutra.csv';
-  a.click();
-  if(window.showToast) showToast('Downloaded!','#059669');
+  if(typeof XLSX === 'undefined'){
+    alert('Excel library not loaded yet — please try again in a moment.'); return;
+  }
+
+  var assetLabel = document.getElementById('assetType').options[document.getElementById('assetType').selectedIndex].text;
+  var hdr = {font:{bold:true,color:{rgb:'FFFFFF'}},fill:{fgColor:{rgb:'4F46E5'}},alignment:{horizontal:'left'}};
+  var bold = {font:{bold:true}};
+  var numFmt = '#,##0';
+
+  var rows = [
+    [{v:'Capital Gains Tax Computation — FY 2025-26 / AY 2026-27',s:{font:{bold:true,sz:13,color:{rgb:'1E1B4B'}}}}],
+    [{v:'Generated by Finosutra — finosutra.com',s:{font:{italic:true,color:{rgb:'9CA3AF'}}}}],
+    [],
+    [{v:'INPUTS',s:hdr},{v:'',s:hdr},{v:'',s:hdr}],
+    [{v:'Asset Type'},{v:assetLabel}],
+    [{v:'Purchase Date'},{v:d.purchaseDate}],
+    [{v:'Sale Date'},{v:d.saleDate}],
+    [{v:'Holding Period'},{v:Math.floor(d.months/12)+' yr '+(d.months%12)+' mo'}],
+    [{v:'Purchase Price (₹)'},{v:d.purchasePrice,t:'n',z:numFmt}],
+    [{v:'Sale Price (₹)'},{v:d.salePrice,t:'n',z:numFmt}],
+    [{v:'Gain Type'},{v:d.gainType}],
+    [],
+    [{v:'SCHEDULE CG — COMPUTATION',s:hdr},{v:'',s:hdr},{v:'',s:hdr}],
+  ];
+
+  d.steps.forEach(function(s){
+    rows.push([{v:'Step '+s.num+': '+s.lbl},{v:s.val},{v:s.note||''}]);
+  });
+
+  rows.push([]);
+  rows.push([{v:'Gross Gain / (Loss) (₹)',s:bold},{v:d.grossGain,t:'n',z:numFmt,s:bold}]);
+  rows.push([{v:'Taxable Gains (₹)',s:bold},{v:d.taxable,t:'n',z:numFmt,s:bold}]);
+  rows.push([{v:'Total Tax Liability (₹)',s:{font:{bold:true,color:{rgb:'DC2626'}}}},{v:d.taxLiab,t:'n',z:numFmt,s:{font:{bold:true,color:{rgb:'DC2626'}}}}]);
+  rows.push([]);
+  rows.push([{v:'Disclaimer',s:{font:{italic:true,color:{rgb:'9CA3AF'}}}},{v:'This computation is indicative. Verify with your CA before filing ITR.',s:{font:{italic:true,color:{rgb:'9CA3AF'}}}}]);
+
+  var ws = XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols'] = [{wch:42},{wch:22},{wch:52}];
+  var wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Schedule CG');
+  XLSX.writeFile(wb, 'Finosutra_CapitalGains_FY2025-26.xlsx');
+
+  if(window.showToast) showToast('✓ Downloaded!','#059669');
   if(!window.isProUser) showUpsellBanner();
 }
 
