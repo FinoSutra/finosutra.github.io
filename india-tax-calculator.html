@@ -1806,7 +1806,7 @@ function initiateExcelPayment(){
     const rzp = new Razorpay(options);
     rzp.open();
   } catch(e){
-    btn.innerHTML = '⬇ Download Excel Report — ₹99';
+    btn.innerHTML = '⬇ Download Excel Report — ₹199';
     btn.disabled = false;
     alert('Could not open payment window. This is usually caused by an ad-blocker or privacy extension blocking the payment script. Please disable it for this site and try again, or email fino.sutra07@gmail.com and we will help.');
     console.error(e);

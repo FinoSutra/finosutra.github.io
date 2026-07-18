@@ -518,40 +518,70 @@ function renderLeaseGrid(arr){
 
 function renderProGate(){
   document.getElementById('leaseContentArea').innerHTML =
-    '<div style="margin-bottom:12px;display:flex;align-items:center;gap:8px;">'+
-      '<span style="font-size:11px;font-weight:700;background:#FEF3C7;color:#92400E;padding:3px 10px;border-radius:20px;">SAMPLE DATA</span>'+
-      '<span style="font-size:12px;color:#6B7280;">Upgrade to Pro to save and view your own leases</span>'+
+    // ── Upgrade banner ──
+    '<div style="background:linear-gradient(135deg,#1E1B4B,#312E81);border-radius:14px;padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">'+
+      '<div style="width:48px;height:48px;background:rgba(99,102,241,.3);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🚀</div>'+
+      '<div style="flex:1;min-width:200px;">'+
+        '<div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;">You\'re viewing 2 sample leases</div>'+
+        '<div style="font-size:12.5px;color:rgba(255,255,255,.6);line-height:1.5;">Go Pro to add your own leases — IND AS 116 schedules, journal entries, and audit-ready Excel in one workspace.</div>'+
+      '</div>'+
+      '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">'+
+        '<button onclick="fsInitiateProSubscription()" style="padding:10px 20px;background:linear-gradient(135deg,#F59E0B,#D97706);border:none;border-radius:9px;font-size:13px;font-weight:700;color:#fff;cursor:pointer;font-family:Inter,sans-serif;box-shadow:0 2px 8px rgba(217,119,6,.3);white-space:nowrap;">🏆 Go Pro — ₹499/mo</button>'+
+        '<span style="font-size:11px;color:rgba(255,255,255,.45);text-align:right;">or ₹3,999/yr &nbsp;·&nbsp; 2 months free</span>'+
+      '</div>'+
     '</div>'+
-    '<div class="lease-grid" style="margin-bottom:20px;pointer-events:none;opacity:.8;">'+
-      sampleLeaseCard('Mumbai HQ — Floor 4','ABC Pvt. Ltd.','10.5','36','41,20,000','22,14,059','12,62,171','Standard','std')+
-      sampleLeaseCard('Pune Warehouse B','XYZ Corp','11.0','24','11,20,180','5,92,400','1,07,017','Escalation','esc')+
+    // ── Section label ──
+    '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">'+
+      '<span style="font-size:11px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.6px;">Sample Leases</span>'+
+      '<span style="font-size:11.5px;color:#D97706;font-weight:600;background:#FFFBEB;border:1px solid #FDE68A;border-radius:6px;padding:3px 10px;">👁 Read-only preview</span>'+
     '</div>'+
-    '<div style="background:linear-gradient(135deg,#1E1B4B,#312E81);border-radius:16px;padding:32px;text-align:center;">'+
-      '<div style="font-size:16px;font-weight:800;color:#fff;margin-bottom:8px;">⚡ Unlock your lease portfolio</div>'+
-      '<div style="font-size:13px;color:#A5B4FC;margin-bottom:20px;line-height:1.6;">Save unlimited leases · Combined balance sheet · Consolidated Excel · IND AS 116 compliant</div>'+
-      '<div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">'+
-        '<button onclick="fsInitiateProSubscription()" style="padding:12px 28px;background:linear-gradient(135deg,#6366F1,#8B5CF6);border:none;border-radius:10px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;font-family:Inter,sans-serif;">Pro ₹499/mo</button>'+
-        '<button onclick="fsInitiateAnnualSubscription()" style="padding:12px 28px;background:linear-gradient(135deg,#D97706,#B45309);border:none;border-radius:10px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;font-family:Inter,sans-serif;">🏆 Annual ₹3,999/yr — Save 33%</button>'+
+    // ── Sample cards + Go Pro card ──
+    '<div class="lease-grid" style="pointer-events:none;">'+
+      sampleLeaseCard('Andheri Office — 5th Floor','ABC Pvt. Ltd.','Mumbai','01 Apr 2024','36','45,000','10.5','14,23,840','14,98,200','4,99,400','std')+
+      sampleLeaseCard('Pune Warehouse — Phase 2','ABC Pvt. Ltd.','Pune','01 Jan 2024','48','72,000','11.0','27,84,210','29,02,400','7,25,600','esc')+
+      '<div style="background:linear-gradient(135deg,#EEF2FF,#F5F3FF);border:2px dashed #C7D2FE;border-radius:16px;padding:28px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:220px;pointer-events:all;">'+
+        '<div style="font-size:32px;margin-bottom:10px;">🔒</div>'+
+        '<div style="font-size:14px;font-weight:700;color:#3730A3;margin-bottom:6px;">Add your own leases</div>'+
+        '<div style="font-size:12px;color:#6B7280;line-height:1.5;margin-bottom:14px;max-width:200px;">Upload via Excel or add manually — all IND AS 116 schedules computed instantly.</div>'+
+        '<div style="display:flex;flex-direction:column;gap:5px;margin-bottom:16px;text-align:left;width:100%;max-width:220px;">'+
+          '<div style="font-size:11.5px;color:#374151;display:flex;gap:6px;align-items:center;"><span style="color:#4F46E5;font-size:10px;">✓</span> Amortisation schedule</div>'+
+          '<div style="font-size:11.5px;color:#374151;display:flex;gap:6px;align-items:center;"><span style="color:#4F46E5;font-size:10px;">✓</span> Journal entries (Day 1 + monthly)</div>'+
+          '<div style="font-size:11.5px;color:#374151;display:flex;gap:6px;align-items:center;"><span style="color:#4F46E5;font-size:10px;">✓</span> Disclosure note — Para 52</div>'+
+          '<div style="font-size:11.5px;color:#374151;display:flex;gap:6px;align-items:center;"><span style="color:#4F46E5;font-size:10px;">✓</span> Audit-ready Excel export</div>'+
+        '</div>'+
+        '<button onclick="fsInitiateProSubscription()" style="width:100%;padding:10px;background:linear-gradient(135deg,#F59E0B,#D97706);border:none;border-radius:9px;font-size:13px;font-weight:700;color:#fff;cursor:pointer;font-family:Inter,sans-serif;">Unlock — ₹499/mo</button>'+
       '</div>'+
     '</div>';
 }
 
-function sampleLeaseCard(name,entity,ibr,term,rou,curr,depn,modelName,modelClass){
-  return '<div class="lease-card">'+
-    '<div class="lease-card-hd"><div class="lease-name">'+name+'</div><span class="lease-model-badge '+modelClass+'">'+modelName+'</span></div>'+
+function sampleLeaseCard(name,entity,location,start,term,rent,ibr,liab,rou,depn,modelClass){
+  return '<div class="lease-card" style="opacity:.85;">'+
+    '<div class="lease-card-hd" style="display:flex;align-items:center;justify-content:space-between;gap:8px;">'+
+      '<div>'+
+        '<div class="lease-name">'+name+'</div>'+
+        '<div style="font-size:11px;color:#6B7280;margin-top:1px;">'+entity+' &nbsp;·&nbsp; '+location+'</div>'+
+      '</div>'+
+      '<span style="font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;background:#FEF3C7;color:#92400E;border:1px solid #FDE68A;border-radius:20px;padding:3px 9px;flex-shrink:0;">Sample</span>'+
+    '</div>'+
     '<div class="lease-card-body">'+
       '<div class="lease-meta">'+
-        '<div><div class="lm-lbl">Entity</div><div class="lm-val">'+entity+'</div></div>'+
+        '<div><div class="lm-lbl">Commencement</div><div class="lm-val">'+start+'</div></div>'+
+        '<div><div class="lm-lbl">Term</div><div class="lm-val">'+term+' months</div></div>'+
+        '<div><div class="lm-lbl">Rent / mo</div><div class="lm-val">₹'+rent+'</div></div>'+
         '<div><div class="lm-lbl">IBR</div><div class="lm-val">'+ibr+'% p.a.</div></div>'+
-        '<div><div class="lm-lbl">Start</div><div class="lm-val">01 Apr 2024</div></div>'+
-        '<div><div class="lm-lbl">Term</div><div class="lm-val">'+term+' mo</div></div>'+
       '</div>'+
       '<div class="lease-kpis">'+
-        '<div class="lk-item"><div class="lk-lbl">ROU NBV</div><div class="lk-val">₹'+rou+'</div></div>'+
-        '<div class="lk-item"><div class="lk-lbl">Curr. Liab.</div><div class="lk-val green">₹'+curr+'</div></div>'+
-        '<div class="lk-item"><div class="lk-lbl">FY Depn.</div><div class="lk-val orange">₹'+depn+'</div></div>'+
+        '<div class="lk-item"><div class="lk-lbl">Lease Liability</div><div class="lk-val">₹'+liab+'</div></div>'+
+        '<div class="lk-item"><div class="lk-lbl">ROU Asset</div><div class="lk-val green">₹'+rou+'</div></div>'+
+        '<div class="lk-item"><div class="lk-lbl">Annual Depn</div><div class="lk-val orange">₹'+depn+'</div></div>'+
       '</div>'+
-      '<div class="lease-card-footer"><span class="lease-date">Sample data</span></div>'+
+      '<div class="lease-card-footer" style="display:flex;align-items:center;justify-content:space-between;">'+
+        '<span class="badge badge-active">Active</span>'+
+        '<div style="display:flex;gap:6px;">'+
+          '<span style="padding:5px 12px;font-size:11.5px;font-weight:600;border-radius:7px;border:1px solid #E5E7EB;background:#F9FAFB;color:#9CA3AF;">🔒 Schedule</span>'+
+          '<span style="padding:5px 12px;font-size:11.5px;font-weight:600;border-radius:7px;border:1px solid #E5E7EB;background:#F9FAFB;color:#9CA3AF;">🔒 Export</span>'+
+        '</div>'+
+      '</div>'+
     '</div></div>';
 }
 
