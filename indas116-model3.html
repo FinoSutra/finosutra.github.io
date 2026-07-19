@@ -2200,9 +2200,9 @@ function render(){
   renderDisclosure();
   renderAnnual();   // MODULE 4
   // Show modification input area now that original calc is done
-  document.getElementById('modEmptyState').style.display = 'none';
-  document.getElementById('modCalcArea').style.display   = 'block';
-  document.getElementById('modResults').style.display    = 'none';
+  const _mes = document.getElementById('modEmptyState'); if(_mes) _mes.style.display = 'none';
+  const _mca = document.getElementById('modCalcArea');   if(_mca) _mca.style.display = 'block';
+  const _mr  = document.getElementById('modResults');    if(_mr)  _mr.style.display  = 'none';
   renderCPISensitivity();
   renderIBRSensitivity();
   document.getElementById('compResult').innerHTML = '';
