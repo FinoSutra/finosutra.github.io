@@ -3229,6 +3229,7 @@ function sw(id,btn){
   btn.classList.add('on');
   var sel = document.querySelector('.tabs-mobile-select select');
   if(sel) sel.value = id;
+  if(id === 'ibrsens') renderIBRSensitivity();
 }
 
 function swMobile(id){
