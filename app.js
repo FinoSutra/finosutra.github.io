@@ -699,12 +699,13 @@ function openDeleteModal(id,name){
 function closeDeleteModal(){ document.getElementById('deleteModal').classList.remove('show'); deleteTargetId=null; }
 async function confirmDelete(){
   if(!deleteTargetId) return;
+  var idToDelete = deleteTargetId;
   closeDeleteModal();
   try{
-    var res = await window.supaClient.from('leases').delete().eq('id',deleteTargetId).eq('user_id',window.currentUser.id);
+    var res = await window.supaClient.from('leases').delete().eq('id',idToDelete).eq('user_id',window.currentUser.id);
     if(res.error) throw res.error;
-    logAudit(deleteTargetId, 'deleted', {});
-    leases = leases.filter(function(l){ return l.id!==deleteTargetId; });
+    logAudit(idToDelete, 'deleted', {});
+    leases = leases.filter(function(l){ return l.id!==idToDelete; });
     deleteTargetId=null;
     toast('Lease removed.','#6B7280');
     updateLeaseCountBadge();
