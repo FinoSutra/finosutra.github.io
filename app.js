@@ -835,9 +835,9 @@ function processUploadedLeases(rows){
     var freqMap={'monthly':12,'quarterly':4,'half-yearly':2,'half yearly':2,'annual':1,'annually':1};
     var freq=freqMap[freqStr]||12;
     var timing=timingStr.includes('beg')||timingStr.includes('adv')?'advance':'arrears';
-    var escType=escTypeRaw==='pct'||escTypeRaw==='%'||(escTypeRaw==='none'&&escPct>0)?'pct'
-               :escTypeRaw==='amt'||escTypeRaw==='amount'||escTypeRaw==='₹'?'amt'
-               :escTypeRaw==='cpi'?'cpi':'none';
+    var escType=escTypeRaw==='pct'||escTypeRaw==='%'||escTypeRaw.includes('fixed %')||escTypeRaw.includes('fixed%')||escTypeRaw.includes('percent')||(escTypeRaw==='none'&&escPct>0)?'pct'
+               :escTypeRaw==='amt'||escTypeRaw==='amount'||escTypeRaw.includes('fixed ₹')||escTypeRaw.includes('fixed rs')||escTypeRaw.includes('fixed amount')?'amt'
+               :escTypeRaw==='cpi'||escTypeRaw.includes('index')?'cpi':'none';
 
     var pvInit=0,rouInit=0,rouNBV=0,liabCurrent=0,liabNonCurrent=0,depnAnnual=0,depnPeriod=0;
     if(!errors.length){
@@ -1228,7 +1228,7 @@ function downloadTemplate(){
     ['H','Frequency','How often rent is paid. Defaults to Monthly if blank.','Monthly / Quarterly / Half-Yearly / Annual'],
     ['I','IBR (% p.a.) *','Incremental Borrowing Rate in % per annum (e.g. enter 10.5 for 10.5%). Typical Indian IBR: 8-14%.','10.5'],
     ['J','Payment Timing','Whether rent is paid at the start or end of each period. Defaults to End.','End / Beginning'],
-    ['K','Escalation Type','Type of rent escalation clause. Use "none" for flat rent.','none / pct / amt / cpi'],
+    ['K','Escalation Type','Type of rent escalation clause. Use "none" for flat rent. Accepted: none, pct (or "Fixed %"), amt (or "Fixed ₹"), cpi','none / pct / amt / cpi'],
     ['L','Escalation % p.a.','Annual percentage escalation rate. Only applies when Escalation Type = pct.','5  (means 5% p.a.; enter 0 if none)'],
     ['M','Escalation Interval (yrs)','How many years between each escalation step.','3  (means escalate every 3 years; enter 0 if none)'],
     ['N','Rent-Free Months','Number of rent-free months at the start of the lease (₹0 payments).','2  (enter 0 if none)'],
