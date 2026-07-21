@@ -691,6 +691,7 @@ function goToCalculator(){
 
 // ── Delete modal ──────────────────────────────────────────────────────────────
 function openDeleteModal(id,name){
+  if(!id || id==='null' || id==='undefined'){ toast('Cannot remove: lease has no ID. Please reload the page.','#EF4444'); return; }
   deleteTargetId=id;
   document.getElementById('deleteLeaseName').textContent=name;
   document.getElementById('deleteModal').classList.add('show');
