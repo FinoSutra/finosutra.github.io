@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>GST Interest & Late Fee Calculator — All Returns (3B, 1, 9, 9C, CMP-08) | Finosutra</title>
+<meta name="description" content="Free GST Interest & Late Fee Calculator for GSTR-3B, GSTR-1, CMP-08, GSTR-4, GSTR-5, GSTR-5A, GSTR-6, GSTR-7, GSTR-8, GSTR-9 & GSTR-9C. Section 50 interest, Section 47 late fee, turnover-tiered caps, step-by-step working. Built for CAs & GST practitioners."/>
+<meta name="keywords" content="gst interest calculator, gst late fee calculator, gstr-3b late fee, gstr-9 late fee calculator, section 50 gst interest, section 47 gst late fee, cmp-08 late fee, gstr-4 late fee, gst interest and late fee calculator india"/>
+<meta name="author" content="Finosutra"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://www.finosutra.com/gst-interest-late-fee-calculator.html"/>
+
+<!-- Open Graph -->
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Finosutra"/>
+<meta property="og:title" content="GST Interest & Late Fee Calculator — All Returns | Finosutra"/>
+<meta property="og:description" content="Calculate GST interest (Section 50) and late fee (Section 47) for GSTR-3B, GSTR-1, CMP-08, GSTR-4, GSTR-9, GSTR-9C and more. Free, instant, with full working shown."/>
+<meta property="og:url" content="https://www.finosutra.com/gst-interest-late-fee-calculator.html"/>
+<meta property="og:image" content="https://www.finosutra.com/og-image.jpg"/>
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="GST Interest & Late Fee Calculator — All Returns | Finosutra"/>
+<meta name="twitter:description" content="Calculate GST interest (Section 50) and late fee (Section 47) for GSTR-3B, GSTR-1, CMP-08, GSTR-4, GSTR-9, GSTR-9C and more. Free, instant, with full working shown."/>
+<meta name="twitter:image" content="https://www.finosutra.com/og-image.jpg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;
+  --brand-mid:#C7D2FE;--text-primary:#111827;--text-secondary:#6B7280;
+  --text-muted:#9CA3AF;--bg:#F7F8FF;--bg-white:#FFFFFF;
+  --border:rgba(99,102,241,0.15);--border-light:rgba(99,102,241,0.08);
+  --radius:14px;--radius-sm:9px;
+  --green:#059669;--green-bg:#ECFDF5;--green-border:rgba(5,150,105,0.2);
+  --orange:#D97706;--orange-bg:#FFFBEB;
+  --red:#DC2626;--red-bg:#FEF2F2;--red-border:rgba(220,38,38,0.2);
+  /* superset aliases used by borrowed component blocks */
+  --text:#111827;--muted:#6B7280;--faint:#9CA3AF;--card:#FFFFFF;--white:#FFFFFF;
+  --shadow:0 1px 3px rgba(0,0,0,0.04),0 6px 20px rgba(99,102,241,0.07);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-primary);-webkit-font-smoothing:antialiased;min-height:100vh;}
+
+/* ── UNIFIED NAV ── */
+#mainNav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(99,102,241,0.08);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 rgba(99,102,241,0.08),0 4px 20px rgba(99,102,241,0.05);}
+#mainNav .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+#mainNav .nav-logo{display:flex;align-items:center;text-decoration:none;}
+#mainNav .nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
+#mainNav .nav-links a{font-size:13px;font-weight:500;color:#6B7280;text-decoration:none;padding:7px 11px;border-radius:8px;transition:color .15s,background .15s;white-space:nowrap;}
+#mainNav .nav-links a:hover,#mainNav .nav-links a.active{color:#111827;background:#EEF2FF;}
+#mainNav .nav-back-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;font-family:'Inter',sans-serif;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;box-shadow:0 3px 12px rgba(99,102,241,0.3);transition:all .15s;white-space:nowrap;}
+#mainNav .nav-back-btn:hover{background:linear-gradient(135deg,#4F46E5,#7C3AED);transform:translateY(-1px);}
+#mainNav .nav-toggle{display:none;background:none;border:none;font-size:20px;color:#111827;cursor:pointer;padding:4px;}
+@media(max-width:900px){#mainNav .nav-links{display:none;}}
+@media(max-width:900px){#mainNav{padding:0 16px;}#mainNav .nav-actions{display:none;}#mainNav .nav-toggle{display:block;}#mainNav .nav-links.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid rgba(99,102,241,0.08);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
+
+/* ── HERO ── */
+.page-hero{background:linear-gradient(160deg,#EDEEFF 0%,#F2EEFF 100%);border-bottom:1px solid var(--border-light);padding:48px 32px 40px;}
+.page-hero-inner{max-width:1200px;margin:0 auto;}
+.eyebrow{font-size:11px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px;}
+.page-hero h1{font-size:32px;font-weight:800;letter-spacing:-0.5px;margin-bottom:10px;color:var(--text-primary);line-height:1.25;}
+.page-hero p{font-size:14px;color:var(--text-secondary);line-height:1.7;max-width:640px;}
+.hero-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;}
+.hero-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;background:rgba(255,255,255,0.8);border:1px solid var(--border);color:var(--text-secondary);}
+.hero-badge i{color:var(--brand);font-size:10px}
+
+/* ── MAIN LAYOUT ── */
+.main{max-width:1200px;margin:0 auto;padding:36px 32px 20px;display:grid;grid-template-columns:480px 1fr;gap:24px;align-items:start;}
+
+/* ── CALCULATOR CARD ── */
+.calc-card{background:var(--bg-white);border:1px solid var(--border-light);border-radius:var(--radius);padding:26px;box-shadow:0 4px 24px rgba(99,102,241,0.06);position:sticky;top:80px;}
+.calc-title{font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+.calc-title i{color:var(--brand);}
+
+.toggle-group{display:flex;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:3px;margin-bottom:14px;flex-wrap:wrap;}
+.toggle-btn{flex:1;min-width:70px;padding:7px 4px;border:none;background:none;border-radius:7px;font-size:11.5px;font-weight:600;color:var(--text-secondary);cursor:pointer;transition:all .15s;font-family:inherit;}
+.toggle-btn.active{background:#fff;color:var(--brand);box-shadow:0 1px 4px rgba(99,102,241,0.15);}
+
+.form-group{margin-bottom:14px;}
+.form-label{font-size:11.5px;font-weight:600;color:var(--text-secondary);margin-bottom:5px;display:block;letter-spacing:0.02em;}
+.form-input,.form-select{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:13.5px;font-family:inherit;color:var(--text-primary);background:var(--bg-white);transition:border-color .15s;outline:none;}
+.form-input:focus,.form-select:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(99,102,241,0.08);}
+.input-prefix{position:relative;}
+.input-prefix span{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:600;color:var(--text-secondary);}
+.input-prefix input{padding-left:24px;}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.row-4{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.hint{font-size:10.5px;color:var(--text-muted);margin-top:4px;line-height:1.5;}
+.field-note{font-size:11px;color:var(--brand-dark);background:var(--brand-light);border-radius:7px;padding:7px 10px;margin-bottom:14px;line-height:1.5;}
+
+.chk-row{display:flex;align-items:center;gap:8px;padding:8px 0;cursor:pointer;user-select:none;}
+.chk-row input{width:16px;height:16px;accent-color:var(--brand);cursor:pointer;flex-shrink:0;}
+.chk-row span{font-size:12.5px;font-weight:600;color:var(--text-primary);}
+.chk-row small{display:block;font-size:10.5px;font-weight:400;color:var(--text-muted);margin-top:1px;}
+.chk-block{border-top:1px solid var(--border-light);margin-top:6px;padding-top:4px;}
+
+.btn-calc{width:100%;padding:13px;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;border:none;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:10px;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-calc:hover{background:linear-gradient(135deg,#4F46E5,#7C3AED);box-shadow:0 4px 20px rgba(99,102,241,0.35);transform:translateY(-1px);}
+.btn-reset{width:100%;padding:9px;background:none;color:var(--text-muted);border:none;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:4px;transition:color .15s;}
+.btn-reset:hover{color:var(--text-secondary);}
+
+/* ── RESULTS ── */
+.results-card{background:var(--bg-white);border:1px solid var(--border-light);border-radius:var(--radius);padding:26px;box-shadow:0 4px 24px rgba(99,102,241,0.06);}
+.results-empty{text-align:center;padding:44px 20px;color:var(--text-muted);}
+.results-empty i{font-size:36px;margin-bottom:12px;display:block;color:var(--brand-mid);}
+.results-empty p{font-size:13px;line-height:1.6;}
+
+.result-mode-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.06em;}
+.badge-green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+.badge-amber{background:var(--orange-bg);color:var(--orange);border:1px solid rgba(217,119,6,0.2);}
+.badge-red{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border);}
+
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;}
+.kpi-box{border-radius:var(--radius-sm);padding:15px;}
+.kpi-box.main{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;grid-column:span 2;}
+.kpi-box.main.sev-amber{background:linear-gradient(135deg,#D97706,#F59E0B);}
+.kpi-box.main.sev-red{background:linear-gradient(135deg,#DC2626,#EF4444);}
+.kpi-box.green{background:var(--green-bg);border:1px solid var(--green-border);}
+.kpi-box.purple{background:var(--brand-light);border:1px solid var(--border);}
+.kpi-box.orange{background:var(--orange-bg);border:1px solid rgba(217,119,6,0.15);}
+.kpi-label{font-size:10.5px;font-weight:600;opacity:0.8;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;}
+.kpi-box.main .kpi-label{color:rgba(255,255,255,0.85);}
+.kpi-box.green .kpi-label{color:var(--green);}
+.kpi-box.purple .kpi-label{color:var(--brand);}
+.kpi-box.orange .kpi-label{color:var(--orange);}
+.kpi-value{font-size:20px;font-weight:800;letter-spacing:-0.5px;}
+.kpi-box.main .kpi-value{color:#fff;}
+.kpi-box.green .kpi-value{color:#065F46;}
+.kpi-box.purple .kpi-value{color:var(--brand-dark);}
+.kpi-box.orange .kpi-value{color:#92400E;}
+.kpi-sub{font-size:10.5px;margin-top:2px;opacity:0.75;}
+.kpi-box.main .kpi-sub{color:rgba(255,255,255,0.8);}
+
+.breakdown{border:1px solid var(--border-light);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:14px;}
+.breakdown-hd{font-size:10.5px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.08em;padding:9px 14px;background:var(--bg);border-bottom:1px solid var(--border-light);}
+.breakdown-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border-light);font-size:12.5px;}
+.breakdown-row:last-child{border-bottom:none;}
+.breakdown-row.total{background:var(--brand-light);font-weight:700;color:var(--brand-dark);}
+.breakdown-row.total .bv{color:var(--brand-dark);}
+.bl{color:var(--text-secondary);}
+.bv{font-weight:600;color:var(--text-primary);font-variant-numeric:tabular-nums;}
+
+.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.btn-copy,.btn-print{padding:10px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-white);color:var(--text-secondary);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px;}
+.btn-copy:hover,.btn-print:hover{border-color:var(--brand);color:var(--brand);background:var(--brand-light);}
+
+/* ── STEPPER ── */
+.stepper-card{background:var(--bg-white);border:1px solid var(--border-light);border-radius:var(--radius);padding:26px;box-shadow:0 4px 24px rgba(99,102,241,0.06);margin-top:24px;}
+.stepper-title{font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+.stepper-title i{color:var(--brand);}
+.stepper{display:flex;flex-direction:column;}
+.step{display:flex;gap:14px;opacity:0;transform:translateY(6px);animation:stepIn .35s ease forwards;}
+.step:nth-child(1){animation-delay:.02s}.step:nth-child(2){animation-delay:.08s}.step:nth-child(3){animation-delay:.14s}.step:nth-child(4){animation-delay:.20s}.step:nth-child(5){animation-delay:.26s}.step:nth-child(6){animation-delay:.32s}.step:nth-child(7){animation-delay:.38s}.step:nth-child(8){animation-delay:.44s}
+@keyframes stepIn{to{opacity:1;transform:translateY(0);}}
+.step-rail{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+.step-dot{width:28px;height:28px;border-radius:50%;background:var(--brand-light);color:var(--brand-dark);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;border:2px solid var(--brand-mid);}
+.step-line{width:2px;flex:1;background:var(--border);min-height:20px;}
+.step:last-child .step-line{display:none;}
+.step-body{flex:1;padding-bottom:20px;}
+.step-label{font-size:10.5px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px;}
+.step-title{font-size:13.5px;font-weight:700;color:var(--text-primary);margin-bottom:4px;}
+.step-detail{font-size:12.5px;color:var(--text-secondary);line-height:1.6;}
+.step-formula{display:inline-block;margin-top:6px;font-family:monospace;font-size:11.5px;background:var(--bg);border:1px solid var(--border-light);border-radius:6px;padding:5px 9px;color:var(--brand-dark);}
+
+/* ── RIGHT COLUMN ── */
+.right-col{display:flex;flex-direction:column;gap:24px;}
+.ref-card{background:var(--bg-white);border:1px solid var(--border-light);border-radius:var(--radius);padding:22px;box-shadow:0 4px 24px rgba(99,102,241,0.06);}
+.ref-title{font-size:13.5px;font-weight:700;color:var(--text-primary);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.ref-title i{color:var(--brand);}
+.formula-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border-light);font-size:12px;gap:12px;}
+.formula-row:last-child{border-bottom:none;}
+.formula-row .fl{color:var(--text-secondary);}
+.formula-row .fv{font-weight:700;color:var(--brand-dark);font-family:monospace;font-size:11px;text-align:right;}
+
+/* ── FULL-WIDTH SECTIONS ── */
+.section-wrap{max-width:1200px;margin:0 auto;padding:20px 32px 10px;}
+.section-title{font-size:22px;font-weight:800;color:var(--text-primary);margin-bottom:6px;letter-spacing:-0.3px;}
+.section-sub{font-size:13.5px;color:var(--text-secondary);margin-bottom:22px;max-width:720px;line-height:1.6;}
+
+/* LAW BLOCK */
+.law-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:16px;}
+.law-card{background:var(--bg-white);border:1px solid var(--border-light);border-radius:var(--radius-sm);padding:18px 20px;}
+.law-card h3{font-size:13.5px;font-weight:700;color:var(--brand-dark);margin-bottom:8px;display:flex;align-items:center;gap:7px;}
+.law-card p, .law-card li{font-size:12.5px;color:var(--text-secondary);line-height:1.7;}
+.law-card ul{padding-left:18px;margin-top:4px;}
+.verified-line{font-size:11.5px;color:var(--text-muted);background:var(--bg);border:1px dashed var(--border);border-radius:8px;padding:9px 14px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.disclaimer-box{background:var(--orange-bg);border:1px solid rgba(217,119,6,0.2);border-radius:var(--radius-sm);padding:16px 18px;font-size:12px;color:#92400E;line-height:1.7;}
+.disclaimer-box strong{color:#78350F;}
+
+/* EXAMPLES */
+.example-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.example-card{background:var(--bg-white);border:1px solid var(--border-light);border-radius:var(--radius-sm);padding:16px 18px;box-shadow:0 2px 10px rgba(99,102,241,0.05);}
+.example-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;background:var(--brand-light);color:var(--brand-dark);font-size:11px;font-weight:800;border-radius:6px;margin-bottom:8px;}
+.example-title{font-size:12.5px;font-weight:700;color:var(--text-primary);margin-bottom:5px;}
+.example-desc{font-size:11.5px;color:var(--text-secondary);line-height:1.6;margin-bottom:10px;min-height:52px;}
+.example-figs{display:flex;flex-direction:column;gap:5px;border-top:1px solid var(--border-light);padding-top:9px;}
+.example-fig-row{display:flex;justify-content:space-between;font-size:11.5px;}
+.example-fig-row .l{color:var(--text-muted);}
+.example-fig-row .v{font-weight:700;color:var(--text-primary);}
+.example-fig-row.tot .v{color:var(--brand-dark);}
+
+/* FAQ */
+.faq-section{padding:8px 0 20px}
+.faq-title{font-size:20px;font-weight:800;color:var(--text);margin-bottom:20px}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 20px;margin-bottom:10px}
+.faq-q{font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px}
+.faq-a{font-size:13px;color:var(--muted);line-height:1.7}
+
+.wa-btn{position:fixed;bottom:24px;right:24px;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,.4);z-index:999;text-decoration:none;transition:transform .2s}.wa-btn:hover{transform:scale(1.08)}.wa-btn i{color:#fff;font-size:24px}
+
+.site-footer{background:#1E1B4B;color:rgba(255,255,255,0.7);padding:28px 32px;text-align:center;font-size:12px;line-height:1.8;margin-top:40px;}
+.site-footer .footer-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:14px;}
+.site-footer .footer-badge{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:4px 13px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);display:inline-flex;align-items:center;gap:5px;}
+.site-footer .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-top:10px;}
+.site-footer .footer-links a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:11px;}
+.site-footer .footer-links a:hover{color:rgba(255,255,255,0.85);}
+.site-footer .footer-tagline{margin-top:12px;font-size:11px;color:rgba(255,255,255,0.35);}
+
+.fs-share-bar{display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 24px;flex-wrap:wrap;border-top:1.5px solid rgba(99,102,241,0.13);background:#F5F6FF}
+.fs-share-lbl{font-size:13px;font-weight:600;color:#6B7280;margin-right:4px;flex-shrink:0}
+.fs-share-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;transition:all .15s;border:1.5px solid #E5E7EB;background:#fff;color:#374151;line-height:1}
+.fs-share-btn:hover{border-color:#6366F1;color:#4F46E5;background:#EEF2FF}
+.fs-wa-btn{border-color:#25D366;color:#128C7E;background:#F0FDF4}
+.fs-wa-btn:hover{background:#25D366;color:#fff;border-color:#25D366}
+.fs-li-btn{border-color:#0A66C2;color:#0A66C2;background:#EFF6FF}
+.fs-li-btn:hover{background:#0A66C2;color:#fff;border-color:#0A66C2}
+
+@media(max-width:960px){
+  .main{grid-template-columns:1fr;padding:28px 20px 10px;}
+  .calc-card{position:static;}
+  .kpi-grid{grid-template-columns:1fr 1fr;}
+  #mainNav{padding:0 20px;}
+  .page-hero{padding:36px 20px 30px;}
+  .page-hero h1{font-size:25px;}
+  .section-wrap{padding:18px 20px 10px;}
+  .law-grid{grid-template-columns:1fr;}
+  .example-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:600px){
+  .form-input,.form-select,input,select{font-size:16px;}
+  .row-2,.row-4{grid-template-columns:1fr 1fr;}
+  .example-grid{grid-template-columns:1fr;}
+  .btn-row{grid-template-columns:1fr;}
+}
+
+@media print{
+  #mainNav,.page-hero,.calc-card,.right-col,.fs-share-bar,.wa-btn,footer,.section-wrap#examplesSection,.section-wrap#faqSection,.btn-row{display:none !important;}
+  .main{display:block;padding:0;}
+  .stepper-card,.results-card{box-shadow:none;border:1px solid #ccc;page-break-inside:avoid;}
+  body{background:#fff;}
+}
+</style>
+
+<!-- Google Analytics GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Z2G710PHNQ');
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "GST Interest & Late Fee Calculator — All Return Types",
+  "url": "https://www.finosutra.com/gst-interest-late-fee-calculator.html",
+  "description": "Calculate GST interest under Section 50 and late fee under Section 47 for GSTR-3B, GSTR-1, CMP-08, GSTR-4, GSTR-5, GSTR-5A, GSTR-6, GSTR-7, GSTR-8, GSTR-9 and GSTR-9C. Free, instant, with full step-by-step working.",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web Browser",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "creator": { "@type": "Organization", "name": "Finosutra", "url": "https://www.finosutra.com" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.finosutra.com/index.html" },
+    { "@type": "ListItem", "position": 2, "name": "GST Tools", "item": "https://www.finosutra.com/gst-tools.html" },
+    { "@type": "ListItem", "position": 3, "name": "GST Interest & Late Fee Calculator", "item": "https://www.finosutra.com/gst-interest-late-fee-calculator.html" }
+  ]
+}
+</script>
+<!-- FAQPage JSON-LD is injected dynamically from the FAQS array at load time (see script at bottom) so schema text always matches the on-page FAQ text exactly -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img loading="eager" src="logo.png" alt="Finosutra" style="height:56px;width:auto;display:block;">
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="indas-tools.html">IND AS</a></li>
+      <li><a href="gst-tools.html" class="active">GST</a></li>
+      <li><a href="income-tax-hub.html">Income Tax</a></li>
+      <li><a href="templates.html">Templates</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="index.html#pricing">Pricing</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+      <li id="navAuthMobile"></li>
+    </ul>
+    <div class="nav-actions" id="navActions">
+      <a href="gst-tools.html" class="nav-back-btn">&#8592; GST Tools</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="eyebrow">Free Calculator &middot; Section 50 &amp; Section 47</div>
+    <h1>GST Interest &amp; Late Fee Calculator</h1>
+    <p>Calculate GST interest and late fee for GSTR-3B, GSTR-1, CMP-08, GSTR-4, GSTR-5, GSTR-5A, GSTR-6, GSTR-7, GSTR-8, GSTR-9 &amp; GSTR-9C — with full step-by-step working, turnover-tiered caps and law references. Built for CAs and GST practitioners.</p>
+    <div class="hero-badges">
+      <span class="hero-badge"><i class="fa-solid fa-bolt"></i> Instant calculation</span>
+      <span class="hero-badge"><i class="fa-solid fa-list-check"></i> 10 return types</span>
+      <span class="hero-badge"><i class="fa-solid fa-stairs"></i> Step-by-step working</span>
+      <span class="hero-badge"><i class="fa-solid fa-scale-balanced"></i> Turnover-tiered caps</span>
+      <span class="hero-badge"><i class="fa-solid fa-gift"></i> 100% Free</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── MAIN ── -->
+<div class="main">
+
+  <!-- LEFT: CALCULATOR -->
+  <div>
+    <div class="calc-card">
+      <div class="calc-title"><i class="fa-solid fa-calculator"></i> Calculate Interest &amp; Late Fee</div>
+
+      <div class="form-group">
+        <div class="form-label">Return Type</div>
+        <select class="form-select" id="fReturnType" onchange="onReturnTypeChange()"></select>
+      </div>
+
+      <div id="freqToggleWrap" style="display:none">
+        <div class="form-label">Filing Frequency</div>
+        <div class="toggle-group" id="freqToggle">
+          <button type="button" class="toggle-btn active" onclick="setFreq('monthly',this)">Monthly</button>
+          <button type="button" class="toggle-btn" onclick="setFreq('quarterly',this)">Quarterly (QRMP)</button>
+        </div>
+      </div>
+
+      <div class="form-group" id="periodWrap"></div>
+
+      <div class="row-2 form-group">
+        <div>
+          <div class="form-label">Due Date</div>
+          <input type="date" class="form-input" id="fDueDate"/>
+          <div class="hint">Auto-suggested — editable</div>
+        </div>
+        <div>
+          <div class="form-label">Actual Filing Date</div>
+          <input type="date" class="form-input" id="fFilingDate"/>
+        </div>
+      </div>
+
+      <div id="turnoverWrap" class="form-group" style="display:none">
+        <div class="form-label">Aggregate Annual Turnover (PAN-India, prev. FY)</div>
+        <div class="input-prefix"><span>&#8377;</span><input type="number" class="form-input" id="fTurnover" placeholder="e.g. 25000000" min="0" step="1"/></div>
+        <div class="hint">Used to pick the correct late fee cap slab.</div>
+      </div>
+
+      <div class="chk-block">
+        <label class="chk-row"><input type="checkbox" id="fNil" onchange="onNilToggle()"/><span>Nil Return<small>No outward supply / tax liability for the period</small></span></label>
+        <label class="chk-row"><input type="checkbox" id="fPaidBeforeDue" onchange="onPaidBeforeDueToggle()"/><span>Tax Paid Before Due Date<small>Only the return was filed late — no interest applies</small></span></label>
+        <label class="chk-row"><input type="checkbox" id="fPartial" onchange="onPartialToggle()"/><span>Partial Payment Made<small>Reduce interest principal by amount already paid</small></span></label>
+      </div>
+
+      <div class="form-group" id="partialWrap" style="display:none">
+        <div class="form-label">Amount Already Paid (before filing)</div>
+        <div class="input-prefix"><span>&#8377;</span><input type="number" class="form-input" id="fPartialAmt" placeholder="0" min="0" step="0.01"/></div>
+      </div>
+
+      <div id="taxHeadsWrap">
+        <div class="form-label">Outstanding Tax Liability</div>
+        <div class="row-4">
+          <div class="input-prefix"><span>&#8377;</span><input type="number" class="form-input" id="fCgst" placeholder="CGST" min="0" step="0.01"/></div>
+          <div class="input-prefix"><span>&#8377;</span><input type="number" class="form-input" id="fSgst" placeholder="SGST" min="0" step="0.01"/></div>
+          <div class="input-prefix"><span>&#8377;</span><input type="number" class="form-input" id="fIgst" placeholder="IGST" min="0" step="0.01"/></div>
+          <div class="input-prefix"><span>&#8377;</span><input type="number" class="form-input" id="fCess" placeholder="CESS" min="0" step="0.01"/></div>
+        </div>
+      </div>
+
+      <div id="compTaxWrap" class="form-group" style="display:none">
+        <div class="form-label">Composition Tax Liability (lump sum)</div>
+        <div class="input-prefix"><span>&#8377;</span><input type="number" class="form-input" id="fCompTax" placeholder="e.g. 12000" min="0" step="0.01"/></div>
+      </div>
+
+      <div class="form-group">
+        <div class="form-label">Interest Rate (Section 50) — % per annum</div>
+        <input type="number" class="form-input" id="fRate" value="18" min="0" step="0.1"/>
+        <div class="hint">Default 18% p.a. under Sec 50(1). Editable for wrongly-availed-ITC (24%) or notified relief scenarios.</div>
+      </div>
+
+      <button class="btn-calc" onclick="calculate()"><i class="fa-solid fa-equals"></i> Calculate</button>
+      <button class="btn-reset" onclick="resetCalc()">&#8630; Reset</button>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div class="right-col">
+
+    <div class="results-card" id="resultsCard">
+      <div class="results-empty" id="emptyState">
+        <i class="fa-solid fa-receipt"></i>
+        <p>Select a return type, enter dates and tax liability,<br>then click Calculate to see the full breakdown.</p>
+      </div>
+
+      <div id="resultsDiv" style="display:none">
+        <span class="result-mode-badge" id="modeBadge"></span>
+        <div class="kpi-grid" id="kpiGrid"></div>
+        <div class="breakdown">
+          <div class="breakdown-hd">Full Breakdown</div>
+          <div id="breakdownRows"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-copy" onclick="copyResults()"><i class="fa-regular fa-copy"></i> Copy Results</button>
+          <button class="btn-print" onclick="window.print()"><i class="fa-solid fa-print"></i> Print / Save PDF</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ref-card">
+      <div class="ref-title"><i class="fa-solid fa-function"></i> Formulas Used</div>
+      <div class="formula-row"><span class="fl">Delay Days</span><span class="fv">Filing Date − Due Date</span></div>
+      <div class="formula-row"><span class="fl">Interest (per head)</span><span class="fv">Tax × Rate% × Days ÷ 365</span></div>
+      <div class="formula-row"><span class="fl">Late Fee (raw)</span><span class="fv">Per-day Rate × Delay Days</span></div>
+      <div class="formula-row"><span class="fl">Late Fee (applicable)</span><span class="fv">MIN(Raw Fee, Maximum Cap)</span></div>
+      <div class="formula-row"><span class="fl">Total Payable</span><span class="fv">Tax + Interest + Late Fee</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- DETAILED WORKING STEPPER (full width, appears after calculation) -->
+<div class="main" style="grid-template-columns:1fr;padding-top:0" id="stepperOuter">
+  <div class="stepper-card" id="stepperCard" style="display:none">
+    <div class="stepper-title"><i class="fa-solid fa-stairs"></i> Detailed Working — Step by Step</div>
+    <div class="stepper" id="stepperBody"></div>
+  </div>
+</div>
+
+<!-- LAW REFERENCE -->
+<div class="section-wrap" id="lawSection">
+  <div class="section-title">GST Law References</div>
+  <div class="section-sub">Section 50 (interest) and Section 47 (late fee) of the CGST Act, 2017, read with corresponding SGST Acts, plus rate/cap notifications issued by CBIC from time to time.</div>
+  <div class="verified-line"><i class="fa-solid fa-circle-check" style="color:var(--green)"></i> Figures on this page last verified: <strong id="verifiedDate">25 July 2026</strong> against CBIC notifications in force at that date. Rates and caps change via notification — always cross-check before relying on this for a filing.</div>
+  <div class="law-grid">
+    <div class="law-card">
+      <h3><i class="fa-solid fa-gavel"></i> Section 50 — Interest on Delayed Payment</h3>
+      <p>Interest at 18% per annum (Sec 50(1)) applies on tax paid after the due date, computed on the <strong>net cash tax liability</strong> — i.e. only the portion actually discharged through the Electronic Cash Ledger, per the retrospective "net liability" amendment (Finance Act 2021, effective 01-07-2017). Interest where ITC is wrongly availed <em>and utilised</em> is charged at 24% p.a. under Sec 50(3), reduced from the original rate retrospectively vide Finance Act 2022.</p>
+    </div>
+    <div class="law-card">
+      <h3><i class="fa-solid fa-gavel"></i> Section 47 — Late Fee for Delayed Filing</h3>
+      <p>A daily late fee applies for filing a return after its due date, split equally between CGST and SGST/UTGST Acts (no IGST or CESS component). The base provision caps late fee at ₹200/day (₹100+₹100), subject to a maximum of ₹5,000, unless a lower rate/cap has been separately notified for that return (as is the case for GSTR-1, GSTR-3B, GSTR-4 and GSTR-9/9C).</p>
+    </div>
+    <div class="law-card">
+      <h3><i class="fa-solid fa-scale-balanced"></i> Turnover-Tiered Late Fee (GSTR-3B / GSTR-1)</h3>
+      <ul>
+        <li>Nil return: ₹20/day (₹10+₹10), capped at ₹500</li>
+        <li>Turnover up to ₹1.5 crore: ₹50/day (₹25+₹25), capped at ₹2,000</li>
+        <li>Turnover ₹1.5cr–₹5cr: capped at ₹5,000</li>
+        <li>Turnover above ₹5 crore: capped at ₹10,000</li>
+      </ul>
+    </div>
+    <div class="law-card">
+      <h3><i class="fa-solid fa-scale-balanced"></i> Turnover-Tiered Late Fee (GSTR-9 / GSTR-9C)</h3>
+      <ul>
+        <li>AATO up to ₹5cr: ₹50/day (₹25+₹25), capped at 0.04% of turnover in the State/UT</li>
+        <li>AATO ₹5cr–₹20cr: ₹100/day (₹50+₹50), capped at 0.04%</li>
+        <li>AATO above ₹20cr: ₹200/day (₹100+₹100), capped at 0.50% (per Notification 07/2023-CT)</li>
+        <li>GSTR-9C late fee is <strong>continuous with GSTR-9</strong> — not a separate calculation — if GSTR-9C is filed after GSTR-9, fee accrues for the further delay in completing the annual return.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="disclaimer-box"><strong>Disclaimer:</strong> This calculator is provided for general informational and educational purposes only and does not constitute legal, tax or professional advice. Late fee caps, interest rates and due dates are subject to periodic amendment by CBIC/State GST notifications and by GST Council decisions, including case-specific waivers and amnesty schemes not modelled here. Always verify figures against the latest notifications or consult a qualified GST practitioner before making a payment or filing decision. Finosutra accepts no liability for outcomes based on this tool.</div>
+</div>
+
+<!-- WORKED EXAMPLES -->
+<div class="section-wrap" id="examplesSection">
+  <div class="section-title">15 Worked Examples</div>
+  <div class="section-sub">Real scenarios across return types, computed live by this calculator's own engine — so the figures below always match what you'd get by entering the same inputs above.</div>
+  <div class="example-grid" id="exampleGrid"></div>
+</div>
+
+<!-- FAQ -->
+<div class="section-wrap" id="faqSection">
+  <div class="faq-section">
+    <div class="faq-title">Frequently Asked Questions</div>
+    <div id="faqList"></div>
+  </div>
+</div>
+
+<style>
+.fs-share-bar{display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 24px;flex-wrap:wrap;border-top:1.5px solid rgba(99,102,241,0.13);background:#F5F6FF}
+</style>
+<div class="fs-share-bar">
+  <span class="fs-share-lbl">Share:</span>
+  <button class="fs-share-btn" id="fsCopyBtn" onclick="fsCopyLink(this)"><i class="fa-solid fa-link"></i> Copy link</button>
+  <a class="fs-share-btn fs-wa-btn" id="fsWaShare" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+  <a class="fs-share-btn fs-li-btn" id="fsLiShare" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+</div>
+<script>
+function fsCopyLink(btn){
+  navigator.clipboard.writeText(location.href).then(function(){
+    btn.innerHTML='<i class="fa-solid fa-check"></i> Copied!';
+    setTimeout(function(){btn.innerHTML='<i class="fa-solid fa-link"></i> Copy link';},2000);
+  });
+}
+(function(){
+  var u=encodeURIComponent(location.href);
+  var t=encodeURIComponent(document.title+' — '+location.href);
+  var wa=document.getElementById('fsWaShare'); if(wa) wa.href='https://wa.me/?text='+t;
+  var li=document.getElementById('fsLiShare'); if(li) li.href='https://www.linkedin.com/sharing/share-offsite/?url='+u;
+})();
+</script>
+
+<footer class="site-footer">
+  <div class="footer-badges">
+    <span class="footer-badge">&#10003; GST Interest &amp; Late Fee — All Return Types</span>
+    <span class="footer-badge">&#10003; Section 50 &amp; Section 47</span>
+    <span class="footer-badge">&#127470;&#127475; Made in India for Indian CAs</span>
+  </div>
+  <div class="footer-links">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Use</a>
+    <a href="mailto:fino.sutra07@gmail.com">Contact</a>
+    <a href="blog.html">Blog</a>
+  </div>
+  <div class="footer-tagline">&copy; 2026 Finosutra. Built for Chartered Accountants and Finance Teams across India.</div>
+</footer>
+
+<a href="https://wa.me/918208063319?text=Hi%20Finosutra%2C%20I%20need%20help%20with%20GST%20interest%20%26%20late%20fee%20calculation" class="wa-btn" target="_blank" rel="noopener">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   RETURN RULES — single source of truth for all calc + UI logic
+   Figures verified 25-Jul-2026 against CBIC notifications (see
+   research citations in law section). Update ONLY here when
+   rates/caps change via new notification.
+════════════════════════════════════════════════════════════ */
+var RETURN_RULES = {
+  GSTR3B: { label:'GSTR-3B — Summary Return', periodicity:'monthly', hasQRMP:true, interestApplies:true, composition:false,
+    dueDay:20, dueDayQ:{cat1:22,cat2:24}, turnoverTiered:true,
+    lateFee:{ perDayNormal:50, splitNormal:[25,25], perDayNil:20, splitNil:[10,10],
+      capTiers:[{upTo:15000000,cap:2000},{upTo:50000000,cap:5000},{upTo:Infinity,cap:10000}], nilCap:500 },
+    note:'Interest under Sec 50(1) on net cash tax liability. Late fee per Notification 19/2021-CT and successors.' },
+  GSTR1: { label:'GSTR-1 — Outward Supplies Statement', periodicity:'monthly', hasQRMP:true, interestApplies:false, composition:false,
+    dueDay:11, dueDayQ:{cat1:13,cat2:13}, turnoverTiered:true,
+    lateFee:{ perDayNormal:50, splitNormal:[25,25], perDayNil:20, splitNil:[10,10],
+      capTiers:[{upTo:15000000,cap:2000},{upTo:50000000,cap:5000},{upTo:Infinity,cap:10000}], nilCap:500 },
+    note:'GSTR-1 is a statement of outward supplies with no tax payment attached — only late fee applies, no Sec 50 interest.' },
+  CMP08: { label:'CMP-08 — Composition Quarterly Statement', periodicity:'quarterly', interestApplies:true, composition:true,
+    dueDay:18, turnoverTiered:false,
+    lateFee:{ perDayNormal:200, splitNormal:[100,100], perDayNil:200, splitNil:[100,100], cap:5000 },
+    note:'Late fee ₹200/day (₹100 CGST + ₹100 SGST), capped ₹5,000. Interest 18% p.a. on the composition tax paid late.' },
+  GSTR4: { label:'GSTR-4 — Composition Annual Return', periodicity:'annual-jun', interestApplies:true, composition:true,
+    dueDay:null, turnoverTiered:false,
+    lateFee:{ perDayNormal:50, splitNormal:[25,25], perDayNil:0, splitNil:[0,0], cap:2000, nilCap:0 },
+    note:'Due 30 June following the FY. Late fee ₹50/day capped ₹2,000 for non-nil (₹1,000 CGST+₹1,000 SGST); Nil returns waived to ₹0 per amnesty relief. Historic amnesty schemes (2017-18 to 2021-22) offered a further reduced cap — not modelled here as they have lapsed.' },
+  GSTR5: { label:'GSTR-5 — Non-Resident Taxable Person', periodicity:'monthly', interestApplies:true, composition:false,
+    dueDay:20, turnoverTiered:false,
+    lateFee:{ perDayNormal:50, splitNormal:[25,25], perDayNil:20, splitNil:[10,10], cap:10000, nilCap:500 },
+    note:'Also due within 7 days of registration validity expiry, if earlier. Interest 18% p.a. applies on tax paid late.' },
+  GSTR5A: { label:'GSTR-5A — OIDAR Service Providers', periodicity:'monthly', interestApplies:true, composition:false,
+    dueDay:20, turnoverTiered:false,
+    lateFee:{ perDayNormal:50, splitNormal:[25,25], perDayNil:20, splitNil:[10,10], cap:10000, nilCap:500 },
+    note:'Same rate structure as GSTR-5. Filed by non-resident Online Information Database Access & Retrieval service suppliers.' },
+  GSTR6: { label:'GSTR-6 — Input Service Distributor', periodicity:'monthly', interestApplies:false, composition:false,
+    dueDay:13, turnoverTiered:false,
+    lateFee:{ perDayNormal:50, splitNormal:[25,25], perDayNil:50, splitNil:[25,25], cap:10000 },
+    note:'ISDs distribute credit, not tax — no Sec 50 interest applies, only late fee. No reduced nil-return rate is separately notified for GSTR-6.' },
+  GSTR7: { label:'GSTR-7 — TDS Deductor', periodicity:'monthly', interestApplies:true, composition:false,
+    dueDay:10, turnoverTiered:false,
+    lateFee:{ perDayNormal:50, splitNormal:[25,25], perDayNil:50, splitNil:[25,25], cap:5000 },
+    note:'Interest 18% p.a. applies on TDS deducted but deposited late. Late fee ₹50/day (₹25+₹25), capped at ₹5,000 (default Sec 47(1) cap — no separate reduction notified for GSTR-7).' },
+  GSTR8: { label:'GSTR-8 — E-Commerce Operator (TCS)', periodicity:'monthly', interestApplies:true, composition:false,
+    dueDay:10, turnoverTiered:false,
+    lateFee:{ perDayNormal:200, splitNormal:[100,100], perDayNil:200, splitNil:[100,100], cap:10000 },
+    note:'Interest 18% p.a. on TCS collected but deposited late. Late fee ₹200/day (₹100+₹100), capped ₹10,000.' },
+  GSTR9: { label:'GSTR-9 — Annual Return', periodicity:'annual-dec', interestApplies:true, composition:false,
+    dueDay:null, turnoverTiered:true, exemptBelowTurnover:20000000,
+    lateFee:{ tiers:[
+        {upTo:50000000, perDay:50, split:[25,25], capPct:0.0004},
+        {upTo:200000000, perDay:100, split:[50,50], capPct:0.0004},
+        {upTo:Infinity, perDay:200, split:[100,100], capPct:0.005}
+      ] },
+    note:'Due 31 December following the FY. Filing is optional/exempt for aggregate turnover up to ₹2 crore for that FY (no late fee if not filed). Late fee per Notification 07/2023-CT — turnover-tiered ₹/day, capped as a % of turnover in the State/UT.' },
+  GSTR9C: { label:'GSTR-9C — Reconciliation Statement', periodicity:'annual-dec', interestApplies:true, composition:false,
+    dueDay:null, turnoverTiered:true, applicableAboveTurnover:50000000, sameAsGSTR9:true,
+    lateFee:{ tiers:[
+        {upTo:50000000, perDay:50, split:[25,25], capPct:0.0004},
+        {upTo:200000000, perDay:100, split:[50,50], capPct:0.0004},
+        {upTo:Infinity, perDay:200, split:[100,100], capPct:0.005}
+      ] },
+    note:'Mandatory above ₹5 crore turnover. Due 31 December, same date as GSTR-9 — the annual return is "complete" only when both are filed, so late fee is one continuous calculation from the common due date, not two separate fees. This calculator computes the incremental delay for the GSTR-9C filing itself.' }
+};
+var RETURN_ORDER = ['GSTR3B','GSTR1','CMP08','GSTR4','GSTR5','GSTR5A','GSTR6','GSTR7','GSTR8','GSTR9','GSTR9C'];
+
+/* ════════════════════════════════════════════════════════════
+   STATE + PERIOD PICKER
+════════════════════════════════════════════════════════════ */
+var state = { returnType:'GSTR3B', freq:'monthly', qCat:'cat1' };
+var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+var QUARTERS = [ {label:'Q1: Apr – Jun', endMonth:5}, {label:'Q2: Jul – Sep', endMonth:8}, {label:'Q3: Oct – Dec', endMonth:11}, {label:'Q4: Jan – Mar', endMonth:2} ];
+
+function fyList(){
+  var out = []; var now = new Date(); var startY = now.getFullYear() - 6;
+  for(var y=startY; y<=now.getFullYear()+1; y++){ out.push(y+'-'+String(y+1).slice(2)); }
+  return out.reverse();
+}
+function fyStartYear(fy){ return parseInt(fy.split('-')[0],10); }
+function fyString(y){ return y+'-'+String(y+1).slice(2); }
+function pad2(n){ return n<10?('0'+n):(''+n); }
+function isoDate(y,m,d){ return y+'-'+pad2(m+1)+'-'+pad2(d); } // m is 0-indexed month
+function fyStartForDate(d){ var y=d.getFullYear(), m=d.getMonth(); return m>=3 ? y : y-1; } // FY runs Apr-Mar
+
+function initReturnSelect(){
+  var sel = document.getElementById('fReturnType');
+  sel.innerHTML = RETURN_ORDER.map(function(k){ return '<option value="'+k+'">'+RETURN_RULES[k].label+'</option>'; }).join('');
+}
+
+function onReturnTypeChange(){
+  state.returnType = document.getElementById('fReturnType').value;
+  var rule = RETURN_RULES[state.returnType];
+  document.getElementById('freqToggleWrap').style.display = rule.hasQRMP ? 'block' : 'none';
+  document.getElementById('turnoverWrap').style.display = rule.turnoverTiered ? 'block' : 'none';
+  document.getElementById('taxHeadsWrap').style.display = rule.composition ? 'none' : 'block';
+  document.getElementById('compTaxWrap').style.display = rule.composition ? 'block' : 'none';
+  buildPeriodPicker();
+  suggestDueDate();
+}
+
+function setFreq(f, btn){
+  state.freq = f;
+  document.querySelectorAll('#freqToggle .toggle-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  buildPeriodPicker();
+  suggestDueDate();
+}
+
+function buildPeriodPicker(){
+  var rule = RETURN_RULES[state.returnType];
+  var wrap = document.getElementById('periodWrap');
+  var fys = fyList();
+  var fyOptions = fys.map(function(f){ return '<option value="'+f+'">FY '+f+'</option>'; }).join('');
+
+  var today = new Date();
+  var prevMonthDate = new Date(today.getFullYear(), today.getMonth()-1, 1);
+  var prevMonthFY = fyStartForDate(prevMonthDate);
+
+  if(rule.periodicity === 'annual-jun' || rule.periodicity === 'annual-dec'){
+    // default to the most recently *completed* FY, since that's the annual return most likely currently due
+    var defaultAnnualFY = fyStartForDate(today) - 1;
+    wrap.innerHTML = '<div class="form-label">Financial Year</div><select class="form-select" id="fFY" onchange="suggestDueDate()">'+fyOptions+'</select>';
+    document.getElementById('fFY').value = fyString(defaultAnnualFY);
+    return;
+  }
+
+  var effFreq = (rule.hasQRMP && state.freq === 'quarterly') ? 'quarterly' : (rule.periodicity === 'quarterly' ? 'quarterly' : 'monthly');
+
+  if(effFreq === 'quarterly'){
+    var qOptions = QUARTERS.map(function(q,i){ return '<option value="'+i+'">'+q.label+'</option>'; }).join('');
+    var catRow = (state.returnType==='GSTR3B' && state.freq==='quarterly') ?
+      '<div style="margin-top:8px"><div class="form-label">State Category (QRMP due date)</div><div class="toggle-group" id="qCatToggle"><button type="button" class="toggle-btn active" onclick="setQCat(\'cat1\',this)">Category I (22nd)</button><button type="button" class="toggle-btn" onclick="setQCat(\'cat2\',this)">Category II (24th)</button></div></div>' : '';
+    wrap.innerHTML = '<div class="row-2"><div><div class="form-label">Quarter</div><select class="form-select" id="fQuarter" onchange="suggestDueDate()">'+qOptions+'</select></div><div><div class="form-label">Financial Year</div><select class="form-select" id="fFY" onchange="suggestDueDate()">'+fyOptions+'</select></div></div>' + catRow;
+    // default quarter = the most recently completed quarter (FY quarters: 0=Apr-Jun,1=Jul-Sep,2=Oct-Dec,3=Jan-Mar)
+    var monthsSinceApr = (prevMonthDate.getMonth() - 3 + 12) % 12;
+    var defaultQ = Math.floor(monthsSinceApr/3);
+    document.getElementById('fQuarter').value = String(defaultQ);
+    document.getElementById('fFY').value = fyString(prevMonthFY);
+  } else {
+    var mOptions = MONTHS.map(function(m,i){ return '<option value="'+i+'">'+m+'</option>'; }).join('');
+    wrap.innerHTML = '<div class="row-2"><div><div class="form-label">Month</div><select class="form-select" id="fMonth" onchange="suggestDueDate()">'+mOptions+'</select></div><div><div class="form-label">Financial Year</div><select class="form-select" id="fFY" onchange="suggestDueDate()">'+fyOptions+'</select></div></div>';
+    document.getElementById('fMonth').value = String(prevMonthDate.getMonth());
+    document.getElementById('fFY').value = fyString(prevMonthFY);
+  }
+}
+
+function setQCat(c, btn){
+  state.qCat = c;
+  document.querySelectorAll('#qCatToggle .toggle-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  suggestDueDate();
+}
+
+function onNilToggle(){
+  var isNil = document.getElementById('fNil').checked;
+  if(isNil){ ['fCgst','fSgst','fIgst','fCess','fCompTax'].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=''; }); }
+}
+function onPaidBeforeDueToggle(){}
+function onPartialToggle(){
+  document.getElementById('partialWrap').style.display = document.getElementById('fPartial').checked ? 'block' : 'none';
+}
+
+function suggestDueDate(){
+  var rule = RETURN_RULES[state.returnType];
+  var fyEl = document.getElementById('fFY');
+  if(!fyEl) return;
+  var py = fyStartYear(fyEl.value);
+  var due;
+
+  if(rule.periodicity === 'annual-jun'){
+    due = isoDate(py+1, 5, 30); // 30 June following FY
+  } else if(rule.periodicity === 'annual-dec'){
+    due = isoDate(py+1, 11, 31); // 31 December following FY
+  } else {
+    var effFreq = (rule.hasQRMP && state.freq === 'quarterly') ? 'quarterly' : (rule.periodicity === 'quarterly' ? 'quarterly' : 'monthly');
+    if(effFreq === 'quarterly'){
+      var qi = parseInt(document.getElementById('fQuarter').value, 10);
+      var q = QUARTERS[qi];
+      var qEndYear = (qi === 3) ? py+1 : py; // Q4 (Jan-Mar) falls in the second calendar year of the FY
+      var dueDay = rule.dueDayQ ? (state.qCat === 'cat2' ? rule.dueDayQ.cat2 : rule.dueDayQ.cat1) : rule.dueDay;
+      // month after quarter end
+      var dueMonth = (q.endMonth + 1) % 12;
+      var dueYear = (q.endMonth === 11) ? qEndYear + 1 : qEndYear;
+      due = isoDate(dueYear, dueMonth, dueDay);
+    } else {
+      var mi = parseInt(document.getElementById('fMonth').value, 10);
+      var periodYear = (mi <= 2) ? py+1 : py; // Jan/Feb/Mar fall in 2nd calendar year of FY (FY = Apr-Mar)
+      var dueMonth = (mi + 1) % 12;
+      var dueYear = (mi === 11) ? periodYear + 1 : periodYear;
+      due = isoDate(dueYear, dueMonth, rule.dueDay);
+    }
+  }
+  document.getElementById('fDueDate').value = due;
+}
+
+/* ════════════════════════════════════════════════════════════
+   FORMAT HELPERS
+════════════════════════════════════════════════════════════ */
+function fmt(n){ return '₹' + (Math.round((n||0)*100)/100).toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+function fmtN(n){ return (Math.round((n||0)*100)/100).toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+function dateDiffDays(dueISO, filingISO){
+  var d1 = new Date(dueISO+'T00:00:00'); var d2 = new Date(filingISO+'T00:00:00');
+  var diff = Math.round((d2 - d1) / 86400000);
+  return diff > 0 ? diff : 0;
+}
+function fmtDate(iso){
+  if(!iso) return '—';
+  var d = new Date(iso+'T00:00:00');
+  return d.toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'});
+}
+
+/* ════════════════════════════════════════════════════════════
+   PURE CALCULATION ENGINE — reused by live calculator AND by
+   the 15 worked examples, so figures are always consistent.
+   inputs = { returnType, dueDate, filingDate, cgst, sgst, igst,
+     cess, compTax, rate, turnover, nil, composition, paidBeforeDue,
+     partial, partialAmt }
+════════════════════════════════════════════════════════════ */
+function computeResult(inputs){
+  var rule = RETURN_RULES[inputs.returnType];
+  var days = inputs.paidBeforeDue ? 0 : dateDiffDays(inputs.dueDate, inputs.filingDate);
+
+  var cgst = rule.composition ? 0 : (inputs.cgst||0);
+  var sgst = rule.composition ? 0 : (inputs.sgst||0);
+  var igst = rule.composition ? 0 : (inputs.igst||0);
+  var cess = rule.composition ? 0 : (inputs.cess||0);
+  var compTax = rule.composition ? (inputs.compTax||0) : 0;
+  var totalTax = cgst + sgst + igst + cess + compTax;
+
+  // reduce interest principal for partial payment already made
+  var payFactor = 1;
+  if(inputs.partial && totalTax > 0){
+    var already = Math.min(inputs.partialAmt||0, totalTax);
+    payFactor = Math.max(0, (totalTax - already) / totalTax);
+  }
+  var rate = (inputs.rate != null ? inputs.rate : 18) / 100;
+
+  var intCgst=0,intSgst=0,intIgst=0,intCess=0,intComp=0;
+  if(rule.interestApplies && days > 0){
+    intCgst = cgst*payFactor*rate*days/365;
+    intSgst = sgst*payFactor*rate*days/365;
+    intIgst = igst*payFactor*rate*days/365;
+    intCess = cess*payFactor*rate*days/365;
+    intComp = compTax*payFactor*rate*days/365;
+  }
+  var totalInterest = intCgst+intSgst+intIgst+intCess+intComp;
+
+  // late fee
+  var feeCgst=0, feeSgst=0, capApplied=null, rawFee=0, feeNote='';
+  if(days > 0 && rule.lateFee){
+    var lf = rule.lateFee;
+    if(rule.turnoverTiered && lf.tiers){
+      var turnover = inputs.turnover||0;
+      var tier = lf.tiers[lf.tiers.length-1];
+      for(var i=0;i<lf.tiers.length;i++){ if(turnover <= lf.tiers[i].upTo){ tier = lf.tiers[i]; break; } }
+      var perDay = tier.perDay;
+      var rawCgst = (perDay/2)*days, rawSgst = (perDay/2)*days;
+      rawFee = rawCgst+rawSgst;
+      var cap = turnover * tier.capPct;
+      capApplied = cap;
+      var scale = rawFee>0 ? Math.min(1, cap/rawFee) : 1;
+      feeCgst = rawCgst*scale; feeSgst = rawSgst*scale;
+      if(inputs.returnType==='GSTR9' && turnover>0 && turnover<=rule.exemptBelowTurnover){ feeNote='Turnover ≤ ₹2cr — GSTR-9 filing is optional; late fee typically does not apply if the return is not filed.'; }
+    } else if(rule.turnoverTiered && lf.capTiers){
+      var turnover2 = inputs.turnover||0;
+      var perDayN = inputs.nil ? lf.perDayNil : lf.perDayNormal;
+      var split = inputs.nil ? lf.splitNil : lf.splitNormal;
+      rawFee = perDayN*days;
+      var capTier = lf.capTiers[lf.capTiers.length-1];
+      for(var j=0;j<lf.capTiers.length;j++){ if(turnover2 <= lf.capTiers[j].upTo){ capTier = lf.capTiers[j]; break; } }
+      var cap2 = inputs.nil ? lf.nilCap : capTier.cap;
+      capApplied = cap2;
+      var scale2 = rawFee>0 ? Math.min(1, cap2/rawFee) : 1;
+      feeCgst = (split[0]/perDayN||0.5)*rawFee*scale2 || (rawFee*scale2/2);
+      feeSgst = rawFee*scale2 - feeCgst;
+    } else {
+      var perDayN2 = inputs.nil ? (lf.perDayNil!=null?lf.perDayNil:lf.perDayNormal) : lf.perDayNormal;
+      var split2 = inputs.nil ? (lf.splitNil||lf.splitNormal) : lf.splitNormal;
+      rawFee = perDayN2*days;
+      var cap3 = inputs.nil && lf.nilCap!=null ? lf.nilCap : lf.cap;
+      capApplied = cap3;
+      var scale3 = rawFee>0 ? Math.min(1, cap3/rawFee) : 1;
+      feeCgst = (split2[0]/(perDayN2||1))*rawFee*scale3;
+      feeSgst = rawFee*scale3 - feeCgst;
+    }
+  }
+  var totalLateFee = feeCgst+feeSgst;
+  var grandTotal = totalTax + totalInterest + totalLateFee;
+  var severity = days===0 ? 'green' : (days<=30 ? 'amber' : 'red');
+
+  return {
+    days: days, totalTax: totalTax, cgst:cgst, sgst:sgst, igst:igst, cess:cess, compTax:compTax,
+    intCgst:intCgst, intSgst:intSgst, intIgst:intIgst, intCess:intCess, intComp:intComp, totalInterest: totalInterest,
+    feeCgst: feeCgst, feeSgst: feeSgst, totalLateFee: totalLateFee, rawFee: rawFee, capApplied: capApplied, feeNote: feeNote,
+    grandTotal: grandTotal, severity: severity, rate: (inputs.rate!=null?inputs.rate:18)
+  };
+}
+
+/* ════════════════════════════════════════════════════════════
+   LIVE CALCULATOR — gather DOM, run engine, render
+════════════════════════════════════════════════════════════ */
+function gatherInputs(){
+  return {
+    returnType: state.returnType,
+    dueDate: document.getElementById('fDueDate').value,
+    filingDate: document.getElementById('fFilingDate').value,
+    cgst: parseFloat(document.getElementById('fCgst').value)||0,
+    sgst: parseFloat(document.getElementById('fSgst').value)||0,
+    igst: parseFloat(document.getElementById('fIgst').value)||0,
+    cess: parseFloat(document.getElementById('fCess').value)||0,
+    compTax: parseFloat((document.getElementById('fCompTax')||{}).value)||0,
+    rate: parseFloat(document.getElementById('fRate').value),
+    turnover: parseFloat((document.getElementById('fTurnover')||{}).value)||0,
+    nil: document.getElementById('fNil').checked,
+    composition: RETURN_RULES[state.returnType].composition,
+    paidBeforeDue: document.getElementById('fPaidBeforeDue').checked,
+    partial: document.getElementById('fPartial').checked,
+    partialAmt: parseFloat((document.getElementById('fPartialAmt')||{}).value)||0
+  };
+}
+
+var lastInputs=null, lastResult=null;
+
+function calculate(){
+  var inputs = gatherInputs();
+  if(!inputs.dueDate || !inputs.filingDate){ alert('Please enter both the Due Date and the Actual Filing Date.'); return; }
+  var result = computeResult(inputs);
+  lastInputs = inputs; lastResult = result;
+  renderResults(inputs, result);
+  renderStepper(inputs, result);
+  gtag('event','gst_interest_calc',{return_type:inputs.returnType,delay_days:result.days});
+}
+
+function renderResults(inputs, result){
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('resultsDiv').style.display = 'block';
+  document.getElementById('stepperCard').style.display = 'block';
+
+  var badge = document.getElementById('modeBadge');
+  var sevLabel = result.severity==='green' ? 'On time / No delay' : (result.severity==='amber' ? 'Delayed filing' : 'Significantly delayed');
+  badge.className = 'result-mode-badge badge-'+result.severity;
+  badge.innerHTML = '<i class="fa-solid fa-circle-info"></i> '+RETURN_RULES[inputs.returnType].label+' — '+sevLabel;
+
+  var kpi = '';
+  kpi += '<div class="kpi-box main sev-'+result.severity+'"><div class="kpi-label">Total Payable</div><div class="kpi-value">'+fmt(result.grandTotal)+'</div><div class="kpi-sub">Tax + Interest + Late Fee</div></div>';
+  kpi += '<div class="kpi-box orange"><div class="kpi-label">Interest (Sec 50)</div><div class="kpi-value">'+fmt(result.totalInterest)+'</div><div class="kpi-sub">@ '+result.rate+'% p.a.</div></div>';
+  kpi += '<div class="kpi-box purple"><div class="kpi-label">Late Fee (Sec 47)</div><div class="kpi-value">'+fmt(result.totalLateFee)+'</div><div class="kpi-sub">'+(result.capApplied!=null && result.rawFee>result.capApplied?'Capped':'As computed')+'</div></div>';
+  kpi += '<div class="kpi-box green"><div class="kpi-label">Delay</div><div class="kpi-value">'+result.days+'</div><div class="kpi-sub">day'+(result.days===1?'':'s')+' late</div></div>';
+  document.getElementById('kpiGrid').innerHTML = kpi;
+
+  var rows = '';
+  rows += brow('Tax Liability', fmt(result.totalTax), false);
+  if(!RETURN_RULES[inputs.returnType].composition){
+    if(result.intCgst||inputs.cgst) rows += brow('Interest — CGST', fmt(result.intCgst), false);
+    if(result.intSgst||inputs.sgst) rows += brow('Interest — SGST', fmt(result.intSgst), false);
+    if(result.intIgst||inputs.igst) rows += brow('Interest — IGST', fmt(result.intIgst), false);
+    if(result.intCess||inputs.cess) rows += brow('Interest — CESS', fmt(result.intCess), false);
+  } else if(RETURN_RULES[inputs.returnType].interestApplies){
+    rows += brow('Interest — Composition Tax', fmt(result.intComp), false);
+  }
+  if(RETURN_RULES[inputs.returnType].interestApplies) rows += brow('Total Interest', fmt(result.totalInterest), false);
+  if(RETURN_RULES[inputs.returnType].lateFee){
+    rows += brow('Late Fee — CGST', fmt(result.feeCgst), false);
+    rows += brow('Late Fee — SGST', fmt(result.feeSgst), false);
+    if(result.capApplied!=null) rows += brow('Maximum Cap Applicable', fmt(result.capApplied), false);
+  }
+  rows += brow('Grand Total Payable', fmt(result.grandTotal), true);
+  document.getElementById('breakdownRows').innerHTML = rows;
+}
+function brow(label, val, isTotal){ return '<div class="breakdown-row'+(isTotal?' total':'')+'"><span class="bl">'+label+'</span><span class="bv">'+val+'</span></div>'; }
+
+function renderStepper(inputs, result){
+  var rule = RETURN_RULES[inputs.returnType];
+  var steps = [];
+  steps.push({label:'Step 1', title:'Due Date', detail:RETURN_RULES[inputs.returnType].label+' was due on <strong>'+fmtDate(inputs.dueDate)+'</strong>.'});
+  steps.push({label:'Step 2', title:'Actual Filing Date', detail:'Return actually filed / to be filed on <strong>'+fmtDate(inputs.filingDate)+'</strong>.'});
+  steps.push({label:'Step 3', title:'Delay Computation', detail: inputs.paidBeforeDue ? 'Tax paid before due date — delay treated as 0 days for interest purposes.' : ('Delay = Filing Date − Due Date = <strong>'+result.days+' day'+(result.days===1?'':'s')+'</strong>.'), formula:'Delay Days = MAX(0, Filing Date − Due Date)'});
+  if(rule.interestApplies){
+    steps.push({label:'Step 4', title:'Interest Formula (Section 50)', detail:'Interest is charged per tax head at '+result.rate+'% per annum on the amount paid late, prorated by day.', formula:'Interest = Tax Head × Rate% × Delay Days ÷ 365'});
+    steps.push({label:'Step 5', title:'Interest Calculation', detail: result.days===0 ? 'No delay / paid before due date — interest = ₹0.' : ('Total interest across all applicable heads = <strong>'+fmt(result.totalInterest)+'</strong>.')});
+  } else {
+    steps.push({label:'Step 4', title:'Interest Not Applicable', detail: RETURN_RULES[inputs.returnType].label+' does not carry a Section 50 interest liability — it is a statement/credit-distribution return, not a tax payment return.'});
+  }
+  if(rule.lateFee){
+    steps.push({label:rule.interestApplies?'Step 6':'Step 5', title:'Late Fee Formula (Section 47)', detail:'Late fee accrues per day of delay, split equally CGST + SGST, subject to the applicable maximum cap.', formula:'Late Fee = MIN(Per-day Rate × Delay Days, Maximum Cap)'});
+    steps.push({label:rule.interestApplies?'Step 7':'Step 6', title:'Late Fee Calculation', detail: result.days===0 ? 'No delay — late fee = ₹0.' : ('Raw fee = '+fmt(result.rawFee)+'. '+(result.capApplied!=null?('Cap applicable = '+fmt(result.capApplied)+'. '):'')+'Applicable late fee = <strong>'+fmt(result.totalLateFee)+'</strong>.'+(result.feeNote?(' '+result.feeNote):''))});
+  }
+  steps.push({label:'Final Step', title:'Grand Total', detail:'Tax Liability + Total Interest + Total Late Fee = <strong>'+fmt(result.grandTotal)+'</strong> payable.', formula:'Grand Total = Tax + Interest + Late Fee'});
+
+  var html = steps.map(function(s,i){
+    return '<div class="step"><div class="step-rail"><div class="step-dot">'+(i+1)+'</div><div class="step-line"></div></div><div class="step-body"><div class="step-label">'+s.label+'</div><div class="step-title">'+s.title+'</div><div class="step-detail">'+s.detail+'</div>'+(s.formula?'<div class="step-formula">'+s.formula+'</div>':'')+'</div></div>';
+  }).join('');
+  document.getElementById('stepperBody').innerHTML = html;
+}
+
+function copyResults(){
+  if(!lastResult) return;
+  var inputs=lastInputs, result=lastResult;
+  var t = 'GST Interest & Late Fee Calculation — Finosutra\n';
+  t += RETURN_RULES[inputs.returnType].label+'\n';
+  t += 'Due Date: '+fmtDate(inputs.dueDate)+'  |  Filing Date: '+fmtDate(inputs.filingDate)+'  |  Delay: '+result.days+' day(s)\n\n';
+  t += 'Tax Liability: ₹'+fmtN(result.totalTax)+'\n';
+  if(RETURN_RULES[inputs.returnType].interestApplies) t += 'Interest (Sec 50 @ '+result.rate+'%): ₹'+fmtN(result.totalInterest)+'\n';
+  if(RETURN_RULES[inputs.returnType].lateFee) t += 'Late Fee (Sec 47): ₹'+fmtN(result.totalLateFee)+'\n';
+  t += 'Grand Total Payable: ₹'+fmtN(result.grandTotal)+'\n';
+  t += '\nGenerated by finosutra.com — for informational purposes only, not legal advice.';
+  navigator.clipboard.writeText(t).then(function(){
+    var btn = document.querySelector('.btn-copy');
+    var orig = btn.innerHTML;
+    btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+    setTimeout(function(){ btn.innerHTML = orig; }, 2000);
+  }).catch(function(){ alert(t); });
+}
+
+function resetCalc(){
+  document.getElementById('fFilingDate').value = '';
+  document.getElementById('fCgst').value = '';
+  document.getElementById('fSgst').value = '';
+  document.getElementById('fIgst').value = '';
+  document.getElementById('fCess').value = '';
+  if(document.getElementById('fCompTax')) document.getElementById('fCompTax').value = '';
+  if(document.getElementById('fTurnover')) document.getElementById('fTurnover').value = '';
+  document.getElementById('fRate').value = 18;
+  document.getElementById('fNil').checked = false;
+  document.getElementById('fPaidBeforeDue').checked = false;
+  document.getElementById('fPartial').checked = false;
+  document.getElementById('partialWrap').style.display = 'none';
+  document.getElementById('emptyState').style.display = 'block';
+  document.getElementById('resultsDiv').style.display = 'none';
+  document.getElementById('stepperCard').style.display = 'none';
+  suggestDueDate();
+}
+
+/* ════════════════════════════════════════════════════════════
+   15 WORKED EXAMPLES — inputs only; figures computed live via
+   computeResult() so they always stay accurate & consistent.
+════════════════════════════════════════════════════════════ */
+var WORKED_EXAMPLES = [
+  { title:'GSTR-3B, 15-day delay', desc:'Regular taxpayer, turnover ₹1.2cr, files GSTR-3B 15 days late with tax outstanding.', inputs:{returnType:'GSTR3B', dueDate:'2026-04-20', filingDate:'2026-05-05', cgst:62500, sgst:62500, igst:0, cess:0, rate:18, turnover:12000000, nil:false} },
+  { title:'GSTR-3B Nil Return, 40-day delay', desc:'No outward supply for the month, but return itself filed 40 days late.', inputs:{returnType:'GSTR3B', dueDate:'2026-03-20', filingDate:'2026-04-29', cgst:0, sgst:0, igst:0, cess:0, rate:18, turnover:8000000, nil:true} },
+  { title:'GSTR-1, 20-day delay (fee only)', desc:'Outward supply statement filed late — late fee applies, no interest since no direct tax payment.', inputs:{returnType:'GSTR1', dueDate:'2026-02-11', filingDate:'2026-03-03', cgst:0, sgst:0, igst:0, cess:0, rate:18, turnover:9000000, nil:false} },
+  { title:'GSTR-3B, Inter-state (IGST only), 10 days', desc:'Business supplying only inter-state, IGST liability of ₹1,25,000 paid 10 days late.', inputs:{returnType:'GSTR3B', dueDate:'2026-01-20', filingDate:'2026-01-30', cgst:0, sgst:0, igst:125000, cess:0, rate:18, turnover:30000000, nil:false} },
+  { title:'CMP-08, Composition Dealer, 25 days', desc:'Composition dealer quarterly statement, lump-sum tax ₹18,000, filed 25 days late.', inputs:{returnType:'CMP08', dueDate:'2026-04-18', filingDate:'2026-05-13', compTax:18000, rate:18, nil:false} },
+  { title:'GSTR-4, Composition Annual Return, 60 days', desc:'Composition dealer annual return with tax due, filed 60 days after the 30-June due date.', inputs:{returnType:'GSTR4', dueDate:'2026-06-30', filingDate:'2026-08-29', compTax:22000, rate:18, nil:false} },
+  { title:'GSTR-4 Nil, small delay', desc:'Nil composition annual return, no tax due, filed a few days late.', inputs:{returnType:'GSTR4', dueDate:'2026-06-30', filingDate:'2026-07-10', compTax:0, rate:18, nil:true} },
+  { title:'GSTR-9, Turnover ₹3cr, 45-day delay', desc:'Annual return, turnover under ₹5cr slab, late fee at the lowest tier.', inputs:{returnType:'GSTR9', dueDate:'2025-12-31', filingDate:'2026-02-14', cgst:0,sgst:0,igst:0,cess:0, rate:18, turnover:30000000, nil:false} },
+  { title:'GSTR-9, Turnover ₹12cr, 30-day delay', desc:'Mid-tier turnover slab (₹5cr–₹20cr), higher per-day late fee rate.', inputs:{returnType:'GSTR9', dueDate:'2025-12-31', filingDate:'2026-01-30', cgst:0,sgst:0,igst:0,cess:0, rate:18, turnover:120000000, nil:false} },
+  { title:'GSTR-9, Turnover ₹35cr, 20-day delay', desc:'Large taxpayer above ₹20cr, top late-fee tier with 0.50% turnover cap.', inputs:{returnType:'GSTR9', dueDate:'2025-12-31', filingDate:'2026-01-20', cgst:0,sgst:0,igst:0,cess:0, rate:18, turnover:350000000, nil:false} },
+  { title:'GSTR-9C, Turnover ₹8cr, 15-day delay after GSTR-9', desc:'Reconciliation statement filed 15 days after GSTR-9 for a taxpayer above the ₹5cr mandatory threshold.', inputs:{returnType:'GSTR9C', dueDate:'2025-12-31', filingDate:'2026-01-15', cgst:0,sgst:0,igst:0,cess:0, rate:18, turnover:80000000, nil:false} },
+  { title:'GSTR-7 (TDS), 12-day delay', desc:'Government deductor deposits TDS 12 days after the 10th-of-month due date.', inputs:{returnType:'GSTR7', dueDate:'2026-05-10', filingDate:'2026-05-22', cgst:5000, sgst:5000, igst:0, cess:0, rate:18, nil:false} },
+  { title:'GSTR-8 (E-commerce TCS), 18-day delay', desc:'E-commerce operator deposits TCS collected from sellers 18 days late.', inputs:{returnType:'GSTR8', dueDate:'2026-06-10', filingDate:'2026-06-28', cgst:8000, sgst:8000, igst:0, cess:0, rate:18, nil:false} },
+  { title:'GSTR-6 (ISD), 22-day delay', desc:'Input Service Distributor return filed late — late fee only, no interest since no tax is paid.', inputs:{returnType:'GSTR6', dueDate:'2026-03-13', filingDate:'2026-04-04', cgst:0,sgst:0,igst:0,cess:0, rate:18, nil:false} },
+  { title:'GSTR-3B, Partial Payment before filing, 25 days', desc:'Taxpayer pays ₹40,000 of a ₹1,00,000 liability before filing, reducing the interest principal on the balance.', inputs:{returnType:'GSTR3B', dueDate:'2026-07-20', filingDate:'2026-08-14', cgst:50000, sgst:50000, igst:0, cess:0, rate:18, turnover:20000000, nil:false, partial:true, partialAmt:40000} }
+];
+
+function renderExamples(){
+  var html = WORKED_EXAMPLES.map(function(ex, i){
+    var inp = Object.assign({returnType:ex.inputs.returnType, cgst:0,sgst:0,igst:0,cess:0,compTax:0,rate:18,turnover:0,nil:false,composition:RETURN_RULES[ex.inputs.returnType].composition,paidBeforeDue:false,partial:false,partialAmt:0}, ex.inputs);
+    var res = computeResult(inp);
+    return '<div class="example-card"><div class="example-num">'+(i+1)+'</div><div class="example-title">'+ex.title+'</div><div class="example-desc">'+ex.desc+'</div><div class="example-figs">'+
+      '<div class="example-fig-row"><span class="l">Return</span><span class="v">'+RETURN_RULES[ex.inputs.returnType].label.split(' — ')[0]+'</span></div>'+
+      '<div class="example-fig-row"><span class="l">Delay</span><span class="v">'+res.days+' days</span></div>'+
+      '<div class="example-fig-row"><span class="l">Interest</span><span class="v">'+fmt(res.totalInterest)+'</span></div>'+
+      '<div class="example-fig-row"><span class="l">Late Fee</span><span class="v">'+fmt(res.totalLateFee)+'</span></div>'+
+      '<div class="example-fig-row tot"><span class="l">Total Payable</span><span class="v">'+fmt(res.grandTotal)+'</span></div>'+
+      '</div></div>';
+  }).join('');
+  document.getElementById('exampleGrid').innerHTML = html;
+}
+
+/* ════════════════════════════════════════════════════════════
+   30+ FAQs — rendered on page AND mirrored into FAQPage JSON-LD
+════════════════════════════════════════════════════════════ */
+var FAQS = [
+  {q:'What is GST interest?', a:'GST interest is the amount charged under Section 50 of the CGST Act when a taxpayer pays their GST tax liability after the due date. It compensates the government for the delayed receipt of tax and is calculated on a per-day basis at 18% per annum (or 24% p.a. for wrongly availed and utilised input tax credit under Section 50(3)).'},
+  {q:'What is GST late fee?', a:'GST late fee is a fixed daily charge under Section 47 of the CGST Act for filing a GST return after its due date — separate from interest on the tax itself. It applies even if there is no tax liability (a Nil return), though at a reduced rate, and is capped at a maximum amount depending on the return type and turnover.'},
+  {q:'How is GST interest calculated?', a:'GST interest = Tax Amount × Interest Rate (%) × Number of Delay Days ÷ 365. It is computed separately for CGST, SGST, IGST and CESS components on the net cash tax liability (i.e., only the portion paid through the Electronic Cash Ledger, not through Input Tax Credit).'},
+  {q:'How is GST late fee calculated?', a:'GST late fee = Per-day rate (split equally between CGST and SGST) × number of days of delay, subject to a maximum cap. For example, GSTR-3B carries a late fee of ₹50/day (₹25 CGST + ₹25 SGST) for non-nil returns, capped based on annual turnover.'},
+  {q:'What is the difference between GST interest and late fee?', a:'Interest is compensatory — charged on the tax amount itself for the period it remained unpaid. Late fee is punitive — a fixed daily charge for the delay in filing the return, irrespective of whether tax was actually due. A return can attract late fee even with zero tax liability (Nil return), but interest only accrues if tax was paid late.'},
+  {q:'What does Section 50 of the CGST Act say?', a:'Section 50(1) mandates interest at a notified rate (18% per annum) on tax paid after the due date. Section 50(3) prescribes a higher rate (24% per annum) for interest on input tax credit that has been wrongly availed and subsequently utilised. Following a retrospective amendment (Finance Act 2021, effective 1 July 2017), Section 50(1) interest is charged only on the net cash tax liability.'},
+  {q:'What does Section 47 of the CGST Act say?', a:'Section 47 prescribes the late fee for delayed filing of GST returns (GSTR-1, GSTR-3B, GSTR-4, GSTR-5, GSTR-6, GSTR-7, GSTR-8, GSTR-9 etc.). The base provision sets a maximum of ₹200/day (₹100 CGST + ₹100 SGST) up to ₹5,000, but this is routinely superseded by notifications for specific return types, generally to a lower rate and cap.'},
+  {q:'Is there a late fee waiver scheme for GST returns?', a:'Yes, CBIC has periodically issued amnesty notifications waiving or capping late fees for specific past periods — for example, reduced late fee caps for pending GSTR-4, GSTR-9 and GSTR-10 filings in various years. These schemes are time-bound and apply only to the periods and windows specified in the relevant notification; always check the latest notification before relying on a waiver.'},
+  {q:'What is the maximum GST late fee?', a:'The maximum late fee depends on the return type and, for GSTR-3B, GSTR-1, GSTR-9 and GSTR-9C, on the taxpayer\'s aggregate annual turnover. It ranges from ₹500 (Nil GSTR-3B/GSTR-1) up to ₹10,000 for high-turnover regular returns, and up to 0.50% of turnover for GSTR-9/9C of large taxpayers.'},
+  {q:'Is late fee applicable for a Nil GST return?', a:'Yes, but at a reduced rate. A Nil GSTR-3B or GSTR-1 attracts late fee of ₹20/day (₹10 CGST + ₹10 SGST), capped at ₹500, instead of the ₹50/day rate for non-nil returns. GSTR-4 Nil annual returns currently attract no late fee under the amnesty relief in force.'},
+  {q:'Does the Composition Scheme have different interest/late fee rules?', a:'Composition taxpayers file CMP-08 (quarterly statement) and GSTR-4 (annual return). CMP-08 attracts late fee of ₹200/day (₹100+₹100) capped at ₹5,000; GSTR-4 attracts ₹50/day capped at ₹2,000 for non-nil returns. Interest at 18% p.a. applies on the composition tax paid after the due date, same as for regular taxpayers.'},
+  {q:'How is GST late fee calculated for GSTR-9 and GSTR-9C?', a:'GSTR-9/9C late fee is turnover-tiered per Notification 07/2023-CT: ₹50/day (capped at 0.04% of turnover in the State/UT) for AATO up to ₹5cr; ₹100/day (same 0.04% cap) for AATO ₹5cr–₹20cr; and ₹200/day (capped at 0.50% of turnover) above ₹20cr. GSTR-9C late fee runs continuously with GSTR-9 as part of the same annual return, not as a separate calculation.'},
+  {q:'Is GSTR-9 mandatory for all taxpayers?', a:'No. Filing GSTR-9 is optional for taxpayers with aggregate annual turnover up to ₹2 crore for the relevant financial year (per the current exemption threshold). Above ₹2 crore, filing is mandatory. GSTR-9C is mandatory only above ₹5 crore turnover.'},
+  {q:'Can Input Tax Credit (ITC) be used to pay GST interest or late fee?', a:'No. Both interest under Section 50 and late fee under Section 47 must be paid in cash through the Electronic Cash Ledger — ITC available in the Electronic Credit Ledger cannot be used to discharge either liability.'},
+  {q:'What happens if I file my GST return but don\'t pay the tax?', a:'Filing a return without paying the associated tax does not stop interest from accruing — interest runs from the due date until the tax is actually paid, and continues even if the return itself has been filed. Filing the return only stops further late fee accrual (subject to the return being validly filed, which typically requires the tax to be paid alongside).'},
+  {q:'From which date is delay calculated — due date or invoice date?', a:'Delay for both interest and late fee purposes is calculated from the statutory due date of the specific GST return (e.g., 20th of the following month for monthly GSTR-3B), not from the invoice date or any other date, until the date the tax is actually paid / the return is actually filed.'},
+  {q:'Is GST interest charged on a daily or monthly basis?', a:'GST interest is charged on a daily basis. The annual rate (18% or 24%) is divided by 365 and multiplied by the number of days of delay, so even a single day\'s delay attracts a proportionate interest charge.'},
+  {q:'Does interest apply separately to CGST, SGST, IGST and CESS?', a:'Yes. Interest is computed independently on each tax head that was paid late — CGST, SGST, IGST and CESS — using the same rate and day-count, since each head is a distinct liability under the respective Acts.'},
+  {q:'What interest rate applies to wrongly availed and utilised ITC?', a:'Section 50(3) prescribes 24% per annum interest where input tax credit has been wrongly availed AND utilised (i.e., actually used to discharge output tax liability). If wrongly availed credit is reversed before utilisation, no interest under Section 50(3) arises on that credit.'},
+  {q:'Can GST late fee be waived through a court order or appeal?', a:'In specific circumstances, courts have permitted waiver or reduction of late fee, particularly during periods of technical portal issues or force majeure events (e.g., during COVID-19). However, waivers are generally granted through CBIC notifications rather than case-by-case litigation, and are the exception rather than the rule.'},
+  {q:'How do I calculate GST interest for a 15-day delay on ₹1,25,000?', a:'Interest = ₹1,25,000 × 18% × 15 ÷ 365 = approximately ₹925. This is calculated on the net tax amount (or the relevant CGST/SGST/IGST split of it) actually paid late.'},
+  {q:'Does GSTR-1 attract interest under Section 50?', a:'No. GSTR-1 is a statement of outward supplies and carries no direct tax payment obligation of its own, so Section 50 interest does not apply to it. However, a delay in filing GSTR-1 does attract late fee under Section 47, and indirectly delays the buyer\'s ability to claim ITC.'},
+  {q:'Does GSTR-6 (Input Service Distributor) attract interest?', a:'No. GSTR-6 relates to the distribution of input tax credit among branches, not tax payment, so no Section 50 interest applies. Only the late fee under Section 47 is relevant for delayed filing of GSTR-6.'},
+  {q:'What is the late fee for GSTR-7 (TDS return)?', a:'GSTR-7 attracts a late fee of ₹50 per day (₹25 CGST + ₹25 SGST), subject to a maximum of ₹5,000. Interest at 18% per annum also applies if the TDS amount deducted was deposited after the 10th-of-the-month due date.'},
+  {q:'What is the late fee for GSTR-8 (e-commerce TCS)?', a:'GSTR-8 attracts a late fee of ₹200 per day (₹100 CGST + ₹100 SGST), capped at ₹10,000. Interest at 18% per annum applies on TCS collected but deposited after the 10th-of-the-month due date.'},
+  {q:'What is the QRMP scheme and how does it affect due dates?', a:'The Quarterly Return Monthly Payment (QRMP) scheme allows small taxpayers (turnover up to ₹5 crore) to file GSTR-1 and GSTR-3B quarterly while paying tax monthly. Under QRMP, GSTR-3B is due on the 22nd (Category I states) or 24th (Category II states) of the month following the quarter, and GSTR-1 quarterly is due on the 13th.'},
+  {q:'What happens if I file GSTR-9 late but my turnover is below ₹2 crore?', a:'Since GSTR-9 filing is optional below ₹2 crore turnover, a taxpayer in that bracket who chooses not to file typically does not attract a late fee for GSTR-9. If they voluntarily file, standard due-date and late-fee rules apply to that filing.'},
+  {q:'Is there a separate penalty besides interest and late fee?', a:'Yes, in cases of tax evasion, fraud, or specific statutory contraventions, separate penalties under Sections 73, 74 or 122 of the CGST Act may apply, distinct from the routine interest (Section 50) and late fee (Section 47) covered by this calculator. Those penalty provisions are not modelled in this tool.'},
+  {q:'Can I use this calculator for GST practitioner client billing or audit workpapers?', a:'Yes, the calculator shows full step-by-step working and a Print/Save-PDF option suitable for attaching to client communications or audit workpapers. However, always independently verify the figures against the notifications current at the time of filing, since this tool is for informational purposes only.'},
+  {q:'Does the late fee cap change based on turnover for every return type?', a:'No — turnover-based tiering currently applies specifically to GSTR-3B, GSTR-1 (fixed cap brackets) and GSTR-9/GSTR-9C (percentage-of-turnover caps). Other returns like CMP-08, GSTR-4, GSTR-5, GSTR-5A, GSTR-6, GSTR-7 and GSTR-8 currently carry a single flat cap regardless of turnover.'},
+  {q:'What if I pay the tax on time but file the return late?', a:'If the tax was actually paid into the Electronic Cash Ledger on or before the due date, no Section 50 interest arises even if the return itself (and the debit of the cash ledger against the liability) happens later — use the "Tax Paid Before Due Date" toggle in this calculator to reflect that scenario. Late fee, however, still applies based on the actual date the return is filed.'},
+  {q:'How accurate are the figures shown in this calculator?', a:'The calculation logic and rate/cap figures are verified against CBIC notifications as of the "last verified" date shown in the Law References section. GST rates, caps and due dates change periodically via notification, so always cross-check current figures before relying on this tool for an actual filing or payment.'},
+  {q:'Can partial payment reduce my GST interest?', a:'Yes. If part of the tax liability was paid before the return was filed, interest for the remaining delay period is calculated only on the outstanding balance, not the full original liability. Use the "Partial Payment Made" toggle to model this.'}
+];
+
+function renderFAQs(){
+  document.getElementById('faqList').innerHTML = FAQS.map(function(f){
+    return '<div class="faq-item"><div class="faq-q">'+f.q+'</div><div class="faq-a">'+f.a+'</div></div>';
+  }).join('');
+
+  var ld = { "@context":"https://schema.org", "@type":"FAQPage", "mainEntity": FAQS.map(function(f){
+    return { "@type":"Question", "name": f.q, "acceptedAnswer": { "@type":"Answer", "text": f.a } };
+  })};
+  var script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.text = JSON.stringify(ld);
+  document.head.appendChild(script);
+}
+
+/* ════════════════════════════════════════════════════════════
+   INIT
+════════════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function(){
+  initReturnSelect();
+  onReturnTypeChange();
+  document.getElementById('fFilingDate').addEventListener('keydown', function(e){ if(e.key==='Enter') calculate(); });
+  renderExamples();
+  renderFAQs();
+});
+
+(function(){
+  var t=document.getElementById('navToggle');
+  if(!t) return;
+  t.onclick=function(){
+    var l=document.getElementById('navLinks');
+    if(l) l.classList.toggle('open');
+    var i=this.querySelector('i');
+    if(i) i.className=l&&l.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-bars';
+  };
+})();
+</script>
+
+</body>
+</html>
