@@ -85,6 +85,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-primar
 .form-group{margin-bottom:14px;}
 .form-label{font-size:11.5px;font-weight:600;color:var(--text-secondary);margin-bottom:5px;display:block;letter-spacing:0.02em;}
 .form-input,.form-select{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:13.5px;font-family:inherit;color:var(--text-primary);background:var(--bg-white);transition:border-color .15s;outline:none;}
+.form-input:disabled{background:var(--bg);color:var(--text-muted);cursor:not-allowed;}
 .form-input:focus,.form-select:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(99,102,241,0.08);}
 .input-prefix{position:relative;}
 .input-prefix span{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:600;color:var(--text-secondary);}
@@ -146,6 +147,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-primar
 .bl{color:var(--text-secondary);}
 .bv{font-weight:600;color:var(--text-primary);font-variant-numeric:tabular-nums;}
 
+.result-note{background:var(--orange-bg);border:1px solid rgba(217,119,6,0.2);border-radius:var(--radius-sm);padding:10px 12px;font-size:11.5px;color:#92400E;line-height:1.6;margin-bottom:14px;}
 .btn-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 .btn-copy,.btn-print{padding:10px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-white);color:var(--text-secondary);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px;}
 .btn-copy:hover,.btn-print:hover{border-color:var(--brand);color:var(--brand);background:var(--brand-light);}
@@ -375,9 +377,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-primar
       </div>
 
       <div id="turnoverWrap" class="form-group" style="display:none">
-        <div class="form-label">Aggregate Annual Turnover (PAN-India, prev. FY)</div>
+        <div class="form-label" id="turnoverLabel">Aggregate Annual Turnover (PAN-India, prev. FY)</div>
         <div class="input-prefix"><span>&#8377;</span><input type="number" class="form-input" id="fTurnover" placeholder="e.g. 25000000" min="0" step="1"/></div>
-        <div class="hint">Used to pick the correct late fee cap slab.</div>
+        <div class="hint" id="turnoverHint">Used to pick the correct late fee cap slab.</div>
       </div>
 
       <div class="chk-block">
@@ -433,6 +435,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-primar
           <div class="breakdown-hd">Full Breakdown</div>
           <div id="breakdownRows"></div>
         </div>
+        <div id="resultNote" class="result-note" style="display:none"></div>
         <div class="btn-row">
           <button class="btn-copy" onclick="copyResults()"><i class="fa-regular fa-copy"></i> Copy Results</button>
           <button class="btn-print" onclick="window.print()"><i class="fa-solid fa-print"></i> Print / Save PDF</button>
@@ -648,6 +651,19 @@ function onReturnTypeChange(){
   document.getElementById('turnoverWrap').style.display = rule.turnoverTiered ? 'block' : 'none';
   document.getElementById('taxHeadsWrap').style.display = rule.composition ? 'none' : 'block';
   document.getElementById('compTaxWrap').style.display = rule.composition ? 'block' : 'none';
+
+  // Turnover is a hard requirement for the % turnover-tiered returns (GSTR-9/9C) since
+  // their cap is computed AS a percentage of turnover — without it there is no correct cap.
+  var turnoverRequired = rule.turnoverTiered && rule.lateFee && !!rule.lateFee.tiers;
+  var tLabel = document.getElementById('turnoverLabel');
+  var tHint = document.getElementById('turnoverHint');
+  if(tLabel){
+    tLabel.innerHTML = 'Aggregate Annual Turnover (PAN-India, prev. FY)' + (turnoverRequired ? ' <span style="color:var(--red)">*</span>' : '');
+    tHint.textContent = turnoverRequired
+      ? 'Required — the late fee cap for this return is calculated as a percentage of turnover.'
+      : 'Used to pick the correct late fee cap slab.';
+  }
+
   buildPeriodPicker();
   suggestDueDate();
 }
@@ -707,7 +723,14 @@ function setQCat(c, btn){
 
 function onNilToggle(){
   var isNil = document.getElementById('fNil').checked;
-  if(isNil){ ['fCgst','fSgst','fIgst','fCess','fCompTax'].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=''; }); }
+  // A Nil return has no tax liability by definition — lock the tax fields at zero
+  // while checked so they can't silently drift out of sync with the Nil late-fee rate.
+  ['fCgst','fSgst','fIgst','fCess','fCompTax'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el) return;
+    if(isNil){ el.value=''; el.disabled = true; el.placeholder = '0 (Nil return)'; }
+    else { el.disabled = false; el.placeholder = ({fCgst:'CGST', fSgst:'SGST', fIgst:'IGST', fCess:'CESS', fCompTax:'e.g. 12000'})[id]; }
+  });
 }
 function onPaidBeforeDueToggle(){}
 function onPartialToggle(){
@@ -772,54 +795,68 @@ function fmtDate(iso){
 ════════════════════════════════════════════════════════════ */
 function computeResult(inputs){
   var rule = RETURN_RULES[inputs.returnType];
-  var days = inputs.paidBeforeDue ? 0 : dateDiffDays(inputs.dueDate, inputs.filingDate);
+  // Delay (late fee, severity, display) is always the real filing delay — it does NOT
+  // depend on when the tax was paid. Interest alone is zeroed when tax was paid on time.
+  var delayDays = dateDiffDays(inputs.dueDate, inputs.filingDate);
+  var interestDays = inputs.paidBeforeDue ? 0 : delayDays;
+  var error = null;
 
-  var cgst = rule.composition ? 0 : (inputs.cgst||0);
-  var sgst = rule.composition ? 0 : (inputs.sgst||0);
-  var igst = rule.composition ? 0 : (inputs.igst||0);
-  var cess = rule.composition ? 0 : (inputs.cess||0);
-  var compTax = rule.composition ? (inputs.compTax||0) : 0;
+  var cgst = rule.composition ? 0 : Math.max(0, inputs.cgst||0);
+  var sgst = rule.composition ? 0 : Math.max(0, inputs.sgst||0);
+  var igst = rule.composition ? 0 : Math.max(0, inputs.igst||0);
+  var cess = rule.composition ? 0 : Math.max(0, inputs.cess||0);
+  var compTax = rule.composition ? Math.max(0, inputs.compTax||0) : 0;
   var totalTax = cgst + sgst + igst + cess + compTax;
+  var turnoverVal = Math.max(0, inputs.turnover||0);
+
+  // A turnover-tiered % cap (GSTR-9/9C) needs a real turnover figure — without it the
+  // cap formula (turnover × %) resolves to zero and would silently zero the late fee.
+  if(rule.turnoverTiered && rule.lateFee && rule.lateFee.tiers && turnoverVal <= 0 && delayDays > 0){
+    error = 'Aggregate Annual Turnover is required to determine the correct late fee slab for '+rule.label+'.';
+  }
 
   // reduce interest principal for partial payment already made
   var payFactor = 1;
   if(inputs.partial && totalTax > 0){
-    var already = Math.min(inputs.partialAmt||0, totalTax);
+    var already = Math.min(Math.max(0, inputs.partialAmt||0), totalTax);
     payFactor = Math.max(0, (totalTax - already) / totalTax);
   }
-  var rate = (inputs.rate != null ? inputs.rate : 18) / 100;
+  var rateVal = inputs.rate;
+  if(rateVal == null || isNaN(rateVal) || rateVal < 0) rateVal = 18;
+  var rate = rateVal / 100;
 
   var intCgst=0,intSgst=0,intIgst=0,intCess=0,intComp=0;
-  if(rule.interestApplies && days > 0){
-    intCgst = cgst*payFactor*rate*days/365;
-    intSgst = sgst*payFactor*rate*days/365;
-    intIgst = igst*payFactor*rate*days/365;
-    intCess = cess*payFactor*rate*days/365;
-    intComp = compTax*payFactor*rate*days/365;
+  if(rule.interestApplies && interestDays > 0){
+    intCgst = cgst*payFactor*rate*interestDays/365;
+    intSgst = sgst*payFactor*rate*interestDays/365;
+    intIgst = igst*payFactor*rate*interestDays/365;
+    intCess = cess*payFactor*rate*interestDays/365;
+    intComp = compTax*payFactor*rate*interestDays/365;
   }
   var totalInterest = intCgst+intSgst+intIgst+intCess+intComp;
 
-  // late fee
+  // late fee — always keyed on the real filing delay (delayDays), never on interestDays
   var feeCgst=0, feeSgst=0, capApplied=null, rawFee=0, feeNote='';
-  if(days > 0 && rule.lateFee){
+  if(delayDays > 0 && rule.lateFee && !error){
     var lf = rule.lateFee;
     if(rule.turnoverTiered && lf.tiers){
-      var turnover = inputs.turnover||0;
+      var turnover = turnoverVal;
       var tier = lf.tiers[lf.tiers.length-1];
       for(var i=0;i<lf.tiers.length;i++){ if(turnover <= lf.tiers[i].upTo){ tier = lf.tiers[i]; break; } }
       var perDay = tier.perDay;
-      var rawCgst = (perDay/2)*days, rawSgst = (perDay/2)*days;
+      var rawCgst = (perDay/2)*delayDays, rawSgst = (perDay/2)*delayDays;
       rawFee = rawCgst+rawSgst;
       var cap = turnover * tier.capPct;
       capApplied = cap;
       var scale = rawFee>0 ? Math.min(1, cap/rawFee) : 1;
       feeCgst = rawCgst*scale; feeSgst = rawSgst*scale;
       if(inputs.returnType==='GSTR9' && turnover>0 && turnover<=rule.exemptBelowTurnover){ feeNote='Turnover ≤ ₹2cr — GSTR-9 filing is optional; late fee typically does not apply if the return is not filed.'; }
+      if(inputs.returnType==='GSTR9C'){ feeNote='GSTR-9C late fee is continuous with GSTR-9 from the same due date, not a separate fee — do not add this figure to a separately-computed GSTR-9 late fee for the same annual return.'; }
     } else if(rule.turnoverTiered && lf.capTiers){
-      var turnover2 = inputs.turnover||0;
+      var turnover2 = turnoverVal;
       var perDayN = inputs.nil ? lf.perDayNil : lf.perDayNormal;
       var split = inputs.nil ? lf.splitNil : lf.splitNormal;
-      rawFee = perDayN*days;
+      rawFee = perDayN*delayDays;
       var capTier = lf.capTiers[lf.capTiers.length-1];
       for(var j=0;j<lf.capTiers.length;j++){ if(turnover2 <= lf.capTiers[j].upTo){ capTier = lf.capTiers[j]; break; } }
       var cap2 = inputs.nil ? lf.nilCap : capTier.cap;
@@ -830,7 +867,7 @@ function computeResult(inputs){
     } else {
       var perDayN2 = inputs.nil ? (lf.perDayNil!=null?lf.perDayNil:lf.perDayNormal) : lf.perDayNormal;
       var split2 = inputs.nil ? (lf.splitNil||lf.splitNormal) : lf.splitNormal;
-      rawFee = perDayN2*days;
+      rawFee = perDayN2*delayDays;
       var cap3 = inputs.nil && lf.nilCap!=null ? lf.nilCap : lf.cap;
       capApplied = cap3;
       var scale3 = rawFee>0 ? Math.min(1, cap3/rawFee) : 1;
@@ -840,13 +877,14 @@ function computeResult(inputs){
   }
   var totalLateFee = feeCgst+feeSgst;
   var grandTotal = totalTax + totalInterest + totalLateFee;
-  var severity = days===0 ? 'green' : (days<=30 ? 'amber' : 'red');
+  var severity = delayDays===0 ? 'green' : (delayDays<=30 ? 'amber' : 'red');
 
   return {
-    days: days, totalTax: totalTax, cgst:cgst, sgst:sgst, igst:igst, cess:cess, compTax:compTax,
+    error: error,
+    days: delayDays, interestDays: interestDays, totalTax: totalTax, cgst:cgst, sgst:sgst, igst:igst, cess:cess, compTax:compTax,
     intCgst:intCgst, intSgst:intSgst, intIgst:intIgst, intCess:intCess, intComp:intComp, totalInterest: totalInterest,
     feeCgst: feeCgst, feeSgst: feeSgst, totalLateFee: totalLateFee, rawFee: rawFee, capApplied: capApplied, feeNote: feeNote,
-    grandTotal: grandTotal, severity: severity, rate: (inputs.rate!=null?inputs.rate:18)
+    grandTotal: grandTotal, severity: severity, rate: rateVal
   };
 }
 
@@ -879,6 +917,11 @@ function calculate(){
   var inputs = gatherInputs();
   if(!inputs.dueDate || !inputs.filingDate){ alert('Please enter both the Due Date and the Actual Filing Date.'); return; }
   var result = computeResult(inputs);
+  if(result.error){
+    alert(result.error);
+    document.getElementById('fTurnover').focus();
+    return;
+  }
   lastInputs = inputs; lastResult = result;
   renderResults(inputs, result);
   renderStepper(inputs, result);
@@ -920,6 +963,15 @@ function renderResults(inputs, result){
   }
   rows += brow('Grand Total Payable', fmt(result.grandTotal), true);
   document.getElementById('breakdownRows').innerHTML = rows;
+
+  var noteEl = document.getElementById('resultNote');
+  if(result.feeNote){
+    noteEl.style.display = 'block';
+    noteEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> '+result.feeNote;
+  } else {
+    noteEl.style.display = 'none';
+    noteEl.innerHTML = '';
+  }
 }
 function brow(label, val, isTotal){ return '<div class="breakdown-row'+(isTotal?' total':'')+'"><span class="bl">'+label+'</span><span class="bv">'+val+'</span></div>'; }
 
@@ -928,15 +980,15 @@ function renderStepper(inputs, result){
   var steps = [];
   steps.push({label:'Step 1', title:'Due Date', detail:RETURN_RULES[inputs.returnType].label+' was due on <strong>'+fmtDate(inputs.dueDate)+'</strong>.'});
   steps.push({label:'Step 2', title:'Actual Filing Date', detail:'Return actually filed / to be filed on <strong>'+fmtDate(inputs.filingDate)+'</strong>.'});
-  steps.push({label:'Step 3', title:'Delay Computation', detail: inputs.paidBeforeDue ? 'Tax paid before due date — delay treated as 0 days for interest purposes.' : ('Delay = Filing Date − Due Date = <strong>'+result.days+' day'+(result.days===1?'':'s')+'</strong>.'), formula:'Delay Days = MAX(0, Filing Date − Due Date)'});
+  steps.push({label:'Step 3', title:'Delay Computation', detail: 'Filing delay = Filing Date − Due Date = <strong>'+result.days+' day'+(result.days===1?'':'s')+'</strong>.'+(inputs.paidBeforeDue ? ' Tax was paid before the due date, so this delay is used for late fee only — interest is treated as 0 days below.' : ''), formula:'Delay Days = MAX(0, Filing Date − Due Date)'});
   if(rule.interestApplies){
-    steps.push({label:'Step 4', title:'Interest Formula (Section 50)', detail:'Interest is charged per tax head at '+result.rate+'% per annum on the amount paid late, prorated by day.', formula:'Interest = Tax Head × Rate% × Delay Days ÷ 365'});
-    steps.push({label:'Step 5', title:'Interest Calculation', detail: result.days===0 ? 'No delay / paid before due date — interest = ₹0.' : ('Total interest across all applicable heads = <strong>'+fmt(result.totalInterest)+'</strong>.')});
+    steps.push({label:'Step 4', title:'Interest Formula (Section 50)', detail:'Interest is charged per tax head at '+result.rate+'% per annum on the amount paid late, prorated by day. Interest depends on when the <em>tax</em> was paid — not on when the return was filed.', formula:'Interest = Tax Head × Rate% × Interest Days ÷ 365'});
+    steps.push({label:'Step 5', title:'Interest Calculation', detail: result.interestDays===0 ? (inputs.paidBeforeDue ? 'Tax was paid before the due date — interest = ₹0, even though the return itself was filed late.' : 'No delay — interest = ₹0.') : ('Total interest across all applicable heads over '+result.interestDays+' day'+(result.interestDays===1?'':'s')+' = <strong>'+fmt(result.totalInterest)+'</strong>.')});
   } else {
     steps.push({label:'Step 4', title:'Interest Not Applicable', detail: RETURN_RULES[inputs.returnType].label+' does not carry a Section 50 interest liability — it is a statement/credit-distribution return, not a tax payment return.'});
   }
   if(rule.lateFee){
-    steps.push({label:rule.interestApplies?'Step 6':'Step 5', title:'Late Fee Formula (Section 47)', detail:'Late fee accrues per day of delay, split equally CGST + SGST, subject to the applicable maximum cap.', formula:'Late Fee = MIN(Per-day Rate × Delay Days, Maximum Cap)'});
+    steps.push({label:rule.interestApplies?'Step 6':'Step 5', title:'Late Fee Formula (Section 47)', detail:'Late fee accrues per day the return itself remains unfiled, split equally CGST + SGST, subject to the applicable maximum cap — independent of when the tax was paid.', formula:'Late Fee = MIN(Per-day Rate × Delay Days, Maximum Cap)'});
     steps.push({label:rule.interestApplies?'Step 7':'Step 6', title:'Late Fee Calculation', detail: result.days===0 ? 'No delay — late fee = ₹0.' : ('Raw fee = '+fmt(result.rawFee)+'. '+(result.capApplied!=null?('Cap applicable = '+fmt(result.capApplied)+'. '):'')+'Applicable late fee = <strong>'+fmt(result.totalLateFee)+'</strong>.'+(result.feeNote?(' '+result.feeNote):''))});
   }
   steps.push({label:'Final Step', title:'Grand Total', detail:'Tax Liability + Total Interest + Total Late Fee = <strong>'+fmt(result.grandTotal)+'</strong> payable.', formula:'Grand Total = Tax + Interest + Late Fee'});
@@ -976,12 +1028,14 @@ function resetCalc(){
   if(document.getElementById('fTurnover')) document.getElementById('fTurnover').value = '';
   document.getElementById('fRate').value = 18;
   document.getElementById('fNil').checked = false;
+  onNilToggle();
   document.getElementById('fPaidBeforeDue').checked = false;
   document.getElementById('fPartial').checked = false;
   document.getElementById('partialWrap').style.display = 'none';
   document.getElementById('emptyState').style.display = 'block';
   document.getElementById('resultsDiv').style.display = 'none';
   document.getElementById('stepperCard').style.display = 'none';
+  document.getElementById('resultNote').style.display = 'none';
   suggestDueDate();
 }
 
