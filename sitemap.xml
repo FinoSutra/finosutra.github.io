@@ -112,6 +112,20 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://www.finosutra.com/emi-calculator.html</loc>
+    <lastmod>2026-07-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.finosutra.com/gratuity-calculator.html</loc>
+    <lastmod>2026-07-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Capital Gains Tax Calculator -->
   <url>
     <loc>https://www.finosutra.com/capital-gains-calculator.html</loc>
