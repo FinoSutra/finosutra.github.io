@@ -934,7 +934,7 @@ function initiatePayment(){
     var s = document.createElement('script');
     s.src = 'https://checkout.razorpay.com/v1/checkout.js';
     s.onload = function(){ initiatePayment(); };
-    s.onerror = function(){ showToast('Payment blocked by your browser/network. Disable ad-blocker and retry, or email fino.sutra07@gmail.com.','fail'); };
+    s.onerror = function(){ showToast('Payment blocked by your browser/network. Disable ad-blocker and retry, or email billing@finosutra.com.','fail'); };
     document.head.appendChild(s);
     return;
   }
@@ -957,7 +957,7 @@ function initiatePayment(){
     rzp.on('payment.failed', function(resp){ showToast('Payment failed: '+resp.error.description,'fail'); });
     rzp.open();
   } catch(e) {
-    alert('Could not open payment window. This is usually caused by an ad-blocker or privacy extension blocking the payment script. Please disable it for this site and try again, or email fino.sutra07@gmail.com and we will help.');
+    alert('Could not open payment window. This is usually caused by an ad-blocker or privacy extension blocking the payment script. Please disable it for this site and try again, or email hello@finosutra.com and we will help.');
     console.error(e);
   }
 }
@@ -1469,7 +1469,7 @@ function fsCopyLink(btn){
   <div class="footer-links">
     <a href="privacy.html">Privacy Policy</a>
     <a href="terms.html">Terms of Use</a>
-    <a href="mailto:fino.sutra07@gmail.com">Contact</a>
+    <a href="mailto:hello@finosutra.com">Contact</a>
     <a href="blog.html">Blog</a>
   </div>
   <div class="footer-tagline">© 2026 Finosutra. Built for Chartered Accountants and Finance Teams across India.</div>

@@ -827,7 +827,7 @@
       }
       global.showToast('🎉 Pro activated! All exports are now free.', '#5EC98A');
     } catch (e) {
-      global.showToast('Activation failed: ' + e.message + '. Email fino.sutra07@gmail.com with Payment ID: ' + paymentId, '#FF8A80');
+      global.showToast('Activation failed: ' + e.message + '. Email billing@finosutra.com with Payment ID: ' + paymentId, '#FF8A80');
       var pb = document.getElementById('fsProBanner');
       if (pb) { pb.style.pointerEvents = ''; pb.style.opacity = ''; }
       console.error('[auth.js] Pro activation error:', e);

@@ -1124,7 +1124,7 @@ tr:nth-child(even):hover td{background:rgba(0,82,204,0.05)}
 
   <details style="border:1px solid #E2E8F0;border-radius:10px;margin-bottom:10px;background:#fff;">
     <summary style="padding:16px 20px;font-weight:600;font-size:14px;color:#1E293B;cursor:pointer;font-family:Inter,sans-serif;list-style:none;">How do I cancel my Finosutra Pro subscription?</summary>
-    <div style="padding:0 20px 16px;font-size:14px;color:#475569;line-height:1.7;font-family:Inter,sans-serif;">To cancel your Pro subscription, simply email us at <a href="mailto:fino.sutra07@gmail.com" style="color:#0052CC;font-weight:600;">fino.sutra07@gmail.com</a> with your registered email address and the subject line "Cancel Subscription". We process all cancellation requests within 24 hours. You will continue to have full Pro access until the end of your current billing period — no charges are made after cancellation.</div>
+    <div style="padding:0 20px 16px;font-size:14px;color:#475569;line-height:1.7;font-family:Inter,sans-serif;">To cancel your Pro subscription, simply email us at <a href="mailto:billing@finosutra.com" style="color:#0052CC;font-weight:600;">billing@finosutra.com</a> with your registered email address and the subject line "Cancel Subscription". We process all cancellation requests within 24 hours. You will continue to have full Pro access until the end of your current billing period — no charges are made after cancellation.</div>
   </details>
 </div>
 
@@ -1167,7 +1167,7 @@ function fsCopyLink(btn){
   <div class="footer-links">
     <a href="/privacy.html">Privacy Policy</a>
     <a href="/terms.html">Terms of Use</a>
-    <a href="mailto:fino.sutra07@gmail.com">Contact</a>
+    <a href="mailto:hello@finosutra.com">Contact</a>
     <a href="/blog.html">Blog</a>
   </div>
   <div class="footer-tagline">© 2026 Finosutra. Built for Chartered Accountants and Finance Teams across India.</div>
@@ -2461,7 +2461,7 @@ function showRecoveryBanner(paymentId){
 
 function recoveryDownload(){
   if(!R || !INP){
-    alert('Session data not found. Please re-enter your lease details and calculate again. Contact fino.sutra07@gmail.com with your Payment ID for a manual report.');
+    alert('Session data not found. Please re-enter your lease details and calculate again. Contact billing@finosutra.com with your Payment ID for a manual report.');
     return;
   }
   try{
@@ -2472,7 +2472,7 @@ function recoveryDownload(){
       if(banner) banner.style.display = 'none';
     }, 2000);
   } catch(e){
-    alert('Download failed. Please email fino.sutra07@gmail.com with your Payment ID and we will send the report manually within 30 minutes.');
+    alert('Download failed. Please email billing@finosutra.com with your Payment ID and we will send the report manually within 30 minutes.');
     console.error(e);
   }
 }
@@ -2599,7 +2599,7 @@ async function initiateProSubscription(){
       setTimeout(function(){ resolve(typeof Razorpay !== 'undefined'); }, 4000);
     });
     if(!rzpLoaded){
-      showToast('Payment blocked by your browser/network. Disable ad-blocker and retry, or email fino.sutra07@gmail.com.','#EF4444');
+      showToast('Payment blocked by your browser/network. Disable ad-blocker and retry, or email billing@finosutra.com.','#EF4444');
       return;
     }
   }
@@ -2654,7 +2654,7 @@ async function initiateProSubscription(){
     rzpPro.open();
 
   } catch(err) {
-    showToast('Network error, or payment was blocked. Please try again, or email fino.sutra07@gmail.com.','#EF4444');
+    showToast('Network error, or payment was blocked. Please try again, or email hello@finosutra.com.','#EF4444');
     console.error(err);
   }
 }
@@ -3412,7 +3412,7 @@ async function activateProSubscription(paymentId){
     setTimeout(function(){ try{ exportXL(); } catch(e){ console.error(e); } }, 800);
   } catch(e){
     console.error('activateProSubscription error:', e);
-    showToast('Activation failed: ' + e.message + '. Please contact support at fino.sutra07@gmail.com','#EF4444');
+    showToast('Activation failed: ' + e.message + '. Please contact support at hello@finosutra.com','#EF4444');
   }
 }
 
@@ -3431,7 +3431,7 @@ async function activateProSubscription(paymentId){
 </script>
 
 <footer style="background:#111827;padding:24px 20px;text-align:center;">
-  <p style="font-size:12px;color:#9CA3AF;margin:0;">© 2026 Finosutra · GSTIN: 27ACWPW1076G1ZX · Mumbai, Maharashtra, India · <a href="mailto:fino.sutra07@gmail.com" style="color:#9CA3AF;text-decoration:none;">fino.sutra07@gmail.com</a> · <a href="terms.html" style="color:#9CA3AF;text-decoration:none;">Terms</a></p>
+  <p style="font-size:12px;color:#9CA3AF;margin:0;">© 2026 Finosutra · GSTIN: 27ACWPW1076G1ZX · Mumbai, Maharashtra, India · <a href="mailto:hello@finosutra.com" style="color:#9CA3AF;text-decoration:none;">hello@finosutra.com</a> · <a href="terms.html" style="color:#9CA3AF;text-decoration:none;">Terms</a></p>
 </footer>
 
 
