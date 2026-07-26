@@ -115,10 +115,11 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdro
 @media(max-width:480px){.cats-grid{grid-template-columns:1fr;}}
 @media(max-width:600px){.indas-models-grid{grid-template-columns:1fr !important;}}
 .pricing-plans-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px;}
-.footer-cols-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,0.07);margin-bottom:28px;}
+.footer-cols-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:32px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,0.07);margin-bottom:28px;}
 @media(max-width:768px){
   .pricing-plans-grid{grid-template-columns:1fr;}
   .footer-cols-grid{grid-template-columns:1fr 1fr;gap:24px;}
+  .footer-cols-grid > div:first-child{grid-column:span 2;}
 }
 @media(max-width:480px){
   .footer-cols-grid{grid-template-columns:1fr;}
@@ -665,6 +666,12 @@ function toggleBilling(){
         <a href="indas116-model3.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">Escalating Rent Calculator</a>
         <a href="security-deposit.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">Security Deposit (IND AS 109)</a>
         <a href="sd-portfolio.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">SD Portfolio (Multi-Deposit)</a>
+      </div>
+      <div>
+        <h5 style="font-size:11px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;">GST</h5>
+        <a href="gst-tools.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">All GST Tools</a>
+        <a href="gst-calculator.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">GST Calculator</a>
+        <a href="gst-interest-late-fee-calculator.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">GST Interest & Late Fee Calculator</a>
       </div>
       <div>
         <h5 style="font-size:11px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;">Income Tax</h5>
