@@ -19,7 +19,7 @@
   // ── Razorpay publishable key ID — SINGLE SOURCE OF TRUTH for the whole site.
   // Every page reads this via window.FS_RZP_KEY. Never hardcode the key elsewhere.
   // The matching SECRET lives only in Supabase Edge Function secrets, never here.
-  var RZP_KEY   = 'rzp_live_Sty2e9lT4uXzJJ';
+  var RZP_KEY   = 'rzp_live_TOZmt4wlnvNqYc';
   global.FS_RZP_KEY = RZP_KEY;
 
   // ── Global state ─────────────────────────────────────────────────────────────
