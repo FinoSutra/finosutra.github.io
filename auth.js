@@ -16,7 +16,11 @@
   var SUPA_URL  = 'https://uymuivmktvtxmodblxie.supabase.co';
   var SUPA_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5bXVpdm1rdHZ0eG1vZGJseGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzMjk5NTYsImV4cCI6MjA5NjkwNTk1Nn0.7dsdrDmYR8R891_Cc68K75tUlmwi49KExGGQbBq3qmg';
   var EDGE_URL  = 'https://uymuivmktvtxmodblxie.supabase.co/functions/v1/confirm-subscription';
-  var RZP_KEY   = 'rzp_live_Sty2e9lT4uXzJJ';
+  // ── Razorpay publishable key ID — SINGLE SOURCE OF TRUTH for the whole site.
+  // Every page reads this via window.FS_RZP_KEY. Never hardcode the key elsewhere.
+  // The matching SECRET lives only in Supabase Edge Function secrets, never here.
+  var RZP_KEY   = 'rzp_live_TOZmt4wlnvNqYc';
+  global.FS_RZP_KEY = RZP_KEY;
 
   // ── Global state ─────────────────────────────────────────────────────────────
   global.currentUser = null;

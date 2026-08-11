@@ -2231,7 +2231,7 @@ function printWorkpaper(){
 
   // Pro gate
   if(!window.isProUser){
-    if(typeof initiateProSubscription === 'function') initiateProSubscription();
+    if(typeof fsInitiateProSubscription === 'function') fsInitiateProSubscription();
     else alert('PDF export is a Pro feature. Subscribe at ₹499/month for unlimited PDF + Excel exports.');
     return;
   }
@@ -2497,7 +2497,7 @@ function initiatePayment(){
   saveStateToStorage();
 
   var options = {
-    key:'rzp_live_Sty2e9lT4uXzJJ',
+    key:window.FS_RZP_KEY,
     amount:19900,
     currency:'INR',
     name:'Finosutra',
@@ -2554,169 +2554,6 @@ function initiatePayment(){
     console.error(e);
   }
 }
-
-// ── Pro Subscription Flow ──────────────────────────────────────────────────
-// Called when user clicks "Upgrade to Pro ₹499/month"
-async function initiateProSubscription(){
-  var _c = window.supaClient;
-  if(!_c && window.supabase){
-    _c = window.supaClient = window.supabase.createClient(
-      'https://uymuivmktvtxmodblxie.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5bXVpdm1rdHZ0eG1vZGJseGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzMjk5NTYsImV4cCI6MjA5NjkwNTk1Nn0.7dsdrDmYR8R891_Cc68K75tUlmwi49KExGGQbBq3qmg'
-    );
-  }
-
-  // Get session
-  var sessData = await _c.auth.getSession();
-  var session  = sessData.data.session;
-
-  if(!session){
-    // Not logged in — prompt signup/login
-    showProAuthModal(_c);
-    return;
-  }
-
-  // Already Pro? Don't open Razorpay again
-  var _now = new Date().toISOString();
-  var _proRes = await _c.from('subscriptions').select('id')
-    .eq('user_id', session.user.id).eq('status','active')
-    .gt('current_period_end', _now).limit(1).maybeSingle();
-  if(!_proRes.error && _proRes.data){
-    showToast('✅ You are already on Finosutra Pro! Enjoy unlimited exports.','#5EC98A');
-    return;
-  }
-
-  // Dynamically load Razorpay if not yet available (ad-blocker/firewall may
-  // have blocked the checkout.js <script> tag from loading on page load)
-  if(typeof Razorpay === 'undefined'){
-    showToast('Loading payment…','#0052CC');
-    var rzpLoaded = await new Promise(function(resolve){
-      var s = document.createElement('script');
-      s.src = 'https://checkout.razorpay.com/v1/checkout.js';
-      s.onload  = function(){ resolve(typeof Razorpay !== 'undefined'); };
-      s.onerror = function(){ resolve(false); };
-      document.head.appendChild(s);
-      setTimeout(function(){ resolve(typeof Razorpay !== 'undefined'); }, 4000);
-    });
-    if(!rzpLoaded){
-      showToast('Payment blocked by your browser/network. Disable ad-blocker and retry, or email billing@finosutra.com.','#EF4444');
-      return;
-    }
-  }
-
-  showToast('Setting up your Pro subscription…','#0052CC');
-
-  try {
-    // Call Edge Function to create Razorpay subscription
-    var res = await fetch(
-      'https://uymuivmktvtxmodblxie.supabase.co/functions/v1/create-razorpay-sub',
-      {
-        method : 'POST',
-        headers: {
-          'Content-Type' : 'application/json',
-          'Authorization': 'Bearer ' + session.access_token,
-        },
-        body: JSON.stringify({ user_id: session.user.id, email: session.user.email }),
-      }
-    );
-
-    var data = await res.json();
-    if(!data.subscription_id){
-      showToast('Could not create subscription. Please try again.','#EF4444');
-      console.error('Edge fn error:', data);
-      return;
-    }
-
-    // Open Razorpay checkout for the subscription
-    var rzpPro = new Razorpay({
-      key        : 'rzp_live_Sty2e9lT4uXzJJ',
-      subscription_id: data.subscription_id,
-      name       : 'Finosutra',
-      description: 'Pro Plan — Unlimited Exports',
-      image      : '',
-      theme      : { color: '#0052CC' },
-      prefill    : { email: session.user.email },
-      handler    : function(response){
-        gaEvent('pro_subscription_started', { tool_name: 'IND AS 116' });
-        showToast('🎉 Welcome to Finosutra Pro! Activating your account…','#5EC98A');
-        // Wait 4s for webhook to fire, then reload to show Pro state
-        setTimeout(function(){ location.reload(); }, 4000);
-      },
-      modal: {
-        ondismiss: function(){
-          showToast('Subscription cancelled. No charges made.','#002244');
-        }
-      }
-    });
-    rzpPro.on('payment.failed', function(resp){
-      showToast('Payment failed: ' + resp.error.description,'#EF4444');
-    });
-    rzpPro.open();
-
-  } catch(err) {
-    showToast('Network error, or payment was blocked. Please try again, or email hello@finosutra.com.','#EF4444');
-    console.error(err);
-  }
-}
-
-// ── Simple login/signup modal for Pro upsell ──
-function showProAuthModal(client){
-  var existing = document.getElementById('proAuthModal');
-  if(existing){ existing.style.display='flex'; return; }
-
-  var modal = document.createElement('div');
-  modal.id = 'proAuthModal';
-  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:10000;display:flex;align-items:center;justify-content:center;';
-  modal.innerHTML = `
-    <div style="background:#fff;border-radius:16px;padding:32px;max-width:400px;width:90%;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.3);">
-      <button onclick="document.getElementById('proAuthModal').style.display='none'"
-        style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:#6B7280;">×</button>
-      <div style="font-size:24px;margin-bottom:8px;">🚀</div>
-      <h3 style="font-size:18px;font-weight:800;color:#111827;margin:0 0 6px;">Upgrade to Finosutra Pro</h3>
-      <p style="font-size:13px;color:#6B7280;margin:0 0 20px;">Sign in or create a free account to subscribe.</p>
-      <input id="proEmail" type="email" placeholder="your@email.com"
-        style="width:100%;padding:10px 14px;border:1.5px solid #D1D5DB;border-radius:8px;font-size:14px;margin-bottom:10px;box-sizing:border-box;outline:none;"/>
-      <input id="proPassword" type="password" placeholder="Password (min 6 chars)"
-        style="width:100%;padding:10px 14px;border:1.5px solid #D1D5DB;border-radius:8px;font-size:14px;margin-bottom:16px;box-sizing:border-box;outline:none;"/>
-      <button onclick="doProSignup()" id="proSignupBtn"
-        style="width:100%;padding:12px;background:linear-gradient(135deg,#0052CC,#002244);color:#fff;font-size:14px;font-weight:700;border:none;border-radius:10px;cursor:pointer;margin-bottom:10px;">
-        Create Account & Subscribe
-      </button>
-      <button onclick="doProLogin()" id="proLoginBtn"
-        style="width:100%;padding:12px;background:#F3F4F6;color:#374151;font-size:14px;font-weight:600;border:none;border-radius:10px;cursor:pointer;">
-        I already have an account — Sign In
-      </button>
-      <p id="proAuthErr" style="color:#EF4444;font-size:12px;margin:10px 0 0;display:none;"></p>
-    </div>`;
-  document.body.appendChild(modal);
-
-  window._proAuthClient = client;
-}
-
-async function doProSignup(){
-  var email = document.getElementById('proEmail').value.trim();
-  var pass  = document.getElementById('proPassword').value;
-  var err   = document.getElementById('proAuthErr');
-  if(!email||!pass){ err.textContent='Please enter email and password.'; err.style.display='block'; return; }
-  document.getElementById('proSignupBtn').textContent = 'Creating account…';
-  var { error } = await window._proAuthClient.auth.signUp({ email, password: pass });
-  if(error){ err.textContent = error.message; err.style.display='block'; document.getElementById('proSignupBtn').textContent='Create Account & Subscribe'; return; }
-  document.getElementById('proAuthModal').style.display='none';
-  showToast('Account created! Check your email to verify, then come back to subscribe.','#5EC98A');
-}
-
-async function doProLogin(){
-  var email = document.getElementById('proEmail').value.trim();
-  var pass  = document.getElementById('proPassword').value;
-  var err   = document.getElementById('proAuthErr');
-  if(!email||!pass){ err.textContent='Please enter email and password.'; err.style.display='block'; return; }
-  document.getElementById('proLoginBtn').textContent = 'Signing in…';
-  var { error } = await window._proAuthClient.auth.signInWithPassword({ email, password: pass });
-  if(error){ err.textContent = error.message; err.style.display='block'; document.getElementById('proLoginBtn').textContent='I already have an account — Sign In'; return; }
-  document.getElementById('proAuthModal').style.display='none';
-  initiateProSubscription();
-}
-// ─────────────────────────────────────────────────────────────────────────────
 
 function showToast(msg,color){
   var t = document.getElementById('toast');
@@ -3336,7 +3173,7 @@ function exportXL(){
   </div>
   <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
     <button class="sticky-btn" onclick="document.getElementById('btnExp').click()" id="stickyExpBtn">⬇ Export ₹199</button>
-    <button id="stickyProBtn" onclick="initiateProSubscription()"
+    <button id="stickyProBtn" onclick="fsInitiateProSubscription()"
       style="display:inline-flex;align-items:center;gap:6px;padding:11px 18px;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:13px;font-weight:700;border:none;border-radius:10px;cursor:pointer;white-space:nowrap;transition:opacity .15s;"
       onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
       🚀 Pro ₹499/mo — Unlimited
@@ -3367,55 +3204,6 @@ function exportXL(){
 
 
 <script>
-// ── Auth handled by auth.js — minimal shim for Razorpay activation ──
-var EDGE_FUNCTION_URL = 'https://uymuivmktvtxmodblxie.supabase.co/functions/v1/confirm-subscription';
-
-async function activateProSubscription(paymentId){
-  try {
-    if(!window.currentUser){ showToast('Session expired. Please log in again.','#EF4444'); return; }
-
-    // Get JWT to authenticate with Edge Function
-    var sessionData = await window.supaClient.auth.getSession();
-    var jwt = sessionData.data.session && sessionData.data.session.access_token;
-    if(!jwt){ showToast('Session expired. Please log in again.','#EF4444'); return; }
-
-    // Call Edge Function — verifies payment with Razorpay, then writes to DB
-    var response = await fetch(EDGE_FUNCTION_URL, {
-      method:  'POST',
-      headers: {
-        'Content-Type':  'application/json',
-        'Authorization': 'Bearer ' + jwt
-      },
-      body: JSON.stringify({ payment_id: paymentId })
-    });
-
-    var result = await response.json();
-    if(!response.ok || !result.success){
-      throw new Error(result.error || 'Activation failed. Please contact support.');
-    }
-
-    // Update global Pro state (auth.js reads window.isProUser)
-    window.isProUser = true;
-
-    // Hide auth.js Pro banner, show activated message
-    var pb = document.getElementById('fsProBanner');
-    if(pb) pb.style.display = 'none';
-    var pa = document.getElementById('fsProActivated');
-    if(pa){ pa.style.display = 'block'; setTimeout(function(){ pa.style.display='none'; }, 8000); }
-
-    // Update export button label
-    var btn = document.getElementById('btnExp');
-    if(btn) btn.innerHTML = '&#8659;&nbsp; Download Excel Report <span class="pro-free-tag">PRO FREE</span>';
-
-    showToast('🎉 Pro activated! Downloading your report now…','#5EC98A');
-    gaEvent('purchase', { transaction_id: paymentId, value: 499, currency: 'INR', items:[{item_name:'Finosutra Pro',price:499}] });
-    setTimeout(function(){ try{ exportXL(); } catch(e){ console.error(e); } }, 800);
-  } catch(e){
-    console.error('activateProSubscription error:', e);
-    showToast('Activation failed: ' + e.message + '. Please contact support at hello@finosutra.com','#EF4444');
-  }
-}
-
 // ── Portfolio URL param pre-fill ──────────────────────────────────────────────
 (function(){
   var _p = new URLSearchParams(location.search);
@@ -3436,5 +3224,4 @@ async function activateProSubscription(paymentId){
 
 
 </body>
-</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-
+</html>

@@ -940,7 +940,7 @@ function initiatePayment(){
   }
 
   var options = {
-    key: 'rzp_live_Sty2e9lT4uXzJJ',
+    key: window.FS_RZP_KEY,
     amount: 19900,
     currency: 'INR',
     name: 'Finosutra',
@@ -1411,7 +1411,6 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script src="pro-subscription.js"></script>
 
 
 <!-- STICKY EXPORT BAR -->
@@ -1422,7 +1421,7 @@ document.addEventListener('DOMContentLoaded', function(){
   </div>
   <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap;">
     <button class="sticky-btn" onclick="handleExportClick()">⬇ Export ₹199</button>
-    <button onclick="initiateProSubscription('IND AS 109 Security Deposit')"
+    <button onclick="fsInitiateProSubscription()"
       style="display:inline-flex;align-items:center;gap:6px;padding:11px 18px;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:13px;font-weight:700;border:none;border-radius:10px;cursor:pointer;white-space:nowrap;">
       🚀 Pro ₹499/mo — Unlimited
     </button>
