@@ -401,7 +401,6 @@ tr:nth-child(even){background:rgba(0,82,204,0.025)}
 </style>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="pro-subscription.js"></script>
 <script src="auth.js"></script>
 <script type="application/ld+json">
 {
@@ -1192,7 +1191,7 @@ tr:nth-child(even){background:rgba(0,82,204,0.025)}
   </div>
   <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap;">
     <button class="sticky-btn" onclick="handleStickyExportClick()">⬇ Export ₹199</button>
-    <button onclick="initiateProSubscription('IND AS 116 Model 3')"
+    <button onclick="fsInitiateProSubscription()"
       style="display:inline-flex;align-items:center;gap:6px;padding:11px 18px;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:13px;font-weight:700;border:none;border-radius:10px;cursor:pointer;white-space:nowrap;">
       🚀 Pro ₹499/mo — Unlimited
     </button>
@@ -2957,7 +2956,7 @@ function printWorkpaper(){
   if(!R){ alert('Run the lease calculation first.'); return; }
 
   if(!window.isProUser){
-    if(typeof initiateProSubscription === 'function') initiateProSubscription();
+    if(typeof fsInitiateProSubscription === 'function') fsInitiateProSubscription();
     else alert('PDF export is a Pro feature. Subscribe at ₹499/month for unlimited PDF + Excel exports.');
     return;
   }
@@ -3347,7 +3346,7 @@ function initiatePayment(){
   saveStateToStorage();
 
   var options = {
-    key:'rzp_live_Sty2e9lT4uXzJJ',
+    key:window.FS_RZP_KEY,
     amount:19900,
     currency:'INR',
     name:'Finosutra',

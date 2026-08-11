@@ -272,7 +272,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="pro-subscription.js"></script>
 <script src="auth.js"></script>
 </head>
 <body>
@@ -854,7 +853,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
     <button class="btn btn-primary btn-lg" id="btnExp" onclick="tryFreeExport()">
       ⬇ Download Excel Report — ₹199
     </button>
-    <button onclick="initiateProSubscription('Income Tax Calculator')"
+    <button onclick="fsInitiateProSubscription()"
       style="display:inline-flex;align-items:center;gap:6px;padding:12px 22px;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:14px;font-weight:700;border:none;border-radius:10px;cursor:pointer;white-space:nowrap;">
       🚀 Pro ₹499/mo — Unlimited
     </button>
@@ -1739,7 +1738,7 @@ function showUpsellBanner(){
     '<style>@keyframes fsBannerUp{from{transform:translateY(100%)}to{transform:translateY(0)}}</style>' +
     '<span style="font-size:14px;">⭐ Liked the report? Get <strong>unlimited exports</strong> + all Pro tools</span>' +
     '<div style="display:flex;gap:10px;align-items:center;flex-shrink:0;">' +
-      '<a href="#" onclick="if(window.fsInitiateProSubscription)fsInitiateProSubscription(\'upsell_banner\');else if(window.initiateProSubscription)initiateProSubscription(\'Income Tax Calculator\');return false;" style="background:#4F46E5;color:#fff;padding:9px 18px;border-radius:8px;font-weight:700;text-decoration:none;font-size:13px;white-space:nowrap;">Go Pro ₹499/mo →</a>' +
+      '<a href="#" onclick="fsInitiateProSubscription();return false;" style="background:#4F46E5;color:#fff;padding:9px 18px;border-radius:8px;font-weight:700;text-decoration:none;font-size:13px;white-space:nowrap;">Go Pro ₹499/mo →</a>' +
       '<button onclick="document.getElementById(\'fsUpsellBanner\').remove()" style="background:none;border:none;color:#9CA3AF;cursor:pointer;font-size:22px;line-height:1;padding:0 4px;" title="Dismiss">&times;</button>' +
     '</div>';
   document.body.appendChild(b);
@@ -1778,7 +1777,7 @@ function initiateExcelPayment(){
 
   const name = document.getElementById('name').value || 'Taxpayer';
   const options = {
-    key: 'rzp_live_Sty2e9lT4uXzJJ',
+    key: window.FS_RZP_KEY,
     amount: 19900, // ₹199 in paise
     currency: 'INR',
     name: 'Finosutra',
