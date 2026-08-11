@@ -10,6 +10,13 @@
 //     pro         ₹499  (49900 paise) → 30 days
 //     pro_annual  ₹3,999 (399900 paise) → 365 days
 //
+// CAPTURE: checkout is opened with a bare amount and no order_id, so Razorpay's
+//   dashboard "Automatic Capture" setting does NOT apply — it only governs
+//   payments created via the Orders API. Payments therefore arrive as
+//   "authorized" and this function captures them explicitly (Step 5b). Do not
+//   remove that step expecting the dashboard toggle to cover it; the money will
+//   silently auto-void after ~5 days and no subscription will ever activate.
+//
 // HOW TO DEPLOY (no CLI needed):
 //   1. Go to: https://supabase.com/dashboard/project/uymuivmktvtxmodblxie/functions
 //   2. Click confirm-subscription → Code tab → Edit
@@ -95,23 +102,34 @@ serve(async (req: Request) => {
     })
 
     if (!rzpRes.ok) {
-      console.error(`Razorpay API error: ${rzpRes.status}`)
-      return jsonResponse(400, { error: "Could not verify payment with Razorpay" })
+      // Surface the status so bad credentials (401/403) are distinguishable from
+      // an unknown payment id (400/404). Collapsing both into one message made a
+      // key-rotation outage look identical to a typo'd payment id.
+      console.error(`Razorpay GET payment failed: ${rzpRes.status}`)
+      const hint = (rzpRes.status === 401 || rzpRes.status === 403)
+        ? "Payment gateway credentials rejected — check RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET."
+        : "Payment not found at Razorpay."
+      return jsonResponse(400, { error: `${hint} (Razorpay ${rzpRes.status})` })
     }
 
     const payment = await rzpRes.json()
 
-    // ── Step 4: Validate payment status ──────────────────────────────────────
-    if (payment.status !== "captured") {
-      return jsonResponse(400, {
-        error: `Payment not captured (status: ${payment.status}). Contact support with payment ID.`
-      })
+    // ── Step 4: Confirm the payment belongs to this user ─────────────────────
+    // The frontend stamps notes.user_id at checkout. When present it must match
+    // the caller, otherwise any logged-in user could claim someone else's
+    // unclaimed payment id.
+    const notesUserId = payment.notes && payment.notes.user_id
+    if (notesUserId && notesUserId !== user.id) {
+      console.error(`Payment ${payment_id} belongs to ${notesUserId}, claimed by ${user.id}`)
+      return jsonResponse(403, { error: "This payment belongs to a different account." })
     }
 
     // ── Step 5: Determine plan from payment amount ────────────────────────────
     // Annual plan: ₹3,999 (399900 paise) → 365 days
     // Monthly plan: ₹499  (49900 paise)  → 30 days
     // Reject anything below ₹498 (not a valid Pro payment)
+    // Checked BEFORE capture — never capture money for an amount we would then
+    // refuse to honour.
     const amount = payment.amount as number
 
     if (!amount || amount < 49800) {
@@ -123,6 +141,43 @@ serve(async (req: Request) => {
     const isAnnual  = amount >= 399800   // ₹3,999 annual plan
     const planName  = isAnnual ? "pro_annual" : "pro"
     const daysToAdd = isAnnual ? 365 : 30
+
+    // ── Step 5b: Capture the payment if it is only authorised ────────────────
+    // Razorpay's dashboard "Automatic Capture" setting applies ONLY to payments
+    // created through the Orders API. Checkout here is opened with a bare
+    // amount and no order_id, so payments land as "authorized" and would expire
+    // (auto-void) after ~5 days without ever activating Pro. Capture explicitly
+    // rather than depending on an account setting that cannot apply.
+    let paymentStatus = payment.status
+
+    if (paymentStatus === "authorized") {
+      const capRes = await fetch(`https://api.razorpay.com/v1/payments/${payment_id}/capture`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Basic ${credentials}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ amount, currency: payment.currency || "INR" })
+      })
+
+      if (!capRes.ok) {
+        const detail = await capRes.text()
+        console.error(`Razorpay capture failed: ${capRes.status} ${detail}`)
+        return jsonResponse(400, {
+          error: `Could not capture payment (Razorpay ${capRes.status}). Payment ID: ${payment_id}`
+        })
+      }
+
+      const captured = await capRes.json()
+      paymentStatus = captured.status
+      console.log(`✓ Captured ${payment_id} for ₹${(amount / 100).toFixed(0)}`)
+    }
+
+    if (paymentStatus !== "captured") {
+      return jsonResponse(400, {
+        error: `Payment not captured (status: ${paymentStatus}). Contact support with payment ID: ${payment_id}`
+      })
+    }
 
     // ── Step 6: Check for duplicate (idempotency) ─────────────────────────────
     const adminClient = createClient(
