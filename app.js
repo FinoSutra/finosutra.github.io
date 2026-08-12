@@ -205,6 +205,11 @@ async function initApp(){
 // ── Data loading ──────────────────────────────────────────────────────────────
 var FREE_LEASE_LIMIT = 3;
 
+// Upload batch cap — matches the 20 formatted rows in the downloadable template.
+// Keeps the run client-side-fast and keeps the preview screen small enough to
+// actually be reviewed before importing.
+var MAX_UPLOAD_LEASES = 20;
+
 async function loadLeases(){
   if(!window.supaClient || !window.currentUser){ leases = []; return; }
   try{
@@ -751,20 +756,51 @@ function handleFileInputChange(input){
         Object.keys(r).forEach(function(k){ clean[k.replace(/\s*\*\s*/g,'').trim()]=r[k]; });
         return clean;
       });
+      // Keep only rows the user actually filled in. Dropped here: the two shipped
+      // SAMPLE rows, the blank formatted rows, and banner text such as the "STOP"
+      // line under the table — a real lease always carries data beyond its name,
+      // whereas a banner or a stray note only ever fills the first column.
+      rows = rows.filter(function(r){
+        var nm=String(r['Lease Name']||r['A']||'').trim();
+        if(/^sample\b/i.test(nm)) return false;
+        return Object.keys(r).some(function(k){
+          return k!=='Lease Name' && k!=='A' && String(r[k]).trim()!=='';
+        });
+      });
+      if(!rows.length){
+        toast('No leases found in that file. Enter your data in rows 7–26 of the Lease Register sheet.','#EF4444');
+        return;
+      }
+      if(rows.length>MAX_UPLOAD_LEASES){
+        toast('That file has '+rows.length+' leases — the limit is '+MAX_UPLOAD_LEASES+' per upload. Please split it into smaller files.','#EF4444');
+        return;
+      }
       processUploadedLeases(rows);
     }catch(err){ toast('Could not read file: '+err.message,'#EF4444'); }
-    input.value='';
+    finally{ input.value=''; }
   };
   reader.readAsArrayBuffer(file);
 }
 
+function pad2(n){ return (n<10?'0':'')+n; }
+
 function parseDate(v){
-  if(!v) return null;
-  if(v instanceof Date) return v.toISOString().slice(0,10);
+  if(v===null||v===undefined||v==='') return null;
+  // Real Date (SheetJS cellDates) — read the LOCAL parts. toISOString() would shift
+  // an IST midnight back to the previous day and silently move commencement.
+  if(v instanceof Date){
+    if(isNaN(v.getTime())) return null;
+    return v.getFullYear()+'-'+pad2(v.getMonth()+1)+'-'+pad2(v.getDate());
+  }
+  // Excel serial number (when cellDates did not apply) — day 1 is 01/01/1900
+  if(typeof v==='number' && isFinite(v)){
+    var d=new Date(Date.UTC(1899,11,30)+v*86400000);
+    return d.getUTCFullYear()+'-'+pad2(d.getUTCMonth()+1)+'-'+pad2(d.getUTCDate());
+  }
   var s=String(v).trim();
   var parts=s.split(/[\/\-\.]/);
   if(parts.length===3){
-    if(parts[2].length===4) return parts[2]+'-'+(parts[1].length===1?'0':'')+parts[1]+'-'+(parts[0].length===1?'0':'')+parts[0];
+    if(parts[2].length===4) return parts[2]+'-'+pad2(parseInt(parts[1],10))+'-'+pad2(parseInt(parts[0],10));
     return s;
   }
   return s;
@@ -816,12 +852,16 @@ function processUploadedLeases(rows){
     var timingStr=String(r['Payment Timing']||r['J']||'End').trim().toLowerCase();
     var escTypeRaw=String(r['Escalation Type']||r['K']||'none').trim().toLowerCase();
     var escPct=parseFloat(r['Escalation % p.a.']||r['L'])||0;
-    var escYears=parseInt(r['Escalation Interval (yrs)']||r['M'])||3;
-    var rfMonths=parseFloat(r['Rent-Free Months']||r['N'])||0;
-    var idc=parseFloat(r['IDC (₹)']||r['IDC']||r['O'])||0;
-    var incentive=parseFloat(r['Incentive (₹)']||r['Incentive']||r['P'])||0;
-    var restoration=parseFloat(r['Restoration Cost (₹)']||r['Restoration']||r['Q'])||0;
-    var exemptRaw=String(r['Short-term / Low-value']||r['Exempt']||r['R']||'').trim().toLowerCase();
+    var escAmt=parseFloat(r['Escalation ₹ per step']||r['Escalation ₹ p.a.']||r['M'])||0;
+    // Interval defaults to 1 (escalate every year). It must never silently become 3 —
+    // blank and 0 both used to fall through to a 3-year step-up.
+    var escYears=parseInt(r['Escalation Interval (yrs)']||r['N'],10);
+    if(!escYears||escYears<1) escYears=1;
+    var rfMonths=parseFloat(r['Rent-Free Months']||r['O'])||0;
+    var idc=parseFloat(r['IDC (₹)']||r['IDC']||r['P'])||0;
+    var incentive=parseFloat(r['Incentive (₹)']||r['Incentive']||r['Q'])||0;
+    var restoration=parseFloat(r['Restoration Cost (₹)']||r['Restoration']||r['R'])||0;
+    var exemptRaw=String(r['Short-term / Low-value']||r['Exempt']||r['S']||'').trim().toLowerCase();
     var isShortTerm=exemptRaw==='short-term'||exemptRaw==='short term'||exemptRaw==='st';
     var isLowValue=exemptRaw==='low-value'||exemptRaw==='low value'||exemptRaw==='lv';
 
@@ -836,14 +876,20 @@ function processUploadedLeases(rows){
     var freq=freqMap[freqStr]||12;
     var timing=timingStr.includes('beg')||timingStr.includes('adv')?'advance':'arrears';
     var escType=escTypeRaw==='pct'||escTypeRaw==='%'||escTypeRaw.includes('fixed %')||escTypeRaw.includes('fixed%')||escTypeRaw.includes('percent')||(escTypeRaw==='none'&&escPct>0)?'pct'
-               :escTypeRaw==='amt'||escTypeRaw==='amount'||escTypeRaw.includes('fixed ₹')||escTypeRaw.includes('fixed rs')||escTypeRaw.includes('fixed amount')?'amt'
+               :escTypeRaw==='amt'||escTypeRaw==='amount'||escTypeRaw.includes('fixed ₹')||escTypeRaw.includes('fixed rs')||escTypeRaw.includes('fixed amount')||(escTypeRaw==='none'&&!escPct&&escAmt>0)?'amt'
                :escTypeRaw==='cpi'||escTypeRaw.includes('index')?'cpi':'none';
+
+    // An escalation type with no value would compute as a flat rent — surface it
+    // instead of silently understating the liability.
+    if((escType==='pct'||escType==='cpi') && !escPct) errors.push('Escalation % missing');
+    if(escType==='amt' && !escAmt) errors.push('Escalation ₹ missing');
 
     var pvInit=0,rouInit=0,rouNBV=0,liabCurrent=0,liabNonCurrent=0,depnAnnual=0,depnPeriod=0;
     if(!errors.length){
       var inp={
         name:name, start:start, termMonths:termRaw, pmt:pmtRaw, freq:freq,
-        timing:timing, ibr:ibrRaw, escType:escType, escPct:escPct, escYears:escYears,
+        timing:timing, ibr:ibrRaw, escType:escType, escPct:escPct, escAmt:escAmt,
+        escYears:escYears,
         rfMonths:rfMonths, idc:idc+restoration, incentive:incentive,
         isShortTerm:isShortTerm, isLowValue:isLowValue
       };
@@ -862,7 +908,7 @@ function processUploadedLeases(rows){
       lessor:lessor, entity:entity, category:category,
       start:start, termMonths:termRaw,
       pmt:pmtRaw, freq:freq, ibr:ibrRaw, timing:timing,
-      escType:escType, escPct:escPct, escYears:escYears,
+      escType:escType, escPct:escPct, escAmt:escAmt, escYears:escYears,
       rfMonths:rfMonths, idc:idc, incentive:incentive, restoration:restoration,
       isShortTerm:isShortTerm, isLowValue:isLowValue,
       errors:errors, pvInit:pvInit, rouInit:rouInit, rouNBV:rouNBV,
@@ -954,7 +1000,7 @@ async function confirmUpload(){
           name:p.name, lessor:p.lessor, category:p.category, entity:p.entity,
           start:p.start, termMonths:p.termMonths, pmt:p.pmt, ibr:p.ibr,
           freq:p.freq, timing:p.timing,
-          escType:p.escType, escPct:p.escPct, escYears:p.escYears,
+          escType:p.escType, escPct:p.escPct, escAmt:p.escAmt, escYears:p.escYears,
           rfMonths:p.rfMonths, idc:p.idc, incentive:p.incentive, restoration:p.restoration,
           isShortTerm:p.isShortTerm, isLowValue:p.isLowValue
         },
@@ -974,322 +1020,27 @@ async function confirmUpload(){
   }catch(e){ toast('Import failed: '+e.message,'#EF4444'); }
 }
 
-// ── Download Template ─────────────────────────────────────────────────────────
+// ── Download Template ─────────────────────────────────────────────
+// The workbook is a static asset rather than generated here. It carries dropdown
+// lists, a help prompt on every cell and a note on every heading — none of which
+// xlsx-js-style is able to write. It is built by scripts/build_lease_template.py
+// and served as-is, so what the user downloads is exactly what we tested.
+var LEASE_TEMPLATE_URL  = 'Finosutra_Lease_Template_v3.xlsx';
+var LEASE_TEMPLATE_NAME = 'Finosutra_Lease_Template.xlsx';
+
 function downloadTemplate(){
-  if(typeof XLSX==='undefined'){ toast('XLSX not loaded yet. Try again.','#EF4444'); return; }
-
-  // ── Style helpers — Corporate Navy ─────────────────────────────────────────
-  var BRAND   = '0052CC'; // navy accent
-  var BRAND2  = '002244'; // dark navy (title row)
-  var AMBER   = 'D97706';
-  var WHITE   = 'FFFFFF';
-  var LIGHT   = 'E8F0FF'; // navy-50
-  var LIGHT2  = 'F5F8FF'; // alt row
-  var BORDER  = 'BAD0F8'; // navy-200
-  var GREY    = '6B7280';
-  var RED_BG  = 'FEF2F2';
-  var RED_FG  = 'B91C1C';
-  var GREEN_BG= 'F0FDF4';
-  var GREEN_FG= '166534';
-
-  function cell(v, s){ return {v:v, s:s}; }
-
-  var titleStyle = {
-    font:{bold:true, sz:14, color:{rgb:WHITE}, name:'Calibri'},
-    fill:{fgColor:{rgb:BRAND2}},
-    alignment:{vertical:'center', horizontal:'left', indent:1}
-  };
-  var subtitleStyle = {
-    font:{sz:10, color:{rgb:'C7D2FE'}, name:'Calibri'},
-    fill:{fgColor:{rgb:BRAND2}},
-    alignment:{vertical:'center', horizontal:'left', indent:1}
-  };
-  var hdrReq = { // required columns — amber on dark
-    font:{bold:true, sz:10, color:{rgb:WHITE}, name:'Calibri'},
-    fill:{fgColor:{rgb:AMBER}},
-    border:{bottom:{style:'medium',color:{rgb:WHITE}},right:{style:'thin',color:{rgb:WHITE}}},
-    alignment:{vertical:'center', horizontal:'center', wrapText:true}
-  };
-  var hdrOpt = { // optional columns — brand indigo
-    font:{bold:true, sz:10, color:{rgb:WHITE}, name:'Calibri'},
-    fill:{fgColor:{rgb:BRAND}},
-    border:{bottom:{style:'medium',color:{rgb:WHITE}},right:{style:'thin',color:{rgb:WHITE}}},
-    alignment:{vertical:'center', horizontal:'center', wrapText:true}
-  };
-  var dataStr = {
-    font:{sz:10, name:'Calibri'},
-    fill:{fgColor:{rgb:WHITE}},
-    border:{bottom:{style:'thin',color:{rgb:BORDER}},right:{style:'thin',color:{rgb:BORDER}}},
-    alignment:{vertical:'center', wrapText:false}
-  };
-  var dataNum = {
-    font:{sz:10, name:'Calibri'},
-    fill:{fgColor:{rgb:WHITE}},
-    border:{bottom:{style:'thin',color:{rgb:BORDER}},right:{style:'thin',color:{rgb:BORDER}}},
-    alignment:{vertical:'center', horizontal:'right'},
-    numFmt:'#,##0'
-  };
-  var dataPct = {
-    font:{sz:10, name:'Calibri'},
-    fill:{fgColor:{rgb:WHITE}},
-    border:{bottom:{style:'thin',color:{rgb:BORDER}},right:{style:'thin',color:{rgb:BORDER}}},
-    alignment:{vertical:'center', horizontal:'right'}
-  };
-  var dataAlt = function(s){ return Object.assign({},s,{fill:{fgColor:{rgb:LIGHT}}}); };
-  var reqNote = {
-    font:{bold:true, sz:9, color:{rgb:RED_FG}, name:'Calibri'},
-    fill:{fgColor:{rgb:RED_BG}},
-    border:{bottom:{style:'thin',color:{rgb:BORDER}}},
-    alignment:{vertical:'center', horizontal:'center'}
-  };
-  var optNote = {
-    font:{sz:9, color:{rgb:GREEN_FG}, name:'Calibri'},
-    fill:{fgColor:{rgb:GREEN_BG}},
-    border:{bottom:{style:'thin',color:{rgb:BORDER}}},
-    alignment:{vertical:'center', horizontal:'center'}
-  };
-
-  // ── Sheet 1: Lease Register ──────────────────────────────────────────────
-  var ws = {};
-
-  // Row 1: Title banner (merged A1:R1)
-  ws['A1'] = cell('Finosutra  |  IND AS 116 Lease Register', titleStyle);
-  ws['B1'] = cell('', Object.assign({},subtitleStyle));
-  ['C1','D1','E1','F1','G1','H1','I1','J1','K1','L1','M1','N1','O1','P1','Q1','R1'].forEach(function(ref){
-    ws[ref] = cell('', Object.assign({},subtitleStyle));
-  });
-
-  // Row 2: subtitle / version line
-  var today = new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
-  ws['A2'] = cell('Template generated: ' + today + '   |   Version 2.0   |   IND AS 116 / IFRS 16 compliant', subtitleStyle);
-  ['B2','C2','D2','E2','F2','G2','H2','I2','J2','K2','L2','M2','N2','O2','P2','Q2','R2'].forEach(function(ref){
-    ws[ref] = cell('', Object.assign({},subtitleStyle));
-  });
-
-  // Row 3: Required / Optional legend
-  ws['A3'] = cell('* Required field', reqNote);
-  ws['B3'] = cell('', reqNote);
-  ws['C3'] = cell('Optional field', optNote);
-  ws['D3'] = cell('', optNote);
-  ['E3','F3','G3','H3','I3','J3','K3','L3','M3','N3','O3','P3','Q3','R3'].forEach(function(ref){
-    ws[ref] = cell('', Object.assign({},dataStr,{fill:{fgColor:{rgb:LIGHT2}}}));
-  });
-
-  // Row 4: Column headers — amber = required, indigo = optional
-  var colHeaders = [
-    {label:'Lease Name *',    req:true},
-    {label:'Lessor Name',     req:false},
-    {label:'Entity / Lessee', req:false},
-    {label:'Asset Category',  req:false},
-    {label:'Start Date *',    req:true},
-    {label:'Term (months) *', req:true},
-    {label:'Rent / Period (₹) *', req:true},
-    {label:'Frequency',       req:false},
-    {label:'IBR (% p.a.) *',  req:true},
-    {label:'Payment Timing',  req:false},
-    {label:'Escalation Type', req:false},
-    {label:'Escalation % p.a.', req:false},
-    {label:'Escalation Interval (yrs)', req:false},
-    {label:'Rent-Free Months', req:false},
-    {label:'IDC (₹)',         req:false},
-    {label:'Incentive (₹)',   req:false},
-    {label:'Restoration Cost (₹)', req:false},
-    {label:'Short-term / Low-value', req:false},
-  ];
-  var COLS = 'ABCDEFGHIJKLMNOPQR'.split('');
-  colHeaders.forEach(function(h,i){
-    ws[COLS[i]+'4'] = cell(h.label, h.req ? hdrReq : hdrOpt);
-  });
-
-  // Rows 5-6: Sample data — 2 sample leases (alternating fill)
-  var samples = [
-    // name, lessor, entity, cat, start, term, pmt, freq, ibr, timing, escType, escPct, escYrs, rf, idc, incentive, restoration, exempt
-    ['Mumbai Office — Floor 4','Raheja Corp','ABC Pvt. Ltd.','Office Space','01/04/2025',36,50000,'Monthly',10.5,'End','none',0,3,0,0,0,0,''],
-    ['Pune Warehouse B','Industrial Parks Ltd','ABC Pvt. Ltd.','Warehouse','01/07/2025',24,35000,'Monthly',11,'End','pct',5,3,2,10000,0,0,''],
-  ];
-  var numCols = {5:true,6:true,9:true,11:true,12:true,13:true,14:true,15:true,16:true}; // 0-indexed cols that are numbers
-  var pctCols = {8:true}; // IBR is a % — right-align
-  samples.forEach(function(row,ri){
-    var isAlt = ri%2===1;
-    row.forEach(function(v,ci){
-      var base = pctCols[ci] ? dataPct : numCols[ci] ? dataNum : dataStr;
-      var s = isAlt ? dataAlt(base) : base;
-      ws[COLS[ci]+(5+ri)] = cell(v, s);
-    });
-  });
-
-  // Row 7: empty buffer row with light border bottom
-  COLS.forEach(function(c){
-    ws[c+'7'] = cell('', Object.assign({},dataStr,{fill:{fgColor:{rgb:LIGHT2}},border:{bottom:{style:'medium',color:{rgb:BORDER}}}}));
-  });
-
-  // Sheet range + config
-  ws['!ref'] = 'A1:R7';
-  ws['!merges'] = [
-    {s:{r:0,c:0}, e:{r:0,c:17}}, // Title row A1:R1
-    {s:{r:1,c:0}, e:{r:1,c:17}}, // Subtitle row
-    {s:{r:2,c:0}, e:{r:2,c:1}},  // "* Required field" spans A3:B3
-    {s:{r:2,c:2}, e:{r:2,c:3}},  // "Optional field" spans C3:D3
-  ];
-  ws['!cols'] = [
-    {wch:30}, // A Lease Name
-    {wch:22}, // B Lessor
-    {wch:22}, // C Entity
-    {wch:18}, // D Category
-    {wch:14}, // E Start Date
-    {wch:14}, // F Term
-    {wch:18}, // G Rent
-    {wch:14}, // H Frequency
-    {wch:13}, // I IBR
-    {wch:16}, // J Timing
-    {wch:17}, // K Esc Type
-    {wch:16}, // L Esc %
-    {wch:20}, // M Esc Interval
-    {wch:17}, // N Rent-Free
-    {wch:14}, // O IDC
-    {wch:14}, // P Incentive
-    {wch:20}, // Q Restoration
-    {wch:22}, // R Exempt
-  ];
-  ws['!rows'] = [
-    {hpt:28}, // row 1 title
-    {hpt:18}, // row 2 subtitle
-    {hpt:18}, // row 3 legend
-    {hpt:36}, // row 4 headers (tall — wrap text)
-    {hpt:20}, // row 5 data
-    {hpt:20}, // row 6 data
-    {hpt:8},  // row 7 buffer
-  ];
-  // Freeze rows 1-4 so header stays visible while scrolling
-  ws['!freeze'] = {xSplit:0, ySplit:4, topLeftCell:'A5', activeCell:'A5', sqref:'A5'};
-
-  // ── Sheet 2: Instructions ─────────────────────────────────────────────────
-  var instHdr = {
-    font:{bold:true, sz:11, color:{rgb:WHITE}, name:'Calibri'},
-    fill:{fgColor:{rgb:BRAND2}},
-    alignment:{vertical:'center', horizontal:'left', indent:1}
-  };
-  var instSub = Object.assign({},instHdr,{font:{bold:false,sz:10,color:{rgb:'C7D2FE'},name:'Calibri'}});
-  var secHdr = {
-    font:{bold:true, sz:10, color:{rgb:BRAND2}, name:'Calibri'},
-    fill:{fgColor:{rgb:LIGHT}},
-    border:{bottom:{style:'medium',color:{rgb:BRAND}},top:{style:'medium',color:{rgb:BRAND}}},
-    alignment:{vertical:'center', horizontal:'left', indent:1}
-  };
-  var colLbl = {
-    font:{bold:true, sz:10, color:{rgb:WHITE}, name:'Calibri'},
-    fill:{fgColor:{rgb:BRAND}},
-    border:{bottom:{style:'thin',color:{rgb:BORDER}},right:{style:'thin',color:{rgb:BORDER}}},
-    alignment:{vertical:'center', horizontal:'center'}
-  };
-  var reqLbl = {
-    font:{bold:true, sz:10, color:{rgb:AMBER}, name:'Calibri'},
-    fill:{fgColor:{rgb:'FFFBEB'}},
-    border:{bottom:{style:'thin',color:{rgb:BORDER}},right:{style:'thin',color:{rgb:BORDER}}},
-    alignment:{vertical:'center', horizontal:'center'}
-  };
-  var instCell = function(v, bold, col){
-    return cell(v, {
-      font:{bold:!!bold, sz:10, color:{rgb:col||'374151'}, name:'Calibri'},
-      fill:{fgColor:{rgb:WHITE}},
-      border:{bottom:{style:'thin',color:{rgb:BORDER}},right:{style:'thin',color:{rgb:BORDER}}},
-      alignment:{vertical:'center', horizontal:'left', indent:1, wrapText:true}
-    });
-  };
-  var instAlt = function(v, bold, col){
-    return cell(v, {
-      font:{bold:!!bold, sz:10, color:{rgb:col||'374151'}, name:'Calibri'},
-      fill:{fgColor:{rgb:LIGHT2}},
-      border:{bottom:{style:'thin',color:{rgb:BORDER}},right:{style:'thin',color:{rgb:BORDER}}},
-      alignment:{vertical:'center', horizontal:'left', indent:1, wrapText:true}
-    });
-  };
-
-  var iws = {};
-
-  // Title block
-  iws['A1'] = cell('Finosutra — IND AS 116 Lease Template', instHdr);
-  ['B1','C1','D1'].forEach(function(r){ iws[r]=cell('',instHdr); });
-  iws['A2'] = cell('Field-by-field guide for filling the Lease Register sheet', instSub);
-  ['B2','C2','D2'].forEach(function(r){ iws[r]=cell('',instSub); });
-
-  // Section header — columns
-  iws['A3'] = cell('Column', colLbl); iws['B3'] = cell('Field', colLbl);
-  iws['C3'] = cell('Description', colLbl); iws['D3'] = cell('Valid Values / Examples', colLbl);
-
-  var fieldGuide = [
-    ['A','Lease Name *','Unique name for this lease. Used to identify and update existing leases on re-upload.','Mumbai Office — Floor 4'],
-    ['B','Lessor Name','Name of the landlord / lessor / asset owner.','Raheja Corp'],
-    ['C','Entity / Lessee','Legal entity that has entered into the lease.','ABC Pvt. Ltd.'],
-    ['D','Asset Category','Type of right-of-use asset for disclosure grouping.','Office Space / Warehouse / Plant / Vehicle / Equipment'],
-    ['E','Start Date *','Lease commencement date in DD/MM/YYYY format.','01/04/2025'],
-    ['F','Term (months) *','Total lease term in months (integer).','36'],
-    ['G','Rent per Period (₹) *','Base rent amount per payment period in rupees (number only, no commas or ₹ sign).','50000'],
-    ['H','Frequency','How often rent is paid. Defaults to Monthly if blank.','Monthly / Quarterly / Half-Yearly / Annual'],
-    ['I','IBR (% p.a.) *','Incremental Borrowing Rate in % per annum (e.g. enter 10.5 for 10.5%). Typical Indian IBR: 8-14%.','10.5'],
-    ['J','Payment Timing','Whether rent is paid at the start or end of each period. Defaults to End.','End / Beginning'],
-    ['K','Escalation Type','Type of rent escalation clause. Use "none" for flat rent. Accepted: none, pct (or "Fixed %"), amt (or "Fixed ₹"), cpi','none / pct / amt / cpi'],
-    ['L','Escalation % p.a.','Annual percentage escalation rate. Only applies when Escalation Type = pct.','5  (means 5% p.a.; enter 0 if none)'],
-    ['M','Escalation Interval (yrs)','How many years between each escalation step.','3  (means escalate every 3 years; enter 0 if none)'],
-    ['N','Rent-Free Months','Number of rent-free months at the start of the lease (₹0 payments).','2  (enter 0 if none)'],
-    ['O','IDC (₹)','Initial direct costs incurred to obtain the lease — added to ROU asset cost.','10000  (enter 0 if none)'],
-    ['P','Incentive (₹)','Lease incentives received from lessor — deducted from ROU asset cost.','0  (enter 0 if none)'],
-    ['Q','Restoration Cost (₹)','Estimated cost to restore leased asset to original condition — added to ROU asset.','0  (enter 0 if none)'],
-    ['R','Short-term / Low-value','IND AS 116 exemption. Leave blank for normal leases.','blank (normal) / short-term / low-value'],
-  ];
-
-  fieldGuide.forEach(function(row, ri){
-    var isAlt = ri%2===1;
-    var fn = isAlt ? instAlt : instCell;
-    var isReq = row[1].indexOf('*')>=0;
-    iws['A'+(4+ri)] = cell(row[0], Object.assign({}, isReq ? reqLbl : colLbl, {fill:{fgColor:{rgb:isReq?'FFFBEB':LIGHT}}}));
-    iws['B'+(4+ri)] = fn(row[1], true, isReq ? AMBER : BRAND);
-    iws['C'+(4+ri)] = fn(row[2]);
-    iws['D'+(4+ri)] = fn(row[3], false, GREY);
-  });
-
-  var noteStart = 4+fieldGuide.length+1;
-  // Notes section
-  iws['A'+noteStart] = cell('Notes & Tips', secHdr);
-  ['B','C','D'].forEach(function(c){ iws[c+noteStart]=cell('',secHdr); });
-
-  var notes = [
-    'Columns A, E, F, G, I are required. All other columns are optional — leave blank to use defaults.',
-    'Start Date must be in DD/MM/YYYY format (e.g. 01/04/2025). Avoid Excel auto-date formatting.',
-    'Escalation Type: "pct" = % increase per interval; "amt" = fixed ₹ increase; "cpi" = index-linked (treated as pct); "none" = flat.',
-    'Short-term / Low-value exemption: if set, the lease is expensed straight-line — no ROU asset or lease liability is recognised.',
-    'Duplicate detection: if you upload a lease with the same name as an existing one, it will be updated (not duplicated).',
-    'You can add as many rows as needed below row 6. Do not change column headers or column order.',
-  ];
-  notes.forEach(function(n, ni){
-    var fn = ni%2===0 ? instCell : instAlt;
-    iws['A'+(noteStart+1+ni)] = cell('', Object.assign({},fn('').s,{fill:{fgColor:{rgb:LIGHT}}}));
-    iws['B'+(noteStart+1+ni)] = fn('• '+n);
-    iws['C'+(noteStart+1+ni)] = fn('');
-    iws['D'+(noteStart+1+ni)] = fn('');
-  });
-
-  var lastRow = noteStart+1+notes.length;
-  iws['!ref'] = 'A1:D'+lastRow;
-  iws['!merges'] = [
-    {s:{r:0,c:0},e:{r:0,c:3}},
-    {s:{r:1,c:0},e:{r:1,c:3}},
-    {s:{r:noteStart-1,c:0},e:{r:noteStart-1,c:3}},
-  ].concat(notes.map(function(_,ni){
-    return {s:{r:noteStart+ni,c:1},e:{r:noteStart+ni,c:3}};
-  }));
-  iws['!cols'] = [{wch:8},{wch:26},{wch:52},{wch:44}];
-  iws['!rows'] = [{hpt:26},{hpt:18}].concat(
-    [{hpt:22}],
-    fieldGuide.map(function(){ return {hpt:36}; }),
-    [{hpt:22}],
-    notes.map(function(){ return {hpt:40}; })
-  );
-
-  var wb2 = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb2, ws, 'Lease Register');
-  XLSX.utils.book_append_sheet(wb2, iws, 'Instructions');
-  XLSX.writeFile(wb2, 'Finosutra_Lease_Template.xlsx');
+  try{
+    var a=document.createElement('a');
+    a.href=LEASE_TEMPLATE_URL;
+    a.download=LEASE_TEMPLATE_NAME;
+    a.rel='noopener';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    toast('Template downloaded — open it in Excel to see the dropdowns and help notes.','#059669');
+  }catch(e){
+    window.open(LEASE_TEMPLATE_URL,'_blank');
+  }
 }
 
 // ── Export (placeholder — reuses portfolio.html logic signature) ──────────────
@@ -1351,7 +1102,7 @@ function prefillForm(l) {
   setVal('fEscType',     inp.escType || 'none');
   setVal('fEscPct',      inp.escPct || '');
   setVal('fEscAmt',      inp.escAmt || '');
-  setVal('fEscYears',    inp.escYears || '3');
+  setVal('fEscYears',    inp.escYears || '1');
   setVal('fIdc',         inp.idc || '');
   setVal('fIncentive',   inp.incentive || '');
   setVal('fRfMonths',    inp.rfMonths || '');
@@ -1387,7 +1138,7 @@ function resetForm() {
   var ids = ['fName','fLessor','fEntity','fStart','fTerm','fEnd','fPmt','fIbr',
              'fEscPct','fEscAmt','fIdc','fIncentive','fRfMonths','fRestoration','fRemarks'];
   ids.forEach(function(id){ var el=document.getElementById(id); if(el) el.value=''; });
-  setVal('fFreq','12'); setVal('fTiming','end'); setVal('fEscType','none'); setVal('fEscYears','3');
+  setVal('fFreq','12'); setVal('fTiming','end'); setVal('fEscType','none'); setVal('fEscYears','1');
   setVal('fCategory',''); setVal('fCompany','');
   ['fShortTerm','fLowValue','fExtOption','fTermOption'].forEach(function(id){
     var el=document.getElementById(id); if(el) el.checked=false;
@@ -1634,7 +1385,7 @@ function collectInp(){
     escType:     document.getElementById('fEscType').value,
     escPct:      parseFloat(document.getElementById('fEscPct').value)||0,
     escAmt:      parseFloat(document.getElementById('fEscAmt').value)||0,
-    escYears:    parseInt(document.getElementById('fEscYears').value)||3,
+    escYears:    parseInt(document.getElementById('fEscYears').value)||1,
     idc:         parseFloat(document.getElementById('fIdc').value)||0,
     incentive:   parseFloat(document.getElementById('fIncentive').value)||0,
     rfMonths:    parseFloat(document.getElementById('fRfMonths').value)||0,
