@@ -2589,12 +2589,16 @@ function exportPremiumSingleLease(){
   toast('Building premium report…','#6366F1');
   setTimeout(function(){
     try {
+      // Report the FY the user picked if there is a selector, else the current FY —
+      // clamped to a year this lease actually exists in.
+      var fy = resolveReportFY([fakeLeaseObj],
+                 (document.getElementById('rptFyFilter')||{}).value || getCurrentFY());
       premiumExport.buildWorkbook({
         leases: [fakeLeaseObj],
         calcFn: function(l){ return _lastCalcResult; },
         generateJEsFn: function(l){ return jes; },
-        discData: buildDiscDataFromLeases([fakeLeaseObj]),
-        fy: getCurrentFY(),
+        discData: buildDiscDataFromLeases([fakeLeaseObj], fy),
+        fy: fy,
         auditRows: _lastAuditRows || [],
         entity: inp.entity || '',
         name: inp.name || 'Lease'
@@ -2614,7 +2618,8 @@ function exportPremiumPortfolio(){
   toast('Building premium report pack…','#6366F1');
   setTimeout(function(){
     try {
-      var fy = (document.getElementById('rptFyFilter')||{}).value || getCurrentFY();
+      var fy = resolveReportFY(leases,
+                 (document.getElementById('rptFyFilter')||{}).value || getCurrentFY());
       premiumExport.buildWorkbook({
         leases: leases,
         calcFn: calcLeaseForReports,
@@ -2635,10 +2640,55 @@ function exportPremiumPortfolio(){
   }, 50);
 }
 
+// ── FY helpers ────────────────────────────────────────────────────────────────
+// 'FY 2025-26' → { start: 2025-04-01, end: 2026-03-31 }. Indian FY, Apr–Mar.
+// Built in UTC because schedule dates ('2026-03-31') parse as UTC midnight. Mixing
+// a local-constructed boundary with a UTC-parsed row date drops the March row of
+// every FY in any timezone ahead of UTC.
+function fyRange(fy){
+  var m = /FY\s*(\d{4})/.exec(String(fy||''));
+  var startYear = m ? parseInt(m[1],10) : new Date().getFullYear();
+  return {
+    start: new Date(Date.UTC(startYear,3,1)),
+    end:   new Date(Date.UTC(startYear+1,2,31,23,59,59))
+  };
+}
+
+// Keep the reported FY inside the lease's own life. A lease commencing 01/03/2026
+// reported in "FY 2026-27" is legitimate; one reported in an FY it has not started
+// in is not, and used to produce a report labelled for a year it had no figures in.
+function resolveReportFY(leasesArr, requestedFY){
+  var reqEnd = fyRange(requestedFY).end;
+  var earliest = null, latest = null;
+  (leasesArr||[]).forEach(function(l){
+    var inp = l.inputs||{};
+    if(!inp.start) return;
+    var s = new Date(inp.start);
+    var e = new Date(inp.start);
+    e.setMonth(e.getMonth() + (parseInt(inp.termMonths||inp.term,10)||0));
+    if(!earliest || s < earliest) earliest = s;
+    if(!latest   || e > latest)   latest   = e;
+  });
+  if(!earliest) return requestedFY;
+  function fyOf(d){
+    var y = d.getFullYear(), fs = d.getMonth() < 3 ? y-1 : y;
+    return 'FY '+fs+'-'+String(fs+1).slice(2);
+  }
+  if(reqEnd < earliest) return fyOf(earliest);   // FY ends before any lease starts
+  if(fyRange(requestedFY).start > latest) return fyOf(latest);
+  return requestedFY;
+}
+
 // ── Disclosure data builder for premium export ────────────────────────────────
+// Every figure below is scoped to the reported FY. Previously this summed
+// whole-of-life totals while the sheets labelled them "for the year", so the
+// disclosure notes did not foot.
 function buildDiscDataFromLeases(leasesArr, fy){
+  var range = fyRange(fy);
+  var fyStart = range.start, fyEnd = range.end;
+
   var totOpenL=0, totCloseL=0, totInterest=0, totPayments=0, totPrincipal=0;
-  var totOpenROU=0, totAdditions=0, totDep=0, totCloseROU=0;
+  var totOpenROU=0, totAdditions=0, totLiabAdditions=0, totDep=0, totCloseROU=0;
   var currLiab=0, ncurrLiab=0;
   var totUndiscounted=0;
   var mat = {y1:0,y1_5:0,y5plus:0};
@@ -2650,32 +2700,74 @@ function buildDiscDataFromLeases(leasesArr, fy){
     if(!inp.termMonths && inp.term) inp.termMonths = inp.term;
     if(inp.isShortTerm||inp.isLowValue){ exemptExpense += parseFloat(inp.pmt)||0; return; }
     var r = calcLeaseForReports(l);
-    if(!r) return;
+    if(!r || !r.res || !r.res.schedule) return;
+    var sched = r.res.schedule;
+    var commence = new Date(inp.start);
+
+    // Rows falling inside the reported FY, and the state at each boundary
+    var inFY=[], lastBefore=null, firstAfterIdx=-1;
+    sched.forEach(function(row, i){
+      if(!row.periodEnd) return;
+      var d = new Date(row.periodEnd);
+      if(d < fyStart){ lastBefore = row; }
+      else if(d <= fyEnd){ inFY.push(row); }
+      else if(firstAfterIdx < 0){ firstAfterIdx = i; }
+    });
+    // Lease not yet commenced, or already ended, as at this FY
+    if(!inFY.length && !lastBefore) return;
     leaseCount++;
-    totCloseL    += r.res.pvInitial;
-    totAdditions += r.res.rouInitial;
-    totCloseROU  += r.res.rouInitial;
-    currLiab     += r.res.liabCurrent;
-    ncurrLiab    += r.res.liabNonCurrent;
-    totInterest  += r.res.totalInterest;
-    totPayments  += r.res.totalPayments;
-    totCashOut   += r.res.totalPayments;
-    totDep       += r.res.depnAnnual;
+
+    var openL   = lastBefore ? lastBefore.closeL : r.res.pvInitial;
+    var openROU = lastBefore ? lastBefore.rouC   : 0;
+    var closeL  = inFY.length ? inFY[inFY.length-1].closeL : (lastBefore ? lastBefore.closeL : 0);
+    var closeROU= inFY.length ? inFY[inFY.length-1].rouC   : (lastBefore ? lastBefore.rouC   : 0);
+
+    // A lease commencing inside this FY is an addition; its liability opens at nil
+    var commencedInFY = commence >= fyStart && commence <= fyEnd;
+    if(commencedInFY){
+      openL = 0; openROU = 0;
+      totAdditions     += r.res.rouInitial;   // ROU asset recognised
+      totLiabAdditions += r.res.pvInitial;    // liability recognised
+    }
+
+    var fyInt=0, fyPmt=0, fyPrin=0, fyDep=0;
+    inFY.forEach(function(row){
+      fyInt += row.interest; fyPmt += row.pmt; fyPrin += row.principal; fyDep += row.dep;
+    });
+
+    totOpenL     += openL;
+    totCloseL    += closeL;
+    totOpenROU   += openROU;
+    totCloseROU  += closeROU;
+    totInterest  += fyInt;
+    totPayments  += fyPmt;
+    totPrincipal += fyPrin;
+    totCashOut   += fyPmt;
+    totDep       += fyDep;
     if(r.inp.ibr) ibrs.push(parseFloat(r.inp.ibr));
 
-    // maturity from schedule
-    r.res.schedule.forEach(function(row){
-      var mo = row.period * (12/(r.res.freq||12));
-      totUndiscounted += row.pmt;
-      if(mo <= 12) mat.y1 += row.pmt;
-      else if(mo <= 60) mat.y1_5 += row.pmt;
-      else mat.y5plus += row.pmt;
-    });
+    // Maturity of payments still outstanding AFTER the FY end, bucketed from that date
+    if(firstAfterIdx >= 0){
+      var remaining = sched.slice(firstAfterIdx);
+      var curr = 0;
+      remaining.forEach(function(row){
+        var d = new Date(row.periodEnd);
+        var monthsOut = (d.getUTCFullYear()-fyEnd.getUTCFullYear())*12
+                      + (d.getUTCMonth()-fyEnd.getUTCMonth());
+        totUndiscounted += row.pmt;
+        if(monthsOut <= 12){ mat.y1 += row.pmt; curr += row.principal; }
+        else if(monthsOut <= 60){ mat.y1_5 += row.pmt; }
+        else { mat.y5plus += row.pmt; }
+      });
+      currLiab  += Math.min(curr, closeL);
+      ncurrLiab += Math.max(0, closeL - Math.min(curr, closeL));
+    }
   });
+
   var wAvgIBR = ibrs.length ? ibrs.reduce(function(s,x){return s+x;},0)/ibrs.length : 0;
   return {
     totOpenL, totCloseL, totInterest, totPayments, totPrincipal,
-    totOpenROU, totAdditions, totDep, totCloseROU,
+    totOpenROU, totAdditions, totLiabAdditions, totDep, totCloseROU,
     currLiab, ncurrLiab, leaseCount, wAvgIBR,
     exemptExpense, totCashOut, totUndiscounted,
     maturity: mat,

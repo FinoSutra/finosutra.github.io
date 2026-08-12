@@ -271,9 +271,10 @@
   // ════════════════════════════════════════════════════════════════════
   //  SHEET 2 — Executive Summary
   // ════════════════════════════════════════════════════════════════════
-  function buildExecSummary(leases, calcFn) {
+  function buildExecSummary(leases, calcFn, discData, fy) {
+    discData = discData || {};
     var W = 10;
-    var ban = sheetBanner('Executive Summary', 'Lease Portfolio Overview  ·  ' + BRAND.std, 'Leases: ' + leases.length + '   ·   Generated: ' + ts(), W);
+    var ban = sheetBanner('Executive Summary', 'Lease Portfolio Overview  ·  ' + BRAND.std, 'Leases: ' + leases.length + (fy ? '   ·   ' + fy : '') + '   ·   Generated: ' + ts(), W);
     var rows = ban.rows.slice(); var merges = ban.merges.slice();
 
     // KPI row labels
@@ -282,20 +283,19 @@
     var startRow = rows.length - 1;
     merges.push(merge(startRow, kpiLabels.length, startRow, W - 1));
 
-    // Compute aggregate KPIs
-    var agg = { count: 0, openL: 0, closeL: 0, rou: 0, interest: 0, dep: 0, cash: 0, ibrs: [] };
-    leases.forEach(function (l) {
-      var r = calcFn(l);
-      if (!r) return;
-      agg.count++;
-      agg.closeL   += r.res.pvInitial;
-      agg.rou      += r.res.rouInitial;
-      agg.interest += r.res.totalInterest;
-      agg.dep      += r.res.depnAnnual;
-      agg.cash     += r.res.totalPayments;
-      if (r.inp.ibr) agg.ibrs.push(parseFloat(r.inp.ibr));
-    });
-    var wIBR = agg.ibrs.length ? (agg.ibrs.reduce(function (s, x) { return s + x; }, 0) / agg.ibrs.length) : 0;
+    // KPIs come from the FY-scoped disclosure data so this row describes the SAME
+    // period as the rest of the pack. It previously mixed whole-of-life interest and
+    // cash with one year of depreciation, and reported the day-1 liability as closing.
+    var agg = {
+      count:    discData.leaseCount || 0,
+      openL:    discData.totOpenL   || 0,
+      closeL:   discData.totCloseL  || 0,
+      rou:      discData.totCloseROU|| 0,
+      interest: discData.totInterest|| 0,
+      dep:      discData.totDep     || 0,
+      cash:     discData.totCashOut || 0
+    };
+    var wIBR = discData.wAvgIBR || 0;
 
     var kpiVals = [
       { v: agg.count, s: kpiVal(CLR.navy) },
@@ -320,10 +320,18 @@
     var hdrRow = rows.length - 1;
     var idx = 1;
 
+    // Totals are summed from the values actually printed in these columns — the KPI
+    // row above is FY-scoped, so it cannot be reused for day-1 column totals.
+    var colTot = { initial: 0, rou: 0, curr: 0 };
     leases.forEach(function (l, i) {
       var r = calcFn(l);
       var inp = l.inputs || {};
       var status = !r ? 'Exempt' : 'Active';
+      if (r) {
+        colTot.initial += r.res.pvInitial;
+        colTot.rou     += r.res.rouInitial;
+        colTot.curr    += r.res.liabCurrent;
+      }
       var row = [
         cv(idx++, altRow(i)),
         cv(l.name || '—', Object.assign(altRow(i), { font: { bold: true, name: 'Calibri', sz: 10 } })),
@@ -343,7 +351,7 @@
     rows.push([
       cv('', totalLabel()), cv('TOTAL', totalLabel()), cv('', totalLabel()),
       cv('', totalLabel()), cv('', totalLabel()), cv('', totalLabel()),
-      cn(agg.closeL, totalRow()), cn(agg.rou, totalRow()), cn(0, totalRow()), cv('', totalLabel())
+      cn(colTot.initial, totalRow()), cn(colTot.rou, totalRow()), cn(colTot.curr, totalRow()), cv('', totalLabel())
     ]);
     rows.push(empty(W));
     rows.push(footerRow(W));
@@ -799,6 +807,7 @@
 
     noteSection('NOTE 2 — MOVEMENT IN LEASE LIABILITY — Para 52(a)', [
       ['Opening balance (1 April)', d.totOpenL, ''],
+      ['Add: Liabilities recognised on leases commencing during the year', d.totLiabAdditions || 0, ''],
       ['Add: Interest accrued during the year', d.totInterest, ''],
       ['Less: Lease payments made during the year', -d.totPayments, 'sub'],
       ['Closing balance (31 March)', d.totCloseL, 'total'],
@@ -807,7 +816,7 @@
     ]);
 
     noteSection('NOTE 3 — RIGHT-OF-USE ASSET ROLLFORWARD — Para 52(a)', [
-      ['Opening gross carrying amount', d.totOpenROU, ''],
+      ['Opening net carrying amount', d.totOpenROU, ''],
       ['Add: Additions during the year', d.totAdditions, ''],
       ['Less: Depreciation for the year', -d.totDep, 'sub'],
       ['Net Book Value — Closing', d.totCloseROU, 'total']
@@ -1086,7 +1095,7 @@
 
     // Append all sheets in order
     XLSX.utils.book_append_sheet(wb, buildCoverSheet(meta),                            '1_Cover');
-    XLSX.utils.book_append_sheet(wb, buildExecSummary(leases, calcFn),                 '2_Executive_Summary');
+    XLSX.utils.book_append_sheet(wb, buildExecSummary(leases, calcFn, discData, fy),   '2_Executive_Summary');
     XLSX.utils.book_append_sheet(wb, buildLeaseMaster(leases),                         '3_Lease_Master');
     XLSX.utils.book_append_sheet(wb, buildAssumptions(),                               '4_Assumptions');
     XLSX.utils.book_append_sheet(wb, buildValidation(leases, calcFn),                  '5_Validation');

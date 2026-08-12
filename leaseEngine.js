@@ -70,7 +70,15 @@
   // ── Amortization schedule builder ────────────────────────────────────
   // Monthly schedule — one row per month, actual/365 day-count interest
   function buildSchedule(pmtArray, pv, ibr, timing, dep, startDate, monthsPerPeriod, termMonths) {
-    var dailyRate = ibr / 100 / 365;
+    // The liability must unwind on the SAME basis it was discounted on, or the
+    // schedule never reaches zero. calcPV discounts at the periodic rate
+    // (ibr / freq), so accrue at the monthly rate that compounds exactly to it.
+    // An actual/365 daily accrual here would leave a residual balance at the end
+    // and make total interest disagree with (payments - PV).
+    var rPeriod     = ibr / 100 * monthsPerPeriod / 12;
+    var monthlyRate = monthsPerPeriod === 1
+      ? rPeriod
+      : Math.pow(1 + rPeriod, 1 / monthsPerPeriod) - 1;
     var openL = pv;
     var sched = [];
     var isBeg = (timing === 'beg' || timing === 'beginning' || timing === 'advance');
@@ -82,52 +90,84 @@
       var pidx   = isBeg ? Math.round((mo - 1) / monthsPerPeriod) : Math.round(mo / monthsPerPeriod) - 1;
       var pmtAmt = hasPmt ? (pmtArray[pidx] || 0) : 0;
 
-      // Period end date and actual day count
+      // Period end date (display only — interest accrues on the periodic rate)
       var periodEndDate = null;
-      var days = 30; // fallback if no startDate
       if (startDate) {
         var d = new Date(startDate);
         d.setMonth(d.getMonth() + mo, 0);
         periodEndDate = d;
-        days = (d - prevDate) / 86400000;
         prevDate = new Date(d);
       }
 
+      // Carry the balances in whole rupees — the same figures that are displayed.
+      // Rounding each row for display while carrying unrounded balances made the
+      // disclosure notes miss by a few rupees at every year boundary.
+      var pmtR = Math.round(pmtAmt);
+      var depR = Math.round(dep);
       var interest, principal, closeL;
       if (isBeg) {
         if (hasPmt) {
-          principal = pmtAmt;
-          interest  = Math.round((openL - pmtAmt) * dailyRate * days * 100) / 100;
-          closeL    = Math.round((openL - pmtAmt + interest) * 100) / 100;
+          principal = pmtR;
+          interest  = Math.round((openL - pmtR) * monthlyRate);
+          closeL    = openL - pmtR + interest;
         } else {
-          interest  = Math.round(openL * dailyRate * days * 100) / 100;
+          interest  = Math.round(openL * monthlyRate);
           principal = 0;
-          closeL    = Math.round((openL + interest) * 100) / 100;
+          closeL    = openL + interest;
         }
       } else {
-        interest  = Math.round(openL * dailyRate * days * 100) / 100;
-        principal = hasPmt ? Math.round((pmtAmt - interest) * 100) / 100 : 0;
-        closeL    = Math.round((openL + interest - pmtAmt) * 100) / 100;
+        interest  = Math.round(openL * monthlyRate);
+        principal = hasPmt ? pmtR - interest : 0;
+        closeL    = openL + interest - pmtR;
       }
 
       if (closeL < 0) closeL = 0;
-      if (mo === termMonths && Math.abs(closeL) < 1) closeL = 0;
-      rouC = Math.max(0, Math.round((rouC - dep) * 100) / 100);
+      rouC = Math.max(0, rouC - depR);
 
       sched.push({
         period:    mo,
         periodEnd: periodEndDate ? periodEndDate.toISOString().slice(0, 10) : null,
-        openL:     Math.round(openL),
-        interest:  Math.round(interest),
-        pmt:       Math.round(pmtAmt),
-        principal: Math.round(principal),
-        closeL:    Math.round(closeL),
-        dep:       Math.round(dep),
-        rouC:      Math.round(rouC),
+        openL:     openL,
+        interest:  interest,
+        pmt:       pmtR,
+        principal: principal,
+        closeL:    closeL,
+        dep:       depR,
+        rouC:      rouC,
         hasPmt:    hasPmt
       });
 
       openL = closeL;
+    }
+
+    // True up the final month for accumulated per-row rounding so the liability
+    // closes at exactly zero and the schedule's own sub-totals tie back to the
+    // opening PV — an auditor foots these columns.
+    if (sched.length) {
+      // Correct at the LAST ROW THAT CARRIES A PAYMENT — that is where the liability
+      // is actually extinguished. Under an advance annuity the final payment falls at
+      // the start of the last period, so any months after it must carry nil balance
+      // and nil interest rather than accruing on rounding dust.
+      var lastPaidIdx = -1;
+      for (var k = sched.length - 1; k >= 0; k--) {
+        if (sched[k].pmt > 0) { lastPaidIdx = k; break; }
+      }
+      if (lastPaidIdx >= 0) {
+        var lp = sched[lastPaidIdx];
+        // Both conventions rearrange to interest = closeL + pmt - openL, closeL = 0.
+        var impliedInt = lp.pmt - lp.openL;
+        if (impliedInt >= 0) {
+          lp.interest  = impliedInt;
+          lp.principal = isBeg ? lp.pmt : lp.openL;
+        }
+        lp.closeL = 0;
+        for (var j = lastPaidIdx + 1; j < sched.length; j++) {
+          sched[j].openL = 0; sched[j].interest = 0;
+          sched[j].principal = 0; sched[j].closeL = 0;
+        }
+      } else {
+        sched[sched.length - 1].closeL = 0;
+      }
     }
     return sched;
   }
@@ -233,11 +273,23 @@
 
     // Adjust ROU carrying values if IDC/incentive changed rouInitial vs pv
     if (idc || incentive) {
-      var depAdj = rouInitial / termMonths;
-      sched = sched.map(function (row, i) {
-        var rouAdj = Math.max(0, Math.round((rouInitial - (i + 1) * depAdj) * 100) / 100);
-        return Object.assign({}, row, { dep: Math.round(depAdj), rouC: Math.round(rouAdj) });
+      var depAdj = Math.round(rouInitial / termMonths);
+      var carry  = rouInitial;
+      sched = sched.map(function (row) {
+        carry = Math.max(0, carry - depAdj);
+        return Object.assign({}, row, { dep: depAdj, rouC: carry });
       });
+    }
+
+    // Absorb rounding into the final month so accumulated depreciation equals the
+    // ROU asset exactly — otherwise the ROU rollforward does not foot and the GL
+    // is left with a stub balance in accumulated depreciation.
+    if (sched.length) {
+      var depSum = sched.reduce(function (s, x) { return s + x.dep; }, 0);
+      if (depSum !== rouInitial) {
+        sched[sched.length - 1].dep += (rouInitial - depSum);
+        sched[sched.length - 1].rouC = 0;
+      }
     }
 
     var annual  = buildAnnual(sched, inp.start, 1); // schedule is monthly
