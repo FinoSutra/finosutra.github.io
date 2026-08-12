@@ -1957,7 +1957,7 @@ function exportJEXL(){
       j.dr?xJNm(j.dr,alt,GR):xJTx('—',alt),
       j.cr?xJNm(j.cr,alt,AM):xJTx('—',alt)]);
   });
-  je_rows.push([xJFt('Prepared using Finosutra · finosutra.in · IND AS 116 / IFRS 16 Suite')].concat(jBlkRow(N,JC-2)).concat([xJFt('IND AS 116 Compliant ✓',true)]));
+  je_rows.push([xJFt('Prepared using Finosutra · finosutra.com · IND AS 116 / IFRS 16 Suite')].concat(jBlkRow(N,JC-2)).concat([xJFt('IND AS 116 Compliant ✓',true)]));
 
   var ws = XLSX.utils.aoa_to_sheet(je_rows);
   ws['!cols'] = [{wch:12},{wch:10},{wch:20},{wch:45},{wch:32},{wch:25},{wch:18},{wch:14},{wch:14}];
@@ -2385,7 +2385,7 @@ function _makeBrandedCoverSheet(title, subtitle, metaLine){
     [{v:subtitle,s:{font:{name:'Calibri',sz:11,color:{rgb:'374151'}},fill:{fgColor:{rgb:WH}},alignment:{horizontal:'left',vertical:'center',indent:1}}},bl(WH)],
     [{v:'→ Navigate to the sheets below for data tables.',s:{font:{name:'Calibri',sz:10,color:{rgb:A}},fill:{fgColor:{rgb:WH}},alignment:{horizontal:'left',vertical:'center',indent:1}}},bl(WH)],
     [bl(WH),bl(WH)],
-    [{v:'Prepared using Finosutra · finosutra.in',s:{font:{name:'Calibri',sz:9,color:{rgb:A}},fill:{fgColor:{rgb:N}},alignment:{horizontal:'left',indent:1}}},{v:'IND AS 116 Compliant ✓',s:{font:{name:'Calibri',sz:9,color:{rgb:'93BBFB'}},fill:{fgColor:{rgb:N}},alignment:{horizontal:'right'}}}],
+    [{v:'Prepared using Finosutra · finosutra.com',s:{font:{name:'Calibri',sz:9,color:{rgb:A}},fill:{fgColor:{rgb:N}},alignment:{horizontal:'left',indent:1}}},{v:'IND AS 116 Compliant ✓',s:{font:{name:'Calibri',sz:9,color:{rgb:'93BBFB'}},fill:{fgColor:{rgb:N}},alignment:{horizontal:'right'}}}],
   ];
   var ws=XLSX.utils.aoa_to_sheet(rows);
   ws['!cols']=[{wch:70},{wch:20}];
@@ -2871,7 +2871,7 @@ function exportWorkingPaper(){
     [xLbl('Total Payments over Lease Term (₹)'), xNum(res.totalPayments), em, em],
     [em,em,em,em],
     // Footer
-    [xFoot('Prepared using Finosutra · finosutra.in · IND AS 116 / IFRS 16 Suite'), xBlank(N),xBlank(N), xFootR('IND AS 116 Compliant ✓')],
+    [xFoot('Prepared using Finosutra · finosutra.com · IND AS 116 / IFRS 16 Suite'), xBlank(N),xBlank(N), xFootR('IND AS 116 Compliant ✓')],
   ];
 
   var ws1 = XLSX.utils.aoa_to_sheet(s1);
@@ -2895,7 +2895,7 @@ function exportWorkingPaper(){
   var totPrin = res.schedule.reduce(function(s,r){return s+r.principal;},0);
   var totDep  = res.schedule.reduce(function(s,r){return s+r.dep;},0);
   s2rows.push([xTot('TOTAL'),xBlank(AL),xBlank(AL),xTotN(totInt),xTotN(totPmt),xTotN(totPrin),xBlank(AL),xTotN(totDep),xBlank(AL)]);
-  s2rows.push([xFoot('Prepared using Finosutra · finosutra.in'),xBlank(N),xBlank(N),xBlank(N),xBlank(N),xBlank(N),xBlank(N),xBlank(N),xFootR('Periods: '+res.schedule.length+' · IND AS 116 ✓')]);
+  s2rows.push([xFoot('Prepared using Finosutra · finosutra.com'),xBlank(N),xBlank(N),xBlank(N),xBlank(N),xBlank(N),xBlank(N),xBlank(N),xFootR('Periods: '+res.schedule.length+' · IND AS 116 ✓')]);
 
   var ws2 = XLSX.utils.aoa_to_sheet(s2rows);
   ws2['!cols'] = [{wch:8},{wch:14},{wch:20},{wch:18},{wch:16},{wch:16},{wch:20},{wch:18},{wch:16}];
@@ -2913,7 +2913,7 @@ function exportWorkingPaper(){
     var fn = ri%2===0 ? function(f,v){return f(v);} : function(f,v){return xAlt(f,v);};
     s3rows.push([fn(xValB,r.fy),fn(xNum,r.openL),fn(xNumAm,r.interest),fn(xNum,r.payments),fn(xNum,r.principal),fn(xNum,r.closeL),fn(xNum,r.dep),fn(xNum,r.rouC)]);
   });
-  s3rows.push([xFoot('Prepared using Finosutra · finosutra.in'),xBlank(N),xBlank(N),xBlank(N),xBlank(N),xBlank(N),xBlank(N),xFootR('IND AS 116 Compliant ✓')]);
+  s3rows.push([xFoot('Prepared using Finosutra · finosutra.com'),xBlank(N),xBlank(N),xBlank(N),xBlank(N),xBlank(N),xBlank(N),xFootR('IND AS 116 Compliant ✓')]);
 
   var ws3 = XLSX.utils.aoa_to_sheet(s3rows);
   ws3['!cols'] = [{wch:14},{wch:20},{wch:18},{wch:16},{wch:16},{wch:20},{wch:18},{wch:16}];
@@ -2934,7 +2934,7 @@ function exportWorkingPaper(){
       j.cr ? fn(xNumAm,j.cr) : fn(xVal,'—')
     ]);
   });
-  s4rows.push([xFoot('Prepared using Finosutra · finosutra.in'),xBlank(N),xBlank(N),xBlank(N),xBlank(N),xBlank(N),xFootR('IND AS 116 Compliant ✓')]);
+  s4rows.push([xFoot('Prepared using Finosutra · finosutra.com'),xBlank(N),xBlank(N),xBlank(N),xBlank(N),xBlank(N),xFootR('IND AS 116 Compliant ✓')]);
 
   var ws4 = XLSX.utils.aoa_to_sheet(s4rows);
   ws4['!cols'] = [{wch:12},{wch:10},{wch:22},{wch:48},{wch:30},{wch:16},{wch:16}];
@@ -2966,7 +2966,7 @@ function exportWorkingPaper(){
     [xLbl('IBR used'), xValB((inp.ibr||0)+'% p.a.')],
     [{v:xLbl('Within typical range?').v, s:xLbl('').s}, {v:inRange?'Yes — within range':'⚠  Review required — outside typical range', s:{font:{bold:true,sz:10,color:{rgb:inRange?GR:'B91C1C'},name:'Calibri'},fill:{fgColor:{rgb:WH}},alignment:{vertical:'center',horizontal:'left',indent:1}}}],
     [em, em],
-    [xFoot('Prepared using Finosutra · finosutra.in · IND AS 116 / IFRS 16 Suite'), xFootR('IBR should be reassessed at modification date')],
+    [xFoot('Prepared using Finosutra · finosutra.com · IND AS 116 / IFRS 16 Suite'), xFootR('IBR should be reassessed at modification date')],
   ];
 
   var ws5 = XLSX.utils.aoa_to_sheet(s5rows);
@@ -3648,7 +3648,7 @@ function doExportXL(){
     ]);
   });
   sumData.push([xTotL('TOTAL — '+leases.length+' Leases'),bl(AL),bl(AL),bl(AL),xNmB(0),xNmB(kpis.rou),xNmB(kpis.curr),xNmB(kpis.ncurr),xNmB(kpis.depn)]);
-  sumData.push([xFt('Prepared using Finosutra · finosutra.in · IND AS 116 / IFRS 16 Portfolio Suite')].concat(blk(N,cols-2)).concat([xFtR('IND AS 116 Compliant ✓')]));
+  sumData.push([xFt('Prepared using Finosutra · finosutra.com · IND AS 116 / IFRS 16 Portfolio Suite')].concat(blk(N,cols-2)).concat([xFtR('IND AS 116 Compliant ✓')]));
 
   var ws=XLSX.utils.aoa_to_sheet(sumData);
   ws['!cols']=[{wch:32},{wch:22},{wch:8},{wch:10},{wch:20},{wch:18},{wch:18},{wch:20},{wch:14}];
@@ -4132,7 +4132,7 @@ function exportValidationReport() {
       vNum(0,alt),vNum(0,alt),
       vStat(docs.agreement?'Yes':'No',alt,0),vTx(inp.ibr?inp.ibr+'%':'—',alt)]);
   });
-  vrows.push([{v:'Prepared using Finosutra · finosutra.in',s:{font:{name:'Calibri',sz:9,color:{rgb:A}},fill:{fgColor:{rgb:N}},alignment:{horizontal:'left',indent:1}}}].concat(blkR(N,VC-2)).concat([{v:'IND AS 116 Compliant ✓',s:{font:{name:'Calibri',sz:9,color:{rgb:'93BBFB'}},fill:{fgColor:{rgb:N}},alignment:{horizontal:'right'}}}]));
+  vrows.push([{v:'Prepared using Finosutra · finosutra.com',s:{font:{name:'Calibri',sz:9,color:{rgb:A}},fill:{fgColor:{rgb:N}},alignment:{horizontal:'left',indent:1}}}].concat(blkR(N,VC-2)).concat([{v:'IND AS 116 Compliant ✓',s:{font:{name:'Calibri',sz:9,color:{rgb:'93BBFB'}},fill:{fgColor:{rgb:N}},alignment:{horizontal:'right'}}}]));
 
   var ws = XLSX.utils.aoa_to_sheet(vrows);
   ws['!cols']=[{wch:32},{wch:22},{wch:18},{wch:8},{wch:10},{wch:8},{wch:16},{wch:10}];
@@ -4179,7 +4179,7 @@ function exportExpiryTracker() {
       eTx(inp.ibr?(inp.ibr+'%'):'—',alt),
       eNm(s.liabCurrent||0,alt)]);
   });
-  erows.push([{v:'Prepared using Finosutra · finosutra.in',s:{font:{name:'Calibri',sz:9,color:{rgb:A}},fill:{fgColor:{rgb:N}},alignment:{horizontal:'left',indent:1}}}].concat(eBlkR(N,EC-2)).concat([{v:'IND AS 116 Compliant ✓',s:{font:{name:'Calibri',sz:9,color:{rgb:'93BBFB'}},fill:{fgColor:{rgb:N}},alignment:{horizontal:'right'}}}]));
+  erows.push([{v:'Prepared using Finosutra · finosutra.com',s:{font:{name:'Calibri',sz:9,color:{rgb:A}},fill:{fgColor:{rgb:N}},alignment:{horizontal:'left',indent:1}}}].concat(eBlkR(N,EC-2)).concat([{v:'IND AS 116 Compliant ✓',s:{font:{name:'Calibri',sz:9,color:{rgb:'93BBFB'}},fill:{fgColor:{rgb:N}},alignment:{horizontal:'right'}}}]));
 
   var ws = XLSX.utils.aoa_to_sheet(erows);
   ws['!cols']=[{wch:32},{wch:22},{wch:14},{wch:14},{wch:14},{wch:10},{wch:20}];

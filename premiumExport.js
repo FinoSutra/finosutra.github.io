@@ -10,8 +10,8 @@
   var BRAND = {
     name:    'FinoSutra',
     tagline: 'Finance on Autopilot',
-    site:    'www.finosutra.in',
-    version: 'v2.0',
+    site:    'www.finosutra.com',
+    version: 'v3.0',
     std:     'IND AS 116 / IFRS 16'
   };
 
@@ -160,10 +160,21 @@
       hour: '2-digit', minute: '2-digit', hour12: true
     });
   }
+  // en-IN renders September as "Sept", which reads as a typo beside "Mar"/"Jun".
+  // Format explicitly so every month is three letters.
+  var MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   function dateStr(d) {
     if (!d) return '—';
-    try { return new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }); }
-    catch (e) { return d; }
+    try {
+      // Date-only strings are read component-wise: new Date('2026-03-31') is UTC
+      // midnight, which renders as the 30th anywhere behind UTC.
+      var iso = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(d));
+      if (iso) return iso[3] + ' ' + MONTHS_SHORT[+iso[2] - 1] + ' ' + iso[1];
+      var dt = (d instanceof Date) ? d : new Date(d);
+      if (isNaN(dt.getTime())) return d;
+      return String(dt.getDate()).padStart(2, '0') + ' ' +
+             MONTHS_SHORT[dt.getMonth()] + ' ' + dt.getFullYear();
+    } catch (e) { return d; }
   }
   function indian(n) {
     return (n === null || n === undefined) ? '—' :
@@ -251,7 +262,7 @@
     });
 
     rows.push(emptyN(W, CLR.white));
-    rows.push([cv('CONFIDENTIAL — Prepared using Finosutra · finosutra.in. For CA / Finance team use only. Review all outputs before inclusion in financial statements.', { font: { name: 'Calibri', sz: 9, italic: true, color: { rgb: CLR.grey4 } }, fill: { fgColor: { rgb: CLR.grey2 } }, alignment: { wrapText: true, horizontal: 'left', indent: 1 } })].concat(emptyN(W - 1, CLR.grey2)));
+    rows.push([cv('CONFIDENTIAL — Prepared using Finosutra · finosutra.com. For CA / Finance team use only. Review all outputs before inclusion in financial statements.',{ font: { name: 'Calibri', sz: 9, italic: true, color: { rgb: CLR.grey4 } }, fill: { fgColor: { rgb: CLR.grey2 } }, alignment: { wrapText: true, horizontal: 'left', indent: 1 } })].concat(emptyN(W - 1, CLR.grey2)));
     merges.push(merge(rows.length - 1, 0, rows.length - 1, W - 1));
     rows.push(emptyN(W, CLR.white));
     rows.push(footerRow(W));
@@ -366,34 +377,69 @@
   // ════════════════════════════════════════════════════════════════════
   //  SHEET 3 — Lease Master Input Register
   // ════════════════════════════════════════════════════════════════════
+  // Timing is stored as 'beg'/'beginning'/'advance' depending on whether the lease
+  // came from the form or an upload. Checking only 'beg' labelled every uploaded
+  // advance lease as "Arrears".
+  function timingLabel(t) {
+    var s = String(t || '').toLowerCase();
+    return (s.indexOf('beg') === 0 || s.indexOf('adv') === 0) ? 'Advance' : 'Arrears';
+  }
+  function escTypeLabel(t) {
+    return { pct: 'Percent (%)', amt: 'Fixed ₹', cpi: 'CPI / Index-linked' }[String(t || '').toLowerCase()] || 'None (flat)';
+  }
+  function leaseEndDate(start, termMonths) {
+    if (!start || !termMonths) return '—';
+    var iso = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(start));
+    var d = iso ? new Date(Date.UTC(+iso[1], +iso[2] - 1, +iso[3])) : new Date(start);
+    if (isNaN(d.getTime())) return '—';
+    d.setUTCMonth(d.getUTCMonth() + (parseInt(termMonths, 10) || 0));
+    d.setUTCDate(d.getUTCDate() - 1);
+    return d.toISOString().slice(0, 10);
+  }
+
   function buildLeaseMaster(leases) {
-    var W = 16;
-    var ban = sheetBanner('Lease Master Input Register', 'All lease input parameters as at the date of computation  ·  ' + BRAND.std, 'Leases: ' + leases.length + '   ·   Generated: ' + ts(), W);
+    var W = 22;
+    var ban = sheetBanner('Lease Master Input Register', 'Every input behind the computation — these figures reproduce the schedule  ·  ' + BRAND.std, 'Leases: ' + leases.length + '   ·   Generated: ' + ts(), W);
     var rows = ban.rows.slice(); var merges = ban.merges.slice();
 
-    var hdrs = ['#', 'Lease Name', 'Entity', 'Lessor', 'Category', 'Start Date', 'Term (mo)', 'Rent/Period ₹', 'Frequency', 'Timing', 'IBR %', 'Esc. Type', 'Esc. %', 'IDC ₹', 'Incentive ₹', 'Remarks'];
+    var hdrs = ['#', 'Lease Name', 'Entity', 'Lessor', 'Category', 'Start Date', 'End Date',
+                'Term (mo)', 'Rent/Period ₹', 'Frequency', 'Timing', 'IBR %',
+                'Esc. Type', 'Esc. %', 'Esc. ₹/step', 'Esc. Interval (yrs)',
+                'Rent-Free (mo)', 'IDC ₹', 'Incentive ₹', 'Restoration ₹', 'Exemption', 'Remarks'];
     rows.push(hdrs.map(function (h) { return cv(h, navyHdr()); }));
     var hdrRow = rows.length - 1;
 
     leases.forEach(function (l, i) {
       var inp = l.inputs || {};
+      var s = altRow(i);
+      var num = function (v, fmt) { return { v: v, t: 'n', s: Object.assign({}, s, { numFmt: fmt || '#,##0', alignment: { horizontal: 'right' } }) }; };
+      var dash = function (v, fmt) { return (v === null || v === undefined || v === '' || !parseFloat(v)) ? cv('—', Object.assign({}, s, { alignment: { horizontal: 'right' } })) : num(parseFloat(v), fmt); };
+      var escT = String(inp.escType || 'none').toLowerCase();
+      var exempt = inp.isShortTerm ? 'Short-term' : inp.isLowValue ? 'Low-value' : '—';
       rows.push([
-        cv(i + 1, altRow(i)),
-        cv(l.name || '—', Object.assign({}, altRow(i), { font: { bold: true, name: 'Calibri', sz: 10 } })),
-        cv(inp.entity || l.entity || '—', altRow(i)),
-        cv(inp.lessor || '—', altRow(i)),
-        cv(inp.category || '—', altRow(i)),
-        cv(dateStr(inp.start), altRow(i)),
-        cn(inp.termMonths || inp.term || 0, Object.assign({}, altRow(i), { alignment: { horizontal: 'center' } })),
-        cn(inp.pmt || 0, Object.assign({}, altRow(i), { numFmt: '#,##0', alignment: { horizontal: 'right' } })),
-        cv({ 12: 'Monthly', 4: 'Quarterly', 2: 'Half-Yearly', 1: 'Annual' }[inp.freq] || 'Monthly', altRow(i)),
-        cv(inp.timing === 'beg' ? 'Advance' : 'Arrears', altRow(i)),
-        { v: parseFloat(inp.ibr) || 0, t: 'n', s: Object.assign({}, altRow(i), { numFmt: '0.00"%"', alignment: { horizontal: 'right' } }) },
-        cv(inp.escType || 'None', altRow(i)),
-        { v: parseFloat(inp.escPct) || 0, t: 'n', s: Object.assign({}, altRow(i), { numFmt: '0.00"%"', alignment: { horizontal: 'right' } }) },
-        cn(inp.idc || 0, Object.assign({}, altRow(i), { numFmt: '#,##0', alignment: { horizontal: 'right' } })),
-        cn(inp.incentive || 0, Object.assign({}, altRow(i), { numFmt: '#,##0', alignment: { horizontal: 'right' } })),
-        cv(inp.remarks || '—', Object.assign({}, altRow(i), { alignment: { wrapText: true } }))
+        cv(i + 1, s),
+        cv(l.name || '—', Object.assign({}, s, { font: { bold: true, name: 'Calibri', sz: 10 } })),
+        cv(inp.entity || l.entity || '—', s),
+        cv(inp.lessor || '—', s),
+        cv(inp.category || '—', s),
+        cv(dateStr(inp.start), s),
+        cv(dateStr(leaseEndDate(inp.start, inp.termMonths || inp.term)), s),
+        cn(inp.termMonths || inp.term || 0, Object.assign({}, s, { alignment: { horizontal: 'center' } })),
+        num(parseFloat(inp.pmt) || 0),
+        cv({ 12: 'Monthly', 4: 'Quarterly', 2: 'Half-Yearly', 1: 'Annual' }[inp.freq] || 'Monthly', s),
+        cv(timingLabel(inp.timing), s),
+        num(parseFloat(inp.ibr) || 0, '0.00"%"'),
+        cv(escTypeLabel(inp.escType), s),
+        escT === 'pct' || escT === 'cpi' ? dash(inp.escPct, '0.00"%"') : cv('—', Object.assign({}, s, { alignment: { horizontal: 'right' } })),
+        escT === 'amt' ? dash(inp.escAmt) : cv('—', Object.assign({}, s, { alignment: { horizontal: 'right' } })),
+        escT === 'none' ? cv('—', Object.assign({}, s, { alignment: { horizontal: 'center' } }))
+                        : cn(parseInt(inp.escYears, 10) || 1, Object.assign({}, s, { alignment: { horizontal: 'center' } })),
+        cn(parseFloat(inp.rfMonths) || 0, Object.assign({}, s, { alignment: { horizontal: 'center' } })),
+        num(parseFloat(inp.idc) || 0),
+        num(parseFloat(inp.incentive) || 0),
+        num(parseFloat(inp.restoration) || 0),
+        cv(exempt, Object.assign({}, s, { alignment: { horizontal: 'center' } })),
+        cv(inp.remarks || '—', Object.assign({}, s, { alignment: { wrapText: true } }))
       ]);
     });
 
@@ -401,7 +447,10 @@
     rows.push(footerRow(W));
 
     var ws = XLSX.utils.aoa_to_sheet(rows);
-    ws['!cols'] = [{ wch: 4 }, { wch: 28 }, { wch: 20 }, { wch: 20 }, { wch: 14 }, { wch: 12 }, { wch: 9 }, { wch: 14 }, { wch: 12 }, { wch: 10 }, { wch: 8 }, { wch: 10 }, { wch: 8 }, { wch: 12 }, { wch: 12 }, { wch: 25 }];
+    ws['!cols'] = [{ wch: 4 }, { wch: 26 }, { wch: 18 }, { wch: 18 }, { wch: 14 }, { wch: 12 }, { wch: 12 },
+                   { wch: 9 }, { wch: 14 }, { wch: 12 }, { wch: 10 }, { wch: 8 },
+                   { wch: 16 }, { wch: 9 }, { wch: 12 }, { wch: 16 },
+                   { wch: 13 }, { wch: 12 }, { wch: 12 }, { wch: 13 }, { wch: 12 }, { wch: 22 }];
     ws['!freeze'] = freeze(hdrRow + 1, 2);
     ws['!merges'] = merges;
     return ws;
@@ -489,7 +538,7 @@
   // ════════════════════════════════════════════════════════════════════
   //  SHEET 5 — Validation Checks
   // ════════════════════════════════════════════════════════════════════
-  function buildValidation(leases, calcFn) {
+  function buildValidation(leases, calcFn, fy) {
     var W = 6;
     var ban = sheetBanner('Validation & Exception Report', 'Input validation checks for all leases  ·  ' + BRAND.std, 'Leases checked: ' + leases.length + '   ·   Generated: ' + ts(), W);
     var rows = ban.rows.slice(); var merges = ban.merges.slice();
@@ -515,6 +564,60 @@
       if (!inp.lessor) checks.push({ name: name, cat: 'Identity', msg: 'Lessor name not provided — required for disclosure note', sev: 'Info' });
       if (inp.isShortTerm || inp.isLowValue)
         checks.push({ name: name, cat: 'Exemption', msg: (inp.isShortTerm ? 'Short-term' : 'Low-value') + ' exemption applied — lease not on balance sheet', sev: 'Info' });
+
+      var term = parseInt(inp.termMonths || inp.term, 10) || 0;
+      if (inp.isShortTerm && term > 12)
+        checks.push({ name: name, cat: 'Exemption', msg: 'Short-term exemption applied to a ' + term + '-month lease. Para 6 permits it only for terms of 12 months or less.', sev: 'Error' });
+      if (term > 0 && term <= 12 && !inp.isShortTerm && !inp.isLowValue)
+        checks.push({ name: name, cat: 'Exemption', msg: 'Term is ' + term + ' months. The short-term exemption may be available — confirm whether it has been elected.', sev: 'Info' });
+      if (parseFloat(inp.rfMonths) >= term && term > 0)
+        checks.push({ name: name, cat: 'Rent-free', msg: 'Rent-free months (' + inp.rfMonths + ') equal or exceed the lease term — no payments would be recognised.', sev: 'Error' });
+
+      // State the escalation in words. A silent mis-set interval is exactly how a
+      // 5%-per-year lease gets computed as a 5%-per-3-years lease.
+      var escT = String(inp.escType || 'none').toLowerCase();
+      if (escT !== 'none') {
+        var every = parseInt(inp.escYears, 10) || 1;
+        var step = escT === 'amt' ? ('₹' + Number(inp.escAmt || 0).toLocaleString('en-IN'))
+                                  : ((parseFloat(inp.escPct) || 0) + '%');
+        checks.push({ name: name, cat: 'Escalation', msg: 'Rent steps up by ' + step + ' every ' + every + ' year' + (every === 1 ? '' : 's') + '. Confirm this matches the lease deed.', sev: 'Info' });
+      }
+
+      // ── Self-checks on the computed schedule ──────────────────────────
+      var r = calcFn(l);
+      if (r && r.res && r.res.schedule && r.res.schedule.length) {
+        var sc = r.res.schedule;
+        var sumf = function (k) { return sc.reduce(function (a, x) { return a + x[k]; }, 0); };
+        var finalL = sc[sc.length - 1].closeL;
+        if (Math.abs(finalL) > 1)
+          checks.push({ name: name, cat: 'Schedule', msg: 'Lease liability does not extinguish — ₹' + Number(finalL).toLocaleString('en-IN') + ' remains after the final payment.', sev: 'Error' });
+        else
+          checks.push({ name: name, cat: 'Schedule', msg: 'Amortisation schedule unwinds to nil at the end of the term.', sev: 'Info' });
+
+        var intGap = sumf('interest') - (sumf('pmt') - r.res.pvInitial);
+        if (Math.abs(intGap) > 1)
+          checks.push({ name: name, cat: 'Schedule', msg: 'Total finance charge differs from (payments less present value) by ₹' + Number(Math.abs(intGap)).toLocaleString('en-IN') + '.', sev: 'Error' });
+
+        var depGap = sumf('dep') - r.res.rouInitial;
+        if (Math.abs(depGap) > 1)
+          checks.push({ name: name, cat: 'ROU asset', msg: 'Accumulated depreciation differs from the ROU asset by ₹' + Number(Math.abs(depGap)).toLocaleString('en-IN') + '.', sev: 'Error' });
+
+        // Is the reported FY one this lease actually exists in?
+        if (fy && inp.start) {
+          var fyM = /FY\s*(\d{4})/.exec(String(fy));
+          if (fyM) {
+            var fyS = new Date(Date.UTC(+fyM[1], 3, 1)), fyE = new Date(Date.UTC(+fyM[1] + 1, 2, 31, 23, 59, 59));
+            var cS = new Date(inp.start);
+            var cE = new Date(inp.start); cE.setUTCMonth(cE.getUTCMonth() + term);
+            if (cS > fyE)
+              checks.push({ name: name, cat: 'Reporting period', msg: 'Lease commences ' + dateStr(inp.start) + ', after the end of ' + fy + '. It contributes nothing to this report.', sev: 'Warning' });
+            else if (cE < fyS)
+              checks.push({ name: name, cat: 'Reporting period', msg: 'Lease ended before ' + fy + ' began. It contributes nothing to this report.', sev: 'Warning' });
+            else if (cS >= fyS && cS <= fyE)
+              checks.push({ name: name, cat: 'Reporting period', msg: 'Lease commences during ' + fy + ' — only ' + (sc.filter(function (x) { var d = new Date(x.periodEnd); return d >= fyS && d <= fyE; }).length) + ' month(s) fall in this reporting period.', sev: 'Info' });
+          }
+        }
+      }
     });
 
     if (!checks.length) checks.push({ name: 'All leases', cat: 'General', msg: 'No issues found — inputs appear complete', sev: 'Info' });
@@ -679,6 +782,7 @@
         // aggregate
         if (!fyMap[a.fy]) fyMap[a.fy] = { fy: a.fy, openL: 0, interest: 0, payments: 0, principal: 0, closeL: 0, dep: 0, rouC: 0 };
         var ag = fyMap[a.fy];
+        ag.openL += a.openL;   // was never accumulated — every consolidated year read nil
         ag.interest += a.interest; ag.payments += a.payments; ag.principal += a.principal;
         ag.dep += a.dep; ag.closeL += a.closeL; ag.rouC += a.rouC;
       });
@@ -709,12 +813,18 @@
   // ════════════════════════════════════════════════════════════════════
   //  SHEET 8 — Journal Entries
   // ════════════════════════════════════════════════════════════════════
-  function buildJournalEntries(allJEs) {
+  function buildJournalEntries(allJEs, fy) {
     var rows = [];
     var merges = [];
     var W = 8;
 
-    var ban = sheetBanner('Journal Entries — GL Posting', 'All journal entries for recognised leases  ·  Suitable for ERP / Tally / SAP import', 'Entries: ' + allJEs.length + '   ·   Generated: ' + ts(), W);
+    // The sheet deliberately spans the whole lease term, but the rest of the pack
+    // reports one year — say so, and mark the rows that belong to that year.
+    var inFYCount = fy ? allJEs.filter(function (j) { return j.fy === fy; }).length : 0;
+    var sub = fy
+      ? 'Full lease term shown  ·  ' + inFYCount + ' of ' + allJEs.length + ' entries fall in ' + fy + ' (highlighted)'
+      : 'All journal entries for recognised leases  ·  Suitable for ERP / Tally / SAP import';
+    var ban = sheetBanner('Journal Entries — GL Posting', sub, 'Entries: ' + allJEs.length + '   ·   Generated: ' + ts(), W);
     ban.rows.forEach(function(r){ rows.push(r); });
     ban.merges.forEach(function(m){ merges.push(m); });
 
@@ -737,9 +847,12 @@
       var typeC = typeColors[j.type] || CLR.navy;
       var s = altRow(i);
       var ns = function (v, isdr) { return { v: v || 0, t: 'n', s: { font: { name: 'Calibri', sz: 10, bold: !!v, color: { rgb: v ? (isdr ? CLR.green : CLR.textMid) : CLR.grey3 } }, numFmt: '#,##0', alignment: { horizontal: 'right' } } }; };
+      var fyCell = (fy && j.fy === fy)
+        ? { font: { name: 'Calibri', sz: 10, bold: true, color: { rgb: CLR.white } }, fill: { fgColor: { rgb: CLR.green } }, alignment: { horizontal: 'center' } }
+        : s;
       rows.push([
         cv(j.date, s),
-        cv(j.fy || '', s),
+        cv(j.fy || '', fyCell),
         cv(j.typeLabel, { font: { name: 'Calibri', sz: 9, bold: true, color: { rgb: CLR.white } }, fill: { fgColor: { rgb: typeC } }, alignment: { horizontal: 'center' } }),
         cv(j.narration, Object.assign({}, s, { alignment: { wrapText: true } })),
         cv(j.account, Object.assign({}, s, { font: { name: 'Calibri', sz: 10, bold: true, color: { rgb: CLR.navy } } })),
@@ -984,7 +1097,7 @@
       ['Depreciation on ROU Assets', d.totPL_Dep || 0, ''],
       ['Finance Cost — Interest on Lease Liabilities', d.totPL_Int || 0, ''],
       d.exemptExpense ? ['Short-term / Low-value Lease Expense', d.exemptExpense, ''] : null,
-      ['Total P&L Impact (EBITDA benefit vs. old treatment)', (d.totPL_Dep || 0) + (d.totPL_Int || 0), 'total']
+      ['Total charge to P&L for the year', (d.totPL_Dep || 0) + (d.totPL_Int || 0), 'total']
     ].filter(Boolean));
     snapshotSection('CASH FLOW STATEMENT', [
       ['Principal repayment (Financing activities)', d.totPrincipal || 0, ''],
@@ -1098,10 +1211,10 @@
     XLSX.utils.book_append_sheet(wb, buildExecSummary(leases, calcFn, discData, fy),   '2_Executive_Summary');
     XLSX.utils.book_append_sheet(wb, buildLeaseMaster(leases),                         '3_Lease_Master');
     XLSX.utils.book_append_sheet(wb, buildAssumptions(),                               '4_Assumptions');
-    XLSX.utils.book_append_sheet(wb, buildValidation(leases, calcFn),                  '5_Validation');
+    XLSX.utils.book_append_sheet(wb, buildValidation(leases, calcFn, fy),              '5_Validation');
     XLSX.utils.book_append_sheet(wb, buildAmortization(leases, calcFn),                '6_Amortization');
     XLSX.utils.book_append_sheet(wb, buildAnnualRollforward(leases, calcFn),           '7_Annual_Rollforward');
-    XLSX.utils.book_append_sheet(wb, buildJournalEntries(allJEs),                      '8_Journal_Entries');
+    XLSX.utils.book_append_sheet(wb, buildJournalEntries(allJEs, fy),                  '8_Journal_Entries');
     if (fy) XLSX.utils.book_append_sheet(wb, buildDisclosure(discData, fy),            '9_Disclosure_Note');
     XLSX.utils.book_append_sheet(wb, buildReportingSnapshot(leases, calcFn, discData, fy), '10_Mgmt_Snapshot');
     XLSX.utils.book_append_sheet(wb, buildAuditWorkingPapers(leases, calcFn, meta),    '11_Audit_WP');
