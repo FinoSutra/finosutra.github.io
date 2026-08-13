@@ -1378,14 +1378,31 @@ document.getElementById('btnCalc').onclick = function(){
 
     const rouC = Math.max(0, rouInitial - (m*dep));
 
-    sched.push({ i:m, lbl, oL:openL, int:interest, pmt:payment, principal, cL:closeL, dep, rouC, hasPmt });
+    sched.push({ i:m, lbl, pEnd, oL:openL, int:interest, pmt:payment, principal, cL:closeL, dep, rouC, hasPmt });
     openL = closeL;
   }
 
-  /* ── CURRENT / NON-CURRENT SPLIT (next 12 months of principal) ── */
-  let currentLiab = 0;
-  sched.slice(0, 12).forEach(x=>{ currentLiab += x.principal; });
-  const nonCurrentLiab = Math.max(0, pv - currentLiab);
+  /* ── CURRENT / NON-CURRENT SPLIT ──
+     Canonical definition, matching leaseEngine.currentSplitAt and the Disclosure
+     Pack: principal falling due in the 12 months AFTER the reporting date, against
+     the liability outstanding at that date. This is a balance-sheet presentation
+     split, so it is struck at the reporting date — not at commencement, which is
+     what this previously did while the FAQ promised otherwise. Falls back to
+     commencement when no reporting date is entered. */
+  const refD = reportDateVal ? new Date(reportDateVal) : null;
+  let currentLiab = 0, liabAtRef = pv;
+  if(refD){
+    const horizon = new Date(refD);
+    horizon.setMonth(horizon.getMonth() + 12);
+    sched.forEach(x=>{
+      if(x.pEnd <= refD)          liabAtRef    = x.cL;
+      else if(x.pEnd <= horizon)  currentLiab += x.principal;
+    });
+  } else {
+    sched.slice(0, 12).forEach(x=>{ currentLiab += x.principal; });
+  }
+  currentLiab = Math.min(currentLiab, liabAtRef);
+  const nonCurrentLiab = Math.max(0, liabAtRef - currentLiab);
 
   /* ── TOTALS ── */
   const totInt = sched.reduce((s,x)=>s+x.int,0);
@@ -1714,7 +1731,7 @@ function renderJournal(){
     je('JE 1 — Initial Recognition', cd, je1Lines, je1Narr)
     + je('JE 2 — Interest Accrual', 'Monthly (Recurring)',
         [{a:'Finance Cost — Lease Interest',dr:intForJE,cr:null},{a:'Lease Liability',dr:null,cr:intForJE}],
-        'Monthly interest accretion at IBR/12 using effective interest method.')
+        'Monthly interest accretion using the effective interest method — at the monthly rate that compounds to the periodic IBR (IBR/12 for monthly-paid leases).')
     + je('JE 3 — Lease Payment', freqLabel+' (Recurring)',
         [{a:'Lease Liability',dr:pmtForJE,cr:null},{a:'Bank / Cash',dr:null,cr:pmtForJE}],
         freqLabel+' cash payment to lessor. Interest already accrued monthly via JE 2.')

@@ -68,7 +68,8 @@
   }
 
   // ── Amortization schedule builder ────────────────────────────────────
-  // Monthly schedule — one row per month, actual/365 day-count interest
+  // Monthly schedule — one row per month. Interest accrues at the monthly rate that
+  // compounds exactly to the periodic discount rate (effective interest method).
   function buildSchedule(pmtArray, pv, ibr, timing, dep, startDate, monthsPerPeriod, termMonths) {
     // The liability must unwind on the SAME basis it was discounted on, or the
     // schedule never reaches zero. calcPV discounts at the periodic rate
@@ -207,10 +208,41 @@
   }
 
   // ── Current / non-current split ──────────────────────────────────────
-  function currentSplit(sched) {
-    var currentLiab = 0;
-    sched.slice(0, 12).forEach(function (x) { currentLiab += x.principal; });
-    return Math.round(currentLiab);
+  // CANONICAL DEFINITION — every surface must use this one.
+  // Current portion  = principal falling due in the 12 months AFTER the reporting date.
+  // Non-current      = liability outstanding at that date, less the current portion.
+  // Both are struck at the REPORTING DATE, not at commencement, because this is a
+  // balance-sheet presentation split. With no reporting date supplied the
+  // commencement date is used, which reproduces the plain first-12-months view.
+  function currentSplitAt(sched, refDateISO) {
+    if (!sched || !sched.length) return { liabilityAt: 0, current: 0, nonCurrent: 0 };
+    var pv = sched[0].openL;
+
+    if (!refDateISO) {
+      var c0 = 0;
+      sched.slice(0, 12).forEach(function (x) { c0 += x.principal; });
+      c0 = Math.min(Math.round(c0), pv);
+      return { liabilityAt: pv, current: c0, nonCurrent: Math.max(0, pv - c0) };
+    }
+
+    var ref     = new Date(refDateISO);
+    var horizon = new Date(ref);
+    horizon.setUTCMonth(horizon.getUTCMonth() + 12);
+
+    var liabilityAt = pv, current = 0;
+    sched.forEach(function (row) {
+      if (!row.periodEnd) return;
+      var d = new Date(row.periodEnd);
+      if (d <= ref)          { liabilityAt = row.closeL; }
+      else if (d <= horizon) { current += row.principal; }
+    });
+    current = Math.min(Math.round(current), liabilityAt);
+    return { liabilityAt: liabilityAt, current: current, nonCurrent: Math.max(0, liabilityAt - current) };
+  }
+
+  // Back-compat wrapper — returns the current portion only.
+  function currentSplit(sched, refDateISO) {
+    return currentSplitAt(sched, refDateISO).current;
   }
 
   // ── Validate ─────────────────────────────────────────────────────────
@@ -293,8 +325,9 @@
     }
 
     var annual  = buildAnnual(sched, inp.start, 1); // schedule is monthly
-    var currL   = currentSplit(sched);
-    var ncurrL  = Math.max(0, pv - currL);
+    var split   = currentSplitAt(sched, inp.reportDate);
+    var currL   = split.current;
+    var ncurrL  = split.nonCurrent;
     var totInt  = sched.reduce(function (s, x) { return s + x.interest; }, 0);
     var totPmt  = sched.reduce(function (s, x) { return s + x.pmt; }, 0);
     var depAnnual = Math.round(dep * 12); // monthly dep × 12
@@ -338,6 +371,7 @@
     calculate:   calculate,
     validate:    validate,
     generatePayments: generatePayments,
+    currentSplitAt: currentSplitAt,
     calcPV:      calcPV,
     buildAnnual: buildAnnual,
     f2:          f2,

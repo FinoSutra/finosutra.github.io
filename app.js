@@ -2654,6 +2654,14 @@ function fyRange(fy){
   };
 }
 
+// The FY-end reporting date as an ISO date — the reference for the balance-sheet
+// current / non-current split.
+function fyEndISO(fy){
+  var m = /FY\s*(\d{4})/.exec(String(fy||''));
+  var startYear = m ? parseInt(m[1],10) : new Date().getFullYear();
+  return (startYear+1)+'-03-31';
+}
+
 // Keep the reported FY inside the lease's own life. A lease commencing 01/03/2026
 // reported in "FY 2026-27" is legitimate; one reported in an FY it has not started
 // in is not, and used to produce a report labelled for a year it had no figures in.
@@ -2749,18 +2757,19 @@ function buildDiscDataFromLeases(leasesArr, fy){
     // Maturity of payments still outstanding AFTER the FY end, bucketed from that date
     if(firstAfterIdx >= 0){
       var remaining = sched.slice(firstAfterIdx);
-      var curr = 0;
       remaining.forEach(function(row){
         var d = new Date(row.periodEnd);
         var monthsOut = (d.getUTCFullYear()-fyEnd.getUTCFullYear())*12
                       + (d.getUTCMonth()-fyEnd.getUTCMonth());
         totUndiscounted += row.pmt;
-        if(monthsOut <= 12){ mat.y1 += row.pmt; curr += row.principal; }
+        if(monthsOut <= 12){ mat.y1 += row.pmt; }
         else if(monthsOut <= 60){ mat.y1_5 += row.pmt; }
         else { mat.y5plus += row.pmt; }
       });
-      currLiab  += Math.min(curr, closeL);
-      ncurrLiab += Math.max(0, closeL - Math.min(curr, closeL));
+      // One canonical current/non-current definition, struck at the reporting date.
+      var sp = leaseEngine.currentSplitAt(sched, fyEndISO(fy));
+      currLiab  += sp.current;
+      ncurrLiab += sp.nonCurrent;
     }
   });
 
@@ -3973,7 +3982,7 @@ function renderCoDisclosures() {
     '<tr style="font-weight:700;color:#4F46E5;"><td>Present value of lease liabilities</td><td>'+f2(totCurr+totNCurr)+'</td></tr>'+
     '</tbody></table></div>'+
     '<div style="margin-top:10px;padding:10px 14px;background:#EEF2FF;border-radius:8px;font-size:12px;color:#4F46E5;">'+
-    'Note: Maturity analysis uses current liability / non-current split as proxy. For precise undiscounted cashflows, use Export Disclosure Pack.</div>';
+    'Note: Buckets below are undiscounted contractual payments. The current / non-current split is struck at the reporting date, consistent with the Disclosure Pack.</div>';
 }
 
 function renderCoJE() {

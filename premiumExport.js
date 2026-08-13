@@ -326,6 +326,13 @@
     rows.push([cv('LEASE-WISE SUMMARY', subHdr(11))].concat(emptyN(W - 1, CLR.purple)));
     merges.push(merge(rows.length - 1, 0, rows.length - 1, W - 1));
 
+    // Current liability is struck at the FY-end reporting date, matching the
+    // disclosure note. It previously came from the engine's commencement-date
+    // default, so the same lease showed two different "current" figures in one pack.
+    var fyEndRef = (function(){
+      var m = /FY\s*(\d{4})/.exec(String(fy || ''));
+      return m ? (parseInt(m[1], 10) + 1) + '-03-31' : null;
+    })();
     var tblHdr = ['#', 'Lease Name', 'Entity', 'Start Date', 'Term (mo)', 'IBR %', 'Initial Liab. ₹', 'ROU Asset ₹', 'Curr. Liab. ₹', 'Status'];
     rows.push(tblHdr.map(function (h) { return cv(h, navyHdr()); }));
     var hdrRow = rows.length - 1;
@@ -338,10 +345,14 @@
       var r = calcFn(l);
       var inp = l.inputs || {};
       var status = !r ? 'Exempt' : 'Active';
+      var curLiab = 0;
       if (r) {
+        curLiab = (fyEndRef && window.leaseEngine && r.res.schedule)
+          ? leaseEngine.currentSplitAt(r.res.schedule, fyEndRef).current
+          : r.res.liabCurrent;
         colTot.initial += r.res.pvInitial;
         colTot.rou     += r.res.rouInitial;
-        colTot.curr    += r.res.liabCurrent;
+        colTot.curr    += curLiab;
       }
       var row = [
         cv(idx++, altRow(i)),
@@ -352,7 +363,7 @@
         { v: parseFloat(inp.ibr) || 0, t: 'n', s: Object.assign(altRow(i), { numFmt: '0.00"%"', alignment: { horizontal: 'right' } }) },
         r ? cn(r.res.pvInitial, Object.assign(altRow(i), { numFmt: '#,##0', alignment: { horizontal: 'right' } })) : cv('Exempt', altRow(i)),
         r ? cn(r.res.rouInitial, Object.assign(altRow(i), { numFmt: '#,##0', alignment: { horizontal: 'right' } })) : cv('—', altRow(i)),
-        r ? cn(r.res.liabCurrent, Object.assign(altRow(i), { numFmt: '#,##0', alignment: { horizontal: 'right' } })) : cv('—', altRow(i)),
+        r ? cn(curLiab, Object.assign(altRow(i), { numFmt: '#,##0', alignment: { horizontal: 'right' } })) : cv('—', altRow(i)),
         cv(status, Object.assign(altRow(i), { alignment: { horizontal: 'center' } }))
       ];
       rows.push(row);
@@ -487,7 +498,9 @@
       ['IBR determination', 'Rate at which entity can borrow funds for similar term, currency, and collateral as at commencement date'],
       ['Subsequent measurement', 'Carrying amount adjusted for interest accrual, payments made, and remeasurement (if any)'],
       ['PV formula', 'PV = Σ [Pmt(t) / (1+r)^t] where r = IBR per period; t = period number'],
-      ['Annuity type', 'Ordinary annuity (payments at end of period) unless advance payment elected']
+      ['Annuity type', 'Ordinary annuity (payments at end of period) unless advance payment elected'],
+      ['Interest accrual basis', 'Effective interest method. Interest accrues monthly at the rate that compounds exactly to the periodic discount rate r, so the liability unwinds on the same basis it was discounted on and total finance charge equals total payments less the present value.'],
+      ['Current / non-current split', 'Current portion = principal falling due in the 12 months after the reporting date. Non-current = liability outstanding at that date less the current portion. Struck at the reporting date, not at commencement.']
     ]);
 
     section('3. RIGHT-OF-USE (ROU) ASSET', [

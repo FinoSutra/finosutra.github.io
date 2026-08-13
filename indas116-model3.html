@@ -2021,14 +2021,29 @@ document.getElementById('btnCalc').onclick = function(){
     // to hide a real residual while leaving the principal column overstated by it.
     if(Math.abs(closeL) < 0.01) closeL = 0;
     const rouC = Math.max(0, rouInitial - (m*dep));
-    sched.push({ i:m, lbl, oL:openL, int:interest, pmt:payment, principal, cL:closeL, dep, rouC, hasPmt });
+    sched.push({ i:m, lbl, pEnd, oL:openL, int:interest, pmt:payment, principal, cL:closeL, dep, rouC, hasPmt });
     openL = closeL;
   }
 
   /* ── Current / Non-current split (first 12 months) ── */
-  let currentLiab = 0;
-  sched.slice(0, 12).forEach(x=>{ currentLiab += x.principal; });
-  const nonCurrentLiab = Math.max(0, pv - currentLiab);
+  /* Canonical definition, matching leaseEngine.currentSplitAt and the Disclosure
+     Pack: principal falling due in the 12 months AFTER the reporting date, against
+     the liability outstanding at that date. Falls back to commencement when no
+     reporting date is entered. */
+  const refD = reportDateVal ? new Date(reportDateVal) : null;
+  let currentLiab = 0, liabAtRef = pv;
+  if(refD){
+    const horizon = new Date(refD);
+    horizon.setMonth(horizon.getMonth() + 12);
+    sched.forEach(x=>{
+      if(x.pEnd <= refD)          liabAtRef    = x.cL;
+      else if(x.pEnd <= horizon)  currentLiab += x.principal;
+    });
+  } else {
+    sched.slice(0, 12).forEach(x=>{ currentLiab += x.principal; });
+  }
+  currentLiab = Math.min(currentLiab, liabAtRef);
+  const nonCurrentLiab = Math.max(0, liabAtRef - currentLiab);
 
   /* ── Totals ── */
   const totInt = sched.reduce((s,x)=>s+x.int, 0);
@@ -2438,7 +2453,7 @@ function renderJournal(){
     + (INP.rfMonths > 0 ? rfJENote : '')
     + je('JE 2 — Interest Accrual', 'Monthly (Recurring'+rfSuffix+')',
         [{a:'Finance Cost — Lease Interest',dr:firstPaying.int,cr:null},{a:'Lease Liability',dr:null,cr:firstPaying.int}],
-        'Interest accrues monthly using effective interest method (IBR/12). Amount shown is Month '+(firstPayingIdx+1)+'.')
+        'Interest accrues monthly using the effective interest method — at the monthly rate that compounds to the periodic IBR (IBR/12 for monthly-paid leases). Amount shown is Month '+(firstPayingIdx+1)+'.')
     + je('JE 3 — Lease Payment', freqLabel+' (Recurring'+rfSuffix+')',
         [{a:'Lease Liability',dr:INP.basePmt,cr:null},{a:'Bank / Cash',dr:null,cr:INP.basePmt}],
         freqLabel+' payment to lessor.'+(INP.rfMonths>0?' No payment during rent-free months.':''))
