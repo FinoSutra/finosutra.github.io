@@ -2129,6 +2129,7 @@ function renderReportsPage(){
       if(fyF && row.fy !== fyF) return;
       if(!fyData[row.fy]) fyData[row.fy]={fy:row.fy,openL:0,interest:0,payments:0,principal:0,closeL:0,dep:0,rouClose:0};
       var d = fyData[row.fy];
+      d.openL+=row.openL;   // was never accumulated — every year reported nil opening
       d.interest+=row.interest; d.payments+=row.payments;
       d.principal+=row.principal; d.dep+=row.dep;
       d.closeL+=row.closeL; d.rouClose+=row.rouC;
@@ -2212,75 +2213,19 @@ function renderDisclosuresPage(){
     return;
   }
 
-  // Compute all data for selected FY
-  var totOpenL=0, totInterest=0, totPayments=0, totPrincipal=0, totCloseL=0;
-  var totOpenROU=0, totAdditions=0, totDep=0, totCloseROU=0;
-  var totCashOut=0, totPL_Int=0, totPL_Dep=0;
-  var maturity = {y1:0, y1_5:0, y5plus:0}; // undiscounted
-  var ibrs = [], exemptExpense = 0;
-  var fyYear = parseInt((fyF||'').replace('FY ','').split('-')[0])||0;
-  var fyStart = new Date(fyYear+'-04-01');
-  var fyEnd   = new Date((fyYear+1)+'-03-31');
-
-  leases.forEach(function(l){
-    var inp = Object.assign({},l.inputs||{},{name:l.name||'lease',entity:l.entity||''});
-    if(!inp.termMonths && inp.term) inp.termMonths = inp.term;
-
-    // Short-term / low-value straight-line expense
-    if(inp.isShortTerm||inp.isLowValue){
-      var freq = parseInt(inp.freq)||12;
-      var termMonths = parseInt(inp.termMonths||inp.term)||0;
-      var n = Math.round(termMonths/(12/freq));
-      exemptExpense += (parseFloat(inp.pmt)||0) * n / (termMonths/12) * 1; // annual expense
-      return;
-    }
-
-    var calcInp = Object.assign({},inp);
-    calcInp.idc=(parseFloat(inp.idc)||0)+(parseFloat(inp.restoration)||0);
-    if(!leaseEngine.validate(calcInp).valid) return;
-    var res = leaseEngine.calculate(calcInp);
-
-    if(inp.ibr) ibrs.push(parseFloat(inp.ibr));
-
-    // Find this FY in annual rollforward
-    var annRow = (res.annual||[]).find(function(r){ return r.fy===fyF; });
-    if(annRow){
-      totInterest  += annRow.interest;
-      totPayments  += annRow.payments;
-      totPrincipal += annRow.principal;
-      totDep       += annRow.dep;
-      totCashOut   += annRow.payments;
-      totPL_Int    += annRow.interest;
-      totPL_Dep    += annRow.dep;
-      // Opening = previous FY closing or initial if first FY
-      var prevAnn = (res.annual||[]).find(function(r){
-        var prevY = fyYear-1;
-        return r.fy === 'FY '+prevY+'-'+String(fyYear).slice(2);
-      });
-      var openL = prevAnn ? prevAnn.closeL : res.pvInitial;
-      totOpenL += openL;
-      totCloseL += annRow.closeL;
-      // ROU rollforward
-      var openROU = prevAnn ? prevAnn.rouC + annRow.dep : res.rouInitial;
-      totOpenROU  += openROU;
-      totAdditions += 0; // no mid-year additions in current version
-      totCloseROU += annRow.rouC;
-    }
-
-    // Maturity analysis — future undiscounted payments from FY end
-    res.schedule.forEach(function(row){
-      if(!row.periodEnd||row.pmt===0) return;
-      var pEnd = new Date(row.periodEnd);
-      if(pEnd <= fyEnd) return; // already paid by FY end
-      var monthsFromFYEnd = (pEnd.getFullYear()-fyEnd.getFullYear())*12 + (pEnd.getMonth()-fyEnd.getMonth());
-      if(monthsFromFYEnd<=12)      maturity.y1    += row.pmt;
-      else if(monthsFromFYEnd<=60) maturity.y1_5  += row.pmt;
-      else                         maturity.y5plus += row.pmt;
-    });
-  });
-
-  var wAvgIBR = ibrs.length ? (ibrs.reduce(function(s,x){return s+x;},0)/ibrs.length).toFixed(1) : '—';
-  var totUndiscounted = maturity.y1+maturity.y1_5+maturity.y5plus;
+  // One canonical source for every disclosure figure — the same builder the premium
+  // report pack uses, so this page, its Excel export and the pack cannot diverge.
+  // This previously duplicated the whole computation, and struck the current /
+  // non-current split at commencement so it did not tie to its own closing balance.
+  var d = buildDiscDataFromLeases(leases, fyF);
+  var totOpenL     = d.totOpenL,     totInterest = d.totInterest, totPayments = d.totPayments;
+  var totPrincipal = d.totPrincipal, totCloseL   = d.totCloseL;
+  var totOpenROU   = d.totOpenROU,   totAdditions= d.totAdditions;
+  var totDep       = d.totDep,       totCloseROU = d.totCloseROU;
+  var totCashOut   = d.totCashOut,   totPL_Int   = d.totPL_Int, totPL_Dep = d.totPL_Dep;
+  var maturity     = d.maturity,     exemptExpense = d.exemptExpense || 0;
+  var totUndiscounted = d.totUndiscounted;
+  var wAvgIBR = d.wAvgIBR ? d.wAvgIBR.toFixed(1) : '—';
   var financeCharge = totUndiscounted - totCloseL;
 
   var html =
@@ -2317,11 +2262,12 @@ function renderDisclosuresPage(){
         '<thead><tr><th>Particulars</th><th class="num">Amount (₹)</th></tr></thead>'+
         '<tbody>'+
           '<tr><td style="font-weight:600;">Opening balance</td><td class="num">'+f2(totOpenL)+'</td></tr>'+
+          '<tr><td class="indent">Add: Liabilities recognised on leases commencing during the year</td><td class="num">'+f2(d.totLiabAdditions||0)+'</td></tr>'+
           '<tr><td class="indent">Add: Interest accrued (finance cost)</td><td class="num">'+f2(totInterest)+'</td></tr>'+
           '<tr><td class="indent">Less: Payments made</td><td class="num" style="color:#EF4444;">('+f2(totPayments)+')</td></tr>'+
           '<tr class="total-row"><td>Closing balance</td><td class="num">'+f2(totCloseL)+'</td></tr>'+
-          '<tr><td class="indent" style="font-style:italic;">Current portion</td><td class="num">'+f2(leases.reduce(function(s,l){ var r=calcLeaseForReports(l); return r?s+r.res.liabCurrent:s; },0))+'</td></tr>'+
-          '<tr><td class="indent" style="font-style:italic;">Non-current portion</td><td class="num">'+f2(leases.reduce(function(s,l){ var r=calcLeaseForReports(l); return r?s+r.res.liabNonCurrent:s; },0))+'</td></tr>'+
+          '<tr><td class="indent" style="font-style:italic;">Current portion</td><td class="num">'+f2(d.currLiab)+'</td></tr>'+
+          '<tr><td class="indent" style="font-style:italic;">Non-current portion</td><td class="num">'+f2(d.ncurrLiab)+'</td></tr>'+
         '</tbody>'+
       '</table></div>'+
     '</div>'+
@@ -2332,7 +2278,7 @@ function renderDisclosuresPage(){
       '<div class="rpt-table-wrap"><table class="rpt-table">'+
         '<thead><tr><th>Particulars</th><th class="num">Amount (₹)</th></tr></thead>'+
         '<tbody>'+
-          '<tr><td style="font-weight:600;">Gross carrying amount — Opening</td><td class="num">'+f2(totOpenROU)+'</td></tr>'+
+          '<tr><td style="font-weight:600;">Net carrying amount — Opening</td><td class="num">'+f2(totOpenROU)+'</td></tr>'+
           '<tr><td class="indent">Add: Additions during the year</td><td class="num">'+f2(totAdditions)+'</td></tr>'+
           '<tr><td class="indent">Less: Depreciation for the year</td><td class="num" style="color:#EF4444;">('+f2(totDep)+')</td></tr>'+
           '<tr class="total-row"><td>Net Book Value — Closing</td><td class="num">'+f2(totCloseROU)+'</td></tr>'+
@@ -2418,14 +2364,18 @@ function exportDisclosureXL(){
 
   renderDisclosuresPage();
   var wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, _makeBrandedCoverSheet('IND AS 116 Disclosure Note', 'IND AS 116 Para 52 — Disclosure Note for FY '+fyF, 'FY: '+fyF+' · Leases: '+leases.length), 'Cover');
+  XLSX.utils.book_append_sheet(wb, _makeBrandedCoverSheet('IND AS 116 Disclosure Note', 'IND AS 116 Para 52 — Disclosure Note for '+fyF, ''+fyF+' · Leases: '+leases.length), 'Cover');
 
   var sections = document.querySelectorAll('#disclosuresContent .rpt-section');
   sections.forEach(function(sec, idx){
     var title = sec.querySelector('.rpt-section-title');
     var tbl   = sec.querySelector('table');
     if(!tbl) return;
-    var sheetName = (title ? title.innerText.replace(/[:\*\?\/\\]/g,'').slice(0,28) : 'Sheet'+(idx+1));
+    // Excel caps sheet names at 31 chars, so slicing the full note title cut it
+    // mid-word ("Note 1 — Maturity Analysis o"). Use short, complete names.
+    var SHEET_NAMES = ['Note 1 Maturity','Note 2 Liability','Note 3 ROU Asset',
+                       'Note 4 P&L','Note 5 Additional'];
+    var sheetName = SHEET_NAMES[idx] || ('Note '+(idx+1));
     var ws = XLSX.utils.table_to_sheet(tbl);
     ws['!cols'] = [{wch:45},{wch:18}];
     XLSX.utils.book_append_sheet(wb, ws, sheetName);
