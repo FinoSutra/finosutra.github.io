@@ -583,6 +583,22 @@ tr:nth-child(even):hover td{background:rgba(0,82,204,0.05)}
 <!-- Google Analytics GA4 — replace G-Z2G710PHNQ with your real Measurement ID -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
 <script>
+/* Shared short-date formatter. en-IN renders September as "Sept", which reads as a
+   typo beside "Mar" and "Jun". Format explicitly so every month is three letters,
+   and read date-only strings component-wise so they cannot shift a day in
+   timezones behind UTC. */
+var FS_MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function fsShortDate(d){
+  if(d===null||d===undefined||d==='') return '—';
+  try{
+    var iso = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(d));
+    if(iso) return iso[3]+' '+FS_MONTHS_SHORT[+iso[2]-1]+' '+iso[1];
+    var dt = (d instanceof Date) ? d : new Date(d);
+    if(isNaN(dt.getTime())) return String(d);
+    return String(dt.getDate()).padStart(2,'0')+' '+FS_MONTHS_SHORT[dt.getMonth()]+' '+dt.getFullYear();
+  }catch(e){ return String(d); }
+}
+
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -1894,7 +1910,7 @@ function renderDisclosure(){
 
   // Reference date: reporting date if set, else commencement
   const refDate = INP.reportDateVal ? new Date(INP.reportDateVal) : new Date(startDate);
-  const refLabel = refDate.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  const refLabel = fsShortDate(refDate);
 
   // ── A. Maturity Analysis ──
   let b_lt1=0, b_1to3=0, b_3to5=0, b_gt5=0;
@@ -2131,8 +2147,8 @@ function renderComparative(){
 
   const s1 = snapAt(d1val);
   const s2 = snapAt(d2val);
-  const lbl1 = new Date(d1val).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
-  const lbl2 = new Date(d2val).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  const lbl1 = fsShortDate(new Date(d1val));
+  const lbl2 = fsShortDate(new Date(d2val));
 
   function row(label, v1, v2){
     if(v1===null && v2===null) return `<tr><td class="L">${label}</td><td style="color:#9CA3AF">Before commencement</td><td style="color:#9CA3AF">Before commencement</td></tr>`;
@@ -2201,7 +2217,7 @@ function renderTermination(){
   const cumDep    = (snapIdx+1) * R.dep;
   const rouNBV    = Math.max(0, R.rouInitial - cumDep);
   const gainLoss  = rouNBV - carryLiab - penalty; // positive = gain, negative = loss
-  const termLabel = termDate.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  const termLabel = fsShortDate(termDate);
 
   // JE: Dr Lease Liability (full carrying amount) + Dr Termination Penalty (if any)
   //     Cr ROU Asset (NBV) + Cr/Dr Gain or Loss
@@ -2263,12 +2279,12 @@ function printWorkpaper(){
   // Populate print header meta
   const freqLabel = {12:'Monthly',4:'Quarterly',2:'Half-Yearly',1:'Annual'}[R.freq];
   document.getElementById('phMeta').textContent =
-    'Commencement: ' + new Date(INP.d).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}) +
+    'Commencement: ' + fsShortDate(new Date(INP.d)) +
     '  ·  Term: ' + INP.termMonths + ' months' +
     '  ·  Payment: ₹' + Math.round(INP.pmt).toLocaleString('en-IN') + ' ' + freqLabel +
     '  ·  IBR: ' + (INP.ibr).toFixed(2) + '% p.a.';
   document.getElementById('phDate').textContent =
-    new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+    fsShortDate(new Date());
 
   // Make all panes visible before print, restore after
   const panes = document.querySelectorAll('.pane');
@@ -3000,7 +3016,7 @@ function exportXL(){
   ═══════════════════════════════════════════════════════ */
   {
     const xlRefDate = INP.reportDateVal ? new Date(INP.reportDateVal) : new Date(startDateXL);
-    const xlRefLabel = xlRefDate.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+    const xlRefLabel = fsShortDate(xlRefDate);
 
     let lt1=0,y1to3=0,y3to5=0,gt5=0,liabAtRef=R.pv;
     R.sched.forEach((x,idx) => {
@@ -3129,7 +3145,7 @@ function exportXL(){
     const rdVal=INP.reportDateVal;
     if(rdVal){
       const rd=new Date(rdVal);
-      const rdLabel=rd.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+      const rdLabel=fsShortDate(rd);
       const mppBS=mppXL; const sBS=startDateXL;
       let snapIdx=-1;
       for(let i=0;i<R.sched.length;i++){

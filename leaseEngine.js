@@ -356,10 +356,19 @@
     return '₹' + Number(n).toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
   }
 
+  // en-IN renders September as "Sept", which reads as a typo beside "Mar"/"Jun".
+  // Format explicitly, and read date-only strings component-wise so they cannot
+  // shift a day in timezones behind UTC.
+  var MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   function fDate(d) {
     if (!d) return '—';
-    try { return new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }); }
-    catch (e) { return d; }
+    try {
+      var iso = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(d));
+      if (iso) return iso[3] + ' ' + MONTHS_SHORT[+iso[2] - 1] + ' ' + iso[1];
+      var dt = (d instanceof Date) ? d : new Date(d);
+      if (isNaN(dt.getTime())) return d;
+      return String(dt.getDate()).padStart(2, '0') + ' ' + MONTHS_SHORT[dt.getMonth()] + ' ' + dt.getFullYear();
+    } catch (e) { return d; }
   }
 
   function freqLabel(freq) {

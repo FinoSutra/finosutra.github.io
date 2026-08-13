@@ -1,3 +1,19 @@
+
+/* Shared short-date formatter. en-IN renders September as "Sept", which reads as a
+   typo beside "Mar" and "Jun". Format explicitly so every month is three letters,
+   and read date-only strings component-wise so they cannot shift a day in
+   timezones behind UTC. */
+var FS_MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function fsShortDate(d){
+  if(d===null||d===undefined||d==='') return '—';
+  try{
+    var iso = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(d));
+    if(iso) return iso[3]+' '+FS_MONTHS_SHORT[+iso[2]-1]+' '+iso[1];
+    var dt = (d instanceof Date) ? d : new Date(d);
+    if(isNaN(dt.getTime())) return String(d);
+    return String(dt.getDate()).padStart(2,'0')+' '+FS_MONTHS_SHORT[dt.getMonth()]+' '+dt.getFullYear();
+  }catch(e){ return String(d); }
+}
 'use strict';
 
 var SUPA_URL = 'https://uymuivmktvtxmodblxie.supabase.co';
@@ -12,7 +28,7 @@ var currentPage = 'dashboard';
 // ── Helpers ──────────────────────────────────────────────────────────────────
 function f2(n){ return (n===null||n===undefined||isNaN(+n)) ? '—' : '₹'+Number(n).toLocaleString('en-IN',{minimumFractionDigits:0,maximumFractionDigits:0}); }
 function fPct(n){ return (n===null||n===undefined||isNaN(+n)) ? '—' : Number(n).toFixed(2)+'%'; }
-function fDate(d){ if(!d) return '—'; try{ return new Date(d).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}); }catch(e){return d;} }
+function fDate(d){ if(!d) return '—'; try{ return fsShortDate(new Date(d)); }catch(e){return d;} }
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 function toast(msg, color){
@@ -1928,7 +1944,7 @@ function exportJEXL(){
   });
 
   var N='002244',N2='002E5C',A='0052CC',AL='E8F0FF',WH='FFFFFF',GR='059669',AM='D97706',CA='F0F5FF';
-  var jeTd=new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  var jeTd=fsShortDate(new Date());
   function xJBn(v){return {v:v,s:{font:{name:'Calibri',sz:13,bold:true,color:{rgb:WH}},fill:{fgColor:{rgb:N}},alignment:{horizontal:'left',vertical:'center',indent:1}}}; }
   function xJSb(v){return {v:v,s:{font:{name:'Calibri',sz:10,color:{rgb:'93BBFB'}},fill:{fgColor:{rgb:N2}},alignment:{horizontal:'left',vertical:'center',indent:1}}}; }
   function xJMt(v){return {v:v,s:{font:{name:'Calibri',sz:10,bold:true,color:{rgb:A}},fill:{fgColor:{rgb:AL}},alignment:{horizontal:'left',vertical:'center',indent:1}}}; }
@@ -2375,7 +2391,7 @@ function switchRptTab(tab) {
 
 function _makeBrandedCoverSheet(title, subtitle, metaLine){
   var N='002244',N2='002E5C',A='0052CC',AL='E8F0FF',WH='FFFFFF';
-  var td=new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  var td=fsShortDate(new Date());
   function bl(c){return {v:'',s:{fill:{fgColor:{rgb:c}}}}; }
   var rows=[
     [{v:'Finosutra  |  '+title,s:{font:{name:'Calibri',sz:14,bold:true,color:{rgb:WH}},fill:{fgColor:{rgb:N}},alignment:{horizontal:'left',vertical:'center',indent:1}}},bl(N)],
@@ -2805,7 +2821,7 @@ function exportWorkingPaper(){
   var inp = _lastCalcResult.inp;
   var res = _lastCalcResult.res;
   var wb  = XLSX.utils.book_new();
-  var today = new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  var today = fsShortDate(new Date());
 
   // ── Shared Navy style palette ──────────────────────────────────────────────
   var N  = '002244'; // dark navy banner
@@ -3086,7 +3102,7 @@ function lwUpdateOverviewKpis(inp, res) {
     '</div>';
   // also update ov-calc-ts in meta
   var tsEl = document.getElementById('ov-calc-ts');
-  if(tsEl) tsEl.textContent = new Date().toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+  if(tsEl) tsEl.textContent = (fsShortDate(new Date()).slice(0,6)+', '+new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}));
 }
 
 // ── Schedules tab population ──────────────────────────────────────
@@ -3612,7 +3628,7 @@ function doExportXL(){
   if(typeof XLSX==='undefined'){ toast('XLSX not loaded.','#EF4444'); return; }
   var wb=XLSX.utils.book_new();
   var N='002244',N2='002E5C',A='0052CC',AL='E8F0FF',WH='FFFFFF',GY='6B7280',AM='D97706',GR='059669',CA='F0F5FF';
-  var today=new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  var today=fsShortDate(new Date());
   function xBn(v){  return {v:v,s:{font:{name:'Calibri',sz:14,bold:true,color:{rgb:WH}},fill:{fgColor:{rgb:N}},alignment:{horizontal:'left',vertical:'center',indent:1}}}; }
   function xSb(v){  return {v:v,s:{font:{name:'Calibri',sz:10,color:{rgb:'93BBFB'}},fill:{fgColor:{rgb:N2}},alignment:{horizontal:'left',vertical:'center',indent:1}}}; }
   function xMt(v){  return {v:v,s:{font:{name:'Calibri',sz:10,bold:true,color:{rgb:A}},fill:{fgColor:{rgb:AL}},alignment:{horizontal:'left',vertical:'center',indent:1}}}; }
@@ -4112,7 +4128,7 @@ function exportValidationReport() {
   if(!window.XLSX){ toast('XLSX library not loaded','#EF4444'); return; }
   var wb = XLSX.utils.book_new();
   var N='002244',N2='002E5C',A='0052CC',AL='E8F0FF',WH='FFFFFF',GR='059669',RD='B91C1C',AM='D97706',CA='F0F5FF';
-  var vTd=new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  var vTd=fsShortDate(new Date());
   function vBn(v){return {v:v,s:{font:{name:'Calibri',sz:13,bold:true,color:{rgb:WH}},fill:{fgColor:{rgb:N}},alignment:{horizontal:'left',vertical:'center',indent:1}}}; }
   function vMt(v){return {v:v,s:{font:{name:'Calibri',sz:10,bold:true,color:{rgb:A}},fill:{fgColor:{rgb:AL}},alignment:{horizontal:'left',vertical:'center',indent:1}}}; }
   function vHd(v){return {v:v,s:{font:{name:'Calibri',sz:10,bold:true,color:{rgb:WH}},fill:{fgColor:{rgb:A}},alignment:{horizontal:'center',vertical:'center',wrapText:true}}}; }
@@ -4157,7 +4173,7 @@ function exportExpiryTracker() {
   var wb = XLSX.utils.book_new();
   var now = new Date();
   var N='002244',A='0052CC',AL='E8F0FF',WH='FFFFFF',GR='059669',RD='B91C1C',AM='D97706',CA='F0F5FF';
-  var eTd=new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  var eTd=fsShortDate(new Date());
   function eBn(v){return {v:v,s:{font:{name:'Calibri',sz:13,bold:true,color:{rgb:WH}},fill:{fgColor:{rgb:N}},alignment:{horizontal:'left',vertical:'center',indent:1}}}; }
   function eMt(v){return {v:v,s:{font:{name:'Calibri',sz:10,bold:true,color:{rgb:A}},fill:{fgColor:{rgb:AL}},alignment:{horizontal:'left',vertical:'center',indent:1}}}; }
   function eHd(v){return {v:v,s:{font:{name:'Calibri',sz:10,bold:true,color:{rgb:WH}},fill:{fgColor:{rgb:A}},alignment:{horizontal:'center',vertical:'center',wrapText:true}}}; }

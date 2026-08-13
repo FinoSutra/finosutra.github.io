@@ -155,10 +155,9 @@
   }
 
   function ts() {
-    return new Date().toLocaleString('en-IN', {
-      day: '2-digit', month: 'short', year: 'numeric',
-      hour: '2-digit', minute: '2-digit', hour12: true
-    });
+    var n = new Date();
+    return dateStr(n) + ', ' +
+      n.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true });
   }
   // en-IN renders September as "Sept", which reads as a typo beside "Mar"/"Jun".
   // Format explicitly so every month is three letters.

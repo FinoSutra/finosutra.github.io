@@ -10,7 +10,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+<script>
+/* Shared short-date formatter. en-IN renders September as "Sept", which reads as a
+   typo beside "Mar" and "Jun". Format explicitly so every month is three letters,
+   and read date-only strings component-wise so they cannot shift a day in
+   timezones behind UTC. */
+var FS_MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function fsShortDate(d){
+  if(d===null||d===undefined||d==='') return '—';
+  try{
+    var iso = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(d));
+    if(iso) return iso[3]+' '+FS_MONTHS_SHORT[+iso[2]-1]+' '+iso[1];
+    var dt = (d instanceof Date) ? d : new Date(d);
+    if(isNaN(dt.getTime())) return String(d);
+    return String(dt.getDate()).padStart(2,'0')+' '+FS_MONTHS_SHORT[dt.getMonth()]+' '+dt.getFullYear();
+  }catch(e){ return String(d); }
+}
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
 <title>IND AS 116 Calculator with Escalation Rents (Model 3) | Free | Finosutra</title>
 <link rel="canonical" href="https://www.finosutra.com/indas116-model3.html"/>
 
@@ -2533,7 +2549,7 @@ function renderDisclosure(){
   const mpp = 12 / R.freq;
 
   const refDate  = INP.reportDateVal ? new Date(INP.reportDateVal) : new Date(startDate);
-  const refLabel = refDate.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  const refLabel = fsShortDate(refDate);
 
   // A. Maturity analysis
   let b_lt1=0, b_1to3=0, b_3to5=0, b_gt5=0, liabilityAtRef=R.pv;
@@ -2870,8 +2886,8 @@ function renderComparative(){
 
   const s1   = snapAt(d1val);
   const s2   = snapAt(d2val);
-  const lbl1 = new Date(d1val).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
-  const lbl2 = new Date(d2val).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  const lbl1 = fsShortDate(new Date(d1val));
+  const lbl2 = fsShortDate(new Date(d2val));
 
   function row(label, v1, v2){
     const c1 = v1!=null ? f(v1) : '—';
@@ -2927,7 +2943,7 @@ function renderTermination(){
   const cumDep    = (snapIdx+1) * R.dep;
   const rouNBV    = Math.max(0, R.rouInitial - cumDep);
   const gainLoss  = rouNBV - carryLiab - penalty;
-  const termLabel = termDate.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  const termLabel = fsShortDate(termDate);
 
   let jeRows = '';
   jeRows += `<tr><td class="L" style="padding-left:13px">Lease Liability</td><td>${fn(carryLiab)}</td><td>—</td></tr>`;
@@ -2985,13 +3001,13 @@ function printWorkpaper(){
 
   const freqLabel = {12:'Monthly',4:'Quarterly',2:'Half-Yearly',1:'Annual'}[R.freq];
   document.getElementById('phMeta').textContent =
-    'Commencement: ' + new Date(INP.d).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}) +
+    'Commencement: ' + fsShortDate(new Date(INP.d)) +
     '  ·  Term: ' + INP.totalTermMonths + ' months' +
     '  ·  Payment: ₹' + Math.round(INP.basePmt).toLocaleString('en-IN') + ' ' + freqLabel +
     '  ·  IBR: ' + INP.ibr.toFixed(2) + '% p.a.' +
     (INP.escDesc && INP.escType !== 'none' ? '  ·  Escalation: ' + INP.escDesc : '');
   document.getElementById('phDate').textContent =
-    new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+    fsShortDate(new Date());
 
   const panes = document.querySelectorAll('.pane');
   const prevDisplay = Array.from(panes).map(p => p.style.display);
@@ -3140,7 +3156,7 @@ function calcModification_REMOVED(){
   const newDep        = revisedN > 0 ? revisedROUAdj / revisedN : 0;
 
   // Modification label date
-  const modLabel = modDate.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  const modLabel = fsShortDate(modDate);
 
   // Build revised amortization schedule
   const revisedSched = [];
@@ -3774,7 +3790,7 @@ function exportXL(){
     const startDateD=new Date(INP.d);
     const mppD=12/R.freq;
     const refDateD=INP.reportDateVal?new Date(INP.reportDateVal):new Date(startDateD);
-    const refLabelD=refDateD.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+    const refLabelD=fsShortDate(refDateD);
 
     put(0,'s','IND AS 116 — NOTE ON LEASES (ESCALATION LEASE)',S.secHdr);
     for(let i=1;i<=5;i++) put(i,'z','',S.secHdr); r++;
@@ -3871,7 +3887,7 @@ function exportXL(){
 
     if(INP.reportDateVal){
       const rd=new Date(INP.reportDateVal);
-      const rdLabel=rd.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+      const rdLabel=fsShortDate(rd);
       const [sy,sm,sd]=INP.d.split('-').map(Number);
       const sd2=new Date(sy,sm-1,sd);
       const rInt=rd.getFullYear()*10000+(rd.getMonth()+1)*100+rd.getDate();

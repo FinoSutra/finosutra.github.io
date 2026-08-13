@@ -12,7 +12,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+<script>
+/* Shared short-date formatter. en-IN renders September as "Sept", which reads as a
+   typo beside "Mar" and "Jun". Format explicitly so every month is three letters,
+   and read date-only strings component-wise so they cannot shift a day in
+   timezones behind UTC. */
+var FS_MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function fsShortDate(d){
+  if(d===null||d===undefined||d==='') return '—';
+  try{
+    var iso = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(d));
+    if(iso) return iso[3]+' '+FS_MONTHS_SHORT[+iso[2]-1]+' '+iso[1];
+    var dt = (d instanceof Date) ? d : new Date(d);
+    if(isNaN(dt.getTime())) return String(d);
+    return String(dt.getDate()).padStart(2,'0')+' '+FS_MONTHS_SHORT[dt.getMonth()]+' '+dt.getFullYear();
+  }catch(e){ return String(d); }
+}
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -530,7 +546,7 @@ function fsCopyLink(btn){
 /* ── Helpers ─────────────────────────────────────────────────────────────── */
 function f(n){ return '₹' + Math.round(n).toLocaleString('en-IN'); }
 function fn(n){ return Math.round(n).toLocaleString('en-IN'); }
-function fDate(d){ return d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}); }
+function fDate(d){ return fsShortDate(d); }
 
 function pvCalc(pmt, n, r, timing){
   if(r === 0) return pmt * n;
@@ -1094,6 +1110,37 @@ function exportXL(){
   };
   function xlC(v,s){return{v:v,s:s};}
   function xlN(v,s){return{v:v,t:'n',s:s};}
+
+  // Sheet 1: Cover Page — brings this export in line with the other calculators,
+  // which all lead with report details and a contents list.
+  const cvData = [
+    [xlC('Finosutra  |  IND AS 116 — Lease Modification Report',S.title),'',''],
+    [xlC('IND AS 116 / IFRS 16  ·  Para 45 & 46  ·  For CA / Finance team use only',S.sub),'',''],
+    [],
+    [xlC('REPORT DETAILS',S.hdr),xlC('',S.hdr),xlC('',S.hdr)],
+    [xlC('Report Type',S.lbl),xlC('Lease Modification — remeasurement and revised schedule',S.val),''],
+    [xlC('Standard',S.lbl),xlC('IND AS 116 / IFRS 16',S.val),''],
+    [xlC('Commencement Date',S.lbl),xlC(fDate(startDate),S.val),''],
+    [xlC('Original Term',S.lbl),xlC(term+' months',S.val),''],
+    [xlC('Original IBR',S.lbl),xlC(ibr+'% p.a.',S.val),''],
+    [xlC('Modifications Modelled',S.lbl),xlC(String(modResults.length),S.val),''],
+    [xlC('Report Generated',S.lbl),xlC(fDate(now),S.val),''],
+    [xlC('Software',S.lbl),xlC('Finosutra v3.0  |  www.finosutra.com',S.val),''],
+    [],
+    [xlC('CONTENTS',S.hdr),xlC('',S.hdr),xlC('',S.hdr)],
+    [xlC('Inputs',S.r1t),xlC('Original lease and every modification event as entered',S.r1t),''],
+    [xlC('Original Schedule',S.r2t),xlC('Amortisation before any modification',S.r2t),''],
+    [xlC('Modification JEs',S.r1t),xlC('Journal entries for each modification (Para 45 / 46)',S.r1t),''],
+    [xlC('Revised Schedule',S.r2t),xlC('Amortisation after the final modification',S.r2t),''],
+    [xlC('Balance Sheet Snapshot',S.r1t),xlC('ROU asset and liability split at the modification date',S.r1t),''],
+    [xlC('Disclosure Note',S.r2t),xlC('Maturity analysis and modification summary (Para 52)',S.r2t),''],
+    [],
+    [xlC('CONFIDENTIAL — Review all outputs before inclusion in financial statements.',S.sub),'',''],
+    [xlC('Prepared using Finosutra  ·  www.finosutra.com  ·  IND AS 116 / IFRS 16  ·  v3.0',S.sub),'','']
+  ];
+  var wsCv = addSheet(wb, cvData, 'Cover Page', [30,58,4]);
+  wsCv['!merges']=[{s:{r:0,c:0},e:{r:0,c:2}},{s:{r:1,c:0},e:{r:1,c:2}},
+                   {s:{r:21,c:0},e:{r:21,c:2}},{s:{r:22,c:0},e:{r:22,c:2}}];
   function addSheet(wb,data,name,cols){
     var ws=XLSX.utils.aoa_to_sheet(data);
     if(cols) ws['!cols']=cols.map(function(w){return{wch:w};});
@@ -1107,10 +1154,10 @@ function exportXL(){
   // Sheet 1: Inputs
   var inp = [
     [xlC('IND AS 116 Model 2 — Lease Modification Calculator', S.title),''],
-    [xlC('Prepared by Finosutra  |  Exported: '+now.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}),S.sub),''],
+    [xlC('Prepared by Finosutra  |  Exported: '+fsShortDate(now),S.sub),''],
     [],
     [xlC('SECTION A — ORIGINAL LEASE',S.hdr),xlC('',S.hdr)],
-    [xlC('Commencement Date',S.lbl), xlC(startDate.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}),S.val)],
+    [xlC('Commencement Date',S.lbl), xlC(fsShortDate(startDate),S.val)],
     [xlC('Original Term (months)',S.lbl), xlN(term,S.num)],
     [xlC('Original Payment / Period (₹)',S.lbl), xlN(pmt,S.num)],
     [xlC('Original IBR (% p.a.)',S.lbl), xlN(ibr,mkS({numFmt:'0.00"%"'}))],
@@ -1123,7 +1170,7 @@ function exportXL(){
     [],
   ];
   modResults.forEach(function(m,i){
-    inp.push([xlC('MODIFICATION ' + m.idx + ' — ' + m.modDate.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}),S.hdr),xlC('',S.hdr)]);
+    inp.push([xlC('MODIFICATION ' + m.idx + ' — ' + fsShortDate(m.modDate),S.hdr),xlC('',S.hdr)]);
     inp.push([xlC('Type',S.lbl), xlC(m.type==='scope-reduce'?'Para 46a — Scope Reduction':m.type==='scope-extend'?'Para 46b — Scope Extension':'Para 45 — Remeasurement',S.val)]);
     if(m.type!=='scope-extend'){
       inp.push([xlC('Revised Payment / Period (₹)',S.lbl), xlN(m.mPmt,S.num)]);
@@ -1218,6 +1265,76 @@ function exportXL(){
   var wsR = addSheet(wb, rData, 'Revised Schedule', [5,14,18,14,14,14,18,16,16]);
   wsR['!merges']=[{s:{r:0,c:0},e:{r:0,c:8}}];
   wsR['!freeze']={xSplit:0,ySplit:4};
+
+  /* Sheet 5: Balance Sheet Snapshot — position immediately after the final
+     modification, which is the reporting reference this tool actually has.
+     Current / non-current uses the canonical definition: principal falling due in
+     the 12 months after that date, against the liability outstanding at it. */
+  const refD = new Date(lastMod.modDate);
+  const horizon = new Date(refD); horizon.setMonth(horizon.getMonth()+12);
+  let curLiab = 0;
+  finalSched.forEach(function(x){ if(x.pEnd > refD && x.pEnd <= horizon) curLiab += x.prin; });
+  curLiab = Math.min(curLiab, lastMod.newPV);
+  const nonCurLiab = Math.max(0, lastMod.newPV - curLiab);
+
+  var bData = [
+    [xlC('Balance Sheet Snapshot — As At '+fDate(lastMod.modDate),S.title),'',''],
+    [xlC('Position immediately after the final modification  ·  IND AS 116 / IFRS 16',S.sub),'',''],
+    [],
+    [xlC('ASSETS',S.hdr),xlC('Amount (₹)',S.hdr),xlC('Note',S.hdr)],
+    [xlC('Right-of-Use Asset — Net Book Value',S.r1t),xlN(lastMod.revisedROUFinal,S.r1),xlC('After remeasurement',S.r1t)],
+    [],
+    [xlC('LIABILITIES',S.hdr),xlC('Amount (₹)',S.hdr),xlC('Note',S.hdr)],
+    [xlC('Lease Liability — Current',S.r1t),xlN(curLiab,S.r1),xlC('Principal due within 12 months',S.r1t)],
+    [xlC('Lease Liability — Non-Current',S.r2t),xlN(nonCurLiab,S.r2),xlC('Due after 12 months',S.r2t)],
+    [xlC('Total Lease Liability',S.tott),xlN(lastMod.newPV,S.tot),xlC('',S.tot)],
+    [],
+    [xlC('BASIS OF PREPARATION',S.hdr),xlC('',S.hdr),xlC('',S.hdr)],
+    [xlC('Interest accrual',S.lbl),xlC('Effective interest method — monthly rate compounding exactly to the periodic IBR, so the liability unwinds on the same basis it was discounted on.',S.val),''],
+    [xlC('Current / non-current',S.lbl),xlC('Principal falling due in the 12 months after the reporting date, against the liability outstanding at that date.',S.val),''],
+    [xlC('Remeasurement',S.lbl),xlC('Para 45 — revised payments discounted at the IBR at the modification date, with the difference adjusted against the ROU asset.',S.val),''],
+    [],
+    [xlC('Prepared using Finosutra  ·  www.finosutra.com  ·  IND AS 116 / IFRS 16  ·  v3.0',S.sub),'','']
+  ];
+  var wsB = addSheet(wb, bData, 'Balance Sheet Snapshot', [42,20,46]);
+  wsB['!merges']=[{s:{r:0,c:0},e:{r:0,c:2}},{s:{r:1,c:0},e:{r:1,c:2}},
+                  {s:{r:12,c:1},e:{r:12,c:2}},{s:{r:13,c:1},e:{r:13,c:2}},
+                  {s:{r:14,c:1},e:{r:14,c:2}},{s:{r:16,c:0},e:{r:16,c:2}}];
+
+  /* Sheet 6: Disclosure Note — maturity of the remaining payments, measured from
+     the same reference date as the split above. */
+  // Bucket on horizon DATES, matching the split above. A month-index difference
+  // counts 13 payments into the first year when the reference date is a month start.
+  const h5 = new Date(refD); h5.setMonth(h5.getMonth()+60);
+  let bLt1=0, b1to5=0, bGt5=0, totUndisc=0;
+  finalSched.forEach(function(x){
+    if(x.pEnd <= refD) return;
+    totUndisc += x.pmt;
+    if(x.pEnd <= horizon) bLt1 += x.pmt; else if(x.pEnd <= h5) b1to5 += x.pmt; else bGt5 += x.pmt;
+  });
+  var dData = [
+    [xlC('IND AS 116 — Disclosure Note (Para 52)',S.title),''],
+    [xlC('As at '+fDate(lastMod.modDate)+'  ·  Post-modification position',S.sub),''],
+    [],
+    [xlC('MATURITY ANALYSIS — UNDISCOUNTED LEASE PAYMENTS',S.hdr),xlC('Amount (₹)',S.hdr)],
+    [xlC('Not later than 1 year',S.r1t),xlN(bLt1,S.r1)],
+    [xlC('Later than 1 year and not later than 5 years',S.r2t),xlN(b1to5,S.r2)],
+    [xlC('Later than 5 years',S.r1t),xlN(bGt5,S.r1)],
+    [xlC('Total undiscounted lease payments',S.tott),xlN(totUndisc,S.tot)],
+    [xlC('Less: future finance charges',S.r1t),xlN(-(totUndisc-lastMod.newPV),S.r1)],
+    [xlC('Present value of lease liabilities',S.tott),xlN(lastMod.newPV,S.tot)],
+    [],
+    [xlC('MODIFICATION SUMMARY',S.hdr),xlC('Amount (₹)',S.hdr)],
+    [xlC('Liability immediately before modification',S.r1t),xlN(lastMod.carryLiab,S.r1)],
+    [xlC('Liability immediately after modification',S.r2t),xlN(lastMod.newPV,S.r2)],
+    [xlC('Net adjustment to ROU asset',S.r1t),xlN(lastMod.adjustment,S.r1)],
+    [],
+    [xlC('Preparer’s note: generated by Finosutra from user-provided inputs. Review before inclusion in financial statements.',S.sub),''],
+    [xlC('Prepared using Finosutra  ·  www.finosutra.com  ·  IND AS 116 / IFRS 16  ·  v3.0',S.sub),'']
+  ];
+  var wsD = addSheet(wb, dData, 'Disclosure Note', [52,22]);
+  wsD['!merges']=[{s:{r:0,c:0},e:{r:0,c:1}},{s:{r:1,c:0},e:{r:1,c:1}},
+                  {s:{r:16,c:0},e:{r:16,c:1}},{s:{r:17,c:0},e:{r:17,c:1}}];
 
   XLSX.writeFile(wb, 'Finosutra_IND_AS_116_Modification.xlsx');
 }
