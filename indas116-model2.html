@@ -725,9 +725,11 @@ function calculate(){
   const origROU = origPV + idc - inc;
   const origDep = origROU / term; // monthly depreciation
 
-  // Build original schedule — monthly rows, actual/365 day-count interest
+  // Build original schedule — monthly rows. Interest accrues at the monthly rate
+  // that compounds exactly to the periodic discount rate r0, so the schedule
+  // reconciles: total interest equals payments less PV and the liability closes at nil.
   const origSched = [];
-  const dailyRate0 = ibr / 100 / 365;
+  const monthlyRate0 = mpp0 === 1 ? r0 : Math.pow(1 + r0, 1/mpp0) - 1;
   let oL = origPV;
   let prevEnd0 = new Date(startDate);
   for(let mo = 1; mo <= term; mo++){
@@ -737,12 +739,13 @@ function calculate(){
     const payment = hasPmt ? pmt : 0;
     let int, prin, cL;
     if(timing === 'beg'){
-      if(hasPmt){ prin = payment; const afterPmt = oL - payment; int = afterPmt * dailyRate0 * days; cL = afterPmt + int; }
-      else { int = oL * dailyRate0 * days; prin = 0; cL = oL + int; }
+      if(hasPmt){ prin = payment; const afterPmt = oL - payment; int = afterPmt * monthlyRate0; cL = afterPmt + int; }
+      else { int = oL * monthlyRate0; prin = 0; cL = oL + int; }
     } else {
-      int = oL * dailyRate0 * days; prin = hasPmt ? payment - int : 0; cL = Math.max(0, oL + int - payment);
+      int = oL * monthlyRate0; prin = hasPmt ? payment - int : 0; cL = Math.max(0, oL + int - payment);
     }
-    if(mo === term || Math.abs(cL) < 0.01) cL = 0;
+    // Snap only rounding dust — forcing the final month to nil hid real residuals.
+    if(Math.abs(cL) < 0.01) cL = 0;
     origSched.push({ mo, pEnd, oL, int, pmt: payment, prin, cL, hasPmt });
     oL = cL;
     prevEnd0 = new Date(pEnd);
@@ -807,7 +810,7 @@ function calculate(){
     const usedFreq    = m.freq || curFreq;
     const usedMpp     = 12 / usedFreq;
     const usedIBR     = m.ibr !== null ? m.ibr : curIBR;
-    const usedRPeriod = (usedIBR / 100) / usedFreq; // periodic rate for PV only
+    const usedRPeriod = (usedIBR / 100) / usedFreq; // periodic rate — discounting AND unwinding
     const usedRMonth  = usedIBR / 100 / 12;          // monthly rate for schedule
     const revisedN    = m.term;                       // months remaining
     const revisedPeriods = Math.round(m.term / usedMpp); // payment count for PV & narration
@@ -840,9 +843,10 @@ function calculate(){
     const revisedROUFinal = Math.max(0, revisedROU);
     const newDep     = revisedN > 0 ? revisedROUFinal / revisedN : 0; // monthly dep
 
-    // Build revised schedule — monthly rows, actual/365 day-count interest
+    // Build revised schedule — monthly rows, on the same basis as the remeasurement
+    // PV above (usedRPeriod), so the post-modification schedule reconciles too.
     const newSched = [];
-    const dailyRateM = usedIBR / 100 / 365;
+    const monthlyRateM = usedMpp === 1 ? usedRPeriod : Math.pow(1 + usedRPeriod, 1/usedMpp) - 1;
     let rL = newPV;
     let prevEndM = new Date(modDate);
     for(let i = 1; i <= revisedN; i++){
@@ -852,12 +856,13 @@ function calculate(){
       const payment = hasPmt ? m.pmt : 0;
       let int, prin, cL;
       if(timing === 'beg'){
-        if(hasPmt){ prin = payment; const afterPmt = rL - payment; int = afterPmt * dailyRateM * days; cL = afterPmt + int; }
-        else { int = rL * dailyRateM * days; prin = 0; cL = rL + int; }
+        if(hasPmt){ prin = payment; const afterPmt = rL - payment; int = afterPmt * monthlyRateM; cL = afterPmt + int; }
+        else { int = rL * monthlyRateM; prin = 0; cL = rL + int; }
       } else {
-        int = rL * dailyRateM * days; prin = hasPmt ? payment - int : 0; cL = Math.max(0, rL + int - payment);
+        int = rL * monthlyRateM; prin = hasPmt ? payment - int : 0; cL = Math.max(0, rL + int - payment);
       }
-      if(i === revisedN || Math.abs(cL) < 0.01) cL = 0;
+      // Snap only rounding dust — forcing the final month to nil hid real residuals.
+      if(Math.abs(cL) < 0.01) cL = 0;
       const rouC = Math.max(0, revisedROUFinal - i * newDep);
       newSched.push({ i, pEnd, oL: rL, int, pmt: payment, prin, cL, dep: newDep, rouC, hasPmt });
       rL = cL;

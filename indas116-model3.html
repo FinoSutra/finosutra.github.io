@@ -1966,7 +1966,12 @@ document.getElementById('btnCalc').onclick = function(){
 
   /* ── Amortization schedule (monthly rows) ── */
   // Interest accrues monthly; cash payment appears only in payment months.
-  const dailyRate = ibr/100/365; // actual/365 day-count
+  // The liability must unwind on the SAME basis it was discounted on (r = ibr/freq),
+  // otherwise total interest will not equal payments less PV and the schedule will
+  // not reconcile. Accrue at the monthly rate that compounds exactly to r.
+  const rPeriod     = ibr/100 * monthsPerPeriod / 12;
+  const monthlyRate = monthsPerPeriod === 1 ? rPeriod
+                    : Math.pow(1 + rPeriod, 1/monthsPerPeriod) - 1;
   let openL = pv;
   const sched = [];
   const startDate = new Date(d);
@@ -1998,21 +2003,23 @@ document.getElementById('btnCalc').onclick = function(){
       if(hasPmt){
         principal      = payment;
         const afterPmt = openL - payment;
-        interest       = afterPmt * dailyRate * days;
+        interest       = afterPmt * monthlyRate;
         closeL         = afterPmt + interest;
       } else {
-        interest  = openL * dailyRate * days;
+        interest  = openL * monthlyRate;
         principal = 0;
         closeL    = openL + interest;
       }
     } else {
-      interest  = openL * dailyRate * days;
+      interest  = openL * monthlyRate;
       principal = hasPmt ? payment - interest : 0;
       closeL    = openL + interest - payment;
     }
     prevEnd = new Date(pEnd);
 
-    if(m === termMonths || Math.abs(closeL) < 0.01) closeL = 0;
+    // Snap only true rounding dust. Forcing the final month to zero regardless used
+    // to hide a real residual while leaving the principal column overstated by it.
+    if(Math.abs(closeL) < 0.01) closeL = 0;
     const rouC = Math.max(0, rouInitial - (m*dep));
     sched.push({ i:m, lbl, oL:openL, int:interest, pmt:payment, principal, cL:closeL, dep, rouC, hasPmt });
     openL = closeL;
