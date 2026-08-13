@@ -16,7 +16,23 @@
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+<script>
+/* Shared short-date formatter. en-IN renders September as "Sept", which reads as a
+   typo beside "Mar" and "Jun". Format explicitly so every month is three letters,
+   and read date-only strings component-wise so they cannot shift a day in
+   timezones behind UTC. */
+var FS_MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function fsShortDate(d){
+  if(d===null||d===undefined||d==='') return '';
+  try{
+    var iso = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(d));
+    if(iso) return iso[3]+' '+FS_MONTHS_SHORT[+iso[2]-1]+' '+iso[1];
+    var dt = (d instanceof Date) ? d : new Date(d);
+    if(isNaN(dt.getTime())) return String(d);
+    return String(dt.getDate()).padStart(2,'0')+' '+FS_MONTHS_SHORT[dt.getMonth()]+' '+dt.getFullYear();
+  }catch(e){ return String(d); }
+}
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
 <script src="auth.js"></script>
 <style>
 :root{
@@ -621,7 +637,7 @@ function renderGrid(){
     var fyIdx = d.summary.fyYearIdx || 0;
     var fyInt = d.summary.sched.length > fyIdx ? d.summary.sched[fyIdx].interest : 0;
     var statusBadge = getDepStatus(d) || '';
-    var commStr = d.commDate ? d.commDate.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}) : '';
+    var commStr = d.commDate ? fsShortDate(d.commDate) : '';
     return '<div class="dep-card">' +
       '<div class="dep-card-head">' +
         '<div class="dep-name">' + d.name + '</div>' +

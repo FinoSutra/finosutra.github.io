@@ -265,6 +265,30 @@ body{background:linear-gradient(160deg,#EDEEFF 0%,#EAF0FF 40%,#F2EEFF 100%);colo
 <!-- Google Analytics GA4 — replace G-Z2G710PHNQ with your real Measurement ID -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
 <script>
+/* Shared short-date formatter. en-IN renders September as "Sept", which reads as a
+   typo beside "Mar" and "Jun". Format explicitly so every month is three letters,
+   and read date-only strings component-wise so they cannot shift a day in
+   timezones behind UTC. */
+var FS_MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function fsShortMonth(d){
+  if(!d) return '';
+  try{
+    var dt = (d instanceof Date) ? d : new Date(d);
+    if(isNaN(dt.getTime())) return String(d);
+    return FS_MONTHS_SHORT[dt.getMonth()]+' '+dt.getFullYear();
+  }catch(e){ return String(d); }
+}
+function fsShortDate(d){
+  if(d===null||d===undefined||d==='') return '';
+  try{
+    var iso = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(d));
+    if(iso) return iso[3]+' '+FS_MONTHS_SHORT[+iso[2]-1]+' '+iso[1];
+    var dt = (d instanceof Date) ? d : new Date(d);
+    if(isNaN(dt.getTime())) return String(d);
+    return String(dt.getDate()).padStart(2,'0')+' '+FS_MONTHS_SHORT[dt.getMonth()]+' '+dt.getFullYear();
+  }catch(e){ return String(d); }
+}
+
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -706,7 +730,7 @@ function calculate(){
       kpi('Current FY Unwinding', INR(currentFYInterest),
           (isGiven?'Finance income':'Finance cost')+' — Year '+sched[currentYearIdx].year, 'c-green') +
       kpi(isGiven?'Prepaid Rent Remaining':'Deferred Income Remaining', INR(prepaidRemaining),
-          'As at '+repDate.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}), 'c-blue') +
+          'As at '+fsShortDate(repDate), 'c-blue') +
       kpi('Remaining Term', remainingYrs.toFixed(1)+' yrs',
           isCurrent?'🟡 Due within 12 months — reclassify':'Non-current', '') +
       kpi('BS Classification', isCurrent?'Current':'Non-Current',
@@ -728,7 +752,7 @@ function calculate(){
 
   // ── Formula box ──
   var dateNote = commDate
-    ? '<div class="f-line" style="margin-top:8px;font-size:12px;color:var(--muted)">Commencement: '+commDate.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})+' &nbsp;&middot;&nbsp; Annual SLM charge: '+FULL(rentPY)+' / yr</div>'
+    ? '<div class="f-line" style="margin-top:8px;font-size:12px;color:var(--muted)">Commencement: '+fsShortDate(commDate)+' &nbsp;&middot;&nbsp; Annual SLM charge: '+FULL(rentPY)+' / yr</div>'
     : '';
   document.getElementById('fvBox').innerHTML =
     '<div class="formula-box">' +
@@ -741,7 +765,7 @@ function calculate(){
     dateNote + '</div>';
 
   // ── Day 1 JE ──
-  var d1DateStr = commDate ? ' — '+commDate.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) : '';
+  var d1DateStr = commDate ? ' — '+fsShortDate(commDate) : '';
   var d1Html = isGiven
     ? buildJE('Day 1 — Deposit Paid (Tenant / Lessee)'+d1DateStr,[
         {side:'dr',acct:'Security Deposit — Financial Asset ('+std1+')',amt:pv},
@@ -762,7 +786,7 @@ function calculate(){
     '<strong>Rent:</strong> '+(isGiven?'Prepaid Rent amortised to Rent Expense (straight-line).':'Deferred Income released to Rental Income (straight-line).')+'</p></div>' +
     '<div class="sec-head">Day 1 — Inception</div>' + d1Html;
   sched.forEach(function(r){
-    var pdLbl = r.periodEndDate ? r.periodEndDate.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) : '';
+    var pdLbl = r.periodEndDate ? fsShortDate(r.periodEndDate) : '';
     var head  = 'Year '+r.year+(pdLbl?' &nbsp;|&nbsp; '+pdLbl:'')+(r.partial<1?' ('+Math.round(r.partial*12)+' months)':'');
     jHtml += '<div class="sec-head" style="margin-top:18px">'+head+'</div>';
     if(isGiven){
@@ -800,7 +824,7 @@ function calculate(){
     '</tr></thead><tbody>';
   sched.forEach(function(r){
     var net       = isGiven ? r.interest-r.rentPeriod : r.rentPeriod-r.interest;
-    var dateLbl   = r.periodEndDate ? r.periodEndDate.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) : 'Year End';
+    var dateLbl   = r.periodEndDate ? fsShortDate(r.periodEndDate) : 'Year End';
     var isActivePd= hasContext && currentYearIdx===r.year-1 && depositStatus==='active';
     var classBadge= '';
     if(hasContext){
@@ -830,7 +854,7 @@ function calculate(){
   document.getElementById('scheduleAll').innerHTML = sHtml;
 
   // ── BS & P&L Impact ──
-  var repFmt = hasContext ? repDate.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) : null;
+  var repFmt = hasContext ? fsShortDate(repDate) : null;
   var iHtml = '';
 
   // Balance sheet
@@ -867,7 +891,7 @@ function calculate(){
   }
 
   // P&L
-  iHtml += '<div class="sec-head">P&amp;L Impact — Per Year</div><div style="overflow-x:auto"><table class="imp-table"><thead><tr><th>P&amp;L Line</th>'+sched.map(function(r){ var lbl=r.periodEndDate?r.periodEndDate.toLocaleDateString('en-IN',{month:'short',year:'numeric'}):'Year '+r.year; return '<th>'+lbl+'</th>'; }).join('')+'<th>Total</th></tr></thead><tbody>';
+  iHtml += '<div class="sec-head">P&amp;L Impact — Per Year</div><div style="overflow-x:auto"><table class="imp-table"><thead><tr><th>P&amp;L Line</th>'+sched.map(function(r){ var lbl=r.periodEndDate?fsShortMonth(r.periodEndDate):'Year '+r.year; return '<th>'+lbl+'</th>'; }).join('')+'<th>Total</th></tr></thead><tbody>';
   if(isGiven){
     iHtml += '<tr><td>Finance Income (Interest)</td>'+sched.map(function(r){ return '<td class="c-green">+'+FULL(r.interest)+'</td>'; }).join('')+'<td class="c-green">+'+FULL(totalInterest)+'</td></tr>';
     iHtml += '<tr><td>Rent Expense</td>'+sched.map(function(r){ return '<td class="c-red">-'+FULL(r.rentPeriod)+'</td>'; }).join('')+'<td class="c-red">-'+FULL(totalRent)+'</td></tr>';
