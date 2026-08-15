@@ -2074,6 +2074,33 @@ h4 { font-size: 16px; }
   text-decoration: none;
 }
 
+/* Nav dropdown (simple single-column, e.g. Resources) */
+.fs-nav-dropdown-simple {
+  min-width: 200px;
+  padding: 10px;
+  left: 0;
+  transform: none;
+}
+.fs-nav-dd-trigger:hover .fs-nav-dropdown-simple,
+.fs-nav-dd-trigger:focus-within .fs-nav-dropdown-simple {
+  display: block;
+}
+.fs-nav-dropdown-simple a {
+  display: block;
+  font-size: 13.5px;
+  color: #334155;
+  padding: 8px 10px;
+  border-radius: var(--fs-r-sm);
+  text-decoration: none;
+  line-height: 1.5;
+}
+.fs-nav-dropdown-simple a:hover,
+.fs-nav-dropdown-simple a.active {
+  color: var(--fs-blue);
+  background: var(--fs-blue-lt);
+  text-decoration: none;
+}
+
 /* Mobile nav */
 #navAuthMobile { display: none; }
 .fs-nav-links.open #navAuthMobile { display: block; }
