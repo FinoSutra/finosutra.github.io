@@ -1984,8 +1984,8 @@ h4 { font-size: 16px; }
   margin-top: 2px;
   white-space: nowrap;
 }
-@media (max-width: 560px) {
-  .fs-nav-logo-tag { display: none; }
+@media (max-width: 480px) {
+  .fs-nav-logo-tag { font-size: 8.5px; letter-spacing: 0.02em; }
 }
 .fs-nav-links {
   display: flex;
