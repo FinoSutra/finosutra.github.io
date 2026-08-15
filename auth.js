@@ -51,18 +51,18 @@
       /* AUTH MODAL */
       '#fsAuthOverlay{display:none;position:fixed;inset:0;background:rgba(15,15,30,.55);z-index:9999;align-items:center;justify-content:center;backdrop-filter:blur(4px);}',
       '#fsAuthOverlay.show{display:flex!important;}',
-      '#fsAuthModal{background:#fff;border-radius:20px;padding:36px 32px 28px;width:440px;max-width:94vw;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.22);animation:fsSlideIn .22s ease;}',
+      '#fsAuthModal{background:#fff;border-radius:14px;padding:40px 28px 28px;width:440px;max-width:94vw;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.22);animation:fsSlideIn .22s ease;}',
       '@keyframes fsSlideIn{from{transform:translateY(16px);opacity:0;}to{transform:translateY(0);opacity:1;}}',
       '.fs-auth-tab{background:none;border:none;border-bottom:2px solid transparent;padding:10px 20px;font-size:14px;font-weight:600;color:#9CA3AF;cursor:pointer;margin-bottom:-2px;transition:color .15s,border-color .15s;font-family:Inter,sans-serif;}',
-      '.fs-auth-tab.active{color:#6366F1;border-bottom-color:#6366F1;}',
+      '.fs-auth-tab.active{color:#B8862E;border-bottom-color:#B8862E;font-weight:700;}',
       '.fs-auth-field{margin-bottom:14px;}',
       '.fs-auth-field label{display:block;font-size:12px;font-weight:600;color:#374151;margin-bottom:5px;font-family:Inter,sans-serif;}',
       '.fs-auth-field input{width:100%;padding:10px 12px;border:1.5px solid #D1D5DB;border-radius:8px;font-size:14px;color:#111827;outline:none;box-sizing:border-box;transition:border-color .15s;font-family:Inter,sans-serif;}',
-      '.fs-auth-field input:focus{border-color:#6366F1;box-shadow:0 0 0 3px rgba(99,102,241,.12);}',
+      '.fs-auth-field input:focus{border-color:#15222C;box-shadow:0 0 0 3px rgba(21,34,44,.10);}',
       '.fs-auth-err{font-size:12px;color:#EF4444;margin-bottom:12px;padding:8px 12px;background:#FEF2F2;border-radius:7px;display:none;font-family:Inter,sans-serif;}',
-      '.fs-auth-submit{width:100%;padding:12px;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .15s;font-family:Inter,sans-serif;}',
-      '.fs-auth-submit:hover{opacity:.9;}.fs-auth-submit:disabled{opacity:.55;cursor:not-allowed;}',
-      '.fs-auth-link{background:none;border:none;color:#6366F1;font-size:13px;font-weight:600;cursor:pointer;text-decoration:underline;padding:0;font-family:Inter,sans-serif;}',
+      '.fs-auth-submit{width:100%;padding:12px;background:#15222C;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:background .15s,box-shadow .15s;font-family:Inter,sans-serif;box-shadow:0 8px 20px -6px rgba(21,34,44,.45);}',
+      '.fs-auth-submit:hover{background:#0E161C;box-shadow:0 10px 24px -6px rgba(21,34,44,.55);}.fs-auth-submit:disabled{opacity:.55;cursor:not-allowed;box-shadow:none;}',
+      '.fs-auth-link{background:none;border:none;color:#B8862E;font-size:13px;font-weight:600;cursor:pointer;text-decoration:underline;padding:0;font-family:Inter,sans-serif;}',
       /* NAV AUTH */
       '.fs-nav-login-btn{background:none;border:1.5px solid #6366F1;color:#6366F1;padding:6px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;font-family:Inter,sans-serif;white-space:nowrap;}',
       '.fs-nav-login-btn:hover{background:#EEF2FF;}',
@@ -74,16 +74,16 @@
       '.fs-nav-profile-btn{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#EEF2FF;color:#6366F1;font-size:14px;text-decoration:none;transition:background .15s;}',
       '.fs-nav-profile-btn:hover{background:#C7D2FE;}',
       /* PRO UPGRADE BANNER */
-      '#fsProBanner{display:none;margin-top:20px;background:linear-gradient(135deg,#EEF2FF,#F5F3FF);border:1.5px solid #C7D2FE;border-radius:14px;padding:20px 22px;position:relative;overflow:hidden;}',
-      '#fsProBanner::before{content:"";position:absolute;top:-30px;right:-30px;width:100px;height:100px;background:radial-gradient(circle,rgba(139,92,246,.15),transparent 70%);pointer-events:none;}',
+      '#fsProBanner{display:none;margin-top:20px;background:linear-gradient(135deg,#FBF8F0,#F6F3EA);border:1.5px solid #E4D9BE;border-radius:14px;padding:20px 22px;position:relative;overflow:hidden;}',
+      '#fsProBanner::before{content:"";position:absolute;top:-30px;right:-30px;width:100px;height:100px;background:radial-gradient(circle,rgba(184,134,46,.15),transparent 70%);pointer-events:none;}',
       '.fs-pro-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;}',
       '.fs-pro-title{font-size:15px;font-weight:800;color:#111827;margin-bottom:4px;font-family:Inter,sans-serif;}',
       '.fs-pro-sub{font-size:12px;color:#6B7280;margin-bottom:10px;font-family:Inter,sans-serif;}',
       '.fs-pro-pills{display:flex;flex-wrap:wrap;gap:6px;}',
-      '.fs-pro-pill{font-size:11px;font-weight:600;color:#4F46E5;background:#E0E7FF;padding:3px 10px;border-radius:20px;font-family:Inter,sans-serif;}',
+      '.fs-pro-pill{font-size:11px;font-weight:600;color:#8A6423;background:#FBF3E4;padding:3px 10px;border-radius:20px;font-family:Inter,sans-serif;}',
       '.fs-pro-cta{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;}',
-      '.fs-btn-subscribe{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;border:none;border-radius:10px;padding:11px 22px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 4px 14px rgba(99,102,241,.35);transition:transform .15s,box-shadow .15s;font-family:Inter,sans-serif;}',
-      '.fs-btn-subscribe:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(99,102,241,.45);}',
+      '.fs-btn-subscribe{background:#15222C;color:#fff;border:none;border-radius:10px;padding:11px 22px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 4px 14px rgba(21,34,44,.35);transition:transform .15s,box-shadow .15s,background .15s;font-family:Inter,sans-serif;}',
+      '.fs-btn-subscribe:hover{background:#0E161C;transform:translateY(-1px);box-shadow:0 6px 18px rgba(21,34,44,.45);}',
       '.fs-pro-cta-note{font-size:10px;color:#9CA3AF;text-align:right;font-family:Inter,sans-serif;}',
       '.fs-pro-free-tag{display:inline-block;background:#D1FAE5;color:#065F46;font-size:11px;font-weight:700;padding:1px 8px;border-radius:20px;margin-left:8px;vertical-align:middle;}',
       '#fsProActivated{display:none;margin-top:12px;padding:14px 18px;background:linear-gradient(135deg,#DCFCE7,#D1FAE5);border:1.5px solid #22C55E;border-radius:10px;text-align:center;}',
@@ -94,15 +94,15 @@
       '#fsUpgradeBox{background:#fff;border-radius:22px;overflow:hidden;width:680px;max-width:96vw;position:relative;box-shadow:0 40px 100px rgba(0,0,0,.28);animation:fsSlideIn .22s ease;}',
       '.fs-um-close{position:absolute;top:14px;right:16px;background:rgba(255,255,255,.15);border:none;font-size:18px;color:#fff;cursor:pointer;line-height:1;padding:0;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;}',
       '.fs-um-close:hover{background:rgba(255,255,255,.25);}',
-      '.fs-um-header{background:#1E1B4B;padding:22px 28px 20px;}',
-      '.fs-um-eyebrow{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#A5B4FC;margin-bottom:4px;font-family:Inter,sans-serif;}',
+      '.fs-um-header{background:#15222C;padding:22px 28px 20px;}',
+      '.fs-um-eyebrow{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#B8862E;margin-bottom:4px;font-family:Inter,sans-serif;}',
       '.fs-um-title{font-size:20px;font-weight:700;color:#fff;margin:0 0 2px;font-family:Inter,sans-serif;}',
-      '.fs-um-sub{font-size:12px;color:#A5B4FC;margin:0;font-family:Inter,sans-serif;}',
+      '.fs-um-sub{font-size:12px;color:#D9C9A3;margin:0;font-family:Inter,sans-serif;}',
       '.fs-um-body{padding:20px 28px 22px;}',
       '.fs-um-preview-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#9CA3AF;margin-bottom:10px;font-family:Inter,sans-serif;}',
       '.fs-um-chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:12px;}',
-      '.fs-um-chip{font-size:11px;font-weight:600;color:#4F46E5;background:#EEF2FF;padding:3px 10px;border-radius:20px;font-family:Inter,sans-serif;}',
-      '.fs-um-roi{background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:9px 14px;font-size:12px;color:#92400E;margin-bottom:14px;text-align:center;font-family:Inter,sans-serif;line-height:1.5;}',
+      '.fs-um-chip{font-size:11px;font-weight:600;color:#8A6423;background:#FBF3E4;padding:3px 10px;border-radius:20px;font-family:Inter,sans-serif;}',
+      '.fs-um-roi{background:#FBF3E4;border:1px solid #E8D2A0;border-radius:10px;padding:9px 14px;font-size:12px;color:#7A5A1E;margin-bottom:14px;text-align:center;font-family:Inter,sans-serif;line-height:1.5;}',
       /* Preview strip — bigger cells so numbers are legible */
       '.fs-um-preview{display:flex;gap:8px;margin-bottom:14px;}',
       '.fs-um-sheet{flex:1;border:1px solid #E5E7EB;border-radius:9px;overflow:hidden;min-width:0;box-shadow:0 2px 8px rgba(0,0,0,.05);}',
@@ -113,24 +113,24 @@
       /* Pricing cards */
       '.fs-um-cards{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:10px;margin:14px 0;align-items:start;}',
       '.fs-um-card{border:1.5px solid #E5E7EB;border-radius:14px;padding:18px 14px 14px;text-align:center;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s;position:relative;}',
-      '.fs-um-card:hover{border-color:#6366F1;box-shadow:0 6px 20px rgba(99,102,241,.14);transform:translateY(-2px);}',
-      '.fs-um-card-featured{border-color:#6366F1;background:linear-gradient(160deg,#F5F3FF,#EEF2FF);box-shadow:0 4px 20px rgba(99,102,241,.15);}',
-      '.fs-um-card-featured:hover{box-shadow:0 8px 28px rgba(99,102,241,.22);}',
-      '.fs-um-card-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-size:10px;font-weight:800;padding:3px 12px;border-radius:20px;white-space:nowrap;letter-spacing:.04em;font-family:Inter,sans-serif;}',
+      '.fs-um-card:hover{border-color:#15222C;box-shadow:0 6px 20px rgba(21,34,44,.14);transform:translateY(-2px);}',
+      '.fs-um-card-featured{border-color:#B8862E;background:linear-gradient(160deg,#FBF3E4,#F6F3EA);box-shadow:0 4px 20px rgba(184,134,46,.18);}',
+      '.fs-um-card-featured:hover{box-shadow:0 8px 28px rgba(184,134,46,.26);}',
+      '.fs-um-card-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#B8862E,#9C7226);color:#fff;font-size:10px;font-weight:800;padding:3px 12px;border-radius:20px;white-space:nowrap;letter-spacing:.04em;font-family:Inter,sans-serif;}',
       '.fs-um-card-price{font-size:28px;font-weight:800;color:#111827;font-family:Inter,sans-serif;line-height:1.1;margin-top:4px;}',
       '.fs-um-card-price span{font-size:13px;font-weight:500;color:#6B7280;}',
-      '.fs-um-card-name{font-size:13px;font-weight:700;color:#1E1B4B;margin:4px 0 2px;font-family:Inter,sans-serif;}',
+      '.fs-um-card-name{font-size:13px;font-weight:700;color:#15222C;margin:4px 0 2px;font-family:Inter,sans-serif;}',
       '.fs-um-card-desc{font-size:11px;color:#6B7280;line-height:1.5;margin-bottom:10px;font-family:Inter,sans-serif;}',
       /* Feature list inside Pro card */
       '.fs-um-card-list{list-style:none;padding:0;margin:0 0 12px;text-align:left;}',
       '.fs-um-card-list li{font-size:11px;color:#374151;font-family:Inter,sans-serif;padding:3px 0;display:flex;align-items:center;gap:5px;line-height:1.4;}',
-      '.fs-um-card-list li::before{content:"✓";color:#6366F1;font-weight:700;flex-shrink:0;}',
+      '.fs-um-card-list li::before{content:"✓";color:#B8862E;font-weight:700;flex-shrink:0;}',
       '.fs-um-card-annual .fs-um-card-list li::before{color:#059669;}',
       /* Buttons */
       '.fs-um-btn{width:100%;padding:10px 0;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:Inter,sans-serif;transition:opacity .15s;}',
       '.fs-um-btn:hover{opacity:.88;}',
       '.fs-um-btn-muted{background:#F3F4F6;color:#6B7280;border:1.5px solid #E5E7EB!important;}',
-      '.fs-um-btn-primary{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;box-shadow:0 4px 14px rgba(99,102,241,.3);}',
+      '.fs-um-btn-primary{background:#15222C;color:#fff;box-shadow:0 4px 14px rgba(21,34,44,.3);}',
       /* Social proof + footer */
       '.fs-um-social{text-align:center;font-size:11px;color:#9CA3AF;margin-bottom:10px;font-family:Inter,sans-serif;}',
       '.fs-um-social strong{color:#6B7280;}',
@@ -154,9 +154,15 @@
     var html = '<div id="fsAuthOverlay" onclick="if(event.target===this)fsCloseAuthModal()">' +
       '<div id="fsAuthModal">' +
         '<button onclick="fsCloseAuthModal()" style="position:absolute;top:14px;right:18px;background:none;border:none;font-size:24px;color:#D1D5DB;cursor:pointer;line-height:1;">&#215;</button>' +
-        '<div style="text-align:center;margin-bottom:20px;">' +
-          '<div style="font-size:22px;font-weight:800;background:linear-gradient(135deg,#6366F1,#8B5CF6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Finosutra</div>' +
-          '<p id="fsAuthSubtitle" style="font-size:13px;color:#6B7280;margin-top:3px;font-family:Inter,sans-serif;"></p>' +
+        '<div style="text-align:center;margin-bottom:26px;">' +
+          '<div style="display:inline-flex;align-items:center;gap:10px;">' +
+            '<img src="/favicon.svg" alt="" aria-hidden="true" style="width:34px;height:34px;flex-shrink:0;"/>' +
+            '<div style="text-align:left;">' +
+              '<div style="font-size:17px;font-weight:800;color:#15222C;letter-spacing:-0.02em;line-height:1.1;font-family:Inter,sans-serif;">Finosutra</div>' +
+              '<div style="font-size:10px;font-weight:700;color:#6B7280;letter-spacing:.06em;text-transform:uppercase;margin-top:2px;font-family:Inter,sans-serif;">— FINANCE ON AUTOPILOT</div>' +
+            '</div>' +
+          '</div>' +
+          '<p id="fsAuthSubtitle" style="font-size:13px;color:#6B7280;margin-top:12px;font-family:Inter,sans-serif;"></p>' +
         '</div>' +
         '<div style="display:flex;border-bottom:2px solid #F3F4F6;margin-bottom:22px;">' +
           '<button class="fs-auth-tab active" id="fsTabLogin" onclick="fsSwitchTab(\'login\')">Log In</button>' +
@@ -326,11 +332,68 @@
     if (o) o.classList.remove('show');
   };
 
-  global.fsDoOneTimeExport = function () {
-    if (typeof global._fsOriginalExportFn === 'function') {
-      global._fsOriginalExportFn.call(document.getElementById('btnExp'));
+  // ── One-time export payment (₹199) — must be its own Razorpay charge.
+  // Do NOT fall back to _fsOriginalExportFn here: on several tool pages that's
+  // just the bare export function with no payment step of its own, and on
+  // others it's dead code that's unreachable via the normal button click (it
+  // only runs through this exact path), so relying on it either gives the
+  // file away free or hits whatever quirks that page's own handler has.
+  global.fsInitiateOneTimeExport = function () {
+    if (global.isProUser) { fsCallToolExport(); return; }
+
+    if (typeof Razorpay === 'undefined') {
+      global.showToast('Loading payment…', '#6366F1');
+      var rzpScript = document.createElement('script');
+      rzpScript.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      rzpScript.onload = function () { global.fsInitiateOneTimeExport(); };
+      rzpScript.onerror = function () { global.showToast('Could not load payment. Check connection.', '#EF4444'); };
+      document.head.appendChild(rzpScript);
+      return;
+    }
+
+    var options = {
+      key:         RZP_KEY,
+      amount:      19900, // ₹199 in paise
+      currency:    'INR',
+      name:        'Finosutra',
+      description: 'One-time Excel Export',
+      image:       '',
+      theme:       { color: '#6366F1' },
+      modal:       { ondismiss: function () { global.showToast('Payment cancelled. No charges made.', '#9CA3AF'); } },
+      prefill:     { email: global.currentUser ? global.currentUser.email : '', name: '', contact: '' },
+      notes:       { plan: 'one_time_export', page: location.pathname },
+      handler:     function (response) {
+        global.showToast('Payment received! Preparing your download…', '#5EC98A');
+        if (typeof global.gtag === 'function') {
+          global.gtag('event', 'purchase', {
+            transaction_id: response.razorpay_payment_id,
+            value:          199,
+            currency:       'INR',
+            items: [{ item_id: 'one_time_export', item_name: 'One-time Excel Export', price: 199, quantity: 1 }]
+          });
+        }
+        setTimeout(function () { fsRunExportFn('PAID'); }, 300);
+      }
+    };
+
+    try {
+      var rzp = new Razorpay(options);
+      rzp.on('payment.failed', function (resp) {
+        global.showToast('Payment failed: ' + (resp.error && resp.error.description || 'Unknown error'), '#FF8A80');
+      });
+      if (typeof global.gaEvent === 'function') {
+        global.gaEvent('begin_checkout', { tool_name: 'One-time Export', value: 199, currency: 'INR' });
+      }
+      rzp.open();
+    } catch (e) {
+      alert('Could not open payment window. Please check your connection and try again.');
+      console.error(e);
     }
   };
+
+  // Backward-compat: the upgrade modal card still calls fsDoOneTimeExport()
+  // by name — keep it pointed at the real payment flow above.
+  global.fsDoOneTimeExport = global.fsInitiateOneTimeExport;
 
   // ── Wrap the export button to intercept Pro users ────────────────────────────
   function wrapExportButton() {
@@ -339,7 +402,9 @@
 
     var originalOnclick = btnExp.onclick;
 
-    // Store original so fsDoOneTimeExport() can call it from the upgrade modal
+    // Kept for pages that still reference window._fsOriginalExportFn directly.
+    // fsDoOneTimeExport() no longer calls this — it runs its own ₹199 charge
+    // via fsInitiateOneTimeExport() instead (see above).
     global._fsOriginalExportFn = originalOnclick;
 
     btnExp.onclick = function (e) {
@@ -363,20 +428,24 @@
   }
 
   // ── Detect and call the right export function for this tool ──────────────────
+  // Shared by the Pro path and the one-time-payment path so both actually
+  // trigger the tool's real export, regardless of which function name it uses.
+  function fsRunExportFn(tag) {
+    try {
+      if (typeof global.exportXL === 'function')                     { global.exportXL(); return; }
+      if (typeof global.generateAndDownloadExcel === 'function')     { global.generateAndDownloadExcel(tag + '_' + Date.now()); return; }
+      if (typeof global.generateExcel === 'function')                { global.generateExcel(tag + '_' + Date.now()); return; }
+      if (typeof global.downloadExcel === 'function')                { global.downloadExcel(); return; }
+      global.showToast('Export not ready. Please calculate first.', '#FF8A80');
+    } catch (e) {
+      console.error('[auth.js] Export error:', e);
+      global.showToast('Export failed. Please try again.', '#FF8A80');
+    }
+  }
+
   function fsCallToolExport() {
     global.showToast('&#10003; Downloading your Pro report…', '#5EC98A');
-    setTimeout(function () {
-      try {
-        if (typeof global.exportXL === 'function')                     { global.exportXL(); return; }
-        if (typeof global.generateAndDownloadExcel === 'function')     { global.generateAndDownloadExcel('PRO_' + Date.now()); return; }
-        if (typeof global.generateExcel === 'function')                { global.generateExcel('PRO_' + Date.now()); return; }
-        if (typeof global.downloadExcel === 'function')                { global.downloadExcel(); return; }
-        global.showToast('Export not ready. Please calculate first.', '#FF8A80');
-      } catch (e) {
-        console.error('[auth.js] Export error:', e);
-        global.showToast('Export failed. Please try again.', '#FF8A80');
-      }
-    }, 300);
+    setTimeout(function () { fsRunExportFn('PRO'); }, 300);
     if (typeof global.gaEvent === 'function') {
       global.gaEvent('excel_downloaded', { trigger: 'pro_subscription', page: location.pathname });
     }

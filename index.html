@@ -3,564 +3,534 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<meta name="author" content="Finosutra"/>
+<meta name="author" content="FinoSutra"/>
 <meta name="robots" content="index,follow"/>
 <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="finosutra.css?v=2"/>
+<style>
+/* Scroll-reveal — homepage only, additive classes so nothing shared is touched. */
+.fs-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(.2,.65,.3,1), transform 0.7s cubic-bezier(.2,.65,.3,1);
+}
+.fs-reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+.fs-reveal-group > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fs-reveal-group.is-visible > * { opacity: 1; transform: translateY(0); }
+.fs-reveal-group.is-visible > *:nth-child(1) { transition-delay: 0.00s; }
+.fs-reveal-group.is-visible > *:nth-child(2) { transition-delay: 0.08s; }
+.fs-reveal-group.is-visible > *:nth-child(3) { transition-delay: 0.16s; }
+.fs-reveal-group.is-visible > *:nth-child(4) { transition-delay: 0.24s; }
+.fs-reveal-group.is-visible > *:nth-child(5) { transition-delay: 0.32s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fs-reveal, .fs-reveal-group > * { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
+/* Hero entrance — runs once on page load, hero is always in the initial viewport
+   so this uses a plain CSS animation rather than the scroll-triggered .fs-reveal system. */
+@keyframes fsHeroUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fsHeroIn {
+  from { opacity: 0; transform: translateY(16px) translateX(10px); }
+  to   { opacity: 1; transform: translateY(0) translateX(0); }
+}
+.fs-hero-badge      { animation: fsHeroUp 0.6s cubic-bezier(.2,.65,.3,1) both; animation-delay: 0.05s; }
+.fs-hero h1          { animation: fsHeroUp 0.6s cubic-bezier(.2,.65,.3,1) both; animation-delay: 0.12s; }
+.fs-hero-left p       { animation: fsHeroUp 0.6s cubic-bezier(.2,.65,.3,1) both; animation-delay: 0.22s; }
+.fs-hero-btns        { animation: fsHeroUp 0.6s cubic-bezier(.2,.65,.3,1) both; animation-delay: 0.30s; }
+.fs-hero-capability  { animation: fsHeroUp 0.6s cubic-bezier(.2,.65,.3,1) both; animation-delay: 0.38s; }
+.fs-hero-right       { animation: fsHeroIn 0.7s cubic-bezier(.2,.65,.3,1) both; animation-delay: 0.28s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fs-hero-badge, .fs-hero h1, .fs-hero-left p, .fs-hero-btns, .fs-hero-capability, .fs-hero-right {
+    animation: none !important; opacity: 1 !important; transform: none !important;
+  }
+}
+</style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
-<title>Finosutra — IND AS 116 Lease Accounting & Finance Tools for Indian CAs</title>
+<title>FinoSutra — IND AS 116 Lease Accounting & Finance Tools for Indian CAs</title>
 <meta name="description" content="Free IND AS 116 lease accounting calculator, lease modification tool, IND AS 109 security deposit calculator and more. Audit-ready tools built for CAs and CFOs in India."/>
 <link rel="canonical" href="https://www.finosutra.com/"/>
 <meta property="og:type" content="website"/>
-<meta property="og:title" content="Finosutra — Finance on Autopilot"/>
-<meta property="og:description" content="Free finance tools for CAs, CFOs, Finance Teams in India. IND AS, Income Tax, Salary, GST calculators — Finance on Autopilot."/>
+<meta property="og:title" content="FinoSutra — Professional Finance Tools for Indian CAs"/>
+<meta property="og:description" content="Free finance tools for CAs, CFOs, Finance Teams in India. IND AS, Income Tax, GST calculators — audit-ready workpapers in minutes."/>
 <meta property="og:url" content="https://www.finosutra.com/"/>
 <meta property="og:image" content="https://www.finosutra.com/og-image.jpg"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="Finosutra — Finance on Autopilot"/>
+<meta name="twitter:title" content="FinoSutra — Professional Finance Tools for Indian CAs"/>
 <meta name="twitter:description" content="Free finance tools for CAs, CFOs, Finance Teams in India."/>
 <meta name="twitter:image" content="https://www.finosutra.com/og-image.jpg"/>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Organization","name":"Finosutra","url":"https://www.finosutra.com","logo":"https://www.finosutra.com/favicon.svg","description":"Finance automation tools for CAs, CFOs and finance teams in India.","email":"hello@finosutra.com","address":{"@type":"PostalAddress","addressLocality":"Mumbai","addressCountry":"IN"},"sameAs":["https://www.linkedin.com/company/finosutra07/"]}
+{"@context":"https://schema.org","@type":"Organization","name":"FinoSutra","url":"https://www.finosutra.com","logo":"https://www.finosutra.com/favicon.svg","description":"Finance automation tools for CAs, CFOs and finance teams in India.","email":"hello@finosutra.com","address":{"@type":"PostalAddress","addressLocality":"Mumbai","addressCountry":"IN"},"sameAs":["https://www.linkedin.com/company/finosutra07/"]}
 </script>
-<style>
-
-:root{--brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;--brand-mid:#C7D2FE;--text:#111827;--muted:#6B7280;--faint:#9CA3AF;--bg:#F7F8FF;--white:#FFFFFF;--border:rgba(99,102,241,0.12);--border-light:rgba(99,102,241,0.07);--radius:14px;--radius-sm:9px;--shadow:0 1px 3px rgba(0,0,0,0.04),0 6px 20px rgba(99,102,241,0.07);--shadow-md:0 4px 32px rgba(99,102,241,0.11),0 1px 4px rgba(0,0,0,0.04);}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;}
-nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border-light);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 var(--border-light),0 4px 20px rgba(99,102,241,0.05);}
-.nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
-.nav-logo{display:flex;align-items:center;text-decoration:none;}
-.nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
-.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;padding:7px 12px;border-radius:8px;transition:color .15s,background .15s;white-space:nowrap;}
-.nav-links a:hover,.nav-links a.active{color:var(--text);background:var(--brand-light);}
-.nav-actions{display:flex;align-items:center;gap:8px;}
-.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;font-family:'Inter',sans-serif;transition:all .15s;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;border:none;box-shadow:0 3px 12px rgba(99,102,241,0.3);}
-.nav-btn:hover{background:linear-gradient(135deg,#4F46E5,#7C3AED);transform:translateY(-1px);box-shadow:0 5px 18px rgba(99,102,241,0.4);}
-.nav-toggle{display:none;background:none;border:none;font-size:20px;color:var(--text);cursor:pointer;padding:4px;}
-@media(max-width:900px){.nav-links{display:none;}.nav-actions{display:none;}.nav-toggle{display:block;}.nav-links.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid var(--border-light);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;max-height:80vh;overflow-y:auto;}}
-@media(max-width:768px){nav{padding:0 16px;}}
-
-/* HERO */
-.hero-section{background:#001A3D;border-bottom:none;overflow:hidden;}
-.hero{padding:80px 32px 72px;max-width:1160px;margin:0 auto;text-align:center;position:relative;}
-.hero::before{content:'';position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:800px;height:400px;background:radial-gradient(ellipse at 50% 30%,rgba(99,102,241,0.09) 0%,transparent 70%);pointer-events:none;}
-.hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,0.9);border:1px solid var(--brand-mid);color:var(--brand-dark);font-size:12px;font-weight:600;padding:7px 16px;border-radius:100px;margin-bottom:26px;box-shadow:0 2px 8px rgba(99,102,241,0.1);}
-.hero h1{font-size:52px;font-weight:800;line-height:1.1;letter-spacing:-.8px;color:#fff;max-width:720px;margin:0 auto 20px;}
-.hero h1 em{font-style:normal;background:linear-gradient(135deg,#60A5FA,#93C5FD);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.hero p{font-size:17px;color:#BAD0F8;max-width:520px;margin:0 auto 32px;line-height:1.7;}
-.hero-btns{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;}
-.btn-primary{display:inline-flex;align-items:center;gap:6px;padding:13px 26px;border-radius:var(--radius-sm);font-size:15px;font-weight:700;cursor:pointer;text-decoration:none;font-family:'Inter',sans-serif;transition:all .15s;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;border:none;box-shadow:0 4px 14px rgba(99,102,241,0.35);}
-.btn-primary:hover{background:linear-gradient(135deg,#4F46E5,#7C3AED);transform:translateY(-2px);box-shadow:0 8px 24px rgba(99,102,241,0.45);}
-.btn-ghost{display:inline-flex;align-items:center;gap:6px;padding:13px 22px;border-radius:var(--radius-sm);font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;font-family:'Inter',sans-serif;transition:all .15s;background:var(--white);color:var(--text);border:1.5px solid var(--border);}
-.btn-ghost:hover{border-color:var(--brand);color:var(--brand);}
-
-/* SECTION */
-.section{padding:72px 32px;}
-.section-alt{background:var(--white);}
-.wrap{max-width:1160px;margin:0 auto;}
-.section-ey{font-size:12px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;}
-.section-h{font-size:34px;font-weight:800;letter-spacing:-.5px;margin-bottom:12px;}
-.section-desc{font-size:16px;color:var(--muted);max-width:520px;line-height:1.7;}
-.section-hd{margin-bottom:48px;}
-.section-hd.center{text-align:center;}
-.section-hd.center .section-desc{margin:0 auto;}
-
-/* CATEGORY GRID */
-.cats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
-.cat-card{background:var(--white);border:1px solid var(--border-light);border-radius:var(--radius);padding:28px 24px;text-decoration:none;display:flex;flex-direction:column;transition:all .2s;position:relative;overflow:hidden;box-shadow:var(--shadow);}
-.cat-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#6366F1,#8B5CF6);opacity:0;transition:opacity .2s;}
-.cat-card:hover{border-color:rgba(99,102,241,0.3);box-shadow:var(--shadow-md);transform:translateY(-3px);}
-.cat-card:hover::after{opacity:1;}
-.cat-card.featured{border:1.5px solid rgba(99,102,241,0.3);box-shadow:0 0 0 3px rgba(99,102,241,0.05),var(--shadow-md);}
-.cat-card.featured::after{opacity:1;}
-.cat-icon{width:46px;height:46px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px;}
-.cat-card h3{font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px;}
-.cat-card p{font-size:13px;color:var(--muted);line-height:1.6;flex:1;margin-bottom:14px;}
-.cat-meta{display:flex;align-items:center;justify-content:space-between;}
-.cat-count{font-size:11px;font-weight:600;color:var(--brand);}
-.cat-arr{font-size:12px;font-weight:700;color:var(--brand);}
-.hot-badge{position:absolute;top:14px;right:14px;font-size:10px;font-weight:700;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;padding:3px 9px;border-radius:20px;box-shadow:0 2px 6px rgba(99,102,241,0.3);}
-
-/* PRICING */
-.pricing-strip{background:linear-gradient(135deg,#EEF2FF,#F5F3FF);border:1px solid rgba(99,102,241,0.15);border-radius:var(--radius);padding:32px 36px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;}
-.price-cards{display:flex;gap:14px;}
-.price-card{background:var(--white);border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;text-align:center;min-width:100px;}
-.price-card.pop{border-color:rgba(99,102,241,0.35);background:linear-gradient(145deg,#FAFBFF,#F3F0FF);box-shadow:0 0 0 3px rgba(99,102,241,0.06),var(--shadow);}
-.price-amount{font-size:32px;font-weight:800;color:var(--text);letter-spacing:-1px;}
-.price-amount sup{font-size:16px;vertical-align:super;font-weight:700;}
-.price-name{font-size:11px;color:var(--faint);font-weight:600;margin-top:2px;}
-
-/* CONTACT */
-.contact-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:48px;max-width:960px;margin:0 auto;align-items:start;}
-.contact-item{display:flex;align-items:flex-start;gap:14px;margin-bottom:22px;}
-.contact-icon{width:40px;height:40px;background:var(--brand-light);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--brand);font-size:16px;flex-shrink:0;}
-.contact-label{font-size:10px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;}
-.contact-value{font-size:14px;font-weight:600;color:var(--text);}
-.contact-value a{color:var(--brand);text-decoration:none;}
-.contact-form-card{background:var(--white);border:1px solid var(--border-light);border-radius:16px;padding:32px;box-shadow:var(--shadow-md);}
-.form-field{margin-bottom:14px;}
-.form-field label{display:block;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;}
-.form-field input,.form-field select,.form-field textarea{width:100%;padding:10px 13px;border:1.5px solid #E5E7EB;border-radius:var(--radius-sm);font-size:14px;font-family:'Inter',sans-serif;color:var(--text);outline:none;transition:border-color .15s;background:#F9FAFB;}
-.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--brand);background:#fff;box-shadow:0 0 0 3px rgba(99,102,241,0.1);}
-.form-field textarea{resize:vertical;min-height:90px;}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-
-@media(max-width:1024px){.cats-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:768px){.hero{padding:56px 20px;} .hero h1{font-size:34px;} .section{padding:52px 20px;} .cats-grid{grid-template-columns:1fr 1fr;} .contact-grid{grid-template-columns:1fr;} .form-row{grid-template-columns:1fr;} .hero-btns{flex-direction:column;align-items:center;} .pricing-strip{flex-direction:column;align-items:flex-start;}}
-@media(max-width:480px){.cats-grid{grid-template-columns:1fr;}}
-@media(max-width:600px){.indas-models-grid{grid-template-columns:1fr !important;}}
-.pricing-plans-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px;}
-.footer-cols-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:32px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,0.07);margin-bottom:28px;}
-@media(max-width:768px){
-  .pricing-plans-grid{grid-template-columns:1fr;}
-  .footer-cols-grid{grid-template-columns:1fr 1fr;gap:24px;}
-  .footer-cols-grid > div:first-child{grid-column:span 2;}
-}
-@media(max-width:480px){
-  .footer-cols-grid{grid-template-columns:1fr;}
-}
-</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="auth.js"></script>
+<script src="auth.js?v=2"></script>
 </head>
 <body>
 
 <!-- ANNOUNCEMENT BAR -->
-<div id="announcementBar" style="background:#002244;color:#BAD0F8;text-align:center;padding:9px 48px;font-size:13px;font-weight:500;position:relative;z-index:1001;">
+<div class="fs-announce" id="announcementBar">
   <i class="fa-solid fa-layer-group" style="margin-right:6px;color:#60A5FA;"></i>
-  IND AS 116 Lease Workspace &mdash; manage all leases, exports and working papers in one place.&nbsp;
-  <a href="app.html" style="color:#fff;font-weight:700;text-decoration:underline;text-underline-offset:3px;margin:0 4px;">Open free &rarr;</a>
-  <button onclick="document.getElementById('announcementBar').style.display='none'" aria-label="Dismiss" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.1);border:none;color:#BAD0F8;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;">&times;</button>
+  IND AS 116 Lease Workspace &mdash; manage all leases, exports and working papers in one place.
+  <a href="app.html">Open free &rarr;</a>
+  <button class="fs-announce-close" onclick="document.getElementById('announcementBar').style.display='none'" aria-label="Dismiss">&times;</button>
 </div>
 
-<nav>
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
-      <img loading="eager" src="logo.png" alt="Finosutra" style="height:52px;width:auto;display:block;">
-    </a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="indas-tools.html">IND AS</a></li>
-      <li><a href="gst-tools.html">GST</a></li>
-      <li><a href="income-tax-hub.html">Income Tax</a></li>
-      <li><a href="templates.html">Templates</a></li>
-      <li><a href="blog.html">Blog</a></li>
-      <li><a href="#pricing">Pricing</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li id="navAuthMobile"></li>
-    </ul>
-    <div class="nav-actions" id="navActions">
-      <a href="app.html" class="nav-btn"><i class="fa-solid fa-rocket"></i> Launch Lease App</a>
-    </div>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><i class="fa-solid fa-bars"></i></button>
-  </div>
-</nav>
+<!-- NAV -->
+<div id="fs-nav"></div>
 
 <!-- HERO -->
-<div class="hero-section">
-  <div class="hero">
-    <div class="hero-badge" style="background:rgba(255,255,255,0.08);border:1px solid rgba(186,208,248,0.25);color:#BAD0F8;"><i class="fa-solid fa-shield-halved" style="color:#60A5FA;"></i> Built for Indian CAs &nbsp;&middot;&nbsp; IND AS 116 compliant &nbsp;&middot;&nbsp; Free to start</div>
-    <h1>The lease accounting tool<br><em>Indian CAs actually use</em></h1>
-    <p>Calculate, journal, export and disclose — IND AS 116 lease accounting from Day 1 to disclosure note, in minutes.</p>
-    <div class="hero-btns">
-      <a href="app.html" class="btn-primary" style="background:linear-gradient(135deg,#0052CC,#0065FF);box-shadow:0 4px 14px rgba(0,82,204,0.45);"><i class="fa-solid fa-calculator"></i>&nbsp; Open Lease Calculator — free</a>
-      <a href="#tools" class="btn-ghost" style="background:rgba(255,255,255,0.07);border-color:rgba(186,208,248,0.25);color:#BAD0F8;">Explore all tools &darr;</a>
+<section class="fs-hero">
+  <div class="fs-hero-inner">
+    <div class="fs-hero-left">
+      <div class="fs-hero-badge">Finance tools for CA &amp; finance professionals</div>
+      <h1>Professional finance workings.<br>Without the spreadsheet grind.</h1>
+      <p>Calculate, review, document and export accounting and finance workings — with purpose-built tools for IND AS, IFRS, GST and financial reporting.</p>
+      <div class="fs-hero-btns">
+        <a href="#tools" class="fs-btn fs-btn-primary">Explore Tools <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="app.html" class="fs-btn fs-btn-secondary">Try IND AS 116 Free</a>
+      </div>
+      <div class="fs-hero-capability">IND AS<span class="sep">&middot;</span>IFRS<span class="sep">&middot;</span>GST<span class="sep">&middot;</span>Financial Reporting</div>
     </div>
-  </div>
-</div>
 
-<!-- TRUST STRIP -->
-<div style="background:#002244;border-top:1px solid rgba(186,208,248,0.12);padding:18px 32px;">
-  <div style="max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap;">
-    <div style="display:flex;align-items:center;gap:9px;color:#BAD0F8;font-size:13px;font-weight:600;font-family:'Inter',sans-serif;">
-      <i class="fa-solid fa-file-circle-check" style="color:#60A5FA;font-size:16px;"></i> 500+ leases calculated
-    </div>
-    <div style="width:1px;height:18px;background:rgba(186,208,248,0.2);"></div>
-    <div style="display:flex;align-items:center;gap:9px;color:#BAD0F8;font-size:13px;font-weight:600;font-family:'Inter',sans-serif;">
-      <i class="fa-solid fa-table" style="color:#60A5FA;font-size:16px;"></i> 200+ Excel exports
-    </div>
-    <div style="width:1px;height:18px;background:rgba(186,208,248,0.2);"></div>
-    <div style="display:flex;align-items:center;gap:9px;color:#BAD0F8;font-size:13px;font-weight:600;font-family:'Inter',sans-serif;">
-      <i class="fa-solid fa-shield-halved" style="color:#60A5FA;font-size:16px;"></i> IND AS 116 compliant
-    </div>
-    <div style="width:1px;height:18px;background:rgba(186,208,248,0.2);"></div>
-    <div style="display:flex;align-items:center;gap:9px;color:#BAD0F8;font-size:13px;font-weight:600;font-family:'Inter',sans-serif;">
-      <i class="fa-solid fa-users" style="color:#60A5FA;font-size:16px;"></i> Used by CAs across India
-    </div>
-  </div>
-</div>
+    <div class="fs-hero-right">
+      <div class="fs-preview" role="img" aria-label="Illustrative preview of the FinoSutra workspace interface, showing sample data">
+        <div class="fs-preview-hd">
+          <div class="fs-preview-brand"><img src="logo.svg" alt="FinoSutra"/></div>
+          <div class="fs-preview-tabs" aria-hidden="true">
+            <span class="active">Overview</span><span>Workings</span><span>Tools</span><span>Exports</span>
+          </div>
+        </div>
+        <div class="fs-preview-body" aria-hidden="true">
+          <div class="fs-preview-greet">
+            <div class="fs-preview-greet-sm">Good afternoon</div>
+            <div class="fs-preview-greet-row">
+              <div class="fs-preview-greet-lg">Your finance workspace</div>
+              <span class="fs-preview-demo-tag">Sample workspace</span>
+            </div>
+          </div>
 
-<!-- START HERE STRIP -->
-<section style="background:#fff;border-bottom:1px solid rgba(99,102,241,0.08);padding:28px 32px;">
-  <div style="max-width:1160px;margin:0 auto;">
-    <div style="font-size:11px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:.1em;text-align:center;margin-bottom:16px;font-family:'Inter',sans-serif;">What do you need today?</div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;" id="startHereGrid">
+          <div class="fs-preview-metrics">
+            <div class="fs-preview-metric"><div class="v" data-count="12">0</div><div class="l">Active workings</div></div>
+            <div class="fs-preview-metric"><div class="v" data-count="8">0</div><div class="l">Clients</div></div>
+            <div class="fs-preview-metric"><div class="v" data-count="18">0</div><div class="l">Workpapers</div></div>
+          </div>
 
-      <a href="indas116.html" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;border:1.5px solid rgba(99,102,241,0.18);background:#FAFBFF;text-decoration:none;transition:all .15s;" onmouseover="this.style.borderColor='#6366F1';this.style.background='#EEF2FF'" onmouseout="this.style.borderColor='rgba(99,102,241,0.18)';this.style.background='#FAFBFF'">
-        <div style="width:36px;height:36px;border-radius:9px;background:#EEF2FF;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <i class="fa-solid fa-building" style="color:#4F46E5;font-size:15px;"></i>
-        </div>
-        <div>
-          <div style="font-size:13px;font-weight:700;color:#111827;font-family:'Inter',sans-serif;">IND AS 116</div>
-          <div style="font-size:11px;color:#6B7280;font-family:'Inter',sans-serif;">Lease accounting</div>
-        </div>
-      </a>
+          <div class="fs-preview-calc">
+            <div class="fs-preview-calc-hd">
+              <span>IND AS 116 &middot; Lease Accounting</span>
+              <span class="fs-preview-calc-live">Calculated instantly</span>
+            </div>
+            <div class="fs-preview-calc-row primary"><span>Lease liability</span><span data-count="8432450" data-prefix="&#8377;">&#8377;0</span></div>
+            <div class="fs-preview-calc-row"><span>ROU asset</span><span>&#8377;82,10,320</span></div>
+            <div class="fs-preview-calc-row"><span>Finance cost</span><span>&#8377;8,21,400</span></div>
+            <a href="indas116.html" class="fs-preview-calc-link">Try this calculation <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
 
-      <a href="security-deposit.html" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;border:1.5px solid rgba(99,102,241,0.18);background:#FAFBFF;text-decoration:none;transition:all .15s;" onmouseover="this.style.borderColor='#6366F1';this.style.background='#EEF2FF'" onmouseout="this.style.borderColor='rgba(99,102,241,0.18)';this.style.background='#FAFBFF'">
-        <div style="width:36px;height:36px;border-radius:9px;background:#EEF2FF;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <i class="fa-solid fa-lock" style="color:#4F46E5;font-size:15px;"></i>
-        </div>
-        <div>
-          <div style="font-size:13px;font-weight:700;color:#111827;font-family:'Inter',sans-serif;">Security Deposit</div>
-          <div style="font-size:11px;color:#6B7280;font-family:'Inter',sans-serif;">IND AS 109 PV calc</div>
-        </div>
-      </a>
+          <div class="fs-preview-sec-title">Recent work</div>
+          <div class="fs-preview-recent">
+            <div class="fs-preview-row"><span class="c">ABC Pvt Ltd</span><span class="t">IND AS 116</span><span class="a">Open &rarr;</span></div>
+            <div class="fs-preview-row"><span class="c">XYZ Pvt Ltd</span><span class="t">Security Deposit</span><span class="a">Open &rarr;</span></div>
+            <div class="fs-preview-row"><span class="c">PQR Ltd</span><span class="t">EIR &amp; Amortised Cost</span><span class="a">Open &rarr;</span></div>
+          </div>
 
-      <a href="gst-calculator.html" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;border:1.5px solid rgba(99,102,241,0.18);background:#FAFBFF;text-decoration:none;transition:all .15s;" onmouseover="this.style.borderColor='#6366F1';this.style.background='#EEF2FF'" onmouseout="this.style.borderColor='rgba(99,102,241,0.18)';this.style.background='#FAFBFF'">
-        <div style="width:36px;height:36px;border-radius:9px;background:#EEF2FF;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <i class="fa-solid fa-receipt" style="color:#4F46E5;font-size:15px;"></i>
+          <div class="fs-preview-sec-title">Popular tools</div>
+          <div class="fs-preview-tool-grid">
+            <div class="fs-preview-tool"><i class="fa-solid fa-building"></i>IND AS 116</div>
+            <div class="fs-preview-tool"><i class="fa-solid fa-percent"></i>IND AS 109</div>
+            <div class="fs-preview-tool"><i class="fa-solid fa-lock"></i>Security Deposit</div>
+          </div>
         </div>
-        <div>
-          <div style="font-size:13px;font-weight:700;color:#111827;font-family:'Inter',sans-serif;">GST Calculator</div>
-          <div style="font-size:11px;color:#6B7280;font-family:'Inter',sans-serif;">GST inclusive / exclusive</div>
-        </div>
-      </a>
-
-      <a href="advance-tax-calculator.html" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;border:1.5px solid rgba(99,102,241,0.18);background:#FAFBFF;text-decoration:none;transition:all .15s;" onmouseover="this.style.borderColor='#6366F1';this.style.background='#EEF2FF'" onmouseout="this.style.borderColor='rgba(99,102,241,0.18)';this.style.background='#FAFBFF'">
-        <div style="width:36px;height:36px;border-radius:9px;background:#EEF2FF;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <i class="fa-solid fa-indian-rupee-sign" style="color:#4F46E5;font-size:15px;"></i>
-        </div>
-        <div>
-          <div style="font-size:13px;font-weight:700;color:#111827;font-family:'Inter',sans-serif;">Advance Tax</div>
-          <div style="font-size:11px;color:#6B7280;font-family:'Inter',sans-serif;">234B / 234C calculator</div>
-        </div>
-      </a>
-
+      </div>
     </div>
   </div>
 </section>
-<style>
-@media(max-width:768px){#startHereGrid{grid-template-columns:1fr 1fr !important;}}
-@media(max-width:480px){#startHereGrid{grid-template-columns:1fr !important;}}
-</style>
+
+<!-- TRUST STRIP -->
+<div class="fs-trust fs-reveal">
+  <div class="fs-trust-inner">
+    <div class="fs-trust-item"><i class="fa-solid fa-file-circle-check"></i> Lease accounting, simplified</div>
+    <div class="fs-trust-sep"></div>
+    <div class="fs-trust-item"><i class="fa-solid fa-table"></i> Audit-ready Excel exports</div>
+    <div class="fs-trust-sep"></div>
+    <div class="fs-trust-item"><i class="fa-solid fa-shield-halved"></i> IND AS 116 compliant</div>
+    <div class="fs-trust-sep"></div>
+    <div class="fs-trust-item"><i class="fa-solid fa-users"></i> Used by CAs across India</div>
+  </div>
+</div>
+
+<!-- EVERYTHING YOU NEED -->
+<section class="fs-section">
+  <div class="fs-wrap">
+    <div class="fs-section-hd center fs-reveal">
+      <h2>Everything you need to finish the working</h2>
+      <p class="fs-section-desc">From calculation to review-ready workpapers, FinoSutra brings the finance workflow into one place.</p>
+    </div>
+    <div class="fs-flow-grid fs-reveal-group">
+      <div class="fs-flow-card">
+        <div class="fs-flow-icon"><i class="fa-solid fa-calculator"></i></div>
+        <h3>Calculate</h3>
+        <p>Run structured accounting and finance calculations.</p>
+      </div>
+      <div class="fs-flow-card">
+        <div class="fs-flow-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+        <h3>Analyse</h3>
+        <p>Understand the financial and accounting impact.</p>
+      </div>
+      <div class="fs-flow-card">
+        <div class="fs-flow-icon"><i class="fa-solid fa-file-lines"></i></div>
+        <h3>Document</h3>
+        <p>Create professional workings and supporting documentation.</p>
+      </div>
+      <div class="fs-flow-card">
+        <div class="fs-flow-icon"><i class="fa-solid fa-file-export"></i></div>
+        <h3>Export</h3>
+        <p>Generate Excel-ready workpapers and reports.</p>
+      </div>
+    </div>
+    <div class="fs-flow-path" aria-hidden="true">
+      <span class="fs-flow-step">Calculate</span><span class="fs-flow-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+      <span class="fs-flow-step">Analyse</span><span class="fs-flow-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+      <span class="fs-flow-step">Document</span><span class="fs-flow-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+      <span class="fs-flow-step">Export</span>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK LINKS -->
+<section class="fs-section-alt">
+  <div class="fs-wrap" style="padding-top:28px;padding-bottom:28px;">
+    <div class="fs-eyebrow fs-reveal" style="text-align:center;margin-bottom:16px;">What do you need today?</div>
+    <div class="fs-quicklinks fs-reveal-group">
+      <a href="indas116.html" class="fs-quicklink">
+        <div class="fs-quicklink-icon"><i class="fa-solid fa-building"></i></div>
+        <div><div class="fs-quicklink-title">IND AS 116</div><div class="fs-quicklink-sub">Lease accounting</div></div>
+      </a>
+      <a href="security-deposit.html" class="fs-quicklink">
+        <div class="fs-quicklink-icon"><i class="fa-solid fa-lock"></i></div>
+        <div><div class="fs-quicklink-title">Security Deposit</div><div class="fs-quicklink-sub">IND AS 109 PV calc</div></div>
+      </a>
+      <a href="gst-calculator.html" class="fs-quicklink">
+        <div class="fs-quicklink-icon"><i class="fa-solid fa-receipt"></i></div>
+        <div><div class="fs-quicklink-title">GST Calculator</div><div class="fs-quicklink-sub">GST inclusive / exclusive</div></div>
+      </a>
+      <a href="advance-tax-calculator.html" class="fs-quicklink">
+        <div class="fs-quicklink-icon"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+        <div><div class="fs-quicklink-title">Advance Tax</div><div class="fs-quicklink-sub">234B / 234C calculator</div></div>
+      </a>
+    </div>
+  </div>
+</section>
 
 <!-- IND AS 116 PRODUCT SHOWCASE -->
-<section style="padding:60px 20px 52px;background:#fff;">
-  <div style="max-width:1020px;margin:0 auto;">
-    <div style="text-align:center;margin-bottom:40px;">
-      <div style="font-size:11px;font-weight:700;color:#6366F1;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;font-family:'Inter',sans-serif;">Featured Tools</div>
-      <h2 style="font-size:26px;font-weight:800;color:#1E1B4B;margin:0 0 10px;font-family:'Inter',sans-serif;letter-spacing:-0.4px;">IND AS 116 / IFRS 16 Calculators</h2>
-      <p style="font-size:15px;color:#6B7280;max-width:480px;margin:0 auto;line-height:1.6;font-family:'Inter',sans-serif;">Two models, every lease type — from fixed monthly rents to escalating rent clauses.</p>
+<section class="fs-section fs-section-alt">
+  <div class="fs-wrap" style="max-width:1020px;">
+    <div class="fs-section-hd center fs-reveal">
+      <span class="fs-eyebrow">Featured Tools</span>
+      <h2>IND AS 116 / IFRS 16 Calculators</h2>
+      <p class="fs-section-desc">Two models, every lease type — from fixed monthly rents to escalating rent clauses.</p>
     </div>
 
-    <div class="indas-models-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
-
-      <!-- Model 1 -->
-      <a href="indas116.html" style="display:block;text-decoration:none;background:linear-gradient(145deg,#FAFBFF,#F3F0FF);border:1.5px solid rgba(99,102,241,0.2);border-radius:18px;padding:28px 28px 24px;transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 36px rgba(99,102,241,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-        <div style="position:absolute;top:16px;right:16px;font-size:10px;font-weight:700;background:#6366F1;color:#fff;padding:3px 10px;border-radius:20px;letter-spacing:.04em;font-family:'Inter',sans-serif;">MOST POPULAR</div>
-        <div style="width:44px;height:44px;background:#EEF2FF;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-          <i class="fa-solid fa-file-invoice" style="color:#4F46E5;font-size:18px;"></i>
+    <div class="fs-showcase fs-reveal-group">
+      <a href="indas116.html" class="fs-showcase-card fs-showcase-card--blue" style="position:relative;">
+        <span class="fs-badge fs-badge-pro" style="position:absolute;top:16px;right:16px;">Most popular</span>
+        <div class="fs-showcase-icon" style="background:var(--fs-blue-lt);color:var(--fs-blue-dk);"><i class="fa-solid fa-file-invoice"></i></div>
+        <div class="fs-eyebrow">Standard Lease</div>
+        <h3>Fixed Rent Calculator</h3>
+        <p>Fixed monthly payments &middot; ROU asset &middot; Full amortisation schedule &middot; Journal entries every period &middot; Annual FY rollforward &middot; Balance sheet snapshot</p>
+        <div class="fs-showcase-checks">
+          <span><i class="fa-solid fa-check" style="color:var(--fs-blue);"></i>ROU asset &amp; lease liability</span>
+          <span><i class="fa-solid fa-check" style="color:var(--fs-blue);"></i>IND AS 116 &amp; IFRS 16 compliant</span>
+          <span><i class="fa-solid fa-check" style="color:var(--fs-blue);"></i>Audit-ready Excel report</span>
         </div>
-        <div style="font-size:11px;font-weight:700;color:#6366F1;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;font-family:'Inter',sans-serif;">Model 1</div>
-        <h3 style="font-size:18px;font-weight:800;color:#1E1B4B;margin:0 0 8px;font-family:'Inter',sans-serif;letter-spacing:-0.3px;">Standard Lease</h3>
-        <p style="font-size:13px;color:#6B7280;line-height:1.6;margin:0 0 18px;font-family:'Inter',sans-serif;">Fixed monthly payments · ROU asset · Full amortisation schedule · Journal entries every period · Annual FY rollforward · Balance sheet snapshot</p>
-        <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:20px;">
-          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#374151;font-family:'Inter',sans-serif;"><i class="fa-solid fa-check" style="color:#6366F1;font-size:11px;width:14px;"></i>ROU asset &amp; lease liability</div>
-          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#374151;font-family:'Inter',sans-serif;"><i class="fa-solid fa-check" style="color:#6366F1;font-size:11px;width:14px;"></i>IND AS 116 &amp; IFRS 16 compliant</div>
-          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#374151;font-family:'Inter',sans-serif;"><i class="fa-solid fa-check" style="color:#6366F1;font-size:11px;width:14px;"></i>Audit-ready Excel report</div>
-        </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;">
-          <div style="font-size:12px;color:#6366F1;font-weight:700;font-family:'Inter',sans-serif;">Free &nbsp;·&nbsp; Excel ₹199</div>
-          <span style="font-size:13px;font-weight:700;color:#4F46E5;font-family:'Inter',sans-serif;">Open &rarr;</span>
+        <div class="fs-showcase-foot">
+          <span style="color:var(--fs-blue);">Free &middot; Excel ₹199</span>
+          <span style="color:var(--fs-blue-dk);">Open &rarr;</span>
         </div>
       </a>
 
-      <!-- Model 3 — Escalation Rents -->
-      <a href="indas116-model3.html" style="display:block;text-decoration:none;background:linear-gradient(145deg,#FFFDF5,#FEF3C7);border:1.5px solid rgba(180,131,9,0.2);border-radius:18px;padding:28px 28px 24px;transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 36px rgba(180,131,9,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-        <div style="position:absolute;top:16px;right:16px;font-size:10px;font-weight:700;background:#D97706;color:#fff;padding:3px 10px;border-radius:20px;letter-spacing:.04em;font-family:'Inter',sans-serif;">NEW</div>
-        <div style="width:44px;height:44px;background:#FEF3C7;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-          <i class="fa-solid fa-chart-line" style="color:#B45309;font-size:18px;"></i>
+      <a href="indas116-model3.html" class="fs-showcase-card fs-showcase-card--amber">
+        <span class="fs-badge fs-badge-new" style="position:absolute;top:16px;right:16px;">New</span>
+        <div class="fs-showcase-icon" style="background:#FEF3C7;color:#B45309;"><i class="fa-solid fa-chart-line"></i></div>
+        <div class="fs-eyebrow" style="color:#B45309;">Escalation Rents</div>
+        <h3>Step-up Lease Calculator</h3>
+        <p>Step-up / escalating lease payments &middot; Handles fixed % hikes at any interval &middot; Accurate PV of all future rents &middot; Same schedule, JEs &amp; balance sheet</p>
+        <div class="fs-showcase-checks">
+          <span><i class="fa-solid fa-check" style="color:#D97706;"></i>Escalation % &amp; interval inputs</span>
+          <span><i class="fa-solid fa-check" style="color:#D97706;"></i>Full period-by-period projections</span>
+          <span><i class="fa-solid fa-check" style="color:#D97706;"></i>IND AS 116 &amp; IFRS 16 compliant</span>
         </div>
-        <div style="font-size:11px;font-weight:700;color:#B45309;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;font-family:'Inter',sans-serif;">Model 3</div>
-        <h3 style="font-size:18px;font-weight:800;color:#1E1B4B;margin:0 0 8px;font-family:'Inter',sans-serif;letter-spacing:-0.3px;">Escalation Rents</h3>
-        <p style="font-size:13px;color:#6B7280;line-height:1.6;margin:0 0 18px;font-family:'Inter',sans-serif;">Step-up / escalating lease payments · Handles fixed % hikes at any interval · Accurate PV of all future rents · Same schedule, JEs &amp; balance sheet</p>
-        <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:20px;">
-          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#374151;font-family:'Inter',sans-serif;"><i class="fa-solid fa-check" style="color:#D97706;font-size:11px;width:14px;"></i>Escalation % &amp; interval inputs</div>
-          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#374151;font-family:'Inter',sans-serif;"><i class="fa-solid fa-check" style="color:#D97706;font-size:11px;width:14px;"></i>Full period-by-period projections</div>
-          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#374151;font-family:'Inter',sans-serif;"><i class="fa-solid fa-check" style="color:#D97706;font-size:11px;width:14px;"></i>IND AS 116 &amp; IFRS 16 compliant</div>
-        </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;">
-          <div style="font-size:12px;color:#B45309;font-weight:700;font-family:'Inter',sans-serif;">Free &nbsp;·&nbsp; Excel ₹199</div>
-          <span style="font-size:13px;font-weight:700;color:#B45309;font-family:'Inter',sans-serif;">Open &rarr;</span>
+        <div class="fs-showcase-foot">
+          <span style="color:#B45309;">Free &middot; Excel ₹199</span>
+          <span style="color:#B45309;">Open &rarr;</span>
         </div>
       </a>
-
     </div>
 
-    <!-- Bottom note -->
-    <p style="text-align:center;font-size:12px;color:#9CA3AF;margin-top:20px;font-family:'Inter',sans-serif;">Both tools are free to use &nbsp;·&nbsp; Export audit-ready Excel for ₹199 &nbsp;·&nbsp; <a href="#pricing" style="color:#6366F1;text-decoration:none;font-weight:600;">Pro subscribers export free ↗</a></p>
+    <p style="text-align:center;font-size:12px;color:var(--fs-faint);margin-top:20px;">Both tools are free to use &middot; Export audit-ready Excel for ₹199 &middot; <a href="#pricing" style="font-weight:600;">Pro subscribers export free &nearr;</a></p>
   </div>
 </section>
 
 <!-- CATEGORY GRID -->
-<section class="section section-alt" id="tools">
-  <div class="wrap">
-    <div class="section-hd center">
-      <div class="section-ey">All categories</div>
-      <h2 class="section-h">Choose your area</h2>
-      <p class="section-desc">Each category has dedicated tools — live now and coming soon. Click to explore.</p>
+<section class="fs-section" id="tools">
+  <div class="fs-wrap">
+    <div class="fs-section-hd center fs-reveal">
+      <span class="fs-eyebrow">All categories</span>
+      <h2>Choose your area</h2>
+      <p class="fs-section-desc">Each category has dedicated tools — live now and coming soon. Click to explore.</p>
     </div>
 
-    <div class="cats-grid">
-
-      <a href="indas-tools.html" class="cat-card featured">
-        <div class="hot-badge">6 live tools</div>
-        <div class="cat-icon" style="background:#EEF2FF;color:#4F46E5;"><i class="fa-solid fa-file-contract"></i></div>
+    <div class="fs-grid-3 fs-reveal-group">
+      <a href="indas-tools.html" class="fs-cat-card featured" style="position:relative;">
+        <span class="fs-hot-badge">6 live tools</span>
+        <div class="fs-cat-icon" style="background:var(--fs-blue-lt);color:var(--fs-blue-dk);"><i class="fa-solid fa-file-contract"></i></div>
         <h3>IND AS Tools</h3>
-        <p>IND AS 116 lease accounting (Model 1: standard, Model 2: modification, Model 3: escalation rents), security deposits, fixed asset register — IND AS 116, 109 and 16 compliant.</p>
-        <div class="cat-meta">
-          <span class="cat-count">6 live &middot; 2 coming soon</span>
-          <span class="cat-arr">Explore &rarr;</span>
+        <p>IND AS 116 lease accounting (standard, modification, escalation rents), security deposits, fixed asset register — IND AS 116, 109 and 16 compliant.</p>
+        <div class="fs-cat-meta">
+          <span class="fs-cat-count">6 live &middot; 2 coming soon</span>
+          <span class="fs-cat-arr">Explore &rarr;</span>
         </div>
       </a>
 
-      <a href="gst-tools.html" class="cat-card">
-        <div class="cat-icon" style="background:#F0FDF4;color:#15803D;"><i class="fa-solid fa-receipt"></i></div>
+      <a href="gst-tools.html" class="fs-cat-card">
+        <div class="fs-cat-icon" style="background:#F0FDF4;color:#15803D;"><i class="fa-solid fa-receipt"></i></div>
         <h3>GST Tools</h3>
         <p>GST calculator with CGST/SGST/IGST split, and GST reconciliation automation coming soon.</p>
-        <div class="cat-meta">
-          <span class="cat-count">1 live &middot; 1 coming soon</span>
-          <span class="cat-arr">Explore &rarr;</span>
+        <div class="fs-cat-meta">
+          <span class="fs-cat-count">1 live &middot; 1 coming soon</span>
+          <span class="fs-cat-arr">Explore &rarr;</span>
         </div>
       </a>
 
-      <a href="income-tax-hub.html" class="cat-card">
-        <div class="cat-icon" style="background:#FEF9C3;color:#A16207;"><i class="fa-solid fa-calculator"></i></div>
+      <a href="income-tax-hub.html" class="fs-cat-card">
+        <div class="fs-cat-icon" style="background:#FEF9C3;color:#A16207;"><i class="fa-solid fa-calculator"></i></div>
         <h3>Income Tax</h3>
         <p>Income tax, capital gains, advance tax, HRA exemption — FY 2026-27 with New vs Old regime, 87A rebate and surcharge.</p>
-        <div class="cat-meta">
-          <span class="cat-count">4 live &middot; 2 coming soon</span>
-          <span class="cat-arr">Explore &rarr;</span>
+        <div class="fs-cat-meta">
+          <span class="fs-cat-count">4 live &middot; 2 coming soon</span>
+          <span class="fs-cat-arr">Explore &rarr;</span>
         </div>
       </a>
 
-      <a href="templates.html" class="cat-card">
-        <div class="cat-icon" style="background:#EFF6FF;color:#1D4ED8;"><i class="fa-solid fa-table"></i></div>
+      <a href="templates.html" class="fs-cat-card">
+        <div class="fs-cat-icon" style="background:var(--fs-blue-lt);color:var(--fs-blue-dk);"><i class="fa-solid fa-table"></i></div>
         <h3>Excel Templates</h3>
         <p>Professional financial model templates — Fixed Asset Register, MIS dashboard, budget trackers and more.</p>
-        <div class="cat-meta">
-          <span class="cat-count">Launching soon</span>
-          <span class="cat-arr">Explore &rarr;</span>
+        <div class="fs-cat-meta">
+          <span class="fs-cat-count">Launching soon</span>
+          <span class="fs-cat-arr">Explore &rarr;</span>
         </div>
       </a>
 
-      <a href="indas116.html" class="cat-card" style="background:linear-gradient(145deg,#FAFBFF,#F3F0FF);border-color:rgba(99,102,241,0.2);">
-        <div class="cat-icon" style="background:#EEF2FF;color:#6366F1;"><i class="fa-solid fa-star"></i></div>
+      <a href="indas116.html" class="fs-cat-card" style="background:var(--fs-blue-lt);">
+        <div class="fs-cat-icon" style="background:var(--fs-card);color:var(--fs-blue);"><i class="fa-solid fa-star"></i></div>
         <h3>Most Popular</h3>
         <p>IND AS 116 Lease Calculator — ROU asset, amortization schedule, journal entries, audit-ready Excel.</p>
-        <div class="cat-meta">
-          <span class="cat-count">Free &middot; 1 export/mo</span>
-          <span class="cat-arr">Open now &rarr;</span>
+        <div class="fs-cat-meta">
+          <span class="fs-cat-count">Free &middot; 1 export/mo</span>
+          <span class="fs-cat-arr">Open now &rarr;</span>
         </div>
       </a>
-
     </div>
   </div>
 </section>
 
 <!-- BLOG -->
-<section class="section" id="blog" style="background:#fff;">
-  <div class="wrap">
-    <div class="section-hd center">
-      <div class="section-ey">Finance Knowledge</div>
-      <h2 class="section-h">From the Finosutra Blog</h2>
-      <p class="section-desc">Deep-dive guides on IND AS, IFRS, GST and more — written for CAs, CFOs and finance teams.</p>
+<section class="fs-section fs-section-alt" id="blog">
+  <div class="fs-wrap">
+    <div class="fs-section-hd center fs-reveal">
+      <span class="fs-eyebrow">Finance Knowledge</span>
+      <h2>From the FinoSutra Blog</h2>
+      <p class="fs-section-desc">Deep-dive guides on IND AS, IFRS, GST and more — written for CAs, CFOs and finance teams.</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:900px;margin:0 auto 32px;">
-      <a href="blog/ind-as-116-lease-accounting-guide.html" style="display:block;background:#F9FAFB;border:1px solid rgba(99,102,241,0.12);border-radius:16px;padding:24px;text-decoration:none;transition:box-shadow .15s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(99,102,241,0.12)'" onmouseout="this.style.boxShadow='none'">
-        <div style="display:inline-block;background:#EEF2FF;color:#6366F1;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.4px;margin-bottom:12px;">IND AS 116</div>
-        <h3 style="font-size:16px;font-weight:700;color:#111827;margin-bottom:8px;line-height:1.4;">IND AS 116 Lease Accounting: Complete Guide with Worked Example</h3>
-        <p style="font-size:13px;color:#6B7280;margin-bottom:16px;line-height:1.6;">ROU asset, lease liability, IBR, amortisation schedule and all journal entries — step by step.</p>
-        <span style="font-size:13px;font-weight:600;color:#6366F1;">Read guide →</span>
+    <div class="fs-reveal-group" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:900px;margin:0 auto 32px;">
+      <a href="blog/ind-as-116-lease-accounting-guide.html" class="fs-blog-card">
+        <span class="fs-blog-tag">IND AS 116</span>
+        <h3>IND AS 116 Lease Accounting: Complete Guide with Worked Example</h3>
+        <p>ROU asset, lease liability, IBR, amortisation schedule and all journal entries — step by step.</p>
+        <span class="fs-blog-link">Read guide &rarr;</span>
       </a>
-      <a href="blog/ind-as-109-security-deposit-accounting.html" style="display:block;background:#F9FAFB;border:1px solid rgba(99,102,241,0.12);border-radius:16px;padding:24px;text-decoration:none;transition:box-shadow .15s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(99,102,241,0.12)'" onmouseout="this.style.boxShadow='none'">
-        <div style="display:inline-block;background:#EEF2FF;color:#6366F1;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.4px;margin-bottom:12px;">IND AS 109</div>
-        <h3 style="font-size:16px;font-weight:700;color:#111827;margin-bottom:8px;line-height:1.4;">IND AS 109 Security Deposit: Fair Value, Day 1 Discount & Journal Entries</h3>
-        <p style="font-size:13px;color:#6B7280;margin-bottom:16px;line-height:1.6;">How to discount a security deposit, calculate EIR amortisation and book all journal entries.</p>
-        <span style="font-size:13px;font-weight:600;color:#6366F1;">Read guide →</span>
+      <a href="blog/ind-as-109-security-deposit-accounting.html" class="fs-blog-card">
+        <span class="fs-blog-tag">IND AS 109</span>
+        <h3>IND AS 109 Security Deposit: Fair Value, Day 1 Discount &amp; Journal Entries</h3>
+        <p>How to discount a security deposit, calculate EIR amortisation and book all journal entries.</p>
+        <span class="fs-blog-link">Read guide &rarr;</span>
       </a>
-      <a href="blog/lease-accounting-ind-as-116-with-example.html" style="display:block;background:#F9FAFB;border:1px solid rgba(99,102,241,0.12);border-radius:16px;padding:24px;text-decoration:none;transition:box-shadow .15s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(99,102,241,0.12)'" onmouseout="this.style.boxShadow='none'">
-        <div style="display:inline-block;background:#EEF2FF;color:#6366F1;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.4px;margin-bottom:12px;">IND AS 116</div>
-        <h3 style="font-size:16px;font-weight:700;color:#111827;margin-bottom:8px;line-height:1.4;">Lease Accounting as per IND AS 116 — Full Worked Example with Journal Entries</h3>
-        <p style="font-size:13px;color:#6B7280;margin-bottom:16px;line-height:1.6;">Step-by-step: PV calculation, 12-quarter amortisation schedule, all 4 journal entries and balance sheet impact.</p>
-        <span style="font-size:13px;font-weight:600;color:#6366F1;">Read guide →</span>
+      <a href="blog/lease-accounting-ind-as-116-with-example.html" class="fs-blog-card">
+        <span class="fs-blog-tag">IND AS 116</span>
+        <h3>Lease Accounting as per IND AS 116 — Full Worked Example with Journal Entries</h3>
+        <p>Step-by-step: PV calculation, 12-quarter amortisation schedule, all 4 journal entries and balance sheet impact.</p>
+        <span class="fs-blog-link">Read guide &rarr;</span>
       </a>
     </div>
     <div style="text-align:center;">
-      <a href="blog.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border:2px solid #6366F1;border-radius:10px;font-size:14px;font-weight:700;color:#6366F1;text-decoration:none;transition:all .15s;" onmouseover="this.style.background='#6366F1';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='#6366F1'">View All Articles →</a>
+      <a href="blog.html" class="fs-btn fs-btn-secondary">View All Articles &rarr;</a>
     </div>
   </div>
 </section>
 
 <!-- PRICING -->
-<section class="section" id="pricing">
-  <div class="wrap">
-    <div class="section-hd center">
-      <div class="section-ey">Pricing</div>
-      <h2 class="section-h">Simple, honest pricing</h2>
-      <p class="section-desc">Use every tool free. Pay ₹199 per export, or go Pro — pays off at just 3 exports/month.</p>
+<section class="fs-section" id="pricing">
+  <div class="fs-wrap">
+    <div class="fs-section-hd center fs-reveal">
+      <span class="fs-eyebrow">Pricing</span>
+      <h2>Simple, honest pricing</h2>
+      <p class="fs-section-desc">Use every tool free. Pay ₹199 per export, or go Pro — pays off at just 3 exports/month.</p>
     </div>
 
     <!-- Billing toggle -->
-    <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:28px;">
-      <span id="toggle-monthly-lbl" style="font-size:13px;font-weight:700;color:#111827;font-family:'Inter',sans-serif;">Monthly</span>
-      <button id="billingToggle" onclick="toggleBilling()" style="width:48px;height:26px;border-radius:13px;border:none;background:#6366F1;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0;">
-        <span id="billingToggleThumb" style="position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .2s;display:block;"></span>
+    <div class="fs-billing-toggle fs-reveal">
+      <span class="fs-toggle-label active" id="toggle-monthly-lbl">Monthly</span>
+      <button class="fs-toggle-btn" id="billingToggle" onclick="toggleBilling()">
+        <span class="fs-toggle-thumb" id="billingToggleThumb"></span>
       </button>
-      <span id="toggle-annual-lbl" style="font-size:13px;font-weight:600;color:#6B7280;font-family:'Inter',sans-serif;">
-        Annual &nbsp;<span style="font-size:11px;font-weight:800;background:#D1FAE5;color:#065F46;padding:2px 8px;border-radius:20px;">Save 33%</span>
-      </span>
+      <span class="fs-toggle-label" id="toggle-annual-lbl">Annual <span class="fs-save-badge">Save 33%</span></span>
     </div>
 
-    <!-- 3-column plan cards -->
-    <div class="pricing-plans-grid">
+    <!-- 3 plan cards -->
+    <div class="fs-price-grid fs-price-grid-3 fs-reveal-group">
 
       <!-- Free -->
-      <div style="background:#fff;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px 20px;">
-        <div style="font-size:12px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;font-family:'Inter',sans-serif;">Free</div>
-        <div style="font-size:32px;font-weight:800;color:#111827;font-family:'Inter',sans-serif;">₹0</div>
-        <div style="font-size:12px;color:#9CA3AF;margin-bottom:20px;font-family:'Inter',sans-serif;">Forever free</div>
-        <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
-          <li style="font-size:13px;color:#374151;display:flex;gap:8px;font-family:'Inter',sans-serif;"><span style="color:#22C55E;font-weight:700;flex-shrink:0;">✓</span> All 9 calculators</li>
-          <li style="font-size:13px;color:#374151;display:flex;gap:8px;font-family:'Inter',sans-serif;"><span style="color:#22C55E;font-weight:700;flex-shrink:0;">✓</span> Full results on screen</li>
-          <li style="font-size:13px;color:#374151;display:flex;gap:8px;font-family:'Inter',sans-serif;"><span style="color:#22C55E;font-weight:700;flex-shrink:0;">✓</span> Up to 3 leases free</li>
-          <li style="font-size:13px;color:#9CA3AF;display:flex;gap:8px;font-family:'Inter',sans-serif;"><span style="flex-shrink:0;">✗</span> Multi-lease portfolio</li>
-          <li style="font-size:13px;color:#9CA3AF;display:flex;gap:8px;font-family:'Inter',sans-serif;"><span style="flex-shrink:0;">✗</span> Unlimited exports</li>
+      <div class="fs-price-card">
+        <div class="fs-price-name">Free</div>
+        <div class="fs-price-amount">₹0</div>
+        <div style="font-size:12px;color:var(--fs-faint);">Forever free</div>
+        <ul class="fs-price-features">
+          <li>All 9 calculators</li>
+          <li>Full results on screen</li>
+          <li>Up to 3 leases free</li>
+          <li class="disabled">Multi-lease portfolio</li>
+          <li class="disabled">Unlimited exports</li>
         </ul>
-        <a href="indas-tools.html" style="display:block;text-align:center;padding:11px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:13px;font-weight:700;color:#374151;text-decoration:none;font-family:'Inter',sans-serif;transition:border-color .15s;" onmouseover="this.style.borderColor='#6366F1'" onmouseout="this.style.borderColor='#E5E7EB'">Start free →</a>
+        <a href="indas-tools.html" class="fs-btn fs-btn-secondary" style="width:100%;justify-content:center;">Start free &rarr;</a>
       </div>
 
       <!-- Pay per export -->
-      <div style="background:#fff;border:1.5px solid #E5E7EB;border-radius:16px;padding:24px 20px;">
-        <div style="font-size:12px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;font-family:'Inter',sans-serif;">Pay as you go</div>
-        <div style="font-size:32px;font-weight:800;color:#111827;font-family:'Inter',sans-serif;">₹199</div>
-        <div style="font-size:12px;color:#9CA3AF;margin-bottom:20px;font-family:'Inter',sans-serif;">per export, no account needed</div>
-        <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
-          <li style="font-size:13px;color:#374151;display:flex;gap:8px;font-family:'Inter',sans-serif;"><span style="color:#22C55E;font-weight:700;flex-shrink:0;">✓</span> CA-grade Excel workbook</li>
-          <li style="font-size:13px;color:#374151;display:flex;gap:8px;font-family:'Inter',sans-serif;"><span style="color:#22C55E;font-weight:700;flex-shrink:0;">✓</span> Instant download</li>
-          <li style="font-size:13px;color:#374151;display:flex;gap:8px;font-family:'Inter',sans-serif;"><span style="color:#22C55E;font-weight:700;flex-shrink:0;">✓</span> No signup required</li>
-          <li style="font-size:13px;color:#9CA3AF;display:flex;gap:8px;font-family:'Inter',sans-serif;"><span style="flex-shrink:0;">✗</span> Multi-lease portfolio</li>
-          <li style="font-size:13px;color:#9CA3AF;display:flex;gap:8px;font-family:'Inter',sans-serif;"><span style="flex-shrink:0;">✗</span> Unlimited exports</li>
+      <div class="fs-price-card">
+        <div class="fs-price-name">Pay as you go</div>
+        <div class="fs-price-amount">₹199</div>
+        <div style="font-size:12px;color:var(--fs-faint);">per export, no account needed</div>
+        <ul class="fs-price-features">
+          <li>CA-grade Excel workbook</li>
+          <li>Instant download</li>
+          <li>No signup required</li>
+          <li class="disabled">Multi-lease portfolio</li>
+          <li class="disabled">Unlimited exports</li>
         </ul>
-        <a href="indas-tools.html" style="display:block;text-align:center;padding:11px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:13px;font-weight:700;color:#374151;text-decoration:none;font-family:'Inter',sans-serif;transition:border-color .15s;" onmouseover="this.style.borderColor='#6366F1'" onmouseout="this.style.borderColor='#E5E7EB'">Use a tool →</a>
+        <a href="indas-tools.html" class="fs-btn fs-btn-secondary" style="width:100%;justify-content:center;">Use a tool &rarr;</a>
       </div>
 
       <!-- Pro -->
-      <div style="background:linear-gradient(135deg,#1E1B4B,#312E81);border:1.5px solid #6366F1;border-radius:16px;padding:24px 20px;position:relative;overflow:hidden;">
-        <div style="position:absolute;top:-30px;right:-30px;width:100px;height:100px;background:radial-gradient(circle,rgba(139,92,246,.3),transparent 70%);pointer-events:none;"></div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-          <span style="font-size:12px;font-weight:700;color:#A5B4FC;text-transform:uppercase;letter-spacing:.06em;font-family:'Inter',sans-serif;">Pro</span>
-          <span style="font-size:10px;font-weight:800;background:#22C55E;color:#fff;padding:2px 8px;border-radius:20px;letter-spacing:.04em;">MOST POPULAR</span>
+      <div class="fs-price-card pro-dark popular">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div class="fs-price-name">Pro</div>
+          <span class="fs-badge" style="background:var(--fs-ok);color:#fff;font-size:10px;">Most popular</span>
         </div>
-        <div id="pro-price-display" style="font-size:32px;font-weight:800;color:#fff;font-family:'Inter',sans-serif;">₹499<span style="font-size:14px;font-weight:500;color:#A5B4FC;">/mo</span></div>
-        <div id="pro-price-sub" style="font-size:12px;color:#6B7280;margin-bottom:20px;font-family:'Inter',sans-serif;">billed monthly</div>
-        <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
-          <li style="font-size:13px;color:#E0E7FF;display:flex;gap:8px;font-family:'Inter',sans-serif;"><span style="color:#4ADE80;font-weight:700;flex-shrink:0;">✓</span> Unlimited Excel exports</li>
-          <li style="font-size:13px;color:#E0E7FF;display:flex;gap:8px;font-family:'Inter',sans-serif;"><span style="color:#4ADE80;font-weight:700;flex-shrink:0;">✓</span> All 5 paid tools</li>
-          <li style="font-size:13px;color:#E0E7FF;display:flex;gap:8px;font-family:'Inter',sans-serif;"><span style="color:#4ADE80;font-weight:700;flex-shrink:0;">✓</span> Multi-lease portfolio</li>
-          <li style="font-size:13px;color:#E0E7FF;display:flex;gap:8px;font-family:'Inter',sans-serif;"><span style="color:#4ADE80;font-weight:700;flex-shrink:0;">✓</span> Consolidated Excel workbook</li>
-          <li style="font-size:13px;color:#E0E7FF;display:flex;gap:8px;font-family:'Inter',sans-serif;"><span style="color:#4ADE80;font-weight:700;flex-shrink:0;">✓</span> Cancel anytime</li>
+        <div class="fs-price-amount" id="pro-price-display">₹499<small>/mo</small></div>
+        <div style="font-size:12px;color:#64748B;" id="pro-price-sub">billed monthly</div>
+        <ul class="fs-price-features">
+          <li>Unlimited Excel exports</li>
+          <li>All 5 paid tools</li>
+          <li>Multi-lease portfolio</li>
+          <li>Consolidated Excel workbook</li>
+          <li>Cancel anytime</li>
         </ul>
-        <button id="pro-cta-btn" onclick="fsInitiateProSubscription()" style="display:block;width:100%;text-align:center;padding:12px;background:linear-gradient(135deg,#6366F1,#8B5CF6);border:none;border-radius:10px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;font-family:'Inter',sans-serif;box-shadow:0 4px 14px rgba(99,102,241,.5);transition:opacity .15s;" onmouseover="this.style.opacity='.9'" onmouseout="this.style.opacity='1'">⚡ Subscribe to Pro</button>
+        <button class="fs-btn fs-btn-primary" id="pro-cta-btn" onclick="fsInitiateProSubscription()" style="width:100%;justify-content:center;">Subscribe to Pro</button>
       </div>
 
     </div>
 
-    <!-- Feature comparison table -->
-    <div style="overflow-x:auto;margin:28px 0 20px;">
-      <table style="width:100%;border-collapse:collapse;font-family:'Inter',sans-serif;font-size:13px;min-width:520px;">
+    <!-- Feature comparison -->
+    <div class="fs-reveal" style="overflow-x:auto;margin:28px 0 20px;">
+      <table class="fs-compare-table">
         <thead>
           <tr>
-            <th style="text-align:left;padding:10px 14px;color:#6B7280;font-weight:600;font-size:12px;border-bottom:2px solid #E5E7EB;width:44%;">Feature</th>
-            <th style="text-align:center;padding:10px 14px;color:#6B7280;font-weight:600;font-size:12px;border-bottom:2px solid #E5E7EB;">Free</th>
-            <th style="text-align:center;padding:10px 14px;color:#6B7280;font-weight:600;font-size:12px;border-bottom:2px solid #E5E7EB;">₹199/export</th>
-            <th style="text-align:center;padding:10px 8px;background:#EEF2FF;border-bottom:2px solid #6366F1;border-radius:8px 8px 0 0;">
-              <span style="color:#4F46E5;font-weight:800;font-size:12px;">Pro</span>
-            </th>
+            <th>Feature</th>
+            <th>Free</th>
+            <th>₹199/export</th>
+            <th class="highlight">Pro</th>
           </tr>
         </thead>
         <tbody>
-          <tr style="background:#F9FAFB;">
-            <td style="padding:10px 14px;color:#374151;font-weight:500;border-bottom:1px solid #F3F4F6;">All calculators (IND AS 116, 109, GST, Tax)</td>
-            <td style="text-align:center;padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#22C55E;font-weight:700;">✓</td>
-            <td style="text-align:center;padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#22C55E;font-weight:700;">✓</td>
-            <td style="text-align:center;padding:10px 8px;background:#EEF2FF;border-bottom:1px solid #C7D2FE;color:#22C55E;font-weight:700;">✓</td>
+          <tr>
+            <td>All calculators (IND AS 116, 109, GST, Tax)</td>
+            <td class="check">&#10003;</td>
+            <td class="check">&#10003;</td>
+            <td class="highlight check">&#10003;</td>
           </tr>
           <tr>
-            <td style="padding:10px 14px;color:#374151;font-weight:500;border-bottom:1px solid #F3F4F6;">Full results on screen</td>
-            <td style="text-align:center;padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#22C55E;font-weight:700;">✓</td>
-            <td style="text-align:center;padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#22C55E;font-weight:700;">✓</td>
-            <td style="text-align:center;padding:10px 8px;background:#EEF2FF;border-bottom:1px solid #C7D2FE;color:#22C55E;font-weight:700;">✓</td>
-          </tr>
-          <tr style="background:#F9FAFB;">
-            <td style="padding:10px 14px;color:#374151;font-weight:500;border-bottom:1px solid #F3F4F6;">1 free Excel export per month</td>
-            <td style="text-align:center;padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#22C55E;font-weight:700;">✓</td>
-            <td style="text-align:center;padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#22C55E;font-weight:700;">✓</td>
-            <td style="text-align:center;padding:10px 8px;background:#EEF2FF;border-bottom:1px solid #C7D2FE;color:#22C55E;font-weight:700;">✓</td>
+            <td>Full results on screen</td>
+            <td class="check">&#10003;</td>
+            <td class="check">&#10003;</td>
+            <td class="highlight check">&#10003;</td>
           </tr>
           <tr>
-            <td style="padding:10px 14px;color:#374151;font-weight:500;border-bottom:1px solid #F3F4F6;">CA-grade Excel workbook (multi-sheet)</td>
-            <td style="text-align:center;padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#9CA3AF;">—</td>
-            <td style="text-align:center;padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#22C55E;font-weight:700;">✓</td>
-            <td style="text-align:center;padding:10px 8px;background:#EEF2FF;border-bottom:1px solid #C7D2FE;color:#22C55E;font-weight:700;">✓ Unlimited</td>
-          </tr>
-          <tr style="background:#F9FAFB;">
-            <td style="padding:10px 14px;color:#374151;font-weight:500;border-bottom:1px solid #F3F4F6;">IND AS 116 Disclosure Note</td>
-            <td style="text-align:center;padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#9CA3AF;">—</td>
-            <td style="text-align:center;padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#22C55E;font-weight:700;">✓</td>
-            <td style="text-align:center;padding:10px 8px;background:#EEF2FF;border-bottom:1px solid #C7D2FE;color:#22C55E;font-weight:700;">✓</td>
+            <td>1 free Excel export per month</td>
+            <td class="check">&#10003;</td>
+            <td class="check">&#10003;</td>
+            <td class="highlight check">&#10003;</td>
           </tr>
           <tr>
-            <td style="padding:10px 14px;color:#374151;font-weight:500;border-bottom:1px solid #F3F4F6;">Lease Workspace (multi-lease dashboard)</td>
-            <td style="text-align:center;padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#9CA3AF;">—</td>
-            <td style="text-align:center;padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#9CA3AF;">—</td>
-            <td style="text-align:center;padding:10px 8px;background:#EEF2FF;border-bottom:1px solid #C7D2FE;color:#22C55E;font-weight:700;">✓</td>
-          </tr>
-          <tr style="background:#F9FAFB;">
-            <td style="padding:10px 14px;color:#374151;font-weight:500;border-bottom:1px solid #F3F4F6;">Consolidated portfolio Excel export</td>
-            <td style="text-align:center;padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#9CA3AF;">—</td>
-            <td style="text-align:center;padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#9CA3AF;">—</td>
-            <td style="text-align:center;padding:10px 8px;background:#EEF2FF;border-bottom:1px solid #C7D2FE;color:#22C55E;font-weight:700;">✓</td>
+            <td>CA-grade Excel workbook (multi-sheet)</td>
+            <td class="dash">&mdash;</td>
+            <td class="check">&#10003;</td>
+            <td class="highlight check">&#10003; Unlimited</td>
           </tr>
           <tr>
-            <td style="padding:10px 14px;color:#374151;font-weight:500;border-bottom:1px solid #F3F4F6;">Lease modification calculator (Para 45/46)</td>
-            <td style="text-align:center;padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#9CA3AF;">—</td>
-            <td style="text-align:center;padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#9CA3AF;">—</td>
-            <td style="text-align:center;padding:10px 8px;background:#EEF2FF;border-bottom:1px solid #C7D2FE;color:#22C55E;font-weight:700;">✓</td>
+            <td>IND AS 116 Disclosure Note</td>
+            <td class="dash">&mdash;</td>
+            <td class="check">&#10003;</td>
+            <td class="highlight check">&#10003;</td>
           </tr>
-          <tr style="background:#F9FAFB;">
-            <td style="padding:10px 14px;color:#374151;font-weight:500;">Audit-grade working papers</td>
-            <td style="text-align:center;padding:10px 14px;color:#9CA3AF;">—</td>
-            <td style="text-align:center;padding:10px 14px;color:#9CA3AF;">—</td>
-            <td style="text-align:center;padding:10px 8px;background:#EEF2FF;border-radius:0 0 8px 8px;color:#22C55E;font-weight:700;">✓</td>
+          <tr>
+            <td>Lease Workspace (multi-lease dashboard)</td>
+            <td class="dash">&mdash;</td>
+            <td class="dash">&mdash;</td>
+            <td class="highlight check">&#10003;</td>
+          </tr>
+          <tr>
+            <td>Consolidated portfolio Excel export</td>
+            <td class="dash">&mdash;</td>
+            <td class="dash">&mdash;</td>
+            <td class="highlight check">&#10003;</td>
+          </tr>
+          <tr>
+            <td>Lease modification calculator (Para 45/46)</td>
+            <td class="dash">&mdash;</td>
+            <td class="dash">&mdash;</td>
+            <td class="highlight check">&#10003;</td>
+          </tr>
+          <tr>
+            <td>Audit-grade working papers</td>
+            <td class="dash">&mdash;</td>
+            <td class="dash">&mdash;</td>
+            <td class="highlight check">&#10003;</td>
           </tr>
         </tbody>
       </table>
     </div>
 
     <!-- ROI callout -->
-    <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:12px;padding:14px 20px;text-align:center;margin-bottom:16px;">
-      <span style="font-size:13px;color:#92400E;font-family:'Inter',sans-serif;">💡 <strong>Break-even in month 1:</strong> Just 3 exports at ₹199 each = ₹597 — more than a full month of Pro (₹499). Most CAs export 5–10× a month.</span>
+    <div class="fs-roi-callout fs-reveal">
+      <strong>Break-even in month 1:</strong> Just 3 exports at ₹199 each = ₹597 — more than a full month of Pro (₹499). Most CAs export 5-10x a month.
     </div>
 
     <!-- Cancellation note -->
-    <p style="text-align:center;font-size:12px;color:var(--faint);margin-top:8px;">
-      <i class="fa-solid fa-circle-info" style="margin-right:5px;color:#6366F1;"></i>
-      To cancel, email <a href="mailto:billing@finosutra.com" style="color:#6366F1;text-decoration:none;font-weight:600;">billing@finosutra.com</a> — cancelled within 24 hours, Pro access stays until period ends.
+    <p style="text-align:center;font-size:12px;color:var(--fs-faint);margin-top:12px;">
+      <i class="fa-solid fa-circle-info" style="margin-right:5px;color:var(--fs-blue);"></i>
+      To cancel, email <a href="mailto:billing@finosutra.com" style="font-weight:600;">billing@finosutra.com</a> — cancelled within 24 hours, Pro access stays until period ends.
     </p>
   </div>
 </section>
@@ -579,127 +549,75 @@ function toggleBilling(){
   if(_billingAnnual){
     thumb.style.left = '25px';
     toggle.style.background = '#059669';
-    monthlyLbl.style.color = '#6B7280'; monthlyLbl.style.fontWeight = '600';
-    annualLbl.style.color = '#111827'; annualLbl.style.fontWeight = '700';
-    priceDisplay.innerHTML = '₹3,999<span style="font-size:14px;font-weight:500;color:#A5B4FC;">/yr</span>';
-    priceSub.innerHTML = '<span style="color:#4ADE80;font-weight:700;">2 months free</span> &nbsp;·&nbsp; Save ₹1,989/yr';
-    ctaBtn.textContent = '🏆 Subscribe Annual — 2 Months Free';
+    monthlyLbl.className = 'fs-toggle-label';
+    annualLbl.className = 'fs-toggle-label active';
+    priceDisplay.innerHTML = '₹3,999<small>/yr</small>';
+    priceSub.innerHTML = '<span style="color:#4ADE80;font-weight:700;">2 months free</span> &middot; Save ₹1,989/yr';
+    ctaBtn.textContent = 'Subscribe Annual — 2 Months Free';
     ctaBtn.onclick = function(){ fsInitiateAnnualSubscription(); };
   } else {
     thumb.style.left = '3px';
-    toggle.style.background = '#6366F1';
-    monthlyLbl.style.color = '#111827'; monthlyLbl.style.fontWeight = '700';
-    annualLbl.style.color = '#6B7280'; annualLbl.style.fontWeight = '600';
-    priceDisplay.innerHTML = '₹499<span style="font-size:14px;font-weight:500;color:#A5B4FC;">/mo</span>';
+    toggle.style.background = 'var(--fs-blue)';
+    monthlyLbl.className = 'fs-toggle-label active';
+    annualLbl.className = 'fs-toggle-label';
+    priceDisplay.innerHTML = '₹499<small>/mo</small>';
     priceSub.textContent = 'billed monthly';
-    ctaBtn.innerHTML = '⚡ Subscribe to Pro';
+    ctaBtn.textContent = 'Subscribe to Pro';
     ctaBtn.onclick = function(){ fsInitiateProSubscription(); };
   }
 }
 </script>
 
 <!-- CONTACT -->
-<section class="section section-alt" id="contact">
-  <div class="wrap">
-    <div class="section-hd center">
-      <div class="section-ey">Contact us</div>
-      <h2 class="section-h">Get in touch</h2>
-      <p class="section-desc">Questions, demo requests, or partnership inquiries — we reply within 24 hours.</p>
+<section class="fs-section fs-section-alt" id="contact">
+  <div class="fs-wrap">
+    <div class="fs-section-hd center fs-reveal">
+      <span class="fs-eyebrow">Contact us</span>
+      <h2>Get in touch</h2>
+      <p class="fs-section-desc">Questions, demo requests, or partnership inquiries — we reply within 24 hours.</p>
     </div>
-    <div class="contact-grid">
+    <div class="fs-contact-grid fs-reveal-group">
       <div>
-        <div class="contact-item">
-          <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
-          <div><div class="contact-label">Email</div><div class="contact-value"><a href="mailto:hello@finosutra.com">hello@finosutra.com</a></div></div>
+        <div class="fs-contact-item">
+          <div class="fs-contact-icon"><i class="fa-solid fa-envelope"></i></div>
+          <div><div class="fs-contact-label">Email</div><div class="fs-contact-value"><a href="mailto:hello@finosutra.com">hello@finosutra.com</a></div></div>
         </div>
-        <div class="contact-item">
-          <div class="contact-icon"><i class="fa-brands fa-whatsapp"></i></div>
-          <div><div class="contact-label">WhatsApp</div><div class="contact-value"><a href="https://wa.me/918208063319?text=Hi%2C%20I%20found%20Finosutra%20and%20would%20like%20to%20know%20more." target="_blank">Message us on WhatsApp</a></div></div>
+        <div class="fs-contact-item">
+          <div class="fs-contact-icon"><i class="fa-brands fa-whatsapp"></i></div>
+          <div><div class="fs-contact-label">WhatsApp</div><div class="fs-contact-value"><a href="https://wa.me/918208063319?text=Hi%2C%20I%20found%20FinoSutra%20and%20would%20like%20to%20know%20more." target="_blank" rel="noopener">Message us on WhatsApp</a></div></div>
         </div>
-        <div class="contact-item">
-          <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
-          <div><div class="contact-label">Location</div><div class="contact-value">Mumbai, Maharashtra, India</div></div>
+        <div class="fs-contact-item">
+          <div class="fs-contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <div><div class="fs-contact-label">Location</div><div class="fs-contact-value">Mumbai, Maharashtra, India</div></div>
         </div>
-        <div style="margin-top:24px;padding:18px;background:linear-gradient(135deg,#EEF2FF,#F5F3FF);border:1px solid var(--brand-mid);border-radius:12px;font-size:13px;color:var(--muted);line-height:1.7;">
-          <strong style="color:var(--brand);">Why Finosutra?</strong><br>
-          We are a Mumbai-based team of finance professionals building tools we wish existed when we were in the field. Everything is designed for <strong style="color:var(--brand);">Indian standards</strong> — IND AS, Companies Act, GST — not foreign software retrofitted for India.
+        <div class="fs-why-box">
+          <strong>Why FinoSutra?</strong><br>
+          We are a Mumbai-based team of finance professionals building tools we wish existed when we were in the field. Everything is designed for <strong>Indian standards</strong> — IND AS, Companies Act, GST — not foreign software retrofitted for India.
         </div>
       </div>
-      <div class="contact-form-card">
+      <div class="fs-contact-form-card">
         <div style="font-size:16px;font-weight:700;margin-bottom:5px;">Send us a message</div>
-        <div style="font-size:13px;color:var(--muted);margin-bottom:22px;">We typically reply within 1 business day.</div>
+        <div style="font-size:13px;color:var(--fs-muted);margin-bottom:22px;">We typically reply within 1 business day.</div>
         <form id="contactForm" action="https://formspree.io/f/xvzyyrvp" method="POST" onsubmit="handleFormSubmit(event)">
-          <div class="form-row">
-            <div class="form-field"><label>Your name</label><input type="text" name="name" placeholder="e.g. Rahul Sharma" required/></div>
-            <div class="form-field"><label>Email address</label><input type="email" name="email" placeholder="you@company.com" required/></div>
+          <div class="fs-form-row">
+            <div class="fs-field"><label class="fs-label">Your name</label><input class="fs-input" type="text" name="name" placeholder="e.g. Rahul Sharma" required/></div>
+            <div class="fs-field"><label class="fs-label">Email address</label><input class="fs-input" type="email" name="email" placeholder="you@company.com" required/></div>
           </div>
-          <div class="form-field">
-            <label>I am a</label>
-            <select name="role"><option value="">Select your role</option><option>Chartered Accountant</option><option>CFO / Finance Head</option><option>Finance Manager</option><option>Accountant</option><option>Student</option><option>Other</option></select>
+          <div class="fs-field">
+            <label class="fs-label">I am a</label>
+            <select class="fs-select" name="role"><option value="">Select your role</option><option>Chartered Accountant</option><option>CFO / Finance Head</option><option>Finance Manager</option><option>Accountant</option><option>Student</option><option>Other</option></select>
           </div>
-          <div class="form-field"><label>Message</label><textarea name="message" placeholder="Tell us what you need, ask a question, or request a demo..." required></textarea></div>
-          <button type="submit" class="btn-primary" style="width:100%;justify-content:center;padding:12px;">Send message &nbsp;<i class="fa-solid fa-paper-plane"></i></button>
+          <div class="fs-field"><label class="fs-label">Message</label><textarea class="fs-textarea" name="message" placeholder="Tell us what you need, ask a question, or request a demo..." required></textarea></div>
+          <button type="submit" class="fs-btn fs-btn-primary" style="width:100%;justify-content:center;">Send message &nbsp;<i class="fa-solid fa-paper-plane"></i></button>
         </form>
-        <div id="formSuccess" style="display:none;margin-top:14px;padding:14px;background:#DCFCE7;border-radius:8px;font-size:13px;color:#166534;text-align:center;"><i class="fa-solid fa-circle-check" style="margin-right:6px;"></i>Message sent! We'll get back to you within 1 business day.</div>
+        <div id="formSuccess" style="display:none;margin-top:14px;padding:14px;background:var(--fs-ok-lt);border-radius:var(--fs-r);font-size:13px;color:#166534;text-align:center;"><i class="fa-solid fa-circle-check" style="margin-right:6px;"></i>Message sent! We'll get back to you within 1 business day.</div>
       </div>
     </div>
   </div>
 </section>
 
-<footer style="background:#111827;padding:48px 32px 28px;color:#9CA3AF;">
-  <div style="max-width:1160px;margin:0 auto;">
-    <div class="footer-cols-grid">
-      <div>
-        <div style="font-size:22px;font-weight:800;background:linear-gradient(135deg,#818CF8,#A78BFA);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;font-family:Inter,sans-serif;letter-spacing:-.3px;">Finosutra</div>
-        <p style="font-size:13px;line-height:1.7;max-width:220px;">Finance on autopilot — smart tools built for CAs, CFOs and finance teams across India.</p>
-        <div style="display:flex;gap:8px;margin-top:16px;">
-          <a href="mailto:hello@finosutra.com" style="width:32px;height:32px;background:rgba(255,255,255,0.08);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#9CA3AF;text-decoration:none;font-size:13px;transition:background .15s;" title="Email"><i class="fa-solid fa-envelope"></i></a>
-          <a href="https://wa.me/918208063319" target="_blank" style="width:32px;height:32px;background:rgba(255,255,255,0.08);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#9CA3AF;text-decoration:none;font-size:13px;" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-          <a href="https://www.linkedin.com/company/finosutra07/" target="_blank" style="width:32px;height:32px;background:rgba(255,255,255,0.08);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#9CA3AF;text-decoration:none;font-size:13px;" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-        </div>
-      </div>
-      <div>
-        <h5 style="font-size:11px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;">IND AS Tools</h5>
-        <a href="indas-tools.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">All IND AS Tools</a>
-        <a href="indas116.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">IND AS 116 Calculator</a>
-        <a href="indas116-model2.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">Lease Modification Calculator</a>
-        <a href="indas116-model3.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">Escalating Rent Calculator</a>
-        <a href="security-deposit.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">Security Deposit (IND AS 109)</a>
-        <a href="sd-portfolio.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">SD Portfolio (Multi-Deposit)</a>
-      </div>
-      <div>
-        <h5 style="font-size:11px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;">GST</h5>
-        <a href="gst-tools.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">All GST Tools</a>
-        <a href="gst-calculator.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">GST Calculator</a>
-        <a href="gst-interest-late-fee-calculator.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">GST Interest & Late Fee Calculator</a>
-      </div>
-      <div>
-        <h5 style="font-size:11px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;">Income Tax</h5>
-        <a href="income-tax-hub.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">All Income Tax Tools</a>
-        <a href="india-tax-calculator.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">Income Tax Calculator</a>
-        <a href="capital-gains-calculator.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">Capital Gains Calculator</a>
-        <a href="advance-tax-calculator.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">Advance Tax Calculator</a>
-        <a href="hra-calculator.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">HRA Exemption Calculator</a>
-      </div>
-      <div>
-        <h5 style="font-size:11px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;">Company</h5>
-        <a href="blog.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">Blog</a>
-        <a href="index.html#pricing" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">Pricing</a>
-        <a href="index.html#contact" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">Contact</a>
-        <a href="privacy.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">Privacy Policy</a>
-        <a href="terms.html" style="display:block;font-size:13px;color:#9CA3AF;text-decoration:none;margin-bottom:9px;">Terms of Service</a>
-      </div>
-    </div>
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-      <p style="font-size:12px;color:#6B7280;margin:0;">© 2026 Finosutra. All rights reserved. Made with care in Mumbai, India. GSTIN: 27ACWPW1076G1ZX</p>
-      <p style="font-size:12px;color:#6B7280;margin:0;">
-        <a href="privacy.html" style="color:#6B7280;text-decoration:none;">Privacy</a> &nbsp;·&nbsp;
-        <a href="terms.html" style="color:#6B7280;text-decoration:none;">Terms</a> &nbsp;·&nbsp;
-        <a href="mailto:hello@finosutra.com" style="color:#6B7280;text-decoration:none;">hello@finosutra.com</a>
-      </p>
-    </div>
-  </div>
-</footer>
+<!-- FOOTER -->
+<div id="fs-footer"></div>
 
 <script>
 function handleFormSubmit(e) {
@@ -719,23 +637,58 @@ function handleFormSubmit(e) {
   .catch(function() { form.submit(); });
 }
 </script>
-
+<script src="nav.js?v=2"></script>
+<script src="footer.js?v=2"></script>
 <script>
 (function(){
-  var btn = document.getElementById('navToggle');
-  var links = document.querySelector('.nav-links');
-  var actions = document.querySelector('.nav-actions');
-  if(!btn) return;
-  btn.addEventListener('click', function(){
-    links && links.classList.toggle('open');
-  });
-  document.addEventListener('click', function(e){
-    if(!btn.contains(e.target) && links && !links.contains(e.target)){
-      links.classList.remove('open');
+  var targets = document.querySelectorAll('.fs-reveal, .fs-reveal-group');
+  if (!targets.length) return;
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    targets.forEach(function(t){ t.classList.add('is-visible'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  targets.forEach(function(t){ io.observe(t); });
+})();
+</script>
+<script>
+(function(){
+  var els = document.querySelectorAll('[data-count]');
+  if (!els.length) return;
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function setFinal(el, target, prefix){
+    el.textContent = prefix + target.toLocaleString('en-IN');
+  }
+
+  function countUp(el, target, prefix, duration){
+    var startTime = null;
+    function step(ts){
+      if (!startTime) startTime = ts;
+      var progress = Math.min((ts - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = prefix + Math.round(eased * target).toLocaleString('en-IN');
+      if (progress < 1) requestAnimationFrame(step);
     }
+    requestAnimationFrame(step);
+  }
+
+  els.forEach(function(el){
+    var target = parseInt(el.getAttribute('data-count'), 10);
+    var prefix = el.getAttribute('data-prefix') || '';
+    if (isNaN(target)) return;
+    if (reduceMotion) { setFinal(el, target, prefix); return; }
+    setTimeout(function(){ countUp(el, target, prefix, 900); }, 550);
   });
 })();
 </script>
-
 </body>
 </html>

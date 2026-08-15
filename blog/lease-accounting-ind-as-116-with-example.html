@@ -23,6 +23,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="../finosutra.css?v=2"/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
 <script type="application/ld+json">
@@ -46,17 +47,6 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#fff;color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
-
-/* NAV */
-nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-light);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 var(--border-light),0 4px 20px rgba(99,102,241,0.05)}
-.nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
-.nav-logo img{height:40px;width:auto;}
-.nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
-.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;padding:7px 12px;border-radius:8px;transition:color .15s,background .15s;}
-.nav-links a:hover{color:var(--text);background:var(--brand-light);}
-.nav-toggle{display:none;background:none;border:none;font-size:20px;color:var(--text);cursor:pointer;padding:8px;}
-@media(max-width:900px){.nav-links{display:none;}}
-@media(max-width:768px){nav{padding:0 16px;}.nav-toggle{display:block;}.nav-links.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid var(--border-light);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
 
 /* ARTICLE LAYOUT */
 .article-wrap{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
@@ -141,34 +131,14 @@ table td.highlight{font-weight:700;color:var(--brand-dark);}
 .bs-card-row.total{font-weight:700;border-top:1px solid var(--border);padding-top:8px;margin-top:4px;color:var(--text);}
 @media(max-width:600px){.bs-grid{grid-template-columns:1fr;}}
 
-/* FOOTER */
-footer{background:#111827;padding:28px 32px;color:#9CA3AF;}
 @media(max-width:600px){.article-wrap{padding:32px 16px 60px;}.je-amounts{gap:16px;}.step-formula{font-size:12px;}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../auth.js"></script>
+<script src="../auth.js?v=2"></script>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <a href="../index.html" class="nav-logo"><img src="../logo.png" alt="Finosutra"></a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="../indas-tools.html">IND AS</a></li>
-      <li><a href="../gst-tools.html">GST</a></li>
-      <li><a href="../income-tax-hub.html">Income Tax</a></li>
-      <li><a href="../templates.html">Templates</a></li>
-      <li><a href="../blog.html">Blog</a></li>
-      <li><a href="../index.html#pricing">Pricing</a></li>
-      <li><a href="../index.html#contact">Contact</a></li>
-      <li id="navAuthMobile"></li>
-    </ul>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <a href="../blog.html" style="font-size:13px;font-weight:600;color:var(--brand);text-decoration:none;">← All Articles</a>
-      <button class="nav-toggle" id="navToggle"><i class="fa-solid fa-bars"></i></button>
-    </div>
-  </div>
-</nav>
+<div id="fs-nav"></div>
 
 <div class="article-wrap">
 
@@ -512,25 +482,9 @@ PV = 3,00,000 × [1 − (1.025)⁻¹²] ÷ 0.025
 
 </div><!-- end article-wrap -->
 
-<footer style="background:#111827;padding:28px 32px;color:#9CA3AF;">
-  <div style="max-width:1160px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px;">
-    <p>© 2026 Finosutra. All rights reserved.</p>
-    <p><a href="../privacy.html" style="color:#6B7280;text-decoration:none;">Privacy</a> &nbsp;·&nbsp; <a href="../terms.html" style="color:#6B7280;text-decoration:none;">Terms</a> &nbsp;·&nbsp; <a href="mailto:hello@finosutra.com" style="color:#6B7280;text-decoration:none;">hello@finosutra.com</a></p>
-  </div>
-</footer>
-
-<script>
-(function(){
-  var t=document.getElementById('navToggle');
-  if(!t)return;
-  t.onclick=function(){
-    var l=document.getElementById('navLinks');
-    if(l)l.classList.toggle('open');
-    var i=this.querySelector('i');
-    if(i)i.className=l&&l.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-bars';
-  };
-})();
-</script>
+<div id="fs-footer"></div>
+<script src="../nav.js?v=2"></script>
+<script src="../footer.js?v=2"></script>
 <script src="../share.js"></script>
 </body>
 </html>

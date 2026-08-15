@@ -196,24 +196,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 
 
 /* ── UNIFIED NAV (injected) ── */
-#mainNav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(99,102,241,0.08);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 rgba(99,102,241,0.08),0 4px 20px rgba(99,102,241,0.05);}
-#mainNav .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
-#mainNav .nav-logo{display:flex;align-items:center;text-decoration:none;}
-#mainNav .nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
-#mainNav .nav-links a{font-size:13px;font-weight:500;color:#6B7280;text-decoration:none;padding:7px 11px;border-radius:8px;transition:color .15s,background .15s;white-space:nowrap;}
-#mainNav .nav-links a:hover{color:#111827;background:#EEF2FF;}
-#mainNav .nav-back-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;font-family:'Inter',sans-serif;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;box-shadow:0 3px 12px rgba(99,102,241,0.3);transition:all .15s;white-space:nowrap;}
-#mainNav .nav-back-btn:hover{background:linear-gradient(135deg,#4F46E5,#7C3AED);transform:translateY(-1px);}
-#mainNav .nav-toggle{display:none;background:none;border:none;font-size:20px;color:#111827;cursor:pointer;padding:4px;}
-@media(max-width:900px){#mainNav .nav-links{display:none;}}
-@media(max-width:900px){#mainNav{padding:0 16px;}#mainNav .nav-actions{display:none;}#mainNav .nav-toggle{display:block;}#mainNav .nav-links.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid rgba(99,102,241,0.08);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
-.site-footer{background:#1E1B4B;color:rgba(255,255,255,0.7);padding:28px 32px;text-align:center;font-size:12px;line-height:1.8;margin-top:40px;}
-.site-footer .footer-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:14px;}
-.site-footer .footer-badge{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:4px 13px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);display:inline-flex;align-items:center;gap:5px;}
-.site-footer .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-top:10px;}
-.site-footer .footer-links a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:11px;}
-.site-footer .footer-links a:hover{color:rgba(255,255,255,0.85);}
-.site-footer .footer-tagline{margin-top:12px;font-size:11px;color:rgba(255,255,255,0.35);}
 </style>
 <!-- SheetJS with style support -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
@@ -271,36 +253,13 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 }
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="finosutra.css?v=2"/>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="auth.js"></script>
+<script src="auth.js?v=2"></script>
 </head>
 <body>
 
-<!-- HEADER -->
-<nav id="mainNav">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
-      <img loading="eager" src="logo.png" alt="Finosutra" style="height:56px;width:auto;display:block;">
-    </a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="indas-tools.html">IND AS</a></li>
-      <li><a href="gst-tools.html">GST</a></li>
-      <li><a href="income-tax-hub.html">Income Tax</a></li>
-      <li><a href="templates.html">Templates</a></li>
-      <li><a href="blog.html">Blog</a></li>
-      <li><a href="index.html#pricing">Pricing</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
-      <li id="navAuthMobile"></li>
-    </ul>
-    <div class="nav-actions" id="navActions">
-      <a href="index.html" class="nav-back-btn">&#8592; All Tools</a>
-    </div>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-      <i class="fa-solid fa-bars"></i>
-    </button>
-  </div>
-</nav>
+<div id="fs-nav"></div>
 
 <!-- APP LAYOUT -->
 <div class="app">
@@ -2211,20 +2170,9 @@ function fsCopyLink(btn){
   var li=document.getElementById('fsLiShare'); if(li) li.href='https://www.linkedin.com/sharing/share-offsite/?url='+u;
 })();
 </script>
-<footer class="site-footer">
-  <div class="footer-badges">
-    <span class="footer-badge">✓ FY 2026-27 Income Tax Rules</span>
-    <span class="footer-badge">✓ New vs Old Regime Comparison</span>
-    <span class="footer-badge">🇮🇳 Made in India for Indian CAs</span>
-  </div>
-  <div class="footer-links">
-    <a href="privacy.html">Privacy Policy</a>
-    <a href="terms.html">Terms of Use</a>
-    <a href="mailto:hello@finosutra.com">Contact</a>
-    <a href="blog.html">Blog</a>
-  </div>
-  <div class="footer-tagline">© 2026 Finosutra. Built for Chartered Accountants and Finance Teams across India.</div>
-</footer>
+<div id="fs-footer"></div>
+<script src="nav.js?v=2"></script>
+<script src="footer.js?v=2"></script>
 
 
 </body>

@@ -23,6 +23,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="finosutra.css?v=2"/>
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script type="application/ld+json">
@@ -85,17 +86,6 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:linear-gradient(160deg,#EDEEFF 0%,#EAF0FF 40%,#F2EEFF 100%);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;min-height:100vh;-webkit-font-smoothing:antialiased;}
 
-/* NAV */
-#mainNav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-light);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 var(--border-light),0 4px 20px rgba(79,70,229,0.05)}
-.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px;}
-.nav-logo img{height:36px;width:auto;}
-.nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
-.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:7px;transition:color .15s,background .15s;}
-.nav-links a:hover{color:var(--text);background:var(--brand-light);}
-.nav-toggle{display:none;background:none;border:none;font-size:20px;color:var(--text);cursor:pointer;padding:8px;}
-.nav-auth{display:flex;align-items:center;gap:10px;}
-@media(max-width:900px){.nav-links{display:none;}}
-@media(max-width:768px){#mainNav{padding:0 16px;}.nav-toggle{display:block;}.nav-links.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:60px;left:0;right:0;background:#fff;border-bottom:1px solid var(--border-light);padding:12px 16px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
 
 /* HERO */
 .hero{background:linear-gradient(135deg,#1E1B4B 0%,#312E81 50%,#1E1B4B 100%);padding:36px 32px 30px;border-bottom:1px solid rgba(255,255,255,0.06);}
@@ -229,31 +219,14 @@ hr.div{border:none;border-top:1px solid var(--border-light);margin:14px 0;}
 /* RESPONSIVE */
 @media(max-width:900px){.main{grid-template-columns:1fr;padding:16px 16px 60px;}.main>*{min-width:0;}.hero{padding:24px 16px;}}
 @media(max-width:600px){.kpi-grid{grid-template-columns:1fr 1fr;}.bucket-grid input.rate-in{width:56px;}.tab-btn{padding:9px 10px;font-size:11px;}}
-@media print{#mainNav,.hero,.calc-btn,.exp-row{display:none!important;}.main{grid-template-columns:1fr;}.result-card{box-shadow:none;border:1px solid #ddd;}}
+@media print{.fs-nav,.hero,.calc-btn,.exp-row{display:none!important;}.main{grid-template-columns:1fr;}.result-card{box-shadow:none;border:1px solid #ddd;}}
 input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0;}
 </style>
-<script src="auth.js"></script>
+<script src="auth.js?v=2"></script>
 </head>
 <body>
 
-<nav id="mainNav">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo"><img src="logo.png" alt="Finosutra"></a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="indas-tools.html">IND AS</a></li>
-      <li><a href="gst-tools.html">GST</a></li>
-      <li><a href="income-tax-hub.html">Income Tax</a></li>
-      <li><a href="templates.html">Templates</a></li>
-      <li><a href="blog.html">Blog</a></li>
-      <li><a href="index.html#pricing">Pricing</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
-    </ul>
-    <div class="nav-auth">
-      <div id="navAuth"></div>
-      <button class="nav-toggle" id="navToggle"><i class="fa-solid fa-bars"></i></button>
-    </div>
-  </div>
-</nav>
+<div id="fs-nav"></div>
 
 <div class="hero">
   <div class="hero-inner">
@@ -558,12 +531,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
   </div>
 </section>
 
-<footer style="background:#111827;padding:28px 32px;color:#9CA3AF;">
-  <div style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px;">
-    <p>© 2026 Finosutra. All rights reserved. Compliant with IND AS 109 / IFRS 9.</p>
-    <p><a href="privacy.html" style="color:#6B7280;text-decoration:none;">Privacy</a> &nbsp;·&nbsp; <a href="terms.html" style="color:#6B7280;text-decoration:none;">Terms</a> &nbsp;·&nbsp; <a href="mailto:hello@finosutra.com" style="color:#6B7280;text-decoration:none;">hello@finosutra.com</a></p>
-  </div>
-</footer>
+<div id="fs-footer"></div>
+<script src="nav.js?v=2"></script>
+<script src="footer.js?v=2"></script>
 
 <script>
 var BUCKETS = [
@@ -812,13 +782,6 @@ function toggleFaq(btn){
 }
 
 (function(){
-  var t=document.getElementById('navToggle');
-  if(t) t.onclick=function(){
-    var l=document.getElementById('navLinks');
-    if(l)l.classList.toggle('open');
-    var i=this.querySelector('i');
-    if(i)i.className=l&&l.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-bars';
-  };
   var d=new Date();
   var dd=('0'+d.getDate()).slice(-2);
   var mm=('0'+(d.getMonth()+1)).slice(-2);
