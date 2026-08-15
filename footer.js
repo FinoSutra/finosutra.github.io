@@ -102,7 +102,7 @@
     var socialLinks = [
       { href: 'mailto:hello@finosutra.com', icon: 'envelope', label: 'Email' },
       { href: 'https://wa.me/918208063319', icon: 'whatsapp', label: 'WhatsApp', brand: true },
-      { href: 'https://www.linkedin.com/company/finosutra07/', icon: 'linkedin-in', label: 'LinkedIn', brand: true },
+      { href: 'https://www.linkedin.com/company/124543898/', icon: 'linkedin-in', label: 'LinkedIn', brand: true },
       { href: 'https://www.youtube.com/@cakrishnaswadekar07', icon: 'youtube', label: 'YouTube', brand: true }
     ];
 
