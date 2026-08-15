@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="finosutra.css?v=2"/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
 <script>
 /* Shared short-date formatter. en-IN renders September as "Sept", which reads as a
@@ -40,12 +41,6 @@ window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);
 html{scroll-behavior:smooth}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-primary);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;}
 
-/* NAV */
-nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-light);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 var(--border-light);}
-.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
-.nav-right{display:flex;align-items:center;gap:12px;}
-#navActions{display:flex;align-items:center;gap:8px;}
 
 /* PAGE */
 .page-wrap{max-width:680px;margin:48px auto;padding:0 20px 80px;}
@@ -112,27 +107,14 @@ nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);border-bottom:1
 .btn-signout{background:none;border:1.5px solid #E5E7EB;color:var(--text-muted);padding:10px 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif;transition:all .15s;}
 .btn-signout:hover{border-color:#EF4444;color:#EF4444;}
 
-footer{background:#111827;padding:28px;text-align:center;}
-footer p{font-size:13px;color:#6B7280;}
-footer a{color:#9CA3AF;text-decoration:none;}
-
 @media(max-width:640px){
-  nav{padding:0 16px;} .page-wrap{margin:28px auto;} .profile-header{padding:22px 20px;} .plan-card{padding:20px;} .tools-card{padding:20px;} .upgrade-card{padding:20px;}
+  .page-wrap{margin:28px auto;} .profile-header{padding:22px 20px;} .plan-card{padding:20px;} .tools-card{padding:20px;} .upgrade-card{padding:20px;}
 }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <a href="index.html" class="logo">
-      <img src="logo.png" alt="Finosutra" style="height:56px;width:auto;display:block;">
-    </a>
-    <div class="nav-right">
-      <div id="navActions"></div>
-    </div>
-  </div>
-</nav>
+<div id="fs-nav"></div>
 
 <div class="page-wrap">
 
@@ -228,12 +210,12 @@ footer a{color:#9CA3AF;text-decoration:none;}
   </div><!-- /profileContent -->
 </div>
 
-<footer>
-  <p>© 2026 Finosutra · <a href="index.html">Home</a> · <a href="mailto:hello@finosutra.com">hello@finosutra.com</a> · <a href="terms.html">Terms</a></p>
-</footer>
+<div id="fs-footer"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="auth.js"></script>
+<script src="auth.js?v=2"></script>
+<script src="nav.js?v=2"></script>
+<script src="footer.js?v=2"></script>
 <script>
 // ── Profile page logic ──────────────────────────────────────────────────────
 var SUPA_URL = 'https://uymuivmktvtxmodblxie.supabase.co';

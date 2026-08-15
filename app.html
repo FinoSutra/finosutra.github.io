@@ -22,7 +22,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="leaseEngine.js?v=12"></script>
 <script src="premiumExport.js?v=7"></script>
-<script src="auth.js"></script>
+<script src="auth.js?v=2"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter',sans-serif;color:#111827;-webkit-font-smoothing:antialiased;background:#F0F1FF;overflow-x:hidden;}
@@ -32,9 +32,9 @@ body{font-family:'Inter',sans-serif;color:#111827;-webkit-font-smoothing:antiali
 
 /* ── Sidebar ── */
 .sidebar{width:240px;flex-shrink:0;background:#1E1B4B;display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:200;overflow-y:auto;transition:transform .25s ease;}
-.sb-brand{padding:20px 18px 16px;border-bottom:1px solid rgba(255,255,255,0.07);}
-.sb-logo{font-size:17px;font-weight:800;color:#fff;letter-spacing:-.3px;}
-.sb-sub{font-size:11px;color:rgba(255,255,255,0.4);margin-top:3px;line-height:1.4;}
+.sb-brand{padding:20px 18px 16px;background:#F6F3EA;border-bottom:1px solid #DCD5C8;display:flex;align-items:center;gap:10px;}
+.sb-logo{font-size:17px;font-weight:800;color:#15222C;letter-spacing:-.3px;}
+.sb-sub{font-size:10px;font-weight:700;color:#6B7681;margin-top:3px;line-height:1.4;letter-spacing:.06em;text-transform:uppercase;}
 .sb-section{padding:16px 18px 4px;font-size:10px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1px;font-weight:700;}
 .sb-item{display:flex;align-items:center;gap:10px;padding:10px 14px;margin:1px 8px;border-radius:8px;cursor:pointer;font-size:13px;color:rgba(255,255,255,0.6);transition:background .15s,color .15s;text-decoration:none;}
 .sb-item:hover{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.9);}
@@ -61,9 +61,10 @@ body{font-family:'Inter',sans-serif;color:#111827;-webkit-font-smoothing:antiali
 .app-main{margin-left:240px;flex:1;display:flex;flex-direction:column;min-height:100vh;}
 
 /* Mobile topbar */
-.mobile-topbar{display:none;align-items:center;gap:12px;padding:12px 16px;background:#1E1B4B;position:sticky;top:0;z-index:100;}
-.mobile-topbar .mob-hamburger{background:none;border:none;color:#fff;font-size:20px;cursor:pointer;padding:2px;}
-.mobile-topbar .mob-logo{font-size:15px;font-weight:800;color:#fff;}
+.mobile-topbar{display:none;align-items:center;gap:12px;padding:12px 16px;background:#F6F3EA;border-bottom:1px solid #DCD5C8;position:sticky;top:0;z-index:100;}
+.mobile-topbar .mob-hamburger{background:none;border:none;color:#15222C;font-size:20px;cursor:pointer;padding:2px;}
+.mobile-topbar .mob-logo{font-size:15px;font-weight:800;color:#15222C;line-height:1.15;}
+.mobile-topbar .mob-tagline{font-size:9px;font-weight:700;color:#6B7681;letter-spacing:.06em;text-transform:uppercase;margin-top:1px;}
 
 /* Page topbar */
 .page-topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;background:#fff;border-bottom:1px solid #E5E7EB;position:sticky;top:0;z-index:50;}
@@ -723,7 +724,11 @@ body{font-family:'Inter',sans-serif;color:#111827;-webkit-font-smoothing:antiali
 <!-- Mobile topbar -->
 <div class="mobile-topbar">
   <button class="mob-hamburger" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
-  <span class="mob-logo">Finosutra — Lease App</span>
+  <img src="favicon.svg" alt="" style="width:24px;height:24px;flex-shrink:0;" aria-hidden="true"/>
+  <div>
+    <div class="mob-logo">Finosutra</div>
+    <div class="mob-tagline">— Finance on Autopilot</div>
+  </div>
 </div>
 
 <!-- Sidebar overlay -->
@@ -732,9 +737,12 @@ body{font-family:'Inter',sans-serif;color:#111827;-webkit-font-smoothing:antiali
 <div class="app-wrap">
   <!-- Sidebar -->
   <nav class="sidebar" id="sidebar">
-    <a href="index.html" class="sb-brand" style="text-decoration:none;display:block;" title="Finosutra Home">
-      <div class="sb-logo">Finosutra</div>
-      <div class="sb-sub">IND AS 116 — Lease Accounting</div>
+    <a href="index.html" class="sb-brand" style="text-decoration:none;" title="Finosutra Home">
+      <img src="favicon.svg" alt="" style="width:32px;height:32px;flex-shrink:0;" aria-hidden="true"/>
+      <div>
+        <div class="sb-logo">Finosutra</div>
+        <div class="sb-sub">— Finance on Autopilot</div>
+      </div>
     </a>
 
     <div class="sb-section">Main</div>

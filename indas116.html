@@ -29,70 +29,20 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="finosutra.css?v=2"/>
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-
-body{
-  min-height:100vh;
-  background:linear-gradient(160deg,#EDEEFF 0%,#EAF0FF 40%,#F2EEFF 100%);
-  font-family:'Inter',sans-serif;
-  color:#111827;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-}
-
-header{
-  border-bottom:1px solid rgba(0,82,204,0.1);
-  padding:0 32px;
-  background:rgba(255,255,255,0.97);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
-  position:sticky;
-  top:0;
-  z-index:100;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  height:64px;
-  box-shadow:0 1px 0 rgba(0,82,204,0.08),0 4px 20px rgba(0,82,204,0.05);
-}
-
-.logo{display:flex;align-items:center;gap:12px}
-
-.logo-icon{
-  width:36px;height:36px;
-  background:linear-gradient(135deg,#0052CC,#002244);
-  border-radius:8px;display:flex;align-items:center;
-  justify-content:center;font-weight:bold;font-size:13px;color:#fff
-}
-
-.logo-name{font-size:17px;font-weight:bold;color:#1A1A2E}
-.logo-sub{font-size:10px;color:#0052CC;letter-spacing:2px;text-transform:uppercase}
-
-.badge{
-  background:linear-gradient(135deg,#0052CC,#002244);
-  color:#fff;font-size:11px;font-weight:bold;
-  padding:4px 12px;border-radius:20px
-}
-
-.top-nav{display:flex;align-items:center;gap:14px}
-.top-nav a{
-  text-decoration:none;font-size:13px;font-weight:600;color:#0052CC;
-  padding:8px 14px;border-radius:8px;background:#E8F0FF;transition:0.2s
-}
-.top-nav a:hover{background:#0052CC;color:white}
 
 .hero{padding:36px 32px 28px;max-width:1200px;margin:0 auto}
-.eyebrow{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#0052CC;margin-bottom:10px;font-weight:700}
+.eyebrow{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--fs-blue);margin-bottom:10px;font-weight:700}
 .trust-strip{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;}
 .trust-pill{display:inline-flex;align-items:center;gap:5px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:20px;padding:5px 12px;font-size:12px;font-weight:600;color:#15803D;}
-.trust-pill.indigo{background:#E8F0FF;border-color:#BAD0F8;color:#4338CA;}
+.trust-pill.indigo{background:var(--fs-blue-lt);border-color:var(--fs-blue);color:var(--fs-blue);}
 .steps-bar{max-width:1200px;margin:0 auto 20px;padding:0 32px;display:flex;align-items:flex-start;gap:0;}
 .step-item{display:flex;align-items:center;gap:8px;flex:1;}
-.step-num{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#0052CC,#002244);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.step-num{width:26px;height:26px;border-radius:50%;background:var(--fs-blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .step-text{display:flex;flex-direction:column;}
 .step-label{font-size:12px;font-weight:600;color:#374151;}
 .step-sub{font-size:10px;color:#9CA3AF;}
@@ -162,7 +112,7 @@ input:focus,select:focus{border-color:#0052CC;box-shadow:0 0 0 3px rgba(0,82,204
 
 .btn-calc{
   width:100%;padding:13px;
-  background:linear-gradient(135deg,#0052CC,#002244);
+  background:var(--fs-blue);
   border:none;border-radius:10px;font-size:14px;font-weight:700;
   color:#fff;cursor:pointer;font-family:'Inter',sans-serif;
   letter-spacing:0.3px;
@@ -240,22 +190,6 @@ input:focus,select:focus{border-color:#0052CC;box-shadow:0 0 0 3px rgba(0,82,204
   font-weight:700;
 }
 
-/* ── SITE FOOTER ── */
-.site-footer{
-  background:#002244;color:rgba(255,255,255,0.7);
-  padding:28px 32px;text-align:center;font-size:12px;line-height:1.8;
-  margin-top:40px;
-}
-.site-footer .footer-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:14px;}
-.site-footer .footer-badge{
-  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);
-  border-radius:20px;padding:4px 13px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);
-  display:inline-flex;align-items:center;gap:5px;
-}
-.site-footer .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-top:10px;}
-.site-footer .footer-links a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:11px;}
-.site-footer .footer-links a:hover{color:rgba(255,255,255,0.85);}
-.site-footer .footer-tagline{margin-top:12px;font-size:11px;color:rgba(255,255,255,0.35);}
 
 /* ── REPORTING SNAPSHOT ── */
 .snapshot-bar{
@@ -355,7 +289,7 @@ tr:nth-child(even):hover td{background:rgba(0,82,204,0.05)}
 
 .btn-exp{
   display:flex;align-items:center;gap:7px;padding:9px 18px;
-  background:linear-gradient(135deg,#0052CC,#002244);border:none;
+  background:var(--fs-blue);border:none;
   border-radius:8px;font-size:12px;font-weight:bold;color:#fff;
   cursor:pointer;font-family:'Inter',sans-serif;box-shadow:0 3px 10px rgba(0,82,204,0.3)
 }
@@ -564,17 +498,6 @@ tr:nth-child(even):hover td{background:rgba(0,82,204,0.05)}
 
 
 /* ── UNIFIED NAV (injected) ── */
-#mainNav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,82,204,0.08);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 rgba(0,82,204,0.08),0 4px 20px rgba(0,82,204,0.05);}
-#mainNav .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
-#mainNav .nav-logo{display:flex;align-items:center;text-decoration:none;}
-#mainNav .nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
-#mainNav .nav-links a{font-size:13px;font-weight:500;color:#6B7280;text-decoration:none;padding:7px 11px;border-radius:8px;transition:color .15s,background .15s;white-space:nowrap;}
-#mainNav .nav-links a:hover{color:#111827;background:#E8F0FF;}
-#mainNav .nav-back-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;font-family:'Inter',sans-serif;background:linear-gradient(135deg,#0052CC,#002244);color:#fff;box-shadow:0 3px 12px rgba(0,82,204,0.3);transition:all .15s;white-space:nowrap;}
-#mainNav .nav-back-btn:hover{background:linear-gradient(135deg,#0052CC,#7C3AED);transform:translateY(-1px);}
-#mainNav .nav-toggle{display:none;background:none;border:none;font-size:20px;color:#111827;cursor:pointer;padding:4px;}
-@media(max-width:900px){#mainNav .nav-links{display:none;}}
-@media(max-width:900px){#mainNav{padding:0 16px;}#mainNav .nav-actions{display:none;}#mainNav .nav-toggle{display:block;}#mainNav .nav-links.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid rgba(0,82,204,0.08);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
 
 /* Pro export badge on button */
 .pro-free-tag{display:inline-block;background:#D1FAE5;color:#065F46;font-size:11px;font-weight:700;padding:1px 8px;border-radius:20px;margin-left:8px;vertical-align:middle;}
@@ -654,35 +577,12 @@ function fsShortDate(d){
 }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="auth.js"></script>
+<script src="auth.js?v=2"></script>
 </head>
 
 <body>
 
-<nav id="mainNav">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
-      <img loading="eager" src="logo.png" alt="Finosutra" style="height:56px;width:auto;display:block;">
-    </a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="indas-tools.html">IND AS</a></li>
-      <li><a href="gst-tools.html">GST</a></li>
-      <li><a href="income-tax-hub.html">Income Tax</a></li>
-      <li><a href="templates.html">Templates</a></li>
-      <li><a href="blog.html">Blog</a></li>
-      <li><a href="index.html#pricing">Pricing</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
-      <li id="navAuthMobile"></li>
-    </ul>
-    <div class="nav-actions" id="navActions">
-      <a href="index.html" class="nav-back-btn">&#8592; All Tools</a>
-    </div>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-      <i class="fa-solid fa-bars"></i>
-    </button>
-  </div>
-</nav>
+<div id="fs-nav"></div>
 
 <div class="hero">
   <div class="eyebrow">Lease Accounting Calculator</div>
@@ -1174,20 +1074,9 @@ function fsCopyLink(btn){
   var li=document.getElementById('fsLiShare'); if(li) li.href='https://www.linkedin.com/sharing/share-offsite/?url='+u;
 })();
 </script>
-<footer class="site-footer">
-  <div class="footer-badges">
-    <span class="footer-badge">✓ IND AS 116 / IFRS 16 Compliant</span>
-    <span class="footer-badge">🔒 Data stored securely on Supabase</span>
-    <span class="footer-badge">🇮🇳 Made in India for Indian CAs</span>
-  </div>
-  <div class="footer-links">
-    <a href="/privacy.html">Privacy Policy</a>
-    <a href="/terms.html">Terms of Use</a>
-    <a href="mailto:hello@finosutra.com">Contact</a>
-    <a href="/blog.html">Blog</a>
-  </div>
-  <div class="footer-tagline">© 2026 Finosutra. Built for Chartered Accountants and Finance Teams across India.</div>
-</footer>
+<div id="fs-footer"></div>
+<script src="nav.js?v=2"></script>
+<script src="footer.js?v=2"></script>
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 

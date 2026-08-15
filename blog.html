@@ -1,399 +1,242 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<title>Finance & Accounting Blog — IND AS, GST, Tax Guides | Finosutra</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Finance & Accounting Blog — IND AS, GST, Tax Guides | FinoSutra</title>
 <meta name="description" content="Free finance and accounting guides for CAs, CFOs and accountants in India. IND AS 116, IND AS 109, GST, Income Tax — practical articles with journal entries and examples."/>
 <meta name="keywords" content="IND AS 116 guide, IND AS 109 security deposit, lease accounting india, finance blog CA, accounting guides india, IFRS 16 guide, journal entries ind as"/>
-<meta name="author" content="Finosutra"/>
-<meta name="robots" content="index, follow"/>
+<meta name="author" content="FinoSutra"/>
+<meta name="robots" content="index,follow"/>
 <link rel="canonical" href="https://www.finosutra.com/blog.html"/>
 <meta property="og:type" content="website"/>
-<meta property="og:site_name" content="Finosutra"/>
-<meta property="og:title" content="Finance & Accounting Blog — Finosutra"/>
+<meta property="og:site_name" content="FinoSutra"/>
+<meta property="og:title" content="Finance & Accounting Blog — FinoSutra"/>
 <meta property="og:description" content="Practical IND AS, GST and tax guides for CAs, CFOs and accountants in India."/>
 <meta property="og:url" content="https://www.finosutra.com/blog.html"/>
 <meta property="og:image" content="https://www.finosutra.com/og-image.jpg"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="Finance & Accounting Blog — Finosutra"/>
+<meta name="twitter:title" content="Finance & Accounting Blog — FinoSutra"/>
 <meta name="twitter:description" content="Practical IND AS, GST and tax guides for CAs, CFOs and accountants in India."/>
 <meta name="twitter:image" content="https://www.finosutra.com/og-image.jpg"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-<!-- GA4 -->
+<link rel="stylesheet" href="finosutra.css?v=2"/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
-<style>
-:root{
-  --brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;--brand-mid:#C7D2FE;
-  --bg:#F9FAFB;--card:#FFFFFF;--border:rgba(99,102,241,0.18);--border-light:rgba(99,102,241,0.08);
-  --text:#111827;--muted:#6B7280;--muted2:#9CA3AF;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:linear-gradient(160deg,#EDEEFF 0%,#EAF0FF 40%,#F2EEFF 100%);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;min-height:100vh;-webkit-font-smoothing:antialiased;}
-
-/* NAV */
-nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-light);padding:0 32px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 0 var(--border-light),0 4px 20px rgba(99,102,241,0.05)}
-.nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
-.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
-.nav-logo img{height:44px;width:auto;}
-.nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
-.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;padding:7px 12px;border-radius:8px;transition:color .15s,background .15s;white-space:nowrap;}
-.nav-links a:hover,.nav-links a.active{color:var(--text);background:var(--brand-light);}
-.nav-actions{display:flex;align-items:center;gap:8px;}
-.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-size:13px;font-weight:700;border-radius:10px;text-decoration:none;transition:opacity .15s;}
-.nav-btn:hover{opacity:.88;}
-.nav-toggle{display:none;background:none;border:none;font-size:20px;color:var(--text);cursor:pointer;padding:8px;}
-@media(max-width:900px){.nav-links{display:none;}}
-@media(max-width:900px){nav{padding:0 16px;}.nav-actions{display:none;}.nav-toggle{display:block;}.nav-links.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid var(--border-light);padding:12px 20px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:999;}}
-
-/* HERO */
-.blog-hero{max-width:1160px;margin:0 auto;padding:52px 32px 40px;}
-.blog-hero-label{display:inline-block;background:var(--brand-light);color:var(--brand);font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.5px;margin-bottom:16px;}
-.blog-hero h1{font-size:clamp(28px,4vw,42px);font-weight:800;color:var(--text);line-height:1.15;letter-spacing:-0.5px;margin-bottom:14px;}
-.blog-hero h1 span{background:linear-gradient(135deg,#6366F1,#8B5CF6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.blog-hero p{font-size:16px;color:var(--muted);max-width:560px;line-height:1.65;}
-
-/* FILTERS */
-.blog-filters{max-width:1160px;margin:0 auto;padding:0 32px 28px;display:flex;gap:8px;flex-wrap:wrap;}
-.filter-btn{background:#fff;border:1.5px solid var(--border);color:var(--muted);font-size:13px;font-weight:600;padding:7px 16px;border-radius:20px;cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif;}
-.filter-btn:hover,.filter-btn.active{background:var(--brand);border-color:var(--brand);color:#fff;}
-
-/* GRID */
-.blog-grid{max-width:1160px;margin:0 auto;padding:0 32px 64px;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;}
-
-/* CARD */
-.blog-card{background:#fff;border-radius:18px;border:1px solid var(--border-light);box-shadow:0 2px 16px rgba(99,102,241,0.06);overflow:hidden;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column;}
-.blog-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(99,102,241,0.13);}
-.blog-card-badge{padding:22px 24px 0;}
-.blog-card-tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.4px;}
-.tag-indas{background:#EEF2FF;color:#4F46E5;}
-.tag-gst{background:#ECFDF5;color:#059669;}
-.tag-tax{background:#FFF7ED;color:#D97706;}
-.blog-card-body{padding:16px 24px 20px;flex:1;}
-.blog-card-body h2{font-size:17px;font-weight:800;color:var(--text);line-height:1.35;margin-bottom:10px;letter-spacing:-0.2px;}
-.blog-card-body p{font-size:13px;color:var(--muted);line-height:1.6;}
-.blog-card-meta{padding:0 24px 20px;display:flex;align-items:center;justify-content:space-between;}
-.blog-meta-info{font-size:12px;color:var(--muted2);}
-.blog-read-link{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:700;color:var(--brand);text-decoration:none;transition:gap .15s;}
-.blog-read-link:hover{gap:8px;}
-
-/* COMING SOON CARD */
-.blog-card-soon{background:linear-gradient(135deg,#F9FAFB,#F3F4F6);border:1.5px dashed var(--border-mid,#C7D2FE);}
-.blog-card-soon .blog-card-body h2{color:var(--muted);}
-
-/* CTA BANNER */
-.blog-cta{max-width:1160px;margin:0 auto 64px;padding:0 32px;}
-.blog-cta-inner{background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:20px;padding:36px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
-.blog-cta-text h3{font-size:20px;font-weight:800;color:#fff;margin-bottom:6px;}
-.blog-cta-text p{font-size:14px;color:rgba(255,255,255,.8);}
-.blog-cta-btn{background:#fff;color:var(--brand);font-size:14px;font-weight:700;padding:13px 26px;border-radius:10px;text-decoration:none;white-space:nowrap;transition:transform .15s,box-shadow .15s;display:inline-block;}
-.blog-cta-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.15);}
-
-/* FOOTER */
-footer{background:#111827;padding:48px 32px 28px;color:#9CA3AF;}
-.footer-inner{max-width:1160px;margin:0 auto;}
-.footer-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px;margin-bottom:36px;}
-.footer-brand p{font-size:13px;color:#6B7280;margin-top:8px;max-width:260px;line-height:1.6;}
-.footer-col h4{font-size:12px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;}
-.footer-col ul{list-style:none;}
-.footer-col ul li{margin-bottom:8px;}
-.footer-col ul li a{font-size:13px;color:#6B7280;text-decoration:none;transition:color .15s;}
-.footer-col ul li a:hover{color:#fff;}
-.footer-bottom{border-top:1px solid #1F2937;padding-top:20px;display:flex;flex-direction:column;gap:4px;}
-.footer-bottom p{font-size:12px;}
-
-@media(max-width:600px){.blog-grid{grid-template-columns:1fr;padding:0 16px 48px;}.blog-hero{padding:36px 16px 28px;}.blog-filters{padding:0 16px 20px;}.blog-cta{padding:0 16px;}.blog-cta-inner{padding:28px 24px;}}
-</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="auth.js"></script>
+<script src="auth.js?v=2"></script>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
-      <img src="logo.png" alt="Finosutra" style="height:44px;width:auto;">
-    </a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="indas-tools.html">IND AS</a></li>
-      <li><a href="gst-tools.html">GST</a></li>
-      <li><a href="income-tax-hub.html">Income Tax</a></li>
-      <li><a href="templates.html">Templates</a></li>
-      <li><a href="blog.html" class="active">Blog</a></li>
-      <li><a href="index.html#pricing">Pricing</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
-      <li id="navAuthMobile"></li>
-    </ul>
-    <div class="nav-actions" id="navActions">
-      <a href="indas116.html" class="nav-btn"><i class="fa-solid fa-bolt"></i> Try IND AS 116</a>
-    </div>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><i class="fa-solid fa-bars"></i></button>
-  </div>
-</nav>
+<div id="fs-nav"></div>
 
-<section class="blog-hero">
-  <div class="blog-hero-label">📚 Knowledge Hub</div>
+<section class="fs-blog-hero">
+  <div class="fs-blog-hero-label">Knowledge Hub</div>
   <h1>Finance &amp; Accounting<br><span>Guides for India</span></h1>
   <p>Practical articles on IND AS, GST, Income Tax and more — written for CAs, CFOs and finance teams. Free, no fluff, with real journal entry examples.</p>
 </section>
 
-<div class="blog-filters">
-  <button class="filter-btn active">All</button>
-  <button class="filter-btn">IND AS</button>
-  <button class="filter-btn">GST</button>
-  <button class="filter-btn">Income Tax</button>
+<div class="fs-wrap" style="padding-bottom:28px;">
+  <div style="display:flex;gap:8px;flex-wrap:wrap;">
+    <button class="fs-chip active" data-filter="all">All</button>
+    <button class="fs-chip" data-filter="indas">IND AS</button>
+    <button class="fs-chip" data-filter="gst">GST</button>
+    <button class="fs-chip" data-filter="tax">Income Tax</button>
+  </div>
 </div>
 
-<div class="blog-grid">
+<div class="fs-wrap" style="padding-bottom:64px;">
+<div class="fs-blog-grid" id="blogGrid">
 
-  <!-- Article: IND AS 12 Deferred Tax -->
-  <div class="blog-card">
-    <div class="blog-card-badge"><span class="blog-card-tag tag-indas">IND AS 12 / IAS 12</span></div>
-    <div class="blog-card-body">
-      <h2>Deferred Tax under IND AS 12 — DTA, DTL, Temporary Differences &amp; Journal Entries</h2>
+  <div class="fs-blog-card" data-cat="indas">
+    <div class="fs-blog-card-badge"><span class="fs-blog-tag fs-blog-tag-indas">IND AS 12 / IAS 12</span></div>
+    <div class="fs-blog-card-body">
+      <h3>Deferred Tax under IND AS 12 — DTA, DTL, Temporary Differences &amp; Journal Entries</h3>
       <p>Complete guide to deferred tax for Indian CAs — temporary differences, taxable vs deductible, step-by-step depreciation example, full journal entries for creating and reversing DTA/DTL, and common mistakes to avoid.</p>
     </div>
-    <div class="blog-card-meta">
-      <span class="blog-meta-info">July 2026 &nbsp;·&nbsp; 12 min read</span>
-      <a href="blog/ind-as-12-deferred-tax.html" class="blog-read-link">Read →</a>
+    <div class="fs-blog-card-meta">
+      <span class="fs-blog-meta">July 2026 &middot; 12 min read</span>
+      <a href="blog/ind-as-12-deferred-tax.html" class="fs-blog-link">Read <i class="fa-solid fa-arrow-right" style="font-size:11px;"></i></a>
     </div>
   </div>
 
-  <!-- Article: IBR under IND AS 116 -->
-  <div class="blog-card">
-    <div class="blog-card-badge"><span class="blog-card-tag tag-indas">IND AS 116</span></div>
-    <div class="blog-card-body">
-      <h2>Incremental Borrowing Rate (IBR) under IND AS 116 — How to Determine It in India</h2>
+  <div class="fs-blog-card" data-cat="indas">
+    <div class="fs-blog-card-badge"><span class="fs-blog-tag fs-blog-tag-indas">IND AS 116</span></div>
+    <div class="fs-blog-card-body">
+      <h3>Incremental Borrowing Rate (IBR) under IND AS 116 — How to Determine It in India</h3>
       <p>Auditor-ready methodology for deriving IBR in India — SBI MCLR approach, credit spreads by entity type, full worked example, sensitivity table and the one-page documentation workpaper auditors expect.</p>
     </div>
-    <div class="blog-card-meta">
-      <span class="blog-meta-info">July 2026 &nbsp;·&nbsp; 16 min read</span>
-      <a href="blog/ind-as-116-ibr-incremental-borrowing-rate.html" class="blog-read-link">Read →</a>
+    <div class="fs-blog-card-meta">
+      <span class="fs-blog-meta">July 2026 &middot; 16 min read</span>
+      <a href="blog/ind-as-116-ibr-incremental-borrowing-rate.html" class="fs-blog-link">Read <i class="fa-solid fa-arrow-right" style="font-size:11px;"></i></a>
     </div>
   </div>
 
-  <!-- Article: IND AS 117 Insurance Contracts -->
-  <div class="blog-card">
-    <div class="blog-card-badge"><span class="blog-card-tag tag-indas">IND AS 117 / IFRS 17</span></div>
-    <div class="blog-card-body">
-      <h2>IND AS 117 / IFRS 17 Insurance Contracts — Complete Guide with Worked Examples</h2>
+  <div class="fs-blog-card" data-cat="indas">
+    <div class="fs-blog-card-badge"><span class="fs-blog-tag fs-blog-tag-indas">IND AS 117 / IFRS 17</span></div>
+    <div class="fs-blog-card-body">
+      <h3>IND AS 117 / IFRS 17 Insurance Contracts — Complete Guide with Worked Examples</h3>
       <p>GMM, PAA and VFA measurement models explained plainly. CSM concept, insurance revenue vs premium received, two full worked examples (motor PAA + life GMM), transition approaches and key disclosures.</p>
     </div>
-    <div class="blog-card-meta">
-      <span class="blog-meta-info">July 2026 &nbsp;·&nbsp; 16 min read</span>
-      <a href="blog/ind-as-117-insurance-contracts.html" class="blog-read-link">Read →</a>
+    <div class="fs-blog-card-meta">
+      <span class="fs-blog-meta">July 2026 &middot; 16 min read</span>
+      <a href="blog/ind-as-117-insurance-contracts.html" class="fs-blog-link">Read <i class="fa-solid fa-arrow-right" style="font-size:11px;"></i></a>
     </div>
   </div>
 
-  <!-- Article: Capital Gains Tax India FY 2025-26 -->
-  <div class="blog-card">
-    <div class="blog-card-badge"><span class="blog-card-tag tag-tax">Income Tax</span></div>
-    <div class="blog-card-body">
-      <h2>Capital Gains Tax India FY 2025-26: Complete Guide with Worked Examples</h2>
+  <div class="fs-blog-card" data-cat="tax">
+    <div class="fs-blog-card-badge"><span class="fs-blog-tag fs-blog-tag-tax">Income Tax</span></div>
+    <div class="fs-blog-card-body">
+      <h3>Capital Gains Tax India FY 2025-26: Complete Guide with Worked Examples</h3>
       <p>Finance Act 2024 rates on equity, property, gold and debt MF. LTCG 12.5%, STCG 20%, grandfathering for pre-2018 equity, indexation option for property — with comprehensive worked examples for AY 2026-27.</p>
     </div>
-    <div class="blog-card-meta">
-      <span class="blog-meta-info">July 2026 &nbsp;·&nbsp; 15 min read</span>
-      <a href="blog/capital-gains-tax-india-2025-26.html" class="blog-read-link">Read →</a>
+    <div class="fs-blog-card-meta">
+      <span class="fs-blog-meta">July 2026 &middot; 15 min read</span>
+      <a href="blog/capital-gains-tax-india-2025-26.html" class="fs-blog-link">Read <i class="fa-solid fa-arrow-right" style="font-size:11px;"></i></a>
     </div>
   </div>
 
-  <!-- Article: Lease Accounting Step by Step -->
-  <div class="blog-card">
-    <div class="blog-card-badge"><span class="blog-card-tag tag-indas">IND AS 116</span></div>
-    <div class="blog-card-body">
-      <h2>Lease Accounting as per IND AS 116 — Step by Step with Example</h2>
+  <div class="fs-blog-card" data-cat="indas">
+    <div class="fs-blog-card-badge"><span class="fs-blog-tag fs-blog-tag-indas">IND AS 116</span></div>
+    <div class="fs-blog-card-body">
+      <h3>Lease Accounting as per IND AS 116 — Step by Step with Example</h3>
       <p>Full worked example from Day 1 to Year 3 — ROU asset, lease liability, amortization schedule and all journal entries explained clearly for CAs and finance teams.</p>
     </div>
-    <div class="blog-card-meta">
-      <span class="blog-meta-info">July 2026 &nbsp;·&nbsp; 12 min read</span>
-      <a href="blog/lease-accounting-ind-as-116-with-example.html" class="blog-read-link">Read →</a>
+    <div class="fs-blog-card-meta">
+      <span class="fs-blog-meta">July 2026 &middot; 12 min read</span>
+      <a href="blog/lease-accounting-ind-as-116-with-example.html" class="fs-blog-link">Read <i class="fa-solid fa-arrow-right" style="font-size:11px;"></i></a>
     </div>
   </div>
 
-  <!-- Article: IND AS 116 Step by Step Example -->
-  <div class="blog-card">
-    <div class="blog-card-badge"><span class="blog-card-tag tag-indas">IND AS 116</span></div>
-    <div class="blog-card-body">
-      <h2>IND AS 116 Lease Accounting — Step by Step Example with Full Schedule</h2>
+  <div class="fs-blog-card" data-cat="indas">
+    <div class="fs-blog-card-badge"><span class="fs-blog-tag fs-blog-tag-indas">IND AS 116</span></div>
+    <div class="fs-blog-card-body">
+      <h3>IND AS 116 Lease Accounting — Step by Step Example with Full Schedule</h3>
       <p>Complete walkthrough from commencement date to termination — PV calculation, amortisation table, ROU depreciation, all 4 journal entries and balance sheet impact, with a real India office lease example.</p>
     </div>
-    <div class="blog-card-meta">
-      <span class="blog-meta-info">July 2026 &nbsp;·&nbsp; 14 min read</span>
-      <a href="blog/ind-as-116-lease-accounting-step-by-step-example.html" class="blog-read-link">Read →</a>
+    <div class="fs-blog-card-meta">
+      <span class="fs-blog-meta">July 2026 &middot; 14 min read</span>
+      <a href="blog/ind-as-116-lease-accounting-step-by-step-example.html" class="fs-blog-link">Read <i class="fa-solid fa-arrow-right" style="font-size:11px;"></i></a>
     </div>
   </div>
 
-  <!-- Article: Lease Modification -->
-  <div class="blog-card">
-    <div class="blog-card-badge"><span class="blog-card-tag tag-indas">IND AS 116</span></div>
-    <div class="blog-card-body">
-      <h2>Lease Modification under IND AS 116 — Para 45 and 46 Explained</h2>
+  <div class="fs-blog-card" data-cat="indas">
+    <div class="fs-blog-card-badge"><span class="fs-blog-tag fs-blog-tag-indas">IND AS 116</span></div>
+    <div class="fs-blog-card-body">
+      <h3>Lease Modification under IND AS 116 — Para 45 and 46 Explained</h3>
       <p>When does a lease change become a modification? Para 45 remeasurement, Para 46a scope reduction and Para 46b new lease — with decision tree, worked examples and journal entries.</p>
     </div>
-    <div class="blog-card-meta">
-      <span class="blog-meta-info">July 2026 &nbsp;·&nbsp; 14 min read</span>
-      <a href="blog/ind-as-116-lease-modification.html" class="blog-read-link">Read →</a>
+    <div class="fs-blog-card-meta">
+      <span class="fs-blog-meta">July 2026 &middot; 14 min read</span>
+      <a href="blog/ind-as-116-lease-modification.html" class="fs-blog-link">Read <i class="fa-solid fa-arrow-right" style="font-size:11px;"></i></a>
     </div>
   </div>
 
-  <!-- Article: ECL Provision Matrix -->
-  <div class="blog-card">
-    <div class="blog-card-badge"><span class="blog-card-tag tag-indas">IND AS 109</span></div>
-    <div class="blog-card-body">
-      <h2>ECL Provision Matrix under IND AS 109 — Step-by-Step with Worked Example</h2>
+  <div class="fs-blog-card" data-cat="indas">
+    <div class="fs-blog-card-badge"><span class="fs-blog-tag fs-blog-tag-indas">IND AS 109</span></div>
+    <div class="fs-blog-card-body">
+      <h3>ECL Provision Matrix under IND AS 109 — Step-by-Step with Worked Example</h3>
       <p>Build an Expected Credit Loss provision matrix for trade receivables — ageing buckets, loss rates, forward-looking adjustments and journal entries, with a full worked example for a textile manufacturer.</p>
     </div>
-    <div class="blog-card-meta">
-      <span class="blog-meta-info">July 2026 &nbsp;·&nbsp; 12 min read</span>
-      <a href="blog/ecl-provision-matrix-ind-as-109.html" class="blog-read-link">Read →</a>
+    <div class="fs-blog-card-meta">
+      <span class="fs-blog-meta">July 2026 &middot; 12 min read</span>
+      <a href="blog/ecl-provision-matrix-ind-as-109.html" class="fs-blog-link">Read <i class="fa-solid fa-arrow-right" style="font-size:11px;"></i></a>
     </div>
   </div>
 
-  <!-- Article: IND AS vs IFRS -->
-  <div class="blog-card">
-    <div class="blog-card-badge"><span class="blog-card-tag tag-indas">IND AS vs IFRS</span></div>
-    <div class="blog-card-body">
-      <h2>IND AS vs IFRS: Key Differences Every CA and CFO Must Know</h2>
+  <div class="fs-blog-card" data-cat="indas">
+    <div class="fs-blog-card-badge"><span class="fs-blog-tag fs-blog-tag-indas">IND AS vs IFRS</span></div>
+    <div class="fs-blog-card-body">
+      <h3>IND AS vs IFRS: Key Differences Every CA and CFO Must Know</h3>
       <p>Carve-outs, deferrals, and India-specific modifications explained across goodwill, hedge accounting, leases, employee benefits and more — with a master comparison table.</p>
     </div>
-    <div class="blog-card-meta">
-      <span class="blog-meta-info">July 2026 &nbsp;·&nbsp; 16 min read</span>
-      <a href="blog/ind-as-vs-ifrs-key-differences.html" class="blog-read-link">Read →</a>
+    <div class="fs-blog-card-meta">
+      <span class="fs-blog-meta">July 2026 &middot; 16 min read</span>
+      <a href="blog/ind-as-vs-ifrs-key-differences.html" class="fs-blog-link">Read <i class="fa-solid fa-arrow-right" style="font-size:11px;"></i></a>
     </div>
   </div>
 
-  <!-- Article 1: IND AS 116 -->
-  <div class="blog-card">
-    <div class="blog-card-badge"><span class="blog-card-tag tag-indas">IND AS 116</span></div>
-    <div class="blog-card-body">
-      <h2>IND AS 116 / IFRS 16 Lease Accounting: Complete Guide with Journal Entries</h2>
+  <div class="fs-blog-card" data-cat="indas">
+    <div class="fs-blog-card-badge"><span class="fs-blog-tag fs-blog-tag-indas">IND AS 116</span></div>
+    <div class="fs-blog-card-body">
+      <h3>IND AS 116 / IFRS 16 Lease Accounting: Complete Guide with Journal Entries</h3>
       <p>Step-by-step guide to recognising ROU assets, lease liabilities, amortisation schedules and journal entries under IND AS 116. Includes worked example.</p>
     </div>
-    <div class="blog-card-meta">
-      <span class="blog-meta-info">June 2026 &nbsp;·&nbsp; 10 min read</span>
-      <a href="blog/ind-as-116-lease-accounting-guide.html" class="blog-read-link">Read →</a>
+    <div class="fs-blog-card-meta">
+      <span class="fs-blog-meta">June 2026 &middot; 10 min read</span>
+      <a href="blog/ind-as-116-lease-accounting-guide.html" class="fs-blog-link">Read <i class="fa-solid fa-arrow-right" style="font-size:11px;"></i></a>
     </div>
   </div>
 
-  <!-- Article 2: IND AS 109 Security Deposit -->
-  <div class="blog-card">
-    <div class="blog-card-badge"><span class="blog-card-tag tag-indas">IND AS 109</span></div>
-    <div class="blog-card-body">
-      <h2>Security Deposit Accounting under IND AS 109 — Journal Entries &amp; Examples</h2>
+  <div class="fs-blog-card" data-cat="indas">
+    <div class="fs-blog-card-badge"><span class="fs-blog-tag fs-blog-tag-indas">IND AS 109</span></div>
+    <div class="fs-blog-card-body">
+      <h3>Security Deposit Accounting under IND AS 109 — Journal Entries &amp; Examples</h3>
       <p>How to account for refundable security deposits under IND AS 109 / IFRS 9. Covers fair value, Day 1 discount, EIR amortisation and balance sheet impact.</p>
     </div>
-    <div class="blog-card-meta">
-      <span class="blog-meta-info">June 2026 &nbsp;·&nbsp; 8 min read</span>
-      <a href="blog/ind-as-109-security-deposit-accounting.html" class="blog-read-link">Read →</a>
+    <div class="fs-blog-card-meta">
+      <span class="fs-blog-meta">June 2026 &middot; 8 min read</span>
+      <a href="blog/ind-as-109-security-deposit-accounting.html" class="fs-blog-link">Read <i class="fa-solid fa-arrow-right" style="font-size:11px;"></i></a>
     </div>
   </div>
 
-  <!-- Coming Soon: GST -->
-  <div class="blog-card blog-card-soon">
-    <div class="blog-card-badge"><span class="blog-card-tag tag-gst">GST</span></div>
-    <div class="blog-card-body">
-      <h2>GSTR-2B Reconciliation: Step-by-Step Guide for CAs</h2>
+  <div class="fs-blog-card fs-blog-soon" data-cat="gst">
+    <div class="fs-blog-card-badge"><span class="fs-blog-tag fs-blog-tag-gst">GST</span></div>
+    <div class="fs-blog-card-body">
+      <h3>GSTR-2B Reconciliation: Step-by-Step Guide for CAs</h3>
       <p>Coming soon — How to reconcile GSTR-2B with purchase register, handle mismatches and claim maximum ITC without notices.</p>
     </div>
-    <div class="blog-card-meta">
-      <span class="blog-meta-info">Coming soon</span>
-      <span style="font-size:13px;color:var(--muted2);font-weight:600;">🔔 Soon</span>
+    <div class="fs-blog-card-meta">
+      <span class="fs-blog-meta">Coming soon</span>
     </div>
   </div>
 
-  <!-- Coming Soon: Income Tax -->
-  <div class="blog-card blog-card-soon">
-    <div class="blog-card-badge"><span class="blog-card-tag tag-tax">Income Tax</span></div>
-    <div class="blog-card-body">
-      <h2>New Tax Regime vs Old Tax Regime FY 2026-27: Which is Better?</h2>
+  <div class="fs-blog-card fs-blog-soon" data-cat="tax">
+    <div class="fs-blog-card-badge"><span class="fs-blog-tag fs-blog-tag-tax">Income Tax</span></div>
+    <div class="fs-blog-card-body">
+      <h3>New Tax Regime vs Old Tax Regime FY 2026-27: Which is Better?</h3>
       <p>Coming soon — A structured comparison with salary slabs, deductions and worked examples to help you choose the right regime.</p>
     </div>
-    <div class="blog-card-meta">
-      <span class="blog-meta-info">Coming soon</span>
-      <span style="font-size:13px;color:var(--muted2);font-weight:600;">🔔 Soon</span>
+    <div class="fs-blog-card-meta">
+      <span class="fs-blog-meta">Coming soon</span>
     </div>
   </div>
 
 </div>
+</div>
 
-<div class="blog-cta">
-  <div class="blog-cta-inner">
-    <div class="blog-cta-text">
-      <h3>Don't just read — calculate instantly</h3>
-      <p>Use our free IND AS calculators to get schedules, journal entries and audit-ready Excel reports in under 60 seconds.</p>
+<div class="fs-wrap" style="padding-bottom:64px;">
+  <div class="fs-cta-banner">
+    <div>
+      <div class="fs-cta-banner-title">Don't just read — calculate instantly</div>
+      <div class="fs-cta-banner-desc">Use our free IND AS calculators to get schedules, journal entries and audit-ready Excel reports in under 60 seconds.</div>
     </div>
-    <a href="indas-tools.html" class="blog-cta-btn">Explore Free Tools →</a>
+    <a href="indas-tools.html" class="fs-btn fs-btn-primary">Explore Free Tools <i class="fa-solid fa-arrow-right"></i></a>
   </div>
 </div>
 
-<footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <img src="logo.png" alt="Finosutra" style="height:36px;filter:brightness(0) invert(1);opacity:.85;">
-        <p>Finance on Autopilot. Free tools and guides for CAs, CFOs and finance teams in India.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Tools</h4>
-        <ul>
-          <li><a href="indas116.html">IND AS 116 Calculator</a></li>
-          <li><a href="security-deposit.html">Security Deposit</a></li>
-          <li><a href="india-tax-calculator.html">Income Tax</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Learn</h4>
-        <ul>
-          <li><a href="blog.html">Blog</a></li>
-          <li><a href="blog/ind-as-116-lease-accounting-guide.html">IND AS 116 Guide</a></li>
-          <li><a href="blog/ind-as-109-security-deposit-accounting.html">IND AS 109 Guide</a></li>
-          <li><a href="templates.html">Templates</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="index.html#pricing">Pricing</a></li>
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="terms.html">Terms of Service</a></li>
-          <li><a href="mailto:hello@finosutra.com">Contact</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2026 Finosutra. All rights reserved. Made with care in Mumbai, India. GSTIN: 27ACWPW1076G1ZX</p>
-      <p><a href="privacy.html" style="color:#6B7280;text-decoration:none;">Privacy</a> &nbsp;·&nbsp; <a href="terms.html" style="color:#6B7280;text-decoration:none;">Terms</a> &nbsp;·&nbsp; <a href="mailto:hello@finosutra.com" style="color:#6B7280;text-decoration:none;">hello@finosutra.com</a></p>
-    </div>
-  </div>
-</footer>
+<div id="fs-footer"></div>
 
+<script src="nav.js?v=2"></script>
+<script src="footer.js?v=2"></script>
 <script>
 (function(){
-  var t=document.getElementById('navToggle');
-  if(!t)return;
-  t.onclick=function(){
-    var l=document.getElementById('navLinks');
-    if(l)l.classList.toggle('open');
-    var i=this.querySelector('i');
-    if(i)i.className=l&&l.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-bars';
-  };
-  // Filter buttons (UI only for now)
-  document.querySelectorAll('.filter-btn').forEach(function(btn){
-    btn.addEventListener('click',function(){
-      document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
+  var chips = document.querySelectorAll('.fs-chip[data-filter]');
+  var cards = document.querySelectorAll('.fs-blog-card[data-cat]');
+  chips.forEach(function(chip){
+    chip.addEventListener('click', function(){
+      chips.forEach(function(c){ c.classList.remove('active'); });
       this.classList.add('active');
+      var f = this.getAttribute('data-filter');
+      cards.forEach(function(card){
+        card.style.display = (f === 'all' || card.getAttribute('data-cat') === f) ? '' : 'none';
+      });
     });
   });
 })();
 </script>
-
 </body>
 </html>
-
-
