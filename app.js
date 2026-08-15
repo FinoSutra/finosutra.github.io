@@ -342,7 +342,7 @@ function renderDashOnboarding(){
     '<div class="ob-wrap">'+
       '<div class="ob-welcome">'+
         '<div style="font-size:36px;margin-bottom:10px;">👋</div>'+
-        '<h2>Welcome to FinoSutra</h2>'+
+        '<h2>Welcome to Finosutra</h2>'+
         '<p>You\'re 3 steps away from your first IND AS 116 lease calculation.</p>'+
       '</div>'+
       '<div class="ob-steps">'+

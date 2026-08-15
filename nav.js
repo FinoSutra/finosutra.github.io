@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════
-   nav.js — FinoSutra shared navigation
+   nav.js — Finosutra shared navigation
    Injected into every page so there's one copy to maintain.
    ═══════════════════════════════════════════════════════════════════ */
 (function () {
@@ -19,7 +19,10 @@
 
   var links = [
     { label: 'Tools', href: '#', dropdown: true },
-    { label: 'Resources', href: '/blog.html' },
+    { label: 'Resources', href: '#', simpleDropdown: [
+        { label: 'Blog', href: '/blog.html' },
+        { label: 'Templates & Workpapers', href: '/templates.html' }
+      ] },
     { label: 'Pricing', href: '/index.html#pricing' }
   ];
 
@@ -52,8 +55,7 @@
       items: [
         { label: 'All IND AS Tools', href: '/indas-tools.html' },
         { label: 'All GST Tools', href: '/gst-tools.html' },
-        { label: 'All Income Tax Tools', href: '/income-tax-hub.html' },
-        { label: 'Templates & Workpapers', href: '/templates.html' }
+        { label: 'All Income Tax Tools', href: '/income-tax-hub.html' }
       ]
     }
   ];
@@ -86,6 +88,23 @@
     return dd;
   }
 
+  function buildSimpleDropdown(items) {
+    var dd = document.createElement('div');
+    dd.className = 'fs-nav-dropdown fs-nav-dropdown-simple';
+    dd.setAttribute('role', 'menu');
+
+    items.forEach(function (item) {
+      var a = document.createElement('a');
+      a.href = item.href;
+      a.textContent = item.label;
+      a.setAttribute('role', 'menuitem');
+      if (isActive(item.href)) a.className = 'active';
+      dd.appendChild(a);
+    });
+
+    return dd;
+  }
+
   function buildNav() {
     var nav = document.createElement('nav');
     nav.className = 'fs-nav';
@@ -99,7 +118,7 @@
     var logo = document.createElement('a');
     logo.href = '/index.html';
     logo.className = 'fs-nav-logo';
-    logo.setAttribute('aria-label', 'FinoSutra home — Finance on Autopilot');
+    logo.setAttribute('aria-label', 'Finosutra home — Finance on Autopilot');
     var logoImg = document.createElement('img');
     logoImg.src = '/favicon.svg';
     logoImg.alt = '';
@@ -129,7 +148,7 @@
     links.forEach(function (lk) {
       var li = document.createElement('li');
 
-      if (lk.dropdown) {
+      if (lk.dropdown || lk.simpleDropdown) {
         li.className = 'fs-nav-dd-trigger';
         li.style.position = 'relative';
         var a = document.createElement('a');
@@ -144,7 +163,7 @@
         a.appendChild(caret);
         a.addEventListener('click', function (e) { e.preventDefault(); });
         li.appendChild(a);
-        li.appendChild(buildDropdown());
+        li.appendChild(lk.dropdown ? buildDropdown() : buildSimpleDropdown(lk.simpleDropdown));
       } else {
         var a2 = document.createElement('a');
         a2.href = lk.href;

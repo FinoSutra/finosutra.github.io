@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════
-   footer.js — FinoSutra shared footer
+   footer.js — Finosutra shared footer
    Injected into every page so there's one copy to maintain.
    ═══════════════════════════════════════════════════════════════════ */
 (function () {
@@ -103,7 +103,7 @@
       { href: 'mailto:hello@finosutra.com', icon: 'envelope', label: 'Email' },
       { href: 'https://wa.me/918208063319', icon: 'whatsapp', label: 'WhatsApp', brand: true },
       { href: 'https://www.linkedin.com/company/finosutra07/', icon: 'linkedin-in', label: 'LinkedIn', brand: true },
-      { href: 'https://www.youtube.com/@Finosutra', icon: 'youtube', label: 'YouTube', brand: true }
+      { href: 'https://www.youtube.com/@cakrishnaswadekar07', icon: 'youtube', label: 'YouTube', brand: true }
     ];
 
     socialLinks.forEach(function (s) {
@@ -149,7 +149,7 @@
 
     var copy = document.createElement('p');
     var year = new Date().getFullYear();
-    copy.textContent = '© ' + year + ' FinoSutra. All rights reserved. Made with care in Mumbai, India.';
+    copy.textContent = '© ' + year + ' Finosutra. All rights reserved. Made with care in Mumbai, India.';
     bottom.appendChild(copy);
 
     var legalLinks = document.createElement('p');
