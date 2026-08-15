@@ -2075,10 +2075,14 @@ h4 { font-size: 16px; }
 }
 
 /* Mobile nav */
+#navAuthMobile { display: none; }
+.fs-nav-links.open #navAuthMobile { display: block; }
 @media (max-width: 900px) {
   .fs-nav-inner { padding: 0 20px; }
   .fs-nav-links { display: none; }
-  .fs-nav-actions .fs-btn-ghost { display: none; }
+  .fs-nav-actions .fs-btn-ghost,
+  .fs-nav-actions .fs-nav-login-btn,
+  .fs-nav-actions .fs-nav-user-wrap { display: none; }
   .fs-nav-toggle { display: block; }
 
   .fs-nav-links.open {
