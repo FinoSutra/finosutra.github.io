@@ -64,8 +64,8 @@
       '.fs-auth-submit:hover{background:#0E161C;box-shadow:0 10px 24px -6px rgba(21,34,44,.55);}.fs-auth-submit:disabled{opacity:.55;cursor:not-allowed;box-shadow:none;}',
       '.fs-auth-link{background:none;border:none;color:#B8862E;font-size:13px;font-weight:600;cursor:pointer;text-decoration:underline;padding:0;font-family:Inter,sans-serif;}',
       /* NAV AUTH */
-      '.fs-nav-login-btn{background:none;border:1.5px solid #2563EB;color:#2563EB;padding:6px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;font-family:Inter,sans-serif;white-space:nowrap;}',
-      '.fs-nav-login-btn:hover{background:#EFF6FF;}',
+      '.fs-nav-login-btn{background:none;border:1.5px solid #0B1220;color:#0B1220;padding:6px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;font-family:Inter,sans-serif;white-space:nowrap;}',
+      '.fs-nav-login-btn:hover{background:#F3F4F6;}',
       '.fs-nav-user-wrap{display:flex;align-items:center;gap:8px;}',
       '.fs-nav-user-email{font-size:12px;color:#6B7280;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}',
       '.fs-nav-pro-badge{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-size:10px;font-weight:800;padding:2px 8px;border-radius:20px;letter-spacing:.5px;}',
