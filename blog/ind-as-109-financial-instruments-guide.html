@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>IND AS 109 Financial Instruments — Classification, Recognition &amp; Measurement Explained | Finosutra</title>
+<meta name="description" content="Complete guide to IND AS 109 Financial Instruments — the business model and SPPI tests, amortised cost vs FVOCI vs FVTPL classification, initial and subsequent measurement, impairment, derecognition and hedge accounting, with a full worked example."/>
+<meta name="keywords" content="IND AS 109 financial instruments, IND AS 109 classification, SPPI test, business model test, amortised cost FVOCI FVTPL, IND AS 109 measurement, IFRS 9 India, IND AS 109 derecognition, IND AS 109 hedge accounting, financial instruments accounting india"/>
+<meta name="author" content="Finosutra"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://www.finosutra.com/blog/ind-as-109-financial-instruments-guide.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Finosutra"/>
+<meta property="og:title" content="IND AS 109 Financial Instruments — Classification, Recognition & Measurement Explained"/>
+<meta property="og:description" content="The business model and SPPI tests, amortised cost vs FVOCI vs FVTPL, initial and subsequent measurement, impairment, derecognition and hedge accounting — with a full worked example."/>
+<meta property="og:url" content="https://www.finosutra.com/blog/ind-as-109-financial-instruments-guide.html"/>
+<meta property="og:image" content="https://www.finosutra.com/og-image.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="IND AS 109 Financial Instruments — Complete Guide"/>
+<meta name="twitter:description" content="Classification, recognition, measurement, impairment and derecognition under IND AS 109 — with a full worked example."/>
+<meta name="twitter:image" content="https://www.finosutra.com/og-image.jpg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="../finosutra.css?v=9"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "IND AS 109 Financial Instruments — Classification, Recognition & Measurement Explained",
+  "description": "Complete guide to IND AS 109 — business model and SPPI tests, amortised cost vs FVOCI vs FVTPL classification, initial and subsequent measurement, impairment, derecognition and hedge accounting, with a full worked example.",
+  "author": {"@type": "Organization", "name": "Finosutra"},
+  "publisher": {"@type": "Organization", "name": "Finosutra", "url": "https://www.finosutra.com"},
+  "datePublished": "2026-08-17",
+  "dateModified": "2026-08-17",
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.finosutra.com/blog/ind-as-109-financial-instruments-guide.html"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What is the SPPI test under IND AS 109?", "acceptedAnswer": {"@type": "Answer", "text": "SPPI stands for 'Solely Payments of Principal and Interest.' It tests whether a financial asset's contractual cash flows are just repayment of principal plus interest compensating for time value of money and credit risk. If cash flows include equity-like upside, leverage, or other non-lending features, the asset fails SPPI and must be measured at FVTPL regardless of the business model."}},
+    {"@type": "Question", "name": "Can a company choose to measure amortised-cost assets at fair value instead?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, in limited cases. IND AS 109 allows an irrevocable 'fair value option' at initial recognition if doing so eliminates or significantly reduces an accounting mismatch. This is uncommon in practice and must be documented at inception — it cannot be applied retrospectively or applied opportunistically period to period."}},
+    {"@type": "Question", "name": "Does IND AS 109 apply to trade receivables and payables?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Trade receivables are financial assets (almost always measured at amortised cost, and always subject to the ECL simplified approach) and trade payables are financial liabilities (measured at amortised cost). Most companies don't realise these routine balances are technically within IND AS 109's scope because the accounting effect at normal credit terms is usually immaterial."}},
+    {"@type": "Question", "name": "What is the difference between FVOCI for debt and FVOCI for equity?", "acceptedAnswer": {"@type": "Answer", "text": "Both route fair value gains and losses through Other Comprehensive Income rather than P&L. The key difference is recycling: for debt instruments in FVOCI, cumulative OCI gains/losses are reclassified ('recycled') to P&L on sale or derecognition. For equity instruments under the FVOCI election, they are never recycled to P&L — even on sale, the cumulative gain or loss is transferred directly within equity (e.g. to retained earnings)."}},
+    {"@type": "Question", "name": "Is IND AS 109 the same as IFRS 9?", "acceptedAnswer": {"@type": "Answer", "text": "IND AS 109 is India's converged version of IFRS 9 and is substantially aligned on classification, measurement, impairment and hedge accounting. There are a small number of India-specific carve-outs and transitional clarifications, but for day-to-day accounting the two standards produce the same answer in almost all cases."}}
+  ]
+}
+</script>
+<style>
+:root{
+  --brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;--brand-mid:#C7D2FE;
+  --bg:#F9FAFB;--card:#FFFFFF;--border:rgba(99,102,241,0.18);--border-light:rgba(99,102,241,0.08);
+  --text:#111827;--muted:#6B7280;--muted2:#9CA3AF;
+  --green:#059669;--green-light:#ECFDF5;
+  --red:#DC2626;--red-light:#FEF2F2;
+  --orange:#D97706;--orange-light:#FFFBEB;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+/* ARTICLE LAYOUT */
+.article-wrap{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+
+/* BREADCRUMB */
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted2);margin-bottom:24px;flex-wrap:wrap;}
+.breadcrumb a{color:var(--muted2);text-decoration:none;transition:color .15s;}
+.breadcrumb a:hover{color:var(--brand);}
+
+/* ARTICLE HEADER */
+.article-tag{display:inline-block;background:var(--brand-light);color:var(--brand);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.4px;margin-bottom:16px;}
+.article-title{font-size:clamp(24px,4vw,36px);font-weight:800;line-height:1.2;letter-spacing:-0.5px;color:var(--text);margin-bottom:16px;}
+.article-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--muted);margin-bottom:32px;flex-wrap:wrap;}
+.article-meta span{display:flex;align-items:center;gap:5px;}
+.article-divider{height:1px;background:var(--border-light);margin-bottom:36px;}
+
+/* TOC */
+.toc{background:var(--brand-light);border:1px solid var(--brand-mid);border-radius:14px;padding:22px 26px;margin-bottom:40px;}
+.toc h3{font-size:13px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;}
+.toc ol{padding-left:18px;}
+.toc ol li{margin-bottom:6px;}
+.toc ol li a{font-size:14px;color:var(--brand-dark);text-decoration:none;font-weight:500;}
+.toc ol li a:hover{text-decoration:underline;}
+
+/* PROSE */
+.article-body h2{font-size:22px;font-weight:800;color:var(--text);margin:40px 0 14px;letter-spacing:-0.3px;}
+.article-body h3{font-size:17px;font-weight:700;color:var(--text);margin:28px 0 10px;}
+.article-body p{margin-bottom:16px;color:#1F2937;}
+.article-body ul,.article-body ol{padding-left:22px;margin-bottom:16px;}
+.article-body ul li,.article-body ol li{margin-bottom:8px;color:#1F2937;}
+.article-body strong{font-weight:700;color:var(--text);}
+
+/* CALLOUT */
+.callout{background:var(--brand-light);border-left:4px solid var(--brand);border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0;}
+.callout p{margin:0;font-size:14px;color:var(--brand-dark);}
+.callout strong{color:var(--brand-dark);}
+.callout-green{background:var(--green-light);border-left-color:var(--green);}
+.callout-green p{color:#065F46;}
+.callout-orange{background:var(--orange-light);border-left-color:var(--orange);}
+.callout-orange p{color:#92400E;}
+.callout-red{background:var(--red-light);border-left-color:var(--red);}
+.callout-red p{color:#991B1B;}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:24px 0;}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:360px;}
+table th{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-weight:700;padding:10px 14px;text-align:left;}
+table th.r{text-align:right;}
+table td{padding:9px 14px;border-bottom:1px solid #F3F4F6;color:#1F2937;}
+table td.r{text-align:right;}
+table tr:nth-child(even) td{background:#F9FAFB;}
+table tr:last-child td{border-bottom:none;}
+table tfoot td{background:#EEF2FF;font-weight:700;border-top:2px solid var(--brand-mid);}
+
+/* JE BLOCK */
+.je-block{background:#F9FAFB;border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:20px 0;}
+.je-title{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px;}
+.je-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #F3F4F6;}
+.je-row:last-child{border-bottom:none;}
+.je-account{font-size:14px;font-weight:600;color:var(--text);}
+.je-account.cr{padding-left:24px;font-weight:500;color:var(--muted);}
+.je-amounts{display:flex;gap:32px;}
+.je-dr{font-size:14px;font-weight:700;color:#10B981;min-width:100px;text-align:right;}
+.je-cr{font-size:14px;font-weight:700;color:#6366F1;min-width:100px;text-align:right;}
+
+/* FORMULA */
+.formula-box{background:#1E1B4B;border-radius:10px;padding:18px 22px;margin:20px 0;font-family:'Courier New',monospace;font-size:15px;color:#C7D2FE;line-height:1.7;}
+.formula-box .formula-label{font-family:'Inter',sans-serif;font-size:10px;font-weight:700;color:#818CF8;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
+
+/* STEP CARD */
+.step-card{border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:16px 0;position:relative;padding-left:60px;}
+.step-num{position:absolute;left:18px;top:18px;width:28px;height:28px;background:var(--brand);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;}
+.step-card h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;margin-top:0;}
+.step-card p{font-size:14px;color:var(--muted);margin:0;}
+
+/* CTA */
+.cta-box{background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:16px;padding:28px 30px;margin:40px 0;text-align:center;}
+.cta-box h3{font-size:18px;font-weight:800;color:#fff;margin-bottom:8px;}
+.cta-box p{font-size:14px;color:rgba(255,255,255,.85);margin-bottom:18px;}
+.cta-box a{display:inline-block;background:#fff;color:var(--brand);font-size:14px;font-weight:700;padding:12px 26px;border-radius:10px;text-decoration:none;transition:transform .15s;}
+.cta-box a:hover{transform:translateY(-1px);}
+
+/* RELATED */
+.related-links{border:1px solid var(--border-light);border-radius:12px;padding:20px 24px;margin-top:40px;}
+.related-links h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;}
+.related-links a{display:block;font-size:14px;color:var(--brand);text-decoration:none;padding:6px 0;border-bottom:1px solid var(--border-light);font-weight:500;}
+.related-links a:last-child{border-bottom:none;}
+.related-links a:hover{text-decoration:underline;}
+
+@media(max-width:600px){.article-wrap{padding:32px 16px 60px;}.je-amounts{gap:16px;}.step-card{padding-left:50px;}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../auth.js?v=9"></script>
+</head>
+<body>
+
+<div id="fs-nav"></div>
+
+<div class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span>›</span>
+    <a href="../blog.html">Blog</a>
+    <span>›</span>
+    <span>IND AS 109 Financial Instruments</span>
+  </nav>
+
+  <div class="article-tag">IND AS 109 / IFRS 9</div>
+  <h1 class="article-title">IND AS 109 Financial Instruments — Classification, Recognition &amp; Measurement Explained</h1>
+  <div class="article-meta">
+    <span><i class="fa-regular fa-calendar"></i> August 2026</span>
+    <span><i class="fa-regular fa-clock"></i> 17 min read</span>
+    <span><i class="fa-solid fa-user"></i> Finosutra Team</span>
+  </div>
+  <div class="article-divider"></div>
+
+  <div class="toc">
+    <h3>In This Article</h3>
+    <ol>
+      <li><a href="#scope">What Counts as a Financial Instrument</a></li>
+      <li><a href="#framework">The Classification Framework — Business Model + SPPI</a></li>
+      <li><a href="#categories">The Three Measurement Categories for Financial Assets</a></li>
+      <li><a href="#equity">Equity Investments — The FVOCI Election</a></li>
+      <li><a href="#liabilities">Classification of Financial Liabilities</a></li>
+      <li><a href="#initial">Initial Recognition and Measurement</a></li>
+      <li><a href="#subsequent">Subsequent Measurement — Where Gains and Losses Go</a></li>
+      <li><a href="#impairment">Impairment — The Expected Credit Loss Model</a></li>
+      <li><a href="#example">Worked Example — FVOCI Debt Instrument, Start to Sale</a></li>
+      <li><a href="#derecognition">Derecognition</a></li>
+      <li><a href="#reclassification">Reclassification</a></li>
+      <li><a href="#embedded-hedge">Embedded Derivatives and Hedge Accounting</a></li>
+      <li><a href="#vs-igaap">IND AS 109 vs Old IGAAP (AS 13) — Key Differences</a></li>
+      <li><a href="#disclosures">Disclosures Required</a></li>
+      <li><a href="#errors">Common Mistakes CAs Make</a></li>
+      <li><a href="#faq">FAQs</a></li>
+    </ol>
+  </div>
+
+  <div class="article-body">
+
+    <h2 id="scope">1. What Counts as a Financial Instrument</h2>
+    <p>IND AS 109 governs how companies recognise, classify, measure and derecognise <strong>financial instruments</strong> — any contract giving rise to a financial asset in one entity and a financial liability or equity instrument in another. In practice, this scope is far broader than the "investments" line most people associate with financial instruments:</p>
+
+    <ul>
+      <li><strong>Financial assets:</strong> cash, trade receivables, loans given, investments in debt and equity securities, security deposits given, derivative assets, contract assets</li>
+      <li><strong>Financial liabilities:</strong> trade payables, borrowings, debentures issued, security deposits received, derivative liabilities</li>
+      <li><strong>Equity instruments:</strong> a residual interest in an entity's assets after deducting liabilities — from the issuer's perspective (e.g. ordinary shares issued)</li>
+    </ul>
+
+    <div class="callout callout-orange">
+      <p><strong>Most companies underestimate this scope.</strong> Routine trade receivables and payables, security deposits, and even employee loans are all within IND AS 109. The reason this often goes unnoticed is that at normal commercial credit terms (30–90 days), the discounting and impairment effects are usually immaterial — but "usually immaterial" is a judgement to document, not an assumption to skip.</p>
+    </div>
+
+    <h2 id="framework">2. The Classification Framework — Business Model + SPPI</h2>
+    <p>Every financial asset is classified using two sequential tests. Both must be applied at initial recognition, and both look at facts as they exist then — not at what happens to the instrument later.</p>
+
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <h3>The Business Model Test</h3>
+      <p>How does the entity actually manage this <em>group</em> of assets to generate cash flows? There are three possible answers: (a) <strong>hold to collect</strong> contractual cash flows — sales are incidental; (b) <strong>hold to collect and sell</strong> — both collecting cash flows and selling are integral to achieving the objective; (c) <strong>other</strong> — typically trading, where assets are bought and sold to realise short-term price movements. This is assessed at a portfolio level based on how management actually runs the business, evidenced by past sales patterns, KPIs used, and how managers are compensated — not by a stated intention on a single instrument.</p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <h3>The SPPI Test</h3>
+      <p>Are the contractual cash flows <strong>Solely Payments of Principal and Interest</strong> on the principal amount outstanding? "Interest" here means consideration for time value of money, credit risk, and basic lending compensation — not equity-like upside, leverage, or conversion features. A plain-vanilla loan or bond passes. A convertible debenture, an equity share, or a loan with a profit-participation kicker fails.</p>
+    </div>
+
+    <div class="callout">
+      <p><strong>The test only matters if both pass together.</strong> An asset that fails SPPI is measured at FVTPL regardless of its business model. An asset that passes SPPI is then classified based purely on the business model. Equity instruments never pass SPPI (there's no "principal" to repay) and are addressed by a separate rule — see Section 4.</p>
+    </div>
+
+    <h2 id="categories">3. The Three Measurement Categories for Financial Assets</h2>
+    <p>Putting the two tests together produces three possible outcomes for a debt-type financial asset:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Business Model</th><th>SPPI</th><th>Category</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Hold to collect</td><td>Pass</td><td><strong>Amortised Cost</strong></td></tr>
+          <tr><td>Hold to collect and sell</td><td>Pass</td><td><strong>FVOCI (debt)</strong></td></tr>
+          <tr><td>Other / trading</td><td>Pass or fail</td><td><strong>FVTPL</strong></td></tr>
+          <tr><td>Any business model</td><td>Fail</td><td><strong>FVTPL</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ul>
+      <li><strong>Amortised Cost</strong> — e.g. trade receivables, loans given, held-to-maturity bonds, security deposits. Carried at cost adjusted for principal repayments and the EIR-based amortisation of any premium or discount, less impairment.</li>
+      <li><strong>FVOCI (debt)</strong> — e.g. a bond portfolio managed for both yield and liquidity. Carried at fair value on the balance sheet; the difference between fair value and amortised cost sits in Other Comprehensive Income; interest income and impairment still flow through P&amp;L exactly as under amortised cost.</li>
+      <li><strong>FVTPL</strong> — e.g. actively traded securities, mutual fund units, and anything failing SPPI. Carried at fair value with <em>all</em> movements — including unrealised gains and losses — recognised directly in profit or loss.</li>
+    </ul>
+
+    <h2 id="equity">4. Equity Investments — The FVOCI Election</h2>
+    <p>Investments in equity shares of another entity are, by default, measured at <strong>FVTPL</strong> — every fair value movement hits the P&amp;L, which creates volatile earnings for long-term strategic holdings that were never bought to trade.</p>
+
+    <p>IND AS 109 offers a way out: at initial recognition, an entity may make an <strong>irrevocable election</strong>, instrument by instrument, to present fair value changes in OCI instead — but only for equity instruments <strong>not held for trading</strong>.</p>
+
+    <div class="callout callout-orange">
+      <p><strong>The catch — no recycling, ever.</strong> Once elected, cumulative gains and losses on that equity investment are never reclassified to P&amp;L, even when the shares are sold. On disposal, the cumulative OCI balance is transferred directly within equity (typically to retained earnings), bypassing the income statement entirely. Dividend income, however, still goes to P&amp;L as normal. This is the single biggest practical difference between FVOCI for equity and FVOCI for debt — see the worked example in Section 9.</p>
+    </div>
+
+    <h2 id="liabilities">5. Classification of Financial Liabilities</h2>
+    <p>Financial liabilities are simpler: the default category is <strong>amortised cost</strong> — this covers the vast majority of trade payables, term loans, and debentures. Only two situations pull a liability into FVTPL:</p>
+
+    <ul>
+      <li><strong>Held for trading</strong> — e.g. a derivative liability, or a liability incurred principally to repurchase in the near term</li>
+      <li><strong>Fair value option</strong> — an irrevocable election at initial recognition, permitted only where it eliminates or significantly reduces an accounting mismatch</li>
+    </ul>
+
+    <p>Where the fair value option is used, one important carve-out applies: changes in fair value attributable to the <strong>entity's own credit risk</strong> are presented in OCI rather than P&amp;L (unless doing so would create or widen an accounting mismatch), so that a company's P&amp;L doesn't show a gain simply because the market perceives it as more likely to default.</p>
+
+    <h2 id="initial">6. Initial Recognition and Measurement</h2>
+    <p>All financial instruments are initially recognised at <strong>fair value</strong> — usually the transaction price. The one adjustment that varies by category is transaction costs:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Category</th><th>Transaction Costs</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Amortised cost / FVOCI</td><td>Added to (or netted against) the initial carrying amount — included in the EIR calculation</td></tr>
+          <tr><td>FVTPL</td><td>Expensed immediately to P&amp;L — not capitalised</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Where the transaction price differs from fair value (for example, a related-party loan at a below-market rate, or a security deposit paid interest-free), the difference between cash paid/received and fair value is recognised immediately — typically as a prepaid expense, deferred income, or a day-one gain/loss depending on the substance of the arrangement.</p>
+
+    <h2 id="subsequent">7. Subsequent Measurement — Where Gains and Losses Go</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Category</th><th>Balance Sheet Carrying Value</th><th>Interest / Dividend Income</th><th>Fair Value Movement</th><th>Impairment</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Amortised Cost</td><td>EIR-amortised cost less impairment</td><td>P&amp;L (EIR method)</td><td>Not fair valued</td><td>P&amp;L (ECL)</td></tr>
+          <tr><td>FVOCI — Debt</td><td>Fair value</td><td>P&amp;L (EIR method)</td><td>OCI (recycled to P&amp;L on sale)</td><td>P&amp;L (ECL), offset in OCI</td></tr>
+          <tr><td>FVOCI — Equity election</td><td>Fair value</td><td>Dividends to P&amp;L</td><td>OCI (never recycled)</td><td>Not applicable</td></tr>
+          <tr><td>FVTPL</td><td>Fair value</td><td>P&amp;L</td><td>P&amp;L</td><td>Not applicable — already at FV</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-green">
+      <p><strong>The one constant across categories:</strong> for every debt-type instrument that passes SPPI (amortised cost or FVOCI-debt), interest income in P&amp;L is <em>always</em> computed using the Effective Interest Rate method on the amortised cost — never the coupon rate, and never a straight-line allocation.</p>
+    </div>
+
+    <h2 id="impairment">8. Impairment — The Expected Credit Loss Model</h2>
+    <p>Amortised cost and FVOCI-debt instruments are subject to IND AS 109's forward-looking <strong>Expected Credit Loss (ECL)</strong> model, which replaced the old "incurred loss" approach under AS 13/AS 30. In brief:</p>
+
+    <ul>
+      <li><strong>General approach (3-stage model)</strong> — most loans and debt investments start at Stage 1 (12-month ECL). If credit risk has increased significantly since origination, they move to Stage 2 (lifetime ECL, still accruing interest on gross carrying amount). If credit-impaired, Stage 3 (lifetime ECL, interest accrues on the net carrying amount).</li>
+      <li><strong>Simplified approach</strong> — mandatory for trade receivables and contract assets without a significant financing component, and permitted for lease receivables. Skips the staging and always recognises <strong>lifetime ECL</strong> via a provision matrix.</li>
+    </ul>
+
+    <p>The mechanics of the simplified approach — ageing buckets, loss rates, forward-looking adjustments, and the movement schedule — are covered in full depth with a worked example in our dedicated <a href="ecl-provision-matrix-ind-as-109.html">ECL Provision Matrix guide</a>.</p>
+
+    <h2 id="example">9. Worked Example — FVOCI Debt Instrument, Start to Sale</h2>
+
+    <div class="callout">
+      <p><strong>Scenario:</strong> A company buys ₹50,00,000 face value of an 8% Government Security on 1 April 2024, at par, held under a "hold to collect and sell" business model → classified <strong>FVOCI (debt)</strong>. Since it was purchased at par, EIR = coupon rate = 8% p.a., so amortised cost stays flat at ₹50,00,000 throughout — the only moving part is the fair value adjustment routed through OCI.</p>
+    </div>
+
+    <h3>Step 1: Initial Recognition — 1 April 2024</h3>
+    <div class="je-block">
+      <div class="je-title">Purchase of G-Sec</div>
+      <div class="je-row">
+        <span class="je-account">Investment in G-Sec (FVOCI)</span>
+        <div class="je-amounts"><span class="je-dr">Dr 50,00,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Bank</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 50,00,000</span></div>
+      </div>
+    </div>
+
+    <h3>Step 2: Year 1 — 31 March 2025 (Fair value rises to ₹51,20,000)</h3>
+    <div class="je-block">
+      <div class="je-title">(a) Coupon = EIR interest income (no discount/premium to amortise)</div>
+      <div class="je-row">
+        <span class="je-account">Bank</span>
+        <div class="je-amounts"><span class="je-dr">Dr 4,00,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Interest Income (P&amp;L)</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 4,00,000</span></div>
+      </div>
+    </div>
+    <div class="je-block">
+      <div class="je-title">(b) Mark to fair value — OCI gain of ₹1,20,000</div>
+      <div class="je-row">
+        <span class="je-account">Investment in G-Sec (FVOCI)</span>
+        <div class="je-amounts"><span class="je-dr">Dr 1,20,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">FVOCI Reserve (OCI)</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 1,20,000</span></div>
+      </div>
+    </div>
+
+    <h3>Step 3: Year 2 — 31 March 2026 (Fair value falls to ₹50,45,000)</h3>
+    <div class="je-block">
+      <div class="je-title">(a) Coupon = EIR interest income</div>
+      <div class="je-row">
+        <span class="je-account">Bank</span>
+        <div class="je-amounts"><span class="je-dr">Dr 4,00,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Interest Income (P&amp;L)</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 4,00,000</span></div>
+      </div>
+    </div>
+    <div class="je-block">
+      <div class="je-title">(b) Mark to fair value — OCI reserve reduces by ₹75,000 (₹1,20,000 → ₹45,000)</div>
+      <div class="je-row">
+        <span class="je-account">FVOCI Reserve (OCI)</span>
+        <div class="je-amounts"><span class="je-dr">Dr 75,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Investment in G-Sec (FVOCI)</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 75,000</span></div>
+      </div>
+    </div>
+
+    <h3>Step 4: Sale on 15 January 2027 at ₹50,80,000</h3>
+    <p>The security is sold before maturity, for ₹50,80,000. Two entries are needed: remeasure to fair value immediately before sale, then derecognise and recycle the cumulative OCI reserve to P&amp;L.</p>
+
+    <div class="je-block">
+      <div class="je-title">(a) Remeasure to fair value at sale date — OCI reserve rises by ₹35,000 (₹45,000 → ₹80,000)</div>
+      <div class="je-row">
+        <span class="je-account">Investment in G-Sec (FVOCI)</span>
+        <div class="je-amounts"><span class="je-dr">Dr 35,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">FVOCI Reserve (OCI)</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 35,000</span></div>
+      </div>
+    </div>
+    <div class="je-block">
+      <div class="je-title">(b) Derecognise the investment at fair value</div>
+      <div class="je-row">
+        <span class="je-account">Bank</span>
+        <div class="je-amounts"><span class="je-dr">Dr 50,80,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Investment in G-Sec (FVOCI)</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 50,80,000</span></div>
+      </div>
+    </div>
+    <div class="je-block">
+      <div class="je-title">(c) Recycle cumulative OCI reserve to P&amp;L — this is the debt-FVOCI-specific step</div>
+      <div class="je-row">
+        <span class="je-account">FVOCI Reserve (OCI)</span>
+        <div class="je-amounts"><span class="je-dr">Dr 80,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Gain on Sale of Investments (P&amp;L)</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 80,000</span></div>
+      </div>
+    </div>
+
+    <div class="callout callout-green">
+      <p><strong>Contrast with equity FVOCI:</strong> Had this been an equity share under the FVOCI election instead of a debt instrument, entry (c) above would never happen. The ₹80,000 cumulative gain would instead move directly from the FVOCI Reserve to Retained Earnings within equity — profit or loss would show <em>nothing</em> from the sale, only the dividend income received along the way.</p>
+    </div>
+
+    <div class="cta-box">
+      <h3>Automate your IND AS 109 workings</h3>
+      <p>Finosutra's free calculators handle the EIR schedules, fair value tracking and journal entries for security deposits and ECL provisioning — audit-ready in minutes.</p>
+      <a href="../indas-tools.html">Explore IND AS 109 Tools →</a>
+    </div>
+
+    <h2 id="derecognition">10. Derecognition</h2>
+    <p>A financial asset is derecognised when the contractual rights to its cash flows expire, or when the entity transfers substantially all the risks and rewards of ownership. IND AS 109 sets out a decision sequence for transfers:</p>
+
+    <ol>
+      <li>Has the entity transferred substantially all risks and rewards? → If yes, <strong>derecognise</strong></li>
+      <li>Has the entity retained substantially all risks and rewards? → If yes, <strong>continue to recognise</strong> (e.g. a sale-and-repurchase, or receivables sold with recourse)</li>
+      <li>Neither transferred nor retained substantially → assess whether <strong>control</strong> has passed. If control has passed, derecognise; if not, continue to recognise to the extent of continuing involvement</li>
+    </ol>
+
+    <p>A financial liability is derecognised when the obligation is discharged, cancelled, or expires — including a substantial modification of terms (generally, a change of 10% or more in the present value of cash flows) being treated as an extinguishment of the old liability and recognition of a new one.</p>
+
+    <h2 id="reclassification">11. Reclassification</h2>
+    <p>Reclassification between categories is rare by design. It's permitted <strong>only for financial assets</strong> (never financial liabilities) and only when the entity's business model for managing that group of assets changes — something expected to happen very infrequently, such as a company deciding to wind down and exit an entire lending business line. A change in intention for an individual instrument, temporary unavailability of a market, or a one-off large sale does not trigger reclassification. When it does apply, it is accounted for <strong>prospectively</strong> from the reclassification date — no restatement of prior periods.</p>
+
+    <h2 id="embedded-hedge">12. Embedded Derivatives and Hedge Accounting</h2>
+
+    <h3>Embedded Derivatives</h3>
+    <p>Where the host contract is itself a financial asset within IND AS 109's scope, the <strong>entire hybrid instrument</strong> is classified as a whole using the business model and SPPI tests above — bifurcation of an embedded derivative is not performed. Bifurcation still applies where the host is <strong>not</strong> a financial asset (e.g. an embedded derivative in a lease, insurance contract, or executory purchase contract) and the embedded feature is not closely related to the host and would meet the definition of a derivative on its own.</p>
+
+    <h3>Hedge Accounting</h3>
+    <p>IND AS 109 permits three types of hedging relationships, each matching the timing of a gain/loss to what it economically offsets:</p>
+    <ul>
+      <li><strong>Fair value hedge</strong> — hedges exposure to changes in the fair value of a recognised asset/liability or firm commitment (e.g. hedging a fixed-rate borrowing's fair value against interest rate moves). Gain/loss on the hedging instrument and the hedged item both hit P&amp;L.</li>
+      <li><strong>Cash flow hedge</strong> — hedges exposure to variability in future cash flows (e.g. hedging forecast export receipts with a forward contract). The effective portion of the hedge gain/loss is deferred in OCI and reclassified to P&amp;L when the hedged transaction affects profit or loss.</li>
+      <li><strong>Net investment hedge</strong> — hedges currency exposure on a net investment in a foreign operation, with the effective portion recognised in OCI (as part of foreign currency translation reserve) and released to P&amp;L only on disposal of the foreign operation.</li>
+    </ul>
+    <p>To qualify, a hedging relationship needs formal documentation at inception and must meet three effectiveness conditions on an ongoing basis: an economic relationship between hedged item and hedging instrument, credit risk not dominating the value changes, and a hedge ratio consistent with actual risk management — a materially lighter-touch test than the old "80–125%" bright-line rule under IAS 39/AS 30.</p>
+
+    <h2 id="vs-igaap">13. IND AS 109 vs Old IGAAP (AS 13 / AS 30) — Key Differences</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Aspect</th><th>Old IGAAP (AS 13 / AS 30)</th><th>IND AS 109</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Classification driver</td><td>Instrument type (current / long-term investment)</td><td>Business model + contractual cash flow (SPPI) tests</td></tr>
+          <tr><td>Measurement basis</td><td>Lower of cost and fair value (current); cost, with diminution provision (long-term)</td><td>Amortised cost, FVOCI or FVTPL, all rigorously defined</td></tr>
+          <tr><td>Impairment trigger</td><td>Incurred loss — objective evidence of loss already occurred</td><td>Expected credit loss — forward-looking, before default occurs</td></tr>
+          <tr><td>Interest income method</td><td>Often coupon rate / straight-line</td><td>Mandatory Effective Interest Rate (EIR) method</td></tr>
+          <tr><td>Security deposits, staff loans</td><td>Recognised at transaction amount, no discounting</td><td>Recognised at fair value; Day 1 discount recognised separately</td></tr>
+          <tr><td>Hedge accounting</td><td>Limited guidance (AS 30 optional, rarely adopted)</td><td>Comprehensive, mandatory where hedge accounting is elected</td></tr>
+          <tr><td>Equity investment gains</td><td>Not routed through P&amp;L unless sold (cost model)</td><td>FVTPL by default (P&amp;L) or FVOCI election (never recycled)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="disclosures">14. Disclosures Required</h2>
+    <p>IND AS 107 (Financial Instruments: Disclosures) works alongside IND AS 109 and requires, among other things:</p>
+    <ul>
+      <li>Carrying amounts of each category of financial asset and liability, reconciled to the balance sheet</li>
+      <li>A fair value hierarchy (Level 1/2/3) for instruments measured at fair value, with the valuation technique used for Level 2 and 3</li>
+      <li>A rollforward of the ECL loss allowance by class of financial asset</li>
+      <li>Nature and extent of risks arising from financial instruments — credit risk, liquidity risk, and market risk (including sensitivity analysis)</li>
+      <li>Hedge accounting disclosures where applicable — the hedging relationship, the risk being hedged, and the effect on the financial statements</li>
+    </ul>
+
+    <h2 id="errors">15. Common Mistakes CAs Make</h2>
+
+    <div class="callout callout-red">
+      <p><strong>Error 1 — Classifying by instrument type instead of running both tests.</strong> "It's a bond, so it's amortised cost" skips the business model assessment entirely. Two identical bonds held by two different companies can land in different categories if one company's treasury actively trades similar instruments and the other holds to maturity.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 2 — Using the coupon rate instead of EIR for interest income.</strong> Whenever an instrument is bought at a discount or premium to face value, coupon ≠ EIR, and using the coupon rate understates or overstates interest income and leaves the carrying amount from converging to face value at maturity.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 3 — Forgetting the FVOCI equity election is irrevocable and instrument-by-instrument.</strong> It cannot be made on a blanket "all our unquoted equity investments" basis after the fact, and it cannot be reversed if the investment later underperforms and management would prefer the loss stayed out of OCI.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 4 — Skipping ECL on intercompany and related-party loans.</strong> Loans to subsidiaries or related parties are financial assets like any other and are subject to ECL, though the credit risk assessment obviously reflects the specific relationship and any support arrangements in place.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 5 — Treating a hedge as "hedge accounting" without formal documentation.</strong> Economically hedging a risk is not the same as qualifying for hedge accounting. Without contemporaneous documentation of the hedging relationship, risk management objective, and effectiveness assessment at inception, both legs must be accounted for independently — often creating P&amp;L volatility the hedge was meant to avoid.</p>
+    </div>
+
+  </div>
+
+  <div class="related-links">
+    <h3>Related tools &amp; articles</h3>
+    <a href="../ecl-calculator.html">→ ECL Provision Matrix Calculator (free, instant results)</a>
+    <a href="../security-deposit.html">→ IND AS 109 Security Deposit Calculator</a>
+    <a href="ecl-provision-matrix-ind-as-109.html">→ ECL Provision Matrix under IND AS 109 — Full Guide</a>
+    <a href="ind-as-109-security-deposit-accounting.html">→ IND AS 109 Security Deposit Accounting — Full Guide</a>
+    <a href="ind-as-116-lease-accounting-guide.html">→ IND AS 116 Lease Accounting — Complete Guide</a>
+    <a href="../blog.html">← All Articles</a>
+  </div>
+
+</div>
+
+<div id="fs-footer"></div>
+<script src="../nav.js?v=9"></script>
+<script src="../footer.js?v=8"></script>
+<script src="../share.js"></script>
+</body>
+</html>
