@@ -144,6 +144,13 @@ input:focus,select:focus{border-color:var(--fs-blue);box-shadow:0 0 0 3px rgba(0
 /* ── KPI CARDS ── */
 .kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px 22px 0}
 .kpi{
+  /* Grid items default to min-width:auto, which refuses to shrink below
+     the intrinsic (unbreakable) width of their content — a long currency
+     value (large lease amounts run to 7+ digits) then forces the card,
+     and the whole .kpis row, wider than the viewport with no way to
+     scroll to the clipped part. min-width:0 lets the column actually
+     shrink to the 1fr track it's supposed to occupy. */
+  min-width:0;
   background:linear-gradient(145deg,#F8F6FF,#E8F0FF);
   border:1px solid rgba(0,82,204,0.12);
   border-left:4px solid var(--fs-blue);
@@ -156,7 +163,7 @@ input:focus,select:focus{border-color:var(--fs-blue);box-shadow:0 0 0 3px rgba(0
 .kpi.kpi-purple{border-left-color:#7C3AED;background:linear-gradient(145deg,#F5F3FF,#EDE9FE)}
 .kpi:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,82,204,0.12)}
 .kpi-lbl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#6B7280;margin-bottom:6px;font-weight:700}
-.kpi-val{font-size:22px;font-weight:700;color:var(--fs-blue);letter-spacing:-0.5px}
+.kpi-val{font-size:22px;font-weight:700;color:var(--fs-blue);letter-spacing:-0.5px;overflow-wrap:break-word}
 .kpi.kpi-teal .kpi-val{color:#0F766E}
 .kpi.kpi-amber .kpi-val{color:#D97706}
 .kpi.kpi-purple .kpi-val{color:#7C3AED}
