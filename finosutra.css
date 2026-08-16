@@ -2037,7 +2037,11 @@ h4 { font-size: 16px; }
   font-size: 20px;
   color: var(--fs-text);
   cursor: pointer;
-  padding: 8px;
+  /* 12px padding around the 20px icon gives a 44x44px hit target — the
+     Apple/Material minimum for reliable single-tap accuracy. At the
+     previous 8px (36x36px) a real thumb next to the "Get started" button
+     missed often enough to need 2-3 taps. */
+  padding: 12px;
   line-height: 1;
   touch-action: manipulation;
 }

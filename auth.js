@@ -524,6 +524,18 @@
     fsUpdateExportLabel(isPro);
   }
 
+  // ── Re-sync nav auth UI on demand ───────────────────────────────────────────
+  // nav.js builds #navActions/#navAuthMobile asynchronously (it replaces a
+  // placeholder div after the page loads). If auth.js finishes checking the
+  // session BEFORE nav.js has built those elements — plausible on slower
+  // mobile CPUs — fsUpdateNavUI's getElementById calls silently find nothing
+  // and the mobile "Log In" row never renders, with no retry. nav.js calls
+  // this immediately after it builds the nav, so whichever script finishes
+  // last is the one that ends up rendering the correct state.
+  global.fsRefreshNavUI = function () {
+    fsUpdateNavUI(global.currentUser, global.isProUser);
+  };
+
   // ── Supabase: check session + subscription ────────────────────────────────────
   async function fsCheckAuthState() {
     try {
