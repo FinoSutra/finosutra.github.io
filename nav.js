@@ -36,7 +36,8 @@
         { label: 'Escalating Rent Calculator', href: '/indas116-model3.html' },
         { label: 'Security Deposit (IND AS 109)', href: '/security-deposit.html' },
         { label: 'SD Portfolio', href: '/sd-portfolio.html' },
-        { label: 'ECL Provision Matrix', href: '/ecl-calculator.html' }
+        { label: 'ECL Provision Matrix', href: '/ecl-calculator.html' },
+        { label: 'Financial Statement Generator', href: '/financial-statement.html' }
       ]
     },
     {
@@ -228,6 +229,11 @@
     } else {
       document.body.insertBefore(nav, document.body.firstChild);
     }
+
+    // If auth.js already resolved the session before this nav DOM existed
+    // (#navActions/#navAuthMobile didn't exist yet, so its updates silently
+    // no-op'd), pull the current auth state now that the elements are real.
+    if (typeof window.fsRefreshNavUI === 'function') window.fsRefreshNavUI();
 
     // Mobile toggle
     var toggle = document.getElementById('fsNavToggle');

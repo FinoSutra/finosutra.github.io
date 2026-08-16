@@ -1936,6 +1936,15 @@ h4 { font-size: 16px; }
 
 
 /* ── Navbar (injected by nav.js) ────────────────────────────────── */
+/* Reserves the nav's height on the #fs-nav placeholder before nav.js
+   replaces it — otherwise the placeholder is 0px tall for the brief
+   window between first paint and nav.js executing, everything below it
+   sits higher than its final position, and a tap aimed at the (not yet
+   rendered) hamburger button lands on whatever's there instead — the
+   classic cause of "first tap misses, has to be tapped again" on mobile. */
+#fs-nav {
+  min-height: var(--fs-nav-h);
+}
 .fs-nav {
   background: rgba(255, 255, 255, 0.97);
   backdrop-filter: blur(16px);
@@ -2028,8 +2037,13 @@ h4 { font-size: 16px; }
   font-size: 20px;
   color: var(--fs-text);
   cursor: pointer;
-  padding: 8px;
+  /* 12px padding around the 20px icon gives a 44x44px hit target — the
+     Apple/Material minimum for reliable single-tap accuracy. At the
+     previous 8px (36x36px) a real thumb next to the "Get started" button
+     missed often enough to need 2-3 taps. */
+  padding: 12px;
   line-height: 1;
+  touch-action: manipulation;
 }
 
 /* Nav dropdown (tools mega-menu) */
