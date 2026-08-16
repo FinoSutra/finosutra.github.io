@@ -1673,9 +1673,10 @@ h4 { font-size: 16px; }
 .fs-trust-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--fs-muted); }
 .fs-trust-item i { color: var(--fs-blue); }
 @media (max-width: 600px) {
-  .fs-tmpl-row { padding: 12px 14px; gap: 10px; }
+  .fs-tmpl-row { padding: 12px 14px; gap: 8px 10px; flex-wrap: wrap; }
   .fs-tmpl-desc { display: none; }
   .fs-tmpl-price { display: none; }
+  .fs-tmpl-right { flex-basis: 100%; justify-content: flex-end; }
   .fs-what-grid { grid-template-columns: 1fr; }
   .fs-trust-bar { gap: 16px; }
 }
