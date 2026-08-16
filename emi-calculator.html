@@ -117,7 +117,8 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 
 /* ── KPI GRID ── */
 .kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
-.kpi-box{border-radius:var(--radius-sm);padding:16px;}
+.kpi-box{border-radius:var(--radius-sm);padding:16px;min-width:0;}
+.kpi-box .kpi-val{overflow-wrap:break-word;}
 .kpi-box.main-emi{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;}
 .kpi-box.interest{background:var(--red-bg);border:1px solid rgba(220,38,38,0.15);}
 .kpi-box.total{background:var(--orange-bg);border:1px solid rgba(217,119,6,0.15);}

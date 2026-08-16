@@ -117,7 +117,7 @@ nav{
 
 /* ── KPI GRID ── */
 .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
-.kpi-box{border-radius:var(--radius-sm);padding:16px;}
+.kpi-box{border-radius:var(--radius-sm);padding:16px;min-width:0;}
 .kpi-box.main{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;grid-column:span 2;}
 .kpi-box.green{background:var(--green-bg);border:1px solid var(--green-border);}
 .kpi-box.purple{background:var(--brand-light);border:1px solid var(--border);}
@@ -127,7 +127,7 @@ nav{
 .kpi-box.green .kpi-label{color:var(--green);}
 .kpi-box.purple .kpi-label{color:var(--brand);}
 .kpi-box.orange .kpi-label{color:var(--orange);}
-.kpi-value{font-size:22px;font-weight:800;letter-spacing:-0.5px;}
+.kpi-value{font-size:22px;font-weight:800;letter-spacing:-0.5px;overflow-wrap:break-word;}
 .kpi-box.main .kpi-value{color:#fff;}
 .kpi-box.green .kpi-value{color:#065F46;}
 .kpi-box.purple .kpi-value{color:var(--brand-dark);}
