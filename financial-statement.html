@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Financial Statement Generator for Proprietorship — Trial Balance to Balance Sheet | Finosutra</title>
+<meta name="description" content="Upload your trial balance and generate a complete Balance Sheet and Statement of Profit &amp; Loss for a proprietorship, in the ICAI Guidance Note format for non-corporate entities."/>
+<meta name="keywords" content="financial statement generator, trial balance to balance sheet, proprietorship financial statements, ICAI guidance note non-corporate entities, balance sheet generator india"/>
+<meta name="author" content="Finosutra"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://www.finosutra.com/financial-statement.html"/>
+
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Finosutra"/>
+<meta property="og:title" content="Financial Statement Generator — Trial Balance to Balance Sheet | Finosutra"/>
+<meta property="og:description" content="Upload your trial balance and generate a complete Balance Sheet and P&amp;L for a proprietorship, in ICAI's non-corporate entity format."/>
+<meta property="og:url" content="https://www.finosutra.com/financial-statement.html"/>
+<meta property="og:image" content="https://www.finosutra.com/og-image.jpg"/>
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Financial Statement Generator — Finosutra"/>
+<meta name="twitter:description" content="Upload your trial balance and generate a complete Balance Sheet and P&amp;L for a proprietorship, in ICAI's non-corporate entity format."/>
+<meta name="twitter:image" content="https://www.finosutra.com/og-image.jpg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="finosutra.css?v=8"/>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+<script src="finStatementEngine.js?v=1"></script>
+<script src="finStatementExport.js?v=1"></script>
+
+<style>
+.fstmt-main{max-width:960px;margin:0 auto;padding:0 24px 60px}
+.fstmt-hero{max-width:960px;margin:0 auto;padding:36px 24px 20px}
+.fstmt-hero p{font-size:14px;color:var(--fs-muted);max-width:640px;line-height:1.7;margin-top:10px}
+.fstmt-steps{display:flex;flex-direction:column;gap:16px;margin-top:24px}
+.fstmt-step{display:flex;gap:16px}
+.fstmt-step-num{width:30px;height:30px;border-radius:50%;background:var(--fs-blue);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fstmt-step-body{flex:1}
+.fstmt-dropzone{border:2px dashed var(--fs-border);border-radius:var(--fs-r-lg);padding:28px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s}
+.fstmt-dropzone:hover{border-color:var(--fs-blue-mid);background:var(--fs-blue-lt)}
+.fstmt-dropzone i{font-size:26px;color:var(--fs-blue);margin-bottom:8px}
+.fstmt-review-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.fstmt-review-table th{text-align:left;padding:6px 8px;background:#F1F5F9;font-weight:700;color:#334155;position:sticky;top:0}
+.fstmt-review-table td{padding:5px 8px;border-bottom:1px solid var(--fs-border-lt)}
+.fstmt-review-table td.num{text-align:right;font-variant-numeric:tabular-nums}
+.fstmt-review-scroll{max-height:340px;overflow-y:auto;border:1px solid var(--fs-border);border-radius:var(--fs-r)}
+.fstmt-totals-bar{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;padding:12px 16px;border-radius:var(--fs-r);font-size:13px;font-weight:600}
+.fstmt-totals-ok{background:var(--fs-ok-lt);color:#15803D}
+.fstmt-totals-bad{background:var(--fs-err-lt);color:#B91C1C}
+.fstmt-errlist{margin-top:10px;padding:12px 16px;background:var(--fs-err-lt);border-radius:var(--fs-r);color:#B91C1C;font-size:12.5px}
+.fstmt-errlist li{margin-left:18px;margin-top:2px}
+.fstmt-results{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px}
+@media(max-width:760px){.fstmt-results{grid-template-columns:1fr}}
+.fstmt-line{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px solid var(--fs-border-lt)}
+.fstmt-line.sub{font-weight:700;border-bottom:2px solid var(--fs-border)}
+.fstmt-line .lbl{color:var(--fs-muted)}
+.fstmt-line .val{font-variant-numeric:tabular-nums;font-weight:600}
+.fstmt-section-hd{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--fs-blue);margin:14px 0 6px}
+.fstmt-balance-chip{margin-top:14px;padding:10px 14px;border-radius:var(--fs-r);font-size:13px;font-weight:700;text-align:center}
+.fstmt-hidden{display:none}
+.fstmt-disabled{opacity:.5;pointer-events:none}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js?v=8"></script>
+</head>
+
+<body>
+
+<div id="fs-nav"></div>
+
+<div class="fstmt-hero">
+  <div class="fs-eyebrow">Financial Statement Generator</div>
+  <h1>Trial Balance to Balance Sheet — Proprietorship</h1>
+  <p>Download our trial balance template, fill in your figures, and upload it to generate a complete Balance Sheet and Statement of Profit &amp; Loss in the format prescribed by ICAI's Guidance Note on Financial Statements for Non-Corporate Entities. Phase 1 covers proprietorships.</p>
+  <div class="trust-strip" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;">
+    <span class="fs-badge fs-badge-free">Free to use</span>
+    <span class="fs-badge fs-badge-new">ICAI Guidance Note format</span>
+    <span class="fs-badge fs-badge-soon">Proprietorship — Phase 1</span>
+  </div>
+</div>
+
+<div class="fstmt-main">
+
+  <!-- STEP 1 — Download template -->
+  <div class="fs-card" style="margin-bottom:20px;">
+    <div class="fstmt-step">
+      <div class="fstmt-step-num">1</div>
+      <div class="fstmt-step-body">
+        <div class="fs-card-title">Download the Trial Balance template</div>
+        <div class="fs-card-desc">A ready-to-fill Excel workbook with 6 tabs — one per ICAI note group: Capital Account, Notes 4-6, Notes 7-10, Fixed Assets, Notes 12-18, and Notes 19-25. Fill in your closing figures for the year — don't rename or reorder rows.</div>
+        <a class="fs-btn fs-btn-primary" href="Finosutra_NonCorp_TB_Template_v1.xlsx" download>
+          <i class="fa-solid fa-download"></i> Download TB Template (.xlsx)
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 — Upload -->
+  <div class="fs-card" style="margin-bottom:20px;">
+    <div class="fstmt-step">
+      <div class="fstmt-step-num">2</div>
+      <div class="fstmt-step-body" style="width:100%;">
+        <div class="fs-card-title">Upload your filled Trial Balance</div>
+        <div class="fs-card-desc">We'll read all 6 tabs and show you exactly what was parsed — only the entries you actually filled in — before calculating anything.</div>
+        <div class="fstmt-dropzone" id="fstmtDropzone">
+          <i class="fa-solid fa-file-arrow-up"></i>
+          <div style="font-size:14px;font-weight:600;">Click to choose your filled template</div>
+          <div style="font-size:12px;color:var(--fs-muted);margin-top:4px;">.xlsx or .xls</div>
+        </div>
+        <input type="file" id="fstmtFileInput" accept=".xlsx,.xls" style="display:none;"/>
+
+        <div id="fstmtParseError" class="fstmt-errlist fstmt-hidden"></div>
+
+        <div id="fstmtReviewArea" class="fstmt-hidden" style="margin-top:18px;">
+          <div id="fstmtTotalsBar" class="fstmt-totals-bar"></div>
+          <div id="fstmtErrList" class="fstmt-errlist fstmt-hidden"></div>
+
+          <div class="fstmt-section-hd">Parsed entries (non-zero only)</div>
+          <div class="fstmt-review-scroll">
+            <table class="fstmt-review-table">
+              <thead><tr><th>Note / Section</th><th>Account Head</th><th style="text-align:right;">Amount (₹)</th></tr></thead>
+              <tbody id="fstmtReviewRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 — Report details + Generate -->
+  <div class="fs-card fstmt-hidden" id="fstmtStep3" style="margin-bottom:20px;">
+    <div class="fstmt-step">
+      <div class="fstmt-step-num">3</div>
+      <div class="fstmt-step-body" style="width:100%;">
+        <div class="fs-card-title">Report details</div>
+        <div class="fs-card-desc">Used only for the report header — not part of the calculation.</div>
+        <div class="fs-form-row">
+          <div class="fs-field">
+            <label class="fs-label">Entity Name</label>
+            <input class="fs-input" id="fstmtEntity" placeholder="e.g. Ramesh Traders"/>
+          </div>
+          <div class="fs-field">
+            <label class="fs-label">Year Ended</label>
+            <input class="fs-input" id="fstmtFY" placeholder="e.g. 31 March 2026"/>
+          </div>
+        </div>
+        <div class="fs-field">
+          <label class="fs-label">Prepared By (optional)</label>
+          <input class="fs-input" id="fstmtPreparedBy" placeholder="Your name / firm"/>
+        </div>
+        <button class="fs-btn fs-btn-primary fs-btn-lg" id="fstmtGenerateBtn">Generate Statements →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="fs-card fstmt-hidden" id="fstmtResultsCard" style="margin-bottom:20px;">
+    <div class="fs-card-title">Financial Statements Preview</div>
+    <div id="fstmtBalanceChip" class="fstmt-balance-chip"></div>
+    <div class="fstmt-results">
+      <div>
+        <div class="fstmt-section-hd">Balance Sheet</div>
+        <div id="fstmtBSBox"></div>
+      </div>
+      <div>
+        <div class="fstmt-section-hd">Statement of Profit &amp; Loss</div>
+        <div id="fstmtPLBox"></div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--fs-border);">
+      <div class="fs-card-title" style="font-size:15px;">Export as Excel</div>
+      <div class="fs-card-desc">Full multi-sheet workbook — Balance Sheet, Statement of P&amp;L, and Notes — in ICAI's format.</div>
+      <button class="fs-btn fs-btn-primary fs-btn-lg" id="btnExp">⬇ Download Excel Report &nbsp;<span style="font-size:11px;opacity:.8;">₹199</span></button>
+    </div>
+  </div>
+
+</div>
+
+<div id="fs-footer"></div>
+
+<script src="nav.js?v=8"></script>
+<script src="footer.js?v=8"></script>
+
+<script>
+(function () {
+  'use strict';
+
+  var parsedTB = null;
+  var lastResult = null;
+
+  function toNum(v) {
+    if (v === null || v === undefined || v === '') return 0;
+    var n = +v;
+    return isNaN(n) ? 0 : n;
+  }
+
+  function inr(v) {
+    return '₹' + Math.round(v).toLocaleString('en-IN');
+  }
+
+  // ── Dropzone / file input wiring ──────────────────────────────────
+  var dropzone = document.getElementById('fstmtDropzone');
+  var fileInput = document.getElementById('fstmtFileInput');
+  dropzone.addEventListener('click', function () { fileInput.click(); });
+  fileInput.addEventListener('change', function () {
+    if (fileInput.files && fileInput.files[0]) handleFile(fileInput.files[0]);
+  });
+
+  function handleFile(file) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      try {
+        var wb = XLSX.read(e.target.result, { type: 'array' });
+        var parsed = parseWorkbook(wb);
+        if (!parsed.ok) {
+          showParseError(parsed.error);
+          return;
+        }
+        hideParseError();
+        parsedTB = parsed.tb;
+        renderReview(parsed);
+      } catch (err) {
+        showParseError('Could not read this file. Please make sure it is a valid .xlsx/.xls file based on the downloaded template. (' + err.message + ')');
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  }
+
+  function showParseError(msg) {
+    var el = document.getElementById('fstmtParseError');
+    el.textContent = msg;
+    el.classList.remove('fstmt-hidden');
+    document.getElementById('fstmtReviewArea').classList.add('fstmt-hidden');
+    document.getElementById('fstmtStep3').classList.add('fstmt-hidden');
+  }
+  function hideParseError() {
+    document.getElementById('fstmtParseError').classList.add('fstmt-hidden');
+  }
+
+  // ── Parse the 6-sheet workbook by label matching within bounded
+  //    sections (not fixed row positions) — several labels repeat across
+  //    different sections of the same sheet (e.g. "Security Deposits" and
+  //    "Others (specify nature)" each appear 2-3 times), so lookups are
+  //    scoped to the row range between one section's header and the next.
+  var REQUIRED_SHEETS = ['Capital Account', 'Notes 4-6', 'Notes 7-10', 'Fixed Assets', 'Notes 12-18', 'Notes 19-25 PL'];
+  var parsedEntries = []; // {label, value} for review display, rebuilt per parse
+
+  function sheetAOA(wb, name) {
+    var ws = wb.Sheets[name];
+    return ws ? XLSX.utils.sheet_to_json(ws, { header: 1, defval: 0 }) : null;
+  }
+  function findAnchor(aoa, text) {
+    for (var i = 0; i < aoa.length; i++) {
+      if (aoa[i] && String(aoa[i][0]).trim() === text) return i;
+    }
+    return -1;
+  }
+  function findInRange(aoa, label, start, end) {
+    for (var i = start; i < end && i < aoa.length; i++) {
+      if (aoa[i] && String(aoa[i][0]).trim() === label) return i;
+    }
+    return -1;
+  }
+  // section(aoa, anchorText, nextAnchorText|null) -> {start, end}
+  function section(aoa, anchorText, nextAnchorText) {
+    var a = findAnchor(aoa, anchorText);
+    var start = a >= 0 ? a + 1 : 0;
+    var end = nextAnchorText ? (findAnchor(aoa, nextAnchorText) >= 0 ? findAnchor(aoa, nextAnchorText) : aoa.length) : aoa.length;
+    return { start: start, end: end };
+  }
+  function readFlat(aoa, items, range, out) {
+    items.forEach(function (it) {
+      var r = findInRange(aoa, it.label, range.start, range.end);
+      var v = r >= 0 ? toNum(aoa[r][1]) : 0;
+      out[it.key] = v;
+      if (v) parsedEntries.push({ label: it.label, value: v });
+    });
+  }
+  function readGrid(aoa, items, dims, range, out) {
+    items.forEach(function (it) {
+      var r = findInRange(aoa, it.label, range.start, range.end);
+      dims.forEach(function (d, di) {
+        var v = r >= 0 ? toNum(aoa[r][1 + di]) : 0;
+        out[d.key][it.key] = v;
+        if (v) parsedEntries.push({ label: d.label + ' — ' + it.label, value: v });
+      });
+    });
+  }
+  function readSingle(aoa, label, range) {
+    var r = findInRange(aoa, label, range.start, range.end);
+    var v = r >= 0 ? toNum(aoa[r][1]) : 0;
+    if (v) parsedEntries.push({ label: label, value: v });
+    return v;
+  }
+
+  function parseWorkbook(wb) {
+    for (var s = 0; s < REQUIRED_SHEETS.length; s++) {
+      if (!wb.Sheets[REQUIRED_SHEETS[s]]) {
+        return { ok: false, error: "This file is missing the required tab '" + REQUIRED_SHEETS[s] + "'. Please use the official downloaded template without renaming tabs." };
+      }
+    }
+
+    parsedEntries = [];
+    var E = finStatementEngine;
+    var tb = E.blankInput();
+
+    // Capital Account
+    var aoaCap = sheetAOA(wb, 'Capital Account');
+    var capRange = { start: 0, end: aoaCap.length };
+    tb.capital.openingBalance = readSingle(aoaCap, 'Opening Balance (as at 1 April)', capRange);
+    tb.capital.introduced = readSingle(aoaCap, 'Capital Introduced during the year', capRange);
+    tb.capital.remuneration = readSingle(aoaCap, 'Remuneration for the year', capRange);
+    tb.capital.interest = readSingle(aoaCap, 'Interest on Capital for the year', capRange);
+    tb.capital.withdrawals = readSingle(aoaCap, 'Withdrawals during the year', capRange);
+
+    // Notes 4-6
+    var aoa46 = sheetAOA(wb, 'Notes 4-6');
+    readFlat(aoa46, E.RESERVE_ITEMS, section(aoa46, 'Note 4 — Reserves and Surplus', 'Note 5 — Borrowings'), tb.reserves);
+    readGrid(aoa46, E.BORROWING_ITEMS, E.BORROWING_DIMS, section(aoa46, 'Note 5 — Borrowings', null), tb.borrowings);
+
+    // Notes 7-10
+    var aoa710 = sheetAOA(wb, 'Notes 7-10');
+    readFlat(aoa710, E.OTHER_LT_LIAB_ITEMS, section(aoa710, 'Note 7 — Other Long-term Liabilities', 'Note 8 — Provisions'), tb.otherLTLiabilities);
+    readGrid(aoa710, E.PROVISION_ITEMS, E.PROVISION_DIMS, section(aoa710, 'Note 8 — Provisions', 'Note 9 — Trade Payables'), tb.provisions);
+    readFlat(aoa710, E.TRADE_PAYABLES_ITEMS, section(aoa710, 'Note 9 — Trade Payables', 'Note 9 (contd.) — MSMED Act Disclosure (informational, not part of the tally)'), tb.tradePayables);
+    readFlat(aoa710, E.MSMED_DISCLOSURE_ITEMS, section(aoa710, 'Note 9 (contd.) — MSMED Act Disclosure (informational, not part of the tally)', 'Note 10 — Other Current Liabilities'), tb.msmedDisclosure);
+    readFlat(aoa710, E.OTHER_CURR_LIAB_ITEMS, section(aoa710, 'Note 10 — Other Current Liabilities', null), tb.otherCurrentLiabilities);
+
+    // Fixed Assets
+    var aoaFA = sheetAOA(wb, 'Fixed Assets');
+    var FA_DIMS = [{ key: 'openingGross' }, { key: 'additions' }, { key: 'deductionsGross' }, { key: 'openingAccumDep' }, { key: 'depreciationYear' }, { key: 'deductionsAccumDep' }];
+    var tangibleRange = section(aoaFA, 'Tangible Assets', 'Intangible Assets');
+    var intangibleRange = section(aoaFA, 'Intangible Assets', 'Capital Work-in-Progress');
+    E.ASSET_CLASSES.forEach(function (c) {
+      var rng = c.type === 'tangible' ? tangibleRange : intangibleRange;
+      var r = findInRange(aoaFA, c.label, rng.start, rng.end);
+      var row = r >= 0 ? aoaFA[r] : [];
+      FA_DIMS.forEach(function (d, di) {
+        var v = toNum(row[1 + di]);
+        tb.fixedAssets[c.key][d.key] = v;
+        if (v) parsedEntries.push({ label: c.label + ' — ' + d.key, value: v });
+      });
+    });
+    var cwipRange = section(aoaFA, 'Capital Work-in-Progress', 'Intangible Assets under Development');
+    tb.cwip.opening = readSingle(aoaFA, 'Opening Balance', cwipRange);
+    tb.cwip.additions = readSingle(aoaFA, 'Additions during the year', cwipRange);
+    tb.cwip.capitalized = readSingle(aoaFA, 'Capitalized during the year', cwipRange);
+    var iaudRange = section(aoaFA, 'Intangible Assets under Development', null);
+    tb.iaud.opening = readSingle(aoaFA, 'Opening Balance', iaudRange);
+    tb.iaud.additions = readSingle(aoaFA, 'Additions during the year', iaudRange);
+    tb.iaud.capitalized = readSingle(aoaFA, 'Capitalized during the year', iaudRange);
+
+    // Notes 12-18
+    var aoa1218 = sheetAOA(wb, 'Notes 12-18');
+    readGrid(aoa1218, E.INVESTMENT_ITEMS, E.INVESTMENT_DIMS, section(aoa1218, 'Note 12 — Investments', 'Note 13 — Loans and Advances'), tb.investments);
+    readGrid(aoa1218, E.LOANS_ADV_ITEMS, E.LOANS_ADV_DIMS, section(aoa1218, 'Note 13 — Loans and Advances', 'Note 14 — Other Non-Current Assets'), tb.loansAdvances);
+    readFlat(aoa1218, E.OTHER_NC_ASSETS_ITEMS, section(aoa1218, 'Note 14 — Other Non-Current Assets', 'Note 15 — Inventories'), tb.otherNonCurrentAssets);
+    readFlat(aoa1218, E.INVENTORY_ITEMS, section(aoa1218, 'Note 15 — Inventories', 'Note 16 — Trade Receivables'), tb.inventories);
+    var recvRange = section(aoa1218, 'Note 16 — Trade Receivables', 'Note 17 — Cash and Bank Balances');
+    readGrid(aoa1218, E.RECEIVABLE_ITEMS, E.RECEIVABLE_DIMS, recvRange, tb.tradeReceivables);
+    tb.unbilledReceivables = readSingle(aoa1218, 'Unbilled Receivables', recvRange);
+    var cashRange = section(aoa1218, 'Note 17 — Cash and Bank Balances', 'Note 18 — Other Current Assets');
+    readFlat(aoa1218, E.CASH_EQUIV_ITEMS, cashRange, tb.cashEquivalents);
+    readFlat(aoa1218, E.OTHER_BANK_BAL_ITEMS, cashRange, tb.otherBankBalances);
+    readFlat(aoa1218, E.OTHER_CURR_ASSETS_ITEMS, section(aoa1218, 'Note 18 — Other Current Assets', null), tb.otherCurrentAssets);
+
+    // Notes 19-25 PL
+    var aoaPL = sheetAOA(wb, 'Notes 19-25 PL');
+    var revRange = section(aoaPL, 'Note 19 — Revenue from Operations', 'Note 20 — Other Income');
+    readFlat(aoaPL, E.REVENUE_ITEMS, revRange, tb.revenue);
+    tb.exciseDuty = readSingle(aoaPL, 'Less: Excise Duty', revRange);
+    readFlat(aoaPL, E.OTHER_INCOME_ITEMS, section(aoaPL, 'Note 20 — Other Income', 'Note 21 — Cost of Goods Sold'), tb.otherIncome);
+    var cogsRange = section(aoaPL, 'Note 21 — Cost of Goods Sold', 'Note 22 — Employee Benefits Expense');
+    tb.cogs.openingRawMaterial = readSingle(aoaPL, 'Opening Raw Material Stock', cogsRange);
+    tb.cogs.purchasesRawMaterial = readSingle(aoaPL, 'Purchases of Raw Material', cogsRange);
+    tb.cogs.purchasesStockInTrade = readSingle(aoaPL, 'Purchases of Stock-in-Trade', cogsRange);
+    tb.cogs.openingStockInTrade = readSingle(aoaPL, 'Opening Stock-in-Trade', cogsRange);
+    tb.cogs.openingWIP = readSingle(aoaPL, 'Opening Work-in-Progress', cogsRange);
+    tb.cogs.openingFinishedGoods = readSingle(aoaPL, 'Opening Finished Goods', cogsRange);
+    readFlat(aoaPL, E.EMPLOYEE_BENEFITS_ITEMS, section(aoaPL, 'Note 22 — Employee Benefits Expense', 'Note 23 — Finance Costs'), tb.employeeBenefits);
+    readFlat(aoaPL, E.FINANCE_COST_ITEMS, section(aoaPL, 'Note 23 — Finance Costs', 'Note 25 — Other Expenses'), tb.financeCosts);
+    readFlat(aoaPL, E.OTHER_EXPENSES_ITEMS, section(aoaPL, 'Note 25 — Other Expenses', null), tb.otherExpenses);
+
+    return { ok: true, tb: tb, entries: parsedEntries };
+  }
+
+  // ── Render the review table + validation ────────────────────────────
+  function renderReview(parsed) {
+    var rowsEl = document.getElementById('fstmtReviewRows');
+    rowsEl.innerHTML = '';
+    if (parsed.entries.length === 0) {
+      rowsEl.innerHTML = '<tr><td colspan="3" style="color:var(--fs-muted);">No non-zero entries were found — is this the right file?</td></tr>';
+    }
+    parsed.entries.forEach(function (r) {
+      var tr = document.createElement('tr');
+      var parts = r.label.split(' — ');
+      var sectionLbl = parts.length > 1 ? parts[0] : '';
+      var acct = parts.length > 1 ? parts.slice(1).join(' — ') : parts[0];
+      tr.innerHTML = '<td style="color:var(--fs-muted);font-size:11.5px;">' + escapeHtml(sectionLbl) + '</td>' +
+        '<td>' + escapeHtml(acct) + '</td>' +
+        '<td class="num">' + inr(r.value) + '</td>';
+      rowsEl.appendChild(tr);
+    });
+
+    document.getElementById('fstmtReviewArea').classList.remove('fstmt-hidden');
+
+    var v = finStatementEngine.validate(parsed.tb);
+    var totalsBar = document.getElementById('fstmtTotalsBar');
+    var errListEl = document.getElementById('fstmtErrList');
+    var step3 = document.getElementById('fstmtStep3');
+
+    if (v.valid) {
+      totalsBar.className = 'fstmt-totals-bar fstmt-totals-ok';
+      totalsBar.innerHTML = '✓ Tallies — Total Assets ' + inr(v.totals.debit) + ' = Total Equity &amp; Liabilities ' + inr(v.totals.credit);
+      errListEl.classList.add('fstmt-hidden');
+      step3.classList.remove('fstmt-hidden');
+    } else {
+      totalsBar.className = 'fstmt-totals-bar fstmt-totals-bad';
+      totalsBar.innerHTML = '✗ Does not tally — Total Assets ' + inr(v.totals.debit) + ' vs Total Equity &amp; Liabilities ' + inr(v.totals.credit) + ' (difference ' + inr(Math.abs(v.totals.difference)) + ')';
+      var lis = v.errors.map(function (e) { return '<li>' + escapeHtml(e.message) + '</li>'; }).join('');
+      errListEl.innerHTML = '<strong>Fix these before generating:</strong><ul>' + lis + '</ul>';
+      errListEl.classList.remove('fstmt-hidden');
+      step3.classList.add('fstmt-hidden');
+    }
+    document.getElementById('fstmtResultsCard').classList.add('fstmt-hidden');
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  // ── Generate statements ─────────────────────────────────────────────
+  document.getElementById('fstmtGenerateBtn').addEventListener('click', function () {
+    if (!parsedTB) return;
+    var v = finStatementEngine.validate(parsedTB);
+    if (!v.valid) return;
+    lastResult = finStatementEngine.calculate(parsedTB);
+    renderResults(lastResult);
+    document.getElementById('fstmtResultsCard').classList.remove('fstmt-hidden');
+    document.getElementById('fstmtResultsCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  function line(label, val, isSub) {
+    return '<div class="fstmt-line' + (isSub ? ' sub' : '') + '"><span class="lbl">' + escapeHtml(label) + '</span><span class="val">' + inr(val) + '</span></div>';
+  }
+
+  function renderResults(res) {
+    var bs = res.balanceSheet, pl = res.profitLoss;
+
+    var bsHtml = '';
+    bsHtml += line("Owner's Capital Account", bs.capitalClosing);
+    bsHtml += line('Reserves and Surplus', bs.reserves);
+    bsHtml += line('Non-current liabilities', bs.nonCurrentLiabilities.total);
+    bsHtml += line('Current liabilities', bs.currentLiabilities.total);
+    bsHtml += line('TOTAL — Equity & Liabilities', bs.totalEquityAndLiabilities, true);
+    bsHtml += '<div style="height:10px;"></div>';
+    bsHtml += line('Non-current assets', bs.nonCurrentAssets.total);
+    bsHtml += line('Current assets', bs.currentAssets.total);
+    bsHtml += line('TOTAL — Assets', bs.totalAssets, true);
+    document.getElementById('fstmtBSBox').innerHTML = bsHtml;
+
+    var plHtml = '';
+    plHtml += line('Revenue from operations', pl.revenueFromOperations);
+    plHtml += line('Other income', pl.otherIncome);
+    plHtml += line('Total Income', pl.totalIncome, true);
+    plHtml += '<div style="height:10px;"></div>';
+    plHtml += line('Cost of goods sold', pl.costOfGoodsSold);
+    plHtml += line('Employee benefits', pl.employeeBenefits);
+    plHtml += line('Finance costs', pl.financeCosts);
+    plHtml += line('Depreciation', pl.depreciationExpense);
+    plHtml += line('Other expenses', pl.otherExpensesTotal);
+    plHtml += line('Total Expenses', pl.totalExpenses, true);
+    plHtml += '<div style="height:10px;"></div>';
+    plHtml += line('Profit for the Year', pl.profitForYear, true);
+    document.getElementById('fstmtPLBox').innerHTML = plHtml;
+
+    var chip = document.getElementById('fstmtBalanceChip');
+    if (bs.balanced) {
+      chip.style.background = 'var(--fs-ok-lt)'; chip.style.color = '#15803D';
+      chip.textContent = '✓ Balance Sheet balances — Total Equity & Liabilities = Total Assets';
+    } else {
+      chip.style.background = 'var(--fs-err-lt)'; chip.style.color = '#B91C1C';
+      chip.textContent = '✗ Balance Sheet does not balance — difference ' + inr(Math.abs(bs.difference)) + '. Please re-check your uploaded figures.';
+    }
+  }
+
+  // ── Excel export — auth.js auto-wraps #btnExp and calls window.exportXL ──
+  window.exportXL = function () {
+    if (!lastResult) return;
+    finStatementExport.buildWorkbook({
+      result: lastResult,
+      entity: document.getElementById('fstmtEntity').value || 'Entity',
+      fy: document.getElementById('fstmtFY').value || '',
+      preparedBy: document.getElementById('fstmtPreparedBy').value || ''
+    });
+  };
+})();
+</script>
+
+</body>
+</html>
