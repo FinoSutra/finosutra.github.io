@@ -6,227 +6,282 @@
 <meta name="robots" content="noindex, nofollow"/>
 <title>Finosutra OG Image — 1200×630</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{
   width:1200px;height:630px;overflow:hidden;
-  background:#F7F8FF;
+  background:#EEF0EA;
   font-family:'Inter',-apple-system,sans-serif;
   -webkit-font-smoothing:antialiased;
 }
-.canvas{position:relative;width:1200px;height:630px;overflow:hidden;}
+.canvas{position:relative;width:1200px;height:630px;overflow:hidden;background:linear-gradient(135deg,#F2EFE7 0%,#EAEBE2 100%);}
 
-/* ── Background ── */
-.bg-glow-l{
-  position:absolute;width:700px;height:700px;border-radius:50%;
-  background:radial-gradient(circle,rgba(99,102,241,0.12) 0%,transparent 65%);
-  top:-200px;left:-100px;pointer-events:none;
+/* ── Card ── */
+.card{
+  position:absolute;top:28px;left:28px;right:28px;bottom:28px;
+  background:#FBFAF6;
+  border-radius:28px;
+  border:1px solid rgba(21,34,44,0.06);
+  box-shadow:0 24px 60px rgba(21,34,44,0.14),0 2px 8px rgba(21,34,44,0.05);
+  overflow:hidden;
 }
-.bg-glow-r{
-  position:absolute;width:500px;height:500px;border-radius:50%;
-  background:radial-gradient(circle,rgba(139,92,246,0.08) 0%,transparent 70%);
-  bottom:-80px;right:100px;pointer-events:none;
-}
-.bg-grid{
-  position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(99,102,241,0.07) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(99,102,241,0.07) 1px,transparent 1px);
-  background-size:60px 60px;pointer-events:none;
+.dots{
+  position:absolute;top:16px;right:16px;width:70px;height:40px;
+  background-image:radial-gradient(rgba(184,134,46,0.35) 1.6px,transparent 1.6px);
+  background-size:12px 12px;pointer-events:none;z-index:1;
 }
 
-/* ── Left zone ── */
+/* ── Left content ── */
 .left{
   position:absolute;top:0;left:0;
-  width:610px;height:630px;
-  padding:52px 60px;
-  display:flex;flex-direction:column;justify-content:space-between;
+  width:600px;height:100%;
+  padding:44px 0 40px 52px;
+  display:flex;flex-direction:column;
+  z-index:2;
 }
 
-.logo{display:flex;align-items:center;}
-
-/* Headline block */
-.headline-block{flex:1;display:flex;flex-direction:column;justify-content:center;padding:8px 0;}
 .eyebrow{
-  font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-  color:#6366F1;margin-bottom:16px;
+  display:flex;align-items:center;gap:9px;
+  font-size:11.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:#5B5346;margin-bottom:24px;
 }
-.headline{
-  font-size:56px;font-weight:900;line-height:1.0;letter-spacing:-2.5px;
-  color:#111827;margin-bottom:18px;
+.eyebrow .dot{width:5px;height:5px;border-radius:50%;background:#B8862E;}
+
+.logo-row{display:flex;align-items:center;gap:18px;margin-bottom:26px;}
+.logo-icon{flex-shrink:0;}
+.logo-divider{width:1px;height:52px;background:rgba(21,34,44,0.14);}
+.logo-word{font-size:42px;font-weight:800;color:#15222C;letter-spacing:-0.03em;line-height:1;}
+.logo-tag{font-size:12px;font-weight:700;color:#8A8371;letter-spacing:1.5px;text-transform:uppercase;margin-top:8px;}
+
+.stack-line{font-size:16px;font-weight:600;color:#4B5563;margin-bottom:22px;}
+.stack-line .sep{color:#C9BFA4;margin:0 9px;}
+
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:auto;}
+.chip{
+  display:flex;align-items:center;gap:9px;
+  background:#FFFFFF;border:1px solid rgba(21,34,44,0.08);
+  border-radius:13px;padding:9px 13px 9px 9px;
+  box-shadow:0 2px 6px rgba(21,34,44,0.04);
 }
-.headline .gt{
-  background:linear-gradient(120deg,#6366F1 0%,#8B5CF6 50%,#A855F7 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+.chip-icon{
+  width:30px;height:30px;border-radius:9px;background:#15222C;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  color:#F6F3EA;
 }
-.subtitle{font-size:15px;font-weight:400;color:#6B7280;line-height:1.6;max-width:430px;margin-bottom:24px;}
+.chip-icon svg{width:15px;height:15px;}
+.chip-icon .rupee{font-size:14px;font-weight:800;}
+.chip-text{font-size:11.5px;font-weight:700;color:#15222C;line-height:1.3;}
 
-.badges{display:flex;flex-wrap:wrap;gap:8px;}
-.badge{padding:5px 13px;border-radius:20px;font-size:11px;font-weight:600;}
-.bi{background:#EEF2FF;border:1px solid rgba(99,102,241,0.3);color:#4F46E5;}
-.bg_{background:#ECFDF5;border:1px solid rgba(16,185,129,0.3);color:#059669;}
-.ba{background:#FFFBEB;border:1px solid rgba(245,158,11,0.3);color:#D97706;}
+.footer-url{display:flex;align-items:center;gap:9px;margin-top:24px;}
+.footer-url .globe{color:#15222C;}
+.footer-url .globe svg{width:19px;height:19px;}
+.footer-url .url{font-size:16px;font-weight:700;color:#15222C;letter-spacing:-0.01em;}
+.footer-url .arrow{font-size:16px;font-weight:700;color:#B8862E;}
 
-/* Trust bar */
-.trust-bar{display:flex;align-items:center;}
-.ti_{display:flex;align-items:center;gap:6px;font-size:11px;color:#9CA3AF;font-weight:500;padding-right:16px;}
-.td{width:5px;height:5px;border-radius:50%;background:#6366F1;flex-shrink:0;}
-.tdiv{width:1px;height:12px;background:#E5E7EB;margin-right:16px;}
+/* ── Right illustration panel ── */
+.illo{position:absolute;top:0;right:0;width:560px;height:100%;z-index:1;}
 
-/* ── Vertical separator ── */
-.v-sep{
-  position:absolute;left:610px;top:40px;width:1px;height:550px;
-  background:linear-gradient(to bottom,transparent 0%,rgba(99,102,241,0.2) 25%,rgba(99,102,241,0.2) 75%,transparent 100%);
+/* Clipboard */
+.clipboard{
+  position:absolute;top:44px;right:96px;width:236px;
+  background:#FFFFFF;border-radius:16px;padding:22px 20px 20px;
+  box-shadow:0 16px 34px rgba(21,34,44,0.15),0 2px 6px rgba(21,34,44,0.05);
+  z-index:4;
 }
-
-/* ── Right panel ── */
-.right{
-  position:absolute;top:0;left:610px;
-  width:590px;height:630px;
-  padding:44px 0 44px 48px;overflow:hidden;
+.clipboard::before{
+  content:'';position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+  width:70px;height:18px;background:#26343F;border-radius:6px;
 }
-
-/* ── Main dashboard card ── */
-.dash-card{
-  width:490px;
-  background:#FFFFFF;
-  border:1px solid rgba(99,102,241,0.18);
-  border-radius:16px;padding:22px 22px 18px;
-  box-shadow:0 4px 32px rgba(99,102,241,0.1),0 1px 4px rgba(0,0,0,0.04);
-  position:relative;z-index:2;
+.clipboard::after{
+  content:'';position:absolute;top:-15px;left:50%;transform:translateX(-50%);
+  width:20px;height:20px;background:#26343F;border-radius:50%;
+  border:3px solid #FBFAF6;
 }
-.dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
-.dash-title{font-size:12px;font-weight:600;color:#6B7280;letter-spacing:0.3px;}
-.live-badge{
-  font-size:10px;font-weight:700;padding:3px 9px;
-  background:#ECFDF5;border:1px solid rgba(16,185,129,0.35);
-  border-radius:6px;color:#059669;letter-spacing:1px;
+.clip-title{font-size:22px;font-weight:800;color:#15222C;margin-bottom:13px;letter-spacing:-0.02em;}
+.clip-row{display:flex;align-items:center;gap:9px;margin-bottom:9px;}
+.clip-check{
+  width:17px;height:17px;border-radius:50%;background:#FDF3E1;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;color:#B8862E;
 }
+.clip-check svg{width:10px;height:10px;}
+.clip-row-text{font-size:12.5px;font-weight:600;color:#4B5563;}
+.clip-line{height:8px;border-radius:4px;background:#EEEAE0;margin-left:26px;flex:1;}
 
-/* Metrics grid */
-.metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
-.metric{
-  background:#F7F8FF;border:1px solid rgba(99,102,241,0.1);
-  border-radius:10px;padding:12px 14px;
+/* Bars + arrow, ascending from behind the clipboard */
+.trend{position:absolute;top:96px;right:34px;z-index:3;display:flex;align-items:flex-end;gap:8px;height:180px;}
+.trend-bar{width:20px;border-radius:4px 4px 0 0;background:linear-gradient(180deg,#26343F 0%,#15222C 100%);box-shadow:0 6px 14px rgba(21,34,44,0.2);}
+.arrow-wrap{position:absolute;top:70px;right:20px;width:170px;height:130px;z-index:5;pointer-events:none;}
+
+/* Floating chip icons */
+.float-chip{
+  position:absolute;width:54px;height:54px;border-radius:15px;background:#15222C;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 12px 24px rgba(21,34,44,0.24);z-index:5;color:#F6F3EA;
 }
-.metric-lbl{font-size:10px;color:#9CA3AF;font-weight:500;margin-bottom:5px;}
-.metric-val{font-size:19px;font-weight:700;letter-spacing:-0.5px;}
-.metric-sub{font-size:9.5px;color:#D1D5DB;margin-top:2px;}
-.cp{color:#6366F1;}.cw{color:#111827;}.cg{color:#059669;}.ca{color:#D97706;}
+.float-chip.rupee{top:222px;right:452px;font-size:22px;font-weight:800;}
 
-/* Mini bar chart */
-.chart-lbl{font-size:10px;color:#9CA3AF;margin-bottom:7px;}
-.bars{display:flex;align-items:flex-end;gap:6px;height:42px;}
-.bar{flex:1;border-radius:3px 3px 0 0;background:linear-gradient(to top,#6366F1,#A78BFA);opacity:.8;}
-
-/* ── Floating mini cards ── */
-.card-gst{
-  position:absolute;top:34px;right:8px;width:182px;
-  background:#FFFFFF;
-  border:1px solid rgba(16,185,129,0.25);
-  border-radius:13px;padding:16px;z-index:3;
-  box-shadow:0 4px 20px rgba(16,185,129,0.12),0 1px 4px rgba(0,0,0,0.05);
+/* Coin stacks */
+.coin-stack{position:absolute;display:flex;flex-direction:column-reverse;align-items:center;z-index:2;}
+.coin{
+  border-radius:50%;flex-shrink:0;
+  background:linear-gradient(180deg,#EAC077 0%,#B8862E 60%,#9C6F24 100%);
+  border:2px solid #8F6620;
+  box-shadow:0 3px 6px rgba(21,34,44,0.18), inset 0 2px 3px rgba(255,255,255,0.35);
 }
-.mini-lbl{font-size:10.5px;font-weight:600;color:#9CA3AF;margin-bottom:8px;}
-.mini-val{font-size:26px;font-weight:800;color:#059669;letter-spacing:-1px;line-height:1;}
-.mini-sub{font-size:9.5px;color:#D1D5DB;margin-top:5px;}
+.coin:first-child{margin-top:0 !important;}
+.coin.top-coin{display:flex;align-items:center;justify-content:center;color:#15222C;font-weight:800;}
+.stack-a{bottom:38px;right:381px;}
+.stack-a .coin{width:76px;height:24px;margin-top:-15px;}
+.stack-a .coin.top-coin{font-size:16px;}
+.stack-b{bottom:34px;right:440px;}
+.stack-b .coin{width:60px;height:19px;margin-top:-12px;}
+.stack-c{bottom:38px;right:66px;}
+.stack-c .coin{width:56px;height:18px;margin-top:-11px;}
+.stack-c .coin.top-coin{font-size:13px;}
 
-.card-je{
-  position:absolute;bottom:36px;right:8px;width:205px;
-  background:#FFFFFF;
-  border:1px solid rgba(99,102,241,0.18);
-  border-radius:13px;padding:16px;z-index:3;
-  box-shadow:0 4px 20px rgba(99,102,241,0.1),0 1px 4px rgba(0,0,0,0.04);
+/* Calculator */
+.calc{
+  position:absolute;bottom:30px;right:150px;width:270px;
+  background:linear-gradient(160deg,#2A3A46 0%,#15222C 100%);
+  border-radius:24px;padding:20px;
+  box-shadow:0 26px 50px rgba(21,34,44,0.32);z-index:4;
 }
-.je-title{font-size:9.5px;font-weight:700;color:#9CA3AF;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;}
-.je-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid #F3F4F6;}
-.je-row:last-child{border-bottom:none;}
-.je-acc{font-size:11px;color:#6B7280;}
-.je-dr{font-size:11px;font-weight:700;color:#059669;}
-.je-cr{font-size:11px;font-weight:700;color:#EF4444;}
-
-/* ── URL corner ── */
-.url-corner{position:absolute;bottom:24px;right:24px;font-size:11px;color:#D1D5DB;font-weight:500;}
+.calc-screen{background:#B9C4B0;border-radius:11px;padding:14px 16px;margin-bottom:14px;box-shadow:inset 0 2px 5px rgba(0,0,0,0.25);}
+.calc-val{font-family:'Courier New',monospace;font-size:26px;color:#1F2E22;font-weight:700;letter-spacing:1px;text-align:right;}
+.calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.key{
+  background:linear-gradient(180deg,#F3F1EA 0%,#E2DECF 100%);border-radius:9px;height:38px;
+  display:flex;align-items:center;justify-content:center;
+  color:#15222C;font-size:15px;font-weight:700;
+  box-shadow:0 2px 0 rgba(21,34,44,0.18), inset 0 1px 0 rgba(255,255,255,0.6);
+}
+.key.op{background:linear-gradient(180deg,#E4B563 0%,#B8862E 100%);color:#15222C;box-shadow:0 2px 0 rgba(21,34,44,0.28), inset 0 1px 0 rgba(255,255,255,0.4);}
 </style>
 </head>
 <body>
 <div class="canvas">
+  <div class="card">
+    <div class="dots"></div>
 
-  <div class="bg-glow-l"></div>
-  <div class="bg-glow-r"></div>
-  <div class="bg-grid"></div>
+    <!-- Left content -->
+    <div class="left">
+      <div class="eyebrow"><span class="dot"></span>Finance Automation SaaS &nbsp;·&nbsp; India</div>
 
-  <!-- Left content -->
-  <div class="left">
-    <div class="logo">
-      <img src="logo.png" alt="Finosutra" style="height:84px;width:auto;display:block;">
-    </div>
+      <div class="logo-row">
+        <svg class="logo-icon" width="76" height="76" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 8 L92 8 L112 28 L112 112 L8 112 Z" fill="#15222C"/>
+          <path d="M92 8 L112 8 L112 28 Z" fill="#B8862E"/>
+          <rect x="30" y="34" width="13" height="54" rx="1.5" fill="#F6F3EA"/>
+          <rect x="30" y="34" width="42" height="13" rx="1.5" fill="#F6F3EA"/>
+          <rect x="30" y="59" width="30" height="13" rx="1.5" fill="#F6F3EA"/>
+        </svg>
+        <div class="logo-divider"></div>
+        <div>
+          <div class="logo-word">Finosutra</div>
+          <div class="logo-tag">— Finance on Autopilot</div>
+        </div>
+      </div>
 
-    <div class="headline-block">
-      <div class="eyebrow">Finance Automation SaaS · India</div>
-      <div class="headline">Finance on<br><span class="gt">Autopilot</span></div>
-      <div class="subtitle">IND AS 116 · Income Tax · Capital Gains · GST<br>Professional tools for CAs, CFOs &amp; Finance Teams</div>
-      <div class="badges">
-        <div class="badge bi">IND AS 116 / IFRS 16</div>
-        <div class="badge bi">Capital Gains Tax</div>
-        <div class="badge bg_">Income Tax FY 2026-27</div>
-        <div class="badge ba">Advance Tax</div>
+      <div class="stack-line">IND AS 116<span class="sep">·</span>Income Tax<span class="sep">·</span>Capital Gains<span class="sep">·</span>GST</div>
+
+      <div class="chips">
+        <div class="chip">
+          <div class="chip-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 2h9l5 5v15H6z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M15 2v5h5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><line x1="9" y1="13" x2="15" y2="13" stroke="currentColor" stroke-width="1.8"/><line x1="9" y1="17" x2="15" y2="17" stroke="currentColor" stroke-width="1.8"/></svg>
+          </div>
+          <div class="chip-text">IND AS 116<br>/ IFRS 16</div>
+        </div>
+        <div class="chip">
+          <div class="chip-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="3,17 9,11 13,15 21,7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><polyline points="15,7 21,7 21,13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="chip-text">Capital<br>Gains Tax</div>
+        </div>
+        <div class="chip">
+          <div class="chip-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><polyline points="8.5,12 11,14.5 15.5,9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="chip-text">Security<br>Deposit</div>
+        </div>
+        <div class="chip">
+          <div class="chip-icon"><span class="rupee">₹</span></div>
+          <div class="chip-text">Advance<br>Tax</div>
+        </div>
+      </div>
+
+      <div class="footer-url">
+        <span class="globe"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><ellipse cx="12" cy="12" rx="4" ry="9" stroke="currentColor" stroke-width="1.6"/><line x1="3" y1="12" x2="21" y2="12" stroke="currentColor" stroke-width="1.6"/></svg></span>
+        <span class="url">finosutra.com</span>
+        <span class="arrow">→</span>
       </div>
     </div>
 
-    <div class="trust-bar">
-      <div class="ti_"><div class="td"></div>Free to use</div>
-      <div class="tdiv"></div>
-      <div class="ti_"><div class="td"></div>Excel export</div>
-      <div class="tdiv"></div>
-      <div class="ti_"><div class="td"></div>Built for India</div>
-      <div class="tdiv"></div>
-      <div class="ti_"><div class="td"></div>finosutra.com</div>
+    <!-- Right illustration -->
+    <div class="illo">
+
+      <div class="clipboard">
+        <div class="clip-title">GST 18%</div>
+        <div class="clip-row">
+          <div class="clip-check"><svg viewBox="0 0 20 20" fill="none"><polyline points="4,10 8,14 16,5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="clip-line"></div>
+        </div>
+        <div class="clip-row">
+          <div class="clip-check"><svg viewBox="0 0 20 20" fill="none"><polyline points="4,10 8,14 16,5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="clip-line" style="width:70%;"></div>
+        </div>
+        <div class="clip-row">
+          <div class="clip-check"><svg viewBox="0 0 20 20" fill="none"><polyline points="4,10 8,14 16,5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="clip-line" style="width:55%;"></div>
+        </div>
+      </div>
+
+      <div class="trend">
+        <div class="trend-bar" style="height:34%"></div>
+        <div class="trend-bar" style="height:56%"></div>
+        <div class="trend-bar" style="height:78%"></div>
+        <div class="trend-bar" style="height:100%"></div>
+      </div>
+      <svg class="arrow-wrap" viewBox="0 0 170 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 118 L150 20" stroke="#B8862E" stroke-width="7" stroke-linecap="round"/>
+        <path d="M110 16 L155 18 L152 62" stroke="#B8862E" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+
+      <div class="float-chip rupee">₹</div>
+
+      <div class="coin-stack stack-a">
+        <div class="coin"></div>
+        <div class="coin"></div>
+        <div class="coin"></div>
+        <div class="coin"></div>
+        <div class="coin top-coin">₹</div>
+      </div>
+      <div class="coin-stack stack-b">
+        <div class="coin"></div>
+        <div class="coin"></div>
+        <div class="coin"></div>
+      </div>
+      <div class="coin-stack stack-c">
+        <div class="coin"></div>
+        <div class="coin"></div>
+        <div class="coin top-coin">₹</div>
+      </div>
+
+      <div class="calc">
+        <div class="calc-screen">
+          <div class="calc-val">CALCULATE</div>
+        </div>
+        <div class="calc-grid">
+          <div class="key">7</div><div class="key">8</div><div class="key">9</div><div class="key op">%</div>
+          <div class="key">4</div><div class="key">5</div><div class="key">6</div><div class="key op">×</div>
+          <div class="key">1</div><div class="key">2</div><div class="key">3</div><div class="key op">=</div>
+          <div class="key" style="grid-column:span 2;">0</div><div class="key">.</div><div class="key op">+</div>
+        </div>
+      </div>
+
     </div>
+
   </div>
-
-  <div class="v-sep"></div>
-
-  <!-- Right panel -->
-  <div class="right">
-    <div class="dash-card">
-      <div class="dash-header">
-        <div class="dash-title">IND AS 116 — Lease Amortization Schedule</div>
-        <div class="live-badge">LIVE</div>
-      </div>
-      <div class="metrics">
-        <div class="metric"><div class="metric-lbl">Lease Liability</div><div class="metric-val cp">₹24.8L</div><div class="metric-sub">Opening balance</div></div>
-        <div class="metric"><div class="metric-lbl">ROU Asset</div><div class="metric-val cw">₹26.2L</div><div class="metric-sub">Day 1 recognition</div></div>
-        <div class="metric"><div class="metric-lbl">Finance Charge</div><div class="metric-val cg">₹1.48L</div><div class="metric-sub">Year 1 P&amp;L</div></div>
-        <div class="metric"><div class="metric-lbl">Depreciation</div><div class="metric-val ca">₹5.24L</div><div class="metric-sub">Annual (SLM)</div></div>
-      </div>
-      <div class="chart-lbl">Lease liability — 5-year amortization</div>
-      <div class="bars">
-        <div class="bar" style="height:100%"></div>
-        <div class="bar" style="height:82%"></div>
-        <div class="bar" style="height:63%"></div>
-        <div class="bar" style="height:44%"></div>
-        <div class="bar" style="height:24%"></div>
-      </div>
-    </div>
-
-    <div class="card-gst">
-      <div class="mini-lbl">GST Payable</div>
-      <div class="mini-val">₹18,000</div>
-      <div class="mini-sub">₹1,00,000 × 18% IGST</div>
-    </div>
-
-    <div class="card-je">
-      <div class="je-title">Journal Entry · Day 1</div>
-      <div class="je-row"><div class="je-acc">ROU Asset A/c</div><div class="je-dr">Dr ₹26.2L</div></div>
-      <div class="je-row"><div class="je-acc">Lease Liability</div><div class="je-cr">Cr ₹24.8L</div></div>
-      <div class="je-row"><div class="je-acc">Prepaid Rent</div><div class="je-cr">Cr ₹1.4L</div></div>
-    </div>
-  </div>
-
-  <div class="url-corner">finosutra.com</div>
-
 </div>
 </body>
 </html>
