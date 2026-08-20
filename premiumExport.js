@@ -10,7 +10,7 @@
   var BRAND = {
     name:    'Finosutra',
     tagline: 'Finance on Autopilot',
-    site:    'www.finosutra.com',
+    site:    'finosutra.com',
     version: 'v3.0',
     std:     'IND AS 116 / IFRS 16'
   };
