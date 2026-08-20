@@ -9,7 +9,7 @@
 (function (global) {
   'use strict';
 
-  var BRAND = { name: 'Finosutra', site: 'www.finosutra.com', version: 'v2.0', std: 'ICAI Guidance Note — Non-Corporate Entities' };
+  var BRAND = { name: 'Finosutra', site: 'finosutra.com', version: 'v2.0', std: 'ICAI Guidance Note — Non-Corporate Entities' };
 
   var CLR = {
     navy: '002244', navyDark: '001830', purple: '0052CC', purpleLight: 'E8F0FF',
