@@ -161,8 +161,8 @@
   </div>
 
   <div class="fs-trust-bar">
-    <div class="fs-trust-item"><i class="fa-solid fa-gift"></i> 100% free — no account needed</div>
-    <div class="fs-trust-item"><i class="fa-solid fa-bolt"></i> Instant download after payment</div>
+    <div class="fs-trust-item"><i class="fa-solid fa-gift"></i> Free to download — no account needed</div>
+    <div class="fs-trust-item"><i class="fa-solid fa-bolt"></i> Instant download, no payment required</div>
     <div class="fs-trust-item"><i class="fa-solid fa-rotate-left"></i> Contact us within 7 days for issues</div>
     <div class="fs-trust-item"><i class="fa-solid fa-file-excel"></i> Works with Excel 2016 and above</div>
   </div>
@@ -202,7 +202,6 @@
 
 <script src="nav.js?v=9"></script>
 <script src="footer.js?v=8"></script>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
 
 /* ══════════════════════════════════════════
@@ -260,58 +259,6 @@ function submitNotify(){
 document.getElementById('notifyModal').addEventListener('click', function(e){
   if(e.target===this) closeNotifyModal();
 });
-
-/* ══════════════════════════════════════════
-   RAZORPAY — BUY TEMPLATE
-══════════════════════════════════════════ */
-var TEMPLATES = {
-  far: {
-    name: 'Fixed Asset Register',
-    amount: 19900,
-    desc: 'Fixed Asset Register — Excel Template (IND AS / Companies Act)',
-    generate: generateFAR
-  },
-  indas116lease: {
-    name: 'IND AS 116 Lease Schedule',
-    amount: 14900,
-    desc: 'IND AS 116 / IFRS 16 Lease Amortisation Schedule — Excel Template',
-    generate: downloadIndAS116Lease
-  }
-};
-
-function buyTemplate(id){
-  var tmpl = TEMPLATES[id];
-  if(!tmpl){ alert('Template not found.'); return; }
-
-  var options = {
-    key: window.FS_RZP_KEY,
-    amount: tmpl.amount,
-    currency: 'INR',
-    name: 'Finosutra',
-    description: tmpl.desc,
-    image: '',
-    theme: { color: '#6366F1' },
-    modal: {
-      ondismiss: function(){ showToast('Payment cancelled. No charges made.','#8B5CF6'); }
-    },
-    handler: function(response){
-      showToast('✓ Payment successful! Preparing your download...','#5EC98A');
-      setTimeout(function(){ tmpl.generate(); }, 800);
-    },
-    prefill: { name:'', email:'', contact:'' }
-  };
-
-  try{
-    var rzp = new Razorpay(options);
-    rzp.on('payment.failed', function(resp){
-      showToast('Payment failed: '+resp.error.description,'#FF8A80');
-    });
-    rzp.open();
-  } catch(e){
-    alert('Could not open payment window. Please check your connection and try again.');
-    console.error(e);
-  }
-}
 
 /* ══════════════════════════════════════════
    TOAST

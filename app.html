@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<title>Lease App — IND AS 116 | Finosutra</title>
+<title>Lease Workspace — IND AS 116 | Finosutra</title>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <meta name="description" content="IND AS 116 Lease Workspace — manage all leases, calculate ROU assets, generate journal entries, and export audit-ready working papers. Built for CAs and CFOs."/>
 <meta name="robots" content="noindex,nofollow"/>
@@ -829,7 +829,7 @@ body{font-family:'Inter',sans-serif;color:#111827;-webkit-font-smoothing:antiali
         <div class="page-topbar-right">
           <button class="btn btn-amber btn-sm" onclick="downloadTemplate()"><i class="fa-solid fa-download"></i> Template</button>
           <button class="btn btn-teal btn-sm" onclick="document.getElementById('fileUploadInput').click()"><i class="fa-solid fa-upload"></i> Upload</button>
-          <button class="btn btn-outline btn-sm" id="btnExp" onclick="exportPortfolioXL()"><i class="fa-solid fa-file-excel"></i> Export</button>
+          <button class="btn btn-outline btn-sm" id="btnExportPortfolio" onclick="exportPortfolioXL()"><i class="fa-solid fa-file-excel"></i> Export</button>
           <button class="btn btn-primary btn-sm" onclick="openAddModal()"><i class="fa-solid fa-plus"></i> Add Lease</button>
         </div>
       </div>
@@ -1101,7 +1101,7 @@ body{font-family:'Inter',sans-serif;color:#111827;-webkit-font-smoothing:antiali
                   <tr><td><b>Schedules</b></td><td>Period-by-period amortization table + Annual FY rollforward (switch with Period / Annual toggle)</td><td>Verifying amortization numbers, cross-checking with GL</td></tr>
                   <tr><td><b>Journal Entries</b></td><td>Day 1 recognition JE + periodic interest accrual, payment, depreciation entries</td><td>Posting to accounting system, audit support</td></tr>
                   <tr><td><b>Disclosures</b></td><td>Para 52 maturity analysis, liability movement, ROU movement, P&amp;L disclosures</td><td>Preparing notes to financial statements</td></tr>
-                  <tr><td><b>Documents</b></td><td>Upload slots for Lease Agreement, Amendment, Termination Letter, Memo, Disclosure Note</td><td>Attaching source documents for audit trail</td></tr>
+                  <tr><td><b>Doc Links</b></td><td>Save links or names to your Lease Agreement, Amendment, Termination Letter and other source documents — references only, no file upload</td><td>Keeping a pointer to where source documents live, for audit trail</td></tr>
                   <tr><td><b>Audit &amp; Review</b></td><td>Validation issues, explanation panel ("how was this calculated"), audit trail log, Sign-Off fields</td><td>Review process, audit queries, sign-off</td></tr>
                 </tbody>
               </table>
@@ -1975,38 +1975,6 @@ body{font-family:'Inter',sans-serif;color:#111827;-webkit-font-smoothing:antiali
 
 <!-- Toast -->
 <div id="appToast"></div>
-
-<!-- Add Lease Modal -->
-<div class="modal-overlay" id="addLeaseModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeAddModal()">&#215;</button>
-    <div class="modal-title">Add Lease to Portfolio</div>
-    <div class="m-field">
-      <label>Lease Name / Description</label>
-      <input type="text" id="mlName" placeholder="e.g. Mumbai Office — 3rd Floor"/>
-    </div>
-    <div class="m-field">
-      <label>Lessee / Entity Name</label>
-      <input type="text" id="mlEntity" placeholder="e.g. ABC Pvt. Ltd."/>
-    </div>
-    <div class="m-field">
-      <label>Company</label>
-      <select id="mlCompany"><option value="">— Select company (optional) —</option></select>
-    </div>
-    <div class="m-field">
-      <label>Lease Type</label>
-      <select id="mlModel">
-        <option value="standard">Standard (Fixed Rent) — Model 1</option>
-        <option value="escalation">Escalation / Variable Rent — Model 3</option>
-      </select>
-    </div>
-    <p class="m-note">You'll be taken to the calculator. After computing, click <strong>"Save to Portfolio"</strong> in the results to save it here.</p>
-    <div class="modal-actions">
-      <button class="btn btn-outline" onclick="closeAddModal()">Cancel</button>
-      <button class="btn btn-primary" onclick="goToCalculator()">Open Calculator →</button>
-    </div>
-  </div>
-</div>
 
 <!-- Delete Modal -->
 <div class="modal-overlay" id="deleteModal">

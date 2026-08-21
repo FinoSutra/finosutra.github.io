@@ -199,8 +199,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 </style>
 <!-- SheetJS with style support -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
-<!-- Razorpay -->
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -227,7 +225,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
     {
       "@type": "Question",
       "name": "What is the income tax slab for FY 2026-27 under the New Regime?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Under the New Regime for FY 2026-27: 0% up to ₹3 lakh, 5% from ₹3-7 lakh, 10% from ₹7-10 lakh, 15% from ₹10-12 lakh, 20% from ₹12-15 lakh, and 30% above ₹15 lakh. A standard deduction of ₹75,000 is also available." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Under the New Regime for FY 2026-27: 0% up to ₹4 lakh, 5% from ₹4-8 lakh, 10% from ₹8-12 lakh, 15% from ₹12-16 lakh, 20% from ₹16-20 lakh, 25% from ₹20-24 lakh, and 30% above ₹24 lakh. A standard deduction of ₹75,000 is also available." }
     },
     {
       "@type": "Question",
@@ -1676,7 +1674,7 @@ function updatePropLTCGMethod(){
 // ===================================================================
 // EXCEL GENERATION — SheetJS
 // ===================================================================
-function generateAndDownloadExcel(paymentId){
+function generateAndDownloadExcel(exportRef){
   if(!lastResults){
     if(typeof showToast==='function') showToast('Please calculate your tax first.','#FF8A80');
     else alert('Please calculate your tax first.');
@@ -1773,7 +1771,7 @@ function generateAndDownloadExcel(paymentId){
     ws['A7'] = cs('Date of Birth',  S.meta);  ws['B7'] = cs(dob,  S.metaV);
     ws['A8'] = cs('Category',       S.meta);  ws['B8'] = cs(inp.category==='super_senior'?'Super Senior (80+)':inp.category==='senior'?'Senior Citizen (60-79)':'Individual (Below 60)', S.metaV);
     ws['A9'] = cs('Generated On',   S.meta);  ws['B9'] = cs(now.toLocaleString('en-IN'), S.metaV);
-    ws['A10']= cs('Payment ID',     S.meta);  ws['B10']= cs(paymentId, S.metaV);
+    ws['A10']= cs('Export Reference', S.meta);  ws['B10']= cs(exportRef, S.metaV);
     ws['A11']= cb();
     ws['A12']= cs('TAX SUMMARY', S.secHdr);
     ws['A13']= cs('',S.hdr); ws['B13']= cs('NEW REGIME (₹)', S.hdr); ws['C13']= cs('OLD REGIME (₹)', S.hdr);
@@ -2006,7 +2004,7 @@ function generateAndDownloadExcel(paymentId){
   const actionsDiv = document.getElementById('result-actions');
   const successMsg = document.createElement('div');
   successMsg.style.cssText = 'margin-top:12px;background:#ECFDF5;border:1px solid rgba(16,185,129,0.3);border-radius:8px;padding:12px 16px;font-size:12px;color:#059669;font-weight:600;';
-  successMsg.innerHTML = '✓ Payment confirmed (ID: '+paymentId.slice(-8)+') · Excel downloaded successfully!';
+  successMsg.innerHTML = '✓ Excel downloaded successfully!';
   actionsDiv.parentNode.insertBefore(successMsg, actionsDiv.nextSibling);
 }
 
