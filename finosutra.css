@@ -595,6 +595,11 @@ h4 { font-size: 16px; }
 .fs-price-grid-3 {
   grid-template-columns: repeat(3, 1fr);
 }
+.fs-price-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 600px;
+  margin: 0 auto;
+}
 .fs-price-card {
   background: var(--fs-card);
   border: 1px solid var(--fs-border);
@@ -644,7 +649,8 @@ h4 { font-size: 16px; }
 }
 @media (max-width: 640px) {
   .fs-price-grid,
-  .fs-price-grid-3 { grid-template-columns: 1fr; }
+  .fs-price-grid-3,
+  .fs-price-grid-2 { grid-template-columns: 1fr; }
 }
 
 
