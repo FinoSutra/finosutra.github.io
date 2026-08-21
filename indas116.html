@@ -578,7 +578,7 @@ function fsShortDate(d){
     {
       "@type": "Question",
       "name": "Is this IND AS 116 calculator free?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Yes, the full IND AS 116 calculator — including amortisation schedule, journal entries and annual rollforward — is completely free. An audit-ready Excel export is available for ₹199." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, the full IND AS 116 calculator — including amortisation schedule, journal entries and annual rollforward — is completely free. Log in to download an audit-ready Excel export — free accounts get 5 downloads a month." }
     },
     {
       "@type": "Question",
@@ -631,7 +631,7 @@ function fsShortDate(d){
     <div class="step-num">3</div>
     <div class="step-text">
       <span class="step-label">Download Excel</span>
-      <span class="step-sub">Audit-ready report · ₹199</span>
+      <span class="step-sub">Audit-ready report · Free (login required, 5/mo)</span>
     </div>
   </div>
 </div>
@@ -977,29 +977,15 @@ function fsShortDate(d){
       </div>
 
 
-      <div id="freeExportNotice" style="margin-bottom:8px;padding:9px 14px;background:#ECFDF5;border:1.5px solid #6EE7B7;border-radius:8px;font-size:12px;color:#065F46;font-weight:600;">🎁 First export free — no signup needed. Click to download.</div>
-      <script>try{if(localStorage.getItem('fs_free_exp_indas116'))document.getElementById('freeExportNotice').style.display='none';}catch(e){}</script>
       <div class="exp-row">
         <span class="exp-note" id="expNote"></span>
         <button class="btn-pdf" id="btnPdf" onclick="printWorkpaper()" title="Print / Save as PDF — Pro feature">🖨 Print PDF</button>
-        <button class="btn-exp" id="btnExp">⬇ Download Excel Report &nbsp;<span style="font-size:10px;opacity:.8;">₹199</span></button>
+        <button class="btn-exp" id="btnExp">⬇ Download Excel Report &nbsp;<span style="font-size:10px;opacity:.8;">5 free / month</span></button>
         <button id="btnSavePortfolio" onclick="saveToPortfolio()" style="display:none;align-items:center;gap:6px;padding:10px 16px;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;border:1.5px solid #059669;background:#ECFDF5;color:#065F46;font-family:Inter,sans-serif;transition:all .15s;" title="Save this lease to your portfolio (Pro)">📂 Save to Portfolio</button>
       </div>
       <div style="margin-top:10px;padding:12px 16px;background:#E8F0FF;border:1px solid #BAD0F8;border-radius:8px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
         <div style="font-size:12px;color:#002244;line-height:1.5;"><strong>Managing multiple leases?</strong> The Lease Workspace has all your leases in one place — portfolio view, modification calculator, and premium working paper exports.</div>
         <a href="app.html" style="flex-shrink:0;padding:8px 16px;background:#002244;color:#fff;border-radius:7px;font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap;">Try Lease Workspace &rarr;</a>
-      </div>
-
-      <!-- RECOVERY BANNER: shown after successful payment if download failed -->
-      <div id="recoveryBanner" style="display:none;margin-top:16px;padding:14px 16px;background:linear-gradient(135deg,#DCFCE7,#D1FAE5);border:1.5px solid #22C55E;border-radius:10px;">
-        <div style="font-size:13px;font-weight:700;color:#166534;margin-bottom:6px;">✅ Payment Successful — Your report is ready!</div>
-        <div style="font-size:12px;color:#166534;margin-bottom:12px;">If your download did not start automatically, click the button below.</div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-          <button id="btnRecoveryDownload" onclick="recoveryDownload()" style="padding:10px 20px;background:linear-gradient(135deg,#16A34A,#15803D);border:none;border-radius:8px;font-size:13px;font-weight:700;color:#fff;cursor:pointer;font-family:'Inter',sans-serif;">
-            ⬇ Download My Excel Report
-          </button>
-          <span style="font-size:11px;color:#166534;">Payment ID: <span id="recoveryPaymentId" style="font-weight:700;"></span></span>
-        </div>
       </div>
 
     </div>
@@ -2246,255 +2232,10 @@ function swMobile(id){
   document.getElementById('p-'+id).classList.add('on');
 }
 
-/* ═══════════════════════════════════════════════════════
-   RAZORPAY PAYMENT
-═══════════════════════════════════════════════════════ */
-// ── Email gate logic ──
-var capturedEmail = '';
+// auth.js's wrapExportButton() owns #btnExp entirely — logged-out users are
+// prompted to log in, logged-in free users get 5 downloads/month, Pro is
+// unlimited. No local export/payment wiring is needed on this page.
 
-// ── Self-contained Pro check helper (no auth block dependency) ──
-async function _checkProDirect(){
-  try {
-    // Reuse the shared client auth.js already created instead of spinning up
-    // another GoTrueClient instance against the same storage key.
-    if(!window.supaClient && window.supabase && window.supabase.createClient){
-      window.supaClient = window.supabase.createClient(
-        'https://uymuivmktvtxmodblxie.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5bXVpdm1rdHZ0eG1vZGJseGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzMjk5NTYsImV4cCI6MjA5NjkwNTk1Nn0.7dsdrDmYR8R891_Cc68K75tUlmwi49KExGGQbBq3qmg'
-      );
-    }
-    if(window.supaClient){
-      var _c = window.supaClient;
-      var _sess = (await _c.auth.getSession()).data.session;
-      if(_sess){
-        var _now = new Date().toISOString();
-        var _sub = await _c.from('subscriptions').select('id')
-          .eq('user_id',_sess.user.id).eq('status','active')
-          .gt('current_period_end',_now)
-          .order('created_at',{ascending:false}).limit(1).maybeSingle();
-        return { isPro: !_sub.error && !!_sub.data, client: _c };
-      }
-      return { isPro: false, client: _c };
-    }
-  } catch(e){ console.warn('Pro check error:', e); }
-  return { isPro: false, client: null };
-}
-
-// ── Inline label updater (no auth block dependency) ──
-function _setProBtnLabel(){
-  var btn = document.getElementById('btnExp');
-  if(btn) btn.innerHTML = '&#8659;&nbsp; Download Excel Report <span class="pro-free-tag">PRO FREE</span>';
-  var sticky = document.querySelector('#sticky-export-bar .sticky-btn');
-  if(sticky) sticky.innerHTML = '&#8659; Download Excel Report &nbsp;<span class="pro-free-tag">PRO FREE</span>';
-  // Hide Pro upgrade button — user is already Pro
-  var proBtn = document.getElementById('stickyProBtn');
-  if(proBtn) proBtn.style.display = 'none';
-}
-
-// ── On page load: update button label for Pro users ──
-window.addEventListener('load', async function(){
-  var result = await _checkProDirect();
-  if(result.isPro){ _setProBtnLabel(); }
-});
-
-document.getElementById('btnExp').onclick = async function(){
-  if(!R||!INP){ alert('Please calculate the lease schedule first.'); return; }
-
-  var result = await _checkProDirect();
-  if(result.isPro){
-    // ✅ Confirmed Pro — free export
-    _setProBtnLabel();
-    gaEvent('excel_downloaded', { tool_name: 'IND AS 116', trigger: 'pro_subscription' });
-    showToast('\u2713 Downloading your Pro report\u2026','#5EC98A');
-    setTimeout(function(){ try{ exportXL(); } catch(e){ console.error(e); } }, 300);
-    return;
-  }
-
-  // 1 free ever for new users
-  var freeKey = 'fs_free_exp_indas116';
-  try {
-    if(!localStorage.getItem(freeKey)){
-      localStorage.setItem(freeKey,'1');
-      var fn = document.getElementById('freeExportNotice'); if(fn) fn.style.display='none';
-      gaEvent('excel_downloaded', { tool_name: 'IND AS 116', trigger: 'free_ever' });
-      showToast('🎁 Your 1 free IND AS 116 report — enjoy!','#059669');
-      setTimeout(function(){ try{ exportXL(); } catch(e){ console.error(e); } }, 300);
-      setTimeout(function(){ showIndas116UpsellBanner(); }, 1500);
-      return;
-    }
-  } catch(e){}
-
-  // Already used free export → ₹199 payment
-  gaEvent('begin_checkout', { tool_name: 'IND AS 116', value: 199, currency: 'INR' });
-  initiatePayment();
-};
-
-function showIndas116UpsellBanner(){
-  if(document.getElementById('fsUpsellBanner')) return;
-  var b = document.createElement('div');
-  b.id = 'fsUpsellBanner';
-  b.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:#002244;color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:99999;font-family:Inter,sans-serif;box-shadow:0 -4px 20px rgba(0,0,0,.25);animation:fsBannerUp .35s ease;flex-wrap:wrap;';
-  b.innerHTML =
-    '<style>@keyframes fsBannerUp{from{transform:translateY(100%)}to{transform:translateY(0)}}</style>' +
-    '<span style="font-size:14px;">⭐ Liked the report? Get <strong>unlimited exports</strong> + portfolio + all Pro tools</span>' +
-    '<div style="display:flex;gap:10px;align-items:center;flex-shrink:0;">' +
-      '<a href="#" onclick="if(window.fsInitiateProSubscription)fsInitiateProSubscription(\'upsell_banner\');return false;" style="background:#0052CC;color:#fff;padding:9px 18px;border-radius:8px;font-weight:700;text-decoration:none;font-size:13px;white-space:nowrap;">Go Pro ₹499/mo →</a>' +
-      '<button onclick="document.getElementById(\'fsUpsellBanner\').remove()" style="background:none;border:none;color:#9CA3AF;cursor:pointer;font-size:22px;line-height:1;padding:0 4px;" title="Dismiss">&times;</button>' +
-    '</div>';
-  document.body.appendChild(b);
-}
-
-
-// Allow Enter key in email gate
-
-
-/* ── Save full state to localStorage so a page reload cannot lose the download ── */
-function saveStateToStorage(){
-  try{
-    localStorage.setItem('fs_INP', JSON.stringify(INP));
-    localStorage.setItem('fs_R',   JSON.stringify(R));
-    localStorage.setItem('fs_paid','pending');
-  } catch(e){ console.warn('localStorage save failed',e); }
-}
-
-function markPaidInStorage(paymentId){
-  try{
-    localStorage.setItem('fs_paid', paymentId);
-    localStorage.setItem('fs_paid_ts', Date.now().toString());
-  } catch(e){}
-}
-
-function clearPaymentStorage(){
-  try{
-    ['fs_INP','fs_R','fs_paid','fs_paid_ts'].forEach(function(k){ localStorage.removeItem(k); });
-  } catch(e){}
-}
-
-/* ── Check on page load if user has a pending paid download ── */
-(function checkPendingDownload(){
-  try{
-    var paid   = localStorage.getItem('fs_paid');
-    var ts     = parseInt(localStorage.getItem('fs_paid_ts')||'0');
-    var age    = Date.now() - ts;
-    var withinWindow = age < 30*60*1000; // 30 minutes window
-
-    if(paid && paid !== 'pending' && withinWindow){
-      var storedINP = JSON.parse(localStorage.getItem('fs_INP')||'null');
-      var storedR   = JSON.parse(localStorage.getItem('fs_R')||'null');
-      if(storedINP && storedR){
-        INP = storedINP;
-        R   = storedR;
-        showRecoveryBanner(paid);
-      }
-    } else if(paid || ts){
-      clearPaymentStorage();
-    }
-  } catch(e){}
-})();
-
-function showRecoveryBanner(paymentId){
-  var banner = document.getElementById('recoveryBanner');
-  if(!banner) return;
-  document.getElementById('recoveryPaymentId').textContent = paymentId || '';
-  banner.style.display = 'block';
-  banner.scrollIntoView({behavior:'smooth', block:'center'});
-}
-
-function recoveryDownload(){
-  if(!R || !INP){
-    alert('Session data not found. Please re-enter your lease details and calculate again. Contact billing@finosutra.com with your Payment ID for a manual report.');
-    return;
-  }
-  try{
-    exportXL();
-    setTimeout(function(){
-      clearPaymentStorage();
-      var banner = document.getElementById('recoveryBanner');
-      if(banner) banner.style.display = 'none';
-    }, 2000);
-  } catch(e){
-    alert('Download failed. Please email billing@finosutra.com with your Payment ID and we will send the report manually within 30 minutes.');
-    console.error(e);
-  }
-}
-
-function initiatePayment(){
-  if(!R||!INP){ alert('Please calculate the lease schedule first.'); return; }
-
-  // Dynamically load Razorpay if not yet available (CDN may not have loaded)
-  if(typeof Razorpay === 'undefined'){
-    showToast('Loading payment…','#0052CC');
-    var s = document.createElement('script');
-    s.src = 'https://checkout.razorpay.com/v1/checkout.js';
-    s.onload = function(){ initiatePayment(); };
-    s.onerror = function(){ showToast('Could not load payment. Please check your internet connection.','#EF4444'); };
-    document.head.appendChild(s);
-    return;
-  }
-
-  gaEvent('payment_initiated', { tool_name: 'IND AS 116', amount: 199, currency: 'INR' });
-
-  // ── CRITICAL: Save state BEFORE opening payment window ──
-  saveStateToStorage();
-
-  var options = {
-    key:window.FS_RZP_KEY,
-    amount:19900,
-    currency:'INR',
-    name:'Finosutra',
-    description:'Ind AS 116 Lease Report — Excel Export',
-    image:'',
-    theme:{color:'#0052CC'},
-    modal:{ondismiss:function(){
-      try{ localStorage.removeItem('fs_paid'); } catch(e){}
-      showToast('Payment cancelled. No charges made.','#002244');
-    }},
-    handler:function(response){
-      var payId = response.razorpay_payment_id || 'SUCCESS';
-      // GA4 standard ecommerce purchase event (shows revenue in reports)
-      gtag('event', 'purchase', {
-        transaction_id: payId,
-        value: 199,
-        currency: 'INR',
-        items: [{ item_id: 'indas116_excel', item_name: 'IND AS 116 Excel Report', price: 199, quantity: 1 }]
-      });
-      gaEvent('excel_downloaded', { tool_name: 'IND AS 116', trigger: 'post_payment' });
-      markPaidInStorage(payId);
-      showToast('✓ Payment successful! Downloading your report...','#5EC98A');
-
-      // Show recovery banner immediately as backup
-      showRecoveryBanner(payId);
-
-      // Attempt auto-download
-      setTimeout(function(){
-        try{
-          exportXL();
-          setTimeout(function(){
-            clearPaymentStorage();
-            var banner = document.getElementById('recoveryBanner');
-            if(banner) banner.style.display = 'none';
-          }, 5000);
-        } catch(e){
-          showToast('Auto-download failed. Use the green Download button below.','#FF8A80');
-          console.error('exportXL error:', e);
-        }
-      }, 800);
-    },
-    prefill:{name:'',email:capturedEmail,contact:''}
-  };
-  try{
-    var rzp = new Razorpay(options);
-    rzp.on('payment.failed',function(resp){
-      try{ localStorage.removeItem('fs_paid'); } catch(e){}
-      gaEvent('payment_failed', { tool_name: 'IND AS 116', reason: resp.error.description });
-      showToast('Payment failed: '+resp.error.description,'#FF8A80');
-    });
-    rzp.open();
-  } catch(e){
-    alert('Could not open payment window. Please check your connection and try again.');
-    console.error(e);
-  }
-}
 
 function showToast(msg,color){
   var t = document.getElementById('toast');
@@ -3110,10 +2851,10 @@ function exportXL(){
 <div id="sticky-export-bar">
   <div style="flex:1;">
     <div class="sticky-text">✓ Calculation done — get the audit-ready Excel</div>
-    <div class="sticky-sub" id="stickySubText">Full schedule · Journal entries · Drop into workpapers · 1 free/mo · ₹199 one-time or ₹499/mo unlimited</div>
+    <div class="sticky-sub" id="stickySubText">Full schedule · Journal entries · Drop into workpapers · Free (5/mo, login required) or ₹499/mo unlimited</div>
   </div>
   <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-    <button class="sticky-btn" onclick="document.getElementById('btnExp').click()" id="stickyExpBtn">⬇ Export ₹199</button>
+    <button class="sticky-btn" onclick="document.getElementById('btnExp').click()" id="stickyExpBtn">⬇ Export to Excel</button>
     <button id="stickyProBtn" onclick="fsInitiateProSubscription()"
       style="display:inline-flex;align-items:center;gap:6px;padding:11px 18px;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:13px;font-weight:700;border:none;border-radius:10px;cursor:pointer;white-space:nowrap;transition:opacity .15s;"
       onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">

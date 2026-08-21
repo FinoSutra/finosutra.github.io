@@ -111,7 +111,7 @@
       '.fs-um-sheet-cell{flex:1;font-size:10px;padding:4px 6px;color:#374151;font-family:Inter,sans-serif;min-width:0;overflow:hidden;white-space:nowrap;border-bottom:1px solid #F3F4F6;font-variant-numeric:tabular-nums;}',
       '.fs-um-sheet-cell.h{background:#F9FAFB;font-weight:700;color:#9CA3AF;font-size:9px;text-transform:uppercase;letter-spacing:.3px;}',
       /* Pricing cards */
-      '.fs-um-cards{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:10px;margin:14px 0;align-items:start;}',
+      '.fs-um-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0;align-items:start;}',
       '.fs-um-card{border:1.5px solid #E5E7EB;border-radius:14px;padding:18px 14px 14px;text-align:center;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s;position:relative;}',
       '.fs-um-card:hover{border-color:#15222C;box-shadow:0 6px 20px rgba(21,34,44,.14);transform:translateY(-2px);}',
       '.fs-um-card-featured{border-color:#B8862E;background:linear-gradient(160deg,#FBF3E4,#F6F3EA);box-shadow:0 4px 20px rgba(184,134,46,.18);}',
@@ -132,6 +132,7 @@
       '.fs-um-btn-muted{background:#F3F4F6;color:#6B7280;border:1.5px solid #E5E7EB!important;}',
       '.fs-um-btn-primary{background:#15222C;color:#fff;box-shadow:0 4px 14px rgba(21,34,44,.3);}',
       /* Social proof + footer */
+      '.fs-um-quota{background:#EEF2FF;border:1px solid #C7D2FE;border-radius:10px;padding:9px 14px;font-size:12px;color:#4338CA;margin-bottom:14px;text-align:center;font-family:Inter,sans-serif;line-height:1.5;}',
       '.fs-um-social{text-align:center;font-size:11px;color:#9CA3AF;margin-bottom:10px;font-family:Inter,sans-serif;}',
       '.fs-um-social strong{color:#6B7280;}',
       '.fs-um-footer{text-align:center;font-size:11px;color:#C4C4CC;font-family:Inter,sans-serif;padding-top:10px;border-top:1px solid #F3F4F6;}',
@@ -272,7 +273,7 @@
               '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">Payments</div><div class="fs-um-sheet-cell">(1,50,000)</div></div>' +
             '</div>' +
           '</div>' +
-          '<div class="fs-um-roi">&#128161; <strong>Most CAs export 3–5&times; per month.</strong> Pro (&#8377;499) costs less than pay-per-report (&#8377;199 &times; 3 = &#8377;597)</div>' +
+          '<div class="fs-um-quota" id="fsUmQuotaLine">&#127881; You\'ve used all <strong>5 free downloads</strong> for this month. Go Pro for unlimited exports across every tool.</div>' +
           '<div class="fs-um-chips">' +
             '<span class="fs-um-chip">&#10003; Amortization schedule</span>' +
             '<span class="fs-um-chip">&#10003; Journal entries</span>' +
@@ -280,12 +281,6 @@
             '<span class="fs-um-chip">&#10003; Balance sheet impact</span>' +
           '</div>' +
           '<div class="fs-um-cards">' +
-            '<div class="fs-um-card" onclick="fsCloseUpgradeModal();fsDoOneTimeExport()">' +
-              '<div class="fs-um-card-price">&#8377;199</div>' +
-              '<div class="fs-um-card-name">This report only</div>' +
-              '<div class="fs-um-card-desc">One-time &middot; No subscription<br>Instant download</div>' +
-              '<button class="fs-um-btn fs-um-btn-muted">Download &#8594;</button>' +
-            '</div>' +
             '<div class="fs-um-card fs-um-card-featured" onclick="fsCloseUpgradeModal();fsInitiateProSubscription()">' +
               '<div class="fs-um-card-badge">MOST POPULAR</div>' +
               '<div class="fs-um-card-price">&#8377;499<span>/mo</span></div>' +
@@ -332,98 +327,66 @@
     if (o) o.classList.remove('show');
   };
 
-  // ── One-time export payment (₹199) — must be its own Razorpay charge.
-  // Do NOT fall back to _fsOriginalExportFn here: on several tool pages that's
-  // just the bare export function with no payment step of its own, and on
-  // others it's dead code that's unreachable via the normal button click (it
-  // only runs through this exact path), so relying on it either gives the
-  // file away free or hits whatever quirks that page's own handler has.
-  global.fsInitiateOneTimeExport = function () {
-    if (global.isProUser) { fsCallToolExport(); return; }
+  // ── Monthly download quota (5/month, logged-in free users) ───────────────────
+  // Enforced server-side by the fs_try_consume_download() Postgres function
+  // (SECURITY DEFINER, keyed on auth.uid()) — see
+  // supabase/migrations/20260821_download_usage.sql. The client only reads the
+  // result; it can never grant itself a download by editing this file.
+  global.fsDownloadsRemaining = null;
 
-    if (typeof Razorpay === 'undefined') {
-      global.showToast('Loading payment…', '#6366F1');
-      var rzpScript = document.createElement('script');
-      rzpScript.src = 'https://checkout.razorpay.com/v1/checkout.js';
-      rzpScript.onload = function () { global.fsInitiateOneTimeExport(); };
-      rzpScript.onerror = function () { global.showToast('Could not load payment. Check connection.', '#EF4444'); };
-      document.head.appendChild(rzpScript);
-      return;
-    }
-
-    var options = {
-      key:         RZP_KEY,
-      amount:      19900, // ₹199 in paise
-      currency:    'INR',
-      name:        'Finosutra',
-      description: 'One-time Excel Export',
-      image:       '',
-      theme:       { color: '#6366F1' },
-      modal:       { ondismiss: function () { global.showToast('Payment cancelled. No charges made.', '#9CA3AF'); } },
-      prefill:     { email: global.currentUser ? global.currentUser.email : '', name: '', contact: '' },
-      notes:       { plan: 'one_time_export', page: location.pathname },
-      handler:     function (response) {
-        global.showToast('Payment received! Preparing your download…', '#5EC98A');
-        if (typeof global.gtag === 'function') {
-          global.gtag('event', 'purchase', {
-            transaction_id: response.razorpay_payment_id,
-            value:          199,
-            currency:       'INR',
-            items: [{ item_id: 'one_time_export', item_name: 'One-time Excel Export', price: 199, quantity: 1 }]
-          });
-        }
-        setTimeout(function () { fsRunExportFn('PAID'); }, 300);
-      }
-    };
-
+  async function fsFetchDownloadQuota() {
+    if (!global.currentUser || !global.supaClient) { global.fsDownloadsRemaining = null; return; }
     try {
-      var rzp = new Razorpay(options);
-      rzp.on('payment.failed', function (resp) {
-        global.showToast('Payment failed: ' + (resp.error && resp.error.description || 'Unknown error'), '#FF8A80');
-      });
-      if (typeof global.gaEvent === 'function') {
-        global.gaEvent('begin_checkout', { tool_name: 'One-time Export', value: 199, currency: 'INR' });
-      }
-      rzp.open();
+      var monthKey = new Date().toISOString().slice(0, 7);
+      var res = await global.supaClient
+        .from('download_usage')
+        .select('count')
+        .eq('user_id', global.currentUser.id)
+        .eq('month_key', monthKey)
+        .maybeSingle();
+      global.fsDownloadsRemaining = res.error ? null : Math.max(0, 5 - (res.data ? res.data.count : 0));
+    } catch (e) { global.fsDownloadsRemaining = null; }
+  }
+
+  async function fsTryConsumeDownload() {
+    try {
+      var res = await global.supaClient.rpc('fs_try_consume_download');
+      var row = res.data && res.data[0];
+      if (res.error || !row) return { allowed: false, remaining: 0 };
+      global.fsDownloadsRemaining = row.remaining;
+      return row;
     } catch (e) {
-      alert('Could not open payment window. Please check your connection and try again.');
-      console.error(e);
+      return { allowed: false, remaining: 0 };
     }
-  };
+  }
 
-  // Backward-compat: the upgrade modal card still calls fsDoOneTimeExport()
-  // by name — keep it pointed at the real payment flow above.
-  global.fsDoOneTimeExport = global.fsInitiateOneTimeExport;
-
-  // ── Wrap the export button to intercept Pro users ────────────────────────────
+  // ── Wrap the export button: Pro bypasses, logged-out users must log in,
+  // logged-in free users get 5 downloads/month before hitting the upgrade modal.
   function wrapExportButton() {
     var btnExp = document.getElementById('btnExp');
     if (!btnExp) return;
 
-    var originalOnclick = btnExp.onclick;
-
-    // Kept for pages that still reference window._fsOriginalExportFn directly.
-    // fsDoOneTimeExport() no longer calls this — it runs its own ₹199 charge
-    // via fsInitiateOneTimeExport() instead (see above).
-    global._fsOriginalExportFn = originalOnclick;
-
-    btnExp.onclick = function (e) {
+    btnExp.onclick = async function (e) {
       if (global.isProUser) {
         fsCallToolExport();
         return;
       }
-      // 1 free export per calendar month (tracked in localStorage)
-      var monthKey = 'fs_free_exp_' + new Date().toISOString().slice(0, 7); // e.g. "fs_free_exp_2026-06"
-      try {
-        if (!localStorage.getItem(monthKey)) {
-          localStorage.setItem(monthKey, '1');
-          global.showToast('🎁 Your 1 free export for this month — enjoy!', '#059669');
-          fsCallToolExport();
-          return;
+      if (!global.currentUser) {
+        global.showToast('Log in to download — free accounts get 5 downloads/month.', '#6366F1');
+        global.fsShowAuthModal('login');
+        return;
+      }
+      var result = await fsTryConsumeDownload();
+      if (result.allowed) {
+        global.showToast('✓ Download ' + (5 - result.remaining) + '/5 used this month', '#059669');
+        setTimeout(function () { fsRunExportFn('FREE'); }, 300);
+        if (typeof global.gaEvent === 'function') {
+          global.gaEvent('excel_downloaded', { trigger: 'free_tier', page: location.pathname });
         }
-      } catch (err) { /* localStorage blocked — fall through to modal */ }
-      // Already used free export this month — show upgrade modal
-      global.fsShowUpgradeModal();
+        fsUpdateExportLabel(false);
+      } else {
+        global.fsShowUpgradeModal();
+      }
     };
   }
 
@@ -453,17 +416,21 @@
 
   // ── Update export button label ────────────────────────────────────────────────
   function fsUpdateExportLabel(isPro) {
+    var quotaTag = '';
+    if (!isPro && global.currentUser && global.fsDownloadsRemaining !== null) {
+      quotaTag = ' <span class="fs-pro-free-tag" style="background:#EEF2FF;color:#4338CA;">' + global.fsDownloadsRemaining + '/5 left</span>';
+    }
     var btn = document.getElementById('btnExp');
     if (btn) {
       btn.innerHTML = isPro
         ? '&#8659;&nbsp; Download Excel Report <span class="fs-pro-free-tag">FREE</span>'
-        : '&#8659;&nbsp; Download Excel Report &nbsp;<strong>&#8377;199</strong>';
+        : '&#8659;&nbsp; Download Excel Report' + quotaTag;
     }
     var sticky = document.querySelector('#sticky-export-bar .sticky-btn');
     if (sticky) {
       sticky.innerHTML = isPro
         ? '&#8659; Download Excel Report &nbsp;<span class="fs-pro-free-tag">PRO FREE</span>'
-        : '&#8659; Download Excel Report &nbsp;&#8377;199';
+        : '&#8659; Download Excel Report' + quotaTag;
     }
   }
 
@@ -544,6 +511,7 @@
       if (session) {
         global.currentUser = session.user;
         global.isProUser   = await fsCheckSubscription(session.user.id);
+        if (!global.isProUser) await fsFetchDownloadQuota();
         fsUpdateNavUI(session.user, global.isProUser);
         fsCheckRenewalAlert();
       } else {
@@ -554,11 +522,13 @@
         if (session) {
           global.currentUser = session.user;
           global.isProUser   = await fsCheckSubscription(session.user.id);
+          if (!global.isProUser) await fsFetchDownloadQuota();
           fsUpdateNavUI(session.user, global.isProUser);
           fsCheckRenewalAlert();
         } else {
           global.currentUser = null;
           global.isProUser   = false;
+          global.fsDownloadsRemaining = null;
           fsUpdateNavUI(null, false);
         }
       });
@@ -678,6 +648,7 @@
       if (res.error) throw res.error;
       global.currentUser = res.data.user;
       global.isProUser   = await fsCheckSubscription(res.data.user.id);
+      if (!global.isProUser) await fsFetchDownloadQuota();
       fsUpdateNavUI(res.data.user, global.isProUser);
       document.getElementById('fsLoginForm').style.display  = 'none';
       document.getElementById('fsAuthSuccess').style.display = 'block';
