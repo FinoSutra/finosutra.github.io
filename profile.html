@@ -152,6 +152,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-primar
       <div class="plan-desc" id="planDesc">Access all calculators. 5 free Excel exports/month, or upgrade to Pro for unlimited downloads.</div>
       <div class="plan-meta" id="planMeta"></div>
       <div class="plan-expiry" id="planExpiry" style="display:none;"></div>
+      <div style="font-size:12px;color:#9CA3AF;margin-top:10px;">Billing question or want to cancel? Email <a href="mailto:billing@finosutra.com" style="color:inherit;text-decoration:underline;">billing@finosutra.com</a></div>
     </div>
 
     <!-- Upgrade card (shown for Free users) -->
@@ -161,7 +162,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-primar
       <div class="pro-features">
         <div class="pro-feature"><i class="fa-solid fa-check"></i> Unlimited Excel exports (all tools)</div>
         <div class="pro-feature"><i class="fa-solid fa-check"></i> CA-grade audit-ready format</div>
-        <div class="pro-feature"><i class="fa-solid fa-check"></i> IND AS 116, Income Tax, Salary, Security Deposit, HRA</div>
+        <div class="pro-feature"><i class="fa-solid fa-check"></i> IND AS 116, Income Tax, Security Deposit, HRA and more</div>
         <div class="pro-feature"><i class="fa-solid fa-check"></i> 30-day access from payment date</div>
       </div>
       <button class="btn-primary" onclick="fsInitiateProSubscription()">Upgrade to Pro &nbsp;₹499/mo</button>
@@ -298,7 +299,7 @@ async function loadProfile(){
     }
 
     // Mark all tools as Pro Free
-    ['st-indas116','st-indas2','st-tax','st-salary','st-sd'].forEach(function(id){
+    ['st-indas116','st-indas2','st-tax','st-sd'].forEach(function(id){
       var el = document.getElementById(id);
       if(el){ el.className='tool-status-pro'; el.textContent='PRO FREE'; }
     });

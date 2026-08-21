@@ -14,7 +14,9 @@
         { label: 'Lease Modification', href: '/indas116-model2.html' },
         { label: 'Escalating Rent Calculator', href: '/indas116-model3.html' },
         { label: 'Security Deposit (IND AS 109)', href: '/security-deposit.html' },
-        { label: 'ECL Provision Matrix', href: '/ecl-calculator.html' }
+        { label: 'SD Portfolio', href: '/sd-portfolio.html' },
+        { label: 'ECL Provision Matrix', href: '/ecl-calculator.html' },
+        { label: 'Financial Statement Generator', href: '/financial-statement.html' }
       ]
     },
     {

@@ -5,9 +5,33 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Multi-Security Deposit Portfolio — IND AS 109 | Finosutra</title>
 <meta name="description" content="Manage multiple IND AS 109 security deposits in one place. Bulk upload via Excel, consolidated amortisation schedule, journal entries and disclosure note."/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Finosutra"/>
 <meta property="og:title" content="Multi-Security Deposit Portfolio — IND AS 109 | Finosutra"/>
 <meta property="og:description" content="Bulk upload security deposits via Excel. Consolidated IND AS 109 schedule, journal entries and disclosure note."/>
+<meta property="og:url" content="https://finosutra.com/sd-portfolio.html"/>
 <meta property="og:image" content="https://finosutra.com/og-image.jpg"/>
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Multi-Security Deposit Portfolio — IND AS 109 | Finosutra"/>
+<meta name="twitter:description" content="Bulk upload security deposits via Excel. Consolidated IND AS 109 schedule, journal entries and disclosure note."/>
+<meta name="twitter:image" content="https://finosutra.com/og-image.jpg"/>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Multi-Security Deposit Portfolio — IND AS 109",
+  "url": "https://finosutra.com/sd-portfolio.html",
+  "description": "Manage multiple IND AS 109 security deposits in one place. Bulk upload via Excel, consolidated amortisation schedule, journal entries and disclosure note.",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web Browser",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "creator": { "@type": "Organization", "name": "Finosutra", "url": "https://finosutra.com" }
+}
+</script>
+
 <link rel="canonical" href="https://finosutra.com/sd-portfolio.html"/>
 <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -793,7 +817,7 @@ function doExport(){
     XLSX.utils.book_append_sheet(wb,ws,'Consolidated Schedule');
   })();
 
-  /* ── Disclosure Note (IND AS 109 Para 43) ── */
+  /* ── Disclosure Note (Ind AS 107 — Financial Instruments: Disclosures) ── */
   (function(){
     var rows=[];
     function addTitle(t,cols){var r=[];r.push(cs(t,S.brand));for(var i=1;i<cols;i++)r.push(cb());rows.push(r);}
@@ -802,7 +826,7 @@ function doExport(){
     function addRow(cells,stripe){rows.push(cells.map(function(c,i){if(c===null)return cb();if(typeof c==='number')return cn(c,stripe?S.numS:S.num);return cs(c,stripe?S.lblS:S.lbl);}));}
     function addTot(cells){rows.push(cells.map(function(c){return typeof c==='number'?cn(c,S.tot):cs(c||'',S.totL);}));}
 
-    addTitle('IND AS 109 / IFRS 9 — Security Deposit Disclosure Note',3);
+    addTitle('IND AS 107 / IFRS 7 — Security Deposit Disclosure Note',3);
     rows.push([cb(),cb(),cb()]);
 
     // Section 1: Movement in security deposits

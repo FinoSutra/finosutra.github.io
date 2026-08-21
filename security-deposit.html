@@ -874,7 +874,7 @@ function calculate(){
 
   // ── Concepts ──
   document.getElementById('conceptsAll').innerHTML =
-    '<div class="concept-card"><h4>Why Fair Value? — <span>'+std1+' Para 43</span></h4><p>All financial instruments must be initially recognised at <strong>Fair Value</strong>. A security deposit is interest-free, so its Fair Value = Present Value of future cash flows at the <strong>market rate (EIR)</strong>. The excess of nominal over fair value = <strong>Day 1 Discount ('+FULL(discount)+')</strong>.</p></div>' +
+    '<div class="concept-card"><h4>Why Fair Value? — <span>'+std1+' Para 5.1.1</span></h4><p>All financial instruments must be initially recognised at <strong>Fair Value</strong>. A security deposit is interest-free, so its Fair Value = Present Value of future cash flows at the <strong>market rate (EIR)</strong>. The excess of nominal over fair value = <strong>Day 1 Discount ('+FULL(discount)+')</strong>.</p></div>' +
     '<div class="concept-card"><h4><span>'+(isGiven?'Prepaid Rent (Asset)':'Deferred Rental Income (Liability)')+'</span> — '+std2+'</h4><p>The Day 1 Discount = <strong>'+(isGiven?'rent concession to the tenant':'rent concession from the landlord')+'</strong>. Under '+std2+' it is capitalised as <strong>'+(isGiven?'Prepaid Rent':'Deferred Rental Income')+'</strong> and amortised straight-line = '+FULL(rentPY)+'/year over '+tenure+' years.</p></div>' +
     '<div class="concept-card"><h4><span>EIR Method</span></h4><p>Interest = Opening CV &times; '+(rate*100).toFixed(2)+'% each period. NOT straight-line — it compounds. Total interest over tenure = Day 1 Discount = <strong>'+FULL(discount)+'</strong>. Closing CV at maturity = Nominal = <strong>'+FULL(deposit)+'</strong>.</p></div>' +
     '<div class="concept-card"><h4><span>Schedule III Classification</span></h4><p>A security deposit is <strong>Non-Current</strong> when the remaining tenure exceeds 12 months. It reclassifies to <strong>Current</strong> when due within 12 months. Prepaid Rent is split: next-12-month portion = Current Asset; balance = Non-Current Asset.</p></div>' +
@@ -1031,20 +1031,20 @@ function exportXL(){
 
     var rows = [hdrRow];
     SD.sched.forEach(function(r, i){
-      var net = SD.isGiven ? r.interest - SD.rentPY : SD.rentPY - r.interest;
+      var net = SD.isGiven ? r.interest - r.rentPeriod : r.rentPeriod - r.interest;
       var even = i%2===0;
       rows.push([
         cs('Year '+r.year, even?S.ctr:Object.assign({},S.ctr,{fill:{fgColor:{rgb:C_STRIPE}}})),
         cn(r.cvOpen,    even?S.num:S.numS),
         cn(r.interest,  even?S.num:S.numS),
         cn(r.cvClose,   even?S.num:S.numS),
-        cn(SD.rentPY,   even?S.num:S.numS),
+        cn(r.rentPeriod, even?S.num:S.numS),
         cn(net,         even?S.num:S.numS)
       ]);
     });
 
     var totInt  = SD.sched.reduce(function(a,r){return a+r.interest;},0);
-    var totRent = SD.rentPY * SD.sched.length;
+    var totRent = SD.sched.reduce(function(a,r){return a+r.rentPeriod;},0);
     var totNet  = SD.isGiven ? totInt - totRent : totRent - totInt;
     rows.push([cs('TOTAL', S.totL), cn(0,Object.assign({},S.tot,{numFmt:''})), cn(totInt,S.tot), cn(0,Object.assign({},S.tot,{numFmt:''})), cn(totRent,S.tot), cn(totNet,S.tot)]);
 
@@ -1094,13 +1094,13 @@ function exportXL(){
       if(SD.isGiven){
         addJE('Year '+r.year+' — Unwinding', 'Security Deposit — Financial Asset', r.interest, '',          false);
         addJE('Year '+r.year+' — Unwinding', 'Finance Income (P&L)',                '',         r.interest,  true);
-        addJE('Year '+r.year+' — Rent',      'Rent Expense (P&L)',                  SD.rentPY,  '',          false);
-        addJE('Year '+r.year+' — Rent',      'Prepaid Rent',                        '',         SD.rentPY,   true);
+        addJE('Year '+r.year+' — Rent',      'Rent Expense (P&L)',                  r.rentPeriod, '',        false);
+        addJE('Year '+r.year+' — Rent',      'Prepaid Rent',                        '',         r.rentPeriod, true);
       } else {
         addJE('Year '+r.year+' — Unwinding', 'Finance Cost (P&L)',                  r.interest, '',          false);
         addJE('Year '+r.year+' — Unwinding', 'Security Deposit — Financial Liability','',       r.interest,  true);
-        addJE('Year '+r.year+' — Income',    'Deferred Rental Income',               SD.rentPY, '',          false);
-        addJE('Year '+r.year+' — Income',    'Rental Income (P&L)',                  '',        SD.rentPY,   true);
+        addJE('Year '+r.year+' — Income',    'Deferred Rental Income',               r.rentPeriod, '',       false);
+        addJE('Year '+r.year+' — Income',    'Rental Income (P&L)',                  '',        r.rentPeriod, true);
       }
     });
 
@@ -1146,11 +1146,11 @@ function exportXL(){
     addSec('P&L IMPACT — YEAR BY YEAR', 4);
     addHdr(['Year', SD.isGiven?'Finance Income (₹)':'Finance Cost (₹)', SD.isGiven?'Rent Expense (₹)':'Rental Income (₹)', 'Net P&L Impact (₹)']);
     SD.sched.forEach(function(r, i){
-      var net = SD.isGiven ? r.interest - SD.rentPY : SD.rentPY - r.interest;
-      addRow(['Year '+r.year, r.interest, SD.rentPY, net], i%2!==0);
+      var net = SD.isGiven ? r.interest - r.rentPeriod : r.rentPeriod - r.interest;
+      addRow(['Year '+r.year, r.interest, r.rentPeriod, net], i%2!==0);
     });
     var totInt  = SD.sched.reduce(function(a,r){return a+r.interest;},0);
-    var totRent = SD.rentPY * SD.sched.length;
+    var totRent = SD.sched.reduce(function(a,r){return a+r.rentPeriod;},0);
     addTot(['TOTAL', totInt, totRent, SD.isGiven ? totInt-totRent : totRent-totInt]);
 
     rows.push([cb(),cb(),cb(),cb()]);

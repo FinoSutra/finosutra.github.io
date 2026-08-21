@@ -269,17 +269,11 @@ function updateLeaseCountBadge(){
 }
 
 function populateCompanyDropdowns(){
-  var selectors = ['mlCompany','leaseCompanyFilter'];
-  selectors.forEach(function(id){
-    var sel = document.getElementById(id);
-    if(!sel) return;
-    var firstOption = id==='mlCompany'
-      ? '<option value="">— Select company (optional) —</option>'
-      : '<option value="">All companies</option>';
-    sel.innerHTML = firstOption;
-    companies.forEach(function(c){
-      sel.innerHTML += '<option value="'+esc(c.id)+'">'+esc(c.name)+'</option>';
-    });
+  var sel = document.getElementById('leaseCompanyFilter');
+  if(!sel) return;
+  sel.innerHTML = '<option value="">All companies</option>';
+  companies.forEach(function(c){
+    sel.innerHTML += '<option value="'+esc(c.id)+'">'+esc(c.name)+'</option>';
   });
 }
 
@@ -695,19 +689,9 @@ async function deleteCompany(id){
   }catch(e){ toast('Error: '+e.message,'#EF4444'); }
 }
 
-// ── Add lease modal ───────────────────────────────────────────────────────────
+// ── Add lease ──────────────────────────────────────────────────────────────────
 function openAddModal(){
   openLeaseDetail(null);
-}
-function closeAddModal(){ document.getElementById('addLeaseModal').classList.remove('show'); }
-function goToCalculator(){
-  var name   = document.getElementById('mlName').value.trim();
-  var entity = document.getElementById('mlEntity').value.trim();
-  var model  = document.getElementById('mlModel').value;
-  var coId   = document.getElementById('mlCompany').value;
-  var params = new URLSearchParams({pf_name:name, pf_entity:entity, pf_save:'1'});
-  if(coId) params.set('pf_company',coId);
-  window.location.href = (model==='standard'?'indas116.html':'indas116-model3.html')+'?'+params.toString();
 }
 
 // ── Delete modal ──────────────────────────────────────────────────────────────
