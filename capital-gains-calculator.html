@@ -788,11 +788,9 @@ function showUpsellBanner(){
   document.body.appendChild(b);
 }
 
-// Expose for auth.js fsCallToolExport() (Pro) and fsDoOneTimeExport() (₹199)
+// Expose for auth.js fsCallToolExport() — auth.js's wrapExportButton() owns
+// #btnExp's onclick (login + 5/month quota gate, Pro bypass); it calls this.
 window.downloadExcel = doExport;
-
-// Set SYNCHRONOUSLY — auth.js DOMContentLoaded fires first and reads this as _fsOriginalExportFn
-document.getElementById('btnExp').onclick = doExport;
 
 document.addEventListener('DOMContentLoaded', function(){
   document.getElementById('saleDate').value = new Date().toISOString().split('T')[0];

@@ -475,8 +475,8 @@ function fsShortDate(d){
       <!-- EXPORT INFO CARD -->
       <div class="exp-info-card" id="expInfoCard" style="display:none">
         <div style="font-size:13px;font-weight:700;color:var(--brand);margin-bottom:4px;">📊 Get the audit-ready Excel — drop it straight into your workpapers</div>
-        <div style="font-size:11px;color:#6B7280;margin-bottom:10px;">One-time ₹199 · Instant download · CA &amp; audit-ready format</div>
-        <div class="exp-info-title">📊 What's inside the Excel Report — ₹199</div>
+        <div style="font-size:11px;color:#6B7280;margin-bottom:10px;">Free · 5 downloads/month (login required) · CA &amp; audit-ready format</div>
+        <div class="exp-info-title">📊 What's inside the Excel Report</div>
         <div class="exp-info-grid">
           <div class="exp-info-item">Fair Value computation (PV workings)</div>
           <div class="exp-info-item">Day 1 journal entry (Dr / Cr)</div>
@@ -487,14 +487,14 @@ function fsShortDate(d){
           <div class="exp-info-item">All journal entries (Year 1 to end)</div>
           <div class="exp-info-item">Ind AS 109 / IFRS 9 compliant format</div>
         </div>
-        <div class="exp-info-note">One-time payment · Instant download · CA &amp; audit-ready format · Secure via Razorpay</div>
+        <div class="exp-info-note">Log in to download · 5 free downloads/month · CA &amp; audit-ready format</div>
       </div>
 
       <!-- EXPORT ROW -->
       <div class="exp-row" id="expRow" style="display:none">
         <span class="exp-note" id="expNote"></span>
-        <button class="btn-exp" id="btnExp" onclick="handleExportClick()">
-          <i class="fa-solid fa-file-excel"></i> Download Excel Report &nbsp;<span style="font-size:10px;opacity:.8">₹199</span>
+        <button class="btn-exp" id="btnExp">
+          <i class="fa-solid fa-file-excel"></i> Download Excel Report
         </button>
       </div>
       <div id="sdCrossLink" style="display:none;margin:0 16px 16px;padding:12px 16px;background:#E8F0FF;border:1px solid #BAD0F8;border-radius:8px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
@@ -906,50 +906,9 @@ function buildJE(title, lines){
   return '<div class="je-wrap"><div class="je-head">'+title+'</div><table class="je-table"><thead><tr><th>Account</th><th>Dr Amount</th><th>Cr Amount</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
 
-/* ── EXPORT CLICK HANDLER (Pro = free, Free = ₹199) ── */
-function handleExportClick(){
-  if(window.isProUser){ exportXL(); return; }
-  initiatePayment();
-}
-
-/* ── RAZORPAY PAYMENT ── */
-function initiatePayment(){
-  if(!SD){ alert('Please calculate the deposit schedule first.'); return; }
-
-  // Dynamically load Razorpay if not yet available (ad-blocker/firewall may
-  // have blocked the checkout.js <script> tag from loading on page load)
-  if(typeof Razorpay === 'undefined'){
-    showToast('Loading payment…','info');
-    var s = document.createElement('script');
-    s.src = 'https://checkout.razorpay.com/v1/checkout.js';
-    s.onload = function(){ initiatePayment(); };
-    s.onerror = function(){ showToast('Payment blocked by your browser/network. Disable ad-blocker and retry, or email billing@finosutra.com.','fail'); };
-    document.head.appendChild(s);
-    return;
-  }
-
-  var options = {
-    key: window.FS_RZP_KEY,
-    amount: 19900,
-    currency: 'INR',
-    name: 'Finosutra',
-    description: 'Security Deposit Report — Excel Export',
-    theme: { color: '#4F46E5' },
-    modal: { ondismiss: function(){ showToast('Payment cancelled. No charges made.','cancel'); } },
-    handler: function(response){ showToast('Payment successful! Downloading your report...','success'); setTimeout(function(){ exportXL(); try{localStorage.removeItem('fino_sd_state');}catch(e){} }, 800); },
-    prefill: { name:'', email:'', contact:'' }
-  };
-  try {
-    // Save state before payment (mobile UPI kills JS memory)
-    try { localStorage.removeItem('fino_sd_state'); } catch(e){}
-    var rzp = new Razorpay(options);
-    rzp.on('payment.failed', function(resp){ showToast('Payment failed: '+resp.error.description,'fail'); });
-    rzp.open();
-  } catch(e) {
-    alert('Could not open payment window. This is usually caused by an ad-blocker or privacy extension blocking the payment script. Please disable it for this site and try again, or email hello@finosutra.com and we will help.');
-    console.error(e);
-  }
-}
+// auth.js's wrapExportButton() owns #btnExp entirely — logged-out users are
+// prompted to log in, logged-in free users get 5 downloads/month, Pro is
+// unlimited. No local export/payment wiring is needed on this page.
 
 function showToast(msg, type){
   var t = document.getElementById('toast');
@@ -1406,10 +1365,10 @@ document.addEventListener('DOMContentLoaded', function(){
 <div id="sticky-export-bar">
   <div style="flex:1;">
     <div class="sticky-text">✅ Your schedule is ready — get the audit-ready Excel report</div>
-    <div class="sticky-sub">Fair value workings · EIR schedule · Journal entries · BS &amp; P&amp;L impact · ₹199 one-time or ₹499/mo unlimited</div>
+    <div class="sticky-sub">Fair value workings · EIR schedule · Journal entries · BS &amp; P&amp;L impact · Free (5/mo, login required) or ₹499/mo unlimited</div>
   </div>
   <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap;">
-    <button class="sticky-btn" onclick="handleExportClick()">⬇ Export ₹199</button>
+    <button class="sticky-btn" onclick="document.getElementById('btnExp').click()">⬇ Export to Excel</button>
     <button onclick="fsInitiateProSubscription()"
       style="display:inline-flex;align-items:center;gap:6px;padding:11px 18px;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:13px;font-weight:700;border:none;border-radius:10px;cursor:pointer;white-space:nowrap;">
       🚀 Pro ₹499/mo — Unlimited

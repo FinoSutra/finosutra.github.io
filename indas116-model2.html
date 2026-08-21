@@ -425,7 +425,7 @@ tr:hover td{background:#F8F9FF}
 
     <!-- Export -->
     <div style="padding:0 20px 20px">
-      <button class="btn-export" id="btnExp">⬇ Export to Excel &nbsp;<span style="font-size:10px;opacity:.8;">₹199</span></button>
+      <button class="btn-export" id="btnExp">⬇ Export to Excel &nbsp;<span style="font-size:10px;opacity:.8;">5 free / month</span></button>
     </div>
   </div>
 
@@ -1304,22 +1304,6 @@ function resetAll(){
   // Add back a fresh modification block 1
   addModBlock();
 }
-
-/* ── Export button wiring ─────────────────────────────────────────────────── */
-// NOTE: auth.js's wrapExportButton() overwrites this onclick on every page
-// that has #btnExp, so this handler only ever runs as a fallback if auth.js
-// fails to load. It used to call fsInitiateProSubscription() here — a ₹499/mo
-// subscription charge — even though the button itself advertises ₹199. Fixed
-// to match: delegate to the same one-time ₹199 payment auth.js uses.
-document.getElementById('btnExp').onclick = function(){
-  if(!_lastResult){ alert('Please calculate first.'); return; }
-  if(window.isProUser){
-    if(typeof showToast==='function') showToast('✓ Downloading your Pro report…','#5EC98A');
-    setTimeout(function(){ try{ exportXL(); }catch(e){ console.error(e); } }, 300);
-    return;
-  }
-  if(typeof fsInitiateOneTimeExport==='function') fsInitiateOneTimeExport();
-};
 
 /* ── Init ────────────────────────────────────────────────────────────────── */
 addModBlock();

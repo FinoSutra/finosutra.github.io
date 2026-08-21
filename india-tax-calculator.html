@@ -207,7 +207,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
   "@type": "WebApplication",
   "name": "Income Tax Calculator FY 2026-27 | AY 2027-28",
   "url": "https://finosutra.com/india-tax-calculator.html",
-  "description": "Professional income tax calculator for FY 2026-27. New vs Old Regime comparison, 87A rebate, HRA, 80C deductions, capital gains and surcharge. Download CA-ready Excel for ₹199.",
+  "description": "Professional income tax calculator for FY 2026-27. New vs Old Regime comparison, 87A rebate, HRA, 80C deductions, capital gains and surcharge. Download a CA-ready Excel report free (login required).",
   "applicationCategory": "FinanceApplication",
   "operatingSystem": "Web Browser",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
@@ -237,7 +237,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
     {
       "@type": "Question",
       "name": "Is this income tax calculator free?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Yes, the full income tax calculation — including New vs Old Regime comparison, HRA exemption, 80C/80D deductions, capital gains and surcharge — is completely free. A 5-sheet CA-ready Excel report is available for ₹199." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, the full income tax calculation — including New vs Old Regime comparison, HRA exemption, 80C/80D deductions, capital gains and surcharge — is completely free. Log in to download the 5-sheet CA-ready Excel report — free accounts get 5 downloads a month." }
     },
     {
       "@type": "Question",
@@ -809,8 +809,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
   </div>
   <div class="btn-row" id="result-actions" style="display:none">
     <div style="width:100%;margin-bottom:8px;padding:9px 14px;background:#ECFDF5;border:1.5px solid #6EE7B7;border-radius:8px;font-size:12px;color:#065F46;font-weight:600;">🎁 First export free — no signup needed. Click to download.</div>
-    <button class="btn btn-primary btn-lg" id="btnExp" onclick="tryFreeExport()">
-      ⬇ Download Excel Report — ₹199
+    <button class="btn btn-primary btn-lg" id="btnExp">
+      ⬇ Download Excel Report
     </button>
     <button onclick="fsInitiateProSubscription()"
       style="display:inline-flex;align-items:center;gap:6px;padding:12px 22px;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:14px;font-weight:700;border:none;border-radius:10px;cursor:pointer;white-space:nowrap;">
@@ -822,7 +822,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
   <!-- Excel Export Info Card -->
   <div id="excel-info-card" style="display:none;margin-top:16px;background:#EEF2FF;border:1px solid rgba(99,102,241,0.25);border-radius:12px;padding:18px 20px">
     <div style="font-size:13px;font-weight:700;color:#4F46E5;margin-bottom:4px;">📊 Get the audit-ready Excel — drop it straight into your workpapers</div>
-    <div style="font-size:11px;color:#6B7280;margin-bottom:10px;">One-time ₹199 · Instant download · CA-grade format</div>
+    <div style="font-size:11px;color:#6B7280;margin-bottom:10px;">Free · 5 downloads/month (login required) · CA-grade format</div>
     <div style="font-weight:600;color:#4F46E5;font-size:12px;margin-bottom:8px;">What's inside:</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px;color:#4B5563">
       <div>✓ Sheet 1 — Cover & Tax Summary</div>
@@ -832,7 +832,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
       <div>✓ Sheet 5 — Slab-wise tax calculation</div>
       <div>✓ CA-ready working format</div>
     </div>
-    <div style="margin-top:10px;font-size:11px;color:#9CA3AF">One-time payment · Instant download · No subscription · Secure via Razorpay</div>
+    <div style="margin-top:10px;font-size:11px;color:#9CA3AF">Log in to download · No payment required · Pro for unlimited</div>
   </div>
 </section>
 
@@ -1670,107 +1670,9 @@ function updatePropLTCGMethod(){
   document.getElementById('indexed_gain_field').style.display = method==='indexed' ? 'flex' : 'none';
 }
 
-// ===================================================================
-// ─── FREE MONTHLY EXPORT ───
-function tryFreeExport(){
-  if(!lastResults){ alert('Please calculate your tax first before downloading.'); return; }
-  if(window.isProUser){ generateAndDownloadExcel('PRO_'+Date.now()); return; }
-  var monthKey = 'fs_free_exp_' + new Date().toISOString().slice(0,7);
-  try {
-    if(!localStorage.getItem(monthKey)){
-      localStorage.setItem(monthKey,'1');
-      if(window.showToast) showToast('🎁 Your 1 free export for this month — enjoy!','#059669');
-      generateAndDownloadExcel('FREE_'+Date.now());
-      showUpsellBanner();
-      return;
-    }
-  } catch(e){}
-  initiateExcelPayment();
-}
-
-function showUpsellBanner(){
-  if(document.getElementById('fsUpsellBanner')) return;
-  var b = document.createElement('div');
-  b.id = 'fsUpsellBanner';
-  b.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:#1E1B4B;color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:99999;font-family:Inter,sans-serif;box-shadow:0 -4px 20px rgba(0,0,0,.25);animation:fsBannerUp .35s ease;flex-wrap:wrap;';
-  b.innerHTML =
-    '<style>@keyframes fsBannerUp{from{transform:translateY(100%)}to{transform:translateY(0)}}</style>' +
-    '<span style="font-size:14px;">⭐ Liked the report? Get <strong>unlimited exports</strong> + all Pro tools</span>' +
-    '<div style="display:flex;gap:10px;align-items:center;flex-shrink:0;">' +
-      '<a href="#" onclick="fsInitiateProSubscription();return false;" style="background:#4F46E5;color:#fff;padding:9px 18px;border-radius:8px;font-weight:700;text-decoration:none;font-size:13px;white-space:nowrap;">Go Pro ₹499/mo →</a>' +
-      '<button onclick="document.getElementById(\'fsUpsellBanner\').remove()" style="background:none;border:none;color:#9CA3AF;cursor:pointer;font-size:22px;line-height:1;padding:0 4px;" title="Dismiss">&times;</button>' +
-    '</div>';
-  document.body.appendChild(b);
-}
-
-// RAZORPAY PAYMENT — ₹199 Excel Export
-// ===================================================================
-function initiateExcelPayment(){
-  if(!lastResults){
-    alert('Please calculate your tax first before downloading.');
-    return;
-  }
-  // Pro subscriber — free download, skip payment
-  if(window.isProUser){
-    if(typeof showToast === 'function') showToast('✓ Downloading your Pro report…','#5EC98A');
-    setTimeout(function(){ generateAndDownloadExcel('PRO_'+Date.now()); }, 300);
-    return;
-  }
-  const btn = document.getElementById('btnExp');
-  if(!btn) return;
-
-  // Dynamically load Razorpay if not yet available (ad-blocker/firewall may
-  // have blocked the checkout.js <script> tag from loading on page load)
-  if(typeof Razorpay === 'undefined'){
-    if(typeof showToast === 'function') showToast('Loading payment…','#6366F1');
-    var s = document.createElement('script');
-    s.src = 'https://checkout.razorpay.com/v1/checkout.js';
-    s.onload = function(){ initiateExcelPayment(); };
-    s.onerror = function(){ if(typeof showToast === 'function') showToast('Payment blocked by your browser/network. Disable ad-blocker and retry, or email billing@finosutra.com.','#EF4444'); };
-    document.head.appendChild(s);
-    return;
-  }
-
-  btn.innerHTML = '⏳ Opening payment...';
-  btn.disabled = true;
-
-  const name = document.getElementById('name').value || 'Taxpayer';
-  const options = {
-    key: window.FS_RZP_KEY,
-    amount: 19900, // ₹199 in paise
-    currency: 'INR',
-    name: 'Finosutra',
-    description: 'Income Tax Computation Report — FY 2026-27',
-    image: 'logo.svg',
-    prefill: { name: name },
-    notes: { product: 'Tax Calculator Excel Export' },
-    theme: { color: '#6366F1' },
-    handler: function(response){
-      btn.innerHTML = '⬇ Download Excel Report — ₹199';
-      btn.disabled = false;
-      generateAndDownloadExcel(response.razorpay_payment_id);
-      try{localStorage.removeItem('fino_tax_state');}catch(e){}
-    },
-    modal: {
-      ondismiss: function(){
-        btn.innerHTML = '⬇ Download Excel Report — ₹199';
-        btn.disabled = false;
-      }
-    }
-  };
-  // Save state before payment (mobile UPI kills JS memory)
-  try { localStorage.setItem('fino_tax_state', JSON.stringify({data: lastResults, ts: Date.now()})); } catch(e){}
-  try{
-    const rzp = new Razorpay(options);
-    rzp.open();
-  } catch(e){
-    btn.innerHTML = '⬇ Download Excel Report — ₹199';
-    btn.disabled = false;
-    alert('Could not open payment window. This is usually caused by an ad-blocker or privacy extension blocking the payment script. Please disable it for this site and try again, or email hello@finosutra.com and we will help.');
-    console.error(e);
-  }
-}
-
+// auth.js's wrapExportButton() owns #btnExp entirely — logged-out users are
+// prompted to log in, logged-in free users get 5 downloads/month, Pro is
+// unlimited. generateAndDownloadExcel() is what it calls to run the export.
 // ===================================================================
 // EXCEL GENERATION — SheetJS
 // ===================================================================
