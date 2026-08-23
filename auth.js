@@ -15,7 +15,8 @@
   // ── Constants ───────────────────────────────────────────────────────────────
   var SUPA_URL  = 'https://uymuivmktvtxmodblxie.supabase.co';
   var SUPA_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5bXVpdm1rdHZ0eG1vZGJseGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzMjk5NTYsImV4cCI6MjA5NjkwNTk1Nn0.7dsdrDmYR8R891_Cc68K75tUlmwi49KExGGQbBq3qmg';
-  var EDGE_URL  = 'https://uymuivmktvtxmodblxie.supabase.co/functions/v1/confirm-subscription';
+  var EDGE_URL           = 'https://uymuivmktvtxmodblxie.supabase.co/functions/v1/confirm-subscription';
+  var EDGE_URL_ONE_TIME  = 'https://uymuivmktvtxmodblxie.supabase.co/functions/v1/confirm-one-time-export';
   // ── Razorpay publishable key ID — SINGLE SOURCE OF TRUTH for the whole site.
   // Every page reads this via window.FS_RZP_KEY. Never hardcode the key elsewhere.
   // The matching SECRET lives only in Supabase Edge Function secrets, never here.
@@ -501,6 +502,17 @@
         // get it. This line is what survives a mobile UPI app-switch or a
         // reload wiping the page's in-memory calculation.
         fsMarkOneTimePaid(response.razorpay_payment_id);
+        // Fire-and-forget: tells the server to verify/capture this payment
+        // and send the sale-alert + receipt emails. Never awaited and always
+        // caught — a slow or failing notification call must never delay or
+        // block the download the customer already paid for.
+        try {
+          fetch(EDGE_URL_ONE_TIME, {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json', 'apikey': SUPA_KEY },
+            body:    JSON.stringify({ payment_id: response.razorpay_payment_id })
+          }).catch(function (e) { console.warn('[auth.js] purchase notification failed (non-blocking):', e); });
+        } catch (e) { console.warn('[auth.js] purchase notification failed (non-blocking):', e); }
         global.showToast('Payment received! Preparing your download…', '#5EC98A');
         if (typeof global.gtag === 'function') {
           global.gtag('event', 'purchase', {
