@@ -426,6 +426,12 @@
     }
     var o = document.getElementById('fsUpgradeOverlay');
     if (o) o.classList.add('show');
+    if (typeof global.gtag === 'function') {
+      global.gtag('event', 'upgrade_prompt_shown', {
+        reason: global.currentUser ? 'quota_exhausted' : 'first_download',
+        page:   location.pathname
+      });
+    }
   };
 
   global.fsCloseUpgradeModal = function () {
