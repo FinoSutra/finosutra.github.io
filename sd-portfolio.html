@@ -664,7 +664,7 @@ function updateKPIs(){
 
 // ── Excel Export ────────────────────────────────────────────────────────────
 function doExport(){
-  if(deposits.length === 0){ alert('No deposits to export. Upload deposits first.'); return; }
+  if(deposits.length === 0){ alert('No deposits to export. Upload deposits first.'); return false; }
 
   var wb = XLSX.utils.book_new();
   var C_BRAND='4F46E5',C_NAVY='1E1B4B',C_ACCENT='D97706',C_LIGHT='EEF2FF',C_STRIPE='F8F9FF',C_GREEN='065F46',C_WHITE='FFFFFF',C_BORDER='C7D2FE';

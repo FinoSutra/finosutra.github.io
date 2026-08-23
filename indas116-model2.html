@@ -440,7 +440,7 @@ tr:hover td{background:#F8F9FF}
 
     <!-- Export -->
     <div style="padding:0 20px 20px">
-      <button class="btn-export" id="btnExp">⬇ Export to Excel &nbsp;<span style="font-size:10px;opacity:.8;">5 free / month</span></button>
+      <button class="btn-export" id="btnExp">⬇ Export to Excel &nbsp;<span style="font-size:10px;opacity:.8;">2 free / month</span></button>
     </div>
   </div>
 
@@ -1045,7 +1045,7 @@ function renderResults(res){
 
 /* ── Excel Export ────────────────────────────────────────────────────────── */
 function exportXL(){
-  if(!_lastResult){ alert('Please calculate first.'); return; }
+  if(!_lastResult){ alert('Please calculate first.'); return false; }
 
   const { origPV, origROU, origDep, n0, freq, timing, startDate, origSched, modResults, idc, inc, pmt, ibr, term } = _lastResult;
   const wb  = XLSX.utils.book_new();
