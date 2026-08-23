@@ -417,6 +417,12 @@
   }
 
   global.fsShowUpgradeModal = function () {
+    var line = document.getElementById('fsUmQuotaLine');
+    if (line) {
+      line.innerHTML = global.currentUser
+        ? '&#127881; You\'ve used your <strong>' + FREE_DOWNLOADS_PER_MONTH + ' free downloads</strong> for this month. Grab this one for &#8377;' + ONE_TIME_EXPORT_PRICE + ', or go Pro for unlimited.'
+        : '&#128176; Download this report for &#8377;' + ONE_TIME_EXPORT_PRICE + ' &mdash; no account needed. Or log in for ' + FREE_DOWNLOADS_PER_MONTH + ' free downloads/month.';
+    }
     var o = document.getElementById('fsUpgradeOverlay');
     if (o) o.classList.add('show');
   };
@@ -533,9 +539,11 @@
     }
   };
 
-  // ── Wrap the export button: Pro bypasses, logged-out users must log in,
-  // logged-in free users get FREE_DOWNLOADS_PER_MONTH downloads/month before
-  // hitting the upgrade modal (free/Pro/one-time-₹79 choice).
+  // ── Wrap the export button: Pro bypasses; logged-out users go straight to
+  // the upgrade modal (₹79 one-time needs no account — only the free quota
+  // does, since that requires an identity to track "N/month" against); free
+  // users get FREE_DOWNLOADS_PER_MONTH downloads/month before hitting the
+  // same modal.
   function wrapExportButton() {
     var btnExp = document.getElementById('btnExp');
     if (!btnExp) return;
@@ -546,8 +554,12 @@
         return;
       }
       if (!global.currentUser) {
-        global.showToast('Log in to download — free accounts get ' + FREE_DOWNLOADS_PER_MONTH + ' downloads/month.', '#6366F1');
-        global.fsShowAuthModal('login');
+        // No login wall here on purpose — anonymous users can pay ₹79 and
+        // download immediately with no account. fsInitiateOneTimeExport()
+        // already works without global.currentUser. Only the free quota
+        // (which needs an identity to track) and Pro (a subscription) still
+        // require logging in, and those paths handle that themselves.
+        global.fsShowUpgradeModal();
         return;
       }
       var result = await fsTryConsumeDownload();
