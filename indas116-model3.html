@@ -1073,7 +1073,7 @@ tr:nth-child(even){background:rgba(0,82,204,0.025)}
       <div class="exp-row">
         <span class="exp-note" id="expNote"></span>
         <button class="btn-pdf" id="btnPdf" onclick="printWorkpaper()" title="Print / Save as PDF — Pro feature">🖨 Print PDF</button>
-        <button class="btn-exp" id="btnExp">⬇ Export to Excel &nbsp;<span style="font-size:10px;opacity:.8;">5 free / month</span></button>
+        <button class="btn-exp" id="btnExp">⬇ Export to Excel &nbsp;<span style="font-size:10px;opacity:.8;">2 free / month</span></button>
         <button id="btnSavePortfolio" onclick="saveToPortfolio()" style="display:none;align-items:center;gap:6px;padding:10px 16px;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;border:1.5px solid #059669;background:#ECFDF5;color:#065F46;font-family:Inter,sans-serif;transition:all .15s;" title="Save this lease to your portfolio (Pro)">📂 Save to Portfolio</button>
       </div>
       <div style="margin:0 22px 12px;padding:12px 16px;background:#E8F0FF;border:1px solid #BAD0F8;border-radius:8px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
@@ -1183,7 +1183,7 @@ tr:nth-child(even){background:rgba(0,82,204,0.025)}
 <div id="sticky-export-bar">
   <div style="flex:1;">
     <div class="sticky-text">✅ Your lease schedule is ready — get the audit-ready Excel report</div>
-    <div class="sticky-sub">Amortization · Journal entries · Annual rollforward · Free (5/mo, login required) or ₹499/mo unlimited</div>
+    <div class="sticky-sub">Amortization · Journal entries · Annual rollforward · Free (2/mo, login required) or ₹499/mo unlimited</div>
   </div>
   <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap;">
     <button class="sticky-btn" onclick="document.getElementById('btnExp').click()">⬇ Export to Excel</button>
@@ -3115,7 +3115,7 @@ function swMobile(id){
 }
 
 // auth.js's wrapExportButton() owns #btnExp entirely — logged-out users are
-// prompted to log in, logged-in free users get 5 downloads/month, Pro is
+// prompted to log in, logged-in free users get a monthly quota (FREE_DOWNLOADS_PER_MONTH in auth.js), Pro is
 // unlimited. No local export/payment wiring is needed on this page.
 
 function showToast(msg,color){
@@ -3138,7 +3138,7 @@ function showToast(msg,color){
 
 function exportXL(){
 
-  if(!R || !INP) return;
+  if(!R || !INP){ if(typeof showToast==='function') showToast('Please calculate your lease schedule first.','#FF8A80'); return false; }
 
   const wb = XLSX.utils.book_new();
 

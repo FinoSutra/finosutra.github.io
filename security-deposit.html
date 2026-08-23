@@ -475,7 +475,7 @@ function fsShortDate(d){
       <!-- EXPORT INFO CARD -->
       <div class="exp-info-card" id="expInfoCard" style="display:none">
         <div style="font-size:13px;font-weight:700;color:var(--brand);margin-bottom:4px;">📊 Get the audit-ready Excel — drop it straight into your workpapers</div>
-        <div style="font-size:11px;color:#6B7280;margin-bottom:10px;">Free · 5 downloads/month (login required) · CA &amp; audit-ready format</div>
+        <div style="font-size:11px;color:#6B7280;margin-bottom:10px;">Free · 2 downloads/month (login required), then ₹79 · CA &amp; audit-ready format</div>
         <div class="exp-info-title">📊 What's inside the Excel Report</div>
         <div class="exp-info-grid">
           <div class="exp-info-item">Fair Value computation (PV workings)</div>
@@ -487,7 +487,7 @@ function fsShortDate(d){
           <div class="exp-info-item">All journal entries (Year 1 to end)</div>
           <div class="exp-info-item">Ind AS 109 / IFRS 9 compliant format</div>
         </div>
-        <div class="exp-info-note">Log in to download · 5 free downloads/month · CA &amp; audit-ready format</div>
+        <div class="exp-info-note">Log in to download · 2 free downloads/month, then ₹79 · CA &amp; audit-ready format</div>
       </div>
 
       <!-- EXPORT ROW -->
@@ -907,7 +907,7 @@ function buildJE(title, lines){
 }
 
 // auth.js's wrapExportButton() owns #btnExp entirely — logged-out users are
-// prompted to log in, logged-in free users get 5 downloads/month, Pro is
+// prompted to log in, logged-in free users get a monthly quota (FREE_DOWNLOADS_PER_MONTH in auth.js), Pro is
 // unlimited. No local export/payment wiring is needed on this page.
 
 function showToast(msg, type){
@@ -922,7 +922,7 @@ function showToast(msg, type){
 
 /* ── EXCEL EXPORT ── */
 function exportXL(){
-  if(!SD) return;
+  if(!SD){ if(typeof showToast==='function') showToast('Please calculate the deposit schedule first.','fail'); return false; }
   var wb = XLSX.utils.book_new();
 
   // ── Finosutra colour palette ──────────────────────────────────────────────
@@ -1365,7 +1365,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <div id="sticky-export-bar">
   <div style="flex:1;">
     <div class="sticky-text">✅ Your schedule is ready — get the audit-ready Excel report</div>
-    <div class="sticky-sub">Fair value workings · EIR schedule · Journal entries · BS &amp; P&amp;L impact · Free (5/mo, login required) or ₹499/mo unlimited</div>
+    <div class="sticky-sub">Fair value workings · EIR schedule · Journal entries · BS &amp; P&amp;L impact · Free (2/mo, login required) or ₹499/mo unlimited</div>
   </div>
   <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap;">
     <button class="sticky-btn" onclick="document.getElementById('btnExp').click()">⬇ Export to Excel</button>

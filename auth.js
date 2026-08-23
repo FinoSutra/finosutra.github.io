@@ -21,6 +21,12 @@
   // The matching SECRET lives only in Supabase Edge Function secrets, never here.
   var RZP_KEY   = 'rzp_live_TOZmt4wlnvNqYc';
   global.FS_RZP_KEY = RZP_KEY;
+  // ── Free-tier quota + one-time export price — single source of truth.
+  // Keep these two in sync with the cap hardcoded in the SQL function
+  // fs_try_consume_download() (supabase/migrations/*download_quota*.sql) —
+  // that cap is enforced server-side and cannot be read from here.
+  var FREE_DOWNLOADS_PER_MONTH = 2;
+  var ONE_TIME_EXPORT_PRICE    = 79;
 
   // ── Global state ─────────────────────────────────────────────────────────────
   global.currentUser = null;
@@ -111,7 +117,7 @@
       '.fs-um-sheet-cell{flex:1;font-size:10px;padding:4px 6px;color:#374151;font-family:Inter,sans-serif;min-width:0;overflow:hidden;white-space:nowrap;border-bottom:1px solid #F3F4F6;font-variant-numeric:tabular-nums;}',
       '.fs-um-sheet-cell.h{background:#F9FAFB;font-weight:700;color:#9CA3AF;font-size:9px;text-transform:uppercase;letter-spacing:.3px;}',
       /* Pricing cards */
-      '.fs-um-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0;align-items:start;}',
+      '.fs-um-cards{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:10px;margin:14px 0;align-items:start;}',
       '.fs-um-card{border:1.5px solid #E5E7EB;border-radius:14px;padding:18px 14px 14px;text-align:center;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s;position:relative;}',
       '.fs-um-card:hover{border-color:#15222C;box-shadow:0 6px 20px rgba(21,34,44,.14);transform:translateY(-2px);}',
       '.fs-um-card-featured{border-color:#B8862E;background:linear-gradient(160deg,#FBF3E4,#F6F3EA);box-shadow:0 4px 20px rgba(184,134,46,.18);}',
@@ -142,6 +148,14 @@
       '.fs-um-card-badge-green{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#059669,#10B981);color:#fff;font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;white-space:nowrap;letter-spacing:.04em;font-family:Inter,sans-serif;}',
       '.fs-um-btn-green{background:linear-gradient(135deg,#059669,#10B981);color:#fff;box-shadow:0 4px 14px rgba(5,150,105,.25);}',
       '@media(max-width:580px){.fs-um-cards{grid-template-columns:1fr;}.fs-um-card-featured,.fs-um-card-annual{margin-top:14px;}.fs-um-preview{display:none;}.fs-um-card-list{display:none;}}',
+      /* PAYMENT RECOVERY BANNER — shown if a ₹79 payment succeeds but the
+         export fails, or the page is reloaded before the download completed. */
+      '#fsRecoveryBanner{display:none;position:fixed;bottom:0;left:0;right:0;z-index:99997;background:linear-gradient(90deg,#166534,#15803D);color:#fff;padding:14px 20px;box-shadow:0 -4px 20px rgba(0,0,0,.25);font-family:Inter,sans-serif;}',
+      '#fsRecoveryBanner.show{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;}',
+      '.fs-recovery-text{font-size:13px;}',
+      '.fs-recovery-text small{display:block;opacity:.85;font-size:11px;margin-top:2px;}',
+      '.fs-recovery-btn{background:#fff;color:#166534;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:Inter,sans-serif;}',
+      '.fs-recovery-link{color:#fff;text-decoration:underline;font-size:12px;white-space:nowrap;}',
       /* MOBILE AUTH MODAL — prevent iOS zoom on input focus */
       '@media(max-width:600px){#fsAuthModal{width:calc(100vw - 24px);max-width:calc(100vw - 24px);padding:28px 20px 22px;border-radius:16px;}.fs-auth-field input{font-size:16px;padding:11px 12px;}}'
     ].join('');
@@ -273,14 +287,21 @@
               '<div class="fs-um-sheet-row"><div class="fs-um-sheet-cell">Payments</div><div class="fs-um-sheet-cell">(1,50,000)</div></div>' +
             '</div>' +
           '</div>' +
-          '<div class="fs-um-quota" id="fsUmQuotaLine">&#127881; You\'ve used all <strong>5 free downloads</strong> for this month. Go Pro for unlimited exports across every tool.</div>' +
+          '<div class="fs-um-quota" id="fsUmQuotaLine">&#127881; You\'ve used your <strong>' + FREE_DOWNLOADS_PER_MONTH + ' free downloads</strong> for this month. Grab this one for &#8377;' + ONE_TIME_EXPORT_PRICE + ', or go Pro for unlimited.</div>' +
           '<div class="fs-um-chips">' +
             '<span class="fs-um-chip">&#10003; Amortization schedule</span>' +
             '<span class="fs-um-chip">&#10003; Journal entries</span>' +
             '<span class="fs-um-chip">&#10003; Annual rollforward</span>' +
             '<span class="fs-um-chip">&#10003; Balance sheet impact</span>' +
           '</div>' +
+          '<div class="fs-um-roi">&#128161; <strong>Downloading 6+ times a month?</strong> Pro (&#8377;499) costs less than paying &#8377;' + ONE_TIME_EXPORT_PRICE + ' each time (6 &times; &#8377;' + ONE_TIME_EXPORT_PRICE + ' = &#8377;' + (6 * ONE_TIME_EXPORT_PRICE) + ')</div>' +
           '<div class="fs-um-cards">' +
+            '<div class="fs-um-card" onclick="fsCloseUpgradeModal();fsInitiateOneTimeExport()">' +
+              '<div class="fs-um-card-price">&#8377;' + ONE_TIME_EXPORT_PRICE + '</div>' +
+              '<div class="fs-um-card-name">This report only</div>' +
+              '<div class="fs-um-card-desc">One-time &middot; No subscription<br>Instant download</div>' +
+              '<button class="fs-um-btn fs-um-btn-muted">Download &#8594;</button>' +
+            '</div>' +
             '<div class="fs-um-card fs-um-card-featured" onclick="fsCloseUpgradeModal();fsInitiateProSubscription()">' +
               '<div class="fs-um-card-badge">MOST POPULAR</div>' +
               '<div class="fs-um-card-price">&#8377;499<span>/mo</span></div>' +
@@ -317,6 +338,84 @@
     document.body.insertBefore(wrap.firstChild, document.body.firstChild);
   }
 
+  // ── Payment recovery banner ───────────────────────────────────────────────
+  // Guards the ₹79 one-time export against the classic "paid but never got
+  // the file" failure — most often a mobile UPI app-switch reloading the tab
+  // mid-flow and wiping the in-memory calculation the export function needs.
+  // The payment ID is written to localStorage the instant Razorpay confirms
+  // the charge, before the export is even attempted, so it survives a reload;
+  // this banner then gives the user a durable, un-missable way to retry
+  // (or fall back to emailing support with the payment ID) instead of a toast
+  // that vanishes in a few seconds.
+  function injectRecoveryBanner() {
+    if (!document.getElementById('btnExp')) return;
+    var html =
+      '<div id="fsRecoveryBanner">' +
+        '<span class="fs-recovery-text">&#9989; Payment received — your Excel report is ready.<small>Payment ID: <span id="fsRecoveryPaymentId"></span> &middot; click to download</small></span>' +
+        '<button class="fs-recovery-btn" onclick="fsRetryPaidDownload()">&#8659; Download Now</button>' +
+        '<a class="fs-recovery-link" href="#" onclick="fsDismissRecoveryBanner();return false;">Dismiss</a>' +
+      '</div>';
+    var wrap = document.createElement('div');
+    wrap.innerHTML = html;
+    document.body.appendChild(wrap.firstChild);
+  }
+
+  function fsMarkOneTimePaid(paymentId) {
+    try {
+      localStorage.setItem('fs_one_time_paid', JSON.stringify({ paymentId: paymentId, ts: Date.now(), page: location.pathname }));
+    } catch (e) {}
+  }
+
+  function fsClearOneTimePaid() {
+    try { localStorage.removeItem('fs_one_time_paid'); } catch (e) {}
+    var b = document.getElementById('fsRecoveryBanner');
+    if (b) b.classList.remove('show');
+  }
+
+  function fsShowRecoveryBanner(paymentId) {
+    var b = document.getElementById('fsRecoveryBanner');
+    if (!b) return;
+    var idEl = document.getElementById('fsRecoveryPaymentId');
+    if (idEl) idEl.textContent = paymentId || '';
+    b.classList.add('show');
+  }
+
+  global.fsDismissRecoveryBanner = function () {
+    var b = document.getElementById('fsRecoveryBanner');
+    if (b) b.classList.remove('show');
+  };
+
+  // Exposed globally — the banner's "Download Now" button and the page-load
+  // recovery check both call this directly (no payment/quota check here on
+  // purpose: reaching this point already means Razorpay confirmed the charge).
+  global.fsRetryPaidDownload = function () {
+    var ok = fsRunExportFn('PAID');
+    if (ok) {
+      global.showToast('✓ Downloading your report…', '#5EC98A');
+      setTimeout(fsClearOneTimePaid, 4000);
+    } else {
+      global.showToast('Still couldn\'t generate the file — please recalculate on this page, then click Download Now again.', '#FF8A80');
+    }
+  };
+
+  // Runs once on page load: if a ₹79 payment succeeded earlier (this tab
+  // reload, an app-switch during UPI, or the user just came back later) and
+  // was never confirmed downloaded, resurface the recovery banner instead of
+  // silently losing track of a paid-for file.
+  function fsCheckPendingPaidDownload() {
+    try {
+      var raw = localStorage.getItem('fs_one_time_paid');
+      if (!raw) return;
+      var rec = JSON.parse(raw);
+      var ageMs = Date.now() - (rec.ts || 0);
+      if (rec.page !== location.pathname || ageMs > 45 * 60 * 1000) {
+        localStorage.removeItem('fs_one_time_paid');
+        return;
+      }
+      fsShowRecoveryBanner(rec.paymentId);
+    } catch (e) {}
+  }
+
   global.fsShowUpgradeModal = function () {
     var o = document.getElementById('fsUpgradeOverlay');
     if (o) o.classList.add('show');
@@ -327,11 +426,13 @@
     if (o) o.classList.remove('show');
   };
 
-  // ── Monthly download quota (5/month, logged-in free users) ───────────────────
+  // ── Monthly download quota (FREE_DOWNLOADS_PER_MONTH/month, logged-in free
+  // users) ───────────────────────────────────────────────────────────────────
   // Enforced server-side by the fs_try_consume_download() Postgres function
   // (SECURITY DEFINER, keyed on auth.uid()) — see
-  // supabase/migrations/20260821_download_usage.sql. The client only reads the
-  // result; it can never grant itself a download by editing this file.
+  // supabase/migrations/20260821_download_usage.sql (and the cap update in
+  // 20260822_download_quota_2.sql). The client only reads the result; it can
+  // never grant itself a download by editing this file.
   global.fsDownloadsRemaining = null;
 
   async function fsFetchDownloadQuota() {
@@ -344,7 +445,7 @@
         .eq('user_id', global.currentUser.id)
         .eq('month_key', monthKey)
         .maybeSingle();
-      global.fsDownloadsRemaining = res.error ? null : Math.max(0, 5 - (res.data ? res.data.count : 0));
+      global.fsDownloadsRemaining = res.error ? null : Math.max(0, FREE_DOWNLOADS_PER_MONTH - (res.data ? res.data.count : 0));
     } catch (e) { global.fsDownloadsRemaining = null; }
   }
 
@@ -360,8 +461,81 @@
     }
   }
 
+  // ── One-time export payment — the low-friction bridge between the free
+  // quota and a Pro subscription. Must call fsRunExportFn() directly, NOT
+  // fsCallToolExport() (that helper's toast/GA event are Pro-specific).
+  global.fsInitiateOneTimeExport = function () {
+    if (global.isProUser) { fsRunExportFn('PRO'); return; }
+
+    if (typeof Razorpay === 'undefined') {
+      global.showToast('Loading payment…', '#6366F1');
+      var rzpScript = document.createElement('script');
+      rzpScript.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      rzpScript.onload = function () { global.fsInitiateOneTimeExport(); };
+      rzpScript.onerror = function () { global.showToast('Could not load payment. Check connection.', '#EF4444'); };
+      document.head.appendChild(rzpScript);
+      return;
+    }
+
+    var options = {
+      key:         RZP_KEY,
+      amount:      ONE_TIME_EXPORT_PRICE * 100,
+      currency:    'INR',
+      name:        'Finosutra',
+      description: 'One-time Excel Export',
+      image:       '',
+      theme:       { color: '#6366F1' },
+      modal:       { ondismiss: function () { global.showToast('Payment cancelled. No charges made.', '#9CA3AF'); } },
+      prefill:     { email: global.currentUser ? global.currentUser.email : '', name: '', contact: '' },
+      notes:       { plan: 'one_time_export', page: location.pathname },
+      handler:     function (response) {
+        // Persist the payment ID BEFORE attempting the export — Razorpay has
+        // already captured the charge at this point, so from here on the
+        // user must never be left without either the file or a clear way to
+        // get it. This line is what survives a mobile UPI app-switch or a
+        // reload wiping the page's in-memory calculation.
+        fsMarkOneTimePaid(response.razorpay_payment_id);
+        global.showToast('Payment received! Preparing your download…', '#5EC98A');
+        if (typeof global.gtag === 'function') {
+          global.gtag('event', 'purchase', {
+            transaction_id: response.razorpay_payment_id,
+            value:          ONE_TIME_EXPORT_PRICE,
+            currency:       'INR',
+            items: [{ item_id: 'one_time_export_79', item_name: 'One-time Excel Export', price: ONE_TIME_EXPORT_PRICE, quantity: 1 }]
+          });
+        }
+        setTimeout(function () {
+          var ok = fsRunExportFn('PAID');
+          if (ok) {
+            setTimeout(fsClearOneTimePaid, 4000);
+          } else {
+            // Export failed right after a confirmed charge — surface the
+            // recovery banner immediately instead of leaving the user with
+            // only a toast that vanishes in a few seconds.
+            fsShowRecoveryBanner(response.razorpay_payment_id);
+          }
+        }, 300);
+      }
+    };
+
+    try {
+      var rzp = new Razorpay(options);
+      rzp.on('payment.failed', function (resp) {
+        global.showToast('Payment failed: ' + (resp.error && resp.error.description || 'Unknown error'), '#FF8A80');
+      });
+      if (typeof global.gaEvent === 'function') {
+        global.gaEvent('begin_checkout', { tool_name: 'One-time Export', value: ONE_TIME_EXPORT_PRICE, currency: 'INR' });
+      }
+      rzp.open();
+    } catch (e) {
+      alert('Could not open payment window. Please check your connection and try again.');
+      console.error(e);
+    }
+  };
+
   // ── Wrap the export button: Pro bypasses, logged-out users must log in,
-  // logged-in free users get 5 downloads/month before hitting the upgrade modal.
+  // logged-in free users get FREE_DOWNLOADS_PER_MONTH downloads/month before
+  // hitting the upgrade modal (free/Pro/one-time-₹79 choice).
   function wrapExportButton() {
     var btnExp = document.getElementById('btnExp');
     if (!btnExp) return;
@@ -372,13 +546,13 @@
         return;
       }
       if (!global.currentUser) {
-        global.showToast('Log in to download — free accounts get 5 downloads/month.', '#6366F1');
+        global.showToast('Log in to download — free accounts get ' + FREE_DOWNLOADS_PER_MONTH + ' downloads/month.', '#6366F1');
         global.fsShowAuthModal('login');
         return;
       }
       var result = await fsTryConsumeDownload();
       if (result.allowed) {
-        global.showToast('✓ Download ' + (5 - result.remaining) + '/5 used this month', '#059669');
+        global.showToast('✓ Download ' + (FREE_DOWNLOADS_PER_MONTH - result.remaining) + '/' + FREE_DOWNLOADS_PER_MONTH + ' used this month', '#059669');
         setTimeout(function () { fsRunExportFn('FREE'); }, 300);
         if (typeof global.gaEvent === 'function') {
           global.gaEvent('excel_downloaded', { trigger: 'free_tier', page: location.pathname });
@@ -393,16 +567,29 @@
   // ── Detect and call the right export function for this tool ──────────────────
   // Shared by the Pro path and the one-time-payment path so both actually
   // trigger the tool's real export, regardless of which function name it uses.
+  // Returns true/false so callers that gate a real charge (the ₹79 one-time
+  // export) know whether to clear the paid marker or show the recovery banner.
+  // Tool export functions signal "nothing was actually generated" (no
+  // calculation done yet, missing data, etc.) by returning false — anything
+  // else (including the usual undefined, since most of these functions have
+  // no explicit return) is treated as success. This distinction matters most
+  // for the ₹79 one-time export: a caller needs to know for certain whether
+  // to clear the paid marker or show the recovery banner, and "did it throw"
+  // alone isn't enough — several of these guard with a plain early `return`
+  // and no exception at all.
   function fsRunExportFn(tag) {
     try {
-      if (typeof global.exportXL === 'function')                     { global.exportXL(); return; }
-      if (typeof global.generateAndDownloadExcel === 'function')     { global.generateAndDownloadExcel(tag + '_' + Date.now()); return; }
-      if (typeof global.generateExcel === 'function')                { global.generateExcel(tag + '_' + Date.now()); return; }
-      if (typeof global.downloadExcel === 'function')                { global.downloadExcel(); return; }
+      var r;
+      if (typeof global.exportXL === 'function')                     { r = global.exportXL(); return r !== false; }
+      if (typeof global.generateAndDownloadExcel === 'function')     { r = global.generateAndDownloadExcel(tag + '_' + Date.now()); return r !== false; }
+      if (typeof global.generateExcel === 'function')                { r = global.generateExcel(tag + '_' + Date.now()); return r !== false; }
+      if (typeof global.downloadExcel === 'function')                { r = global.downloadExcel(); return r !== false; }
       global.showToast('Export not ready. Please calculate first.', '#FF8A80');
+      return false;
     } catch (e) {
       console.error('[auth.js] Export error:', e);
       global.showToast('Export failed. Please try again.', '#FF8A80');
+      return false;
     }
   }
 
@@ -418,7 +605,7 @@
   function fsUpdateExportLabel(isPro) {
     var quotaTag = '';
     if (!isPro && global.currentUser && global.fsDownloadsRemaining !== null) {
-      quotaTag = ' <span class="fs-pro-free-tag" style="background:#EEF2FF;color:#4338CA;">' + global.fsDownloadsRemaining + '/5 left</span>';
+      quotaTag = ' <span class="fs-pro-free-tag" style="background:#EEF2FF;color:#4338CA;">' + global.fsDownloadsRemaining + '/' + FREE_DOWNLOADS_PER_MONTH + ' left</span>';
     }
     var btn = document.getElementById('btnExp');
     if (btn) {
@@ -906,7 +1093,9 @@
     injectAuthModal();
     injectUpgradeModal();
     injectProBanner();
+    injectRecoveryBanner();
     wrapExportButton();
+    fsCheckPendingPaidDownload();
 
     // Disable all Pro subscribe buttons until we confirm the user's status
     // Prevents race-condition clicks before async auth check completes

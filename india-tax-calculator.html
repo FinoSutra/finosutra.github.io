@@ -235,7 +235,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
     {
       "@type": "Question",
       "name": "Is this income tax calculator free?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Yes, the full income tax calculation — including New vs Old Regime comparison, HRA exemption, 80C/80D deductions, capital gains and surcharge — is completely free. Log in to download the 5-sheet CA-ready Excel report — free accounts get 5 downloads a month." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, the full income tax calculation — including New vs Old Regime comparison, HRA exemption, 80C/80D deductions, capital gains and surcharge — is completely free. Log in to download the 5-sheet CA-ready Excel report — free accounts get 2 downloads a month, then ₹79 per export." }
     },
     {
       "@type": "Question",
@@ -820,7 +820,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
   <!-- Excel Export Info Card -->
   <div id="excel-info-card" style="display:none;margin-top:16px;background:#EEF2FF;border:1px solid rgba(99,102,241,0.25);border-radius:12px;padding:18px 20px">
     <div style="font-size:13px;font-weight:700;color:#4F46E5;margin-bottom:4px;">📊 Get the audit-ready Excel — drop it straight into your workpapers</div>
-    <div style="font-size:11px;color:#6B7280;margin-bottom:10px;">Free · 5 downloads/month (login required) · CA-grade format</div>
+    <div style="font-size:11px;color:#6B7280;margin-bottom:10px;">Free · 2 downloads/month (login required), then ₹79 · CA-grade format</div>
     <div style="font-weight:600;color:#4F46E5;font-size:12px;margin-bottom:8px;">What's inside:</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px;color:#4B5563">
       <div>✓ Sheet 1 — Cover & Tax Summary</div>
@@ -1669,7 +1669,7 @@ function updatePropLTCGMethod(){
 }
 
 // auth.js's wrapExportButton() owns #btnExp entirely — logged-out users are
-// prompted to log in, logged-in free users get 5 downloads/month, Pro is
+// prompted to log in, logged-in free users get a monthly quota (FREE_DOWNLOADS_PER_MONTH in auth.js), Pro is
 // unlimited. generateAndDownloadExcel() is what it calls to run the export.
 // ===================================================================
 // EXCEL GENERATION — SheetJS
@@ -1678,7 +1678,7 @@ function generateAndDownloadExcel(exportRef){
   if(!lastResults){
     if(typeof showToast==='function') showToast('Please calculate your tax first.','#FF8A80');
     else alert('Please calculate your tax first.');
-    return;
+    return false;
   }
   const r = lastResults;
   const nr = r.new;

@@ -350,7 +350,7 @@ table.tbl td:last-child{text-align:right;font-weight:600}
 
     <!-- Export -->
     <div class="export-wrap hidden" id="exportWrap">
-      <div id="freeExportNotice" style="margin-bottom:8px;padding:9px 14px;background:#ECFDF5;border:1.5px solid #6EE7B7;border-radius:8px;font-size:12px;color:#065F46;font-weight:600;">🔒 5 free Excel exports/month — log in to download.</div>
+      <div id="freeExportNotice" style="margin-bottom:8px;padding:9px 14px;background:#ECFDF5;border:1.5px solid #6EE7B7;border-radius:8px;font-size:12px;color:#065F46;font-weight:600;">🔒 2 free Excel exports/month (login required), then ₹79 per export.</div>
       <button class="exp-btn" id="btnExp"><i class="fa-solid fa-file-excel"></i> Export Capital Gains Working (Excel)</button>
     </div>
   </div>
@@ -725,7 +725,7 @@ function showEmpty(msg){
 // ── EXPORT ──
 function doExport(){
   var d = window._cgData;
-  if(!d){ if(window.showToast) showToast('Calculate first.','#DC2626'); return; }
+  if(!d){ if(window.showToast) showToast('Calculate first.','#DC2626'); return false; }
 
   if(typeof XLSX === 'undefined'){
     alert('Excel library not loaded yet — please try again in a moment.'); return;
@@ -789,7 +789,7 @@ function showUpsellBanner(){
 }
 
 // Expose for auth.js fsCallToolExport() — auth.js's wrapExportButton() owns
-// #btnExp's onclick (login + 5/month quota gate, Pro bypass); it calls this.
+// #btnExp's onclick (login + monthly quota gate, Pro bypass); it calls this.
 window.downloadExcel = doExport;
 
 document.addEventListener('DOMContentLoaded', function(){

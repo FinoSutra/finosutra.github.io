@@ -710,7 +710,7 @@ function calculate(){
 
 function exportXL(){
   var d=window._eclData;
-  if(!d){alert('Please calculate first.');return;}
+  if(!d){alert('Please calculate first.');return false;}
   var wb=XLSX.utils.book_new();
   var hdr={font:{bold:true,color:{rgb:'FFFFFF'}},fill:{fgColor:{rgb:'4F46E5'}},alignment:{horizontal:'center'},border:{bottom:{style:'thin',color:{rgb:'C7D2FE'}}}};
   var tot={font:{bold:true},fill:{fgColor:{rgb:'EEF2FF'}}};
