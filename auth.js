@@ -422,13 +422,13 @@
     if (line) {
       line.innerHTML = global.currentUser
         ? '&#127881; You\'ve used your <strong>' + FREE_DOWNLOADS_PER_MONTH + ' free downloads</strong> for this month. Grab this one for &#8377;' + ONE_TIME_EXPORT_PRICE + ', or go Pro for unlimited.'
-        : '&#128176; Download this report for &#8377;' + ONE_TIME_EXPORT_PRICE + ' &mdash; no account needed. Or log in for ' + FREE_DOWNLOADS_PER_MONTH + ' free downloads/month.';
+        : '&#127881; You\'ve used your <strong>' + FREE_DOWNLOADS_PER_MONTH + ' free downloads</strong> for this month. Grab this one for &#8377;' + ONE_TIME_EXPORT_PRICE + ' &mdash; no account needed. Or log in and go Pro for unlimited.';
     }
     var o = document.getElementById('fsUpgradeOverlay');
     if (o) o.classList.add('show');
     if (typeof global.gtag === 'function') {
       global.gtag('event', 'upgrade_prompt_shown', {
-        reason: global.currentUser ? 'quota_exhausted' : 'first_download',
+        reason: 'quota_exhausted',
         page:   location.pathname
       });
     }
@@ -447,6 +447,36 @@
   // 20260822_download_quota_2.sql). The client only reads the result; it can
   // never grant itself a download by editing this file.
   global.fsDownloadsRemaining = null;
+
+  // ── Anonymous free-download quota (device-local, no account needed) ────────
+  // Same FREE_DOWNLOADS_PER_MONTH cap as logged-in users, but there's no
+  // server-side identity to key a count on for a visitor who never signs in,
+  // so this tracks via localStorage instead. Trivially reset by clearing
+  // browser storage — accepted tradeoff so casual visitors never hit a login
+  // wall just to get their first couple of downloads.
+  var ANON_QUOTA_KEY = 'fs_anon_dl';
+
+  function fsAnonMonthKey() { return new Date().toISOString().slice(0, 7); }
+
+  function fsAnonUsedCount() {
+    try {
+      var rec = JSON.parse(localStorage.getItem(ANON_QUOTA_KEY) || 'null');
+      if (!rec || rec.month !== fsAnonMonthKey()) return 0;
+      return rec.count || 0;
+    } catch (e) { return 0; }
+  }
+
+  function fsAnonRemaining() {
+    return Math.max(0, FREE_DOWNLOADS_PER_MONTH - fsAnonUsedCount());
+  }
+
+  function fsConsumeAnonDownload() {
+    var count = fsAnonUsedCount() + 1;
+    try {
+      localStorage.setItem(ANON_QUOTA_KEY, JSON.stringify({ month: fsAnonMonthKey(), count: count }));
+    } catch (e) {}
+    return Math.max(0, FREE_DOWNLOADS_PER_MONTH - count);
+  }
 
   async function fsFetchDownloadQuota() {
     if (!global.currentUser || !global.supaClient) { global.fsDownloadsRemaining = null; return; }
@@ -557,11 +587,12 @@
     }
   };
 
-  // ── Wrap the export button: Pro bypasses; logged-out users go straight to
-  // the upgrade modal (₹79 one-time needs no account — only the free quota
-  // does, since that requires an identity to track "N/month" against); free
-  // users get FREE_DOWNLOADS_PER_MONTH downloads/month before hitting the
-  // same modal.
+  // ── Wrap the export button: Pro bypasses; logged-out users get the same
+  // FREE_DOWNLOADS_PER_MONTH quota as logged-in free users (tracked
+  // device-locally via fsAnonRemaining/fsConsumeAnonDownload since there's no
+  // account to key a server-side count on); only once that's exhausted do
+  // they hit the upgrade modal (₹79 one-time, no account needed, or log in
+  // for Pro). No login wall for the free downloads themselves.
   function wrapExportButton() {
     var btnExp = document.getElementById('btnExp');
     if (!btnExp) return;
@@ -572,11 +603,16 @@
         return;
       }
       if (!global.currentUser) {
-        // No login wall here on purpose — anonymous users can pay ₹79 and
-        // download immediately with no account. fsInitiateOneTimeExport()
-        // already works without global.currentUser. Only the free quota
-        // (which needs an identity to track) and Pro (a subscription) still
-        // require logging in, and those paths handle that themselves.
+        if (fsAnonRemaining() > 0) {
+          var anonRemaining = fsConsumeAnonDownload();
+          global.showToast('✓ Download ' + (FREE_DOWNLOADS_PER_MONTH - anonRemaining) + '/' + FREE_DOWNLOADS_PER_MONTH + ' used this month', '#059669');
+          setTimeout(function () { fsRunExportFn('FREE_ANON'); }, 300);
+          if (typeof global.gaEvent === 'function') {
+            global.gaEvent('excel_downloaded', { trigger: 'free_tier_anon', page: location.pathname });
+          }
+          fsUpdateExportLabel(false);
+          return;
+        }
         global.fsShowUpgradeModal();
         return;
       }
@@ -634,8 +670,11 @@
   // ── Update export button label ────────────────────────────────────────────────
   function fsUpdateExportLabel(isPro) {
     var quotaTag = '';
-    if (!isPro && global.currentUser && global.fsDownloadsRemaining !== null) {
-      quotaTag = ' <span class="fs-pro-free-tag" style="background:#EEF2FF;color:#4338CA;">' + global.fsDownloadsRemaining + '/' + FREE_DOWNLOADS_PER_MONTH + ' left</span>';
+    if (!isPro) {
+      var remaining = global.currentUser ? global.fsDownloadsRemaining : fsAnonRemaining();
+      if (remaining !== null) {
+        quotaTag = ' <span class="fs-pro-free-tag" style="background:#EEF2FF;color:#4338CA;">' + remaining + '/' + FREE_DOWNLOADS_PER_MONTH + ' left</span>';
+      }
     }
     var btn = document.getElementById('btnExp');
     if (btn) {
