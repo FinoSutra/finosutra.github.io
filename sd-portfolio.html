@@ -359,6 +359,10 @@ function fsCopyLink(btn){
 var deposits = [];      // confirmed deposits
 var pendingDeposits = []; // from upload preview
 
+// ── Constants ────────────────────────────────────────────────────────────────
+var MAX_UPLOAD_DEPOSITS = 20;    // matches the "20 deposits per file" limit printed in the template
+var SD_TEMPLATE_URL = 'Finosutra_SD_Template_v1.xlsx';
+
 // ── Helpers ────────────────────────────────────────────────────────────────
 function INR(n){ return '₹' + Math.round(n).toLocaleString('en-IN'); }
 function gaEvent(n,p){ if(typeof gtag==='function') gtag('event',n,p||{}); }
@@ -366,12 +370,12 @@ function gaEvent(n,p){ if(typeof gtag==='function') gtag('event',n,p||{}); }
 // ── Core Calculation Engine (mirrors security-deposit.html calculate()) ───
 function calcSDEngine(raw){
   var name      = (raw['Deposit Name'] || raw['A'] || '').toString().trim();
-  var entity    = (raw['Entity / Lessee'] || raw['B'] || '').toString().trim();
-  var deposit   = parseFloat(raw['Deposit Amount (₹)'] || raw['C'] || 0);
-  var rate      = parseFloat(raw['Market Rate (% p.a.)'] || raw['D'] || 0) / 100;
-  var tenure    = parseFloat(raw['Tenure (Years)'] || raw['E'] || 0);
-  var typeRaw   = (raw['Deposit Type'] || raw['F'] || 'given').toString().toLowerCase();
-  var stdRaw    = (raw['Reporting Standard'] || raw['G'] || 'IND AS').toString().toUpperCase();
+  var entity    = (raw['Entity / Lessee'] || raw['C'] || '').toString().trim();
+  var deposit   = parseFloat(raw['Deposit Amount (₹)'] || raw['E'] || 0);
+  var rate      = parseFloat(raw['Market Rate (% p.a.)'] || raw['F'] || 0) / 100;
+  var tenure    = parseFloat(raw['Tenure (Years)'] || raw['G'] || 0);
+  var typeRaw   = (raw['Deposit Type'] || raw['I'] || 'given').toString().toLowerCase();
+  var stdRaw    = (raw['Reporting Standard'] || raw['J'] || 'IND AS').toString().toUpperCase();
   var commDateV = (raw['Commencement Date'] || raw['H'] || '').toString().trim();
 
   if(!name)    return { error: 'Deposit Name is required' };
@@ -427,59 +431,17 @@ function calcSDEngine(raw){
 }
 
 // ── Template Download ───────────────────────────────────────────────────────
+// Served as a static file (built by scripts/build_sd_template.py) rather than
+// generated in-browser — the dropdown lists and per-cell help prompts can't be
+// written by xlsx-js-style. Mirrors app.js's downloadTemplate() for the Lease
+// Workspace. Keep SD_TEMPLATE_URL in step with that script's output filename.
 function downloadTemplate(){
-  var wb = XLSX.utils.book_new();
-
-  // SD Register sheet
-  var headers = [
-    'Deposit Name','Entity / Lessee','Deposit Amount (₹)',
-    'Market Rate (% p.a.)','Tenure (Years)','Deposit Type','Reporting Standard','Commencement Date'
-  ];
-  var sample1 = ['Mumbai Office Deposit','ABC Pvt. Ltd.',500000,10,3,'Given','IND AS','2023-04-01'];
-  var sample2 = ['Pune Warehouse Deposit','ABC Pvt. Ltd.',300000,9,5,'Received','IND AS','2022-07-01'];
-
-  var C_BRAND = '4F46E5'; var C_WHITE = 'FFFFFF'; var C_LIGHT = 'EEF2FF'; var C_NAVY = '1E1B4B';
-  function hdrCell(v){ return {t:'s',v:v,s:{font:{name:'Calibri',bold:true,sz:10,color:{rgb:C_WHITE}},fill:{fgColor:{rgb:C_BRAND}},alignment:{horizontal:'center',wrapText:true},border:{bottom:{style:'medium',color:{rgb:C_BRAND}}}}}; }
-  function dataCell(v,stripe){ return {t:typeof v==='number'?'n':'s',v:v,s:{font:{name:'Calibri',sz:10},fill:{fgColor:{rgb:stripe?'F8F9FF':C_WHITE}},alignment:{horizontal:typeof v==='number'?'right':'left'}}}; }
-
-  var rows = [
-    headers.map(hdrCell),
-    sample1.map(function(v,i){ return dataCell(v,false); }),
-    sample2.map(function(v,i){ return dataCell(v,true); })
-  ];
-
-  var ws = XLSX.utils.aoa_to_sheet(rows);
-  ws['!cols'] = [{wch:28},{wch:22},{wch:20},{wch:18},{wch:14},{wch:14},{wch:18},{wch:18}];
-  ws['!rows'] = [{hpt:22},{hpt:18},{hpt:18}];
-  XLSX.utils.book_append_sheet(wb, ws, 'SD Register');
-
-  // Instructions sheet
-  var inst = [
-    [{t:'s',v:'Finosutra — Multi-Security Deposit Portfolio Template',s:{font:{name:'Calibri',bold:true,sz:14,color:{rgb:C_NAVY}}}}],
-    [{t:'s',v:'Instructions',s:{font:{name:'Calibri',bold:true,sz:11,color:{rgb:C_BRAND}}}}],
-    [{t:'s',v:'1. Fill one row per security deposit in the SD Register sheet.'}],
-    [{t:'s',v:'2. Deposit Name must be unique.'}],
-    [{t:'s',v:'3. Deposit Type: Enter "Given" (tenant pays) or "Received" (landlord receives).'}],
-    [{t:'s',v:'4. Reporting Standard: Enter "IND AS" or "IFRS" (default: IND AS).'}],
-    [{t:'s',v:'5. Market Rate: Enter as percentage, e.g. 10 for 10% p.a.'}],
-    [{t:'s',v:'6. Tenure: Enter in years, e.g. 3 or 3.5 for 3 years 6 months.'}],
-    [{t:'s',v:'7. Save the file and upload on sd-portfolio.html.'}],
-    [],
-    [{t:'s',v:'Column Reference',s:{font:{name:'Calibri',bold:true,sz:11,color:{rgb:C_BRAND}}}}],
-    [{t:'s',v:'A - Deposit Name: Unique name for the deposit (e.g. Mumbai Office Deposit)'}],
-    [{t:'s',v:'B - Entity / Lessee: Company or client name (optional)'}],
-    [{t:'s',v:'C - Deposit Amount (₹): Nominal / cash amount of the deposit'}],
-    [{t:'s',v:'D - Market Rate (% p.a.): EIR / market interest rate as a percentage'}],
-    [{t:'s',v:'E - Tenure (Years): Duration of deposit in years (can be decimal, e.g. 3.5)'}],
-    [{t:'s',v:'F - Deposit Type: "Given" or "Received"'}],
-    [{t:'s',v:'G - Reporting Standard: "IND AS" or "IFRS" (optional, default IND AS)'}],
-    [{t:'s',v:'H - Commencement Date: Date deposit was paid / received (YYYY-MM-DD, optional). Enables FY-specific unwinding in the portfolio KPIs.'}]
-  ];
-  var wsInst = XLSX.utils.aoa_to_sheet(inst);
-  wsInst['!cols'] = [{wch:70}];
-  XLSX.utils.book_append_sheet(wb, wsInst, 'Instructions');
-
-  XLSX.writeFile(wb, 'Finosutra_SD_Portfolio_Template.xlsx');
+  var a = document.createElement('a');
+  a.href = SD_TEMPLATE_URL;
+  a.download = SD_TEMPLATE_URL;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
   gaEvent('template_downloaded', { tool_name: 'SD Portfolio' });
 }
 
@@ -489,10 +451,41 @@ function handleFileUpload(input){
   if(!file){ return; }
   var reader = new FileReader();
   reader.onload = function(e){
-    var wb = XLSX.read(e.target.result, {type:'array', cellDates:true, raw:false});
-    var ws = wb.Sheets['SD Register'] || wb.Sheets[wb.SheetNames[0]];
-    var rows = XLSX.utils.sheet_to_json(ws, {defval:''});
-    processUploadedDeposits(rows);
+    try{
+      var wb = XLSX.read(e.target.result, {type:'array', cellDates:true, raw:false});
+      var ws = wb.Sheets['SD Register'] || wb.Sheets[wb.SheetNames[0]];
+      // Professional template: 3 banner rows before the header row (row 4).
+      var rows = XLSX.utils.sheet_to_json(ws, {defval:'', range:3});
+      // Fall back to a plain row-1-header sheet if row-4 parsing found nothing.
+      var hasData = rows.some(function(r){ return Object.values(r).some(function(v){ return String(v).trim(); }); });
+      if(!hasData) rows = XLSX.utils.sheet_to_json(ws, {defval:''});
+      // Strip asterisks from keys so "Deposit Name *" -> "Deposit Name".
+      rows = rows.map(function(r){
+        var clean = {};
+        Object.keys(r).forEach(function(k){ clean[k.replace(/\s*\*\s*/g,'').trim()] = r[k]; });
+        return clean;
+      });
+      // Drop the two shipped SAMPLE rows and any blank/banner rows (e.g. the
+      // "STOP" line), keeping only rows the user actually filled in.
+      rows = rows.filter(function(r){
+        var nm = String(r['Deposit Name'] || r['A'] || '').trim();
+        if(/^sample\b/i.test(nm)) return false;
+        return Object.keys(r).some(function(k){
+          return k !== 'Deposit Name' && k !== 'A' && String(r[k]).trim() !== '';
+        });
+      });
+      if(!rows.length){
+        alert('No deposits found in that file. Enter your data in rows 7-26 of the SD Register sheet.');
+        return;
+      }
+      if(rows.length > MAX_UPLOAD_DEPOSITS){
+        alert('That file has ' + rows.length + ' deposits — the limit is ' + MAX_UPLOAD_DEPOSITS + ' per upload. Please split it into smaller files.');
+        return;
+      }
+      processUploadedDeposits(rows);
+    }catch(err){
+      alert('Could not read file: ' + err.message);
+    }
   };
   reader.readAsArrayBuffer(file);
   input.value = '';
