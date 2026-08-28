@@ -2378,6 +2378,7 @@ var ANA_METRICS = {
 var _anaView = 'pivot';
 var _anaGroupBy = 'company';
 var _anaMetric = 'closeL';
+var _anaCompareIdx = null;
 var _anaScheduleCache = {};
 
 function anaGetLeaseCalc(l){
@@ -2441,6 +2442,7 @@ function anaBuildPeriods(granularity){
 }
 
 function anaOnGranularityChange(){
+  _anaCompareIdx = null; // period list is changing — Compare's "vs" index no longer applies
   var g = document.getElementById('anaGranularity').value;
   var customFrom = document.getElementById('anaCustomFrom');
   var customTo = document.getElementById('anaCustomTo');
@@ -2575,7 +2577,7 @@ function renderAnalyticsPage(){
   _anaScheduleCache = {};
   var agg = anaAggregate(range.start, range.end, _anaGroupBy);
 
-  var kpiHtml =
+  var kpiHtml = _anaView==='compare' ? '' :
     '<div class="kpi-strip">'+
       '<div class="kpi-card blue"><div class="kpi-lbl">🏢 Closing Liability</div><div class="kpi-val">'+f2(agg.totals.closeL)+'</div><div class="kpi-sub">As at period end</div></div>'+
       '<div class="kpi-card green"><div class="kpi-lbl">📦 Closing ROU (NBV)</div><div class="kpi-val">'+f2(agg.totals.closeROU)+'</div><div class="kpi-sub">As at period end</div></div>'+
@@ -2583,9 +2585,9 @@ function renderAnalyticsPage(){
       '<div class="kpi-card purple"><div class="kpi-lbl">📉 Depreciation</div><div class="kpi-val">'+f2(agg.totals.dep)+'</div><div class="kpi-sub">For the period</div></div>'+
     '</div>';
 
-  var viewLabels = {pivot:'📋 Pivot',bar:'📊 Bar',pie:'🥧 Pie',line:'📈 Trend'};
+  var viewLabels = {pivot:'📋 Pivot',bar:'📊 Bar',pie:'🥧 Pie',line:'📈 Trend',compare:'⚖️ Compare'};
   var tabsHtml = '<div style="display:flex;gap:0;border-bottom:1px solid #E5E7EB;background:#fff;padding:0 20px;">'+
-    ['pivot','bar','pie','line'].map(function(v){
+    ['pivot','bar','pie','line','compare'].map(function(v){
       var active = v===_anaView;
       return '<button onclick="anaSwitchView(\''+v+'\')" style="padding:10px 18px;font-size:13px;font-weight:600;border:none;border-bottom:2px solid '+(active?'#4F46E5':'transparent')+';color:'+(active?'#4F46E5':'#6B7280')+';background:none;cursor:pointer;margin-bottom:-1px;">'+viewLabels[v]+'</button>';
     }).join('')+
@@ -2598,7 +2600,7 @@ function renderAnalyticsPage(){
       '<option value="lease"'+(_anaGroupBy==='lease'?' selected':'')+'>Lease</option>'+
       '</select>';
   }
-  if(_anaView==='bar' || _anaView==='pie'){
+  if(_anaView==='bar' || _anaView==='pie' || _anaView==='compare'){
     controlsHtml += 'Metric <select class="filter-select" style="min-width:170px;" onchange="anaOnMetricChange(this.value)">'+
       Object.keys(ANA_METRICS).map(function(k){ return '<option value="'+k+'"'+(_anaMetric===k?' selected':'')+'>'+ANA_METRICS[k].label+'</option>'; }).join('')+
       '</select>';
@@ -2613,13 +2615,102 @@ function renderAnalyticsPage(){
 function anaSwitchView(v){ _anaView=v; renderAnalyticsPage(); }
 function anaOnGroupByChange(v){ _anaGroupBy=v; renderAnalyticsPage(); }
 function anaOnMetricChange(v){ _anaMetric=v; renderAnalyticsPage(); }
+function anaOnCompareChange(v){ _anaCompareIdx=+v; renderAnalyticsPage(); }
 
 function anaRenderView(agg, range){
-  if(_anaView==='pivot') return anaRenderPivot(agg);
-  if(_anaView==='bar')   return anaRenderBar(agg);
-  if(_anaView==='pie')   return anaRenderPie(agg);
-  if(_anaView==='line')  return anaRenderLine(range);
+  if(_anaView==='pivot')   return anaRenderPivot(agg);
+  if(_anaView==='bar')     return anaRenderBar(agg);
+  if(_anaView==='pie')     return anaRenderPie(agg);
+  if(_anaView==='line')    return anaRenderLine(range);
+  if(_anaView==='compare') return anaRenderCompare(range);
   return '';
+}
+
+// Two-period MIS-style comparison — reuses anaAggregate for each period, so
+// the numbers always match what Pivot/Bar/Pie show for those same periods.
+function anaRenderCompare(range){
+  if(range.granularity==='custom' || !range.periods){
+    return '<div style="text-align:center;padding:40px;color:#9CA3AF;font-size:13px;">Compare view needs Monthly, Quarterly or Yearly granularity — pick one above.</div>';
+  }
+  var periods = range.periods;
+  var idxA = range.idx;
+  if(periods.length<2){
+    return '<div style="text-align:center;padding:40px;color:#9CA3AF;font-size:13px;">Need at least two periods in your portfolio to compare.</div>';
+  }
+  if(_anaCompareIdx===null || _anaCompareIdx===idxA || _anaCompareIdx<0 || _anaCompareIdx>=periods.length){
+    _anaCompareIdx = idxA>0 ? idxA-1 : idxA+1;
+  }
+  var idxB = _anaCompareIdx;
+  var pA = periods[idxA], pB = periods[idxB];
+  var aggA = anaAggregate(pA.start, pA.end, _anaGroupBy);
+  var aggB = anaAggregate(pB.start, pB.end, _anaGroupBy);
+
+  function variance(a,b){
+    var d = a-b;
+    var pct = b!==0 ? (d/Math.abs(b)*100) : (a!==0 ? 100 : 0);
+    return {d:d, pct:pct};
+  }
+  function deltaLine(a,b){
+    var v = variance(a,b);
+    var arrow = v.d>0 ? '▲' : (v.d<0 ? '▼' : '—');
+    return '<div style="font-size:11.5px;color:#6B7280;margin-top:4px;">'+arrow+' '+f2(Math.abs(v.d))+' ('+(v.d>=0?'+':'')+v.pct.toFixed(1)+'%)</div>';
+  }
+
+  var selectorHtml = '<div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;font-size:13px;color:#374151;flex-wrap:wrap;">'+
+    '<span style="font-weight:700;color:#4F46E5;">'+esc(pA.label)+'</span>'+
+    '<span style="color:#9CA3AF;">vs</span>'+
+    '<select class="filter-select" style="min-width:150px;" onchange="anaOnCompareChange(this.value)">'+
+      periods.map(function(p,i){ return i===idxA ? '' : '<option value="'+i+'"'+(i===idxB?' selected':'')+'>'+esc(p.label)+'</option>'; }).join('')+
+    '</select>'+
+  '</div>';
+
+  var cardMeta = [
+    {k:'closeL',   lbl:'🏢 Closing Liability', cls:'blue'},
+    {k:'closeROU', lbl:'📦 Closing ROU (NBV)', cls:'green'},
+    {k:'interest', lbl:'💸 Interest Expense',  cls:'orange'},
+    {k:'dep',      lbl:'📉 Depreciation',      cls:'purple'}
+  ];
+  var kpiHtml = '<div class="kpi-strip" style="margin-bottom:22px;">'+
+    cardMeta.map(function(c){
+      return '<div class="kpi-card '+c.cls+'"><div class="kpi-lbl">'+c.lbl+'</div>'+
+        '<div class="kpi-val">'+f2(aggA.totals[c.k])+'</div>'+
+        '<div class="kpi-sub">'+f2(aggB.totals[c.k])+' in '+esc(pB.label)+'</div>'+
+        deltaLine(aggA.totals[c.k], aggB.totals[c.k])+
+        '</div>';
+    }).join('')+
+  '</div>';
+
+  var m = _anaMetric;
+  var labels = {};
+  aggA.groups.forEach(function(g){ labels[g.key]=g.label; });
+  aggB.groups.forEach(function(g){ labels[g.key]=g.label; });
+  var mapA={}, mapB={};
+  aggA.groups.forEach(function(g){ mapA[g.key]=g[m]; });
+  aggB.groups.forEach(function(g){ mapB[g.key]=g[m]; });
+  var rows = Object.keys(labels).map(function(k){
+    var a=mapA[k]||0, b=mapB[k]||0;
+    return {label:labels[k], a:a, b:b};
+  }).sort(function(x,y){ return Math.abs(y.a-y.b)-Math.abs(x.a-x.b); });
+
+  var tableHtml;
+  if(!rows.length){
+    tableHtml = '<div style="text-align:center;padding:24px;color:#9CA3AF;font-size:13px;">No lease activity in either period.</div>';
+  } else {
+    var bodyRows = rows.map(function(r){
+      var v = variance(r.a,r.b);
+      return '<tr><td><strong>'+esc(r.label)+'</strong></td><td>'+f2(r.a)+'</td><td>'+f2(r.b)+'</td>'+
+        '<td style="font-weight:600;">'+(v.d>=0?'+':'')+f2(v.d)+'</td>'+
+        '<td>'+(v.d>=0?'+':'')+v.pct.toFixed(1)+'%</td></tr>';
+    }).join('');
+    var tv = variance(aggA.totals[m], aggB.totals[m]);
+    var totalRow = '<tr style="background:#F8F9FF;font-weight:700;"><td>Total</td><td>'+f2(aggA.totals[m])+'</td><td>'+f2(aggB.totals[m])+'</td>'+
+      '<td>'+(tv.d>=0?'+':'')+f2(tv.d)+'</td><td>'+(tv.d>=0?'+':'')+tv.pct.toFixed(1)+'%</td></tr>';
+    tableHtml = '<table class="data-table"><thead><tr><th>'+(_anaGroupBy==='company'?'Company':'Lease')+'</th><th>'+esc(pA.label)+'</th><th>'+esc(pB.label)+'</th><th>Variance</th><th>Var %</th></tr></thead><tbody>'+bodyRows+totalRow+'</tbody></table>';
+  }
+
+  return selectorHtml + kpiHtml +
+    '<div style="font-size:12px;color:#9CA3AF;margin-bottom:12px;">'+ANA_METRICS[m].label+' by '+(_anaGroupBy==='company'?'company':'lease')+'</div>'+
+    tableHtml;
 }
 
 function anaRenderPivot(agg){
