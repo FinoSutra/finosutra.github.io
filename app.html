@@ -761,6 +761,9 @@ body{font-family:'Inter',sans-serif;color:#111827;-webkit-font-smoothing:antiali
     <a class="sb-item" id="nav-reports" onclick="navigate('reports')">
       <i class="fa-solid fa-chart-bar"></i> Reports &amp; Disclosures
     </a>
+    <a class="sb-item" id="nav-analytics" onclick="navigate('analytics')">
+      <i class="fa-solid fa-chart-line"></i> Analytics
+    </a>
 
     <div class="sb-section">Setup</div>
     <a class="sb-item" id="nav-companies" onclick="navigate('companies')">
@@ -933,6 +936,26 @@ body{font-family:'Inter',sans-serif;color:#111827;-webkit-font-smoothing:antiali
 
     <!-- pg-disclosures kept as alias redirect -->
     <div class="page" id="pg-disclosures" style="display:none;"></div>
+
+    <!-- ── Analytics ── -->
+    <div class="page" id="pg-analytics">
+      <div class="page-topbar">
+        <div class="page-topbar-title">Analytics</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+          <select id="anaGranularity" class="filter-select" onchange="anaOnGranularityChange()" style="min-width:120px;">
+            <option value="month">Monthly</option>
+            <option value="quarter">Quarterly</option>
+            <option value="year" selected>Yearly (FY)</option>
+            <option value="custom">Custom range</option>
+          </select>
+          <select id="anaPeriod" class="filter-select" onchange="renderAnalyticsPage()" style="min-width:150px;"></select>
+          <input type="date" id="anaCustomFrom" class="filter-select" style="display:none;" onchange="renderAnalyticsPage()"/>
+          <span id="anaCustomSep" style="display:none;color:#9CA3AF;font-size:12px;">to</span>
+          <input type="date" id="anaCustomTo" class="filter-select" style="display:none;" onchange="renderAnalyticsPage()"/>
+        </div>
+      </div>
+      <div class="page-body" id="analyticsContent"></div>
+    </div>
 
     <!-- ── Help & Guide ── -->
     <div class="page" id="pg-help">
@@ -2054,6 +2077,6 @@ body{font-family:'Inter',sans-serif;color:#111827;-webkit-font-smoothing:antiali
   </div>
 </div>
 
-<script src="app.js?v=13"></script>
+<script src="app.js?v=14"></script>
 </body>
 </html>

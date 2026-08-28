@@ -138,6 +138,7 @@ function navigate(page){
   if(page === 'journal') renderJournalPage();
   if(page === 'reports') { switchRptTab('reports'); renderReportsPage(); }
   if(page === 'disclosures') { navigate('reports'); switchRptTab('disclosures'); renderDisclosuresPage(); return; }
+  if(page === 'analytics') renderAnalyticsPage();
   if(page === 'companies') renderCompaniesPage();
   if(page === 'company-detail') renderCompanyDetail();
   if(page === 'help') {} // static page, no render needed
@@ -2360,6 +2361,390 @@ function switchRptTab(tab) {
       pane.style.display = 'none';
     }
   });
+}
+
+// ── Analytics Engine ─────────────────────────────────────────────────────────
+// Period-based portfolio analysis (monthly/quarterly/yearly/custom), reusing
+// the real leaseEngine schedule per lease — no separate calculation path, so
+// every figure here always agrees with Reports & Disclosures and Dashboard.
+
+var ANA_METRICS = {
+  closeL:   {label:'Closing Liability', color:'#4F46E5'},
+  closeROU: {label:'Closing ROU (NBV)', color:'#059669'},
+  interest: {label:'Interest Expense',  color:'#D97706'},
+  dep:      {label:'Depreciation',      color:'#7C3AED'},
+  payments: {label:'Lease Payments',    color:'#DC2626'}
+};
+var _anaView = 'pivot';
+var _anaGroupBy = 'company';
+var _anaMetric = 'closeL';
+var _anaScheduleCache = {};
+
+function anaGetLeaseCalc(l){
+  if(_anaScheduleCache[l.id]) return _anaScheduleCache[l.id];
+  var r = calcLeaseForReports(l);
+  _anaScheduleCache[l.id] = r;
+  return r;
+}
+
+// Portfolio-wide date span (earliest commencement to latest expiry) — used to
+// generate the period picker's option list.
+function anaPortfolioRange(){
+  var min=null, max=null;
+  leases.forEach(function(l){
+    var inp = l.inputs||{};
+    if(!inp.start) return;
+    var s = new Date(inp.start);
+    if(!min || s<min) min=s;
+    var e = leaseEndDate(l);
+    if(e && (!max || e>max)) max=e;
+  });
+  var now = new Date();
+  if(!min) min = new Date(now.getFullYear(),0,1);
+  if(!max || max<min) max = new Date(min.getFullYear()+1,0,1);
+  return {min:min, max:max};
+}
+
+function anaBuildPeriods(granularity){
+  var range = anaPortfolioRange();
+  var periods = [];
+  function fyOf(d){ return d.getMonth()<3 ? d.getFullYear()-1 : d.getFullYear(); }
+  if(granularity==='year'){
+    var y0=fyOf(range.min), y1=fyOf(range.max);
+    for(var y=y0;y<=y1;y++){
+      periods.push({key:'FY'+y, label:'FY '+y+'-'+String(y+1).slice(2), start:y+'-04-01', end:(y+1)+'-03-31'});
+    }
+  } else if(granularity==='quarter'){
+    var qy0=fyOf(range.min), qy1=fyOf(range.max);
+    var qDefs=[{q:1,sm:3},{q:2,sm:6},{q:3,sm:9},{q:4,sm:0}];
+    for(var qy=qy0;qy<=qy1;qy++){
+      qDefs.forEach(function(qd){
+        var sy = qd.q===4 ? qy+1 : qy;
+        var sd = new Date(sy, qd.sm, 1);
+        var ed = new Date(sy, qd.sm+3, 0);
+        periods.push({key:'FY'+qy+'Q'+qd.q, label:'Q'+qd.q+' FY'+qy+'-'+String(qy+1).slice(2),
+          start:sd.toISOString().slice(0,10), end:ed.toISOString().slice(0,10)});
+      });
+    }
+  } else {
+    var cur = new Date(range.min.getFullYear(), range.min.getMonth(), 1);
+    var last = new Date(range.max.getFullYear(), range.max.getMonth(), 1);
+    while(cur<=last){
+      var sd = new Date(cur), ed = new Date(cur.getFullYear(), cur.getMonth()+1, 0);
+      periods.push({key:cur.getFullYear()+'-'+String(cur.getMonth()+1).padStart(2,'0'),
+        label:FS_MONTHS_SHORT[cur.getMonth()]+' '+cur.getFullYear(),
+        start:sd.toISOString().slice(0,10), end:ed.toISOString().slice(0,10)});
+      cur.setMonth(cur.getMonth()+1);
+    }
+  }
+  return periods;
+}
+
+function anaOnGranularityChange(){
+  var g = document.getElementById('anaGranularity').value;
+  var customFrom = document.getElementById('anaCustomFrom');
+  var customTo = document.getElementById('anaCustomTo');
+  var sep = document.getElementById('anaCustomSep');
+  var periodSel = document.getElementById('anaPeriod');
+  if(g==='custom'){
+    periodSel.style.display='none';
+    customFrom.style.display=''; customTo.style.display=''; sep.style.display='';
+    if(!customFrom.value || !customTo.value){
+      var range = anaPortfolioRange();
+      customFrom.value = range.min.toISOString().slice(0,10);
+      customTo.value = range.max.toISOString().slice(0,10);
+    }
+  } else {
+    periodSel.style.display='';
+    customFrom.style.display='none'; customTo.style.display='none'; sep.style.display='none';
+    var periods = anaBuildPeriods(g);
+    var todayStr = new Date().toISOString().slice(0,10);
+    var defIdx = periods.length-1;
+    for(var i=0;i<periods.length;i++){ if(todayStr>=periods[i].start && todayStr<=periods[i].end){ defIdx=i; break; } }
+    periodSel.innerHTML = periods.map(function(p,i){ return '<option value="'+i+'"'+(i===defIdx?' selected':'')+'>'+esc(p.label)+'</option>'; }).join('');
+    periodSel._periods = periods;
+  }
+  renderAnalyticsPage();
+}
+
+// Finds the last schedule row (month) whose periodEnd is on/before dateStr —
+// i.e. the lease's balance "as of" that date. Null = lease hadn't started yet.
+function anaSnapshotAsOf(schedule, dateStr){
+  var row = null;
+  for(var i=0;i<schedule.length;i++){
+    var pe = schedule[i].periodEnd;
+    if(!pe) continue;
+    if(pe <= dateStr) row = schedule[i]; else break;
+  }
+  return row;
+}
+
+function anaPeriodMetrics(l, psStr, peStr){
+  var r = anaGetLeaseCalc(l);
+  if(!r || !r.res || !r.res.schedule || !r.res.schedule.length) return null;
+  var sched = r.res.schedule;
+  var dayBefore = new Date(psStr); dayBefore.setDate(dayBefore.getDate()-1);
+  var openRow  = anaSnapshotAsOf(sched, dayBefore.toISOString().slice(0,10));
+  var closeRow = anaSnapshotAsOf(sched, peStr);
+  if(!openRow && !closeRow) return null; // lease has no activity anywhere near this period
+  var flow = {interest:0, principal:0, payments:0, dep:0};
+  sched.forEach(function(row){
+    if(!row.periodEnd) return;
+    if(row.periodEnd >= psStr && row.periodEnd <= peStr){
+      flow.interest  += row.interest;
+      flow.principal += row.principal;
+      flow.payments  += row.pmt;
+      flow.dep       += row.dep;
+    }
+  });
+  return {
+    openL:    openRow  ? openRow.closeL  : 0,
+    closeL:   closeRow ? closeRow.closeL : 0,
+    openROU:  openRow  ? openRow.rouC    : 0,
+    closeROU: closeRow ? closeRow.rouC   : 0,
+    interest: flow.interest, principal: flow.principal,
+    payments: flow.payments, dep: flow.dep
+  };
+}
+
+function anaAggregate(psStr, peStr, groupBy){
+  var totals = {openL:0, closeL:0, openROU:0, closeROU:0, interest:0, principal:0, payments:0, dep:0};
+  var groupMap = {};
+  leases.forEach(function(l){
+    var m = anaPeriodMetrics(l, psStr, peStr);
+    if(!m) return;
+    Object.keys(totals).forEach(function(k){ totals[k]+=m[k]; });
+    var key, label;
+    if(groupBy==='lease'){ key=l.id; label=l.name; }
+    else {
+      var inp = l.inputs||{};
+      var cid = inp.company_id||l.company_id||'';
+      if(cid){ var co=companies.find(function(c){return c.id===cid;}); key=cid; label=co?co.name:'Unknown company'; }
+      else { key='_none'; label='Unassigned'; }
+    }
+    if(!groupMap[key]) groupMap[key] = Object.assign({key:key,label:label}, {openL:0,closeL:0,openROU:0,closeROU:0,interest:0,principal:0,payments:0,dep:0});
+    Object.keys(totals).forEach(function(k){ groupMap[key][k]+=m[k]; });
+  });
+  var groups = Object.values(groupMap).sort(function(a,b){ return b.closeL - a.closeL; });
+  return {totals:totals, groups:groups};
+}
+
+function anaGetSelectedRange(){
+  var g = document.getElementById('anaGranularity').value;
+  if(g==='custom'){
+    var from = document.getElementById('anaCustomFrom').value;
+    var to = document.getElementById('anaCustomTo').value;
+    if(!from || !to || from>to) return null;
+    return {start:from, end:to, granularity:'custom', periods:null, idx:null};
+  }
+  var sel = document.getElementById('anaPeriod');
+  var periods = sel._periods || anaBuildPeriods(g);
+  sel._periods = periods;
+  var idx = +sel.value || 0;
+  var p = periods[idx];
+  if(!p) return null;
+  return {start:p.start, end:p.end, granularity:g, periods:periods, idx:idx};
+}
+
+function renderAnalyticsPage(){
+  var container = document.getElementById('analyticsContent');
+  if(!container) return;
+  if(!window.currentUser){
+    container.innerHTML = '<div class="pro-gate"><div class="pro-gate-icon">🔒</div><div class="pro-gate-title">Sign in first</div><div class="pro-gate-sub">Sign in to analyse your lease portfolio by period.</div><button class="btn btn-primary" onclick="fsShowAuthModal(\'login\')">Log In</button></div>';
+    return;
+  }
+  if(!window.isProUser){
+    container.innerHTML = '<div class="pro-gate"><div class="pro-gate-icon">📊</div><div class="pro-gate-title">Analytics is a Pro feature</div><div class="pro-gate-sub">Upgrade to Pro to analyse your portfolio by month, quarter or FY — with pivot tables and charts.</div><button class="btn btn-primary" onclick="fsInitiateProSubscription()">🏆 Go Pro — ₹499/mo</button></div>';
+    return;
+  }
+  var periodSel = document.getElementById('anaPeriod');
+  if(!periodSel._periods && document.getElementById('anaGranularity').value!=='custom'){
+    anaOnGranularityChange();
+    return;
+  }
+  if(!leases.length){
+    container.innerHTML = '<div class="coming-soon" style="padding:60px 20px;"><i class="fa-solid fa-chart-line"></i><h2>No leases found</h2><p>Add leases to see portfolio analytics.</p></div>';
+    return;
+  }
+  var range = anaGetSelectedRange();
+  if(!range){
+    container.innerHTML = '<div class="coming-soon" style="padding:60px 20px;"><i class="fa-solid fa-calendar-xmark"></i><h2>Pick a valid range</h2><p>The "from" date must be on or before the "to" date.</p></div>';
+    return;
+  }
+
+  _anaScheduleCache = {};
+  var agg = anaAggregate(range.start, range.end, _anaGroupBy);
+
+  var kpiHtml =
+    '<div class="kpi-strip">'+
+      '<div class="kpi-card blue"><div class="kpi-lbl">🏢 Closing Liability</div><div class="kpi-val">'+f2(agg.totals.closeL)+'</div><div class="kpi-sub">As at period end</div></div>'+
+      '<div class="kpi-card green"><div class="kpi-lbl">📦 Closing ROU (NBV)</div><div class="kpi-val">'+f2(agg.totals.closeROU)+'</div><div class="kpi-sub">As at period end</div></div>'+
+      '<div class="kpi-card orange"><div class="kpi-lbl">💸 Interest Expense</div><div class="kpi-val">'+f2(agg.totals.interest)+'</div><div class="kpi-sub">For the period</div></div>'+
+      '<div class="kpi-card purple"><div class="kpi-lbl">📉 Depreciation</div><div class="kpi-val">'+f2(agg.totals.dep)+'</div><div class="kpi-sub">For the period</div></div>'+
+    '</div>';
+
+  var viewLabels = {pivot:'📋 Pivot',bar:'📊 Bar',pie:'🥧 Pie',line:'📈 Trend'};
+  var tabsHtml = '<div style="display:flex;gap:0;border-bottom:1px solid #E5E7EB;background:#fff;padding:0 20px;">'+
+    ['pivot','bar','pie','line'].map(function(v){
+      var active = v===_anaView;
+      return '<button onclick="anaSwitchView(\''+v+'\')" style="padding:10px 18px;font-size:13px;font-weight:600;border:none;border-bottom:2px solid '+(active?'#4F46E5':'transparent')+';color:'+(active?'#4F46E5':'#6B7280')+';background:none;cursor:pointer;margin-bottom:-1px;">'+viewLabels[v]+'</button>';
+    }).join('')+
+  '</div>';
+
+  var controlsHtml = '<div style="display:flex;gap:10px;align-items:center;padding:14px 20px;background:#fff;border-bottom:1px solid #F3F4F6;flex-wrap:wrap;font-size:13px;color:#6B7280;">';
+  if(_anaView!=='line'){
+    controlsHtml += 'Group by <select class="filter-select" style="min-width:120px;" onchange="anaOnGroupByChange(this.value)">'+
+      '<option value="company"'+(_anaGroupBy==='company'?' selected':'')+'>Company</option>'+
+      '<option value="lease"'+(_anaGroupBy==='lease'?' selected':'')+'>Lease</option>'+
+      '</select>';
+  }
+  if(_anaView==='bar' || _anaView==='pie'){
+    controlsHtml += 'Metric <select class="filter-select" style="min-width:170px;" onchange="anaOnMetricChange(this.value)">'+
+      Object.keys(ANA_METRICS).map(function(k){ return '<option value="'+k+'"'+(_anaMetric===k?' selected':'')+'>'+ANA_METRICS[k].label+'</option>'; }).join('')+
+      '</select>';
+  }
+  controlsHtml += '</div>';
+
+  var bodyHtml = '<div style="background:#fff;padding:20px;border-radius:0 0 12px 12px;">'+anaRenderView(agg, range)+'</div>';
+
+  container.innerHTML = kpiHtml + '<div class="table-wrap" style="overflow-x:auto;">'+tabsHtml+controlsHtml+bodyHtml+'</div>';
+}
+
+function anaSwitchView(v){ _anaView=v; renderAnalyticsPage(); }
+function anaOnGroupByChange(v){ _anaGroupBy=v; renderAnalyticsPage(); }
+function anaOnMetricChange(v){ _anaMetric=v; renderAnalyticsPage(); }
+
+function anaRenderView(agg, range){
+  if(_anaView==='pivot') return anaRenderPivot(agg);
+  if(_anaView==='bar')   return anaRenderBar(agg);
+  if(_anaView==='pie')   return anaRenderPie(agg);
+  if(_anaView==='line')  return anaRenderLine(range);
+  return '';
+}
+
+function anaRenderPivot(agg){
+  if(!agg.groups.length) return '<div style="text-align:center;padding:40px;color:#9CA3AF;font-size:13px;">No lease activity in this period.</div>';
+  var rows = agg.groups.map(function(g){
+    return '<tr>'+
+      '<td><strong>'+esc(g.label)+'</strong></td>'+
+      '<td>'+f2(g.openL)+'</td><td>'+f2(g.interest)+'</td><td>'+f2(g.principal)+'</td><td>'+f2(g.payments)+'</td>'+
+      '<td><strong>'+f2(g.closeL)+'</strong></td>'+
+      '<td>'+f2(g.openROU)+'</td><td>'+f2(g.dep)+'</td>'+
+      '<td><strong>'+f2(g.closeROU)+'</strong></td>'+
+      '</tr>';
+  }).join('');
+  var t = agg.totals;
+  var totalRow = '<tr style="background:#F8F9FF;font-weight:700;">'+
+    '<td>Total</td><td>'+f2(t.openL)+'</td><td>'+f2(t.interest)+'</td><td>'+f2(t.principal)+'</td><td>'+f2(t.payments)+'</td><td>'+f2(t.closeL)+'</td><td>'+f2(t.openROU)+'</td><td>'+f2(t.dep)+'</td><td>'+f2(t.closeROU)+'</td></tr>';
+  return '<table class="data-table"><thead><tr>'+
+    '<th>'+(_anaGroupBy==='company'?'Company':'Lease')+'</th><th>Opening Liab.</th><th>Interest</th><th>Principal</th><th>Payments</th><th>Closing Liab.</th><th>Opening ROU</th><th>Depreciation</th><th>Closing ROU</th>'+
+    '</tr></thead><tbody>'+rows+totalRow+'</tbody></table>';
+}
+
+function anaRenderBar(agg){
+  var m = _anaMetric;
+  var items = agg.groups.filter(function(g){ return g[m]!==0; })
+    .sort(function(a,b){ return Math.abs(b[m])-Math.abs(a[m]); }).slice(0,10);
+  if(!items.length) return '<div style="text-align:center;padding:40px;color:#9CA3AF;font-size:13px;">No data to chart for this metric.</div>';
+  var max = Math.max.apply(null, items.map(function(g){ return Math.abs(g[m]); }));
+  var color = ANA_METRICS[m].color;
+  var rows = items.map(function(g){
+    var pct = max ? Math.round(Math.abs(g[m])/max*100) : 0;
+    return '<div style="margin-bottom:14px;">'+
+      '<div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px;"><span style="color:#374151;font-weight:600;">'+esc(g.label)+'</span><span style="color:'+color+';font-weight:700;">'+f2(g[m])+'</span></div>'+
+      '<div style="background:#F3F4F6;border-radius:6px;height:10px;overflow:hidden;"><div style="width:'+pct+'%;background:'+color+';height:100%;border-radius:6px;"></div></div>'+
+      '</div>';
+  }).join('');
+  return '<div style="max-width:680px;"><div style="font-size:12px;color:#9CA3AF;margin-bottom:16px;">'+ANA_METRICS[m].label+' by '+(_anaGroupBy==='company'?'company':'lease')+' — top '+items.length+'</div>'+rows+'</div>';
+}
+
+function anaRenderPie(agg){
+  var m = _anaMetric;
+  var items = agg.groups.filter(function(g){ return g[m]>0; }).sort(function(a,b){ return b[m]-a[m]; });
+  var total = items.reduce(function(s,g){ return s+g[m]; },0);
+  if(!items.length || total<=0) return '<div style="text-align:center;padding:40px;color:#9CA3AF;font-size:13px;">No positive values to chart for this metric.</div>';
+  var PALETTE = ['#4F46E5','#059669','#D97706','#7C3AED','#DC2626','#0891B2','#DB2777','#65A30D'];
+  var top = items.slice(0,8);
+  var otherSum = items.slice(8).reduce(function(s,g){ return s+g[m]; },0);
+  if(otherSum>0) top.push({label:'Other', _isOther:true});
+  var acc=0, stops=[];
+  top.forEach(function(g,i){
+    var val = g._isOther ? otherSum : g[m];
+    var pct = val/total*100;
+    var color = g._isOther ? '#CBD5E1' : PALETTE[i%PALETTE.length];
+    stops.push(color+' '+acc.toFixed(2)+'% '+(acc+pct).toFixed(2)+'%');
+    acc += pct;
+    g._pct = pct; g._color = color; g._val = val;
+  });
+  var gradient = 'conic-gradient('+stops.join(',')+')';
+  var legend = top.map(function(g){
+    return '<div style="display:flex;align-items:center;gap:8px;font-size:12.5px;margin-bottom:9px;">'+
+      '<span style="width:10px;height:10px;border-radius:3px;background:'+g._color+';flex-shrink:0;"></span>'+
+      '<span style="color:#374151;flex:1;">'+esc(g.label)+'</span>'+
+      '<span style="color:#6B7280;font-weight:600;">'+f2(g._val)+' · '+g._pct.toFixed(1)+'%</span>'+
+      '</div>';
+  }).join('');
+  return '<div style="display:flex;gap:36px;flex-wrap:wrap;align-items:center;">'+
+    '<div style="width:200px;height:200px;border-radius:50%;background:'+gradient+';flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,0.08);"></div>'+
+    '<div style="min-width:220px;flex:1;"><div style="font-size:12px;color:#9CA3AF;margin-bottom:12px;">'+ANA_METRICS[m].label+' by '+(_anaGroupBy==='company'?'company':'lease')+'</div>'+legend+'</div>'+
+    '</div>';
+}
+
+function anaRenderLine(range){
+  if(range.granularity==='custom' || !range.periods){
+    return '<div style="text-align:center;padding:40px;color:#9CA3AF;font-size:13px;">Trend view needs Monthly, Quarterly or Yearly granularity — pick one above.</div>';
+  }
+  var periods = range.periods;
+  var endIdx = range.idx;
+  var startIdx = Math.max(0, endIdx-7);
+  var slice = periods.slice(startIdx, endIdx+1);
+  var series1=[], series2=[];
+  slice.forEach(function(p){
+    var agg = anaAggregate(p.start, p.end, 'company');
+    series1.push(agg.totals.closeL);
+    series2.push(agg.totals.closeROU);
+  });
+  return anaSvgLine(slice.map(function(p){ return p.label; }), [
+    {name:'Closing Liability', color:'#4F46E5', data:series1},
+    {name:'Closing ROU (NBV)', color:'#059669', data:series2}
+  ]);
+}
+
+function anaSvgLine(labels, series){
+  var W=680, H=280, padL=76, padR=20, padT=20, padB=40;
+  var plotW=W-padL-padR, plotH=H-padT-padB;
+  var allVals = series.reduce(function(a,s){ return a.concat(s.data); },[0]);
+  var maxV = Math.max.apply(null, allVals);
+  var minV = Math.min.apply(null, allVals);
+  if(maxV===minV) maxV = minV+1;
+  function x(i){ return padL + (labels.length<=1?0:i/(labels.length-1))*plotW; }
+  function y(v){ return padT + plotH - (v-minV)/(maxV-minV)*plotH; }
+
+  var gridLines='', gridN=4;
+  for(var g=0; g<=gridN; g++){
+    var gv = minV + (maxV-minV)*g/gridN;
+    var gy = y(gv);
+    gridLines += '<line x1="'+padL+'" y1="'+gy+'" x2="'+(W-padR)+'" y2="'+gy+'" stroke="#F3F4F6" stroke-width="1"/>';
+    gridLines += '<text x="'+(padL-8)+'" y="'+(gy+4)+'" font-size="10" fill="#9CA3AF" text-anchor="end">'+f2(gv)+'</text>';
+  }
+  var xLabels = labels.map(function(lb,i){
+    return '<text x="'+x(i)+'" y="'+(H-padB+16)+'" font-size="10" fill="#9CA3AF" text-anchor="middle">'+esc(lb)+'</text>';
+  }).join('');
+
+  var seriesSvg = series.map(function(s){
+    var pts = s.data.map(function(v,i){ return x(i)+','+y(v); }).join(' ');
+    var dots = s.data.map(function(v,i){ return '<circle cx="'+x(i)+'" cy="'+y(v)+'" r="3.5" fill="'+s.color+'"/>'; }).join('');
+    return '<polyline points="'+pts+'" fill="none" stroke="'+s.color+'" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>'+dots;
+  }).join('');
+
+  var legend = series.map(function(s){
+    return '<span style="display:inline-flex;align-items:center;gap:6px;margin-right:18px;font-size:12px;color:#374151;"><span style="width:10px;height:10px;border-radius:3px;background:'+s.color+';display:inline-block;"></span>'+esc(s.name)+'</span>';
+  }).join('');
+
+  return '<div style="margin-bottom:14px;">'+legend+'</div>'+
+    '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;max-width:'+W+'px;height:auto;display:block;">'+
+    gridLines + seriesSvg + xLabels +
+    '</svg>';
 }
 
 function _makeBrandedCoverSheet(title, subtitle, metaLine){
