@@ -25,6 +25,24 @@ var deleteTargetId = null;
 var _pendingUploadLeases = [];
 var currentPage = 'dashboard';
 
+// Signed-out dashboard preview — same two leases shown on the Leases page,
+// run through the real leaseEngine (via leaseAsOf/calcKPIs) so every figure
+// is genuinely computed, not hand-typed placeholder text.
+var SAMPLE_LEASES = [
+  { id:'_sample1', name:'Andheri Office — 5th Floor', created_at:'2024-04-01',
+    inputs:{ start:'2024-04-01', term:36, pmt:45000, freq:12, ibr:10.5, timing:'end', entity:'ABC Pvt. Ltd.' } },
+  { id:'_sample2', name:'Pune Warehouse — Phase 2', created_at:'2024-01-01',
+    inputs:{ start:'2024-01-01', term:48, pmt:72000, freq:12, ibr:11.0, timing:'end', escType:'pct', escPct:5, escYears:1, entity:'ABC Pvt. Ltd.' } }
+];
+// leaseAsOf() only recomputes rouNBV/liabCurrent/liabNonCurrent and falls back
+// to l.summary for everything else (e.g. depnAnnual) — a real saved lease gets
+// .summary from the engine on save, so sample leases need it pre-populated too.
+try{
+  SAMPLE_LEASES.forEach(function(l){
+    l.summary = leaseEngine.calculate(Object.assign({}, l.inputs, { termMonths: l.inputs.term }));
+  });
+}catch(e){}
+
 // ── Helpers ──────────────────────────────────────────────────────────────────
 function f2(n){ return (n===null||n===undefined||isNaN(+n)) ? '—' : '₹'+Number(n).toLocaleString('en-IN',{minimumFractionDigits:0,maximumFractionDigits:0}); }
 function fPct(n){ return (n===null||n===undefined||isNaN(+n)) ? '—' : Number(n).toFixed(2)+'%'; }
@@ -290,13 +308,15 @@ function calcKPIs(leasesArr){
   return tot;
 }
 
-function updateKPICards(leasesArr){
+function updateKPICards(leasesArr, isSample){
   var tot = calcKPIs(leasesArr);
   var n = leasesArr.length;
   document.getElementById('kpiROU').textContent   = n ? f2(tot.rou)   : '—';
   document.getElementById('kpiCurr').textContent  = n ? f2(tot.curr)  : '—';
   document.getElementById('kpiNCurr').textContent = n ? f2(tot.ncurr) : '—';
   document.getElementById('kpiDepn').textContent  = n ? f2(tot.depn)  : '—';
+  var tag = document.getElementById('kpiSampleTag');
+  if(tag) tag.style.display = isSample ? '' : 'none';
 }
 
 // ── Dashboard rendering ───────────────────────────────────────────────────────
@@ -306,7 +326,8 @@ function renderDashboard(){
     renderDashOnboarding();
     return;
   }
-  updateKPICards(leases);
+  var signedOut = !window.currentUser;
+  updateKPICards(signedOut ? SAMPLE_LEASES : leases, signedOut);
   renderDashAlerts();
   renderActionCenter();
   renderDashRecentTable();
@@ -407,10 +428,34 @@ function renderDashAlerts(){
     '<div class="alert-strip-text"><strong>'+expiring.length+' lease'+(expiring.length>1?'s':'')+' expiring within 90 days</strong> — '+names+'</div></div>';
 }
 
+function dashLeaseRow(l, sample){
+  var s = leaseAsOf(l);
+  var inp = l.inputs||{};
+  var st = leaseStatus(l);
+  var stHtml = sample ? '<span class="badge" style="background:#FEF3C7;color:#92400E;border:1px solid #FDE68A;">Sample</span>'
+    : st==='active'? '<span class="badge badge-active">Active</span>'
+    : st==='expiring'? '<span class="badge badge-expiring">Expiring</span>'
+    : st==='expired'? '<span class="badge badge-expired">Expired</span>' : '—';
+  var ed = leaseEndDate(l);
+  return '<tr'+(sample?' style="opacity:.85;"':'')+'>'+
+    '<td><strong style="font-size:13px;">'+esc(l.name)+'</strong>'+(inp.entity?'<br><span style="font-size:11px;color:#9CA3AF;">'+esc(inp.entity)+'</span>':'')+'</td>'+
+    '<td>'+fPct(inp.ibr)+' p.a.</td>'+
+    '<td>'+f2(s.liabCurrent)+'</td>'+
+    '<td>'+f2(s.rouNBV)+'</td>'+
+    '<td>'+(ed?fDate(ed):'—')+'</td>'+
+    '<td>'+stHtml+'</td>'+
+    '</tr>';
+}
+
 function renderDashRecentTable(){
   var el = document.getElementById('dashRecentTable');
   if(!window.currentUser){
-    el.innerHTML = '<div style="padding:28px;text-align:center;font-size:14px;color:#9CA3AF;">Sign in to see your leases. <button onclick="fsShowAuthModal(\'login\')" style="color:#4F46E5;background:none;border:none;cursor:pointer;font-weight:600;font-family:inherit;font-size:14px;">Log In</button></div>';
+    var sampleRows = SAMPLE_LEASES.map(function(l){ return dashLeaseRow(l, true); }).join('');
+    el.innerHTML =
+      '<table class="data-table" style="pointer-events:none;">'+
+      '<thead><tr><th>Lease</th><th>IBR</th><th>Current Liab.</th><th>ROU NBV</th><th>Expires</th><th>Status</th></tr></thead>'+
+      '<tbody>'+sampleRows+'</tbody></table>'+
+      '<div style="padding:16px;text-align:center;font-size:13px;color:#6B7280;border-top:1px solid #F1F5F9;">Showing 2 sample leases — <button onclick="fsShowAuthModal(\'login\')" style="color:#4F46E5;background:none;border:none;cursor:pointer;font-weight:600;font-family:inherit;font-size:13px;">Log in</button> to see and manage your own.</div>';
     return;
   }
   if(!window.isProUser && leases.length === 0){
@@ -422,23 +467,7 @@ function renderDashRecentTable(){
     return;
   }
   var recent = leases.slice(0,6);
-  var rows = recent.map(function(l){
-    var s = leaseAsOf(l);
-    var inp = l.inputs||{};
-    var st = leaseStatus(l);
-    var stHtml = st==='active'? '<span class="badge badge-active">Active</span>'
-      : st==='expiring'? '<span class="badge badge-expiring">Expiring</span>'
-      : st==='expired'? '<span class="badge badge-expired">Expired</span>' : '—';
-    var ed = leaseEndDate(l);
-    return '<tr>'+
-      '<td><strong style="font-size:13px;">'+esc(l.name)+'</strong>'+(inp.entity?'<br><span style="font-size:11px;color:#9CA3AF;">'+esc(inp.entity)+'</span>':'')+'</td>'+
-      '<td>'+fPct(inp.ibr)+' p.a.</td>'+
-      '<td>'+f2(s.liabCurrent)+'</td>'+
-      '<td>'+f2(s.rouNBV)+'</td>'+
-      '<td>'+(ed?fDate(ed):'—')+'</td>'+
-      '<td>'+stHtml+'</td>'+
-      '</tr>';
-  }).join('');
+  var rows = recent.map(function(l){ return dashLeaseRow(l, false); }).join('');
   el.innerHTML =
     '<table class="data-table">'+
     '<thead><tr><th>Lease</th><th>IBR</th><th>Current Liab.</th><th>ROU NBV</th><th>Expires</th><th>Status</th></tr></thead>'+
@@ -604,7 +633,7 @@ function sampleLeaseCard(name,entity,location,start,term,rent,ibr,liab,rou,depn,
 function renderCompaniesPage(){
   var el = document.getElementById('companiesArea');
   if(!window.currentUser){
-    el.innerHTML = '<div class="pro-gate"><div class="pro-gate-icon">🔒</div><div class="pro-gate-title">Sign in first</div><button class="btn btn-primary" onclick="fsShowAuthModal(\'login\')">Log In</button></div>';
+    el.innerHTML = '<div class="pro-gate"><div class="pro-gate-icon">🔒</div><div class="pro-gate-title">Sign in first</div><div class="pro-gate-sub">Sign in to add and manage your client companies.</div><button class="btn btn-primary" onclick="fsShowAuthModal(\'login\')">Log In</button></div>';
     return;
   }
   if(!companies.length){
@@ -1849,6 +1878,12 @@ function renderJournalPage(){
 
   var content = document.getElementById('jeContent');
 
+  if(!window.currentUser){
+    content.innerHTML = '<div class="pro-gate"><div class="pro-gate-icon">🔒</div><div class="pro-gate-title">Sign in first</div><div class="pro-gate-sub">Sign in to see the journal entries generated from your leases.</div><button class="btn btn-primary" onclick="fsShowAuthModal(\'login\')">Log In</button></div>';
+    document.getElementById('jeInfoBar').style.display='none';
+    return;
+  }
+
   if(!leases.length){
     content.innerHTML = '<div class="coming-soon" style="padding:60px 20px;"><i class="fa-solid fa-receipt"></i><h2>No leases found</h2><p>Add leases to your portfolio to generate journal entries.</p></div>';
     document.getElementById('jeInfoBar').style.display='none';
@@ -2039,6 +2074,10 @@ function renderReportsPage(){
   var fyF = sel.value;
 
   var container = document.getElementById('reportsContent');
+  if(!window.currentUser){
+    container.innerHTML = '<div class="pro-gate"><div class="pro-gate-icon">🔒</div><div class="pro-gate-title">Sign in first</div><div class="pro-gate-sub">Sign in to see reports generated from your leases.</div><button class="btn btn-primary" onclick="fsShowAuthModal(\'login\')">Log In</button></div>';
+    return;
+  }
   if(!leases.length){
     container.innerHTML = '<div class="coming-soon" style="padding:60px 20px;"><i class="fa-solid fa-chart-bar"></i><h2>No leases found</h2><p>Add leases to generate reports.</p></div>';
     return;
@@ -2188,6 +2227,10 @@ function renderDisclosuresPage(){
   var fyF = sel.value;
   var container = document.getElementById('disclosuresInner') || document.getElementById('disclosuresContent');
 
+  if(!window.currentUser){
+    container.innerHTML = '<div class="pro-gate"><div class="pro-gate-icon">🔒</div><div class="pro-gate-title">Sign in first</div><div class="pro-gate-sub">Sign in to see disclosure notes generated from your leases.</div><button class="btn btn-primary" onclick="fsShowAuthModal(\'login\')">Log In</button></div>';
+    return;
+  }
   if(!leases.length){
     container.innerHTML = '<div class="coming-soon" style="padding:60px 20px;"><i class="fa-solid fa-file-lines"></i><h2>No leases found</h2><p>Add leases to generate disclosure note.</p></div>';
     return;
