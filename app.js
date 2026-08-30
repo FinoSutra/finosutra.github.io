@@ -2360,9 +2360,15 @@ function renderDisclosuresPage(){
       '</table></div>'+
     '</div>'+
 
-    // Note 6 — Qualitative Disclosures
+    // Note 6 — Qualitative Disclosures. Capped on screen for scannability at
+    // portfolio scale — the Excel Disclosure Pack always exports the full list,
+    // so nothing here is ever dropped from the actual disclosure, only from the view.
     (d.qualNotes && d.qualNotes.length ?
-    '<div class="rpt-section">'+
+    (function(){
+      var QUAL_CAP = 8;
+      var qShown = d.qualNotes.slice(0, QUAL_CAP);
+      var qHidden = d.qualNotes.length - qShown.length;
+      return '<div class="rpt-section">'+
       '<div class="rpt-section-header">'+
         '<div><div class="rpt-section-title">Note 6 — Qualitative Disclosures</div>'+
         '<div class="rpt-section-sub">Variable payments, extension/termination terms &amp; restrictions · Para 52(b)</div></div>'+
@@ -2371,7 +2377,7 @@ function renderDisclosuresPage(){
       '<div class="rpt-table-wrap"><table class="rpt-table">'+
         '<thead><tr><th>Lease</th><th>Variable payments</th><th>Extension / termination terms</th><th>Restrictions &amp; covenants</th></tr></thead>'+
         '<tbody>'+
-          d.qualNotes.map(function(q){
+          qShown.map(function(q){
             var dash = '<span style="color:#9CA3AF;">—</span>';
             var extTermParts = [q.extOptionNote, q.termOptionNote].filter(Boolean).map(esc);
             return '<tr><td style="font-weight:600;white-space:nowrap;">'+esc(q.name)+'</td>'+
@@ -2381,8 +2387,13 @@ function renderDisclosuresPage(){
           }).join('')+
         '</tbody>'+
       '</table></div>'+
-      '<div style="padding:13px 20px;font-size:11.5px;color:#9CA3AF;border-top:1px solid #F3F4F6;background:#F8F9FF;">Only leases with at least one qualitative field filled in appear here.</div>'+
-    '</div>' : '');
+      '<div style="padding:13px 20px;font-size:11.5px;color:#9CA3AF;border-top:1px solid #F3F4F6;background:#F8F9FF;">'+
+        (qHidden > 0
+          ? '+'+qHidden+' more lease'+(qHidden!==1?'s':'')+' with qualitative disclosures — export the Disclosure Pack for the complete list.'
+          : 'Only leases with at least one qualitative field filled in appear here.')+
+      '</div>'+
+    '</div>';
+    })() : '');
 
   container.innerHTML = html;
 }
