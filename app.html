@@ -1702,18 +1702,39 @@ body{font-family:'Inter',sans-serif;color:#111827;-webkit-font-smoothing:antiali
                     </div>
                   </div>
                   <div class="flag-row">
-                    <input type="checkbox" id="fExtOption"/>
+                    <input type="checkbox" id="fExtOption" onchange="toggleExtTermNotes()"/>
                     <div>
                       <label for="fExtOption">Extension option available</label>
                       <div class="flag-sub">If reasonably certain to exercise, include extension term in lease term (Para 19)</div>
+                      <div class="field" id="fExtOptionNoteWrap" style="display:none;margin-top:8px;">
+                        <label>Extension terms (Para 52(b))</label>
+                        <textarea id="fExtOptionNote" placeholder="e.g. 5-year renewal option exercisable at lessee's discretion; not reasonably certain to exercise, excluded from lease term." style="min-height:56px;"></textarea>
+                      </div>
                     </div>
                   </div>
                   <div class="flag-row">
-                    <input type="checkbox" id="fTermOption"/>
+                    <input type="checkbox" id="fTermOption" onchange="toggleExtTermNotes()"/>
                     <div>
                       <label for="fTermOption">Termination option available</label>
                       <div class="flag-sub">If reasonably certain NOT to exercise, include in lease term (Para 19)</div>
+                      <div class="field" id="fTermOptionNoteWrap" style="display:none;margin-top:8px;">
+                        <label>Termination terms (Para 52(b))</label>
+                        <textarea id="fTermOptionNote" placeholder="e.g. Break option after Year 3 with 6 months' written notice; reasonably certain not to exercise." style="min-height:56px;"></textarea>
+                      </div>
                     </div>
+                  </div>
+                </div>
+                <div class="form-section">
+                  <div class="form-section-title"><i class="fa-solid fa-file-lines"></i> Qualitative Disclosures (Para 52(b))</div>
+                  <div class="field" style="margin-bottom:14px;">
+                    <label>Variable Lease Payments</label>
+                    <textarea id="fVariableRentNote" placeholder="Payments not included in the lease liability — e.g. revenue-linked or index-linked rent above a base amount." style="min-height:56px;"></textarea>
+                    <div class="field-hint">Disclosed separately since it isn't part of the discounted liability</div>
+                  </div>
+                  <div class="field">
+                    <label>Restrictions &amp; Covenants</label>
+                    <textarea id="fRestrictionsNote" placeholder="Restrictions the lease imposes — e.g. on sub-leasing, dividends, or further borrowing." style="min-height:56px;"></textarea>
+                    <div class="field-hint">Leave blank if none — only leases with a note here appear in the disclosure</div>
                   </div>
                 </div>
                 <div class="form-section">

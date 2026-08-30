@@ -1142,8 +1142,13 @@ function prefillForm(l) {
   setCheck('fLowValue',  inp.isLowValue  || false);
   setCheck('fExtOption', inp.extOption   || false);
   setCheck('fTermOption',inp.termOption  || false);
+  setVal('fExtOptionNote',    inp.extOptionNote    || '');
+  setVal('fTermOptionNote',   inp.termOptionNote   || '');
+  setVal('fVariableRentNote', inp.variableRentNote || '');
+  setVal('fRestrictionsNote', inp.restrictionsNote || '');
   autoEndDate();
   toggleEscFields();
+  toggleExtTermNotes();
   // Restore modification fields
   var mod = inp.modification || null;
   var modSec = document.getElementById('modSection');
@@ -1166,7 +1171,8 @@ function prefillForm(l) {
 
 function resetForm() {
   var ids = ['fName','fLessor','fEntity','fStart','fTerm','fEnd','fPmt','fIbr',
-             'fEscPct','fEscAmt','fIdc','fIncentive','fRfMonths','fRestoration','fRemarks'];
+             'fEscPct','fEscAmt','fIdc','fIncentive','fRfMonths','fRestoration','fRemarks',
+             'fExtOptionNote','fTermOptionNote','fVariableRentNote','fRestrictionsNote'];
   ids.forEach(function(id){ var el=document.getElementById(id); if(el) el.value=''; });
   setVal('fFreq','12'); setVal('fTiming','end'); setVal('fEscType','none'); setVal('fEscYears','1');
   setVal('fCategory',''); setVal('fCompany','');
@@ -1174,6 +1180,7 @@ function resetForm() {
     var el=document.getElementById(id); if(el) el.checked=false;
   });
   toggleEscFields();
+  toggleExtTermNotes();
   document.getElementById('ibrWarning').style.display='none';
   // Reset modification section
   var modSec = document.getElementById('modSection');
@@ -1236,6 +1243,13 @@ function toggleEscFields(){
   document.getElementById('escAmtField').style.display = (type === 'amt') ? 'block' : 'none';
   var lbl = document.getElementById('escValueLabel');
   if(lbl) lbl.textContent = type === 'cpi' ? 'Expected CPI / Index growth (% p.a.)' : 'Escalation (% p.a.)';
+}
+
+function toggleExtTermNotes(){
+  var extWrap = document.getElementById('fExtOptionNoteWrap');
+  var termWrap = document.getElementById('fTermOptionNoteWrap');
+  if(extWrap) extWrap.style.display = document.getElementById('fExtOption').checked ? 'block' : 'none';
+  if(termWrap) termWrap.style.display = document.getElementById('fTermOption').checked ? 'block' : 'none';
 }
 
 function clearFieldErr(fieldId){ var el=document.getElementById('err-'+fieldId); if(el) el.textContent=''; }
@@ -1425,6 +1439,10 @@ function collectInp(){
     isLowValue:  document.getElementById('fLowValue').checked,
     extOption:   document.getElementById('fExtOption').checked,
     termOption:  document.getElementById('fTermOption').checked,
+    extOptionNote:    document.getElementById('fExtOptionNote').value.trim(),
+    termOptionNote:   document.getElementById('fTermOptionNote').value.trim(),
+    variableRentNote: document.getElementById('fVariableRentNote').value.trim(),
+    restrictionsNote: document.getElementById('fRestrictionsNote').value.trim(),
     modification: collectModInp()
   };
 }
@@ -2340,7 +2358,31 @@ function renderDisclosuresPage(){
           (exemptExpense>0?'<tr><td>Short-term / low-value lease commitments (exempted)</td><td class="num">'+f2(exemptExpense)+'</td></tr>':'')+
         '</tbody>'+
       '</table></div>'+
-    '</div>';
+    '</div>'+
+
+    // Note 6 — Qualitative Disclosures
+    (d.qualNotes && d.qualNotes.length ?
+    '<div class="rpt-section">'+
+      '<div class="rpt-section-header">'+
+        '<div><div class="rpt-section-title">Note 6 — Qualitative Disclosures</div>'+
+        '<div class="rpt-section-sub">Variable payments, extension/termination terms &amp; restrictions · Para 52(b)</div></div>'+
+        '<span style="font-size:11px;color:#9CA3AF;">'+d.qualNotes.length+' of '+d.leaseCount+' leases have qualitative disclosures configured</span>'+
+      '</div>'+
+      '<div class="rpt-table-wrap"><table class="rpt-table">'+
+        '<thead><tr><th>Lease</th><th>Variable payments</th><th>Extension / termination terms</th><th>Restrictions &amp; covenants</th></tr></thead>'+
+        '<tbody>'+
+          d.qualNotes.map(function(q){
+            var dash = '<span style="color:#9CA3AF;">—</span>';
+            var extTermParts = [q.extOptionNote, q.termOptionNote].filter(Boolean).map(esc);
+            return '<tr><td style="font-weight:600;white-space:nowrap;">'+esc(q.name)+'</td>'+
+              '<td>'+(q.variableRentNote?esc(q.variableRentNote):dash)+'</td>'+
+              '<td>'+(extTermParts.length?extTermParts.join('<br><br>'):dash)+'</td>'+
+              '<td>'+(q.restrictionsNote?esc(q.restrictionsNote):dash)+'</td></tr>';
+          }).join('')+
+        '</tbody>'+
+      '</table></div>'+
+      '<div style="padding:13px 20px;font-size:11.5px;color:#9CA3AF;border-top:1px solid #F3F4F6;background:#F8F9FF;">Only leases with at least one qualitative field filled in appear here.</div>'+
+    '</div>' : '');
 
   container.innerHTML = html;
 }
@@ -3171,6 +3213,7 @@ function buildDiscDataFromLeases(leasesArr, fy){
   var mat = {y1:0,y1_5:0,y5plus:0};
   var ibrs=[], leaseCount=0;
   var exemptExpense=0, totCashOut=0;
+  var qualNotes=[];
 
   leasesArr.forEach(function(l){
     var inp = Object.assign({},l.inputs||{},{name:l.name,entity:l.entity||''});
@@ -3193,6 +3236,14 @@ function buildDiscDataFromLeases(leasesArr, fy){
     // Lease not yet commenced, or already ended, as at this FY
     if(!inFY.length && !lastBefore) return;
     leaseCount++;
+
+    var qVariable = (inp.variableRentNote||'').trim();
+    var qExt      = (inp.extOptionNote||'').trim();
+    var qTerm     = (inp.termOptionNote||'').trim();
+    var qRestrict = (inp.restrictionsNote||'').trim();
+    if(qVariable || qExt || qTerm || qRestrict){
+      qualNotes.push({ name: inp.name, variableRentNote: qVariable, extOptionNote: qExt, termOptionNote: qTerm, restrictionsNote: qRestrict });
+    }
 
     var openL   = lastBefore ? lastBefore.closeL : r.res.pvInitial;
     var openROU = lastBefore ? lastBefore.rouC   : 0;
@@ -3248,7 +3299,7 @@ function buildDiscDataFromLeases(leasesArr, fy){
     totOpenROU, totAdditions, totLiabAdditions, totDep, totCloseROU,
     currLiab, ncurrLiab, leaseCount, wAvgIBR,
     exemptExpense, totCashOut, totUndiscounted,
-    maturity: mat,
+    maturity: mat, qualNotes: qualNotes,
     totPL_Dep: totDep, totPL_Int: totInterest
   };
 }
