@@ -1799,66 +1799,136 @@ h4 { font-size: 16px; }
   border-radius: 20px;
 }
 
-/* ── Proof section (real calculated output, not a mockup) ─────────── */
-.fs-proof-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-@media (max-width: 900px) {
-  .fs-proof-grid { grid-template-columns: 1fr; }
-}
-.fs-proof-card {
-  background: var(--fs-card);
-  border: 1px solid var(--fs-border);
+/* ── Proof section — "The Workbook" (real calculated output styled as an
+   actual Excel window, not a mockup) ──────────────────────────────── */
+.fs-xl-scroll { overflow-x: auto; }
+.fs-xl-window {
+  min-width: 600px;
+  background: #FFFFFF;
   border-radius: var(--fs-r-lg);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
+  overflow: hidden;
+  box-shadow: var(--fs-shadow-md);
+  font-family: 'Inter', sans-serif;
+  color: #1F2430;
 }
-.fs-proof-card-hd {
+.fs-xl-titlebar {
+  background: #0F5C31;
+  color: #E8F3EC;
+  padding: 10px 16px;
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
+  font-size: 12.5px;
+  font-weight: 500;
+}
+.fs-xl-dots { display: flex; gap: 6px; margin-right: 4px; flex-shrink: 0; }
+.fs-xl-dots span { width: 9px; height: 9px; border-radius: 50%; background: rgba(232,243,236,0.35); display: block; }
+.fs-xl-titlebar .fs-xl-fname { opacity: 0.92; white-space: nowrap; }
+.fs-xl-titlebar .fs-xl-fname b { font-weight: 700; }
+.fs-xl-ribbon {
+  background: #17824A;
+  padding: 8px 16px;
+  display: flex;
+  gap: 16px;
+  font-size: 11px;
+  color: #E8F3EC;
+  font-weight: 500;
+}
+.fs-xl-ribbon span { opacity: 0.85; padding-bottom: 6px; }
+.fs-xl-ribbon span.on { opacity: 1; border-bottom: 2px solid #E8F3EC; }
+.fs-xl-formulabar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 14px;
+  background: #F7F8F9;
+  border-bottom: 1px solid #E1E4E8;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 12px;
-  font-weight: 700;
-  color: var(--fs-text);
-  margin-bottom: 14px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--fs-border);
 }
-.fs-proof-card-hd i { color: var(--fs-blue); margin-right: 6px; }
-.fs-proof-date {
+.fs-xl-cellref {
+  background: #fff;
+  border: 1px solid #D0D7DE;
+  border-radius: 3px;
+  padding: 2px 8px;
+  color: #17824A;
+  font-weight: 600;
+  min-width: 44px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.fs-xl-fx { color: #9AA4AF; flex-shrink: 0; }
+.fs-xl-formula { color: #1F2430; white-space: nowrap; }
+.fs-xl-grid { width: 100%; border-collapse: collapse; }
+.fs-xl-grid th {
+  background: #F3F4F6;
+  border: 1px solid #E1E4E8;
+  color: #6B7280;
   font-size: 10.5px;
   font-weight: 600;
-  color: var(--fs-muted);
+  padding: 4px 0;
+  width: 34px;
+}
+.fs-xl-grid th.fs-xl-colhead { width: auto; padding: 4px 12px; text-align: left; }
+.fs-xl-grid td {
+  border: 1px solid #E9EBEE;
+  padding: 8px 14px;
+  font-size: 12.5px;
   white-space: nowrap;
 }
-.fs-proof-kpis { display: flex; flex-direction: column; gap: 13px; }
-.fs-proof-kpis > div { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-.fs-proof-kpis .l { font-size: 12px; color: var(--fs-muted); }
-.fs-proof-kpis .v { font-size: 14px; font-weight: 800; color: var(--fs-text); font-variant-numeric: tabular-nums; white-space: nowrap; }
-.fs-proof-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
-.fs-proof-table th {
-  text-align: right;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: var(--fs-muted);
-  font-weight: 700;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--fs-border);
+.fs-xl-grid td.fs-xl-rownum {
+  background: #F3F4F6;
+  color: #6B7280;
+  font-size: 10.5px;
+  text-align: center;
+  width: 34px;
+  padding: 8px 0;
+  font-family: 'IBM Plex Mono', monospace;
 }
-.fs-proof-table th:first-child { text-align: left; }
-.fs-proof-table th:not(:first-child) { padding-left: 18px; min-width: 76px; }
-.fs-proof-table td { padding: 9px 0; border-bottom: 1px solid var(--fs-border); color: var(--fs-text); text-align: right; font-variant-numeric: tabular-nums; }
-.fs-proof-table td:not(:first-child) { padding-left: 18px; }
-.fs-proof-table td:first-child { text-align: left; color: var(--fs-muted); }
-.fs-proof-table tr:last-child td { border-bottom: none; }
-.fs-proof-note-title { font-size: 13px; font-weight: 700; color: var(--fs-text); margin-bottom: 4px; }
-.fs-proof-note-sub { font-size: 11.5px; font-weight: 600; color: var(--fs-blue-dk); margin-bottom: 12px; line-height: 1.5; }
-.fs-proof-note-body { font-size: 12px; color: var(--fs-muted); line-height: 1.65; margin-top: auto; }
+.fs-xl-grid td.fs-xl-lbl { color: #4B5563; }
+.fs-xl-grid td.fs-xl-val {
+  font-family: 'IBM Plex Mono', monospace;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: #1F2430;
+}
+.fs-xl-grid td.fs-xl-val.fs-xl-strong { font-weight: 600; }
+.fs-xl-grid tr.fs-xl-section td {
+  background: #EAF6EF;
+  color: #0F5C31;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.fs-xl-grid td.fs-xl-active {
+  outline: 2px solid #1A73E8;
+  outline-offset: -2px;
+  background: #F0F6FF;
+}
+.fs-xl-grid td.fs-xl-note { color: #4B5563; font-size: 12px; line-height: 1.6; white-space: normal; }
+.fs-xl-tabs {
+  display: flex;
+  gap: 2px;
+  background: #E1E4E8;
+  padding: 6px 12px 0;
+  overflow-x: auto;
+}
+.fs-xl-tabs span {
+  padding: 8px 16px;
+  font-size: 11.5px;
+  font-weight: 500;
+  background: #F3F4F6;
+  color: #6B7280;
+  border-radius: 6px 6px 0 0;
+  white-space: nowrap;
+}
+.fs-xl-tabs span.active {
+  background: #FFFFFF;
+  color: #0F5C31;
+  font-weight: 700;
+  border-top: 2px solid #17824A;
+}
 
 
 /* ── Contact section ───────────────────────────────────────────── */

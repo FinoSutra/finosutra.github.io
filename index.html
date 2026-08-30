@@ -7,9 +7,9 @@
 <meta name="robots" content="index,follow"/>
 <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-<link rel="stylesheet" href="finosutra.css?v=15"/>
+<link rel="stylesheet" href="finosutra.css?v=16"/>
 <style>
 /* Scroll-reveal — homepage only, additive classes so nothing shared is touched. */
 .fs-reveal {
@@ -261,34 +261,49 @@
       <p class="fs-section-desc">Real figures from an actual run of the calculator &mdash; &#8377;1,00,000/month lease, 36 months, 9% IBR. Nothing below is a stock number.</p>
     </div>
 
-    <div class="fs-proof-grid fs-reveal-group">
-      <div class="fs-proof-card">
-        <div class="fs-proof-card-hd"><span><i class="fa-solid fa-chart-simple"></i>Calculation Results</span> <span class="fs-proof-date">01 Apr 2024</span></div>
-        <div class="fs-proof-kpis">
-          <div><span class="l">Initial lease liability</span><span class="v">&#8377;31,44,680.53</span></div>
-          <div><span class="l">ROU asset (initial)</span><span class="v">&#8377;31,44,680.53</span></div>
-          <div><span class="l">Monthly depreciation</span><span class="v">&#8377;87,352.24</span></div>
-          <div><span class="l">Total interest expense</span><span class="v">&#8377;4,55,319.47</span></div>
+    <div class="fs-reveal-group">
+    <div class="fs-xl-scroll">
+      <div class="fs-xl-window">
+        <div class="fs-xl-titlebar">
+          <div class="fs-xl-dots"><span></span><span></span><span></span></div>
+          <span class="fs-xl-fname">&#128213; <b>Finosutra_Lease_Schedule.xlsx</b> &mdash; Excel</span>
+        </div>
+        <div class="fs-xl-ribbon">
+          <span>File</span><span>Home</span><span class="on">Insert</span><span>Formulas</span><span>Data</span><span>Review</span>
+        </div>
+        <div class="fs-xl-formulabar">
+          <span class="fs-xl-cellref">C7</span>
+          <span class="fs-xl-fx">fx</span>
+          <span class="fs-xl-formula">=PV(9%/12, 36, -100000, , 0)</span>
+        </div>
+        <table class="fs-xl-grid">
+          <tr>
+            <th></th>
+            <th class="fs-xl-colhead">A</th>
+            <th class="fs-xl-colhead">B</th>
+            <th class="fs-xl-colhead">C</th>
+          </tr>
+          <tr class="fs-xl-section"><td class="fs-xl-rownum">1</td><td colspan="3">IND AS 116 &mdash; Fixed Rent Calculator &middot; Commenced 01 Apr 2024</td></tr>
+          <tr><td class="fs-xl-rownum">2</td><td class="fs-xl-lbl">Initial lease liability</td><td></td><td class="fs-xl-val fs-xl-strong fs-xl-active">&#8377;31,44,680.53</td></tr>
+          <tr><td class="fs-xl-rownum">3</td><td class="fs-xl-lbl">ROU asset (initial)</td><td></td><td class="fs-xl-val fs-xl-strong">&#8377;31,44,680.53</td></tr>
+          <tr><td class="fs-xl-rownum">4</td><td class="fs-xl-lbl">Monthly depreciation</td><td></td><td class="fs-xl-val">&#8377;87,352.24</td></tr>
+          <tr><td class="fs-xl-rownum">5</td><td class="fs-xl-lbl">Total interest expense</td><td></td><td class="fs-xl-val">&#8377;4,55,319.47</td></tr>
+          <tr><td class="fs-xl-rownum">6</td><td></td><td></td><td></td></tr>
+          <tr class="fs-xl-section"><td class="fs-xl-rownum">7</td><td colspan="3">JE 1 &mdash; Initial Recognition &middot; 01 Apr 2024</td></tr>
+          <tr><td class="fs-xl-rownum">8</td><td class="fs-xl-lbl">Right-of-Use Asset</td><td class="fs-xl-val">31,44,680.53</td><td class="fs-xl-val">&mdash;</td></tr>
+          <tr><td class="fs-xl-rownum">9</td><td class="fs-xl-lbl">Lease Liability</td><td class="fs-xl-val">&mdash;</td><td class="fs-xl-val">31,44,680.53</td></tr>
+          <tr><td class="fs-xl-rownum">10</td><td></td><td></td><td></td></tr>
+          <tr class="fs-xl-section"><td class="fs-xl-rownum">11</td><td colspan="3">Disclosure Note &middot; Para 52&ndash;60</td></tr>
+          <tr><td class="fs-xl-rownum">12</td><td class="fs-xl-note" colspan="3">A. Maturity analysis of lease payments (undiscounted) &mdash; Para 58(b). Auto-drafted, ready to paste into your financial statements.</td></tr>
+        </table>
+        <div class="fs-xl-tabs">
+          <span class="active">Summary</span>
+          <span>Amortisation</span>
+          <span>Journal Entries</span>
+          <span>Disclosure Note</span>
         </div>
       </div>
-
-      <div class="fs-proof-card">
-        <div class="fs-proof-card-hd"><span><i class="fa-solid fa-file-invoice-dollar"></i>JE 1 &mdash; Initial Recognition</span> <span class="fs-proof-date">01 Apr 2024</span></div>
-        <table class="fs-proof-table">
-          <thead><tr><th>Account</th><th>Dr (&#8377;)</th><th>Cr (&#8377;)</th></tr></thead>
-          <tbody>
-            <tr><td>Right-of-Use Asset</td><td>31,44,680.53</td><td>&mdash;</td></tr>
-            <tr><td>Lease Liability</td><td>&mdash;</td><td>31,44,680.53</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="fs-proof-card">
-        <div class="fs-proof-card-hd"><span><i class="fa-solid fa-file-lines"></i>Disclosure Note</span> <span class="fs-proof-date">Para 52&ndash;60</span></div>
-        <p class="fs-proof-note-title">IND AS 116 &mdash; Note on Leases</p>
-        <p class="fs-proof-note-sub">A. Maturity analysis of lease payments (undiscounted) &mdash; Para 58(b)</p>
-        <p class="fs-proof-note-body">Auto-drafted disclosure wording, ready to paste into your financial statements &mdash; no manual note-writing.</p>
-      </div>
+    </div>
     </div>
 
     <p style="text-align:center;font-size:13px;margin-top:22px;">
