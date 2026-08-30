@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>IND AS 21 Foreign Exchange — Functional Currency, Monetary vs Non-Monetary Items & Translation Explained | Finosutra</title>
+<meta name="description" content="Complete guide to IND AS 21 — determining functional currency, monetary vs non-monetary items, initial and subsequent measurement of foreign currency transactions, translating a foreign operation's financial statements, and a full worked example with journal entries."/>
+<meta name="keywords" content="IND AS 21 foreign exchange, functional currency determination, monetary vs non monetary items, foreign currency translation, exchange difference OCI, IND AS 21 vs AS 11, translating foreign operations, presentation currency, IAS 21 India"/>
+<meta name="author" content="Finosutra"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://finosutra.com/blog/ind-as-21-foreign-exchange-rates-guide.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Finosutra"/>
+<meta property="og:title" content="IND AS 21 Foreign Exchange — Functional Currency, Monetary vs Non-Monetary Items & Translation Explained"/>
+<meta property="og:description" content="Functional currency determination, monetary vs non-monetary items, foreign currency transaction accounting and translating a foreign operation under IND AS 21 — with a full worked example."/>
+<meta property="og:url" content="https://finosutra.com/blog/ind-as-21-foreign-exchange-rates-guide.html"/>
+<meta property="og:image" content="https://finosutra.com/og-image.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="IND AS 21 Foreign Exchange — Complete Guide"/>
+<meta name="twitter:description" content="Functional currency, monetary vs non-monetary items, and translating foreign operations under IND AS 21 — with a full worked example."/>
+<meta name="twitter:image" content="https://finosutra.com/og-image.jpg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="../finosutra.css?v=16"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "IND AS 21 Foreign Exchange — Functional Currency, Monetary vs Non-Monetary Items & Translation Explained",
+  "description": "Complete guide to IND AS 21 — determining functional currency, monetary vs non-monetary items, initial and subsequent measurement of foreign currency transactions, translating a foreign operation's financial statements, and a full worked example with journal entries.",
+  "author": {"@type": "Organization", "name": "Finosutra", "sameAs": ["https://www.linkedin.com/company/124543898/", "https://www.youtube.com/@cakrishnaswadekar07"]},
+  "publisher": {"@type": "Organization", "name": "Finosutra", "url": "https://finosutra.com", "sameAs": ["https://www.linkedin.com/company/124543898/", "https://www.youtube.com/@cakrishnaswadekar07"]},
+  "datePublished": "2026-08-31",
+  "dateModified": "2026-08-31",
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://finosutra.com/blog/ind-as-21-foreign-exchange-rates-guide.html"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What is functional currency under IND AS 21?", "acceptedAnswer": {"@type": "Answer", "text": "Functional currency is the currency of the primary economic environment in which an entity operates — normally the currency that mainly influences its sales prices, and the currency of the country whose competitive forces and regulations mainly determine those prices. It is determined based on facts and substance, not management's choice, and is not necessarily the same as the currency of the country where the entity is incorporated."}},
+    {"@type": "Question", "name": "What is the difference between monetary and non-monetary items under IND AS 21?", "acceptedAnswer": {"@type": "Answer", "text": "Monetary items are units of currency held, and assets and liabilities to be received or paid in a fixed or determinable number of units of currency — such as cash, trade receivables and payables, and loans. Non-monetary items are everything else — inventory, property, plant and equipment, and most intangible assets. Monetary items are retranslated at the closing rate at each reporting date, while non-monetary items measured at historical cost are not retranslated after initial recognition."}},
+    {"@type": "Question", "name": "How is a foreign currency transaction initially recorded?", "acceptedAnswer": {"@type": "Answer", "text": "A foreign currency transaction is recorded, on initial recognition, by applying the spot exchange rate between the functional currency and the foreign currency at the date of the transaction. For practical reasons, an average rate for a week or month may be used for all transactions in each foreign currency during that period, unless exchange rates fluctuate significantly."}},
+    {"@type": "Question", "name": "Where are exchange differences on monetary items recognised?", "acceptedAnswer": {"@type": "Answer", "text": "Exchange differences arising on the settlement or retranslation of monetary items are recognised in profit or loss in the period in which they arise, in the entity's own (functional-currency) financial statements. The main exception is exchange differences on a monetary item that forms part of a net investment in a foreign operation, which are recognised in other comprehensive income and reclassified to profit or loss only on disposal of that foreign operation."}},
+    {"@type": "Question", "name": "How is a foreign operation's financial statements translated for consolidation?", "acceptedAnswer": {"@type": "Answer", "text": "Assets and liabilities (including goodwill and fair value adjustments) are translated at the closing rate at the reporting date. Income and expenses are translated at exchange rates at the dates of the transactions, or a suitable average rate for practical purposes. The resulting exchange difference is recognised in other comprehensive income, accumulated in a separate component of equity (the foreign currency translation reserve), and reclassified to profit or loss only on disposal of the foreign operation."}},
+    {"@type": "Question", "name": "Is IND AS 21 the same as IAS 21?", "acceptedAnswer": {"@type": "Answer", "text": "IND AS 21 is India's converged version of IAS 21 and follows the same functional currency framework, monetary/non-monetary distinction, and translation methodology for foreign operations. It replaces the older Indian AS 11, which was based on an integral/non-integral foreign operation classification rather than the functional currency concept, and did not permit a presentation currency different from the functional currency in the same explicit way."}}
+  ]
+}
+</script>
+<style>
+:root{
+  --brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;--brand-mid:#C7D2FE;
+  --bg:#F9FAFB;--card:#FFFFFF;--border:rgba(99,102,241,0.18);--border-light:rgba(99,102,241,0.08);
+  --text:#111827;--muted:#6B7280;--muted2:#9CA3AF;
+  --green:#059669;--green-light:#ECFDF5;
+  --red:#DC2626;--red-light:#FEF2F2;
+  --orange:#D97706;--orange-light:#FFFBEB;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+.article-wrap{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted2);margin-bottom:24px;flex-wrap:wrap;}
+.breadcrumb a{color:var(--muted2);text-decoration:none;transition:color .15s;}
+.breadcrumb a:hover{color:var(--brand);}
+
+.article-tag{display:inline-block;background:var(--brand-light);color:var(--brand);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.4px;margin-bottom:16px;}
+.article-title{font-size:clamp(24px,4vw,36px);font-weight:800;line-height:1.2;letter-spacing:-0.5px;color:var(--text);margin-bottom:16px;}
+.article-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--muted);margin-bottom:32px;flex-wrap:wrap;}
+.article-meta span{display:flex;align-items:center;gap:5px;}
+.article-divider{height:1px;background:var(--border-light);margin-bottom:36px;}
+
+.toc{background:var(--brand-light);border:1px solid var(--brand-mid);border-radius:14px;padding:22px 26px;margin-bottom:40px;}
+.toc h3{font-size:13px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;}
+.toc ol{padding-left:18px;}
+.toc ol li{margin-bottom:6px;}
+.toc ol li a{font-size:14px;color:var(--brand-dark);text-decoration:none;font-weight:500;}
+.toc ol li a:hover{text-decoration:underline;}
+
+.article-body h2{font-size:22px;font-weight:800;color:var(--text);margin:40px 0 14px;letter-spacing:-0.3px;}
+.article-body h3{font-size:17px;font-weight:700;color:var(--text);margin:28px 0 10px;}
+.article-body p{margin-bottom:16px;color:#1F2937;}
+.article-body ul,.article-body ol{padding-left:22px;margin-bottom:16px;}
+.article-body ul li,.article-body ol li{margin-bottom:8px;color:#1F2937;}
+.article-body strong{font-weight:700;color:var(--text);}
+
+.callout{background:var(--brand-light);border-left:4px solid var(--brand);border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0;}
+.callout p{margin:0;font-size:14px;color:var(--brand-dark);}
+.callout strong{color:var(--brand-dark);}
+.callout-green{background:var(--green-light);border-left-color:var(--green);}
+.callout-green p{color:#065F46;}
+.callout-orange{background:var(--orange-light);border-left-color:var(--orange);}
+.callout-orange p{color:#92400E;}
+.callout-red{background:var(--red-light);border-left-color:var(--red);}
+.callout-red p{color:#991B1B;}
+
+.table-wrap{overflow-x:auto;margin:24px 0;}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:360px;}
+table th{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-weight:700;padding:10px 14px;text-align:left;}
+table th.r{text-align:right;}
+table td{padding:9px 14px;border-bottom:1px solid #F3F4F6;color:#1F2937;}
+table td.r{text-align:right;}
+table tr:nth-child(even) td{background:#F9FAFB;}
+table tr:last-child td{border-bottom:none;}
+table tfoot td{background:#EEF2FF;font-weight:700;border-top:2px solid var(--brand-mid);}
+
+.je-block{background:#F9FAFB;border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:20px 0;}
+.je-title{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px;}
+.je-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #F3F4F6;}
+.je-row:last-child{border-bottom:none;}
+.je-account{font-size:14px;font-weight:600;color:var(--text);}
+.je-account.cr{padding-left:24px;font-weight:500;color:var(--muted);}
+.je-amounts{display:flex;gap:32px;}
+.je-dr{font-size:14px;font-weight:700;color:#10B981;min-width:100px;text-align:right;}
+.je-cr{font-size:14px;font-weight:700;color:#6366F1;min-width:100px;text-align:right;}
+
+.step-card{border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:16px 0;position:relative;padding-left:60px;}
+.step-num{position:absolute;left:18px;top:18px;width:28px;height:28px;background:var(--brand);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;}
+.step-card h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;margin-top:0;}
+.step-card p{font-size:14px;color:var(--muted);margin:0;}
+
+.cta-box{background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:16px;padding:28px 30px;margin:40px 0;text-align:center;}
+.cta-box h3{font-size:18px;font-weight:800;color:#fff;margin-bottom:8px;}
+.cta-box p{font-size:14px;color:rgba(255,255,255,.85);margin-bottom:18px;}
+.cta-box a{display:inline-block;background:#fff;color:var(--brand);font-size:14px;font-weight:700;padding:12px 26px;border-radius:10px;text-decoration:none;transition:transform .15s;}
+.cta-box a:hover{transform:translateY(-1px);}
+
+.related-links{border:1px solid var(--border-light);border-radius:12px;padding:20px 24px;margin-top:40px;}
+.related-links h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;}
+.related-links a{display:block;font-size:14px;color:var(--brand);text-decoration:none;padding:6px 0;border-bottom:1px solid var(--border-light);font-weight:500;}
+.related-links a:last-child{border-bottom:none;}
+.related-links a:hover{text-decoration:underline;}
+
+@media(max-width:600px){.article-wrap{padding:32px 16px 60px;}.je-amounts{gap:16px;}.step-card{padding-left:50px;}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../auth.js?v=11"></script>
+</head>
+<body>
+
+<div id="fs-nav"></div>
+
+<div class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span>›</span>
+    <a href="../blog.html">Blog</a>
+    <span>›</span>
+    <span>IND AS 21 Foreign Exchange</span>
+  </nav>
+
+  <div class="article-tag">IND AS 21 / IAS 21</div>
+  <h1 class="article-title">IND AS 21 Foreign Exchange — Functional Currency, Monetary vs Non-Monetary Items &amp; Translation Explained</h1>
+  <div class="article-meta">
+    <span><i class="fa-regular fa-calendar"></i> August 2026</span>
+    <span><i class="fa-regular fa-clock"></i> 17 min read</span>
+    <span><i class="fa-solid fa-user"></i> Finosutra Team</span>
+  </div>
+  <p style="font-size:16px;line-height:1.65;color:#374151;max-width:760px;margin:4px 0 14px;">Under <strong>IND AS 21</strong>, an entity first determines its <strong>functional currency</strong> — the currency of its primary economic environment — then records foreign currency transactions at the spot rate, retranslates monetary items at each reporting date, and translates any foreign operation's financial statements into the group's presentation currency, with resulting exchange differences routed to profit or loss or OCI depending on what gave rise to them.</p>
+  <div class="article-divider"></div>
+
+  <div class="toc">
+    <h3>In This Article</h3>
+    <ol>
+      <li><a href="#overview">What IND AS 21 Covers — Objective and Scope</a></li>
+      <li><a href="#functional-currency">Determining Functional Currency</a></li>
+      <li><a href="#monetary-nonmonetary">Monetary vs Non-Monetary Items</a></li>
+      <li><a href="#initial">Initial Recognition of Foreign Currency Transactions</a></li>
+      <li><a href="#subsequent">Reporting at Subsequent Balance Sheet Dates</a></li>
+      <li><a href="#exchange-differences">Where Exchange Differences Are Recognised</a></li>
+      <li><a href="#foreign-operations">Translating a Foreign Operation for Consolidation</a></li>
+      <li><a href="#presentation-currency">Change in Functional Currency and Presentation Currency</a></li>
+      <li><a href="#example">Worked Example — Import Payable and a Foreign Subsidiary</a></li>
+      <li><a href="#vs-as11">IND AS 21 vs Old IGAAP (AS 11) — Key Differences</a></li>
+      <li><a href="#disclosures">Disclosures Required</a></li>
+      <li><a href="#errors">Common Mistakes CAs Make</a></li>
+      <li><a href="#faq">FAQs</a></li>
+    </ol>
+  </div>
+
+  <div class="article-body">
+
+    <h2 id="overview">1. What IND AS 21 Covers — Objective and Scope</h2>
+    <p>IND AS 21 prescribes how an entity accounts for transactions denominated in a foreign currency, and how it translates the financial statements of a foreign operation for consolidation, proportionate consolidation, or the equity method. It does <strong>not</strong> cover hedge accounting for foreign currency items (governed by IND AS 109), or the presentation of cash flows arising from transactions in a foreign currency (IND AS 7).</p>
+
+    <h2 id="functional-currency">2. Determining Functional Currency</h2>
+    <p><strong>Functional currency</strong> is the currency of the primary economic environment in which an entity operates. It is determined based on facts and substance — never simply chosen by management, and not necessarily the currency of the entity's country of incorporation. IND AS 21 sets out primary and secondary indicators to assess it:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Primary indicators</th><th>Secondary indicators</th></tr></thead>
+        <tbody>
+          <tr><td>The currency that mainly influences sales prices for goods and services (often the currency in which they are denominated and settled)</td><td>The currency in which funds from financing activities are generated</td></tr>
+          <tr><td>The currency of the country whose competitive forces and regulations mainly determine sales prices</td><td>The currency in which receipts from operating activities are usually retained</td></tr>
+          <tr><td>The currency that mainly influences labour, material and other costs of providing goods/services</td><td>&nbsp;</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>For a <strong>foreign operation</strong> (a subsidiary, branch, associate or joint venture whose activities are based in a different country or in a different currency from the parent), additional factors are considered — whether its activities are carried out as an extension of the parent, the proportion of transactions with the parent, whether its cash flows directly affect the parent's cash flows, and whether its cash flows are sufficient to service its debt without funds from the parent.</p>
+
+    <h2 id="monetary-nonmonetary">3. Monetary vs Non-Monetary Items</h2>
+    <p>This distinction drives almost every subsequent measurement decision in the standard:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Type</th><th>Definition</th><th>Examples</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Monetary items</strong></td><td>Units of currency held, and assets/liabilities to be received or paid in a fixed or determinable number of currency units</td><td>Cash, trade receivables/payables, loans, most provisions to be settled in cash</td></tr>
+          <tr><td><strong>Non-monetary items</strong></td><td>Everything else — no right to receive, or obligation to deliver, a fixed or determinable number of currency units</td><td>Inventory, PP&amp;E, most intangible assets, prepayments for goods/services</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="initial">4. Initial Recognition of Foreign Currency Transactions</h2>
+    <p>A foreign currency transaction is recorded, on initial recognition, by applying the <strong>spot exchange rate</strong> between the functional currency and the foreign currency at the date of the transaction. For practical reasons, a rate that approximates the actual rate — such as an average rate for a week or month — may be used for all transactions in that foreign currency during the period, unless exchange rates fluctuate significantly.</p>
+
+    <h2 id="subsequent">5. Reporting at Subsequent Balance Sheet Dates</h2>
+    <p>At the end of each reporting period:</p>
+    <ul>
+      <li><strong>Monetary items</strong> are retranslated using the <strong>closing rate</strong>.</li>
+      <li><strong>Non-monetary items measured at historical cost</strong> are reported using the exchange rate at the date of the original transaction — they are <strong>not</strong> retranslated.</li>
+      <li><strong>Non-monetary items measured at fair value</strong> (e.g. a revalued asset, or an FVTPL/FVOCI investment) are translated using the exchange rate at the date the fair value was determined.</li>
+    </ul>
+
+    <h2 id="exchange-differences">6. Where Exchange Differences Are Recognised</h2>
+    <p>Exchange differences arising on settling monetary items, or on translating them at rates different from those used on initial recognition, are recognised in <strong>profit or loss</strong> in the period in which they arise, in the entity's own financial statements.</p>
+    <div class="callout callout-orange">
+      <p><strong>The key exception:</strong> exchange differences on a monetary item that forms part of an entity's <strong>net investment in a foreign operation</strong> — an intercompany loan neither planned nor likely to be settled in the foreseeable future — are recognised in other comprehensive income in the consolidated financial statements, accumulated in a separate component of equity, and reclassified to profit or loss only on disposal of the net investment.</p>
+    </div>
+
+    <h2 id="foreign-operations">7. Translating a Foreign Operation for Consolidation</h2>
+    <p>To include a foreign operation's results in the group's consolidated financial statements, its financial statements are translated into the presentation currency as follows:</p>
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <h3>Assets and liabilities</h3>
+      <p>Translated at the <strong>closing rate</strong> at the date of that balance sheet, including any goodwill and fair value adjustments arising on acquisition of the foreign operation.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <h3>Income and expenses</h3>
+      <p>Translated at exchange rates at the <strong>dates of the transactions</strong>, or a suitable average rate for the period for practical purposes.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <h3>Resulting exchange difference</h3>
+      <p>Recognised in <strong>OCI</strong> and accumulated in a separate component of equity — the foreign currency translation reserve (FCTR) — reclassified to profit or loss only when the foreign operation is disposed of.</p>
+    </div>
+
+    <h2 id="presentation-currency">8. Change in Functional Currency and Presentation Currency</h2>
+    <p>Functional currency, once determined, is changed only if there is a change in the underlying transactions, events and conditions that are relevant to it — it is not a discretionary accounting policy choice and cannot be changed to manage reported results. An entity may present its financial statements in <strong>any presentation currency</strong>, which need not be the same as its functional currency — in that case, the results and financial position are translated into the presentation currency using the same method used for translating a foreign operation.</p>
+
+    <h2 id="example">9. Worked Example — Import Payable and a Foreign Subsidiary</h2>
+
+    <h3>Example A — Foreign Currency Import Payable</h3>
+    <div class="callout">
+      <p><strong>Scenario:</strong> Nirvana Textiles Ltd (functional currency ₹) imports machinery from a US supplier for USD 1,00,000 on 1 January 2026, when the spot rate is ₹83.00/USD. Payment is made on 31 March 2026, when the spot rate is ₹85.50/USD. The company's year-end (31 March) coincides with the payment date in this example, so there is no intervening reporting-date retranslation.</p>
+    </div>
+    <div class="je-block">
+      <div class="je-title">1 January 2026 — record the import at the spot rate</div>
+      <div class="je-row">
+        <span class="je-account">Plant &amp; Machinery (₹83.00 × 1,00,000)</span>
+        <div class="je-amounts"><span class="je-dr">Dr 83,00,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Creditors (USD)</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 83,00,000</span></div>
+      </div>
+    </div>
+    <div class="je-block">
+      <div class="je-title">31 March 2026 — settle the payable at the payment-date rate</div>
+      <div class="je-row">
+        <span class="je-account">Creditors (USD)</span>
+        <div class="je-amounts"><span class="je-dr">Dr 83,00,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account">Exchange Loss (₹85.50 − ₹83.00 = ₹2.50 × 1,00,000) (P&amp;L)</span>
+        <div class="je-amounts"><span class="je-dr">Dr 2,50,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Bank (₹85.50 × 1,00,000)</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 85,50,000</span></div>
+      </div>
+    </div>
+    <p>Note the machinery itself remains at ₹83,00,000 — a non-monetary asset measured at historical cost is never retranslated. Only the monetary creditor is remeasured, and the full ₹2,50,000 depreciation-of-the-rupee effect hits profit or loss as an exchange loss, not the asset's cost.</p>
+
+    <div class="cta-box">
+      <h3>Explore Finosutra's IND AS tools</h3>
+      <p>Free calculators for lease accounting, security deposits, ECL provisioning and financial statement generation — audit-ready workpapers in minutes.</p>
+      <a href="../indas-tools.html">Explore IND AS Tools →</a>
+    </div>
+
+    <h3>Example B — Translating a Foreign Subsidiary</h3>
+    <div class="callout">
+      <p><strong>Scenario:</strong> An Indian parent's US subsidiary reports net assets of USD 10,00,000 at year-end (closing rate ₹86.00/USD) and USD 8,00,000 at the start of the year (opening rate ₹83.00/USD), with USD 1,00,000 profit for the year translated at an average rate of ₹84.50/USD, and no dividends paid.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Item</th><th class="r">USD</th><th class="r">Rate</th><th class="r">₹</th></tr></thead>
+        <tbody>
+          <tr><td>Opening net assets</td><td class="r">8,00,000</td><td class="r">83.00</td><td class="r">6,64,00,000</td></tr>
+          <tr><td>Profit for the year</td><td class="r">1,00,000</td><td class="r">84.50 (average)</td><td class="r">84,50,000</td></tr>
+          <tr><td>Closing net assets (should equal)</td><td class="r">9,00,000</td><td class="r">86.00</td><td class="r">7,74,00,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Translating opening net assets and profit separately gives ₹6,64,00,000 + ₹84,50,000 = ₹7,48,50,000, but retranslating the same closing net assets at the closing rate gives ₹7,74,00,000. The ₹25,50,000 difference is the <strong>exchange difference on translation</strong>, recognised in OCI and accumulated in the foreign currency translation reserve — it arises purely from using different rates for the opening balance, the period's profit, and the closing balance, not from any transaction.</p>
+
+    <h2 id="vs-as11">10. IND AS 21 vs Old IGAAP (AS 11) — Key Differences</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Aspect</th><th>Old IGAAP (AS 11)</th><th>IND AS 21</th></tr></thead>
+        <tbody>
+          <tr><td>Core currency concept</td><td>Reporting currency, with foreign operations classified as "integral" or "non-integral"</td><td>Functional currency concept — determined by facts and substance for each entity</td></tr>
+          <tr><td>Foreign operation translation</td><td>Integral operations translated like foreign currency transactions; non-integral operations translated using the closing-rate method</td><td>Single, consistent closing-rate/average-rate method for every foreign operation, once functional currency is identified</td></tr>
+          <tr><td>Exchange differences on long-term monetary items (pre-2018 option)</td><td>Optional capitalisation into related asset cost, or deferral and amortisation, permitted for certain long-term foreign currency monetary items</td><td>No such option — all exchange differences on monetary items go through profit or loss (except the net-investment-in-a-foreign-operation exception)</td></tr>
+          <tr><td>Presentation currency</td><td>Limited explicit guidance on presenting in a currency other than the functional/reporting currency</td><td>Explicitly permits any presentation currency, with a defined translation method</td></tr>
+          <tr><td>Disclosures</td><td>Less extensive</td><td>Requires disclosure of the amount of exchange differences in P&amp;L, the net exchange differences in the separate equity component, and reasons for any presentation currency different from functional currency</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="disclosures">11. Disclosures Required</h2>
+    <p>IND AS 21 requires disclosure of the amount of exchange differences recognised in profit or loss (excluding those on financial instruments measured at FVTPL), the net exchange differences accumulated in the separate component of equity with a reconciliation of the amount at the beginning and end of the period, and — when the presentation currency differs from the functional currency — that fact, the functional currency disclosed, and the reason for using a different presentation currency. Where there has been a change in the functional currency of either the reporting entity or a significant foreign operation, that fact and the reason for the change must also be disclosed.</p>
+
+    <h2 id="errors">12. Common Mistakes CAs Make</h2>
+
+    <div class="callout callout-red">
+      <p><strong>Error 1 — Retranslating non-monetary items carried at historical cost.</strong> Inventory, PP&amp;E and most intangibles measured at cost are locked in at the exchange rate on the transaction date and are never retranslated for currency movements afterward — only monetary items are.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 2 — Capitalising exchange losses on a foreign currency loan into the cost of the related asset.</strong> Unlike the old (now-withdrawn) option under Indian AS 11, IND AS 21 requires all exchange differences on monetary items to flow through profit or loss — there is no capitalisation route for a loan's exchange loss.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 3 — Treating functional currency as a free policy choice.</strong> Functional currency is a factual determination based on the primary economic environment, assessed using the standard's indicators — it isn't selected to achieve a particular accounting or tax outcome, and can't be changed without a genuine change in the underlying facts.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 4 — Recognising the translation reserve movement in profit or loss.</strong> Exchange differences arising on translating a foreign operation's financial statements for consolidation go to OCI and the FCTR — they only hit profit or loss when the foreign operation is actually disposed of.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 5 — Missing the net-investment exception for long-term intercompany loans.</strong> A loan to a foreign subsidiary that is, in substance, part of the net investment (settlement neither planned nor likely in the foreseeable future) gets OCI treatment for its exchange differences in the consolidated accounts — treating it as an ordinary monetary item and running the exchange difference through consolidated P&amp;L is a common oversight.</p>
+    </div>
+
+    <h2 id="faq">13. FAQs</h2>
+
+    <h3>What is functional currency under IND AS 21?</h3>
+    <p>Functional currency is the currency of the primary economic environment in which an entity operates — normally the currency that mainly influences its sales prices, and the currency of the country whose competitive forces and regulations mainly determine those prices. It is determined based on facts and substance, not management's choice, and is not necessarily the same as the currency of the country where the entity is incorporated.</p>
+
+    <h3>What is the difference between monetary and non-monetary items under IND AS 21?</h3>
+    <p>Monetary items are units of currency held, and assets and liabilities to be received or paid in a fixed or determinable number of units of currency — such as cash, trade receivables and payables, and loans. Non-monetary items are everything else — inventory, property, plant and equipment, and most intangible assets. Monetary items are retranslated at the closing rate at each reporting date, while non-monetary items measured at historical cost are not retranslated after initial recognition.</p>
+
+    <h3>How is a foreign currency transaction initially recorded?</h3>
+    <p>A foreign currency transaction is recorded, on initial recognition, by applying the spot exchange rate between the functional currency and the foreign currency at the date of the transaction. For practical reasons, an average rate for a week or month may be used for all transactions in each foreign currency during that period, unless exchange rates fluctuate significantly.</p>
+
+    <h3>Where are exchange differences on monetary items recognised?</h3>
+    <p>Exchange differences arising on the settlement or retranslation of monetary items are recognised in profit or loss in the period in which they arise, in the entity's own (functional-currency) financial statements. The main exception is exchange differences on a monetary item that forms part of a net investment in a foreign operation, which are recognised in other comprehensive income and reclassified to profit or loss only on disposal of that foreign operation.</p>
+
+    <h3>How is a foreign operation's financial statements translated for consolidation?</h3>
+    <p>Assets and liabilities (including goodwill and fair value adjustments) are translated at the closing rate at the reporting date. Income and expenses are translated at exchange rates at the dates of the transactions, or a suitable average rate for practical purposes. The resulting exchange difference is recognised in other comprehensive income, accumulated in a separate component of equity (the foreign currency translation reserve), and reclassified to profit or loss only on disposal of the foreign operation.</p>
+
+    <h3>Is IND AS 21 the same as IAS 21?</h3>
+    <p>IND AS 21 is India's converged version of IAS 21 and follows the same functional currency framework, monetary/non-monetary distinction, and translation methodology for foreign operations. It replaces the older Indian AS 11, which was based on an integral/non-integral foreign operation classification rather than the functional currency concept, and did not permit a presentation currency different from the functional currency in the same explicit way.</p>
+
+  </div>
+
+  <div class="related-links">
+    <h3>Related tools &amp; articles</h3>
+    <a href="../indas-tools.html">→ All IND AS Tools</a>
+    <a href="ind-as-109-financial-instruments-guide.html">→ IND AS 109 Financial Instruments — Complete Guide</a>
+    <a href="ind-as-113-fair-value-measurement-guide.html">→ IND AS 113 Fair Value Measurement — Complete Guide</a>
+    <a href="ind-as-16-property-plant-equipment-guide.html">→ IND AS 16 Property, Plant &amp; Equipment — Complete Guide</a>
+    <a href="ind-as-12-deferred-tax.html">→ IND AS 12 / IAS 12 Deferred Tax — Complete Guide</a>
+    <a href="../blog.html">← All Articles</a>
+  </div>
+
+</div>
+
+<div id="fs-footer"></div>
+<script src="../nav.js?v=9"></script>
+<script src="../footer.js?v=8"></script>
+<script src="../share.js"></script>
+</body>
+</html>
