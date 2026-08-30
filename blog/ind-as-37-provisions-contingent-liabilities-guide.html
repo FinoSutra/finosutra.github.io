@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>IND AS 37 Provisions, Contingent Liabilities & Contingent Assets Explained | Finosutra</title>
+<meta name="description" content="Complete guide to IND AS 37 — the three recognition criteria for a provision, measurement and discounting, contingent liabilities vs contingent assets, reimbursements, onerous contracts, restructuring provisions, and a full worked example with journal entries."/>
+<meta name="keywords" content="IND AS 37 provisions, contingent liabilities and contingent assets, onerous contract provision, restructuring provision IND AS 37, provision recognition criteria, IND AS 37 vs AS 29, warranty provision accounting, present obligation constructive obligation, IAS 37 India"/>
+<meta name="author" content="Finosutra"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://finosutra.com/blog/ind-as-37-provisions-contingent-liabilities-guide.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Finosutra"/>
+<meta property="og:title" content="IND AS 37 Provisions, Contingent Liabilities & Contingent Assets Explained"/>
+<meta property="og:description" content="Recognition criteria, measurement and discounting, contingent liabilities vs contingent assets, reimbursements, onerous contracts and restructuring provisions under IND AS 37 — with a full worked example."/>
+<meta property="og:url" content="https://finosutra.com/blog/ind-as-37-provisions-contingent-liabilities-guide.html"/>
+<meta property="og:image" content="https://finosutra.com/og-image.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="IND AS 37 Provisions & Contingencies — Complete Guide"/>
+<meta name="twitter:description" content="Recognition, measurement, onerous contracts and restructuring provisions under IND AS 37 — with a full worked example."/>
+<meta name="twitter:image" content="https://finosutra.com/og-image.jpg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="../finosutra.css?v=16"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "IND AS 37 Provisions, Contingent Liabilities & Contingent Assets Explained",
+  "description": "Complete guide to IND AS 37 — the three recognition criteria for a provision, measurement and discounting, contingent liabilities vs contingent assets, reimbursements, onerous contracts, restructuring provisions, and a full worked example with journal entries.",
+  "author": {"@type": "Organization", "name": "Finosutra", "sameAs": ["https://www.linkedin.com/company/124543898/", "https://www.youtube.com/@cakrishnaswadekar07"]},
+  "publisher": {"@type": "Organization", "name": "Finosutra", "url": "https://finosutra.com", "sameAs": ["https://www.linkedin.com/company/124543898/", "https://www.youtube.com/@cakrishnaswadekar07"]},
+  "datePublished": "2026-08-31",
+  "dateModified": "2026-08-31",
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://finosutra.com/blog/ind-as-37-provisions-contingent-liabilities-guide.html"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What is the difference between a provision and a contingent liability under IND AS 37?", "acceptedAnswer": {"@type": "Answer", "text": "A provision is recognised on the balance sheet because it meets all three criteria: a present obligation from a past event, a probable outflow of resources, and a reliable estimate. A contingent liability is not recognised — either because the obligation is only possible (its existence depends on an uncertain future event outside the entity's control), or because a present obligation exists but the outflow isn't probable or can't be reliably measured. Contingent liabilities are disclosed in the notes, not recorded as a liability."}},
+    {"@type": "Question", "name": "What are the three recognition criteria for a provision?", "acceptedAnswer": {"@type": "Answer", "text": "A provision is recognised only when all three conditions are met: (1) the entity has a present obligation, legal or constructive, as a result of a past event; (2) it is probable (more likely than not) that an outflow of resources embodying economic benefits will be required to settle it; and (3) a reliable estimate can be made of the amount of the obligation. If any one condition fails, no provision is recognised."}},
+    {"@type": "Question", "name": "Can a company recognise a provision for future operating losses?", "acceptedAnswer": {"@type": "Answer", "text": "No. Future operating losses don't arise from a past event — they relate to expected future activity, not an existing obligation — so IND AS 37 specifically prohibits recognising a provision for them. The one exception is that expected future losses can be a factor pointing to impairment of the related assets under IND AS 36, and losses embedded in an onerous contract are provided for separately under the onerous contract rules."}},
+    {"@type": "Question", "name": "When can a contingent asset be recognised on the balance sheet?", "acceptedAnswer": {"@type": "Answer", "text": "Never, while it remains contingent. A contingent asset is only disclosed (not recognised) when the inflow of economic benefits is probable. It is recognised as an actual asset only when the realisation of income has become virtually certain — at which point, by definition, it is no longer a contingent asset at all, but a regular asset."}},
+    {"@type": "Question", "name": "What is an onerous contract under IND AS 37?", "acceptedAnswer": {"@type": "Answer", "text": "An onerous contract is one where the unavoidable costs of meeting the contractual obligations exceed the economic benefits expected to be received under it. The present obligation under such a contract is recognised and measured as a provision, based on the lower of the cost of fulfilling the contract and any compensation or penalty from failing to fulfil it (i.e. the cost of exiting)."}},
+    {"@type": "Question", "name": "When does a restructuring provision qualify for recognition?", "acceptedAnswer": {"@type": "Answer", "text": "Only when the entity has a detailed formal plan for the restructuring identifying the business, locations, employees and expenditures involved, and has raised a valid expectation in those affected that it will carry out the restructuring — either by starting to implement the plan or by announcing its main features to those affected. A board decision alone, without communication, does not create a constructive obligation."}}
+  ]
+}
+</script>
+<style>
+:root{
+  --brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;--brand-mid:#C7D2FE;
+  --bg:#F9FAFB;--card:#FFFFFF;--border:rgba(99,102,241,0.18);--border-light:rgba(99,102,241,0.08);
+  --text:#111827;--muted:#6B7280;--muted2:#9CA3AF;
+  --green:#059669;--green-light:#ECFDF5;
+  --red:#DC2626;--red-light:#FEF2F2;
+  --orange:#D97706;--orange-light:#FFFBEB;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+.article-wrap{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted2);margin-bottom:24px;flex-wrap:wrap;}
+.breadcrumb a{color:var(--muted2);text-decoration:none;transition:color .15s;}
+.breadcrumb a:hover{color:var(--brand);}
+
+.article-tag{display:inline-block;background:var(--brand-light);color:var(--brand);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.4px;margin-bottom:16px;}
+.article-title{font-size:clamp(24px,4vw,36px);font-weight:800;line-height:1.2;letter-spacing:-0.5px;color:var(--text);margin-bottom:16px;}
+.article-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--muted);margin-bottom:32px;flex-wrap:wrap;}
+.article-meta span{display:flex;align-items:center;gap:5px;}
+.article-divider{height:1px;background:var(--border-light);margin-bottom:36px;}
+
+.toc{background:var(--brand-light);border:1px solid var(--brand-mid);border-radius:14px;padding:22px 26px;margin-bottom:40px;}
+.toc h3{font-size:13px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;}
+.toc ol{padding-left:18px;}
+.toc ol li{margin-bottom:6px;}
+.toc ol li a{font-size:14px;color:var(--brand-dark);text-decoration:none;font-weight:500;}
+.toc ol li a:hover{text-decoration:underline;}
+
+.article-body h2{font-size:22px;font-weight:800;color:var(--text);margin:40px 0 14px;letter-spacing:-0.3px;}
+.article-body h3{font-size:17px;font-weight:700;color:var(--text);margin:28px 0 10px;}
+.article-body p{margin-bottom:16px;color:#1F2937;}
+.article-body ul,.article-body ol{padding-left:22px;margin-bottom:16px;}
+.article-body ul li,.article-body ol li{margin-bottom:8px;color:#1F2937;}
+.article-body strong{font-weight:700;color:var(--text);}
+
+.callout{background:var(--brand-light);border-left:4px solid var(--brand);border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0;}
+.callout p{margin:0;font-size:14px;color:var(--brand-dark);}
+.callout strong{color:var(--brand-dark);}
+.callout-green{background:var(--green-light);border-left-color:var(--green);}
+.callout-green p{color:#065F46;}
+.callout-orange{background:var(--orange-light);border-left-color:var(--orange);}
+.callout-orange p{color:#92400E;}
+.callout-red{background:var(--red-light);border-left-color:var(--red);}
+.callout-red p{color:#991B1B;}
+
+.table-wrap{overflow-x:auto;margin:24px 0;}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:360px;}
+table th{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-weight:700;padding:10px 14px;text-align:left;}
+table th.r{text-align:right;}
+table td{padding:9px 14px;border-bottom:1px solid #F3F4F6;color:#1F2937;}
+table td.r{text-align:right;}
+table tr:nth-child(even) td{background:#F9FAFB;}
+table tr:last-child td{border-bottom:none;}
+table tfoot td{background:#EEF2FF;font-weight:700;border-top:2px solid var(--brand-mid);}
+
+.je-block{background:#F9FAFB;border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:20px 0;}
+.je-title{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px;}
+.je-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #F3F4F6;}
+.je-row:last-child{border-bottom:none;}
+.je-account{font-size:14px;font-weight:600;color:var(--text);}
+.je-account.cr{padding-left:24px;font-weight:500;color:var(--muted);}
+.je-amounts{display:flex;gap:32px;}
+.je-dr{font-size:14px;font-weight:700;color:#10B981;min-width:100px;text-align:right;}
+.je-cr{font-size:14px;font-weight:700;color:#6366F1;min-width:100px;text-align:right;}
+
+.step-card{border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:16px 0;position:relative;padding-left:60px;}
+.step-num{position:absolute;left:18px;top:18px;width:28px;height:28px;background:var(--brand);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;}
+.step-card h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;margin-top:0;}
+.step-card p{font-size:14px;color:var(--muted);margin:0;}
+
+.cta-box{background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:16px;padding:28px 30px;margin:40px 0;text-align:center;}
+.cta-box h3{font-size:18px;font-weight:800;color:#fff;margin-bottom:8px;}
+.cta-box p{font-size:14px;color:rgba(255,255,255,.85);margin-bottom:18px;}
+.cta-box a{display:inline-block;background:#fff;color:var(--brand);font-size:14px;font-weight:700;padding:12px 26px;border-radius:10px;text-decoration:none;transition:transform .15s;}
+.cta-box a:hover{transform:translateY(-1px);}
+
+.related-links{border:1px solid var(--border-light);border-radius:12px;padding:20px 24px;margin-top:40px;}
+.related-links h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;}
+.related-links a{display:block;font-size:14px;color:var(--brand);text-decoration:none;padding:6px 0;border-bottom:1px solid var(--border-light);font-weight:500;}
+.related-links a:last-child{border-bottom:none;}
+.related-links a:hover{text-decoration:underline;}
+
+@media(max-width:600px){.article-wrap{padding:32px 16px 60px;}.je-amounts{gap:16px;}.step-card{padding-left:50px;}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../auth.js?v=11"></script>
+</head>
+<body>
+
+<div id="fs-nav"></div>
+
+<div class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span>›</span>
+    <a href="../blog.html">Blog</a>
+    <span>›</span>
+    <span>IND AS 37 Provisions &amp; Contingencies</span>
+  </nav>
+
+  <div class="article-tag">IND AS 37 / IAS 37</div>
+  <h1 class="article-title">IND AS 37 Provisions, Contingent Liabilities &amp; Contingent Assets Explained</h1>
+  <div class="article-meta">
+    <span><i class="fa-regular fa-calendar"></i> August 2026</span>
+    <span><i class="fa-regular fa-clock"></i> 17 min read</span>
+    <span><i class="fa-solid fa-user"></i> Finosutra Team</span>
+  </div>
+  <p style="font-size:16px;line-height:1.65;color:#374151;max-width:760px;margin:4px 0 14px;">Under <strong>IND AS 37</strong>, a provision is a liability of uncertain timing or amount, recognised only when a present obligation exists as a result of a past event, an outflow of resources is probable, and a reliable estimate can be made. Contingent liabilities and contingent assets, by contrast, are only disclosed — never recognised on the balance sheet — until that uncertainty resolves.</p>
+  <div class="article-divider"></div>
+
+  <div class="toc">
+    <h3>In This Article</h3>
+    <ol>
+      <li><a href="#overview">What IND AS 37 Covers — Objective, Scope &amp; Key Definitions</a></li>
+      <li><a href="#recognition">Recognition Criteria — When a Provision Must Be Recognised</a></li>
+      <li><a href="#measurement">Measurement — Best Estimate, Risk and Discounting</a></li>
+      <li><a href="#contingent-liabilities">Contingent Liabilities — Disclosure, Not Recognition</a></li>
+      <li><a href="#contingent-assets">Contingent Assets — Never Recognised Until Virtually Certain</a></li>
+      <li><a href="#decision-tree">The Recognition Decision Tree</a></li>
+      <li><a href="#reimbursements">Reimbursements</a></li>
+      <li><a href="#onerous">Onerous Contracts</a></li>
+      <li><a href="#restructuring">Restructuring Provisions</a></li>
+      <li><a href="#example">Worked Examples — Warranty, Restructuring and a Contingent Claim</a></li>
+      <li><a href="#vs-as29">IND AS 37 vs Old IGAAP (AS 29) — Key Differences</a></li>
+      <li><a href="#disclosures">Disclosures Required</a></li>
+      <li><a href="#errors">Common Mistakes CAs Make</a></li>
+      <li><a href="#faq">FAQs</a></li>
+    </ol>
+  </div>
+
+  <div class="article-body">
+
+    <h2 id="overview">1. What IND AS 37 Covers — Objective, Scope &amp; Key Definitions</h2>
+    <p>IND AS 37 sets the recognition and measurement rules for provisions, and the disclosure rules for contingent liabilities and contingent assets — three related but distinct concepts that are among the most commonly confused items in financial reporting. The standard's core purpose is to stop entities from either under-providing for genuine obligations or over-providing through "big bath" or hidden-reserve provisions with no real basis.</p>
+
+    <p>Several items that look like provisions are explicitly carved out because another standard already governs them:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Excluded item</th><th>Governed instead by</th></tr></thead>
+        <tbody>
+          <tr><td>Obligations under executory contracts (unless the contract is onerous)</td><td>IND AS 37's onerous-contract provisions apply only to the onerous portion</td></tr>
+          <tr><td>Employee benefit obligations</td><td>IND AS 19 Employee Benefits</td></tr>
+          <tr><td>Income tax provisions and contingencies</td><td>IND AS 12 Deferred Tax</td></tr>
+          <tr><td>Insurance contract liabilities</td><td>IND AS 117 Insurance Contracts</td></tr>
+          <tr><td>Financial instrument commitments and guarantees within scope of IND AS 109</td><td>IND AS 109 Financial Instruments</td></tr>
+          <tr><td>Contract liabilities and onerous revenue-contract situations already addressed there</td><td>IND AS 115 Revenue Recognition</td></tr>
+          <tr><td>A lessee's lease liability for a recognised lease</td><td>IND AS 116 Leases</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Three definitions anchor the whole standard:</p>
+    <ul>
+      <li><strong>Provision</strong> — a liability of uncertain timing or amount.</li>
+      <li><strong>Legal obligation</strong> — one that derives from a contract, legislation, or other operation of law.</li>
+      <li><strong>Constructive obligation</strong> — one that derives from an entity's own actions, where an established pattern of past practice, published policies, or a sufficiently specific current statement have created a valid expectation in other parties that the entity will discharge those responsibilities.</li>
+    </ul>
+
+    <div class="callout">
+      <p><strong>The obligating event</strong> is the past event that creates a legal or constructive obligation and leaves the entity no realistic alternative to settling it. Without an obligating event, there is no present obligation — and without a present obligation, there can be no provision, no matter how likely a future cost seems.</p>
+    </div>
+
+    <h2 id="recognition">2. Recognition Criteria — When a Provision Must Be Recognised</h2>
+    <p>A provision is recognised only when <strong>all three</strong> of these conditions are met:</p>
+
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <h3>Present obligation</h3>
+      <p>The entity has a present obligation (legal or constructive) as a result of a past event, at the reporting date.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <h3>Probable outflow</h3>
+      <p>It is probable — more likely than not, i.e. the probability of outflow is greater than 50% — that settling the obligation will require an outflow of resources embodying economic benefits.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <h3>Reliable estimate</h3>
+      <p>A reliable estimate can be made of the amount of the obligation. In almost all cases an entity will be able to determine a range of possible outcomes and can therefore make an estimate reliable enough to recognise a provision — only in extremely rare cases is no reliable estimate possible.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>A mere intention or board decision to incur expenditure in the future is not enough.</strong> There is no present obligation until an obligating event has occurred — for example, deciding to overhaul a machine next year, however certain, does not create a provision this year, because the entity could still choose to sell the machine instead and avoid the cost entirely.</p>
+    </div>
+
+    <h2 id="measurement">3. Measurement — Best Estimate, Risk and Discounting</h2>
+    <p>A provision is measured at the <strong>best estimate</strong> of the expenditure required to settle the present obligation at the reporting date:</p>
+    <ul>
+      <li>For a large population of items, the obligation is estimated using the <strong>expected value</strong> method — weighting all possible outcomes by their associated probabilities.</li>
+      <li>For a single obligation, the <strong>most likely outcome</strong> may be the best estimate, though other possible outcomes should still be considered where they are predominantly higher or lower than the most likely one.</li>
+      <li><strong>Risks and uncertainties</strong> surrounding the underlying events should be reflected in arriving at the best estimate, but uncertainty does not justify creating excessive provisions or deliberately overstating liabilities.</li>
+      <li>Where the effect of the time value of money is <strong>material</strong>, the provision is discounted to present value using a pre-tax discount rate that reflects current market assessments of the time value of money and the risks specific to the liability.</li>
+      <li>Expected future events (e.g. new legislation, improvements in clean-up technology) are taken into account only where there is <strong>sufficient objective evidence</strong> that they will occur.</li>
+      <li><strong>Gains from the expected disposal of assets</strong> are never taken into account in measuring a provision, even if the disposal is closely linked to the event giving rise to the provision — such gains are recognised separately, when the disposal actually occurs.</li>
+    </ul>
+
+    <h2 id="contingent-liabilities">4. Contingent Liabilities — Disclosure, Not Recognition</h2>
+    <p>A contingent liability is either:</p>
+    <ul>
+      <li>a <strong>possible</strong> obligation arising from a past event, whose existence will be confirmed only by the occurrence or non-occurrence of an uncertain future event not wholly within the entity's control; or</li>
+      <li>a <strong>present obligation</strong> that is not recognised because it is not probable that an outflow will be required, or because the amount cannot be measured with sufficient reliability.</li>
+    </ul>
+    <div class="callout callout-orange">
+      <p><strong>Contingent liabilities are never recognised as a liability</strong> — they are disclosed in the notes (nature, estimate of financial effect, uncertainties, possibility of reimbursement), unless the possibility of an outflow is <strong>remote</strong>, in which case no disclosure is required at all.</p>
+    </div>
+
+    <h2 id="contingent-assets">5. Contingent Assets — Never Recognised Until Virtually Certain</h2>
+    <p>A contingent asset is a possible asset arising from a past event, whose existence will be confirmed only by an uncertain future event not wholly within the entity's control (e.g. a pending legal claim the entity has filed against another party).</p>
+    <div class="callout callout-red">
+      <p><strong>Contingent assets are never recognised</strong> — recognising one could result in the entity booking income that may never actually be realised. They are disclosed only where the inflow of economic benefits is <strong>probable</strong>. Once realisation becomes <strong>virtually certain</strong>, the asset is no longer contingent — it is recognised as a regular asset in the financial statements.</p>
+    </div>
+
+    <h2 id="decision-tree">6. The Recognition Decision Tree</h2>
+    <p>These three concepts sit on a single spectrum of certainty, and the correct treatment falls out mechanically once the facts are established:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Nature of obligation</th><th>Probability of outflow</th><th>Treatment</th></tr></thead>
+        <tbody>
+          <tr><td>Present obligation, reliably measurable</td><td>Probable (&gt;50%)</td><td><strong>Recognise a provision</strong></td></tr>
+          <tr><td>Present obligation, but not reliably measurable, or outflow not probable</td><td>Possible or not probable</td><td><strong>Disclose as contingent liability</strong></td></tr>
+          <tr><td>Possible obligation, existence to be confirmed by a future event</td><td>Any level except remote</td><td><strong>Disclose as contingent liability</strong></td></tr>
+          <tr><td>Any of the above</td><td>Remote</td><td><strong>No disclosure required</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="reimbursements">7. Reimbursements</h2>
+    <p>Where some or all of the expenditure required to settle a provision is expected to be reimbursed by another party (e.g. an insurance recovery, or a supplier's warranty), the reimbursement is recognised as a <strong>separate asset</strong>, but only when it is <strong>virtually certain</strong> that reimbursement will be received if the entity settles the obligation.</p>
+    <div class="callout">
+      <p><strong>The reimbursement asset cannot exceed the amount of the provision itself</strong>, and the two are presented <strong>gross</strong> on the balance sheet — a provision liability and a separate reimbursement asset — not netted against each other, unless a legal right of set-off exists. In the statement of profit and loss, however, the expense relating to the provision <strong>may</strong> be presented net of the reimbursement recognised.</p>
+    </div>
+
+    <h2 id="onerous">8. Onerous Contracts</h2>
+    <p>An <strong>onerous contract</strong> is one where the unavoidable costs of meeting the contractual obligations exceed the economic benefits expected to be received under it. If an entity has such a contract, the present obligation under it is recognised and measured as a provision.</p>
+    <div class="callout callout-orange">
+      <p>The unavoidable cost of a contract reflects the <strong>least net cost of exiting it</strong> — the lower of the cost of fulfilling the contract and any compensation or penalties arising from failing to fulfil it. A loss-making sales contract, an unfavourable long-term supply commitment, or a non-cancellable service contract that has become uneconomic are typical examples.</p>
+    </div>
+
+    <h2 id="restructuring">9. Restructuring Provisions</h2>
+    <p>A restructuring is a programme that is planned and controlled by management and materially changes either the scope of a business or the manner in which it is conducted — for example, closing a business line, relocating operations, or a fundamental reorganisation. A constructive obligation to restructure arises only when <strong>both</strong> of these conditions are met:</p>
+    <ul>
+      <li>The entity has a <strong>detailed formal plan</strong> identifying at least: the business or part of a business concerned; the principal locations affected; the location, function and approximate number of employees to be compensated for terminating their services; the expenditures to be undertaken; and when the plan will be implemented.</li>
+      <li>The entity has raised a <strong>valid expectation</strong> in those affected that it will carry out the restructuring — either by starting to implement the plan, or by announcing its main features to those affected by it.</li>
+    </ul>
+
+    <div class="callout callout-red">
+      <p><strong>A restructuring provision includes only the direct expenditures necessarily entailed</strong> by the restructuring — not costs associated with the entity's ongoing activities. It <strong>excludes</strong>: retraining or relocating continuing staff, marketing/advertising spend, and investment in new systems and distribution networks. It also excludes any anticipated future operating losses, unless they relate to an onerous contract, and any gain on the expected disposal of assets — even assets being disposed of as part of the same restructuring.</p>
+    </div>
+
+    <h2 id="example">10. Worked Examples — Warranty, Restructuring and a Contingent Claim</h2>
+
+    <h3>Example A — Warranty Provision (Expected Value Method)</h3>
+    <div class="callout">
+      <p><strong>Scenario:</strong> Everstrong Appliances Ltd sells goods with a 1-year warranty covering manufacturing defects. Based on past claims experience, management estimates: 75% of units sold will have no defects; 20% will have minor defects, costing <strong>₹2,00,00,000</strong> in total to repair if every unit sold had a minor defect; and 5% will have major defects, costing <strong>₹5,00,00,000</strong> in total if every unit sold had a major defect.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Outcome</th><th class="r">Probability</th><th class="r">Cost if all units affected (₹)</th><th class="r">Expected cost (₹)</th></tr></thead>
+        <tbody>
+          <tr><td>No defects</td><td class="r">75%</td><td class="r">0</td><td class="r">0</td></tr>
+          <tr><td>Minor defects</td><td class="r">20%</td><td class="r">2,00,00,000</td><td class="r">40,00,000</td></tr>
+          <tr><td>Major defects</td><td class="r">5%</td><td class="r">5,00,00,000</td><td class="r">25,00,000</td></tr>
+        </tbody>
+        <tfoot><tr><td colspan="3">Warranty provision required (expected value)</td><td class="r">65,00,000</td></tr></tfoot>
+      </table>
+    </div>
+    <div class="je-block">
+      <div class="je-title">Recognise the warranty provision</div>
+      <div class="je-row">
+        <span class="je-account">Warranty Expense (P&amp;L)</span>
+        <div class="je-amounts"><span class="je-dr">Dr 65,00,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Provision for Warranty</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 65,00,000</span></div>
+      </div>
+    </div>
+    <p>If actual warranty repairs of ₹50,00,000 are carried out during the following year, the entry is a straightforward utilisation of the provision, with no fresh P&amp;L charge:</p>
+    <div class="je-block">
+      <div class="je-title">Utilise the provision as actual claims are settled</div>
+      <div class="je-row">
+        <span class="je-account">Provision for Warranty</span>
+        <div class="je-amounts"><span class="je-dr">Dr 50,00,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Bank / Stores &amp; Spares</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 50,00,000</span></div>
+      </div>
+    </div>
+
+    <div class="cta-box">
+      <h3>Explore Finosutra's IND AS tools</h3>
+      <p>Free calculators for lease accounting, security deposits, ECL provisioning and financial statement generation — audit-ready workpapers in minutes.</p>
+      <a href="../indas-tools.html">Explore IND AS Tools →</a>
+    </div>
+
+    <h3>Example B — Restructuring Provision</h3>
+    <div class="callout">
+      <p><strong>Scenario:</strong> On 15 March 2026, the board of Vantage Industries Ltd approves a detailed formal plan to close one manufacturing unit, identifying the affected location, the ~80 employees to be terminated, and the expected costs. The plan is announced to affected employees on 20 March 2026 — before the 31 March 2026 year-end.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Item</th><th class="r">Amount (₹)</th><th>Included in provision?</th></tr></thead>
+        <tbody>
+          <tr><td>Employee termination benefits</td><td class="r">1,20,00,000</td><td>Yes — direct cost of restructuring</td></tr>
+          <tr><td>Penalty for terminating a supply contract early</td><td class="r">15,00,000</td><td>Yes — direct cost of restructuring</td></tr>
+          <tr><td>Retraining costs for continuing staff</td><td class="r">10,00,000</td><td>No — relates to ongoing activities</td></tr>
+          <tr><td>Relocation costs for continuing staff</td><td class="r">5,00,000</td><td>No — relates to ongoing activities</td></tr>
+        </tbody>
+        <tfoot><tr><td colspan="2">Restructuring provision recognised</td><td>1,35,00,000</td></tr></tfoot>
+      </table>
+    </div>
+    <div class="je-block">
+      <div class="je-title">Recognise the restructuring provision at 31 March 2026</div>
+      <div class="je-row">
+        <span class="je-account">Restructuring Expense (P&amp;L)</span>
+        <div class="je-amounts"><span class="je-dr">Dr 1,35,00,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Provision for Restructuring</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 1,35,00,000</span></div>
+      </div>
+    </div>
+
+    <h3>Example C — Contingent Liability (Not Recognised)</h3>
+    <p>Vantage Industries is also a defendant in a customer lawsuit claiming ₹50,00,000 in damages. Legal counsel assesses the chance of losing the case as <strong>possible but less than 50%</strong>. Since an outflow is not probable, no provision is recognised — the matter is disclosed as a contingent liability, describing its nature, the ₹50,00,000 estimated financial effect, and the uncertainties involved.</p>
+
+    <h2 id="vs-as29">11. IND AS 37 vs Old IGAAP (AS 29) — Key Differences</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Aspect</th><th>Old IGAAP (AS 29)</th><th>IND AS 37</th></tr></thead>
+        <tbody>
+          <tr><td>Core recognition criteria</td><td>Present obligation, probable outflow, reliable estimate — same three conditions</td><td>Unchanged — broadly converged with AS 29</td></tr>
+          <tr><td>Discounting to present value</td><td>Not explicitly mandated in practice; most Indian provisions were measured at undiscounted amounts</td><td>Explicitly required where the time value of money is material, using a pre-tax discount rate</td></tr>
+          <tr><td>Scope carve-outs</td><td>Referenced to old IGAAP standards (AS 15, AS 7, AS 22, etc.)</td><td>Referenced to converged IND AS standards (IND AS 19, 12, 109, 115, 116, 117)</td></tr>
+          <tr><td>Onerous contracts</td><td>Concept present, similar treatment</td><td>Concept present, with more detailed application guidance on measuring the "unavoidable cost"</td></tr>
+          <tr><td>Restructuring provisions</td><td>Similar constructive-obligation test</td><td>Broadly unchanged, with more prescriptive illustrative guidance</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="disclosures">12. Disclosures Required</h2>
+    <p>For each class of provision, IND AS 37 requires a reconciliation of the opening and closing carrying amount showing: additional provisions made in the period, amounts used (incurred and charged against the provision), unused amounts reversed during the period, and the increase during the period reflecting the unwinding of any discount. It also requires, for each class: a brief description of the nature of the obligation and expected timing of any resulting outflows, an indication of the uncertainties about the amount or timing, and the amount of any expected reimbursement, stating the asset recognised for that reimbursement.</p>
+    <p>For contingent liabilities (unless the possibility of an outflow is remote) and probable contingent assets, the entity discloses a brief description of the nature of the item, an estimate of its financial effect where practicable, an indication of the uncertainties, and the possibility of any reimbursement. In extremely rare cases where disclosure would seriously prejudice the entity's position in a dispute, the specific disclosures may be omitted, but the entity must still disclose the general nature of the dispute and the fact that, and reason why, the information has not been disclosed.</p>
+
+    <h2 id="errors">13. Common Mistakes CAs Make</h2>
+
+    <div class="callout callout-red">
+      <p><strong>Error 1 — Recognising a provision for future operating losses.</strong> Anticipated future losses do not arise from a past obligating event and are never provided for on their own — the correct response, if warranted, is an impairment review under IND AS 36, or a separate onerous-contract provision if a specific contract is loss-making.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 2 — Treating a board decision alone as a restructuring obligation.</strong> Without a detailed formal plan and communication that raises a valid expectation among those affected, an internal management decision — however firm — does not create a constructive obligation to restructure.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 3 — Ignoring discounting for long-duration provisions.</strong> A decommissioning or environmental remediation provision payable many years out should be discounted to present value where the effect is material — carrying it at the undiscounted, far-future cost overstates the liability today.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 4 — Recognising a contingent asset once recovery becomes merely probable.</strong> Probable is the disclosure threshold, not the recognition threshold — a contingent asset is only recognised once realisation is virtually certain, at which point it is simply an asset, not a contingent one.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 5 — Netting a reimbursement asset against the related provision on the balance sheet.</strong> Unless a legal right of set-off exists, the provision and any virtually certain reimbursement asset must be presented gross — only the P&amp;L expense may optionally be shown net of the expected reimbursement.</p>
+    </div>
+
+    <h2 id="faq">14. FAQs</h2>
+
+    <h3>What is the difference between a provision and a contingent liability under IND AS 37?</h3>
+    <p>A provision is recognised on the balance sheet because it meets all three criteria: a present obligation from a past event, a probable outflow of resources, and a reliable estimate. A contingent liability is not recognised — either because the obligation is only possible (its existence depends on an uncertain future event outside the entity's control), or because a present obligation exists but the outflow isn't probable or can't be reliably measured. Contingent liabilities are disclosed in the notes, not recorded as a liability.</p>
+
+    <h3>What are the three recognition criteria for a provision?</h3>
+    <p>A provision is recognised only when all three conditions are met: (1) the entity has a present obligation, legal or constructive, as a result of a past event; (2) it is probable (more likely than not) that an outflow of resources embodying economic benefits will be required to settle it; and (3) a reliable estimate can be made of the amount of the obligation. If any one condition fails, no provision is recognised.</p>
+
+    <h3>Can a company recognise a provision for future operating losses?</h3>
+    <p>No. Future operating losses don't arise from a past event — they relate to expected future activity, not an existing obligation — so IND AS 37 specifically prohibits recognising a provision for them. The one exception is that expected future losses can be a factor pointing to impairment of the related assets under IND AS 36, and losses embedded in an onerous contract are provided for separately under the onerous contract rules.</p>
+
+    <h3>When can a contingent asset be recognised on the balance sheet?</h3>
+    <p>Never, while it remains contingent. A contingent asset is only disclosed (not recognised) when the inflow of economic benefits is probable. It is recognised as an actual asset only when the realisation of income has become virtually certain — at which point, by definition, it is no longer a contingent asset at all, but a regular asset.</p>
+
+    <h3>What is an onerous contract under IND AS 37?</h3>
+    <p>An onerous contract is one where the unavoidable costs of meeting the contractual obligations exceed the economic benefits expected to be received under it. The present obligation under such a contract is recognised and measured as a provision, based on the lower of the cost of fulfilling the contract and any compensation or penalty from failing to fulfil it (i.e. the cost of exiting).</p>
+
+    <h3>When does a restructuring provision qualify for recognition?</h3>
+    <p>Only when the entity has a detailed formal plan for the restructuring identifying the business, locations, employees and expenditures involved, and has raised a valid expectation in those affected that it will carry out the restructuring — either by starting to implement the plan or by announcing its main features to those affected. A board decision alone, without communication, does not create a constructive obligation.</p>
+
+  </div>
+
+  <div class="related-links">
+    <h3>Related tools &amp; articles</h3>
+    <a href="../indas-tools.html">→ All IND AS Tools</a>
+    <a href="ind-as-36-impairment-of-assets-guide.html">→ IND AS 36 Impairment of Assets — Complete Guide</a>
+    <a href="ind-as-116-lease-accounting-guide.html">→ IND AS 116 Lease Accounting — Complete Guide</a>
+    <a href="ind-as-19-employee-benefits-guide.html">→ IND AS 19 Employee Benefits — Complete Guide</a>
+    <a href="ind-as-12-deferred-tax.html">→ IND AS 12 / IAS 12 Deferred Tax — Complete Guide</a>
+    <a href="../blog.html">← All Articles</a>
+  </div>
+
+</div>
+
+<div id="fs-footer"></div>
+<script src="../nav.js?v=9"></script>
+<script src="../footer.js?v=8"></script>
+<script src="../share.js"></script>
+</body>
+</html>
