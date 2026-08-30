@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>IND AS 36 Impairment of Assets — CGU, Value in Use & Goodwill Impairment Explained | Finosutra</title>
+<meta name="description" content="Complete guide to IND AS 36 Impairment of Assets — impairment indicators, recoverable amount (fair value less costs of disposal vs value in use), cash-generating units, goodwill allocation, the impairment loss waterfall, reversal rules, and a full worked example with journal entries."/>
+<meta name="keywords" content="IND AS 36 impairment of assets, cash generating unit CGU, value in use calculation, recoverable amount, goodwill impairment testing, IND AS 36 vs AS 28, impairment loss allocation, fair value less costs of disposal, IAS 36 India, ROU asset impairment"/>
+<meta name="author" content="Finosutra"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://finosutra.com/blog/ind-as-36-impairment-of-assets-guide.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Finosutra"/>
+<meta property="og:title" content="IND AS 36 Impairment of Assets — CGU, Value in Use & Goodwill Impairment Explained"/>
+<meta property="og:description" content="Impairment indicators, recoverable amount, cash-generating units, goodwill allocation, the impairment loss waterfall and reversal rules under IND AS 36 — with a full worked example and journal entries."/>
+<meta property="og:url" content="https://finosutra.com/blog/ind-as-36-impairment-of-assets-guide.html"/>
+<meta property="og:image" content="https://finosutra.com/og-image.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="IND AS 36 Impairment of Assets — Complete Guide"/>
+<meta name="twitter:description" content="Recoverable amount, CGUs, goodwill impairment allocation and reversal rules — with a full worked example."/>
+<meta name="twitter:image" content="https://finosutra.com/og-image.jpg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="../finosutra.css?v=16"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "IND AS 36 Impairment of Assets — CGU, Value in Use & Goodwill Impairment Explained",
+  "description": "Complete guide to IND AS 36 — impairment indicators, recoverable amount (fair value less costs of disposal vs value in use), cash-generating units, goodwill allocation, the impairment loss waterfall, reversal rules, and a full worked example with journal entries.",
+  "author": {"@type": "Organization", "name": "Finosutra"},
+  "publisher": {"@type": "Organization", "name": "Finosutra", "url": "https://finosutra.com"},
+  "datePublished": "2026-08-30",
+  "dateModified": "2026-08-30",
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://finosutra.com/blog/ind-as-36-impairment-of-assets-guide.html"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What is the recoverable amount under IND AS 36?", "acceptedAnswer": {"@type": "Answer", "text": "Recoverable amount is the higher of an asset's (or cash-generating unit's) fair value less costs of disposal and its value in use. Fair value less costs of disposal is what the entity could get selling the asset in an orderly transaction less disposal costs; value in use is the present value of the future cash flows expected from continuing to use the asset. An impairment loss only arises if the carrying amount exceeds this recoverable amount."}},
+    {"@type": "Question", "name": "When must goodwill be tested for impairment under IND AS 36?", "acceptedAnswer": {"@type": "Answer", "text": "Goodwill and intangible assets with an indefinite useful life must be tested for impairment at least annually, and whenever there is an indicator of impairment — regardless of whether any indicator is actually present. This mandatory annual test is stricter than the indicator-triggered testing that applies to other assets, because goodwill cannot generate cash flows independently and has no amortisation charge to signal a declining value."}},
+    {"@type": "Question", "name": "How is an impairment loss allocated within a cash-generating unit?", "acceptedAnswer": {"@type": "Answer", "text": "An impairment loss identified for a cash-generating unit (CGU) is allocated first to reduce the carrying amount of any goodwill allocated to that CGU. Any remaining loss is then allocated pro-rata to the other assets in the CGU based on their relative carrying amounts, subject to a floor — no individual asset can be written down below the highest of its own fair value less costs of disposal, its value in use (if determinable), or zero."}},
+    {"@type": "Question", "name": "Can an impairment loss be reversed under IND AS 36?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, for assets other than goodwill — if the estimates used to determine recoverable amount have changed favourably, the impairment loss can be reversed, but only up to the carrying amount (net of depreciation/amortisation) the asset would have had if no impairment had ever been recognised. An impairment loss recognised for goodwill can never be reversed in a subsequent period, even if the reasons for the original loss no longer exist."}},
+    {"@type": "Question", "name": "What discount rate is used to calculate value in use?", "acceptedAnswer": {"@type": "Answer", "text": "A pre-tax discount rate is used, reflecting current market assessments of the time value of money and the risks specific to the asset or CGU for which the cash flow estimates have not been adjusted. It is typically derived from the entity's weighted average cost of capital, incremental borrowing rate, or other market borrowing rates, adjusted to reflect the specific risks of the cash flows being discounted and grossed up to a pre-tax equivalent if built up from a post-tax rate."}},
+    {"@type": "Question", "name": "Does IND AS 36 apply to financial assets and inventory?", "acceptedAnswer": {"@type": "Answer", "text": "No. IND AS 36 specifically excludes assets already covered by their own impairment or measurement model — financial assets within the scope of IND AS 109 (tested under the expected credit loss model instead), inventories (IND AS 2), deferred tax assets (IND AS 12), assets arising from employee benefits (IND AS 19), investment property and biological assets carried at fair value, non-current assets held for sale (IND AS 105), and contract assets under IND AS 115. It does, however, apply to right-of-use assets recognised under IND AS 116."}}
+  ]
+}
+</script>
+<style>
+:root{
+  --brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;--brand-mid:#C7D2FE;
+  --bg:#F9FAFB;--card:#FFFFFF;--border:rgba(99,102,241,0.18);--border-light:rgba(99,102,241,0.08);
+  --text:#111827;--muted:#6B7280;--muted2:#9CA3AF;
+  --green:#059669;--green-light:#ECFDF5;
+  --red:#DC2626;--red-light:#FEF2F2;
+  --orange:#D97706;--orange-light:#FFFBEB;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+/* ARTICLE LAYOUT */
+.article-wrap{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+
+/* BREADCRUMB */
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted2);margin-bottom:24px;flex-wrap:wrap;}
+.breadcrumb a{color:var(--muted2);text-decoration:none;transition:color .15s;}
+.breadcrumb a:hover{color:var(--brand);}
+
+/* ARTICLE HEADER */
+.article-tag{display:inline-block;background:var(--brand-light);color:var(--brand);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.4px;margin-bottom:16px;}
+.article-title{font-size:clamp(24px,4vw,36px);font-weight:800;line-height:1.2;letter-spacing:-0.5px;color:var(--text);margin-bottom:16px;}
+.article-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--muted);margin-bottom:32px;flex-wrap:wrap;}
+.article-meta span{display:flex;align-items:center;gap:5px;}
+.article-divider{height:1px;background:var(--border-light);margin-bottom:36px;}
+
+/* TOC */
+.toc{background:var(--brand-light);border:1px solid var(--brand-mid);border-radius:14px;padding:22px 26px;margin-bottom:40px;}
+.toc h3{font-size:13px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;}
+.toc ol{padding-left:18px;}
+.toc ol li{margin-bottom:6px;}
+.toc ol li a{font-size:14px;color:var(--brand-dark);text-decoration:none;font-weight:500;}
+.toc ol li a:hover{text-decoration:underline;}
+
+/* PROSE */
+.article-body h2{font-size:22px;font-weight:800;color:var(--text);margin:40px 0 14px;letter-spacing:-0.3px;}
+.article-body h3{font-size:17px;font-weight:700;color:var(--text);margin:28px 0 10px;}
+.article-body p{margin-bottom:16px;color:#1F2937;}
+.article-body ul,.article-body ol{padding-left:22px;margin-bottom:16px;}
+.article-body ul li,.article-body ol li{margin-bottom:8px;color:#1F2937;}
+.article-body strong{font-weight:700;color:var(--text);}
+
+/* CALLOUT */
+.callout{background:var(--brand-light);border-left:4px solid var(--brand);border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0;}
+.callout p{margin:0;font-size:14px;color:var(--brand-dark);}
+.callout strong{color:var(--brand-dark);}
+.callout-green{background:var(--green-light);border-left-color:var(--green);}
+.callout-green p{color:#065F46;}
+.callout-orange{background:var(--orange-light);border-left-color:var(--orange);}
+.callout-orange p{color:#92400E;}
+.callout-red{background:var(--red-light);border-left-color:var(--red);}
+.callout-red p{color:#991B1B;}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:24px 0;}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:360px;}
+table th{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-weight:700;padding:10px 14px;text-align:left;}
+table th.r{text-align:right;}
+table td{padding:9px 14px;border-bottom:1px solid #F3F4F6;color:#1F2937;}
+table td.r{text-align:right;}
+table tr:nth-child(even) td{background:#F9FAFB;}
+table tr:last-child td{border-bottom:none;}
+table tfoot td{background:#EEF2FF;font-weight:700;border-top:2px solid var(--brand-mid);}
+
+/* JE BLOCK */
+.je-block{background:#F9FAFB;border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:20px 0;}
+.je-title{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px;}
+.je-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #F3F4F6;}
+.je-row:last-child{border-bottom:none;}
+.je-account{font-size:14px;font-weight:600;color:var(--text);}
+.je-account.cr{padding-left:24px;font-weight:500;color:var(--muted);}
+.je-amounts{display:flex;gap:32px;}
+.je-dr{font-size:14px;font-weight:700;color:#10B981;min-width:100px;text-align:right;}
+.je-cr{font-size:14px;font-weight:700;color:#6366F1;min-width:100px;text-align:right;}
+
+/* STEP CARD */
+.step-card{border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:16px 0;position:relative;padding-left:60px;}
+.step-num{position:absolute;left:18px;top:18px;width:28px;height:28px;background:var(--brand);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;}
+.step-card h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;margin-top:0;}
+.step-card p{font-size:14px;color:var(--muted);margin:0;}
+
+/* CTA */
+.cta-box{background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:16px;padding:28px 30px;margin:40px 0;text-align:center;}
+.cta-box h3{font-size:18px;font-weight:800;color:#fff;margin-bottom:8px;}
+.cta-box p{font-size:14px;color:rgba(255,255,255,.85);margin-bottom:18px;}
+.cta-box a{display:inline-block;background:#fff;color:var(--brand);font-size:14px;font-weight:700;padding:12px 26px;border-radius:10px;text-decoration:none;transition:transform .15s;}
+.cta-box a:hover{transform:translateY(-1px);}
+
+/* RELATED */
+.related-links{border:1px solid var(--border-light);border-radius:12px;padding:20px 24px;margin-top:40px;}
+.related-links h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;}
+.related-links a{display:block;font-size:14px;color:var(--brand);text-decoration:none;padding:6px 0;border-bottom:1px solid var(--border-light);font-weight:500;}
+.related-links a:last-child{border-bottom:none;}
+.related-links a:hover{text-decoration:underline;}
+
+@media(max-width:600px){.article-wrap{padding:32px 16px 60px;}.je-amounts{gap:16px;}.step-card{padding-left:50px;}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../auth.js?v=11"></script>
+</head>
+<body>
+
+<div id="fs-nav"></div>
+
+<div class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span>›</span>
+    <a href="../blog.html">Blog</a>
+    <span>›</span>
+    <span>IND AS 36 Impairment of Assets</span>
+  </nav>
+
+  <div class="article-tag">IND AS 36 / IAS 36</div>
+  <h1 class="article-title">IND AS 36 Impairment of Assets — CGU, Value in Use & Goodwill Impairment Explained</h1>
+  <div class="article-meta">
+    <span><i class="fa-regular fa-calendar"></i> August 2026</span>
+    <span><i class="fa-regular fa-clock"></i> 18 min read</span>
+    <span><i class="fa-solid fa-user"></i> Finosutra Team</span>
+  </div>
+  <div class="article-divider"></div>
+
+  <div class="toc">
+    <h3>In This Article</h3>
+    <ol>
+      <li><a href="#overview">What IND AS 36 Covers — Objective, Scope &amp; Exclusions</a></li>
+      <li><a href="#indicators">When to Test for Impairment — Indicators vs Mandatory Annual Testing</a></li>
+      <li><a href="#recoverable-amount">Recoverable Amount — FVLCD vs Value in Use</a></li>
+      <li><a href="#viu">Value in Use — Cash Flow Projections and the Discount Rate</a></li>
+      <li><a href="#cgu">Cash-Generating Units (CGUs)</a></li>
+      <li><a href="#goodwill">Goodwill and Corporate Assets — Allocation to CGUs</a></li>
+      <li><a href="#allocation">Recognising and Allocating an Impairment Loss</a></li>
+      <li><a href="#example">Worked Example — CGU Impairment with Goodwill</a></li>
+      <li><a href="#reversal">Reversal of Impairment Losses</a></li>
+      <li><a href="#rou">Right-of-Use Assets and IND AS 36</a></li>
+      <li><a href="#vs-as28">IND AS 36 vs Old IGAAP (AS 28) — Key Differences</a></li>
+      <li><a href="#disclosures">Disclosures Required</a></li>
+      <li><a href="#errors">Common Mistakes CAs Make</a></li>
+      <li><a href="#faq">FAQs</a></li>
+    </ol>
+  </div>
+
+  <div class="article-body">
+
+    <h2 id="overview">1. What IND AS 36 Covers — Objective, Scope &amp; Exclusions</h2>
+    <p>IND AS 36 exists to make sure assets are never carried on the balance sheet at more than their <strong>recoverable amount</strong> — the amount the entity could actually get back from the asset, whether by selling it or by continuing to use it. When the carrying amount exceeds that, the asset is impaired and must be written down, with the loss recognised immediately.</p>
+
+    <p>The standard applies broadly to property, plant and equipment, intangible assets, goodwill, and — importantly for lessees — <strong>right-of-use assets recognised under IND AS 116</strong>. But several asset classes are carved out because they already have their own, more appropriate measurement or impairment model:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Excluded asset</th><th>Governed instead by</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Inventories</td><td>IND AS 2</td></tr>
+          <tr><td>Contract assets and costs to obtain/fulfil a contract</td><td>IND AS 115 Revenue Recognition</td></tr>
+          <tr><td>Deferred tax assets</td><td>IND AS 12 Deferred Tax</td></tr>
+          <tr><td>Assets arising from employee benefits (e.g. a net defined benefit asset)</td><td>IND AS 19 Employee Benefits</td></tr>
+          <tr><td>Financial assets within scope of IND AS 109 (trade receivables, loans, investments)</td><td>IND AS 109 — Expected Credit Loss (ECL) model</td></tr>
+          <tr><td>Investment property and biological assets measured at fair value</td><td>IND AS 40 / IND AS 41</td></tr>
+          <tr><td>Non-current assets classified as held for sale</td><td>IND AS 105</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><strong>A common scope confusion:</strong> trade receivables and loans are impaired under IND AS 109's expected credit loss model, not IND AS 36 — the two standards' impairment mechanics (probability-weighted ECL vs recoverable-amount comparison) are entirely different and shouldn't be mixed up, even though both use the word "impairment."</p>
+    </div>
+
+    <h2 id="indicators">2. When to Test for Impairment — Indicators vs Mandatory Annual Testing</h2>
+    <p>For most assets, a full impairment test is only required when there's a reason to suspect impairment. At the end of each reporting period, an entity assesses whether any <strong>indicator</strong> exists — external or internal — that an asset may be impaired:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>External indicators</th><th>Internal indicators</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Significant decline in the asset's market value beyond normal use/passage of time</td><td>Evidence of obsolescence or physical damage</td></tr>
+          <tr><td>Adverse changes in the technological, market, economic or legal environment</td><td>Significant changes in how the asset is used or is expected to be used (idle, discontinuation plans, restructuring)</td></tr>
+          <tr><td>Increases in market interest rates affecting the discount rate used in value-in-use calculations</td><td>Internal reporting evidence that an asset's economic performance is worse than expected</td></tr>
+          <tr><td>Carrying amount of the entity's net assets exceeds its market capitalisation</td><td>&nbsp;</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-orange">
+      <p><strong>Goodwill and intangible assets with an indefinite useful life are different:</strong> these must be tested for impairment <strong>at least annually</strong>, regardless of whether any indicator exists. There's no amortisation charge to flag a declining value over time, so the standard doesn't leave annual testing to judgement.</p>
+    </div>
+
+    <h2 id="recoverable-amount">3. Recoverable Amount — FVLCD vs Value in Use</h2>
+    <p>Recoverable amount is the <strong>higher</strong> of two measures — because an entity would only impair the asset below whichever value it could actually realise:</p>
+
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <h3>Fair value less costs of disposal (FVLCD)</h3>
+      <p>What the entity could obtain from selling the asset in an orderly transaction between market participants, less the incremental costs directly attributable to the disposal.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <h3>Value in use (VIU)</h3>
+      <p>The present value of the future cash flows expected to be derived from continuing to use the asset and from its ultimate disposal.</p>
+    </div>
+
+    <p>If either measure exceeds the asset's carrying amount, there is no impairment and it isn't necessary to calculate the other — for instance, if FVLCD alone already exceeds carrying amount, VIU doesn't need to be computed at all.</p>
+
+    <h2 id="viu">4. Value in Use — Cash Flow Projections and the Discount Rate</h2>
+    <p>Value in use is a discounted cash flow calculation, but IND AS 36 is prescriptive about what goes into it:</p>
+    <ul>
+      <li>Cash flow projections should be based on <strong>reasonable and supportable assumptions</strong>, giving greater weight to external evidence, and based on the most recent financial budgets/forecasts approved by management — typically covering a maximum of five years unless a longer period can be justified.</li>
+      <li>Cash flows beyond the explicit forecast period are extrapolated using a <strong>steady or declining growth rate</strong>, which should not exceed the long-term average growth rate for the products, industry, or country, unless a higher rate can be justified.</li>
+      <li>Estimates must <strong>exclude</strong> cash inflows/outflows from financing activities, income tax receipts/payments, and any cash flows expected from a future restructuring or from improving/enhancing the asset's performance — the calculation reflects the asset's condition <em>as it currently stands</em>.</li>
+      <li>The <strong>discount rate</strong> must be a <strong>pre-tax</strong> rate that reflects current market assessments of the time value of money and the risks specific to the asset, for which the cash flow estimates have not already been adjusted.</li>
+    </ul>
+
+    <div class="callout callout-red">
+      <p><strong>Mixing pre-tax and post-tax bases is the single most common technical error in a value-in-use calculation.</strong> If a post-tax discount rate is more readily available (e.g. derived from a market-observed WACC), it must be grossed up to a pre-tax equivalent — discounting pre-tax cash flows at a post-tax rate (or vice versa) systematically misstates the result.</p>
+    </div>
+
+    <h2 id="cgu">5. Cash-Generating Units (CGUs)</h2>
+    <p>Many assets don't generate cash inflows independently — a single production line, for instance, is worthless without the rest of the factory around it. Where an asset's recoverable amount can't be estimated individually, IND AS 36 requires testing at the level of its <strong>cash-generating unit (CGU)</strong>:</p>
+
+    <div class="callout">
+      <p><strong>A CGU is the smallest identifiable group of assets that generates cash inflows that are largely independent of the cash inflows from other assets or groups of assets.</strong> Identifying the right CGU boundary is a matter of judgement based on how management monitors operations (e.g. by product line, plant, or region) — and is one of the most consequential judgement calls in the entire impairment test, since it determines what carrying amount gets compared against what recoverable amount.</p>
+    </div>
+
+    <p>Once identified, CGUs should be applied <strong>consistently</strong> from period to period for the same asset or type of asset, unless a change is justified.</p>
+
+    <h2 id="goodwill">6. Goodwill and Corporate Assets — Allocation to CGUs</h2>
+    <p>Goodwill doesn't generate cash flows independently of other assets, so it can never be tested on its own. From the acquisition date, goodwill acquired in a business combination is allocated to each of the acquirer's CGUs (or groups of CGUs) expected to benefit from the synergies of the combination — this allocation should represent the lowest level at which goodwill is monitored for internal management purposes, and cannot be larger than an operating segment.</p>
+
+    <p><strong>Corporate assets</strong> — head-office buildings, a shared R&amp;D centre, a group IT system — similarly don't generate independent cash inflows and can't be allocated to a single CGU on a reasonable and consistent basis. These are tested by identifying the smallest group of CGUs to which a reasonable and consistent allocation basis can be identified, and comparing that combined carrying amount (including the allocated portion of the corporate asset) to its recoverable amount.</p>
+
+    <h2 id="allocation">7. Recognising and Allocating an Impairment Loss</h2>
+    <p>Once a CGU's carrying amount is found to exceed its recoverable amount, the impairment loss is allocated in a strict order — this waterfall is one of the standard's most tested mechanics:</p>
+
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <h3>Reduce goodwill first</h3>
+      <p>The impairment loss is applied first to write down any goodwill allocated to the CGU, up to its full carrying amount.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <h3>Allocate the remainder pro-rata</h3>
+      <p>Any loss remaining after goodwill is exhausted is allocated to the CGU's other assets, pro-rata based on the carrying amount of each asset.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <h3>Respect the individual asset floor</h3>
+      <p>No asset can be written down below the highest of its own fair value less costs of disposal (if determinable), its value in use (if determinable), or zero — any excess that can't be allocated because of this floor is spread across the other assets instead.</p>
+    </div>
+
+    <p>An impairment loss is recognised immediately in <strong>profit or loss</strong>, unless the asset is carried at a revalued amount under another standard (e.g. the revaluation model in IND AS 16), in which case it is treated as a revaluation decrease — first absorbed against any revaluation surplus for that asset in OCI, with any excess charged to profit or loss.</p>
+
+    <h2 id="example">8. Worked Example — CGU Impairment with Goodwill</h2>
+
+    <div class="callout">
+      <p><strong>Scenario:</strong> Bharat Components Ltd operates a manufacturing CGU acquired three years ago. At the reporting date, the CGU's carrying amounts are: <strong>Goodwill ₹20,00,000</strong>, <strong>Plant &amp; Machinery ₹40,00,000</strong>, <strong>Building ₹40,00,000</strong>, and a <strong>Brand intangible ₹20,00,000</strong> — a total carrying amount of <strong>₹1,20,00,000</strong>. A sustained fall in end-market demand is an impairment indicator, triggering a full test.</p>
+    </div>
+
+    <h3>Step 1 — Determine Recoverable Amount</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Basis</th><th class="r">Amount (₹)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Fair value less costs of disposal (recent comparable transaction, less 5% disposal costs)</td><td class="r">85,00,000</td></tr>
+          <tr><td>Value in use (5-year cash flow projections discounted at a pre-tax rate of 13%, reflecting the CGU's specific risk)</td><td class="r">90,00,000</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><td>Recoverable amount (higher of the two)</td><td class="r">90,00,000</td></tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <h3>Step 2 — Calculate the Impairment Loss</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th></th><th class="r">Amount (₹)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Carrying amount of the CGU</td><td class="r">1,20,00,000</td></tr>
+          <tr><td>Recoverable amount</td><td class="r">90,00,000</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><td>Impairment loss</td><td class="r">30,00,000</td></tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <h3>Step 3 — Allocate the Loss (Goodwill First, Then Pro-Rata)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Asset</th><th class="r">Carrying Amount (₹)</th><th class="r">Impairment Allocated (₹)</th><th class="r">Carrying Amount After (₹)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Goodwill</td><td class="r">20,00,000</td><td class="r">20,00,000</td><td class="r">0</td></tr>
+          <tr><td>Plant &amp; Machinery (40% of remaining base)</td><td class="r">40,00,000</td><td class="r">4,00,000</td><td class="r">36,00,000</td></tr>
+          <tr><td>Building (40% of remaining base)</td><td class="r">40,00,000</td><td class="r">4,00,000</td><td class="r">36,00,000</td></tr>
+          <tr><td>Brand (20% of remaining base)</td><td class="r">20,00,000</td><td class="r">2,00,000</td><td class="r">18,00,000</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><td>Total</td><td class="r">1,20,00,000</td><td class="r">30,00,000</td><td class="r">90,00,000</td></tr>
+        </tfoot>
+      </table>
+    </div>
+    <p>Goodwill absorbs the first ₹20,00,000 of the loss in full, since it's less than the total ₹30,00,000 impairment. The remaining ₹10,00,000 is then spread pro-rata across Plant &amp; Machinery, Building and Brand, based on their relative carrying amounts (40:40:20 of the ₹1,00,00,000 non-goodwill base) — ₹4,00,000, ₹4,00,000 and ₹2,00,000 respectively. The post-impairment total of ₹90,00,000 ties back exactly to the recoverable amount.</p>
+
+    <h3>Journal Entry</h3>
+    <div class="je-block">
+      <div class="je-title">Recognise the impairment loss in profit or loss</div>
+      <div class="je-row">
+        <span class="je-account">Impairment Loss (P&amp;L)</span>
+        <div class="je-amounts"><span class="je-dr">Dr 30,00,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Accumulated Impairment — Goodwill</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 20,00,000</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Accumulated Impairment — Plant &amp; Machinery</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 4,00,000</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Accumulated Impairment — Building</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 4,00,000</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Accumulated Impairment — Brand</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 2,00,000</span></div>
+      </div>
+    </div>
+
+    <div class="cta-box">
+      <h3>Explore Finosutra's IND AS tools</h3>
+      <p>Free calculators for lease accounting, security deposits, ECL provisioning and financial statement generation — audit-ready workpapers in minutes.</p>
+      <a href="../indas-tools.html">Explore IND AS Tools →</a>
+    </div>
+
+    <h2 id="reversal">9. Reversal of Impairment Losses</h2>
+    <p>At each reporting date, an entity also assesses whether there's any indication that a <strong>previously recognised</strong> impairment loss may no longer exist or may have decreased. If so, recoverable amount is re-estimated and the loss reversed — but with two important limits:</p>
+
+    <div class="callout callout-green">
+      <p><strong>The reversal is capped</strong> at the carrying amount (net of depreciation/amortisation) the asset would have had if no impairment loss had been recognised in prior years. This prevents a reversal from effectively re-recognising a fictitious upward revaluation.</p>
+    </div>
+    <div class="callout callout-red">
+      <p><strong>An impairment loss recognised for goodwill is never reversed</strong> in a later period — even if the specific external event that caused it clearly no longer applies. This asymmetry exists because an apparent recovery in goodwill's value is more likely to reflect internally generated goodwill (which IND AS 38 prohibits recognising) than a genuine reversal of the original loss.</p>
+    </div>
+
+    <h2 id="rou">10. Right-of-Use Assets and IND AS 36</h2>
+    <p>Right-of-use (ROU) assets recognised by a lessee under IND AS 116 are <strong>within the scope of IND AS 36</strong> and are tested using the same recoverable-amount and CGU framework as any other non-financial asset. In practice, an ROU asset is rarely tested in isolation — it's usually part of the CGU that includes the leased premises or equipment along with the other assets used in that operation (e.g. a retail store's fit-out, or a factory's plant sitting inside leased premises).</p>
+    <p>A common trigger is a lease that has become <strong>onerous</strong> — where the unavoidable costs of meeting the lease obligations exceed the economic benefits expected from it (e.g. a retail unit closed early due to a shift to online sales, with rent still payable under a non-cancellable lease). That assessment is made through the same IND AS 36 impairment test applied to the CGU containing the ROU asset, not through a separate onerous-contract provision under IND AS 37 — the two standards don't overlap on this point precisely because ROU assets are explicitly brought into IND AS 36's scope.</p>
+
+    <h2 id="vs-as28">11. IND AS 36 vs Old IGAAP (AS 28) — Key Differences</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Aspect</th><th>Old IGAAP (AS 28)</th><th>IND AS 36</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Goodwill impairment testing</td><td>Goodwill on amalgamation was generally amortised under AS 14/the Companies Act, not subjected to a structured mandatory annual impairment regime</td><td>Goodwill arising on a business combination is not amortised; it is mandatorily tested for impairment at least annually</td></tr>
+          <tr><td>Indefinite-life intangibles</td><td>No concept — AS 26 imposed a rebuttable presumption that useful life does not exceed 10 years, so all intangibles were amortised</td><td>IND AS 38 permits an indefinite useful life where no foreseeable limit exists to the period generating cash flows; such intangibles are not amortised but tested for impairment annually</td></tr>
+          <tr><td>Core recoverable amount / CGU mechanics</td><td>Substantially similar — AS 28 already introduced the recoverable amount and CGU concepts</td><td>Broadly converged with AS 28's mechanics, carried forward largely unchanged</td></tr>
+          <tr><td>Discount rate</td><td>Pre-tax rate required, similar principle</td><td>Same pre-tax rate principle, with more detailed application guidance</td></tr>
+          <tr><td>Reversal of goodwill impairment</td><td>Prohibited</td><td>Prohibited — unchanged</td></tr>
+          <tr><td>Disclosures</td><td>Limited — recognised/reversed amounts by class of asset</td><td>Extensive — key assumptions (discount rate, growth rate) used for each CGU with significant goodwill, and sensitivity to reasonably possible changes in those assumptions</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="disclosures">12. Disclosures Required</h2>
+    <p>IND AS 36 requires disclosures that let users understand how much impairment activity affected the financials and how sensitive the underlying estimates are, including:</p>
+    <ul>
+      <li><strong>Impairment losses and reversals</strong> recognised in profit or loss (and the line item they're included in), and any recognised in OCI, by class of asset and by reportable segment</li>
+      <li>For each CGU (or group of CGUs) with goodwill or indefinite-life intangibles allocated to it that is <strong>significant</strong> in comparison to the entity's total carrying amount of goodwill/indefinite-life intangibles — the carrying amount allocated, the basis of recoverable amount (FVLCD or VIU), and the key assumptions used (discount rate, growth rate, and how they were determined)</li>
+      <li><strong>Sensitivity disclosure</strong> — where a reasonably possible change in a key assumption would cause the CGU's carrying amount to exceed its recoverable amount, the amount by which recoverable amount exceeds carrying amount and the sensitivity of each key assumption</li>
+      <li>A description of events and circumstances that led to the recognition or reversal of an impairment loss</li>
+    </ul>
+
+    <h2 id="errors">13. Common Mistakes CAs Make</h2>
+
+    <div class="callout callout-red">
+      <p><strong>Error 1 — Testing individual assets in isolation when they don't generate independent cash flows.</strong> A single machine on a production line almost never has its own recoverable amount — the test should be performed at the CGU level, not by looking at one asset in a chain of interdependent equipment.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 2 — Mixing pre-tax and post-tax figures in the value-in-use calculation.</strong> Building a discount rate from a post-tax WACC and applying it directly to pre-tax cash flow projections (or vice versa) is the most frequent technical slip in a VIU model, and materially skews the result in either direction.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 3 — Allocating the impairment loss pro-rata across all assets, including goodwill.</strong> Goodwill must absorb the loss first, in full (up to its carrying amount), before any remainder is spread pro-rata across the CGU's other assets — treating goodwill as just another asset in the pro-rata pool understates the write-down other assets should bear less of.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 4 — Skipping the annual goodwill test because "there were no obvious indicators."</strong> The indicator-based trigger only applies to ordinary assets. Goodwill and indefinite-life intangibles require a mandatory annual test regardless of whether any indicator exists.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 5 — Reversing a goodwill impairment when the CGU's performance later recovers.</strong> No matter how clearly the original cause of impairment has reversed, a goodwill impairment loss is never written back — reversal is only available for the CGU's other identifiable assets, capped at their pre-impairment depreciated carrying amount.</p>
+    </div>
+
+    <h2 id="faq">14. FAQs</h2>
+
+    <h3>What is the recoverable amount under IND AS 36?</h3>
+    <p>Recoverable amount is the higher of an asset's (or cash-generating unit's) fair value less costs of disposal and its value in use. Fair value less costs of disposal is what the entity could get selling the asset in an orderly transaction less disposal costs; value in use is the present value of the future cash flows expected from continuing to use the asset. An impairment loss only arises if the carrying amount exceeds this recoverable amount.</p>
+
+    <h3>When must goodwill be tested for impairment under IND AS 36?</h3>
+    <p>Goodwill and intangible assets with an indefinite useful life must be tested for impairment at least annually, and whenever there is an indicator of impairment — regardless of whether any indicator is actually present. This mandatory annual test is stricter than the indicator-triggered testing that applies to other assets, because goodwill cannot generate cash flows independently and has no amortisation charge to signal a declining value.</p>
+
+    <h3>How is an impairment loss allocated within a cash-generating unit?</h3>
+    <p>An impairment loss identified for a cash-generating unit (CGU) is allocated first to reduce the carrying amount of any goodwill allocated to that CGU. Any remaining loss is then allocated pro-rata to the other assets in the CGU based on their relative carrying amounts, subject to a floor — no individual asset can be written down below the highest of its own fair value less costs of disposal, its value in use (if determinable), or zero.</p>
+
+    <h3>Can an impairment loss be reversed under IND AS 36?</h3>
+    <p>Yes, for assets other than goodwill — if the estimates used to determine recoverable amount have changed favourably, the impairment loss can be reversed, but only up to the carrying amount (net of depreciation/amortisation) the asset would have had if no impairment had ever been recognised. An impairment loss recognised for goodwill can never be reversed in a subsequent period, even if the reasons for the original loss no longer exist.</p>
+
+    <h3>What discount rate is used to calculate value in use?</h3>
+    <p>A pre-tax discount rate is used, reflecting current market assessments of the time value of money and the risks specific to the asset or CGU for which the cash flow estimates have not been adjusted. It is typically derived from the entity's weighted average cost of capital, incremental borrowing rate, or other market borrowing rates, adjusted to reflect the specific risks of the cash flows being discounted and grossed up to a pre-tax equivalent if built up from a post-tax rate.</p>
+
+    <h3>Does IND AS 36 apply to financial assets and inventory?</h3>
+    <p>No. IND AS 36 specifically excludes assets already covered by their own impairment or measurement model — financial assets within the scope of IND AS 109 (tested under the expected credit loss model instead), inventories (IND AS 2), deferred tax assets (IND AS 12), assets arising from employee benefits (IND AS 19), investment property and biological assets carried at fair value, non-current assets held for sale (IND AS 105), and contract assets under IND AS 115. It does, however, apply to right-of-use assets recognised under IND AS 116.</p>
+
+  </div>
+
+  <div class="related-links">
+    <h3>Related tools &amp; articles</h3>
+    <a href="../indas-tools.html">→ All IND AS Tools</a>
+    <a href="ind-as-116-lease-accounting-guide.html">→ IND AS 116 Lease Accounting — Complete Guide</a>
+    <a href="ind-as-109-financial-instruments-guide.html">→ IND AS 109 Financial Instruments — Complete Guide</a>
+    <a href="ind-as-19-employee-benefits-guide.html">→ IND AS 19 Employee Benefits — Complete Guide</a>
+    <a href="ind-as-12-deferred-tax.html">→ IND AS 12 / IAS 12 Deferred Tax — Complete Guide</a>
+    <a href="../blog.html">← All Articles</a>
+  </div>
+
+</div>
+
+<div id="fs-footer"></div>
+<script src="../nav.js?v=9"></script>
+<script src="../footer.js?v=8"></script>
+<script src="../share.js"></script>
+</body>
+</html>
