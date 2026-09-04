@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-<link rel="stylesheet" href="finosutra.css?v=16"/>
+<link rel="stylesheet" href="finosutra.css?v=17"/>
 <style>
 /* Scroll-reveal — homepage only, additive classes so nothing shared is touched. */
 .fs-reveal {
@@ -76,7 +76,7 @@
 {"@context":"https://schema.org","@type":"Organization","name":"Finosutra","url":"https://finosutra.com","logo":"https://finosutra.com/favicon.svg","description":"Finance automation tools for CAs, CFOs and finance teams in India.","email":"hello@finosutra.com","address":{"@type":"PostalAddress","addressLocality":"Mumbai","addressCountry":"IN"},"sameAs":["https://www.linkedin.com/company/124543898/"]}
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="auth.js?v=11"></script>
+<script src="auth.js?v=12"></script>
 </head>
 <body>
 
@@ -262,7 +262,8 @@
     </div>
 
     <div class="fs-reveal-group">
-    <div class="fs-xl-scroll">
+    <div class="fs-xl-proof-wrap">
+    <div class="fs-xl-scroll" id="xlScroll">
       <div class="fs-xl-window">
         <div class="fs-xl-titlebar">
           <div class="fs-xl-dots"><span></span><span></span><span></span></div>
@@ -304,6 +305,9 @@
         </div>
       </div>
     </div>
+    <div class="fs-xl-scroll-fade" aria-hidden="true"></div>
+    </div>
+    <div class="fs-xl-scroll-hint" id="xlScrollHint" aria-hidden="true"><i class="fa-solid fa-arrows-left-right"></i> Swipe to see the full sheet</div>
     </div>
 
     <p style="text-align:center;font-size:13px;margin-top:22px;">
@@ -462,7 +466,7 @@
         <div style="font-size:12px;color:#64748B;" id="pro-price-sub">billed monthly</div>
         <ul class="fs-price-features">
           <li>Unlimited Excel exports</li>
-          <li>All 5 paid tools</li>
+          <li>Full Lease Workspace access</li>
           <li>Multi-lease portfolio</li>
           <li>Consolidated Excel workbook</li>
           <li>Cancel anytime</li>
@@ -522,8 +526,8 @@
           </tr>
           <tr>
             <td>Lease modification calculator (Para 45/46)</td>
-            <td class="dash">&mdash;</td>
-            <td class="dash">&mdash;</td>
+            <td class="check">&#10003;</td>
+            <td class="check">&#10003;</td>
             <td class="highlight check">&#10003;</td>
           </tr>
           <tr>
@@ -653,6 +657,23 @@ function handleFormSubmit(e) {
 </script>
 <script src="nav.js?v=9"></script>
 <script src="footer.js?v=8"></script>
+<script>
+(function(){
+  // Hide the "swipe to see more" cue once the workbook mockup has been
+  // scrolled to its right edge — it only needs to teach the gesture once.
+  var scroller = document.getElementById('xlScroll');
+  if (!scroller) return;
+  var fade = document.querySelector('.fs-xl-scroll-fade');
+  var hint = document.getElementById('xlScrollHint');
+  function checkScrollEnd(){
+    var atEnd = scroller.scrollLeft + scroller.clientWidth >= scroller.scrollWidth - 4;
+    if (fade) fade.classList.toggle('is-hidden', atEnd);
+    if (hint) hint.classList.toggle('is-hidden', atEnd);
+  }
+  scroller.addEventListener('scroll', checkScrollEnd, { passive: true });
+  checkScrollEnd();
+})();
+</script>
 <script>
 (function(){
   var targets = document.querySelectorAll('.fs-reveal, .fs-reveal-group');

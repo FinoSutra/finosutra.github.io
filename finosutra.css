@@ -1801,7 +1801,35 @@ h4 { font-size: 16px; }
 
 /* ── Proof section — "The Workbook" (real calculated output styled as an
    actual Excel window, not a mockup) ──────────────────────────────── */
+.fs-xl-proof-wrap { position: relative; }
 .fs-xl-scroll { overflow-x: auto; }
+.fs-xl-scroll-fade {
+  display: none;
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 28px;
+  background: linear-gradient(to right, rgba(15,23,42,0), rgba(15,23,42,0.14));
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.fs-xl-scroll-fade.is-hidden { opacity: 0; }
+.fs-xl-scroll-hint {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--fs-muted);
+  margin-top: 10px;
+  transition: opacity 0.2s ease;
+}
+.fs-xl-scroll-hint.is-hidden { opacity: 0; }
+.fs-xl-scroll-hint i { color: var(--fs-blue); font-size: 11px; }
+@media (max-width: 680px) {
+  .fs-xl-scroll-fade { display: block; }
+  .fs-xl-scroll-hint { display: flex; }
+}
 .fs-xl-window {
   min-width: 600px;
   background: #FFFFFF;
