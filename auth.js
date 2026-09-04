@@ -140,6 +140,14 @@
       '.fs-um-btn-primary{background:#15222C;color:#fff;box-shadow:0 4px 14px rgba(21,34,44,.3);}',
       /* Social proof + footer */
       '.fs-um-quota{background:#EEF2FF;border:1px solid #C7D2FE;border-radius:10px;padding:9px 14px;font-size:12px;color:#4338CA;margin-bottom:14px;text-align:center;font-family:Inter,sans-serif;line-height:1.5;}',
+      /* Anonymous-only login nudge — shown instead of a plain quota line so
+         a visitor whose device-local quota is exhausted sees "log in" as the
+         first, most prominent option, before the paid ones. Hidden by
+         default; fsShowUpgradeModal() toggles it based on global.currentUser. */
+      '.fs-um-login-row{display:none;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;background:#F0F5FA;border:1px solid #C9DCEA;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#1E3A5C;text-align:center;line-height:1.5;font-family:Inter,sans-serif;}',
+      '.fs-um-login-row.show{display:flex;}',
+      '.fs-um-login-btn{flex-shrink:0;background:#15222C;color:#fff;border:none;border-radius:8px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:Inter,sans-serif;transition:opacity .15s;}',
+      '.fs-um-login-btn:hover{opacity:.88;}',
       '.fs-um-social{text-align:center;font-size:11px;color:#9CA3AF;margin-bottom:10px;font-family:Inter,sans-serif;}',
       '.fs-um-social strong{color:#6B7280;}',
       '.fs-um-footer{text-align:center;font-size:11px;color:#C4C4CC;font-family:Inter,sans-serif;padding-top:10px;border-top:1px solid #F3F4F6;}',
@@ -289,6 +297,10 @@
             '</div>' +
           '</div>' +
           '<div class="fs-um-quota" id="fsUmQuotaLine">&#127881; You\'ve used your <strong>' + FREE_DOWNLOADS_PER_MONTH + ' free downloads</strong> for this month. Grab this one for &#8377;' + ONE_TIME_EXPORT_PRICE + ', or go Pro for unlimited.</div>' +
+          '<div class="fs-um-login-row" id="fsUmLoginRow">' +
+            '<span>&#128274; Free downloads are tied to <em>this browser</em> right now &mdash; log in to keep them on your account, synced everywhere.</span>' +
+            '<button class="fs-um-login-btn" onclick="fsCloseUpgradeModal();fsShowAuthModal(\'login\')">Log in &mdash; it\'s free &#8594;</button>' +
+          '</div>' +
           '<div class="fs-um-chips">' +
             '<span class="fs-um-chip">&#10003; Amortization schedule</span>' +
             '<span class="fs-um-chip">&#10003; Journal entries</span>' +
@@ -393,6 +405,14 @@
     var ok = fsRunExportFn('PAID');
     if (ok) {
       global.showToast('✓ Downloading your report…', '#5EC98A');
+      // Same tracking as the direct-success path above — this is the
+      // recovery-banner retry (payment succeeded, first export attempt
+      // didn't), so it's a genuine download completing too and must be
+      // counted, or "downloads today" undercounts by exactly the cases
+      // this banner exists to rescue.
+      if (typeof global.gaEvent === 'function') {
+        global.gaEvent('excel_downloaded', { trigger: 'one_time_paid_retry', page: location.pathname });
+      }
       setTimeout(fsClearOneTimePaid, 4000);
     } else {
       global.showToast('Still couldn\'t generate the file — please recalculate on this page, then click Download Now again.', '#FF8A80');
@@ -422,8 +442,14 @@
     if (line) {
       line.innerHTML = global.currentUser
         ? '&#127881; You\'ve used your <strong>' + FREE_DOWNLOADS_PER_MONTH + ' free downloads</strong> for this month. Grab this one for &#8377;' + ONE_TIME_EXPORT_PRICE + ', or go Pro for unlimited.'
-        : '&#127881; You\'ve used your <strong>' + FREE_DOWNLOADS_PER_MONTH + ' free downloads</strong> for this month. Grab this one for &#8377;' + ONE_TIME_EXPORT_PRICE + ' &mdash; no account needed. Or log in and go Pro for unlimited.';
+        : '&#127881; You\'ve used your <strong>' + FREE_DOWNLOADS_PER_MONTH + ' free downloads</strong> on this browser this month.';
     }
+    // Anonymous visitors only: their quota is device-local (localStorage),
+    // not account-based, so put "log in" first — before the paid options —
+    // instead of burying it in the quota sentence. Logged-in users' quota
+    // is already server-tracked and permanent, so they never see this row.
+    var loginRow = document.getElementById('fsUmLoginRow');
+    if (loginRow) loginRow.classList.toggle('show', !global.currentUser);
     var o = document.getElementById('fsUpgradeOverlay');
     if (o) o.classList.add('show');
     if (typeof global.gtag === 'function') {
@@ -561,6 +587,13 @@
         setTimeout(function () {
           var ok = fsRunExportFn('PAID');
           if (ok) {
+            // Same event name/shape as the free/anon/Pro download paths so
+            // "excel_downloaded today" is one number across every tier —
+            // the ecommerce `purchase` event above covers revenue, this
+            // one covers download-count reporting.
+            if (typeof global.gaEvent === 'function') {
+              global.gaEvent('excel_downloaded', { trigger: 'one_time_paid', page: location.pathname });
+            }
             setTimeout(fsClearOneTimePaid, 4000);
           } else {
             // Export failed right after a confirmed charge — surface the
@@ -1185,8 +1218,16 @@
   });
 
   // ── Backward-compat aliases ───────────────────────────────────────────────────
-  global.showAuthModal    = global.fsShowAuthModal    = function(){ var o=document.getElementById('fsAuthOverlay'); if(o) o.style.display='flex'; };
-  global.closeAuthModal   = global.fsCloseAuthModal   = function(){ var o=document.getElementById('fsAuthOverlay'); if(o) o.style.display='none'; };
+  // Point the un-prefixed legacy names at the real implementations above —
+  // this used to *reassign* fsShowAuthModal/fsCloseAuthModal to bare stubs
+  // that ignored the tab argument and skipped the field-reset/focus logic,
+  // silently breaking every fsShowAuthModal('login'|'signup'|'forgot') call
+  // on the site (nav bar Sign In, signup CTAs, the forgot-password redirect)
+  // since this ran unconditionally after the real definitions. Nothing in
+  // this codebase actually calls the un-prefixed names, but keep them as
+  // aliases in case something external does.
+  global.showAuthModal    = global.fsShowAuthModal;
+  global.closeAuthModal   = global.fsCloseAuthModal;
   global.showToast        = global.fsShowToast        = global.showToast || function(msg,color){ var t=document.createElement('div'); t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:'+(color||'#1E293B')+';color:#fff;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:600;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.2);font-family:Inter,sans-serif'; t.textContent=msg; document.body.appendChild(t); setTimeout(function(){t.remove();},3000); };
 
 })(window);
