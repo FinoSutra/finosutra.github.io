@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-<link rel="stylesheet" href="finosutra.css?v=16"/>
+<link rel="stylesheet" href="finosutra.css?v=17"/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
 <script>
 /* Shared short-date formatter. en-IN renders September as "Sept", which reads as a
@@ -44,7 +44,7 @@ function fsShortDate(d){
     return String(dt.getDate()).padStart(2,'0')+' '+FS_MONTHS_SHORT[dt.getMonth()]+' '+dt.getFullYear();
   }catch(e){ return String(d); }
 }
-window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');function gaEvent(n,p){ if(typeof gtag==='function') gtag('event',n,p||{}); }</script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -499,7 +499,7 @@ function fsCopyLink(btn){
 <div id="fs-footer"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="auth.js?v=11"></script>
+<script src="auth.js?v=12"></script>
 <script src="nav.js?v=9"></script>
 <script src="footer.js?v=8"></script>
 <script>
