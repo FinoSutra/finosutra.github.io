@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>IND AS 2 Inventories — Cost vs NRV, Overhead Allocation & Cost Formulas Explained | Finosutra</title>
+<meta name="description" content="Complete guide to IND AS 2 — the lower of cost and net realisable value rule, cost of purchase and conversion, fixed overhead allocation at normal capacity, FIFO vs weighted average, NRV write-downs and reversals, and a full worked example with journal entries."/>
+<meta name="keywords" content="IND AS 2 inventories, net realisable value NRV, cost of conversion normal capacity, FIFO weighted average cost formula, inventory write-down reversal, IND AS 2 vs AS 2, fixed production overhead allocation, LIFO not permitted, IAS 2 India"/>
+<meta name="author" content="Finosutra"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://finosutra.com/blog/ind-as-2-inventories-guide.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Finosutra"/>
+<meta property="og:title" content="IND AS 2 Inventories — Cost vs NRV, Overhead Allocation & Cost Formulas Explained"/>
+<meta property="og:description" content="The lower of cost and net realisable value rule, cost of purchase and conversion, fixed overhead allocation at normal capacity, FIFO vs weighted average, and NRV write-downs under IND AS 2 — with a full worked example."/>
+<meta property="og:url" content="https://finosutra.com/blog/ind-as-2-inventories-guide.html"/>
+<meta property="og:image" content="https://finosutra.com/og-image.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="IND AS 2 Inventories — Complete Guide"/>
+<meta name="twitter:description" content="Cost vs NRV, overhead allocation and cost formulas under IND AS 2 — with a full worked example."/>
+<meta name="twitter:image" content="https://finosutra.com/og-image.jpg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="../finosutra.css?v=17"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "IND AS 2 Inventories — Cost vs NRV, Overhead Allocation & Cost Formulas Explained",
+  "description": "Complete guide to IND AS 2 — the lower of cost and net realisable value rule, cost of purchase and conversion, fixed overhead allocation at normal capacity, FIFO vs weighted average, NRV write-downs and reversals, and a full worked example with journal entries.",
+  "author": {"@type": "Organization", "name": "Finosutra", "sameAs": ["https://www.linkedin.com/company/124543898/", "https://www.youtube.com/@cakrishnaswadekar07"]},
+  "publisher": {"@type": "Organization", "name": "Finosutra", "url": "https://finosutra.com", "sameAs": ["https://www.linkedin.com/company/124543898/", "https://www.youtube.com/@cakrishnaswadekar07"]},
+  "datePublished": "2026-09-06",
+  "dateModified": "2026-09-06",
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://finosutra.com/blog/ind-as-2-inventories-guide.html"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "How are inventories measured under IND AS 2?", "acceptedAnswer": {"@type": "Answer", "text": "Inventories are measured at the lower of cost and net realisable value (NRV). Cost comprises all costs of purchase, costs of conversion, and other costs incurred in bringing the inventories to their present location and condition. NRV is the estimated selling price in the ordinary course of business less the estimated costs of completion and the estimated costs necessary to make the sale."}},
+    {"@type": "Question", "name": "Is LIFO (last-in, first-out) permitted under IND AS 2?", "acceptedAnswer": {"@type": "Answer", "text": "No. IND AS 2 permits only specific identification (for items that are not ordinarily interchangeable), or the FIFO or weighted average cost formula for other inventories. LIFO is not a permitted cost formula, because it does not reflect the pattern in which inventories actually flow through most businesses and can produce a carrying amount that bears little relationship to recent costs."}},
+    {"@type": "Question", "name": "How is fixed production overhead allocated to inventory cost?", "acceptedAnswer": {"@type": "Answer", "text": "Fixed production overheads are allocated to units of production based on the normal capacity of the production facility — the production expected to be achieved on average over a number of periods under normal circumstances. When actual production is abnormally low, the fixed overhead rate is still applied based on normal capacity, and any resulting unallocated overhead is expensed immediately rather than added to inventory cost. When actual production is abnormally high, the fixed overhead allocated per unit is decreased so inventories are not measured above cost."}},
+    {"@type": "Question", "name": "Can a previous inventory write-down be reversed?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. A new assessment of net realisable value is made in each subsequent period. If the circumstances that previously caused inventories to be written down below cost no longer exist, or there is clear evidence of an increase in net realisable value, the amount of the write-down is reversed — limited so the new carrying amount does not exceed the lower of cost and the revised net realisable value. The reversal is recognised as a reduction in the cost of goods sold expense for that period."}},
+    {"@type": "Question", "name": "What costs are excluded from the cost of inventories?", "acceptedAnswer": {"@type": "Answer", "text": "Abnormal amounts of wasted material, labour or other production costs; storage costs, unless necessary in the production process before a further production stage; administrative overheads that do not contribute to bringing inventories to their present location and condition; and selling costs. All of these are expensed as incurred rather than capitalised into inventory cost."}},
+    {"@type": "Question", "name": "Is IND AS 2 the same as IAS 2?", "acceptedAnswer": {"@type": "Answer", "text": "IND AS 2 is India's converged version of IAS 2 and follows the same lower-of-cost-and-NRV measurement principle, cost components, and prohibition on LIFO. It is also closely aligned with the old Indian AS 2, which already applied similar rules — the main additions are the scope carve-out for agricultural produce measured under IND AS 41 at fair value less costs to sell, and an explicit exception allowing commodity broker-traders to measure inventories at fair value less costs to sell."}}
+  ]
+}
+</script>
+<style>
+:root{
+  --brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;--brand-mid:#C7D2FE;
+  --bg:#F9FAFB;--card:#FFFFFF;--border:rgba(99,102,241,0.18);--border-light:rgba(99,102,241,0.08);
+  --text:#111827;--muted:#6B7280;--muted2:#9CA3AF;
+  --green:#059669;--green-light:#ECFDF5;
+  --red:#DC2626;--red-light:#FEF2F2;
+  --orange:#D97706;--orange-light:#FFFBEB;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+.article-wrap{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted2);margin-bottom:24px;flex-wrap:wrap;}
+.breadcrumb a{color:var(--muted2);text-decoration:none;transition:color .15s;}
+.breadcrumb a:hover{color:var(--brand);}
+
+.article-tag{display:inline-block;background:var(--brand-light);color:var(--brand);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.4px;margin-bottom:16px;}
+.article-title{font-size:clamp(24px,4vw,36px);font-weight:800;line-height:1.2;letter-spacing:-0.5px;color:var(--text);margin-bottom:16px;}
+.article-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--muted);margin-bottom:32px;flex-wrap:wrap;}
+.article-meta span{display:flex;align-items:center;gap:5px;}
+.article-divider{height:1px;background:var(--border-light);margin-bottom:36px;}
+
+.toc{background:var(--brand-light);border:1px solid var(--brand-mid);border-radius:14px;padding:22px 26px;margin-bottom:40px;}
+.toc h3{font-size:13px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;}
+.toc ol{padding-left:18px;}
+.toc ol li{margin-bottom:6px;}
+.toc ol li a{font-size:14px;color:var(--brand-dark);text-decoration:none;font-weight:500;}
+.toc ol li a:hover{text-decoration:underline;}
+
+.article-body h2{font-size:22px;font-weight:800;color:var(--text);margin:40px 0 14px;letter-spacing:-0.3px;}
+.article-body h3{font-size:17px;font-weight:700;color:var(--text);margin:28px 0 10px;}
+.article-body p{margin-bottom:16px;color:#1F2937;}
+.article-body ul,.article-body ol{padding-left:22px;margin-bottom:16px;}
+.article-body ul li,.article-body ol li{margin-bottom:8px;color:#1F2937;}
+.article-body strong{font-weight:700;color:var(--text);}
+
+.callout{background:var(--brand-light);border-left:4px solid var(--brand);border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0;}
+.callout p{margin:0;font-size:14px;color:var(--brand-dark);}
+.callout strong{color:var(--brand-dark);}
+.callout-green{background:var(--green-light);border-left-color:var(--green);}
+.callout-green p{color:#065F46;}
+.callout-orange{background:var(--orange-light);border-left-color:var(--orange);}
+.callout-orange p{color:#92400E;}
+.callout-red{background:var(--red-light);border-left-color:var(--red);}
+.callout-red p{color:#991B1B;}
+
+.table-wrap{overflow-x:auto;margin:24px 0;}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:360px;}
+table th{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-weight:700;padding:10px 14px;text-align:left;}
+table th.r{text-align:right;}
+table td{padding:9px 14px;border-bottom:1px solid #F3F4F6;color:#1F2937;}
+table td.r{text-align:right;}
+table tr:nth-child(even) td{background:#F9FAFB;}
+table tr:last-child td{border-bottom:none;}
+table tfoot td{background:#EEF2FF;font-weight:700;border-top:2px solid var(--brand-mid);}
+
+.je-block{background:#F9FAFB;border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:20px 0;}
+.je-title{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px;}
+.je-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #F3F4F6;}
+.je-row:last-child{border-bottom:none;}
+.je-account{font-size:14px;font-weight:600;color:var(--text);}
+.je-account.cr{padding-left:24px;font-weight:500;color:var(--muted);}
+.je-amounts{display:flex;gap:32px;}
+.je-dr{font-size:14px;font-weight:700;color:#10B981;min-width:100px;text-align:right;}
+.je-cr{font-size:14px;font-weight:700;color:#6366F1;min-width:100px;text-align:right;}
+
+.step-card{border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:16px 0;position:relative;padding-left:60px;}
+.step-num{position:absolute;left:18px;top:18px;width:28px;height:28px;background:var(--brand);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;}
+.step-card h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;margin-top:0;}
+.step-card p{font-size:14px;color:var(--muted);margin:0;}
+
+.cta-box{background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:16px;padding:28px 30px;margin:40px 0;text-align:center;}
+.cta-box h3{font-size:18px;font-weight:800;color:#fff;margin-bottom:8px;}
+.cta-box p{font-size:14px;color:rgba(255,255,255,.85);margin-bottom:18px;}
+.cta-box a{display:inline-block;background:#fff;color:var(--brand);font-size:14px;font-weight:700;padding:12px 26px;border-radius:10px;text-decoration:none;transition:transform .15s;}
+.cta-box a:hover{transform:translateY(-1px);}
+
+.related-links{border:1px solid var(--border-light);border-radius:12px;padding:20px 24px;margin-top:40px;}
+.related-links h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;}
+.related-links a{display:block;font-size:14px;color:var(--brand);text-decoration:none;padding:6px 0;border-bottom:1px solid var(--border-light);font-weight:500;}
+.related-links a:last-child{border-bottom:none;}
+.related-links a:hover{text-decoration:underline;}
+
+@media(max-width:600px){.article-wrap{padding:32px 16px 60px;}.je-amounts{gap:16px;}.step-card{padding-left:50px;}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../auth.js?v=12"></script>
+</head>
+<body>
+
+<div id="fs-nav"></div>
+
+<div class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span>›</span>
+    <a href="../blog.html">Blog</a>
+    <span>›</span>
+    <span>IND AS 2 Inventories</span>
+  </nav>
+
+  <div class="article-tag">IND AS 2 / IAS 2</div>
+  <h1 class="article-title">IND AS 2 Inventories — Cost vs NRV, Overhead Allocation &amp; Cost Formulas Explained</h1>
+  <div class="article-meta">
+    <span><i class="fa-regular fa-calendar"></i> September 2026</span>
+    <span><i class="fa-regular fa-clock"></i> 16 min read</span>
+    <span><i class="fa-solid fa-user"></i> Finosutra Team</span>
+  </div>
+  <p style="font-size:16px;line-height:1.65;color:#374151;max-width:760px;margin:4px 0 14px;">Under <strong>IND AS 2</strong>, inventories are carried at the <strong>lower of cost and net realisable value</strong> — cost built up from purchase price, conversion costs, and other costs of bringing them to their present location and condition, with fixed production overhead allocated based on normal capacity rather than actual output, and LIFO never a permitted cost formula.</p>
+  <div class="article-divider"></div>
+
+  <div class="toc">
+    <h3>In This Article</h3>
+    <ol>
+      <li><a href="#overview">What IND AS 2 Covers — Objective, Scope &amp; Definitions</a></li>
+      <li><a href="#measurement">Measurement Principle — Lower of Cost and NRV</a></li>
+      <li><a href="#purchase-cost">Cost of Purchase</a></li>
+      <li><a href="#conversion-cost">Cost of Conversion — Fixed and Variable Overhead Allocation</a></li>
+      <li><a href="#other-excluded">Other Costs and Costs Excluded from Inventory</a></li>
+      <li><a href="#cost-formulas">Cost Formulas — FIFO and Weighted Average</a></li>
+      <li><a href="#nrv">Net Realisable Value — Estimation and Write-Downs</a></li>
+      <li><a href="#recognition">Recognition as an Expense</a></li>
+      <li><a href="#example">Worked Example — Overhead Allocation and NRV Write-Down</a></li>
+      <li><a href="#vs-as2">IND AS 2 vs Old IGAAP (AS 2) — Key Differences</a></li>
+      <li><a href="#disclosures">Disclosures Required</a></li>
+      <li><a href="#errors">Common Mistakes CAs Make</a></li>
+      <li><a href="#faq">FAQs</a></li>
+    </ol>
+  </div>
+
+  <div class="article-body">
+
+    <h2 id="overview">1. What IND AS 2 Covers — Objective, Scope &amp; Definitions</h2>
+    <p>IND AS 2 prescribes how much cost of inventories should be recognised as an asset and carried forward until the related revenue is recognised, and provides guidance on the cost formulas used to assign costs to inventories.</p>
+    <p><strong>Inventories</strong> are assets: held for sale in the ordinary course of business; in the process of production for such sale; or in the form of materials or supplies to be consumed in the production process or in rendering services.</p>
+    <p>The standard excludes work in progress arising under construction contracts (governed by IND AS 115), financial instruments, and biological assets related to agricultural activity and agricultural produce at the point of harvest (governed by IND AS 41, generally measured at fair value less costs to sell). It also carves out an explicit measurement exception for producers of agricultural/forest products and minerals, and for <strong>commodity broker-traders</strong>, who may measure their inventories at fair value less costs to sell, with changes recognised in profit or loss — for these, only the disclosure requirements of IND AS 2 apply.</p>
+
+    <h2 id="measurement">2. Measurement Principle — Lower of Cost and NRV</h2>
+    <div class="callout">
+      <p><strong>Inventories are measured at the lower of cost and net realisable value (NRV).</strong> This is the single governing rule of the entire standard — inventories are never carried above the amount expected to be realised from their sale or use, and everything else in IND AS 2 is really just detailed guidance on how to compute the two sides of that comparison.</p>
+    </div>
+
+    <h2 id="purchase-cost">3. Cost of Purchase</h2>
+    <p>The cost of purchase comprises the purchase price, import duties and other non-refundable taxes, and transport, handling and other costs directly attributable to the acquisition of finished goods, materials and services — <strong>less</strong> trade discounts, rebates and other similar items.</p>
+
+    <h2 id="conversion-cost">4. Cost of Conversion — Fixed and Variable Overhead Allocation</h2>
+    <p>Costs of conversion include costs directly related to the units of production, such as direct labour, and a systematic allocation of fixed and variable production overheads incurred in converting materials into finished goods.</p>
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <h3>Variable production overheads</h3>
+      <p>Allocated to each unit of production on the basis of the <strong>actual use</strong> of the production facilities.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <h3>Fixed production overheads</h3>
+      <p>Allocated to units of production based on the <strong>normal capacity</strong> of the production facilities — the production expected to be achieved on average over a number of periods or seasons under normal circumstances, not the actual output of the current period.</p>
+    </div>
+    <div class="callout callout-orange">
+      <p><strong>The normal-capacity rule is the most-tested mechanic in this standard.</strong> When actual production is abnormally low (e.g. a temporary shutdown or a weak sales period), the fixed overhead rate is still applied at the normal-capacity rate, and the resulting <strong>unallocated overhead is expensed immediately</strong> rather than loaded onto the smaller number of units actually produced. Conversely, when actual production is abnormally high, the fixed overhead allocated per unit is decreased so that inventories are not measured above cost.</p>
+    </div>
+    <p>Where a production process results in more than one product simultaneously (joint products) or in a joint product plus a by-product, the joint costs are allocated between the products on a rational and consistent basis — such as the relative sales value of each product at the point they become separately identifiable. Immaterial by-products are often measured at net realisable value and that amount deducted from the cost of the main product.</p>
+
+    <h2 id="other-excluded">5. Other Costs and Costs Excluded from Inventory</h2>
+    <p>Other costs are included in the cost of inventories only to the extent they are incurred in bringing the inventories to their present location and condition — for example, non-production overheads or the cost of designing products for specific customers, where directly attributable. Borrowing costs may be included in narrow circumstances, for inventories that require a substantial period to bring to a saleable condition, in accordance with IND AS 23.</p>
+    <div class="callout callout-red">
+      <p><strong>Specifically excluded from the cost of inventories</strong> (expensed as incurred instead): abnormal amounts of wasted material, labour or other production costs; storage costs, unless necessary in the production process before a further production stage; administrative overheads that do not contribute to bringing inventories to their present location and condition; and <strong>selling costs</strong>.</p>
+    </div>
+
+    <h2 id="cost-formulas">6. Cost Formulas — FIFO and Weighted Average</h2>
+    <p>For items of inventory that are <strong>not ordinarily interchangeable</strong>, and goods or services produced and segregated for specific projects, cost is assigned using <strong>specific identification</strong> of individual costs. For other inventories, cost is assigned using either the <strong>First-In, First-Out (FIFO)</strong> formula or the <strong>weighted average cost</strong> formula — the same cost formula must be used for all inventories of similar nature and use to the entity.</p>
+    <div class="callout callout-red">
+      <p><strong>LIFO (Last-In, First-Out) is not a permitted cost formula</strong> under IND AS 2. It does not reflect the pattern in which inventories actually flow through most businesses, and can produce a carrying amount for inventory that has little relationship to recent cost levels — this prohibition is consistent with old Indian AS 2 as well, so it isn't a new restriction for Indian entities converging to IND AS.</p>
+    </div>
+
+    <h2 id="nrv">7. Net Realisable Value — Estimation and Write-Downs</h2>
+    <p><strong>Net realisable value (NRV)</strong> is the estimated selling price in the ordinary course of business, less the estimated costs of completion and the estimated costs necessary to make the sale. Estimates of NRV are based on the most reliable evidence available at the time the estimate is made, considering fluctuations in price or cost directly relating to events occurring after the reporting period, to the extent they confirm conditions existing at the reporting date.</p>
+    <p>Materials and other supplies held for use in production are <strong>not</strong> written down below cost if the finished products in which they will be incorporated are expected to be sold at or above cost — but if a decline in the price of materials indicates the cost of the finished product will exceed NRV, the materials are written down to NRV (usually estimated based on replacement cost).</p>
+    <div class="callout callout-green">
+      <p><strong>A write-down is reversed in a later period</strong> to the extent that the circumstances that previously caused it no longer exist, or there is clear evidence of an increase in NRV — the new carrying amount is the lower of cost and the revised NRV, so a reversal can never take the carrying amount back above original cost.</p>
+    </div>
+
+    <h2 id="recognition">8. Recognition as an Expense</h2>
+    <p>When inventories are sold, their carrying amount is recognised as an expense (cost of goods sold) in the period in which the related revenue is recognised. The amount of any write-down of inventories to NRV, and all losses of inventories, are recognised as an expense in the period the write-down or loss occurs. The amount of any reversal of a write-down is recognised as a <strong>reduction</strong> in the cost of goods sold expense in the period the reversal occurs.</p>
+
+    <h2 id="example">9. Worked Example — Overhead Allocation and NRV Write-Down</h2>
+    <div class="callout">
+      <p><strong>Scenario:</strong> Vivaan Electronics Pvt Ltd manufactures a single product. Normal capacity is <strong>12,000 units/year</strong>, with total budgeted fixed production overhead of <strong>₹24,00,000</strong>. Due to a temporary supply disruption, actual production this year was only <strong>8,000 units</strong>. Direct material cost is ₹200/unit, direct labour ₹80/unit, and variable overhead ₹40/unit. Of the 8,000 units produced, 2,000 remain unsold in closing inventory.</p>
+    </div>
+
+    <h3>Step 1 — Determine the Fixed Overhead Rate and the Unallocated Amount</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Item</th><th class="r">Amount</th></tr></thead>
+        <tbody>
+          <tr><td>Fixed overhead rate (₹24,00,000 ÷ 12,000 normal capacity)</td><td class="r">₹200/unit</td></tr>
+          <tr><td>Fixed overhead allocated to inventory (8,000 units × ₹200)</td><td class="r">₹16,00,000</td></tr>
+          <tr><td>Unallocated fixed overhead (expensed immediately)</td><td class="r">₹8,00,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Step 2 — Determine Cost per Unit</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Cost element</th><th class="r">₹ per unit</th></tr></thead>
+        <tbody>
+          <tr><td>Direct material</td><td class="r">200</td></tr>
+          <tr><td>Direct labour</td><td class="r">80</td></tr>
+          <tr><td>Variable overhead</td><td class="r">40</td></tr>
+          <tr><td>Fixed overhead (at normal capacity rate)</td><td class="r">200</td></tr>
+        </tbody>
+        <tfoot><tr><td>Total cost per unit</td><td class="r">520</td></tr></tfoot>
+      </table>
+    </div>
+
+    <h3>Step 3 — Compare Cost to NRV</h3>
+    <p>At year-end, the selling price has softened to ₹480/unit, with estimated selling costs of ₹30/unit.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Item</th><th class="r">₹ per unit</th></tr></thead>
+        <tbody>
+          <tr><td>Estimated selling price</td><td class="r">480</td></tr>
+          <tr><td>Less: estimated costs to sell</td><td class="r">(30)</td></tr>
+          <tr><td>Net realisable value</td><td class="r">450</td></tr>
+          <tr><td>Cost per unit</td><td class="r">520</td></tr>
+          <tr><td>Write-down required per unit (cost − NRV)</td><td class="r">70</td></tr>
+        </tbody>
+        <tfoot><tr><td>Total write-down (2,000 units × ₹70)</td><td class="r">₹1,40,000</td></tr></tfoot>
+      </table>
+    </div>
+
+    <div class="je-block">
+      <div class="je-title">Expense the unallocated fixed overhead immediately</div>
+      <div class="je-row">
+        <span class="je-account">Cost of Goods Sold (P&amp;L)</span>
+        <div class="je-amounts"><span class="je-dr">Dr 8,00,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Factory Overhead Control Account</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 8,00,000</span></div>
+      </div>
+    </div>
+    <div class="je-block">
+      <div class="je-title">Recognise the NRV write-down on closing inventory</div>
+      <div class="je-row">
+        <span class="je-account">Cost of Goods Sold (P&amp;L)</span>
+        <div class="je-amounts"><span class="je-dr">Dr 1,40,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Inventory / Provision for Write-Down</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 1,40,000</span></div>
+      </div>
+    </div>
+    <p>Closing inventory is carried at ₹450 × 2,000 units = ₹9,00,000 — the lower of cost (₹520/unit) and NRV (₹450/unit). If prices recover next year and NRV rises back to, say, ₹500/unit while these units are still on hand, ₹50/unit of the write-down (up to the original ₹520 cost, never above it) would be reversed as a reduction to that year's cost of goods sold.</p>
+
+    <div class="cta-box">
+      <h3>Explore Finosutra's IND AS tools</h3>
+      <p>Free calculators for lease accounting, security deposits, ECL provisioning and financial statement generation — audit-ready workpapers in minutes.</p>
+      <a href="../indas-tools.html">Explore IND AS Tools →</a>
+    </div>
+
+    <h2 id="vs-as2">10. IND AS 2 vs Old IGAAP (AS 2) — Key Differences</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Aspect</th><th>Old IGAAP (AS 2)</th><th>IND AS 2</th></tr></thead>
+        <tbody>
+          <tr><td>Core measurement rule</td><td>Lower of cost and NRV</td><td>Unchanged — broadly converged with AS 2</td></tr>
+          <tr><td>Cost formulas</td><td>FIFO or weighted average; LIFO not permitted</td><td>Same — no change</td></tr>
+          <tr><td>Fixed overhead allocation</td><td>Based on normal capacity, similar treatment</td><td>Same principle, unchanged</td></tr>
+          <tr><td>Agricultural produce</td><td>No separate standard — generally accounted for within the same cost-based framework</td><td>Harvested agricultural produce initially measured at fair value less costs to sell under IND AS 41, then becomes inventory under IND AS 2 for subsequent measurement</td></tr>
+          <tr><td>Commodity broker-traders</td><td>No explicit fair-value exception</td><td>Explicit exception to measure inventories at fair value less costs to sell, with changes through P&amp;L</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="disclosures">11. Disclosures Required</h2>
+    <p>IND AS 2 requires disclosure of the accounting policies adopted, including the cost formula used; the total carrying amount of inventories and the carrying amount in classifications appropriate to the entity (e.g. merchandise, production supplies, materials, work in progress, finished goods); the carrying amount of any inventories carried at fair value less costs to sell; the amount of inventories recognised as an expense during the period; the amount of any write-down recognised as an expense, and any reversal recognised as a reduction in expense, together with the circumstances or events that led to the reversal; and the carrying amount of inventories pledged as security for liabilities.</p>
+
+    <h2 id="errors">12. Common Mistakes CAs Make</h2>
+
+    <div class="callout callout-red">
+      <p><strong>Error 1 — Allocating fixed overhead based on actual (abnormally low) production instead of normal capacity.</strong> This inflates the per-unit cost and pushes what should be a period expense into inventory, overstating both the balance sheet and current-period profit.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 2 — Capitalising abnormal wastage or general storage costs into inventory.</strong> Only storage that is a necessary part of the production process before a further production stage belongs in inventory cost — routine warehousing of finished goods awaiting sale is a period expense.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 3 — Estimating NRV using selling price alone, without deducting completion and selling costs.</strong> A write-down assessment that ignores the costs still needed to finish and sell the goods will systematically overstate NRV and understate any required write-down.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 4 — Never reversing a prior write-down even when NRV clearly recovers.</strong> IND AS 2 requires reassessing NRV every period — leaving an old write-down in place after the underlying reasons for it have disappeared understates inventory and current-period profit.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 5 — Using LIFO because it's simpler for a particular internal costing system.</strong> Whatever internal management-accounting convenience LIFO might offer, it is simply not an available cost formula for external financial reporting under IND AS 2.</p>
+    </div>
+
+    <h2 id="faq">13. FAQs</h2>
+
+    <h3>How are inventories measured under IND AS 2?</h3>
+    <p>Inventories are measured at the lower of cost and net realisable value (NRV). Cost comprises all costs of purchase, costs of conversion, and other costs incurred in bringing the inventories to their present location and condition. NRV is the estimated selling price in the ordinary course of business less the estimated costs of completion and the estimated costs necessary to make the sale.</p>
+
+    <h3>Is LIFO (last-in, first-out) permitted under IND AS 2?</h3>
+    <p>No. IND AS 2 permits only specific identification (for items that are not ordinarily interchangeable), or the FIFO or weighted average cost formula for other inventories. LIFO is not a permitted cost formula, because it does not reflect the pattern in which inventories actually flow through most businesses and can produce a carrying amount that bears little relationship to recent costs.</p>
+
+    <h3>How is fixed production overhead allocated to inventory cost?</h3>
+    <p>Fixed production overheads are allocated to units of production based on the normal capacity of the production facility — the production expected to be achieved on average over a number of periods under normal circumstances. When actual production is abnormally low, the fixed overhead rate is still applied based on normal capacity, and any resulting unallocated overhead is expensed immediately rather than added to inventory cost. When actual production is abnormally high, the fixed overhead allocated per unit is decreased so inventories are not measured above cost.</p>
+
+    <h3>Can a previous inventory write-down be reversed?</h3>
+    <p>Yes. A new assessment of net realisable value is made in each subsequent period. If the circumstances that previously caused inventories to be written down below cost no longer exist, or there is clear evidence of an increase in net realisable value, the amount of the write-down is reversed — limited so the new carrying amount does not exceed the lower of cost and the revised net realisable value. The reversal is recognised as a reduction in the cost of goods sold expense for that period.</p>
+
+    <h3>What costs are excluded from the cost of inventories?</h3>
+    <p>Abnormal amounts of wasted material, labour or other production costs; storage costs, unless necessary in the production process before a further production stage; administrative overheads that do not contribute to bringing inventories to their present location and condition; and selling costs. All of these are expensed as incurred rather than capitalised into inventory cost.</p>
+
+    <h3>Is IND AS 2 the same as IAS 2?</h3>
+    <p>IND AS 2 is India's converged version of IAS 2 and follows the same lower-of-cost-and-NRV measurement principle, cost components, and prohibition on LIFO. It is also closely aligned with the old Indian AS 2, which already applied similar rules — the main additions are the scope carve-out for agricultural produce measured under IND AS 41 at fair value less costs to sell, and an explicit exception allowing commodity broker-traders to measure inventories at fair value less costs to sell.</p>
+
+  </div>
+
+  <div class="related-links">
+    <h3>Related tools &amp; articles</h3>
+    <a href="../indas-tools.html">→ All IND AS Tools</a>
+    <a href="ind-as-115-revenue-recognition-guide.html">→ IND AS 115 / IFRS 15 Revenue Recognition — Complete Guide</a>
+    <a href="ind-as-36-impairment-of-assets-guide.html">→ IND AS 36 Impairment of Assets — Complete Guide</a>
+    <a href="ind-as-16-property-plant-equipment-guide.html">→ IND AS 16 Property, Plant &amp; Equipment — Complete Guide</a>
+    <a href="ind-as-12-deferred-tax.html">→ IND AS 12 / IAS 12 Deferred Tax — Complete Guide</a>
+    <a href="../blog.html">← All Articles</a>
+  </div>
+
+</div>
+
+<div id="fs-footer"></div>
+<script src="../nav.js?v=9"></script>
+<script src="../footer.js?v=8"></script>
+<script src="../share.js"></script>
+</body>
+</html>
