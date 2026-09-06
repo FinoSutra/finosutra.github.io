@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>IND AS 10 Events After the Reporting Period — Adjusting vs Non-Adjusting Events Explained | Finosutra</title>
+<meta name="description" content="Complete guide to IND AS 10 — adjusting vs non-adjusting events, the going concern test after year-end, dividends declared after the reporting period, the window between the reporting date and authorisation for issue, and a full worked example."/>
+<meta name="keywords" content="IND AS 10 events after reporting period, adjusting events non adjusting events, subsequent events accounting, going concern after year end, dividends declared after balance sheet date, IND AS 10 vs AS 4, date of authorisation for issue, IAS 10 India"/>
+<meta name="author" content="Finosutra"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://finosutra.com/blog/ind-as-10-events-after-reporting-period-guide.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Finosutra"/>
+<meta property="og:title" content="IND AS 10 Events After the Reporting Period — Adjusting vs Non-Adjusting Events Explained"/>
+<meta property="og:description" content="Adjusting vs non-adjusting events, the post-year-end going concern test, and dividends declared after the reporting period under IND AS 10 — with a full worked example."/>
+<meta property="og:url" content="https://finosutra.com/blog/ind-as-10-events-after-reporting-period-guide.html"/>
+<meta property="og:image" content="https://finosutra.com/og-image.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="IND AS 10 Events After the Reporting Period — Complete Guide"/>
+<meta name="twitter:description" content="Adjusting vs non-adjusting events and the post-year-end going concern test under IND AS 10 — with a full worked example."/>
+<meta name="twitter:image" content="https://finosutra.com/og-image.jpg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="../finosutra.css?v=17"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "IND AS 10 Events After the Reporting Period — Adjusting vs Non-Adjusting Events Explained",
+  "description": "Complete guide to IND AS 10 — adjusting vs non-adjusting events, the going concern test after year-end, dividends declared after the reporting period, the window between the reporting date and authorisation for issue, and a full worked example.",
+  "author": {"@type": "Organization", "name": "Finosutra", "sameAs": ["https://www.linkedin.com/company/124543898/", "https://www.youtube.com/@cakrishnaswadekar07"]},
+  "publisher": {"@type": "Organization", "name": "Finosutra", "url": "https://finosutra.com", "sameAs": ["https://www.linkedin.com/company/124543898/", "https://www.youtube.com/@cakrishnaswadekar07"]},
+  "datePublished": "2026-09-06",
+  "dateModified": "2026-09-06",
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://finosutra.com/blog/ind-as-10-events-after-reporting-period-guide.html"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What is the difference between an adjusting event and a non-adjusting event?", "acceptedAnswer": {"@type": "Answer", "text": "An adjusting event provides evidence of conditions that existed at the reporting date, so the financial statements are updated to reflect it — for example, a court case settled after year-end that confirms an obligation already existing at year-end. A non-adjusting event indicates conditions that arose after the reporting date, so the financial statements are not adjusted, but the event is disclosed in the notes if material — for example, a major acquisition announced after year-end."}},
+    {"@type": "Question", "name": "What is the date of authorisation for issue and why does it matter?", "acceptedAnswer": {"@type": "Answer", "text": "The date of authorisation for issue is the date on which the financial statements would be considered complete and in a form that complies with the applicable financial reporting framework, and the relevant governing body (e.g. the board of directors) has approved them for issue outside the entity. IND AS 10's requirement to consider events occurring after the reporting period extends all the way up to this date, not just up to the balance sheet date itself."}},
+    {"@type": "Question", "name": "How are dividends declared after the reporting period treated?", "acceptedAnswer": {"@type": "Answer", "text": "If an entity declares dividends after the reporting period but before the financial statements are authorised for issue, the dividends are not recognised as a liability at the reporting date, because no obligation existed at that date. Instead, the amount is disclosed in the notes as required by IND AS 1."}},
+    {"@type": "Question", "name": "What happens if an entity discovers after year-end that it is no longer a going concern?", "acceptedAnswer": {"@type": "Answer", "text": "If management determines after the reporting period that it intends to liquidate the entity or cease trading, or has no realistic alternative, the financial statements must not be prepared on a going concern basis at all — this is treated as an adjusting event, requiring a fundamental change in the basis of accounting, not merely a disclosure note, regardless of whether the deterioration occurred before or after the reporting date."}},
+    {"@type": "Question", "name": "Is a fraud discovered after year-end an adjusting or non-adjusting event?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on when the fraud occurred and what it reveals. If the fraud (or evidence that financial statements were incorrect due to fraud or error) relates to conditions that existed at the reporting date, it is an adjusting event requiring correction of the affected figures. If it relates to a new fraudulent act that occurred entirely after the reporting date, it is a non-adjusting event requiring disclosure only."}},
+    {"@type": "Question", "name": "Is IND AS 10 the same as IAS 10?", "acceptedAnswer": {"@type": "Answer", "text": "IND AS 10 is India's converged version of IAS 10 and follows the same adjusting/non-adjusting classification, the going concern override, and the dividend disclosure treatment. It replaces the older Indian AS 4 (Contingencies and Events Occurring After the Balance Sheet Date), which combined events-after-balance-sheet-date guidance with contingency accounting in a single standard — contingencies are now separately addressed under IND AS 37."}}
+  ]
+}
+</script>
+<style>
+:root{
+  --brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;--brand-mid:#C7D2FE;
+  --bg:#F9FAFB;--card:#FFFFFF;--border:rgba(99,102,241,0.18);--border-light:rgba(99,102,241,0.08);
+  --text:#111827;--muted:#6B7280;--muted2:#9CA3AF;
+  --green:#059669;--green-light:#ECFDF5;
+  --red:#DC2626;--red-light:#FEF2F2;
+  --orange:#D97706;--orange-light:#FFFBEB;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+.article-wrap{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted2);margin-bottom:24px;flex-wrap:wrap;}
+.breadcrumb a{color:var(--muted2);text-decoration:none;transition:color .15s;}
+.breadcrumb a:hover{color:var(--brand);}
+
+.article-tag{display:inline-block;background:var(--brand-light);color:var(--brand);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.4px;margin-bottom:16px;}
+.article-title{font-size:clamp(24px,4vw,36px);font-weight:800;line-height:1.2;letter-spacing:-0.5px;color:var(--text);margin-bottom:16px;}
+.article-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--muted);margin-bottom:32px;flex-wrap:wrap;}
+.article-meta span{display:flex;align-items:center;gap:5px;}
+.article-divider{height:1px;background:var(--border-light);margin-bottom:36px;}
+
+.toc{background:var(--brand-light);border:1px solid var(--brand-mid);border-radius:14px;padding:22px 26px;margin-bottom:40px;}
+.toc h3{font-size:13px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;}
+.toc ol{padding-left:18px;}
+.toc ol li{margin-bottom:6px;}
+.toc ol li a{font-size:14px;color:var(--brand-dark);text-decoration:none;font-weight:500;}
+.toc ol li a:hover{text-decoration:underline;}
+
+.article-body h2{font-size:22px;font-weight:800;color:var(--text);margin:40px 0 14px;letter-spacing:-0.3px;}
+.article-body h3{font-size:17px;font-weight:700;color:var(--text);margin:28px 0 10px;}
+.article-body p{margin-bottom:16px;color:#1F2937;}
+.article-body ul,.article-body ol{padding-left:22px;margin-bottom:16px;}
+.article-body ul li,.article-body ol li{margin-bottom:8px;color:#1F2937;}
+.article-body strong{font-weight:700;color:var(--text);}
+
+.callout{background:var(--brand-light);border-left:4px solid var(--brand);border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0;}
+.callout p{margin:0;font-size:14px;color:var(--brand-dark);}
+.callout strong{color:var(--brand-dark);}
+.callout-green{background:var(--green-light);border-left-color:var(--green);}
+.callout-green p{color:#065F46;}
+.callout-orange{background:var(--orange-light);border-left-color:var(--orange);}
+.callout-orange p{color:#92400E;}
+.callout-red{background:var(--red-light);border-left-color:var(--red);}
+.callout-red p{color:#991B1B;}
+
+.table-wrap{overflow-x:auto;margin:24px 0;}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:360px;}
+table th{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-weight:700;padding:10px 14px;text-align:left;}
+table th.r{text-align:right;}
+table td{padding:9px 14px;border-bottom:1px solid #F3F4F6;color:#1F2937;}
+table td.r{text-align:right;}
+table tr:nth-child(even) td{background:#F9FAFB;}
+table tr:last-child td{border-bottom:none;}
+table tfoot td{background:#EEF2FF;font-weight:700;border-top:2px solid var(--brand-mid);}
+
+.je-block{background:#F9FAFB;border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:20px 0;}
+.je-title{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px;}
+.je-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #F3F4F6;}
+.je-row:last-child{border-bottom:none;}
+.je-account{font-size:14px;font-weight:600;color:var(--text);}
+.je-account.cr{padding-left:24px;font-weight:500;color:var(--muted);}
+.je-amounts{display:flex;gap:32px;}
+.je-dr{font-size:14px;font-weight:700;color:#10B981;min-width:100px;text-align:right;}
+.je-cr{font-size:14px;font-weight:700;color:#6366F1;min-width:100px;text-align:right;}
+
+.step-card{border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:16px 0;position:relative;padding-left:60px;}
+.step-num{position:absolute;left:18px;top:18px;width:28px;height:28px;background:var(--brand);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;}
+.step-card h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;margin-top:0;}
+.step-card p{font-size:14px;color:var(--muted);margin:0;}
+
+.cta-box{background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:16px;padding:28px 30px;margin:40px 0;text-align:center;}
+.cta-box h3{font-size:18px;font-weight:800;color:#fff;margin-bottom:8px;}
+.cta-box p{font-size:14px;color:rgba(255,255,255,.85);margin-bottom:18px;}
+.cta-box a{display:inline-block;background:#fff;color:var(--brand);font-size:14px;font-weight:700;padding:12px 26px;border-radius:10px;text-decoration:none;transition:transform .15s;}
+.cta-box a:hover{transform:translateY(-1px);}
+
+.related-links{border:1px solid var(--border-light);border-radius:12px;padding:20px 24px;margin-top:40px;}
+.related-links h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;}
+.related-links a{display:block;font-size:14px;color:var(--brand);text-decoration:none;padding:6px 0;border-bottom:1px solid var(--border-light);font-weight:500;}
+.related-links a:last-child{border-bottom:none;}
+.related-links a:hover{text-decoration:underline;}
+
+@media(max-width:600px){.article-wrap{padding:32px 16px 60px;}.je-amounts{gap:16px;}.step-card{padding-left:50px;}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../auth.js?v=12"></script>
+</head>
+<body>
+
+<div id="fs-nav"></div>
+
+<div class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span>›</span>
+    <a href="../blog.html">Blog</a>
+    <span>›</span>
+    <span>IND AS 10 Events After the Reporting Period</span>
+  </nav>
+
+  <div class="article-tag">IND AS 10 / IAS 10</div>
+  <h1 class="article-title">IND AS 10 Events After the Reporting Period — Adjusting vs Non-Adjusting Events Explained</h1>
+  <div class="article-meta">
+    <span><i class="fa-regular fa-calendar"></i> September 2026</span>
+    <span><i class="fa-regular fa-clock"></i> 15 min read</span>
+    <span><i class="fa-solid fa-user"></i> Finosutra Team</span>
+  </div>
+  <p style="font-size:16px;line-height:1.65;color:#374151;max-width:760px;margin:4px 0 14px;">Under <strong>IND AS 10</strong>, events occurring between the reporting date and the date financial statements are authorised for issue are either <strong>adjusting events</strong> — evidence of conditions that already existed at year-end, requiring the figures to be updated — or <strong>non-adjusting events</strong> — new conditions arising after year-end, requiring disclosure only, never a change to the recognised amounts.</p>
+  <div class="article-divider"></div>
+
+  <div class="toc">
+    <h3>In This Article</h3>
+    <ol>
+      <li><a href="#overview">What IND AS 10 Covers — Objective and the Authorisation Window</a></li>
+      <li><a href="#adjusting">Adjusting Events</a></li>
+      <li><a href="#non-adjusting">Non-Adjusting Events</a></li>
+      <li><a href="#going-concern">Going Concern — The Override That's Always Adjusting</a></li>
+      <li><a href="#dividends">Dividends Declared After the Reporting Period</a></li>
+      <li><a href="#judgement">Distinguishing the Two — Where Judgement Is Needed</a></li>
+      <li><a href="#example">Worked Example — Classifying Four Post-Year-End Events</a></li>
+      <li><a href="#vs-as4">IND AS 10 vs Old IGAAP (AS 4) — Key Differences</a></li>
+      <li><a href="#disclosures">Disclosures Required</a></li>
+      <li><a href="#errors">Common Mistakes CAs Make</a></li>
+      <li><a href="#faq">FAQs</a></li>
+    </ol>
+  </div>
+
+  <div class="article-body">
+
+    <h2 id="overview">1. What IND AS 10 Covers — Objective and the Authorisation Window</h2>
+    <p>IND AS 10 prescribes when an entity should adjust its financial statements for events occurring after the reporting period, and the disclosures it should give about the date the financial statements were authorised for issue and about events after the reporting period. <strong>Events after the reporting period</strong> are those, favourable or unfavourable, that occur between the end of the reporting period and the <strong>date the financial statements are authorised for issue</strong> — this window extends beyond the balance sheet date itself, all the way up to board approval (or equivalent) for external issue.</p>
+
+    <h2 id="adjusting">2. Adjusting Events</h2>
+    <div class="callout">
+      <p><strong>Adjusting events</strong> provide evidence of conditions that existed at the reporting date. The entity adjusts the amounts recognised in its financial statements to reflect these events, and updates related disclosures.</p>
+    </div>
+    <p>Typical examples: the settlement of a court case after the reporting period that confirms the entity already had a present obligation at that date; receipt of information after the reporting period indicating an asset was already impaired at that date (e.g. a customer's bankruptcy after year-end confirming a receivable was already uncollectible at year-end); the determination after the reporting period of the cost of assets purchased, or proceeds of assets sold, before that date; and the discovery of fraud or errors showing the financial statements were incorrect.</p>
+
+    <h2 id="non-adjusting">3. Non-Adjusting Events</h2>
+    <div class="callout callout-orange">
+      <p><strong>Non-adjusting events</strong> are indicative of conditions that arose <strong>after</strong> the reporting period. The entity does <strong>not</strong> adjust the amounts recognised in its financial statements for these — instead, if material, it discloses the nature of the event and an estimate of its financial effect (or a statement that such an estimate cannot be made).</p>
+    </div>
+    <p>Typical examples: a major business combination, or disposal of a major subsidiary, after the reporting period; announcing a plan to discontinue an operation after the reporting period; major purchases and disposals of assets after the reporting period; destruction of a major production plant by a fire occurring after the reporting period; announcing, or commencing implementation of, a major restructuring after the reporting period; and significant declines in the fair value of investments occurring after the reporting period (reflecting circumstances that arose after that date, not conditions that already existed).</p>
+
+    <h2 id="going-concern">4. Going Concern — The Override That's Always Adjusting</h2>
+    <div class="callout callout-red">
+      <p><strong>If management determines, after the reporting period, that it intends to liquidate the entity or cease trading, or has no realistic alternative but to do so, the financial statements must not be prepared on a going concern basis at all.</strong> This is treated as an adjusting event under IND AS 10, requiring a fundamental change in the basis of accounting, not merely a disclosure note — this holds true regardless of whether the deterioration in conditions occurred before or after the reporting date, because the going concern assessment is itself considered as of the date the financial statements are authorised for issue.</p>
+    </div>
+
+    <h2 id="dividends">5. Dividends Declared After the Reporting Period</h2>
+    <p>If an entity declares dividends to holders of equity instruments after the reporting period, the dividends are <strong>not recognised as a liability</strong> at the reporting date, because no obligation exists at that date — the declaration itself is what creates the obligation, and that happens after year-end. The amount is instead <strong>disclosed</strong> in the notes as required by IND AS 1.</p>
+
+    <h2 id="judgement">6. Distinguishing the Two — Where Judgement Is Needed</h2>
+    <p>The core question is always: <strong>did the condition exist at the reporting date, with the subsequent event merely providing evidence of it, or did the condition itself arise only after the reporting date?</strong> A customer going bankrupt shortly after year-end because of a sudden, unrelated event (e.g. a fire at their own unrelated facility with no connection to their financial position at year-end) would typically be non-adjusting — the bankruptcy reflects a new event, not a condition that existed at year-end. But the same bankruptcy, where the customer was already known to be in serious financial distress at year-end, would be adjusting — the bankruptcy is simply confirming what was already true.</p>
+
+    <h2 id="example">7. Worked Example — Classifying Four Post-Year-End Events</h2>
+    <div class="callout">
+      <p><strong>Scenario:</strong> Kavach Enterprises Ltd has a 31 March year-end; its financial statements are authorised for issue on 15 June.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Event</th><th>Classification</th><th>Treatment</th></tr></thead>
+        <tbody>
+          <tr><td>A major customer, already showing signs of financial distress at 31 March, is declared insolvent on 20 April; ₹15,00,000 of the year-end receivable from this customer is deemed uncollectible</td><td><strong>Adjusting</strong></td><td>Recognise an impairment/write-off of ₹15,00,000 against the receivable as at 31 March</td></tr>
+          <tr><td>A fire completely destroys a warehouse on 10 May, with no indication the warehouse had any impairment issue as at 31 March</td><td><strong>Non-adjusting</strong></td><td>No adjustment to 31 March figures; disclose the nature and estimated financial effect of the fire in the notes</td></tr>
+          <tr><td>The board declares a final dividend of ₹2,00,00,000 on 5 June</td><td><strong>Non-adjusting</strong> (no obligation existed at 31 March)</td><td>Disclose the dividend in the notes; do not recognise a liability at 31 March</td></tr>
+          <tr><td>On 1 June, management resolves to cease all operations and liquidate the company, having exhausted all alternatives</td><td><strong>Adjusting</strong> (going concern override)</td><td>Financial statements are prepared on a break-up basis, not a going concern basis</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="je-block">
+      <div class="je-title">Adjusting entry for the confirmed-uncollectible receivable (Event 1)</div>
+      <div class="je-row">
+        <span class="je-account">Bad Debts Expense (P&amp;L, year ended 31 March)</span>
+        <div class="je-amounts"><span class="je-dr">Dr 15,00,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Trade Receivables / Allowance for Expected Credit Loss</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 15,00,000</span></div>
+      </div>
+    </div>
+
+    <div class="cta-box">
+      <h3>Explore Finosutra's IND AS tools</h3>
+      <p>Free calculators for lease accounting, security deposits, ECL provisioning and financial statement generation — audit-ready workpapers in minutes.</p>
+      <a href="../indas-tools.html">Explore IND AS Tools →</a>
+    </div>
+
+    <h2 id="vs-as4">8. IND AS 10 vs Old IGAAP (AS 4) — Key Differences</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Aspect</th><th>Old IGAAP (AS 4)</th><th>IND AS 10</th></tr></thead>
+        <tbody>
+          <tr><td>Scope</td><td>Combined "Contingencies and Events Occurring After the Balance Sheet Date" in a single standard</td><td>Contingencies split out entirely into IND AS 37; IND AS 10 focuses solely on subsequent events</td></tr>
+          <tr><td>Adjusting/non-adjusting terminology</td><td>Broadly similar underlying concept</td><td>Same core concept, more explicit and internationally aligned terminology</td></tr>
+          <tr><td>Going concern override</td><td>Present, less explicitly framed as an "adjusting event"</td><td>Explicitly classified as an adjusting event requiring a fundamental change in the basis of preparation</td></tr>
+          <tr><td>Window of consideration</td><td>Generally up to the date of approval of accounts</td><td>Explicitly framed around "date of authorisation for issue," a more precisely defined concept</td></tr>
+          <tr><td>Dividend treatment</td><td>Some historical practice recognised proposed dividends as a liability</td><td>Explicitly prohibits recognising a liability for dividends declared after the reporting period</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="disclosures">9. Disclosures Required</h2>
+    <p>An entity discloses the date its financial statements were authorised for issue and who gave that authorisation, and, if the entity's owners or others have the power to amend the financial statements after issue, that fact. For each material category of non-adjusting event, the entity discloses the nature of the event and an estimate of its financial effect, or a statement that such an estimate cannot be made. If an entity receives information after the reporting period about conditions that existed at that date, it updates disclosures related to those conditions in light of the new information, even where no separate adjusting entry is needed beyond the disclosure itself.</p>
+
+    <h2 id="errors">10. Common Mistakes CAs Make</h2>
+
+    <div class="callout callout-red">
+      <p><strong>Error 1 — Adjusting the financial statements for a genuinely non-adjusting event.</strong> A major fire, an unrelated acquisition, or a market crash occurring after year-end reflects new conditions, not conditions that existed at year-end — these require disclosure, not a change to recognised amounts.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 2 — Recognising a liability for a dividend declared after the reporting period.</strong> No obligation exists until the dividend is actually declared — even a dividend that seems highly likely at year-end isn't recognised until it's formally declared, and even then, only disclosed if declared after year-end.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 3 — Treating a post-year-end going concern deterioration as merely a disclosure item.</strong> If the entity genuinely can no longer prepare its accounts on a going concern basis by the authorisation date, this requires a fundamental change to the entire basis of preparation, not a footnote.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 4 — Stopping the subsequent-events review at the balance sheet date instead of the authorisation date.</strong> The relevant window runs all the way to the date the financial statements are authorised for issue — events discovered right up to that point must be assessed, not just events up to the fiscal year-end.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 5 — Assuming every subsequent bankruptcy or default is automatically adjusting.</strong> The key test is whether the underlying condition existed at the reporting date — a customer's sudden, unrelated collapse after year-end, with no distress signs beforehand, is non-adjusting, even though the ultimate loss is real.</p>
+    </div>
+
+    <h2 id="faq">11. FAQs</h2>
+
+    <h3>What is the difference between an adjusting event and a non-adjusting event?</h3>
+    <p>An adjusting event provides evidence of conditions that existed at the reporting date, so the financial statements are updated to reflect it — for example, a court case settled after year-end that confirms an obligation already existing at year-end. A non-adjusting event indicates conditions that arose after the reporting date, so the financial statements are not adjusted, but the event is disclosed in the notes if material — for example, a major acquisition announced after year-end.</p>
+
+    <h3>What is the date of authorisation for issue and why does it matter?</h3>
+    <p>The date of authorisation for issue is the date on which the financial statements would be considered complete and in a form that complies with the applicable financial reporting framework, and the relevant governing body (e.g. the board of directors) has approved them for issue outside the entity. IND AS 10's requirement to consider events occurring after the reporting period extends all the way up to this date, not just up to the balance sheet date itself.</p>
+
+    <h3>How are dividends declared after the reporting period treated?</h3>
+    <p>If an entity declares dividends after the reporting period but before the financial statements are authorised for issue, the dividends are not recognised as a liability at the reporting date, because no obligation existed at that date. Instead, the amount is disclosed in the notes as required by IND AS 1.</p>
+
+    <h3>What happens if an entity discovers after year-end that it is no longer a going concern?</h3>
+    <p>If management determines after the reporting period that it intends to liquidate the entity or cease trading, or has no realistic alternative, the financial statements must not be prepared on a going concern basis at all — this is treated as an adjusting event, requiring a fundamental change in the basis of accounting, not merely a disclosure note, regardless of whether the deterioration occurred before or after the reporting date.</p>
+
+    <h3>Is a fraud discovered after year-end an adjusting or non-adjusting event?</h3>
+    <p>It depends on when the fraud occurred and what it reveals. If the fraud (or evidence that financial statements were incorrect due to fraud or error) relates to conditions that existed at the reporting date, it is an adjusting event requiring correction of the affected figures. If it relates to a new fraudulent act that occurred entirely after the reporting date, it is a non-adjusting event requiring disclosure only.</p>
+
+    <h3>Is IND AS 10 the same as IAS 10?</h3>
+    <p>IND AS 10 is India's converged version of IAS 10 and follows the same adjusting/non-adjusting classification, the going concern override, and the dividend disclosure treatment. It replaces the older Indian AS 4 (Contingencies and Events Occurring After the Balance Sheet Date), which combined events-after-balance-sheet-date guidance with contingency accounting in a single standard — contingencies are now separately addressed under IND AS 37.</p>
+
+  </div>
+
+  <div class="related-links">
+    <h3>Related tools &amp; articles</h3>
+    <a href="../indas-tools.html">→ All IND AS Tools</a>
+    <a href="ind-as-37-provisions-contingent-liabilities-guide.html">→ IND AS 37 Provisions &amp; Contingencies — Complete Guide</a>
+    <a href="ind-as-1-presentation-financial-statements-guide.html">→ IND AS 1 Presentation of Financial Statements — Complete Guide</a>
+    <a href="ind-as-8-accounting-policies-estimates-errors-guide.html">→ IND AS 8 Accounting Policies, Estimates &amp; Errors — Complete Guide</a>
+    <a href="ind-as-109-financial-instruments-guide.html">→ IND AS 109 Financial Instruments — Complete Guide</a>
+    <a href="../blog.html">← All Articles</a>
+  </div>
+
+</div>
+
+<div id="fs-footer"></div>
+<script src="../nav.js?v=9"></script>
+<script src="../footer.js?v=8"></script>
+<script src="../share.js"></script>
+</body>
+</html>
