@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>IND AS 107 Financial Instruments: Disclosures — Risk Categories & Sensitivity Analysis Explained | Finosutra</title>
+<meta name="description" content="Complete guide to IND AS 107 — significance-of-instruments disclosures, credit risk, liquidity risk and market risk disclosures, sensitivity analysis, the fair value hierarchy cross-reference, and a full worked example illustrating an interest-rate sensitivity table."/>
+<meta name="keywords" content="IND AS 107 financial instruments disclosures, credit risk liquidity risk market risk, sensitivity analysis interest rate, maturity analysis financial liabilities, ECL disclosure IND AS 107, fair value hierarchy disclosure, IFRS 7 India"/>
+<meta name="author" content="Finosutra"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://finosutra.com/blog/ind-as-107-financial-instruments-disclosures-guide.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Finosutra"/>
+<meta property="og:title" content="IND AS 107 Financial Instruments: Disclosures — Risk Categories & Sensitivity Analysis Explained"/>
+<meta property="og:description" content="Significance disclosures, credit/liquidity/market risk disclosures, sensitivity analysis, and the fair value hierarchy cross-reference under IND AS 107 — with a full worked example."/>
+<meta property="og:url" content="https://finosutra.com/blog/ind-as-107-financial-instruments-disclosures-guide.html"/>
+<meta property="og:image" content="https://finosutra.com/og-image.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="IND AS 107 Financial Instruments: Disclosures — Complete Guide"/>
+<meta name="twitter:description" content="Risk categories and sensitivity analysis disclosures under IND AS 107 — with a full worked example."/>
+<meta name="twitter:image" content="https://finosutra.com/og-image.jpg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="../finosutra.css?v=17"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "IND AS 107 Financial Instruments: Disclosures — Risk Categories & Sensitivity Analysis Explained",
+  "description": "Complete guide to IND AS 107 — significance-of-instruments disclosures, credit risk, liquidity risk and market risk disclosures, sensitivity analysis, the fair value hierarchy cross-reference, and a full worked example illustrating an interest-rate sensitivity table.",
+  "author": {"@type": "Organization", "name": "Finosutra", "sameAs": ["https://www.linkedin.com/company/124543898/", "https://www.youtube.com/@cakrishnaswadekar07"]},
+  "publisher": {"@type": "Organization", "name": "Finosutra", "url": "https://finosutra.com", "sameAs": ["https://www.linkedin.com/company/124543898/", "https://www.youtube.com/@cakrishnaswadekar07"]},
+  "datePublished": "2026-09-06",
+  "dateModified": "2026-09-06",
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://finosutra.com/blog/ind-as-107-financial-instruments-disclosures-guide.html"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What are the three risk categories IND AS 107 requires disclosures for?", "acceptedAnswer": {"@type": "Answer", "text": "Credit risk (the risk a counterparty will fail to discharge an obligation, causing a financial loss), liquidity risk (the risk an entity will have difficulty meeting obligations associated with financial liabilities), and market risk (the risk that the fair value or future cash flows of a financial instrument will fluctuate because of changes in market prices, split into currency risk, interest rate risk, and other price risk)."}},
+    {"@type": "Question", "name": "What is a maturity analysis and why is it required?", "acceptedAnswer": {"@type": "Answer", "text": "A maturity analysis for non-derivative financial liabilities shows the remaining contractual maturities, based on undiscounted cash flows, grouped into time bands (e.g. less than 1 year, 1-5 years, more than 5 years). It is required as part of liquidity risk disclosure because it lets users assess the timing of cash outflows the entity has contractually committed to, which the balance sheet's discounted carrying amounts alone don't reveal."}},
+    {"@type": "Question", "name": "What is sensitivity analysis under IND AS 107?", "acceptedAnswer": {"@type": "Answer", "text": "For each type of market risk to which an entity is exposed at the reporting date, IND AS 107 requires a sensitivity analysis showing how profit or loss and equity would have been affected by reasonably possible changes in the relevant risk variable (e.g. a 1% change in interest rates, or a 5% change in a foreign exchange rate), along with the methods and assumptions used in preparing that analysis."}},
+    {"@type": "Question", "name": "How does IND AS 107 relate to IND AS 109 and IND AS 113?", "acceptedAnswer": {"@type": "Answer", "text": "IND AS 109 governs recognition and measurement of financial instruments, and IND AS 113 governs how fair value itself is determined (the fair value hierarchy). IND AS 107 sits alongside both, requiring the disclosures that let users understand the significance of financial instruments to an entity's financial position and performance, and the nature and extent of the risks arising from them — including disclosing the fair value hierarchy level for instruments measured at fair value, using IND AS 113's Level 1/2/3 classification."}},
+    {"@type": "Question", "name": "What credit risk disclosures does IND AS 107 require under the expected credit loss model?", "acceptedAnswer": {"@type": "Answer", "text": "An entity discloses information about its credit risk management practices, a reconciliation of the opening to closing loss allowance balance by class of financial instrument, an analysis of the credit quality of financial assets that are neither past due nor impaired, and how it determines whether credit risk has increased significantly since initial recognition (the trigger for moving from a 12-month to a lifetime expected credit loss measurement under IND AS 109)."}},
+    {"@type": "Question", "name": "Is IND AS 107 the same as IFRS 7?", "acceptedAnswer": {"@type": "Answer", "text": "IND AS 107 is India's converged version of IFRS 7 and follows the same risk-category disclosure structure, sensitivity analysis requirements, and maturity analysis for liquidity risk. As a pure disclosure standard, it has very few substantive India-specific carve-outs — its content is driven largely by whatever IND AS 109 classification and measurement choices an entity has made, since disclosures must explain those choices and their resulting risk exposures."}}
+  ]
+}
+</script>
+<style>
+:root{
+  --brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;--brand-mid:#C7D2FE;
+  --bg:#F9FAFB;--card:#FFFFFF;--border:rgba(99,102,241,0.18);--border-light:rgba(99,102,241,0.08);
+  --text:#111827;--muted:#6B7280;--muted2:#9CA3AF;
+  --green:#059669;--green-light:#ECFDF5;
+  --red:#DC2626;--red-light:#FEF2F2;
+  --orange:#D97706;--orange-light:#FFFBEB;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+.article-wrap{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted2);margin-bottom:24px;flex-wrap:wrap;}
+.breadcrumb a{color:var(--muted2);text-decoration:none;transition:color .15s;}
+.breadcrumb a:hover{color:var(--brand);}
+
+.article-tag{display:inline-block;background:var(--brand-light);color:var(--brand);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.4px;margin-bottom:16px;}
+.article-title{font-size:clamp(24px,4vw,36px);font-weight:800;line-height:1.2;letter-spacing:-0.5px;color:var(--text);margin-bottom:16px;}
+.article-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--muted);margin-bottom:32px;flex-wrap:wrap;}
+.article-meta span{display:flex;align-items:center;gap:5px;}
+.article-divider{height:1px;background:var(--border-light);margin-bottom:36px;}
+
+.toc{background:var(--brand-light);border:1px solid var(--brand-mid);border-radius:14px;padding:22px 26px;margin-bottom:40px;}
+.toc h3{font-size:13px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;}
+.toc ol{padding-left:18px;}
+.toc ol li{margin-bottom:6px;}
+.toc ol li a{font-size:14px;color:var(--brand-dark);text-decoration:none;font-weight:500;}
+.toc ol li a:hover{text-decoration:underline;}
+
+.article-body h2{font-size:22px;font-weight:800;color:var(--text);margin:40px 0 14px;letter-spacing:-0.3px;}
+.article-body h3{font-size:17px;font-weight:700;color:var(--text);margin:28px 0 10px;}
+.article-body p{margin-bottom:16px;color:#1F2937;}
+.article-body ul,.article-body ol{padding-left:22px;margin-bottom:16px;}
+.article-body ul li,.article-body ol li{margin-bottom:8px;color:#1F2937;}
+.article-body strong{font-weight:700;color:var(--text);}
+
+.callout{background:var(--brand-light);border-left:4px solid var(--brand);border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0;}
+.callout p{margin:0;font-size:14px;color:var(--brand-dark);}
+.callout strong{color:var(--brand-dark);}
+.callout-green{background:var(--green-light);border-left-color:var(--green);}
+.callout-green p{color:#065F46;}
+.callout-orange{background:var(--orange-light);border-left-color:var(--orange);}
+.callout-orange p{color:#92400E;}
+.callout-red{background:var(--red-light);border-left-color:var(--red);}
+.callout-red p{color:#991B1B;}
+
+.table-wrap{overflow-x:auto;margin:24px 0;}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:360px;}
+table th{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-weight:700;padding:10px 14px;text-align:left;}
+table th.r{text-align:right;}
+table td{padding:9px 14px;border-bottom:1px solid #F3F4F6;color:#1F2937;}
+table td.r{text-align:right;}
+table tr:nth-child(even) td{background:#F9FAFB;}
+table tr:last-child td{border-bottom:none;}
+table tfoot td{background:#EEF2FF;font-weight:700;border-top:2px solid var(--brand-mid);}
+
+.je-block{background:#F9FAFB;border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:20px 0;}
+.je-title{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px;}
+.je-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #F3F4F6;}
+.je-row:last-child{border-bottom:none;}
+.je-account{font-size:14px;font-weight:600;color:var(--text);}
+.je-account.cr{padding-left:24px;font-weight:500;color:var(--muted);}
+.je-amounts{display:flex;gap:32px;}
+.je-dr{font-size:14px;font-weight:700;color:#10B981;min-width:100px;text-align:right;}
+.je-cr{font-size:14px;font-weight:700;color:#6366F1;min-width:100px;text-align:right;}
+
+.step-card{border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:16px 0;position:relative;padding-left:60px;}
+.step-num{position:absolute;left:18px;top:18px;width:28px;height:28px;background:var(--brand);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;}
+.step-card h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;margin-top:0;}
+.step-card p{font-size:14px;color:var(--muted);margin:0;}
+
+.cta-box{background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:16px;padding:28px 30px;margin:40px 0;text-align:center;}
+.cta-box h3{font-size:18px;font-weight:800;color:#fff;margin-bottom:8px;}
+.cta-box p{font-size:14px;color:rgba(255,255,255,.85);margin-bottom:18px;}
+.cta-box a{display:inline-block;background:#fff;color:var(--brand);font-size:14px;font-weight:700;padding:12px 26px;border-radius:10px;text-decoration:none;transition:transform .15s;}
+.cta-box a:hover{transform:translateY(-1px);}
+
+.related-links{border:1px solid var(--border-light);border-radius:12px;padding:20px 24px;margin-top:40px;}
+.related-links h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;}
+.related-links a{display:block;font-size:14px;color:var(--brand);text-decoration:none;padding:6px 0;border-bottom:1px solid var(--border-light);font-weight:500;}
+.related-links a:last-child{border-bottom:none;}
+.related-links a:hover{text-decoration:underline;}
+
+@media(max-width:600px){.article-wrap{padding:32px 16px 60px;}.je-amounts{gap:16px;}.step-card{padding-left:50px;}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../auth.js?v=12"></script>
+</head>
+<body>
+
+<div id="fs-nav"></div>
+
+<div class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span>›</span>
+    <a href="../blog.html">Blog</a>
+    <span>›</span>
+    <span>IND AS 107 Financial Instruments: Disclosures</span>
+  </nav>
+
+  <div class="article-tag">IND AS 107 / IFRS 7</div>
+  <h1 class="article-title">IND AS 107 Financial Instruments: Disclosures — Risk Categories &amp; Sensitivity Analysis Explained</h1>
+  <div class="article-meta">
+    <span><i class="fa-regular fa-calendar"></i> September 2026</span>
+    <span><i class="fa-regular fa-clock"></i> 16 min read</span>
+    <span><i class="fa-solid fa-user"></i> Finosutra Team</span>
+  </div>
+  <p style="font-size:16px;line-height:1.65;color:#374151;max-width:760px;margin:4px 0 14px;">Under <strong>IND AS 107</strong>, an entity discloses how significant financial instruments are to its position and performance, and the nature and extent of <strong>credit, liquidity and market risk</strong> arising from them — including a quantified <strong>sensitivity analysis</strong> showing how reasonably possible market movements would affect profit or loss and equity.</p>
+  <div class="article-divider"></div>
+
+  <div class="toc">
+    <h3>In This Article</h3>
+    <ol>
+      <li><a href="#overview">What IND AS 107 Covers — Objective and Scope</a></li>
+      <li><a href="#significance">Significance of Financial Instruments</a></li>
+      <li><a href="#credit-risk">Credit Risk Disclosures</a></li>
+      <li><a href="#liquidity-risk">Liquidity Risk and the Maturity Analysis</a></li>
+      <li><a href="#market-risk">Market Risk and Sensitivity Analysis</a></li>
+      <li><a href="#fair-value-link">The Fair Value Hierarchy Cross-Reference</a></li>
+      <li><a href="#example">Worked Example — An Interest Rate Sensitivity Table</a></li>
+      <li><a href="#relationship">How IND AS 107 Relates to IND AS 109 and 113</a></li>
+      <li><a href="#disclosures">Other Disclosures Required</a></li>
+      <li><a href="#errors">Common Mistakes CAs Make</a></li>
+      <li><a href="#faq">FAQs</a></li>
+    </ol>
+  </div>
+
+  <div class="article-body">
+
+    <h2 id="overview">1. What IND AS 107 Covers — Objective and Scope</h2>
+    <p>IND AS 107 requires entities to provide disclosures that enable users to evaluate the <strong>significance</strong> of financial instruments to the entity's financial position and performance, and the <strong>nature and extent</strong> of risks arising from financial instruments to which the entity is exposed, and how the entity manages those risks. It is a pure <strong>disclosure</strong> standard — it doesn't govern recognition or measurement (that's IND AS 109) — and applies to virtually all entities holding or issuing financial instruments.</p>
+
+    <h2 id="significance">2. Significance of Financial Instruments</h2>
+    <p>Disclosures here include the carrying amounts of each category of financial asset and liability under IND AS 109 (amortised cost, FVOCI, FVTPL), items of income, expense, gains and losses arising from financial instruments (interest income/expense, fee income, net gains/losses by category), and information about hedge accounting relationships and their effectiveness.</p>
+
+    <h2 id="credit-risk">3. Credit Risk Disclosures</h2>
+    <div class="callout">
+      <p><strong>Credit risk</strong> is the risk that a counterparty to a financial instrument will fail to discharge an obligation, causing a financial loss. Disclosures include information about the entity's credit risk management practices, a <strong>reconciliation of the opening to closing loss allowance balance</strong> by class of financial instrument (tying directly to IND AS 109's expected credit loss model), an analysis of credit quality for assets neither past due nor impaired, and how the entity determines whether credit risk has increased significantly since initial recognition — the trigger for moving from a 12-month to a lifetime expected credit loss basis.</p>
+    </div>
+
+    <h2 id="liquidity-risk">4. Liquidity Risk and the Maturity Analysis</h2>
+    <p><strong>Liquidity risk</strong> is the risk that an entity will encounter difficulty in meeting obligations associated with its financial liabilities. The key required disclosure is a <strong>maturity analysis</strong> for non-derivative (and separately, derivative) financial liabilities, showing the remaining contractual maturities based on <strong>undiscounted</strong> cash flows, grouped into time bands (e.g. less than 1 year, 1-5 years, more than 5 years) — this reveals the timing of contractual cash outflows that the balance sheet's discounted carrying amounts don't show on their own.</p>
+
+    <h2 id="market-risk">5. Market Risk and Sensitivity Analysis</h2>
+    <p><strong>Market risk</strong> is the risk that the fair value or future cash flows of a financial instrument will fluctuate because of changes in market prices, split into three types:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Type</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Currency risk</strong></td><td>Exposure from financial instruments denominated in a foreign currency</td></tr>
+          <tr><td><strong>Interest rate risk</strong></td><td>Exposure from floating-rate borrowings or investments</td></tr>
+          <tr><td><strong>Other price risk</strong></td><td>Exposure from equity investments, commodity-linked instruments, etc.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout callout-orange">
+      <p><strong>For each type of market risk, IND AS 107 requires a sensitivity analysis</strong> showing how profit or loss and equity would have been affected by <strong>reasonably possible</strong> changes in the relevant risk variable at the reporting date (e.g. a 1% movement in interest rates, or a 5% movement in a foreign exchange rate), together with the methods and assumptions used to prepare that analysis, and any changes from the prior period in those methods and assumptions.</p>
+    </div>
+
+    <h2 id="fair-value-link">6. The Fair Value Hierarchy Cross-Reference</h2>
+    <p>For financial instruments measured at fair value, IND AS 107 requires disclosure of which <strong>fair value hierarchy level</strong> (Level 1, 2 or 3, as defined in IND AS 113) each instrument falls into, transfers between levels during the period, and — for Level 3 instruments specifically — a reconciliation of opening to closing balances and a sensitivity analysis to reasonably possible alternative unobservable inputs.</p>
+
+    <h2 id="example">7. Worked Example — An Interest Rate Sensitivity Table</h2>
+    <div class="callout">
+      <p><strong>Scenario:</strong> Devgiri Infrastructure Ltd has floating-rate borrowings of <strong>₹40,00,00,000</strong> at the reporting date, linked to a benchmark rate. Management assesses a reasonably possible movement in interest rates as <strong>+/- 1%</strong> for the coming year.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Scenario</th><th class="r">Impact on annual interest expense (₹)</th><th class="r">Impact on profit before tax (₹)</th></tr></thead>
+        <tbody>
+          <tr><td>Interest rates increase by 1%</td><td class="r">+40,00,000</td><td class="r">(40,00,000)</td></tr>
+          <tr><td>Interest rates decrease by 1%</td><td class="r">(40,00,000)</td><td class="r">+40,00,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>This disclosure tells users that a 1% adverse movement in the benchmark rate would reduce Devgiri's profit before tax by ₹40,00,000 annually — information the balance sheet's carrying amount of the borrowing (which doesn't reflect future rate movements) can't convey on its own.</p>
+
+    <div class="cta-box">
+      <h3>Explore Finosutra's IND AS tools</h3>
+      <p>Free calculators for lease accounting, security deposits, ECL provisioning and financial statement generation — audit-ready workpapers in minutes.</p>
+      <a href="../indas-tools.html">Explore IND AS Tools →</a>
+    </div>
+
+    <h2 id="relationship">8. How IND AS 107 Relates to IND AS 109 and 113</h2>
+    <p>These three standards work as a set: <strong>IND AS 109</strong> decides how a financial instrument is classified and measured; <strong>IND AS 113</strong> provides the methodology for determining fair value wherever it's used; and <strong>IND AS 107</strong> requires the disclosures that explain those classification/measurement choices to users and quantify the resulting risk exposures. A change in an entity's IND AS 109 classification policy, or its risk management approach, directly changes what IND AS 107 requires it to disclose.</p>
+
+    <h2 id="disclosures">9. Other Disclosures Required</h2>
+    <p>Additional disclosures include the total interest income and expense (calculated using the effective interest method) for financial assets/liabilities not at FVTPL, fee income and expense arising from financial instruments not at FVTPL, any impairment losses on each class of financial asset, and — where an entity has reclassified financial assets between measurement categories — the amount reclassified and the reason.</p>
+
+    <h2 id="errors">10. Common Mistakes CAs Make</h2>
+
+    <div class="callout callout-red">
+      <p><strong>Error 1 — Presenting the maturity analysis on a discounted basis.</strong> Liquidity risk maturity analysis must use undiscounted contractual cash flows — using discounted (balance sheet) amounts understates the true future cash outflow and defeats the purpose of the disclosure.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 2 — Choosing an unrealistically narrow sensitivity range.</strong> The sensitivity analysis must reflect a "reasonably possible" change in the risk variable, based on the actual volatility observed for that entity's specific exposures — not an arbitrarily small percentage chosen to make the disclosed impact look immaterial.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 3 — Omitting the fair value hierarchy level for instruments measured at fair value.</strong> This disclosure is mandatory wherever fair value measurement is used, cross-referencing IND AS 113's Level 1/2/3 classification — it's frequently missed for less commonly fair-valued instrument types.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 4 — Providing generic risk management boilerplate without entity-specific quantification.</strong> IND AS 107 expects quantitative disclosures (reconciliations, maturity bands, sensitivity figures) alongside qualitative risk management commentary — narrative alone doesn't satisfy the standard's requirements.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 5 — Not reconciling the ECL loss allowance movement by class of instrument.</strong> The credit risk disclosures require this reconciliation broken down meaningfully (e.g. by trade receivables, loans, investments) — a single blended total across all financial assets doesn't provide the granularity the standard expects.</p>
+    </div>
+
+    <h2 id="faq">11. FAQs</h2>
+
+    <h3>What are the three risk categories IND AS 107 requires disclosures for?</h3>
+    <p>Credit risk (the risk a counterparty will fail to discharge an obligation, causing a financial loss), liquidity risk (the risk an entity will have difficulty meeting obligations associated with financial liabilities), and market risk (the risk that the fair value or future cash flows of a financial instrument will fluctuate because of changes in market prices, split into currency risk, interest rate risk, and other price risk).</p>
+
+    <h3>What is a maturity analysis and why is it required?</h3>
+    <p>A maturity analysis for non-derivative financial liabilities shows the remaining contractual maturities, based on undiscounted cash flows, grouped into time bands (e.g. less than 1 year, 1-5 years, more than 5 years). It is required as part of liquidity risk disclosure because it lets users assess the timing of cash outflows the entity has contractually committed to, which the balance sheet's discounted carrying amounts alone don't reveal.</p>
+
+    <h3>What is sensitivity analysis under IND AS 107?</h3>
+    <p>For each type of market risk to which an entity is exposed at the reporting date, IND AS 107 requires a sensitivity analysis showing how profit or loss and equity would have been affected by reasonably possible changes in the relevant risk variable (e.g. a 1% change in interest rates, or a 5% change in a foreign exchange rate), along with the methods and assumptions used in preparing that analysis.</p>
+
+    <h3>How does IND AS 107 relate to IND AS 109 and IND AS 113?</h3>
+    <p>IND AS 109 governs recognition and measurement of financial instruments, and IND AS 113 governs how fair value itself is determined (the fair value hierarchy). IND AS 107 sits alongside both, requiring the disclosures that let users understand the significance of financial instruments to an entity's financial position and performance, and the nature and extent of the risks arising from them — including disclosing the fair value hierarchy level for instruments measured at fair value, using IND AS 113's Level 1/2/3 classification.</p>
+
+    <h3>What credit risk disclosures does IND AS 107 require under the expected credit loss model?</h3>
+    <p>An entity discloses information about its credit risk management practices, a reconciliation of the opening to closing loss allowance balance by class of financial instrument, an analysis of the credit quality of financial assets that are neither past due nor impaired, and how it determines whether credit risk has increased significantly since initial recognition (the trigger for moving from a 12-month to a lifetime expected credit loss measurement under IND AS 109).</p>
+
+    <h3>Is IND AS 107 the same as IFRS 7?</h3>
+    <p>IND AS 107 is India's converged version of IFRS 7 and follows the same risk-category disclosure structure, sensitivity analysis requirements, and maturity analysis for liquidity risk. As a pure disclosure standard, it has very few substantive India-specific carve-outs — its content is driven largely by whatever IND AS 109 classification and measurement choices an entity has made, since disclosures must explain those choices and their resulting risk exposures.</p>
+
+  </div>
+
+  <div class="related-links">
+    <h3>Related tools &amp; articles</h3>
+    <a href="../indas-tools.html">→ All IND AS Tools</a>
+    <a href="ind-as-109-financial-instruments-guide.html">→ IND AS 109 Financial Instruments — Complete Guide</a>
+    <a href="ind-as-32-financial-instruments-presentation-guide.html">→ IND AS 32 Financial Instruments: Presentation — Complete Guide</a>
+    <a href="ind-as-113-fair-value-measurement-guide.html">→ IND AS 113 Fair Value Measurement — Complete Guide</a>
+    <a href="ecl-provision-matrix-ind-as-109.html">→ ECL Provision Matrix under IND AS 109 — Full Guide</a>
+    <a href="../blog.html">← All Articles</a>
+  </div>
+
+</div>
+
+<div id="fs-footer"></div>
+<script src="../nav.js?v=9"></script>
+<script src="../footer.js?v=8"></script>
+<script src="../share.js"></script>
+</body>
+</html>
