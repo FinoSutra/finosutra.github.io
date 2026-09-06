@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>IND AS 32 Financial Instruments: Presentation — Liability vs Equity & Compound Instruments Explained | Finosutra</title>
+<meta name="description" content="Complete guide to IND AS 32 — the liability vs equity classification test, the fixed-for-fixed condition, compound financial instruments (split accounting for convertible bonds), treasury shares, offsetting financial assets and liabilities, and a full worked example."/>
+<meta name="keywords" content="IND AS 32 financial instruments presentation, liability vs equity classification, compound financial instrument split accounting, convertible bond equity component, fixed for fixed condition, offsetting financial assets liabilities, IND AS 32 vs Companies Act, IAS 32 India"/>
+<meta name="author" content="Finosutra"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://finosutra.com/blog/ind-as-32-financial-instruments-presentation-guide.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Finosutra"/>
+<meta property="og:title" content="IND AS 32 Financial Instruments: Presentation — Liability vs Equity & Compound Instruments Explained"/>
+<meta property="og:description" content="The liability vs equity classification test, the fixed-for-fixed condition, compound financial instruments (split accounting), and offsetting under IND AS 32 — with a full worked example."/>
+<meta property="og:url" content="https://finosutra.com/blog/ind-as-32-financial-instruments-presentation-guide.html"/>
+<meta property="og:image" content="https://finosutra.com/og-image.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="IND AS 32 Financial Instruments: Presentation — Complete Guide"/>
+<meta name="twitter:description" content="Liability vs equity classification and compound instrument split accounting under IND AS 32 — with a full worked example."/>
+<meta name="twitter:image" content="https://finosutra.com/og-image.jpg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="../finosutra.css?v=17"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "IND AS 32 Financial Instruments: Presentation — Liability vs Equity & Compound Instruments Explained",
+  "description": "Complete guide to IND AS 32 — the liability vs equity classification test, the fixed-for-fixed condition, compound financial instruments (split accounting for convertible bonds), treasury shares, offsetting financial assets and liabilities, and a full worked example.",
+  "author": {"@type": "Organization", "name": "Finosutra", "sameAs": ["https://www.linkedin.com/company/124543898/", "https://www.youtube.com/@cakrishnaswadekar07"]},
+  "publisher": {"@type": "Organization", "name": "Finosutra", "url": "https://finosutra.com", "sameAs": ["https://www.linkedin.com/company/124543898/", "https://www.youtube.com/@cakrishnaswadekar07"]},
+  "datePublished": "2026-09-06",
+  "dateModified": "2026-09-06",
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://finosutra.com/blog/ind-as-32-financial-instruments-presentation-guide.html"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What is the basic test for classifying an instrument as a financial liability or equity?", "acceptedAnswer": {"@type": "Answer", "text": "The substance of the contractual arrangement governs, not its legal form. An instrument is a financial liability if the issuer has a contractual obligation to deliver cash or another financial asset to the holder, or to exchange financial instruments under potentially unfavourable conditions. It is an equity instrument only if it evidences a residual interest in the issuer's net assets, with no such obligation to deliver cash or other assets."}},
+    {"@type": "Question", "name": "Why are compulsorily redeemable preference shares classified as a liability?", "acceptedAnswer": {"@type": "Answer", "text": "Even though they are called 'shares,' compulsorily redeemable preference shares create a contractual obligation for the issuer to deliver cash (the redemption amount) to the holder at a specified or determinable future date. Since the issuer cannot avoid this obligation, the instrument meets the definition of a financial liability, not equity, regardless of its legal label."}},
+    {"@type": "Question", "name": "What is the fixed-for-fixed condition for classifying a conversion option as equity?", "acceptedAnswer": {"@type": "Answer", "text": "A contract that will be settled by the entity delivering a fixed number of its own equity instruments in exchange for a fixed amount of cash or another financial asset is classified as equity. If either the number of shares or the cash amount can vary (e.g. a conversion price adjusted based on future share price movements), the fixed-for-fixed condition fails, and the conversion option is instead classified as a derivative financial liability."}},
+    {"@type": "Question", "name": "How is a compound financial instrument like a convertible bond split between liability and equity?", "acceptedAnswer": {"@type": "Answer", "text": "The liability component is measured first, at the fair value of a similar bond without the conversion feature, discounting the contractual cash flows at the market rate for a non-convertible bond. The equity component (the conversion option) is then measured as the residual — the total proceeds received less the fair value assigned to the liability component. This approach never assigns a value to the liability that isn't independently supportable, and the equity component is never subsequently remeasured."}},
+    {"@type": "Question", "name": "When can financial assets and financial liabilities be offset in the balance sheet?", "acceptedAnswer": {"@type": "Answer", "text": "Only when the entity currently has a legally enforceable right to set off the recognised amounts, and it intends either to settle on a net basis or to realise the asset and settle the liability simultaneously. Both conditions must be met — a legal right to offset alone, without the intention (or practical ability) to settle net or simultaneously, is not sufficient to present the amounts net."}},
+    {"@type": "Question", "name": "Is IND AS 32 the same as IAS 32?", "acceptedAnswer": {"@type": "Answer", "text": "IND AS 32 is India's converged version of IAS 32 and follows the same substance-based liability/equity classification, the fixed-for-fixed condition, compound instrument split accounting, and offsetting criteria. Since Indian company law (the Companies Act, 2013) permits various classes of preference shares and debentures with a range of redemption and conversion terms, this substance-over-form classification test has particularly significant real-world impact for Indian companies structuring instruments that may look like equity but are, in substance, liabilities."}}
+  ]
+}
+</script>
+<style>
+:root{
+  --brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;--brand-mid:#C7D2FE;
+  --bg:#F9FAFB;--card:#FFFFFF;--border:rgba(99,102,241,0.18);--border-light:rgba(99,102,241,0.08);
+  --text:#111827;--muted:#6B7280;--muted2:#9CA3AF;
+  --green:#059669;--green-light:#ECFDF5;
+  --red:#DC2626;--red-light:#FEF2F2;
+  --orange:#D97706;--orange-light:#FFFBEB;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+.article-wrap{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted2);margin-bottom:24px;flex-wrap:wrap;}
+.breadcrumb a{color:var(--muted2);text-decoration:none;transition:color .15s;}
+.breadcrumb a:hover{color:var(--brand);}
+
+.article-tag{display:inline-block;background:var(--brand-light);color:var(--brand);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.4px;margin-bottom:16px;}
+.article-title{font-size:clamp(24px,4vw,36px);font-weight:800;line-height:1.2;letter-spacing:-0.5px;color:var(--text);margin-bottom:16px;}
+.article-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--muted);margin-bottom:32px;flex-wrap:wrap;}
+.article-meta span{display:flex;align-items:center;gap:5px;}
+.article-divider{height:1px;background:var(--border-light);margin-bottom:36px;}
+
+.toc{background:var(--brand-light);border:1px solid var(--brand-mid);border-radius:14px;padding:22px 26px;margin-bottom:40px;}
+.toc h3{font-size:13px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;}
+.toc ol{padding-left:18px;}
+.toc ol li{margin-bottom:6px;}
+.toc ol li a{font-size:14px;color:var(--brand-dark);text-decoration:none;font-weight:500;}
+.toc ol li a:hover{text-decoration:underline;}
+
+.article-body h2{font-size:22px;font-weight:800;color:var(--text);margin:40px 0 14px;letter-spacing:-0.3px;}
+.article-body h3{font-size:17px;font-weight:700;color:var(--text);margin:28px 0 10px;}
+.article-body p{margin-bottom:16px;color:#1F2937;}
+.article-body ul,.article-body ol{padding-left:22px;margin-bottom:16px;}
+.article-body ul li,.article-body ol li{margin-bottom:8px;color:#1F2937;}
+.article-body strong{font-weight:700;color:var(--text);}
+
+.callout{background:var(--brand-light);border-left:4px solid var(--brand);border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0;}
+.callout p{margin:0;font-size:14px;color:var(--brand-dark);}
+.callout strong{color:var(--brand-dark);}
+.callout-green{background:var(--green-light);border-left-color:var(--green);}
+.callout-green p{color:#065F46;}
+.callout-orange{background:var(--orange-light);border-left-color:var(--orange);}
+.callout-orange p{color:#92400E;}
+.callout-red{background:var(--red-light);border-left-color:var(--red);}
+.callout-red p{color:#991B1B;}
+
+.table-wrap{overflow-x:auto;margin:24px 0;}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:360px;}
+table th{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-weight:700;padding:10px 14px;text-align:left;}
+table th.r{text-align:right;}
+table td{padding:9px 14px;border-bottom:1px solid #F3F4F6;color:#1F2937;}
+table td.r{text-align:right;}
+table tr:nth-child(even) td{background:#F9FAFB;}
+table tr:last-child td{border-bottom:none;}
+table tfoot td{background:#EEF2FF;font-weight:700;border-top:2px solid var(--brand-mid);}
+
+.je-block{background:#F9FAFB;border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:20px 0;}
+.je-title{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px;}
+.je-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #F3F4F6;}
+.je-row:last-child{border-bottom:none;}
+.je-account{font-size:14px;font-weight:600;color:var(--text);}
+.je-account.cr{padding-left:24px;font-weight:500;color:var(--muted);}
+.je-amounts{display:flex;gap:32px;}
+.je-dr{font-size:14px;font-weight:700;color:#10B981;min-width:100px;text-align:right;}
+.je-cr{font-size:14px;font-weight:700;color:#6366F1;min-width:100px;text-align:right;}
+
+.step-card{border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:16px 0;position:relative;padding-left:60px;}
+.step-num{position:absolute;left:18px;top:18px;width:28px;height:28px;background:var(--brand);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;}
+.step-card h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;margin-top:0;}
+.step-card p{font-size:14px;color:var(--muted);margin:0;}
+
+.cta-box{background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:16px;padding:28px 30px;margin:40px 0;text-align:center;}
+.cta-box h3{font-size:18px;font-weight:800;color:#fff;margin-bottom:8px;}
+.cta-box p{font-size:14px;color:rgba(255,255,255,.85);margin-bottom:18px;}
+.cta-box a{display:inline-block;background:#fff;color:var(--brand);font-size:14px;font-weight:700;padding:12px 26px;border-radius:10px;text-decoration:none;transition:transform .15s;}
+.cta-box a:hover{transform:translateY(-1px);}
+
+.related-links{border:1px solid var(--border-light);border-radius:12px;padding:20px 24px;margin-top:40px;}
+.related-links h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;}
+.related-links a{display:block;font-size:14px;color:var(--brand);text-decoration:none;padding:6px 0;border-bottom:1px solid var(--border-light);font-weight:500;}
+.related-links a:last-child{border-bottom:none;}
+.related-links a:hover{text-decoration:underline;}
+
+@media(max-width:600px){.article-wrap{padding:32px 16px 60px;}.je-amounts{gap:16px;}.step-card{padding-left:50px;}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../auth.js?v=12"></script>
+</head>
+<body>
+
+<div id="fs-nav"></div>
+
+<div class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span>›</span>
+    <a href="../blog.html">Blog</a>
+    <span>›</span>
+    <span>IND AS 32 Financial Instruments: Presentation</span>
+  </nav>
+
+  <div class="article-tag">IND AS 32 / IAS 32</div>
+  <h1 class="article-title">IND AS 32 Financial Instruments: Presentation — Liability vs Equity &amp; Compound Instruments Explained</h1>
+  <div class="article-meta">
+    <span><i class="fa-regular fa-calendar"></i> September 2026</span>
+    <span><i class="fa-regular fa-clock"></i> 17 min read</span>
+    <span><i class="fa-solid fa-user"></i> Finosutra Team</span>
+  </div>
+  <p style="font-size:16px;line-height:1.65;color:#374151;max-width:760px;margin:4px 0 14px;">Under <strong>IND AS 32</strong>, whether an instrument is a <strong>financial liability</strong> or <strong>equity</strong> depends entirely on its contractual substance — a compulsorily redeemable "preference share" is a liability, not equity, because it obligates the issuer to deliver cash — and a <strong>compound instrument</strong> like a convertible bond is split into its liability and equity components at initial recognition, never remeasured back together.</p>
+  <div class="article-divider"></div>
+
+  <div class="toc">
+    <h3>In This Article</h3>
+    <ol>
+      <li><a href="#overview">What IND AS 32 Covers — Objective and Scope</a></li>
+      <li><a href="#liability-equity">The Liability vs Equity Classification Test</a></li>
+      <li><a href="#puttable">Puttable Instruments and Preference Shares</a></li>
+      <li><a href="#fixed-for-fixed">The Fixed-for-Fixed Condition</a></li>
+      <li><a href="#compound">Compound Financial Instruments — Split Accounting</a></li>
+      <li><a href="#treasury">Treasury Shares</a></li>
+      <li><a href="#offsetting">Offsetting Financial Assets and Liabilities</a></li>
+      <li><a href="#example">Worked Example — Splitting a Convertible Bond</a></li>
+      <li><a href="#vs-companies-act">IND AS 32 vs Pre-IND AS Indian Practice — Key Differences</a></li>
+      <li><a href="#disclosures">Disclosures Required</a></li>
+      <li><a href="#errors">Common Mistakes CAs Make</a></li>
+      <li><a href="#faq">FAQs</a></li>
+    </ol>
+  </div>
+
+  <div class="article-body">
+
+    <h2 id="overview">1. What IND AS 32 Covers — Objective and Scope</h2>
+    <p>IND AS 32 establishes principles for presenting financial instruments as liabilities or equity, and for offsetting financial assets and financial liabilities. Its core objective is to ensure that an instrument's balance sheet classification reflects its economic substance, not merely its legal form — a distinction with major consequences for gearing ratios, covenant compliance, and EPS, since interest/dividends on a liability hit profit or loss while equity returns don't.</p>
+
+    <h2 id="liability-equity">2. The Liability vs Equity Classification Test</h2>
+    <div class="callout">
+      <p><strong>An instrument is a financial liability if the issuer has a contractual obligation to deliver cash or another financial asset to the holder, or to exchange financial instruments under potentially unfavourable conditions. It is an equity instrument only if it evidences a residual interest in the issuer's net assets, with no such obligation.</strong> Substance governs, not the label on the certificate.</p>
+    </div>
+
+    <h2 id="puttable">3. Puttable Instruments and Preference Shares</h2>
+    <div class="callout callout-red">
+      <p><strong>A "preference share" that is compulsorily redeemable at a fixed or determinable future date, or redeemable at the holder's option, creates an obligation for the issuer to deliver cash — it is a financial liability, not equity</strong>, regardless of what it's called under the Companies Act or in the instrument's own documentation. Similarly, a "puttable" ordinary share — one the holder can require the issuer to redeem — is also generally a financial liability, subject to a narrow exception for certain puttable instruments that meet specific criteria (e.g. some units of open-ended mutual funds and certain partnership interests).</p>
+    </div>
+
+    <h2 id="fixed-for-fixed">4. The Fixed-for-Fixed Condition</h2>
+    <p>A contract that will be settled by the entity delivering a <strong>fixed number of its own equity instruments</strong> in exchange for a <strong>fixed amount of cash</strong> (or another financial asset) is classified as an equity instrument — commonly called the <strong>"fixed-for-fixed" condition</strong>.</p>
+    <div class="callout callout-orange">
+      <p><strong>If either side of the exchange can vary — the number of shares deliverable, or the cash amount — the fixed-for-fixed condition fails</strong>, and the conversion feature is instead classified as a <strong>derivative financial liability</strong>, remeasured to fair value through profit or loss each period. A convertible bond with a conversion ratio that adjusts based on the future market price of the shares (rather than a fixed ratio set at issuance) is a classic example that fails this test.</p>
+    </div>
+
+    <h2 id="compound">5. Compound Financial Instruments — Split Accounting</h2>
+    <p>A <strong>compound financial instrument</strong> — most commonly a convertible bond — contains both a liability component (the obligation to pay interest and principal) and an equity component (the holder's option to convert into a fixed number of shares, satisfying the fixed-for-fixed condition). IND AS 32 requires <strong>split accounting</strong>:</p>
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <h3>Measure the liability component first</h3>
+      <p>At the fair value of a similar liability that does <strong>not</strong> have the conversion feature — discounting the contractual cash flows at the market interest rate for an equivalent non-convertible bond.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <h3>Measure the equity component as the residual</h3>
+      <p>Total proceeds received, <strong>less</strong> the fair value assigned to the liability component.</p>
+    </div>
+    <div class="callout callout-green">
+      <p><strong>The equity component, once determined, is never subsequently remeasured</strong> — it stays fixed at its initial split-date value, even as the liability component accretes toward face value using the effective interest method over the bond's life.</p>
+    </div>
+
+    <h2 id="treasury">6. Treasury Shares</h2>
+    <p>If an entity reacquires its own equity instruments ("treasury shares"), the amount paid is deducted directly from equity — no gain or loss is recognised in profit or loss on the purchase, sale, issue, or cancellation of an entity's own equity instruments.</p>
+
+    <h2 id="offsetting">7. Offsetting Financial Assets and Liabilities</h2>
+    <div class="callout callout-red">
+      <p><strong>A financial asset and a financial liability are offset, with the net amount presented, only when the entity currently has a legally enforceable right to set off the recognised amounts, AND intends either to settle on a net basis or to realise the asset and settle the liability simultaneously.</strong> Both conditions are required — a legal right to offset without the actual intention (or ability) to settle net is not sufficient for net presentation.</p>
+    </div>
+
+    <h2 id="example">8. Worked Example — Splitting a Convertible Bond</h2>
+    <div class="callout">
+      <p><strong>Scenario:</strong> Trident Industries Ltd issues a convertible bond for total proceeds of <strong>₹1,00,00,000</strong>, carrying a coupon of 6% p.a., convertible into a <strong>fixed</strong> number of equity shares at the holder's option after 3 years. A comparable non-convertible bond would carry an interest rate of <strong>10%</strong> p.a. Since the number of shares issuable on conversion is fixed regardless of the share price at conversion, the fixed-for-fixed condition is met.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Component</th><th>Basis</th><th class="r">Amount (₹)</th></tr></thead>
+        <tbody>
+          <tr><td>Liability component</td><td>PV of ₹1,00,00,000 principal + ₹6,00,000/year coupon for 3 years, discounted at 10%</td><td class="r">90,05,260</td></tr>
+          <tr><td>Equity component (residual)</td><td>Total proceeds ₹1,00,00,000 less liability component</td><td class="r">9,94,740</td></tr>
+        </tbody>
+        <tfoot><tr><td colspan="2">Total proceeds</td><td class="r">1,00,00,000</td></tr></tfoot>
+      </table>
+    </div>
+    <div class="je-block">
+      <div class="je-title">Recognise the compound instrument at issuance</div>
+      <div class="je-row">
+        <span class="je-account">Bank</span>
+        <div class="je-amounts"><span class="je-dr">Dr 1,00,00,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Convertible Bond — Liability Component</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 90,05,260</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Equity — Conversion Option Reserve</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 9,94,740</span></div>
+      </div>
+    </div>
+    <p>Over the 3-year term, the ₹90,05,260 liability component accretes to the ₹1,00,00,000 face value using the effective interest method at 10% p.a. (with the 6% cash coupon paid annually and the difference added to the carrying amount) — while the ₹9,94,740 equity component remains untouched, regardless of what happens to the company's share price or whether the bond is ultimately converted or redeemed for cash.</p>
+
+    <div class="cta-box">
+      <h3>Explore Finosutra's IND AS tools</h3>
+      <p>Free calculators for lease accounting, security deposits, ECL provisioning and financial statement generation — audit-ready workpapers in minutes.</p>
+      <a href="../indas-tools.html">Explore IND AS Tools →</a>
+    </div>
+
+    <h2 id="vs-companies-act">9. IND AS 32 vs Pre-IND AS Indian Practice — Key Differences</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Aspect</th><th>Pre-IND AS practice</th><th>IND AS 32</th></tr></thead>
+        <tbody>
+          <tr><td>Preference shares</td><td>Generally presented as equity/"share capital," following legal form under the Companies Act</td><td>Classified based on substance — compulsorily redeemable preference shares are financial liabilities</td></tr>
+          <tr><td>Compound instruments</td><td>Convertible instruments generally accounted for as a single liability (or single equity) instrument, without formal split accounting</td><td>Mandatory split into liability and equity components at issuance</td></tr>
+          <tr><td>Conversion options failing fixed-for-fixed</td><td>Not a distinct concept</td><td>Explicitly classified as a derivative liability, fair-valued through P&amp;L</td></tr>
+          <tr><td>Offsetting</td><td>Less formalized dual-condition test</td><td>Explicit dual test — legal right AND intention/ability to settle net or simultaneously</td></tr>
+          <tr><td>Treasury shares</td><td>Buy-back accounting under Companies Act provisions, broadly consistent in substance</td><td>Explicit prohibition on recognising any gain/loss in P&amp;L on own-equity transactions</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="disclosures">10. Disclosures Required</h2>
+    <p>Disclosures relevant to financial instrument presentation include the classification of instruments as liabilities or equity, and where relevant, the split of a compound instrument into its components and their carrying amounts. Offsetting arrangements are disclosed under IND AS 107, showing gross amounts, amounts offset, and net amounts presented, along with amounts subject to enforceable master netting arrangements that don't meet the offsetting criteria but could theoretically be settled net.</p>
+
+    <h2 id="errors">11. Common Mistakes CAs Make</h2>
+
+    <div class="callout callout-red">
+      <p><strong>Error 1 — Classifying compulsorily redeemable preference shares as equity because they're legally "shares."</strong> The redemption obligation makes this a financial liability under IND AS 32, regardless of the Companies Act label — the substance-over-form principle overrides legal terminology.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 2 — Treating a convertible bond as a single liability instrument without split accounting.</strong> The equity conversion option (when it meets the fixed-for-fixed test) must be separated out and recognised in equity at issuance — accounting for the whole instrument as debt overstates liabilities and understates equity.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 3 — Remeasuring the equity component of a compound instrument in later periods.</strong> Once split at initial recognition, the equity component is fixed forever — it is never subsequently adjusted for changes in share price, interest rates, or anything else.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 4 — Offsetting a receivable and payable with the same counterparty just because a legal right of set-off exists.</strong> Both a legal right AND an intention/ability to settle net (or simultaneously) are required — a legal right alone, without genuine net settlement, doesn't justify offsetting.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 5 — Recognising a gain or loss in profit or loss on a share buyback.</strong> Treasury share transactions — purchase, sale, issue, or cancellation of an entity's own equity — never touch profit or loss; the entire effect is recognised directly within equity.</p>
+    </div>
+
+    <h2 id="faq">12. FAQs</h2>
+
+    <h3>What is the basic test for classifying an instrument as a financial liability or equity?</h3>
+    <p>The substance of the contractual arrangement governs, not its legal form. An instrument is a financial liability if the issuer has a contractual obligation to deliver cash or another financial asset to the holder, or to exchange financial instruments under potentially unfavourable conditions. It is an equity instrument only if it evidences a residual interest in the issuer's net assets, with no such obligation to deliver cash or other assets.</p>
+
+    <h3>Why are compulsorily redeemable preference shares classified as a liability?</h3>
+    <p>Even though they are called "shares," compulsorily redeemable preference shares create a contractual obligation for the issuer to deliver cash (the redemption amount) to the holder at a specified or determinable future date. Since the issuer cannot avoid this obligation, the instrument meets the definition of a financial liability, not equity, regardless of its legal label.</p>
+
+    <h3>What is the fixed-for-fixed condition for classifying a conversion option as equity?</h3>
+    <p>A contract that will be settled by the entity delivering a fixed number of its own equity instruments in exchange for a fixed amount of cash or another financial asset is classified as equity. If either the number of shares or the cash amount can vary (e.g. a conversion price adjusted based on future share price movements), the fixed-for-fixed condition fails, and the conversion option is instead classified as a derivative financial liability.</p>
+
+    <h3>How is a compound financial instrument like a convertible bond split between liability and equity?</h3>
+    <p>The liability component is measured first, at the fair value of a similar bond without the conversion feature, discounting the contractual cash flows at the market rate for a non-convertible bond. The equity component (the conversion option) is then measured as the residual — the total proceeds received less the fair value assigned to the liability component. This approach never assigns a value to the liability that isn't independently supportable, and the equity component is never subsequently remeasured.</p>
+
+    <h3>When can financial assets and financial liabilities be offset in the balance sheet?</h3>
+    <p>Only when the entity currently has a legally enforceable right to set off the recognised amounts, and it intends either to settle on a net basis or to realise the asset and settle the liability simultaneously. Both conditions must be met — a legal right to offset alone, without the intention (or practical ability) to settle net or simultaneously, is not sufficient to present the amounts net.</p>
+
+    <h3>Is IND AS 32 the same as IAS 32?</h3>
+    <p>IND AS 32 is India's converged version of IAS 32 and follows the same substance-based liability/equity classification, the fixed-for-fixed condition, compound instrument split accounting, and offsetting criteria. Since Indian company law (the Companies Act, 2013) permits various classes of preference shares and debentures with a range of redemption and conversion terms, this substance-over-form classification test has particularly significant real-world impact for Indian companies structuring instruments that may look like equity but are, in substance, liabilities.</p>
+
+  </div>
+
+  <div class="related-links">
+    <h3>Related tools &amp; articles</h3>
+    <a href="../indas-tools.html">→ All IND AS Tools</a>
+    <a href="ind-as-109-financial-instruments-guide.html">→ IND AS 109 Financial Instruments — Complete Guide</a>
+    <a href="ind-as-113-fair-value-measurement-guide.html">→ IND AS 113 Fair Value Measurement — Complete Guide</a>
+    <a href="ind-as-33-earnings-per-share-guide.html">→ IND AS 33 Earnings Per Share — Complete Guide</a>
+    <a href="ind-as-102-share-based-payment-guide.html">→ IND AS 102 Share-Based Payment — Complete Guide</a>
+    <a href="../blog.html">← All Articles</a>
+  </div>
+
+</div>
+
+<div id="fs-footer"></div>
+<script src="../nav.js?v=9"></script>
+<script src="../footer.js?v=8"></script>
+<script src="../share.js"></script>
+</body>
+</html>
