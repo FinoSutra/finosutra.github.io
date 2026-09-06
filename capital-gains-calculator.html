@@ -258,6 +258,13 @@ table.tbl td:last-child{text-align:right;font-weight:600}
       <div class="hint">Renovation / construction cost added to property</div>
     </div>
     <div class="field">
+      <label>Cost Inflation Index — Improvement Year</label>
+      <div class="input-wrap">
+        <input type="number" id="ciiImprovement" placeholder="e.g. 348" oninput="calculate()" class="no-prefix"/>
+      </div>
+      <div class="hint">Only if Cost of Improvement above is non-zero and was incurred in a different year than the purchase — indexation uses the CII of the year the improvement expense was actually incurred, not the purchase year. Leave blank to assume same year as purchase.</div>
+    </div>
+    <div class="field">
       <label>Acquired before 23 Jul 2024?</label>
       <div class="input-wrap">
         <select id="preJul24" class="no-prefix" onchange="calculate()">
@@ -513,10 +520,14 @@ function calculate(){
     var effectiveCost = purchasePrice;
     if(isLTCG && purchaseDate <= '2018-01-31'){
       var fmv = fmvRaw || purchasePrice;
-      // Deemed cost = min(FMV, Sale Price) if FMV > actual cost, else actual cost
-      effectiveCost = Math.min(Math.max(purchasePrice, fmv), salePrice);
+      // Sec 55(2)(ac): deemed cost of acquisition = HIGHER of (actual cost) and
+      // (LOWER of FMV as on 31-Jan-2018 and full sale consideration). Applying max()
+      // last (as this used to) instead of first silently floors the deemed cost at
+      // sale price whenever sale price is the smallest of the three values — which
+      // hides a genuine capital loss by reporting a ₹0 gain instead.
+      effectiveCost = Math.max(purchasePrice, Math.min(fmv, salePrice));
       steps.push({num:2, lbl:'Grandfathering (Sec 112A proviso)', val:fmt(effectiveCost),
-        note:'Deemed cost = max(actual cost ₹'+purchasePrice.toLocaleString('en-IN')+', FMV ₹'+fmv.toLocaleString('en-IN')+') capped at sale price', cls:'orange'});
+        note:'Deemed cost = max(actual cost ₹'+purchasePrice.toLocaleString('en-IN')+', min(FMV ₹'+fmv.toLocaleString('en-IN')+', sale price))', cls:'orange'});
     } else if(isLTCG){
       steps.push({num:2, lbl:'Cost of Acquisition', val:fmt(purchasePrice), note:'Purchased after 31 Jan 2018 — no grandfathering', cls:''});
     } else {
@@ -555,22 +566,34 @@ function calculate(){
     renderResults(months, grossGain, taxable, taxLiab, gainType, exemptNote, steps, salePrice, purchasePrice, isLTCG, rate, assetType);
 
   } else if(assetType === 'debt'){
-    // Debt MF / Bonds — all at slab rate post Apr 2023 (Finance Act 2023 change)
-    gainType = months > 36 ? 'LTCG (slab rate — Sec 50AA)' : 'STCG (slab rate)';
+    // Debt MF / Bonds:
+    //  • Units acquired ON/AFTER 1 Apr 2023 — Sec 50AA (Finance Act 2023) deems ALL
+    //    gains STCG, taxed at slab rate, regardless of holding period.
+    //  • Units acquired BEFORE 1 Apr 2023 are NOT covered by Sec 50AA and retain
+    //    LTCG treatment if held ≥24 months: flat 12.5%, no indexation (Finance Act
+    //    2024, applicable to sales on/after 23-Jul-2024 — the relevant case for a
+    //    current financial-year calculator). If held <24 months, STCG at slab rate.
+    var acquiredPre50AA = purchaseDate < '2023-04-01';
+    var isLTCG = acquiredPre50AA && months >= 24;
+    gainType = !acquiredPre50AA ? 'STCG (slab rate) — Sec 50AA'
+      : (isLTCG ? 'LTCG — Sec 112 (pre-1-Apr-2023 acquisition)' : 'STCG (slab rate) — pre-1-Apr-2023 acquisition, held <24mo');
     var grossGain = salePrice - purchasePrice;
     taxable = Math.max(0, grossGain);
-    rate = slabRate();
+    rate = isLTCG ? 12.5 : slabRate();
 
     steps.push({num:2, lbl:'Cost of Acquisition', val:fmt(purchasePrice), cls:''});
-    steps.push({num:3, lbl:'Gross Gain', val:fmt(grossGain), note:'No LTCG / indexation benefit for debt MF acquired after 31 Mar 2023 (Finance Act 2023)', cls: grossGain>=0?'green':''});
-    steps.push({num:4, lbl:'Taxable Gains', val:fmt(taxable), note:'Taxed at your income slab rate ('+rate+'%)', cls:'highlight'});
+    steps.push({num:3, lbl:'Gross Gain', val:fmt(grossGain), note: !acquiredPre50AA
+        ? 'No LTCG / indexation benefit — acquired on/after 1 Apr 2023 (Sec 50AA, Finance Act 2023)'
+        : 'Acquired before 1 Apr 2023 — Sec 50AA does not apply', cls: grossGain>=0?'green':''});
+    steps.push({num:4, lbl: isLTCG ? 'Taxable LTCG' : 'Taxable Gains', val:fmt(taxable),
+      note: isLTCG ? 'Held ≥24 months, pre-1-Apr-2023 acquisition — taxed at flat 12.5%, no indexation (Finance Act 2024)' : 'Taxed at your income slab rate ('+rate+'%)', cls:'highlight'});
     var basicTax = taxable * rate/100;
     var cess = basicTax * 0.04;
     taxLiab = basicTax + cess;
-    exemptNote = 'Slab rate — ' + rate + '%';
-    steps.push({num:5, lbl:'Tax @ '+rate+'% slab + 4% cess', val:fmt(taxLiab), note:'Basic tax '+fmt(basicTax)+' + Cess '+fmt(cess), cls:'highlight'});
+    exemptNote = isLTCG ? '12.5% LTCG (pre-1-Apr-2023 acquisition)' : 'Slab rate — ' + rate + '%';
+    steps.push({num:5, lbl: isLTCG ? 'Tax @ 12.5% + 4% cess' : 'Tax @ '+rate+'% slab + 4% cess', val:fmt(taxLiab), note:'Basic tax '+fmt(basicTax)+' + Cess '+fmt(cess), cls:'highlight'});
 
-    renderResults(months, grossGain, taxable, taxLiab, gainType, exemptNote, steps, salePrice, purchasePrice, false, rate, assetType);
+    renderResults(months, grossGain, taxable, taxLiab, gainType, exemptNote, steps, salePrice, purchasePrice, isLTCG, rate, assetType);
 
   } else if(assetType === 'property'){
     var isLTCG = months >= 24;
@@ -593,7 +616,13 @@ function calculate(){
       if(preJul24){
         var ciiP = parseFloat(document.getElementById('ciiPurchase').value)||272;
         var ciiS = parseFloat(document.getElementById('ciiSale').value)||363;
-        indexedCost = totalCost * (ciiS / ciiP);
+        // The cost of improvement is indexed using the CII of the year IT was
+        // incurred, not the purchase year's CII — the two can differ, and applying
+        // the (older, smaller) purchase-year CII to a later improvement overstates
+        // the indexed cost and understates tax. Defaults to the purchase-year CII
+        // when left blank, matching the case where improvement happened same year.
+        var ciiImp = costImp > 0 ? (parseFloat(document.getElementById('ciiImprovement').value)||ciiP) : ciiP;
+        indexedCost = purchasePrice * (ciiS / ciiP) + costImp * (ciiS / ciiImp);
         taxableB = Math.max(0, salePrice - indexedCost);
         taxB = taxableB * 0.20 * 1.04;
       }
@@ -601,8 +630,10 @@ function calculate(){
       // Choose better (lower tax for taxpayer)
       var useIndexation = preJul24 && taxB !== null && taxB < taxA;
       if(preJul24 && indexedCost){
-        steps.push({num:3, lbl:'Indexed Cost (for Option B)', val:fmt(indexedCost),
-          note:'Cost × (CII Sale / CII Purchase) = '+fmt(totalCost)+' × ('+document.getElementById('ciiSale').value+'/'+document.getElementById('ciiPurchase').value+')', cls:'orange'});
+        var indexNote = costImp > 0
+          ? '(Purchase ₹'+purchasePrice.toLocaleString('en-IN')+' × CII Sale/Purchase) + (Improvement ₹'+costImp.toLocaleString('en-IN')+' × CII Sale/Improvement)'
+          : 'Cost × (CII Sale / CII Purchase) = '+fmt(totalCost)+' × ('+document.getElementById('ciiSale').value+'/'+document.getElementById('ciiPurchase').value+')';
+        steps.push({num:3, lbl:'Indexed Cost (for Option B)', val:fmt(indexedCost), note:indexNote, cls:'orange'});
       }
       steps.push({num:4, lbl:'Gross Gain (without indexation)', val:fmt(taxableA), cls: taxableA>=0?'green':''});
 

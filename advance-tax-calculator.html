@@ -219,6 +219,17 @@ table.inst tbody td:not(:first-child){text-align:right}
   </div>
 
   <div class="field">
+    <label>Presumptive Income (Sec 44AD/44ADA)?</label>
+    <div class="input-wrap">
+      <select id="presumptive" class="no-prefix" onchange="calculate()">
+        <option value="no" selected>No</option>
+        <option value="yes">Yes</option>
+      </select>
+    </div>
+    <div class="hint">If Yes: the entire advance tax is legally due in ONE instalment by 15 March — no Jun/Sep/Dec obligation, and §234C on a shortfall is charged for 1 month only (not the usual 3).</div>
+  </div>
+
+  <div class="field">
     <label>Equity LTCG taxable — Sec 112A (₹)</label>
     <div class="input-wrap"><span class="pfx">₹</span>
       <input type="number" id="incLTCG" placeholder="0" oninput="calculate()"/>
@@ -232,6 +243,19 @@ table.inst tbody td:not(:first-child){text-align:right}
       <input type="number" id="incSTCG" placeholder="0" oninput="calculate()"/>
     </div>
     <div class="hint">Short-term equity gains (STT paid), taxed at 20%. 87A rebate NOT applicable on this.</div>
+  </div>
+
+  <div class="field">
+    <label>Equity LTCG/STCG above arose in which quarter?</label>
+    <div class="input-wrap">
+      <select id="cgQuarter" class="no-prefix" onchange="calculate()">
+        <option value="q1" selected>Q1 (Apr–Jun) — anticipated from the start</option>
+        <option value="q2">Q2 (Jul–Sep)</option>
+        <option value="q3">Q3 (Oct–Dec)</option>
+        <option value="q4">Q4 (Jan–Mar)</option>
+      </select>
+    </div>
+    <div class="hint">§234C proviso: no interest on the shortfall in an earlier instalment attributable to capital gains that had not yet arisen, provided the tax on it is paid with the remaining instalments. Leave at Q1 if you could reasonably have anticipated these gains from the start of the year.</div>
   </div>
 
   <div class="field">
@@ -512,15 +536,13 @@ function calculate(){
   // ── Step 2: Slab tax + 87A rebate (only on slab income, NOT on special rate CG)
   var slabTax = computeSlabTax(taxableSlabIncome, fyConfig.slabs);
   var rebate87A = 0;
-  // 87A: check if total income (incl special CG) ≤ rebate limit
-  // Note: rebate u/s 87A is not available against tax on LTCG u/s 112A or STCG u/s 111A
-  // We apply it only to slab tax, conditioned on total income ≤ limit
+  // §87A eligibility is based on TOTAL income — including capital gains taxed at
+  // special rates u/s 111A/112A — not on slab income alone (CBDT Circular No.
+  // 13/2025, dated 19-Sep-2025). If total income exceeds the threshold (even
+  // solely because of LTCG/STCG), NO rebate is due at all. Where eligible, the
+  // rebate still only reduces tax on normal slab-rate income — never the 111A/112A tax.
   var totalTaxableIncome = taxableSlabIncome + ltcg + stcg;
-  if(totalTaxableIncome <= fyConfig.rebateLimit && (ltcg + stcg) === 0){
-    // Full rebate if no special-rate CG and income ≤ limit
-    rebate87A = Math.min(slabTax, fyConfig.rebateCap);
-  } else if(taxableSlabIncome <= fyConfig.rebateLimit && (ltcg + stcg) > 0){
-    // Partial rebate on slab portion only (CBDT clarification — rebate on slab tax if slab income ≤ limit)
+  if(totalTaxableIncome <= fyConfig.rebateLimit){
     rebate87A = Math.min(slabTax, fyConfig.rebateCap);
   }
   var slabTaxAfterRebate = Math.max(0, slabTax - rebate87A);
@@ -535,16 +557,46 @@ function calculate(){
   var grossTax = taxBeforeCess + cess;
   var netAdvTax = Math.max(0, grossTax - tds);
 
+  var isPresumptive = document.getElementById('presumptive').value === 'yes';
+  var cgQuarterIdx = {q1:0, q2:1, q3:2, q4:3}[document.getElementById('cgQuarter').value] || 0;
+
   var dates = getFYDates(fy);
   var paidCumul = [paid1, paid1+paid2, paid1+paid2+paid3, paid1+paid2+paid3+paid4];
-  var duePcts   = [0.15, 0.45, 0.75, 1.00];
   var dueDates  = [dates.inst1, dates.inst2, dates.inst3, dates.inst4];
   var instLabels = ['1st — Jun','2nd — Sep','3rd — Dec','4th — Mar'];
-  var dueAmts   = duePcts.map(function(p){ return netAdvTax * p; });
 
-  // 234C: 1% per month on shortfall per instalment
-  // Months: Q1=3, Q2=3, Q3=3, Q4=1
-  var int234cMonths = [3, 3, 3, 1];
+  // §44AD/44ADA presumptive assessees pay 100% of advance tax in a SINGLE
+  // instalment by 15 March — no Jun/Sep/Dec obligation at all.
+  var duePcts = isPresumptive ? [0, 0, 0, 1.00] : [0.15, 0.45, 0.75, 1.00];
+
+  // Split net advance tax into an "ordinary" (slab-rate) portion and a "special
+  // rate" (Sec 111A/112A capital gains) portion, allocating TDS proportionately
+  // between the two, so the §234C carve-out below can target the CG portion alone.
+  var grossTaxSlab = slabTaxAfterRebate * 1.04;
+  var grossTaxCG = (ltcgTax + stcgTax) * 1.04;
+  var tdsShareSlab = grossTax > 0 ? tds * (grossTaxSlab / grossTax) : 0;
+  var tdsShareCG   = grossTax > 0 ? tds * (grossTaxCG / grossTax) : 0;
+  var netAdvTaxSlab = Math.max(0, grossTaxSlab - tdsShareSlab);
+  var netAdvTaxCG   = Math.max(0, grossTaxCG - tdsShareCG);
+
+  // §234C proviso: no interest on the shortfall in an instalment attributable to
+  // capital gains (Sec 111A/112A) that had not yet arisen as of that instalment's
+  // due date, provided the tax on it is paid off via the remaining instalments as
+  // they fall due. Instalments before the quarter the gains arose in therefore
+  // carry NO obligation for the CG-attributable tax; from that quarter onward the
+  // CG portion follows the same cumulative schedule as ordinary income. (This
+  // carve-out is not modeled for casual/lottery income or new-business income,
+  // which this calculator does not track as separate inputs.)
+  var dueAmts = [];
+  for(var i=0; i<4; i++){
+    var cgDuePct = (isPresumptive || i >= cgQuarterIdx) ? duePcts[i] : 0;
+    dueAmts[i] = netAdvTaxSlab * duePcts[i] + netAdvTaxCG * cgDuePct;
+  }
+
+  // 234C: 1% per month on shortfall per instalment. Months: Q1=3, Q2=3, Q3=3, Q4=1
+  // — presumptive assessees have only the Q4 instalment, so Q1–Q3 carry no monthly
+  // rate at all (their "due" is already zero above; this just documents why).
+  var int234cMonths = isPresumptive ? [0, 0, 0, 1] : [3, 3, 3, 1];
   var total234c = 0;
   var instRows  = [];
   for(var i=0; i<4; i++){
@@ -564,9 +616,13 @@ function calculate(){
     });
   }
 
-  // 234B: if total paid < 90% of gross tax liability (accrues from 1 Apr to filing)
+  // 234B: interest applies if advance tax paid < 90% of "assessed tax" (= gross tax
+  // liability MINUS TDS/TCS credit) — not 90% of gross tax with TDS added back on
+  // the paid side. The two are only equivalent when TDS = 0; with TDS > 0 the old
+  // formula wrongly cleared taxpayers who paid up to 10%-of-TDS less than required.
   var totalPaid = paid1+paid2+paid3+paid4;
-  var is234B = (totalPaid + tds) < (grossTax * 0.90);
+  var assessedTax = grossTax - tds;
+  var is234B = totalPaid < (assessedTax * 0.90);
   var int234b = 0;
   if(is234B){
     var unpaid234b = Math.max(0, grossTax - totalPaid - tds);

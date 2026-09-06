@@ -398,8 +398,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
       <div class="field">
         <label>City Type</label>
         <select id="hra_city">
-          <option value="metro">Metro (40% of Basic)</option>
-          <option value="nonmetro">Non-Metro (50% of Basic)</option>
+          <option value="metro">Metro (50% of Basic)</option>
+          <option value="nonmetro">Non-Metro (40% of Basic)</option>
         </select>
       </div>
     </div>
@@ -411,6 +411,14 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
       <div class="field"><label>Family Pension (₹)</label><div class="input-prefix"><input type="number" id="family_pension" placeholder="0"/></div><span class="hint">1/3rd or ₹15,000 exempt (whichever lower)</span></div>
       <div class="field"><label>Other Pension (₹)</label><div class="input-prefix"><input type="number" id="other_pension" placeholder="0"/></div></div>
       <div class="field"><label>Employer NPS Contribution (₹)</label><div class="input-prefix"><input type="number" id="emp_nps" placeholder="0"/></div><span class="hint">Deductible u/s 80CCD(2) — both regimes</span></div>
+      <div class="field">
+        <label>Government Employee?</label>
+        <select id="govt_employee">
+          <option value="no">No (Private Sector)</option>
+          <option value="yes">Yes (Central/State Govt)</option>
+        </select>
+        <span class="hint">80CCD(2) cap: New Regime 14% (all employees); Old Regime 14% (Govt) / 10% (Private)</span>
+      </div>
     </div>
   </div>
   <div class="btn-row">
@@ -586,19 +594,19 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
       </div>
     </div>
     <div class="acc-body">
-      <div class="notif notif-warn">⚡ For property purchased before 23 July 2024, you may opt for 20% with indexation instead of 12.5% without. Choose the option that results in lower tax.</div>
+      <div class="notif notif-warn">⚡ For property acquired before 23 July 2024 by a resident individual/HUF, the law lets you choose 20% with indexation OR 12.5% without — whichever gives lower tax. This calculator now compares both automatically; it no longer relies on you picking the cheaper option yourself.</div>
       <div class="form-grid">
         <div class="field">
-          <label>Property LTCG Taxation Method</label>
-          <select id="prop_ltcg_method" onchange="updatePropLTCGMethod()">
-            <option value="flat">12.5% (without indexation) — Default</option>
-            <option value="indexed">20% with indexation — Pre July 23, 2024 property</option>
+          <label>Property Acquired Before 23 Jul 2024?</label>
+          <select id="prop_pre_jul24" onchange="updatePropLTCGMethod()">
+            <option value="no">No — 12.5% without indexation only</option>
+            <option value="yes">Yes — compares 12.5% flat vs 20% indexed, uses whichever is lower</option>
           </select>
         </div>
         <div class="field" id="indexed_gain_field" style="display:none">
           <label>Indexed LTCG from Property (₹)</label>
           <div class="input-prefix"><input type="number" id="prop_ltcg_indexed" placeholder="0"/></div>
-          <span class="hint">Enter gain AFTER applying Cost Inflation Index (CII adjustment)</span>
+          <span class="hint">Enter gain AFTER applying Cost Inflation Index (CII adjustment). Only used automatically if it results in lower tax than the 12.5% flat figure above.</span>
         </div>
       </div>
     </div>
@@ -901,6 +909,13 @@ const TAX_CONFIG = {
       {min:20000000,  max:50000000,  rate:0.25},
       {min:50000001,  max:Infinity,  rate:0.37}
     ],
+    // New Regime (115BAC): highest surcharge rate is capped at 25% — the 37% slab
+    // above ₹5 crore does not apply. Old Regime: full 10/15/25/37% table applies.
+    newRegimeSurchargeCap: 0.25,
+    // Surcharge on tax attributable to capital gains u/s 111A/112/112A is capped at
+    // 15% regardless of the taxpayer's total-income surcharge bracket, in both regimes.
+    // (Surcharge on dividend income carries the same 15% cap but is not separately
+    // isolated here — dividend is aggregated into slab income in this calculator.)
     capGainSurchargeMax: 0.15
   },
   cess: { rate: 0.04 },
@@ -1089,26 +1104,26 @@ function calcCapGainTax(cg){
   return tax;
 }
 
-function calcSurcharge(totalIncome, tax){
+function calcSurcharge(totalIncome, taxOnCG, taxOnOther, regime){
   const cfg = TAX_CONFIG.surcharge;
-  // Find applicable surcharge rate and threshold
+  // Find the surcharge bracket from TOTAL income (determines the rate ceiling below)
   let sRate = 0, threshold = 0;
   for(const t of cfg.thresholds){
     if(totalIncome > t.min){ sRate = t.rate; threshold = t.min; }
   }
   if(sRate===0) return {surcharge:0, marginalRelief:0};
 
-  // Priority 11: Proper marginal relief formula
-  // Total tax at threshold income (tax + surcharge at lower bracket)
-  let prevRate = 0, prevThreshold = 0;
-  for(const t of cfg.thresholds){
-    if(t.min < threshold){ prevRate = t.rate; prevThreshold = t.min; }
-  }
-  const surchargeGross = Math.round(tax * sRate);
-  // Tax at previous threshold = tax * prev_rate  (approximate — marginal relief ensures
-  // incremental tax + surcharge ≤ incremental income above threshold)
-  // Correct: (tax + surcharge) - (tax_at_threshold + surcharge_at_threshold) ≤ income - threshold
-  // Approximation: surcharge capped so that surcharge ≤ income - threshold + prevRate*tax - tax*(sRate-prevRate)
+  // New Regime (115BAC): no 37% slab — surcharge on non-CG tax is capped at 25%.
+  const rateOther = regime==='new' ? Math.min(sRate, cfg.newRegimeSurchargeCap) : sRate;
+  // Capital gains u/s 111A/112/112A: surcharge always capped at 15%, both regimes.
+  const rateCG = Math.min(sRate, cfg.capGainSurchargeMax);
+
+  const surchargeOther = Math.round(taxOnOther * rateOther);
+  const surchargeCG = Math.round(taxOnCG * rateCG);
+  const surchargeGross = surchargeOther + surchargeCG;
+
+  // Marginal relief: (tax + surcharge) must not rise by more than the amount total
+  // income exceeds this threshold.
   const marginalRelief = Math.max(0, surchargeGross - Math.max(0, totalIncome - threshold));
   const surcharge = Math.max(0, surchargeGross - marginalRelief);
   return {surcharge, marginalRelief};
@@ -1184,15 +1199,24 @@ function computeForRegime(regime, inputs){
   let net_eq_ltcg = Math.max(0, inputs.eq_ltcg - totalLTCL - inputs.exempt_54);
   let net_prop_ltcg = inputs.prop_ltcg;
   
-  // Priority 3: Property LTCG indexation method
-  let prop_ltcg_tax_rate = TAX_CONFIG.capitalGains.prop_ltcg_rate;
-  let prop_ltcg_taxable = net_prop_ltcg;
-  if(inputs.prop_ltcg_method === 'indexed' && inputs.prop_ltcg_indexed > 0){
-    prop_ltcg_taxable = inputs.prop_ltcg_indexed;
-    prop_ltcg_tax_rate = 0.20; // 20% with indexation
+  // Property LTCG: for acquisitions before 23-Jul-2024, Finance Act 2024 lets a
+  // resident individual/HUF choose whichever of 12.5% flat (no indexation) or 20%
+  // with indexation gives LOWER tax. This must be computed automatically — a
+  // manual choice risks the taxpayer picking the costlier method and overpaying.
+  // 54EC/54F exemptions reduce the gain the same way under either method, so they
+  // are applied to both candidate taxable amounts before comparing the tax.
+  const prop_ltcg_flat_taxable = Math.max(0, net_prop_ltcg - inputs.exempt_54ec - inputs.exempt_54f);
+  let prop_ltcg_tax_rate = TAX_CONFIG.capitalGains.prop_ltcg_rate; // 12.5%
+  let prop_ltcg_taxable = prop_ltcg_flat_taxable;
+  if(inputs.prop_pre_jul24 === 'yes' && inputs.prop_ltcg_indexed > 0){
+    const prop_ltcg_indexed_taxable = Math.max(0, inputs.prop_ltcg_indexed - inputs.exempt_54ec - inputs.exempt_54f);
+    const taxFlat = prop_ltcg_flat_taxable * TAX_CONFIG.capitalGains.prop_ltcg_rate;
+    const taxIndexed = prop_ltcg_indexed_taxable * 0.20;
+    if(taxIndexed < taxFlat){
+      prop_ltcg_taxable = prop_ltcg_indexed_taxable;
+      prop_ltcg_tax_rate = 0.20; // 20% with indexation
+    }
   }
-  // Apply 54EC/54F exemptions to property LTCG
-  prop_ltcg_taxable = Math.max(0, prop_ltcg_taxable - inputs.exempt_54ec - inputs.exempt_54f);
   
   let net_gold_ltcg = Math.max(0, inputs.gold_ltcg - Math.max(0, totalLTCL - inputs.eq_ltcg));
 
@@ -1211,9 +1235,12 @@ function computeForRegime(regime, inputs){
   const giftTaxable = Math.max(0, inputs.gift - 50000);
   const otherSources = inputs.savings_int + inputs.fd_int + inputs.dividend + giftTaxable + inputs.other_income;
 
-  // Priority 7: Employer NPS 80CCD(2) — cap at 10% of basic salary (14% for govt employees)
+  // Employer NPS 80CCD(2) cap: New Regime — 14% of salary for ALL employees (effective
+  // FY 2025-26 onward). Old Regime — 14% for Government employees, 10% for others.
   const basicForNPS = inputs.basic_salary || inputs.gross_salary;
-  const empNPS = Math.min(inputs.emp_nps, basicForNPS * 0.10);
+  const isGovtEmployee = inputs.govt_employee === 'yes';
+  const npsCapPct = (regime === 'new' || isGovtEmployee) ? 0.14 : 0.10;
+  const empNPS = Math.min(inputs.emp_nps, basicForNPS * npsCapPct);
 
   // ---- DEDUCTION ENGINE ----
   let totalDeductions = 0;
@@ -1294,44 +1321,49 @@ function computeForRegime(regime, inputs){
   // ---- TOTAL BASE TAX ----
   let baseTax = slabTax + cgTax + specialTax;
 
+  // Total income including capital gains (§111A/112/112A) and other special-rate
+  // income (§115BB) — the base used for both the §87A eligibility test and the
+  // surcharge-bracket determination (both look at TOTAL income, not slab income alone).
+  const totalIncomeInclSpecialRate = taxableNormal + cg.eq_ltcg + cg.eq_stcg + cg.prop_ltcg + cg.gold_ltcg + specialIncome;
+
   // ---- REBATE ENGINE (Section 87A) ----
+  // Eligibility is based on TOTAL income — including capital gains taxed at special
+  // rates u/s 111A/112/112A and other special-rate income u/s 115BB — not on slab
+  // income alone (CBDT Circular No. 13/2025, dated 19-Sep-2025). If total income
+  // exceeds the threshold (even solely because of such special-rate income), NO
+  // rebate is due at all. Where eligible, the rebate itself can still only reduce
+  // tax on normal slab-rate income — it never reduces tax on the special-rate income.
   let rebate = 0;
   const rebateLimit = cfg.rebateLimit;
-  
+
   if(regime==='new'){
-    // Priority 5: New regime 87A — full rebate if taxable ≤ ₹12,00,000
-    if(taxableNormal <= rebateLimit){
+    // New regime 87A — full rebate if TOTAL income ≤ ₹12,00,000
+    if(totalIncomeInclSpecialRate <= rebateLimit){
       rebate = slabTax; // full slab tax rebated (not CG, not special income)
     } else {
-      // Marginal relief: in the zone where tax exceeds zero, ensure
-      // (tax - rebate) ≤ (taxableNormal - rebateLimit)
-      const marginalZoneTop = rebateLimit + 75000; // ~₹12.75L where slab tax = ₹75K
-      if(taxableNormal < marginalZoneTop){
-        const taxWithoutRebate = slabTax;
-        const incomeAbove12L = taxableNormal - rebateLimit;
-        if(taxWithoutRebate > incomeAbove12L){
-          rebate = taxWithoutRebate - incomeAbove12L;
-        }
+      // Marginal relief: where total income marginally exceeds ₹12,00,000, tax
+      // payable (out of the rebate-eligible slab tax) is limited to the amount by
+      // which total income exceeds the threshold.
+      const incomeAboveLimit = totalIncomeInclSpecialRate - rebateLimit;
+      if(slabTax > incomeAboveLimit){
+        rebate = slabTax - incomeAboveLimit;
       }
     }
   } else {
-    // Old regime: rebate up to ₹12,500 if total income ≤ ₹5,00,000
-    if(taxableNormal <= rebateLimit){
+    // Old regime: rebate up to ₹12,500 if TOTAL income ≤ ₹5,00,000. There is no
+    // marginal relief under the old regime — a taxpayer marginally over ₹5,00,000
+    // loses the rebate entirely; this cliff-edge is by statutory design, not a bug.
+    if(totalIncomeInclSpecialRate <= rebateLimit){
       rebate = Math.min(slabTax, cfg.rebateMax);
-      // Old regime marginal relief at 5L boundary
-      if(taxableNormal > rebateLimit - 10000){
-        const effectiveTax = slabTax - rebate;
-        const incomeAboveLimit = taxableNormal - (rebateLimit - 12500);
-        // ensure tax doesn't exceed income above ₹5L minus exemption
-      }
     }
   }
 
   const taxAfterRebate = Math.max(0, slabTax - rebate) + cgTax + specialTax;
 
   // ---- SURCHARGE ENGINE ----
-  const totalIncomeForSurcharge = taxableNormal + cg.eq_ltcg + cg.eq_stcg + cg.prop_ltcg + cg.gold_ltcg + specialIncome;
-  const { surcharge, marginalRelief } = calcSurcharge(totalIncomeForSurcharge, taxAfterRebate);
+  const taxOnCGForSurcharge = cgTax; // §111A/112/112A — surcharge capped at 15%
+  const taxOnOtherForSurcharge = taxAfterRebate - cgTax; // slab tax after rebate + 115BB special-rate tax
+  const { surcharge, marginalRelief } = calcSurcharge(totalIncomeInclSpecialRate, taxOnCGForSurcharge, taxOnOtherForSurcharge, regime);
 
   // ---- CESS ENGINE ----
   const precess = taxAfterRebate + surcharge;
@@ -1399,6 +1431,7 @@ function getInputs(){
   inp.category = document.getElementById('category').value;
   inp.hra_city = document.getElementById('hra_city').value;
   inp.parents_senior = document.getElementById('parents_senior').value;
+  inp.govt_employee = document.getElementById('govt_employee').value;
   // CG exemptions
   inp.exempt_54 = parseFloat(document.getElementById('exempt_54').value)||0;
   inp.exempt_54ec = Math.min(parseFloat(document.getElementById('exempt_54ec').value)||0, 5000000);
@@ -1409,7 +1442,7 @@ function getInputs(){
   inp.bf_stcl = parseFloat(document.getElementById('bf_stcl').value)||0;
   inp.bf_ltcl = parseFloat(document.getElementById('bf_ltcl').value)||0;
   // Indexation method
-  inp.prop_ltcg_method = document.getElementById('prop_ltcg_method').value;
+  inp.prop_pre_jul24 = document.getElementById('prop_pre_jul24').value;
   inp.prop_ltcg_indexed = parseFloat(document.getElementById('prop_ltcg_indexed')?document.getElementById('prop_ltcg_indexed').value:0)||0;
   return inp;
 }
@@ -1665,8 +1698,8 @@ function calcCGLoss(){
 }
 
 function updatePropLTCGMethod(){
-  const method = document.getElementById('prop_ltcg_method').value;
-  document.getElementById('indexed_gain_field').style.display = method==='indexed' ? 'flex' : 'none';
+  const preJul24 = document.getElementById('prop_pre_jul24').value === 'yes';
+  document.getElementById('indexed_gain_field').style.display = preJul24 ? 'flex' : 'none';
 }
 
 // auth.js's wrapExportButton() owns #btnExp entirely — logged-out users are
@@ -1882,7 +1915,7 @@ function generateAndDownloadExcel(exportRef){
     addHdr(['SECTION','LIMIT','ENTERED (₹)','ALLOWED (₹)']);
     addRow('80C — EPF/PPF/ELSS/LIC/Tax FD etc.', 'Max ₹1,50,000', inr((inp.epf||0)+(inp.ppf||0)+(inp.elss||0)+(inp.lic||0)+(inp.tax_fd||0)+(inp.nsc||0)+(inp.tuition||0)+(inp.hl_principal||0)+(inp.other_80c||0)), inr(or.ded80C), false);
     addRow('80CCD(1B) — Additional NPS',          'Max ₹50,000',   inr(inp.nps_additional||0), inr(or.ded80CCD1B), true);
-    addRow('80CCD(2) — Employer NPS',             '10% of Basic',  inr(inp.emp_nps||0),          inr(or.ded80CCD2),  false);
+    addRow('80CCD(2) — Employer NPS',             '10%/14% of Basic', inr(inp.emp_nps||0),       inr(or.ded80CCD2),  false);
     addRow('80D — Medical Insurance',             '₹25K+₹25K',     inr((inp.med_self||0)+(inp.med_parents||0)), inr(or.ded80D), true);
     addRow('80E — Education Loan Interest',       'No limit',       inr(inp.d80e||0),             inr(or.ded80E),     false);
     addRow('80EE/80EEA — Home Loan Interest',     'Max ₹50K/₹1.5L',inr((inp.d80ee||0)+(inp.d80eea||0)), '—', true);

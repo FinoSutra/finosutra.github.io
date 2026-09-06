@@ -452,13 +452,22 @@ function setCity(c){
 function inr(n){ return '₹' + Math.round(n||0).toLocaleString('en-IN'); }
 
 function calculate(){
-  const basic      = parseFloat(document.getElementById('basic').value)||0;
-  const hra_recv   = parseFloat(document.getElementById('hra_received').value)||0;
-  const rent_paid  = parseFloat(document.getElementById('rent_paid').value)||0;
+  // Floor at 0: a negative value is JS-truthy, so the `!basic || !hra_recv` guard
+  // below does not catch it — without this floor, a negative Basic+DA can make c2
+  // negative and win the Math.min() below, producing a negative displayed HRA
+  // exemption (which Section 10(13A) can never legally produce).
+  const basic      = Math.max(0, parseFloat(document.getElementById('basic').value)||0);
+  const hra_recv   = Math.max(0, parseFloat(document.getElementById('hra_received').value)||0);
+  const rent_paid  = Math.max(0, parseFloat(document.getElementById('rent_paid').value)||0);
   const slab       = parseFloat(document.getElementById('slab').value);
   const pan_avail  = document.getElementById('pan_avail').value;
 
-  if(!basic || !hra_recv){ return; }
+  // Only hold back on the empty-state placeholder while the form is genuinely
+  // untouched (both fields still blank/zero). If the user has entered a value in
+  // EITHER field — e.g. Basic salary filled in but HRA Received left as 0 — the
+  // exemption is still a well-defined (always ≥0) result and should be rendered,
+  // not silently dropped: a "Rs 0 exemption" answer is not the same as no answer.
+  if(!basic && !hra_recv){ return; }
 
   const city_pct  = cityType === 'metro' ? 0.50 : 0.40;
   const ten_pct   = basic * 0.10;
