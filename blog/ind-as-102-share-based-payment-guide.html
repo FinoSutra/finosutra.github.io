@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>IND AS 102 Share-Based Payment — ESOP Accounting, Vesting Conditions & Grant-Date Fair Value Explained | Finosutra</title>
+<meta name="description" content="Complete guide to IND AS 102 — equity-settled vs cash-settled share-based payment, grant-date fair value, vesting conditions, the graded-vesting expense pattern, forfeitures vs failed market conditions, and a full worked example with journal entries."/>
+<meta name="keywords" content="IND AS 102 share based payment, ESOP accounting India, grant date fair value options, vesting conditions market performance service, equity settled cash settled share based payment, IND AS 102 vs guidance note ESOP, employee stock option expense, IFRS 2 India"/>
+<meta name="author" content="Finosutra"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://finosutra.com/blog/ind-as-102-share-based-payment-guide.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Finosutra"/>
+<meta property="og:title" content="IND AS 102 Share-Based Payment — ESOP Accounting, Vesting Conditions & Grant-Date Fair Value Explained"/>
+<meta property="og:description" content="Equity-settled vs cash-settled share-based payment, grant-date fair value, vesting conditions, and the graded-vesting expense pattern under IND AS 102 — with a full worked example."/>
+<meta property="og:url" content="https://finosutra.com/blog/ind-as-102-share-based-payment-guide.html"/>
+<meta property="og:image" content="https://finosutra.com/og-image.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="IND AS 102 Share-Based Payment — Complete Guide"/>
+<meta name="twitter:description" content="ESOP accounting, grant-date fair value, vesting conditions and the expense pattern under IND AS 102 — with a full worked example."/>
+<meta name="twitter:image" content="https://finosutra.com/og-image.jpg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="../finosutra.css?v=17"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z2G710PHNQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z2G710PHNQ');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "IND AS 102 Share-Based Payment — ESOP Accounting, Vesting Conditions & Grant-Date Fair Value Explained",
+  "description": "Complete guide to IND AS 102 — equity-settled vs cash-settled share-based payment, grant-date fair value, vesting conditions, the graded-vesting expense pattern, forfeitures vs failed market conditions, and a full worked example with journal entries.",
+  "author": {"@type": "Organization", "name": "Finosutra", "sameAs": ["https://www.linkedin.com/company/124543898/", "https://www.youtube.com/@cakrishnaswadekar07"]},
+  "publisher": {"@type": "Organization", "name": "Finosutra", "url": "https://finosutra.com", "sameAs": ["https://www.linkedin.com/company/124543898/", "https://www.youtube.com/@cakrishnaswadekar07"]},
+  "datePublished": "2026-09-06",
+  "dateModified": "2026-09-06",
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://finosutra.com/blog/ind-as-102-share-based-payment-guide.html"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What is the difference between equity-settled and cash-settled share-based payment?", "acceptedAnswer": {"@type": "Answer", "text": "In an equity-settled arrangement (e.g. standard ESOPs), the entity receives services in exchange for its own equity instruments, measured once at grant-date fair value and never remeasured. In a cash-settled arrangement (e.g. stock appreciation rights), the entity incurs a liability to pay cash based on the value of its equity instruments, which is remeasured to fair value at every reporting date until settlement, with changes recognised in profit or loss."}},
+    {"@type": "Question", "name": "When is the fair value of an equity-settled share-based payment measured?", "acceptedAnswer": {"@type": "Answer", "text": "At the grant date — the date the entity and the employee (or other party) agree to the share-based payment arrangement, and both parties have a shared understanding of its terms and conditions. For equity-settled awards, this grant-date fair value is fixed and never subsequently remeasured, even if the share price moves significantly before vesting."}},
+    {"@type": "Question", "name": "What is the difference between a vesting condition and a non-vesting condition?", "acceptedAnswer": {"@type": "Answer", "text": "A vesting condition (service condition or performance condition) determines whether the entity receives the services that entitle the counterparty to the award — failing it means forfeiture, and no expense is ultimately recognised for that award. A non-vesting condition is any other condition (e.g. an employee's own contribution to a savings-based purchase plan) — it is factored into the grant-date fair value itself rather than affecting the number of awards expected to vest."}},
+    {"@type": "Question", "name": "How does a market condition differ from a service or performance condition in accounting treatment?", "acceptedAnswer": {"@type": "Answer", "text": "A market condition (e.g. a target share price) is built into the grant-date fair value of the award using an option-pricing model. Once granted, the expense is recognised regardless of whether the market condition is ultimately achieved, as long as the service condition is met — failing only the market condition does not reverse the expense already recognised. This is fundamentally different from failing a service condition, which does reverse previously recognised expense as a forfeiture."}},
+    {"@type": "Question", "name": "How is the expense spread over a graded vesting schedule?", "acceptedAnswer": {"@type": "Answer", "text": "Where an award vests in tranches over different periods (graded vesting), each tranche is treated as a separate grant with its own vesting period and, since the requisite service period differs, its own effective grant-date fair value amortisation schedule — resulting in a front-loaded, accelerating expense pattern across the overall arrangement rather than a simple straight-line spread over the longest vesting period."}},
+    {"@type": "Question", "name": "Is IND AS 102 the same as IFRS 2?", "acceptedAnswer": {"@type": "Answer", "text": "IND AS 102 is India's converged version of IFRS 2 and follows the same grant-date fair value measurement, vesting condition framework, and equity-settled/cash-settled distinction. Before IND AS 102, Indian companies followed the SEBI ESOP Guidelines and an ICAI Guidance Note, which permitted an intrinsic value method as an alternative to fair value in some cases — IND AS 102 removes that choice and mandates fair value measurement for all share-based payment arrangements."}}
+  ]
+}
+</script>
+<style>
+:root{
+  --brand:#6366F1;--brand-dark:#4F46E5;--brand-light:#EEF2FF;--brand-mid:#C7D2FE;
+  --bg:#F9FAFB;--card:#FFFFFF;--border:rgba(99,102,241,0.18);--border-light:rgba(99,102,241,0.08);
+  --text:#111827;--muted:#6B7280;--muted2:#9CA3AF;
+  --green:#059669;--green-light:#ECFDF5;
+  --red:#DC2626;--red-light:#FEF2F2;
+  --orange:#D97706;--orange-light:#FFFBEB;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+.article-wrap{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted2);margin-bottom:24px;flex-wrap:wrap;}
+.breadcrumb a{color:var(--muted2);text-decoration:none;transition:color .15s;}
+.breadcrumb a:hover{color:var(--brand);}
+
+.article-tag{display:inline-block;background:var(--brand-light);color:var(--brand);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.4px;margin-bottom:16px;}
+.article-title{font-size:clamp(24px,4vw,36px);font-weight:800;line-height:1.2;letter-spacing:-0.5px;color:var(--text);margin-bottom:16px;}
+.article-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--muted);margin-bottom:32px;flex-wrap:wrap;}
+.article-meta span{display:flex;align-items:center;gap:5px;}
+.article-divider{height:1px;background:var(--border-light);margin-bottom:36px;}
+
+.toc{background:var(--brand-light);border:1px solid var(--brand-mid);border-radius:14px;padding:22px 26px;margin-bottom:40px;}
+.toc h3{font-size:13px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;}
+.toc ol{padding-left:18px;}
+.toc ol li{margin-bottom:6px;}
+.toc ol li a{font-size:14px;color:var(--brand-dark);text-decoration:none;font-weight:500;}
+.toc ol li a:hover{text-decoration:underline;}
+
+.article-body h2{font-size:22px;font-weight:800;color:var(--text);margin:40px 0 14px;letter-spacing:-0.3px;}
+.article-body h3{font-size:17px;font-weight:700;color:var(--text);margin:28px 0 10px;}
+.article-body p{margin-bottom:16px;color:#1F2937;}
+.article-body ul,.article-body ol{padding-left:22px;margin-bottom:16px;}
+.article-body ul li,.article-body ol li{margin-bottom:8px;color:#1F2937;}
+.article-body strong{font-weight:700;color:var(--text);}
+
+.callout{background:var(--brand-light);border-left:4px solid var(--brand);border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0;}
+.callout p{margin:0;font-size:14px;color:var(--brand-dark);}
+.callout strong{color:var(--brand-dark);}
+.callout-green{background:var(--green-light);border-left-color:var(--green);}
+.callout-green p{color:#065F46;}
+.callout-orange{background:var(--orange-light);border-left-color:var(--orange);}
+.callout-orange p{color:#92400E;}
+.callout-red{background:var(--red-light);border-left-color:var(--red);}
+.callout-red p{color:#991B1B;}
+
+.table-wrap{overflow-x:auto;margin:24px 0;}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:360px;}
+table th{background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;font-weight:700;padding:10px 14px;text-align:left;}
+table th.r{text-align:right;}
+table td{padding:9px 14px;border-bottom:1px solid #F3F4F6;color:#1F2937;}
+table td.r{text-align:right;}
+table tr:nth-child(even) td{background:#F9FAFB;}
+table tr:last-child td{border-bottom:none;}
+table tfoot td{background:#EEF2FF;font-weight:700;border-top:2px solid var(--brand-mid);}
+
+.je-block{background:#F9FAFB;border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:20px 0;}
+.je-title{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px;}
+.je-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #F3F4F6;}
+.je-row:last-child{border-bottom:none;}
+.je-account{font-size:14px;font-weight:600;color:var(--text);}
+.je-account.cr{padding-left:24px;font-weight:500;color:var(--muted);}
+.je-amounts{display:flex;gap:32px;}
+.je-dr{font-size:14px;font-weight:700;color:#10B981;min-width:100px;text-align:right;}
+.je-cr{font-size:14px;font-weight:700;color:#6366F1;min-width:100px;text-align:right;}
+
+.step-card{border:1px solid var(--border-light);border-radius:12px;padding:20px 22px;margin:16px 0;position:relative;padding-left:60px;}
+.step-num{position:absolute;left:18px;top:18px;width:28px;height:28px;background:var(--brand);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;}
+.step-card h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;margin-top:0;}
+.step-card p{font-size:14px;color:var(--muted);margin:0;}
+
+.cta-box{background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:16px;padding:28px 30px;margin:40px 0;text-align:center;}
+.cta-box h3{font-size:18px;font-weight:800;color:#fff;margin-bottom:8px;}
+.cta-box p{font-size:14px;color:rgba(255,255,255,.85);margin-bottom:18px;}
+.cta-box a{display:inline-block;background:#fff;color:var(--brand);font-size:14px;font-weight:700;padding:12px 26px;border-radius:10px;text-decoration:none;transition:transform .15s;}
+.cta-box a:hover{transform:translateY(-1px);}
+
+.related-links{border:1px solid var(--border-light);border-radius:12px;padding:20px 24px;margin-top:40px;}
+.related-links h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;}
+.related-links a{display:block;font-size:14px;color:var(--brand);text-decoration:none;padding:6px 0;border-bottom:1px solid var(--border-light);font-weight:500;}
+.related-links a:last-child{border-bottom:none;}
+.related-links a:hover{text-decoration:underline;}
+
+@media(max-width:600px){.article-wrap{padding:32px 16px 60px;}.je-amounts{gap:16px;}.step-card{padding-left:50px;}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../auth.js?v=12"></script>
+</head>
+<body>
+
+<div id="fs-nav"></div>
+
+<div class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span>›</span>
+    <a href="../blog.html">Blog</a>
+    <span>›</span>
+    <span>IND AS 102 Share-Based Payment</span>
+  </nav>
+
+  <div class="article-tag">IND AS 102 / IFRS 2</div>
+  <h1 class="article-title">IND AS 102 Share-Based Payment — ESOP Accounting, Vesting Conditions &amp; Grant-Date Fair Value Explained</h1>
+  <div class="article-meta">
+    <span><i class="fa-regular fa-calendar"></i> September 2026</span>
+    <span><i class="fa-regular fa-clock"></i> 17 min read</span>
+    <span><i class="fa-solid fa-user"></i> Finosutra Team</span>
+  </div>
+  <p style="font-size:16px;line-height:1.65;color:#374151;max-width:760px;margin:4px 0 14px;">Under <strong>IND AS 102</strong>, an equity-settled share-based payment such as an ESOP is measured once at its <strong>grant-date fair value</strong> and expensed over the vesting period as the employee renders service — the fair value is never remeasured for share-price movements, but the number of awards expected to vest is trued up every period based on service and performance conditions.</p>
+  <div class="article-divider"></div>
+
+  <div class="toc">
+    <h3>In This Article</h3>
+    <ol>
+      <li><a href="#overview">What IND AS 102 Covers — Objective and Scope</a></li>
+      <li><a href="#equity-cash">Equity-Settled vs Cash-Settled Share-Based Payment</a></li>
+      <li><a href="#grant-date">Grant Date and Grant-Date Fair Value</a></li>
+      <li><a href="#vesting-conditions">Vesting Conditions — Service, Performance, Market and Non-Vesting</a></li>
+      <li><a href="#recognition">Recognition — Spreading the Expense Over the Vesting Period</a></li>
+      <li><a href="#graded-vesting">Graded Vesting</a></li>
+      <li><a href="#modifications">Modifications, Cancellations and Forfeitures</a></li>
+      <li><a href="#example">Worked Example — ESOP Grant with a Service Condition</a></li>
+      <li><a href="#vs-guidance-note">IND AS 102 vs the Pre-2016 SEBI/ICAI ESOP Framework</a></li>
+      <li><a href="#disclosures">Disclosures Required</a></li>
+      <li><a href="#errors">Common Mistakes CAs Make</a></li>
+      <li><a href="#faq">FAQs</a></li>
+    </ol>
+  </div>
+
+  <div class="article-body">
+
+    <h2 id="overview">1. What IND AS 102 Covers — Objective and Scope</h2>
+    <p>IND AS 102 requires an entity to recognise the effects of share-based payment transactions in its profit or loss and balance sheet, including expenses associated with transactions in which share options are granted to employees. It applies to all share-based payment transactions, regardless of whether the entity can identify specifically some or all of the goods or services received — most commonly, employee stock option plans (ESOPs), employee stock purchase plans (ESPPs), and stock appreciation rights (SARs).</p>
+
+    <h2 id="equity-cash">2. Equity-Settled vs Cash-Settled Share-Based Payment</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Type</th><th>Definition</th><th>Measurement</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Equity-settled</strong></td><td>The entity receives goods/services and settles the obligation by issuing its own equity instruments (e.g. standard ESOPs)</td><td>Grant-date fair value, fixed and <strong>never remeasured</strong></td></tr>
+          <tr><td><strong>Cash-settled</strong></td><td>The entity incurs a liability to pay cash (or other assets) based on the value of its equity instruments (e.g. stock appreciation rights)</td><td>Fair value <strong>remeasured at every reporting date</strong> until settlement, with changes through profit or loss</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="grant-date">3. Grant Date and Grant-Date Fair Value</h2>
+    <p>The <strong>grant date</strong> is the date the entity and the counterparty (typically an employee) agree to a share-based payment arrangement — both parties have a shared understanding of the terms and conditions, and the entity confers the rights to cash, other assets, or equity instruments, subject to satisfying any specified vesting conditions. For equity-settled awards, fair value is measured at this single point in time using an appropriate option-pricing model (e.g. Black-Scholes or a binomial model), taking into account the exercise price, expected life, current share price, expected volatility, expected dividends, and the risk-free rate.</p>
+
+    <h2 id="vesting-conditions">4. Vesting Conditions — Service, Performance, Market and Non-Vesting</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Condition type</th><th>Example</th><th>Effect on accounting</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Service condition</strong></td><td>Employee must remain employed for 3 years</td><td>Vesting condition — failing it means forfeiture of the award and any expense already recognised on it is reversed</td></tr>
+          <tr><td><strong>Performance condition (non-market)</strong></td><td>Company must achieve a specified revenue or profit target</td><td>Vesting condition — factored into the estimated number of awards expected to vest, trued up each period; failing it means forfeiture</td></tr>
+          <tr><td><strong>Market condition</strong></td><td>Company's share price must reach a target level</td><td>Built into the grant-date fair value itself using the option-pricing model; expense is recognised regardless of whether the target is actually achieved, as long as the service condition is met</td></tr>
+          <tr><td><strong>Non-vesting condition</strong></td><td>Employee must contribute their own savings to an ESPP</td><td>Reflected in the grant-date fair value, not treated as a vesting condition</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout callout-red">
+      <p><strong>The market-condition distinction is the single most misunderstood mechanic in this standard.</strong> Failing a market condition does <strong>not</strong> reverse previously recognised expense — the cost of the award was already "priced in" via a lower grant-date fair value from the option-pricing model, so no true-up happens even if the share price target is never hit. Failing a service or non-market performance condition, by contrast, <strong>does</strong> reverse the expense, because it means the entity simply didn't receive the services it was paying for.</p>
+    </div>
+
+    <h2 id="recognition">5. Recognition — Spreading the Expense Over the Vesting Period</h2>
+    <p>For equity-settled transactions, the entity recognises an expense (and a corresponding increase in equity, typically a "share options outstanding" reserve) as the services are rendered over the <strong>vesting period</strong>, based on the best available estimate of the number of equity instruments expected to vest. This estimate is <strong>revised</strong> if subsequent information indicates the number of awards expected to vest differs from previous estimates — with a cumulative catch-up adjustment recognised in the period of the change.</p>
+
+    <h2 id="graded-vesting">6. Graded Vesting</h2>
+    <p>Where an award vests in tranches over different periods — e.g. 25% after year 1, 25% after year 2, and 50% after year 3 — each tranche is treated as a <strong>separate grant</strong> with its own vesting period and its own fair value amortisation schedule (since the requisite service period differs by tranche). This produces a <strong>front-loaded, accelerating expense pattern</strong> rather than a simple straight-line spread of the total fair value over the longest tranche's vesting period.</p>
+
+    <h2 id="modifications">7. Modifications, Cancellations and Forfeitures</h2>
+    <p>If an entity modifies the terms of a grant in a way that increases its fair value (a "beneficial" modification), the <strong>incremental</strong> fair value is recognised over the remaining vesting period, in addition to the original grant-date fair value. If an award is <strong>cancelled or settled</strong> during the vesting period (other than by forfeiture when vesting conditions aren't met), the entity accounts for it as an acceleration of vesting — recognising immediately the amount that would otherwise have been recognised over the remaining period.</p>
+
+    <h2 id="example">8. Worked Example — ESOP Grant with a Service Condition</h2>
+    <div class="callout">
+      <p><strong>Scenario:</strong> Nimbus Technologies Ltd grants 1,00,000 stock options to employees on 1 April 2026, vesting after 3 years of continuous service (a service condition only, no market or non-market performance condition). Grant-date fair value per option (using Black-Scholes) is <strong>₹45</strong>. Based on historical attrition, the company initially estimates 90% of options will vest (10,000 forfeited due to expected staff exits).</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Year</th><th class="r">Cumulative expected vesting</th><th class="r">Cumulative fair value (₹)</th><th class="r">Cumulative expense (₹)</th><th class="r">Expense for the year (₹)</th></tr></thead>
+        <tbody>
+          <tr><td>Year 1 (90,000 expected to vest)</td><td class="r">90,000 × ₹45 = 40,50,000</td><td class="r">40,50,000</td><td class="r">13,50,000 (1/3)</td><td class="r">13,50,000</td></tr>
+          <tr><td>Year 2 (estimate revised to 92,000 expected to vest)</td><td class="r">92,000 × ₹45 = 41,40,000</td><td class="r">41,40,000</td><td class="r">27,60,000 (2/3)</td><td class="r">14,10,000</td></tr>
+          <tr><td>Year 3 (actual vesting: 91,000 options)</td><td class="r">91,000 × ₹45 = 40,95,000</td><td class="r">40,95,000</td><td class="r">40,95,000 (3/3)</td><td class="r">13,35,000</td></tr>
+        </tbody>
+        <tfoot><tr><td colspan="4">Total expense over 3 years</td><td class="r">40,95,000</td></tr></tfoot>
+      </table>
+    </div>
+    <div class="je-block">
+      <div class="je-title">Recognise the Year 1 share-based payment expense</div>
+      <div class="je-row">
+        <span class="je-account">Employee Compensation Expense (P&amp;L)</span>
+        <div class="je-amounts"><span class="je-dr">Dr 13,50,000</span><span class="je-cr">—</span></div>
+      </div>
+      <div class="je-row">
+        <span class="je-account cr">Share Options Outstanding (Equity)</span>
+        <div class="je-amounts"><span class="je-dr">—</span><span class="je-cr">Cr 13,50,000</span></div>
+      </div>
+    </div>
+    <p>Note how the fair value per option (₹45) never changes across the three years, even as the share price moves — only the <strong>number of options expected to vest</strong> is revised, producing the ₹14,10,000 and ₹13,35,000 charges in Years 2 and 3 respectively, cumulatively totalling exactly the fair value of the 91,000 options that actually vested.</p>
+
+    <div class="cta-box">
+      <h3>Explore Finosutra's IND AS tools</h3>
+      <p>Free calculators for lease accounting, security deposits, ECL provisioning and financial statement generation — audit-ready workpapers in minutes.</p>
+      <a href="../indas-tools.html">Explore IND AS Tools →</a>
+    </div>
+
+    <h2 id="vs-guidance-note">9. IND AS 102 vs the Pre-2016 SEBI/ICAI ESOP Framework</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Aspect</th><th>Pre-IND AS (SEBI Guidelines / ICAI Guidance Note)</th><th>IND AS 102</th></tr></thead>
+        <tbody>
+          <tr><td>Measurement basis</td><td>Choice between intrinsic value and fair value method (intrinsic value widely used, often resulting in a nil or minimal expense for at-the-money options)</td><td>Fair value method mandatory for all arrangements — no intrinsic value alternative</td></tr>
+          <tr><td>Market conditions</td><td>Limited specific guidance</td><td>Explicit treatment — built into grant-date fair value, no reversal on failure</td></tr>
+          <tr><td>Graded vesting</td><td>Less prescriptive on tranche-by-tranche treatment</td><td>Explicit requirement to treat each tranche as a separate grant</td></tr>
+          <tr><td>Cash-settled awards</td><td>Less developed guidance</td><td>Explicit fair value remeasurement each period until settlement</td></tr>
+          <tr><td>Disclosures</td><td>Limited</td><td>Extensive — reconciliation of options outstanding, weighted average exercise prices, fair value assumptions used</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="disclosures">10. Disclosures Required</h2>
+    <p>IND AS 102 requires disclosure of a description of each type of share-based payment arrangement, the number and weighted average exercise prices of options outstanding at the beginning and end of the period (with a reconciliation showing options granted, forfeited, exercised and expired during the period), the weighted average share price at the date of exercise for options exercised, the range of exercise prices and weighted average remaining contractual life for options outstanding at year-end, and the inputs used in the option-pricing model (weighted average share price, exercise price, expected volatility, option life, expected dividends, risk-free rate, and any other model inputs). The total expense recognised for share-based payment transactions during the period must also be disclosed.</p>
+
+    <h2 id="errors">11. Common Mistakes CAs Make</h2>
+
+    <div class="callout callout-red">
+      <p><strong>Error 1 — Remeasuring the fair value of an equity-settled award for share price changes.</strong> Grant-date fair value is fixed once and for all for equity-settled awards — only the estimated number of awards expected to vest is updated, never the per-unit fair value itself.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 2 — Reversing expense when a market condition (like a share price target) isn't achieved.</strong> A failed market condition never triggers a reversal — the cost was already reflected in a lower grant-date fair value when the award was priced using the option model.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 3 — Straight-lining the total fair value of a graded-vesting award over its longest tranche.</strong> Each vesting tranche must be treated as a separate grant with its own service period, producing a front-loaded expense curve, not a flat straight line across the whole arrangement.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 4 — Applying intrinsic value instead of fair value.</strong> The old SEBI/ICAI framework's intrinsic-value option is no longer available — IND AS 102 mandates fair value (via an option-pricing model) for every equity-settled arrangement, regardless of prior practice.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <p><strong>Error 5 — Not remeasuring a cash-settled award (like SARs) at each reporting date.</strong> Unlike equity-settled awards, cash-settled arrangements are a liability remeasured to fair value every period until settlement, with the full change flowing through profit or loss.</p>
+    </div>
+
+    <h2 id="faq">12. FAQs</h2>
+
+    <h3>What is the difference between equity-settled and cash-settled share-based payment?</h3>
+    <p>In an equity-settled arrangement (e.g. standard ESOPs), the entity receives services in exchange for its own equity instruments, measured once at grant-date fair value and never remeasured. In a cash-settled arrangement (e.g. stock appreciation rights), the entity incurs a liability to pay cash based on the value of its equity instruments, which is remeasured to fair value at every reporting date until settlement, with changes recognised in profit or loss.</p>
+
+    <h3>When is the fair value of an equity-settled share-based payment measured?</h3>
+    <p>At the grant date — the date the entity and the employee (or other party) agree to the share-based payment arrangement, and both parties have a shared understanding of its terms and conditions. For equity-settled awards, this grant-date fair value is fixed and never subsequently remeasured, even if the share price moves significantly before vesting.</p>
+
+    <h3>What is the difference between a vesting condition and a non-vesting condition?</h3>
+    <p>A vesting condition (service condition or performance condition) determines whether the entity receives the services that entitle the counterparty to the award — failing it means forfeiture, and no expense is ultimately recognised for that award. A non-vesting condition is any other condition (e.g. an employee's own contribution to a savings-based purchase plan) — it is factored into the grant-date fair value itself rather than affecting the number of awards expected to vest.</p>
+
+    <h3>How does a market condition differ from a service or performance condition in accounting treatment?</h3>
+    <p>A market condition (e.g. a target share price) is built into the grant-date fair value of the award using an option-pricing model. Once granted, the expense is recognised regardless of whether the market condition is ultimately achieved, as long as the service condition is met — failing only the market condition does not reverse the expense already recognised. This is fundamentally different from failing a service condition, which does reverse previously recognised expense as a forfeiture.</p>
+
+    <h3>How is the expense spread over a graded vesting schedule?</h3>
+    <p>Where an award vests in tranches over different periods (graded vesting), each tranche is treated as a separate grant with its own vesting period and, since the requisite service period differs, its own effective grant-date fair value amortisation schedule — resulting in a front-loaded, accelerating expense pattern across the overall arrangement rather than a simple straight-line spread over the longest vesting period.</p>
+
+    <h3>Is IND AS 102 the same as IFRS 2?</h3>
+    <p>IND AS 102 is India's converged version of IFRS 2 and follows the same grant-date fair value measurement, vesting condition framework, and equity-settled/cash-settled distinction. Before IND AS 102, Indian companies followed the SEBI ESOP Guidelines and an ICAI Guidance Note, which permitted an intrinsic value method as an alternative to fair value in some cases — IND AS 102 removes that choice and mandates fair value measurement for all share-based payment arrangements.</p>
+
+  </div>
+
+  <div class="related-links">
+    <h3>Related tools &amp; articles</h3>
+    <a href="../indas-tools.html">→ All IND AS Tools</a>
+    <a href="ind-as-113-fair-value-measurement-guide.html">→ IND AS 113 Fair Value Measurement — Complete Guide</a>
+    <a href="ind-as-33-earnings-per-share-guide.html">→ IND AS 33 Earnings Per Share — Complete Guide</a>
+    <a href="ind-as-19-employee-benefits-guide.html">→ IND AS 19 Employee Benefits — Complete Guide</a>
+    <a href="ind-as-24-related-party-disclosures-guide.html">→ IND AS 24 Related Party Disclosures — Complete Guide</a>
+    <a href="../blog.html">← All Articles</a>
+  </div>
+
+</div>
+
+<div id="fs-footer"></div>
+<script src="../nav.js?v=9"></script>
+<script src="../footer.js?v=8"></script>
+<script src="../share.js"></script>
+</body>
+</html>
