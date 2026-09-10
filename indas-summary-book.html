@@ -1069,6 +1069,17 @@
     // the capture is empty even though the div is technically "in the DOM".
     // Verified fix: keep the wrap in normal static flow (x:0) and hide the
     // visual flash with a full-screen opaque overlay instead of coordinates.
+    //
+    // A SECOND blank-PDF bug surfaced after that fix shipped: at full scale
+    // (all 36 standards → ~38 PDF pages) html2canvas renders the whole wrap
+    // as ONE giant canvas, and at scale:2 that canvas is large enough to
+    // hit a browser canvas size/memory ceiling — it fails silently (no
+    // thrown error) and produces a blank image. Confirmed by direct testing:
+    // scale:2 on all 36 standards produced a ~70KB blank PDF; scale:1 on the
+    // identical content produced a real ~6MB PDF with genuine (non-blank)
+    // pixel content. scale:1 is still perfectly legible for dense text/chart
+    // content at this page width, so drop scale here rather than chunking
+    // the render into per-standard canvases (a bigger, riskier rewrite).
     var overlay = document.createElement('div');
     overlay.style.position = 'fixed';
     overlay.style.inset = '0';
@@ -1107,7 +1118,7 @@
       margin: 10,
       filename: 'finosutra-indas-summary-book.pdf',
       image: { type: 'jpeg', quality: 0.95 },
-      html2canvas: { scale: 2, useCORS: true },
+      html2canvas: { scale: 1, useCORS: true },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     }).from(wrap).save().then(function(){
       cleanup();
