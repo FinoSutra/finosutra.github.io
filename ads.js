@@ -16,13 +16,14 @@
 
   var ADSENSE_CLIENT = 'ca-pub-6258197474786729';
 
+  var adsenseScriptSrc = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + ADSENSE_CLIENT;
+
   function loadAdSenseScript() {
-    if (document.querySelector('script[data-fs-adsense]')) return;
+    if (document.querySelector('script[src="' + adsenseScriptSrc + '"]')) return;
     var s = document.createElement('script');
     s.async = true;
-    s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + ADSENSE_CLIENT;
+    s.src = adsenseScriptSrc;
     s.crossOrigin = 'anonymous';
-    s.setAttribute('data-fs-adsense', '1');
     s.onerror = function () { console.warn('[ads.js] AdSense script failed to load'); };
     document.head.appendChild(s);
   }
