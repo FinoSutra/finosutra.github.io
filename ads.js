@@ -1,62 +1,30 @@
 // ═══════════════════════════════════════════════════════════════════════════════
-// FINOSUTRA — Ads Module (Google AdSense)
-// Version: 1.0
+// FINOSUTRA — Ads Module (Google AdSense Auto Ads)
+// Version: 2.0
 //
 // Pro subscribers never see ads; everyone else does. Reads window.isProUser,
-// which auth.js sets. Load this AFTER auth.js.
+// which auth.js sets. Load this AFTER auth.js on every page.
 //
-// HOW TO USE ON A PAGE:
-//   1. <script src="auth.js?v=13"></script>   (must come first)
-//      <script src="ads.js?v=1"></script>
-//   2. Drop slot markers where an ad should render:
-//      <ins class="fs-ad-slot" data-ad-slot="XXXXXXXXXX"></ins>
-//      (data-ad-slot = the AdSense ad unit ID; create one per placement in
-//      the AdSense UI after the account is approved)
-//
-// SETUP (after AdSense approval):
-//   Replace ADSENSE_CLIENT below with the real "ca-pub-..." publisher ID.
-//   Until then this module is a no-op everywhere it's included.
+// Uses AdSense Auto Ads — Google decides ad placement automatically once
+// Auto Ads is turned on for finosutra.com in the AdSense dashboard. No
+// per-page ad units or slot markup needed; this script only decides whether
+// the base AdSense script loads at all for a given visitor.
 // ═══════════════════════════════════════════════════════════════════════════════
 
 (function (global) {
   'use strict';
 
   var ADSENSE_CLIENT = 'ca-pub-6258197474786729';
-  var ENABLED = ADSENSE_CLIENT.indexOf('REPLACE_WITH') === -1;
 
-  function loadAdSenseScript(cb) {
-    if (global.adsbygoogle) { cb(); return; }
+  function loadAdSenseScript() {
+    if (document.querySelector('script[data-fs-adsense]')) return;
     var s = document.createElement('script');
     s.async = true;
     s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + ADSENSE_CLIENT;
     s.crossOrigin = 'anonymous';
-    s.onload = cb;
+    s.setAttribute('data-fs-adsense', '1');
     s.onerror = function () { console.warn('[ads.js] AdSense script failed to load'); };
     document.head.appendChild(s);
-  }
-
-  function renderSlots() {
-    var slots = document.querySelectorAll('.fs-ad-slot[data-ad-slot]');
-    if (!slots.length) return;
-    loadAdSenseScript(function () {
-      slots.forEach(function (slot) {
-        if (slot.dataset.fsRendered) return;
-        slot.dataset.fsRendered = '1';
-        slot.classList.add('adsbygoogle');
-        slot.style.display = 'block';
-        slot.setAttribute('data-ad-client', ADSENSE_CLIENT);
-        slot.setAttribute('data-ad-format', slot.getAttribute('data-ad-format') || 'auto');
-        slot.setAttribute('data-full-width-responsive', 'true');
-        try { (global.adsbygoogle = global.adsbygoogle || []).push({}); }
-        catch (e) { console.warn('[ads.js] push failed', e); }
-      });
-    });
-  }
-
-  // Pro users: remove slot elements outright (not just hide) so no space is
-  // reserved and no ad request is ever made for them.
-  function stripSlots() {
-    document.querySelectorAll('.fs-ad-slot').forEach(function (slot) { slot.remove(); });
   }
 
   // auth.js resolves window.isProUser asynchronously (Supabase getSession()
@@ -69,10 +37,8 @@
   var AUTH_SETTLE_MS = 700;
 
   function init() {
-    if (!ENABLED) return;
     setTimeout(function () {
-      if (global.isProUser) stripSlots();
-      else renderSlots();
+      if (!global.isProUser) loadAdSenseScript();
     }, AUTH_SETTLE_MS);
   }
 
