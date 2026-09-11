@@ -1,0 +1,3 @@
+# ads.txt — Finosutra (https://finosutra.com)
+# Authorized digital sellers. See https://iabtechlab.com/ads-txt/
+google.com, pub-6258197474786729, DIRECT, f08c47fec0942fa0
