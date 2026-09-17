@@ -93,23 +93,29 @@
 .bar-amber{background:var(--amber);}
 
 .box-row{display:grid;gap:1px;background:var(--border-light);border:1px solid var(--border-light);border-top:none;border-radius:0 0 6px 6px;overflow:hidden;}
-.box{background:#fff;padding:13px 15px;}
-.box h4{font-size:11.5px;font-weight:800;color:var(--text);margin:0 0 7px;}
+.box{background:#fff;padding:13px 15px;min-width:0;}
+.box h4{font-size:11.5px;font-weight:800;color:var(--text);margin:0 0 7px;overflow-wrap:break-word;}
 .box ul{margin:0;padding-left:15px;}
-.box li{font-size:11.5px;line-height:1.5;color:#374151;margin-bottom:4px;}
-.box p.lead{font-size:11.5px;line-height:1.5;color:#374151;margin:0;}
+.box li{font-size:11.5px;line-height:1.5;color:#374151;margin-bottom:4px;overflow-wrap:break-word;word-break:break-word;}
+.box p.lead{font-size:11.5px;line-height:1.5;color:#374151;margin:0;overflow-wrap:break-word;word-break:break-word;}
 
-.cols-6{grid-template-columns:repeat(6,1fr);}
-.cols-4{grid-template-columns:repeat(4,1fr);}
-.cols-3{grid-template-columns:repeat(3,1fr);}
-.cols-2{grid-template-columns:repeat(2,1fr);}
-.cols-1{grid-template-columns:1fr;}
+/* FIX: bare `1fr` tracks default to minmax(auto,1fr), and `auto` falls back
+   to each cell's min-content width. A box with a long unbreakable run of
+   text could force its column wider than its 1/N share, growing the whole
+   grid past its container (the cause of columns being clipped/cut off in
+   captures and printed output). minmax(0,1fr) removes that content-based
+   floor so every column actually respects its assigned fraction. */
+.cols-6{grid-template-columns:repeat(6,minmax(0,1fr));}
+.cols-4{grid-template-columns:repeat(4,minmax(0,1fr));}
+.cols-3{grid-template-columns:repeat(3,minmax(0,1fr));}
+.cols-2{grid-template-columns:repeat(2,minmax(0,1fr));}
+.cols-1{grid-template-columns:minmax(0,1fr);}
 
 .doc-divider{height:1px;background:var(--border-light);margin:34px 0 0;}
 
 @media(max-width:1000px){.book-layout{grid-template-columns:1fr;}.book-sidebar{position:static;max-height:none;}}
-@media(max-width:800px){.cols-6{grid-template-columns:repeat(3,1fr);}.cols-4,.cols-3{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:560px){.cols-6,.cols-4,.cols-3,.cols-2{grid-template-columns:1fr;}.book-shell{padding:20px 14px 60px;}}
+@media(max-width:800px){.cols-6{grid-template-columns:repeat(3,minmax(0,1fr));}.cols-4,.cols-3{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:560px){.cols-6,.cols-4,.cols-3,.cols-2{grid-template-columns:minmax(0,1fr);}.book-shell{padding:20px 14px 60px;}}
 
 @media print{
   body *{visibility:hidden !important;}
