@@ -1063,76 +1063,23 @@
     document.getElementById('bookContent').addEventListener('contextmenu', function(e){ e.preventDefault(); });
   });
 
-  // ── PDF generation, called by auth.js after a successful ₹79 payment (or
-  // immediately for Pro users). Renders ALL available standards into one PDF,
-  // not just the one currently on screen — this is the whole-book purchase.
+  // ── PDF download, called by auth.js after a successful ₹79 payment (or
+  // immediately for Pro users). Downloads the pre-generated, correctly aligned
+  // full PDF instead of generating it in the browser.
   window.fsNotebookDownloadPDF = function(){
-    // html2canvas can only capture elements with real, in-flow layout. A
-    // detached div (never appended — the original bug) renders blank, and so
-    // does an off-screen div positioned via `position:fixed; left:-9999px`
-    // (the first attempted fix) — html2canvas clones the page into a fixed-
-    // width render window and the element's x/y is outside that window, so
-    // the capture is empty even though the div is technically "in the DOM".
-    // Verified fix: keep the wrap in normal static flow (x:0) and hide the
-    // visual flash with a full-screen opaque overlay instead of coordinates.
-    //
-    // A SECOND blank-PDF bug surfaced after that fix shipped: at full scale
-    // (all 36 standards → ~38 PDF pages) html2canvas renders the whole wrap
-    // as ONE giant canvas, and at scale:2 that canvas is large enough to
-    // hit a browser canvas size/memory ceiling — it fails silently (no
-    // thrown error) and produces a blank image. Confirmed by direct testing:
-    // scale:2 on all 36 standards produced a ~70KB blank PDF; scale:1 on the
-    // identical content produced a real ~6MB PDF with genuine (non-blank)
-    // pixel content. scale:1 is still perfectly legible for dense text/chart
-    // content at this page width, so drop scale here rather than chunking
-    // the render into per-standard canvases (a bigger, riskier rewrite).
-    var overlay = document.createElement('div');
-    overlay.style.position = 'fixed';
-    overlay.style.inset = '0';
-    overlay.style.background = '#fff';
-    overlay.style.zIndex = '99999';
-    overlay.style.display = 'flex';
-    overlay.style.alignItems = 'center';
-    overlay.style.justifyContent = 'center';
-    overlay.style.fontFamily = 'inherit';
-    overlay.style.fontSize = '16px';
-    overlay.style.color = '#333';
-    overlay.textContent = 'Generating your PDF…';
-    document.body.appendChild(overlay);
+    var pdfUrl = 'finosutra-indas-summary-book-fixed_1.pdf';
 
-    var wrap = document.createElement('div');
-    wrap.style.position = 'static';
-    wrap.style.width = '900px';
-    wrap.style.background = '#fff';
-    wrap.style.padding = '20px';
-    Object.keys(STD_CONTENT).forEach(function(key){
-      var section = document.createElement('div');
-      section.innerHTML = STD_CONTENT[key];
-      section.style.pageBreakAfter = 'always';
-      wrap.appendChild(section);
-    });
-    document.body.appendChild(wrap);
-
-    if (window.showToast) window.showToast('Generating your PDF…', '#6366F1');
-
-    function cleanup(){
-      if (wrap.parentNode) document.body.removeChild(wrap);
-      if (overlay.parentNode) document.body.removeChild(overlay);
+    if (window.showToast) {
+      window.showToast('Your PDF download is starting…', '#6366F1');
     }
 
-    html2pdf().set({
-      margin: 10,
-      filename: 'finosutra-indas-summary-book.pdf',
-      image: { type: 'jpeg', quality: 0.95 },
-      html2canvas: { scale: 1, useCORS: true },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    }).from(wrap).save().then(function(){
-      cleanup();
-    }).catch(function(e){
-      console.error('[indas-summary-book] PDF generation failed:', e);
-      cleanup();
-      if (window.showToast) window.showToast('PDF generation failed — please try again, or contact hello@finosutra.com.', '#EF4444');
-    });
+    var link = document.createElement('a');
+    link.href = pdfUrl;
+    link.download = 'finosutra-indas-summary-book.pdf';
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
 })();
