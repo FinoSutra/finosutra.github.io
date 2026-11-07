@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+<meta name="google-adsense-account" content="ca-pub-6258197474786729"/>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Capital Gains Tax Calculator India FY 2026-27 (AY 2027-28) | Finosutra</title>
@@ -163,6 +164,7 @@ table.tbl td:last-child{text-align:right;font-weight:600}
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="auth.js?v=12"></script>
+<script src="ads.js?v=1"></script>
 </head>
 <body>
 
@@ -438,13 +440,18 @@ function fsCopyLink(btn){
 
   <div class="faq-item" onclick="this.classList.toggle('open')">
     <div class="faq-q">What is the capital gains tax on debt mutual funds? <i class="fa-solid fa-chevron-down faq-icon"></i></div>
-    <div class="faq-a">Under Finance Act 2023, debt mutual funds acquired after 31 March 2023 are <strong>taxed at your income slab rate regardless of holding period</strong> — there is no LTCG/STCG distinction, and no indexation benefit. This applies to all debt MFs, liquid funds, overnight funds, and most hybrid funds with equity &lt; 65%. The gain is added to your total income and taxed at the applicable slab rate.</div>
+    <div class="faq-a">Under Finance Act 2023 (Section 50AA), debt mutual funds <strong>acquired on or after 1 April 2023</strong> are taxed at your income slab rate regardless of holding period — there is no LTCG/STCG distinction, and no indexation benefit. This applies to debt MFs, liquid funds, overnight funds, and most hybrid funds with equity &lt; 65% acquired from that date onward. Units <strong>acquired before 1 April 2023</strong> are not covered by Section 50AA and retain the earlier LTCG treatment if held ≥24 months: a flat 12.5% rate (no indexation, per the Finance Act 2024 amendment), instead of slab rate. This calculator applies that acquisition-date test automatically.</div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">Are "Section 111A/112/112A" still the correct citations for FY 2026-27? <i class="fa-solid fa-chevron-down faq-icon"></i></div>
+    <div class="faq-a">The Income-tax Act, 1961 (which contains these sections) is being replaced by the Income-tax Act, 2025 for Tax Year 2026-27 onwards — the exact period this calculator covers. Under the new Act, the same provisions are renumbered: <strong>Section 111A (STCG on equity) → Section 196</strong>, <strong>Section 112 (LTCG, general) → Section 197</strong>, and <strong>Section 112A (LTCG on equity) → Section 198</strong>. The rates, holding periods, and exemption amounts are unchanged — only the section numbers differ. This page keeps the familiar 1961 Act numbering since it remains in widespread use, but the 2025 Act numbers above are the technically correct citations from FY 2026-27 onwards.</div>
   </div>
 </div>
 
-<div id="fs-footer"></div>
+<div id="fs-footer"><footer class="fs-footer" role="contentinfo"><div class="fs-footer-inner"><div class="fs-footer-bottom"><p><a href="/">Home</a> &middot; <a href="/indas-tools.html">IND AS Tools</a> &middot; <a href="/gst-tools.html">GST Tools</a> &middot; <a href="/income-tax-hub.html">Income Tax Tools</a> &middot; <a href="/blog.html">Blog</a> &middot; <a href="/templates.html">Templates</a></p><p><a href="/about.html">About</a> &middot; <a href="/contact.html">Contact</a> &middot; <a href="/privacy.html">Privacy Policy</a> &middot; <a href="/terms.html">Terms</a></p></div><div class="fs-footer-bottom"><p>&copy; Finosutra. All rights reserved. Made with care in Mumbai, India.</p></div></div></footer></div>
 <script src="nav.js?v=9"></script>
-<script src="footer.js?v=8"></script>
+<script src="footer.js?v=9"></script>
 
 <script>
 // ─── CII table (CBDT notified) ───

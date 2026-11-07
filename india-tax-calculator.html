@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+<meta name="google-adsense-account" content="ca-pub-6258197474786729"/>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Income Tax Calculator FY 2026-27 | AY 2027-28 | Finosutra</title>
@@ -254,6 +255,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 <link rel="stylesheet" href="finosutra.css?v=17"/>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="auth.js?v=12"></script>
+<script src="ads.js?v=1"></script>
 </head>
 <body>
 
@@ -2072,6 +2074,29 @@ setRegime('new');
     <div style="padding:0 20px 16px;font-size:14px;color:#475569;line-height:1.7;font-family:Inter,sans-serif;">The first advance tax instalment (15% of estimated tax liability) is due by <strong>15 June 2026</strong>. Subsequent instalments: 45% by 15 Sep 2026, 75% by 15 Dec 2026, and 100% by 15 Mar 2027. Salaried individuals whose entire tax is deducted as TDS are generally exempt from advance tax. Non-compliance attracts interest under Sections 234B and 234C.</div>
   </details>
 
+  <details style="border:1px solid #E2E8F0;border-radius:10px;margin-bottom:10px;background:#fff;">
+    <summary style="padding:16px 20px;font-weight:600;font-size:14px;color:#1E293B;cursor:pointer;font-family:Inter,sans-serif;list-style:none;">Are "Section 87A", "80C", "112A" etc. still correct citations for FY 2026-27?</summary>
+    <div style="padding:0 20px 16px;font-size:14px;color:#475569;line-height:1.7;font-family:Inter,sans-serif;">The Income-tax Act, 1961 is being replaced by the Income-tax Act, 2025 for Tax Year 2026-27 onwards — the exact period this calculator covers. The rates, limits and formulas used throughout this calculator are unchanged; only the section numbers are renumbered under the new Act. Key mappings for sections referenced on this page:
+      <br><br>
+      <strong>87A</strong> (rebate) → <strong>156</strong> &nbsp;·&nbsp;
+      <strong>80C</strong> → <strong>123</strong> &nbsp;·&nbsp;
+      <strong>80CCD(1B)/(2)</strong> (NPS) → <strong>124</strong> &nbsp;·&nbsp;
+      <strong>80D</strong> (medical insurance) → <strong>126</strong> &nbsp;·&nbsp;
+      <strong>80E</strong> (education loan) → <strong>129</strong> &nbsp;·&nbsp;
+      <strong>80EE/80EEA</strong> (home loan interest) → <strong>130/131</strong> &nbsp;·&nbsp;
+      <strong>80G</strong> (donations) → <strong>133</strong> &nbsp;·&nbsp;
+      <strong>80TTA/80TTB</strong> (interest income) → <strong>153</strong> (merged) &nbsp;·&nbsp;
+      <strong>10(13A)</strong> (HRA) → <strong>Section 11, read with Schedule III</strong> &nbsp;·&nbsp;
+      <strong>111A</strong> (equity STCG) → <strong>196</strong> &nbsp;·&nbsp;
+      <strong>112</strong> (LTCG, general) → <strong>197</strong> &nbsp;·&nbsp;
+      <strong>112A</strong> (equity LTCG) → <strong>198</strong> &nbsp;·&nbsp;
+      <strong>54/54EC/54F</strong> (CG exemptions) → <strong>82/85/86</strong> &nbsp;·&nbsp;
+      <strong>234B/234C</strong> (interest) → <strong>424/425</strong>.
+      <br><br>
+      This calculator keeps the familiar 1961 Act numbering throughout since it remains in widespread use, but the numbers above are the technically correct citations for FY 2026-27 (Tax Year 2026-27) onwards.
+    </div>
+  </details>
+
 </div>
 
 <style>
@@ -2104,9 +2129,9 @@ function fsCopyLink(btn){
   var li=document.getElementById('fsLiShare'); if(li) li.href='https://www.linkedin.com/sharing/share-offsite/?url='+u;
 })();
 </script>
-<div id="fs-footer"></div>
+<div id="fs-footer"><footer class="fs-footer" role="contentinfo"><div class="fs-footer-inner"><div class="fs-footer-bottom"><p><a href="/">Home</a> &middot; <a href="/indas-tools.html">IND AS Tools</a> &middot; <a href="/gst-tools.html">GST Tools</a> &middot; <a href="/income-tax-hub.html">Income Tax Tools</a> &middot; <a href="/blog.html">Blog</a> &middot; <a href="/templates.html">Templates</a></p><p><a href="/about.html">About</a> &middot; <a href="/contact.html">Contact</a> &middot; <a href="/privacy.html">Privacy Policy</a> &middot; <a href="/terms.html">Terms</a></p></div><div class="fs-footer-bottom"><p>&copy; Finosutra. All rights reserved. Made with care in Mumbai, India.</p></div></div></footer></div>
 <script src="nav.js?v=9"></script>
-<script src="footer.js?v=8"></script>
+<script src="footer.js?v=9"></script>
 
 
 </body>

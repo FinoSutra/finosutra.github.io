@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+<meta name="google-adsense-account" content="ca-pub-6258197474786729"/>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Advance Tax Calculator FY 2026-27 (AY 2027-28) | 234B 234C Interest | Finosutra</title>
@@ -168,6 +169,7 @@ table.inst tbody td:not(:first-child){text-align:right}
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="auth.js?v=12"></script>
+<script src="ads.js?v=1"></script>
 </head>
 <body>
 
@@ -420,9 +422,13 @@ table.inst tbody td:not(:first-child){text-align:right}
     <div style="font-weight:600;color:#1E293B;margin-bottom:4px;">What is advance tax?</div>
     <div style="font-size:14px;color:#475569;line-height:1.6;">Advance tax is income tax paid in quarterly instalments during the financial year, rather than as one lump sum after year-end, wherever the estimated tax liability for the year exceeds ₹10,000.</div>
   </div>
-  <div>
+  <div style="margin-bottom:14px;">
     <div style="font-weight:600;color:#1E293B;margin-bottom:4px;">What happens if I don't pay advance tax on time?</div>
     <div style="font-size:14px;color:#475569;line-height:1.6;">Late or short payment of advance tax attracts interest under Section 234B (for shortfall in total advance tax paid) and Section 234C (for deferment of individual instalments), each charged at 1% per month on the shortfall.</div>
+  </div>
+  <div>
+    <div style="font-weight:600;color:#1E293B;margin-bottom:4px;">Are "Section 234B/234C" still the correct citations for FY 2026-27?</div>
+    <div style="font-size:14px;color:#475569;line-height:1.6;">The Income-tax Act, 1961 (which contains these sections) is being replaced by the Income-tax Act, 2025 for Tax Year 2026-27 onwards — the exact period this calculator covers. Under the new Act, the same provisions are renumbered: <strong>Section 234B (shortfall in advance tax) → Section 424</strong>, and <strong>Section 234C (deferment of instalments) → Section 425</strong>. The 1% per month rate, thresholds, and calculation method are unchanged — only the section numbers differ. This page keeps the familiar 1961 Act numbering since it remains in widespread use, but Sections 424/425 of the Income-tax Act, 2025 are the technically correct citations from FY 2026-27 onwards.</div>
   </div>
 </div>
 </div><!-- /wrap -->
@@ -457,9 +463,9 @@ function fsCopyLink(btn){
   var li=document.getElementById('fsLiShare'); if(li) li.href='https://www.linkedin.com/sharing/share-offsite/?url='+u;
 })();
 </script>
-<div id="fs-footer"></div>
+<div id="fs-footer"><footer class="fs-footer" role="contentinfo"><div class="fs-footer-inner"><div class="fs-footer-bottom"><p><a href="/">Home</a> &middot; <a href="/indas-tools.html">IND AS Tools</a> &middot; <a href="/gst-tools.html">GST Tools</a> &middot; <a href="/income-tax-hub.html">Income Tax Tools</a> &middot; <a href="/blog.html">Blog</a> &middot; <a href="/templates.html">Templates</a></p><p><a href="/about.html">About</a> &middot; <a href="/contact.html">Contact</a> &middot; <a href="/privacy.html">Privacy Policy</a> &middot; <a href="/terms.html">Terms</a></p></div><div class="fs-footer-bottom"><p>&copy; Finosutra. All rights reserved. Made with care in Mumbai, India.</p></div></div></footer></div>
 <script src="nav.js?v=9"></script>
-<script src="footer.js?v=8"></script>
+<script src="footer.js?v=9"></script>
 
 <script>
 function fmt(n){ return '₹' + Math.round(Math.abs(n)).toLocaleString('en-IN'); }

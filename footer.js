@@ -43,8 +43,9 @@
     {
       heading: 'Company',
       links: [
+        { label: 'About Us', href: '/about.html' },
         { label: 'Pricing', href: '/index.html#pricing' },
-        { label: 'Contact', href: '/index.html#contact' },
+        { label: 'Contact', href: '/contact.html' },
         { label: 'Privacy Policy', href: '/privacy.html' },
         { label: 'Terms of Service', href: '/terms.html' }
       ]
@@ -156,6 +157,8 @@
 
     var legalLinks = document.createElement('p');
     var legalItems = [
+      { label: 'About', href: '/about.html' },
+      { label: 'Contact', href: '/contact.html' },
       { label: 'Privacy', href: '/privacy.html' },
       { label: 'Terms', href: '/terms.html' },
       { label: 'hello@finosutra.com', href: 'mailto:hello@finosutra.com' }
