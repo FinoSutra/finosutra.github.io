@@ -619,6 +619,7 @@ function toggleBilling(){
         <div style="font-size:16px;font-weight:700;margin-bottom:5px;">Send us a message</div>
         <div style="font-size:13px;color:var(--fs-muted);margin-bottom:22px;">We typically reply within 1 business day.</div>
         <form id="contactForm" action="https://formspree.io/f/xvzyyrvp" method="POST" onsubmit="handleFormSubmit(event)">
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;"/>
           <div class="fs-form-row">
             <div class="fs-field"><label class="fs-label">Your name</label><input class="fs-input" type="text" name="name" placeholder="e.g. Rahul Sharma" required/></div>
             <div class="fs-field"><label class="fs-label">Email address</label><input class="fs-input" type="email" name="email" placeholder="you@company.com" required/></div>

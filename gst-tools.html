@@ -172,6 +172,7 @@
     <h3 style="font-size:17px;font-weight:700;margin-bottom:8px;">Get notified when it's ready</h3>
     <p style="font-size:13px;color:var(--fs-muted);margin-bottom:18px;" id="notifyProductName"></p>
     <form action="https://formspree.io/f/xnjrrvop" method="POST" onsubmit="handleNotify(event)">
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;"/>
       <input type="hidden" name="product" id="notifyProduct"/>
       <input type="email" name="email" class="fs-input" placeholder="you@company.com" required style="margin-bottom:12px;"/>
       <div style="display:flex;gap:10px;">
